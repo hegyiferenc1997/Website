@@ -1,9 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { NavLink } from "./NavLink";
 import { ThemeToggle } from "./ThemeToggle";
 
-// Felső menüsor: logó, menüpontok, témaváltó.
+// Felső menüsor: logó, menüpontok, témaváltó, nyelvváltó.
 export async function SiteHeader() {
   const t = await getTranslations("Layout");
 
@@ -29,8 +30,9 @@ export async function SiteHeader() {
             </li>
           </ul>
         </nav>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
+          <LanguageSwitcher />
         </div>
       </div>
     </header>

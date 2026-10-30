@@ -17,10 +17,15 @@
       "toLight": "Váltás világos témára",
       "toDark": "Váltás sötét témára"
     },
-    "footer": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is."
+    "footer": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is.",
+    "language": {
+      "label": "Nyelv",
+      "current": "Magyar",
+      "soon": "Az angol változat hamarosan érkezik"
+    }
   },
   "HomePage": {
-    "eyebrow": "~/mernokinformatikus",
+    "eyebrow": "~/mérnökinformatikus",
     "title": "Engineering Maxxing",
     "intro": "Mérnökinformatikus tantárgyak, jegyzetek és források egy helyen, egyetemekre és félévekre bontva.",
     "browseUniversities": "Egyetemek böngészése",
