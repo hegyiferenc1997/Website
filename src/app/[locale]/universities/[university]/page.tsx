@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { localize } from "@/features/courses/localize";
 import { getUniversities, getUniversity } from "@/features/courses/queries";
@@ -19,7 +20,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // Egy egyetem oldala
+// Az URL-ből érkező adat (params) <Suspense>-en belül töltődik, így a navigáció azonnali:
+// a keret rögtön megjelenik, a tartalom pedig betöltés után kerül a helyére.
 export default async function UniversityPage({ params }: Props) {
+  const t = await getTranslations("Common");
+  return (
+    <Suspense fallback={<p>{t("loading")}</p>}>
+      <UniversityContent params={params} />
+    </Suspense>
+  );
+}
+
+async function UniversityContent({ params }: Pick<Props, "params">) {
   const { university: slug } = await params;
   const [university, locale, t] = await Promise.all([
     getUniversity(slug),
