@@ -9,44 +9,61 @@
   "Layout": {
     "siteName": "Mérnökinformatikus portál",
     "nav": {
+      "label": "Fő menü",
       "home": "Főoldal",
       "universities": "Egyetemek"
     },
-    "footer": "Mérnökinformatikus portál"
+    "theme": {
+      "toLight": "Váltás világos témára",
+      "toDark": "Váltás sötét témára"
+    },
+    "footer": "Tantárgyak, jegyzetek és források mérnökinformatikus hallgatóknak."
   },
   "HomePage": {
-    "title": "Mérnökinformatikus tanulmányi portál",
-    "intro": "Tantárgyak, jegyzetek és források egy helyen.",
-    "browseUniversities": "Egyetemek böngészése"
+    "eyebrow": "~/mernokinformatikus",
+    "title": "Minden, ami a mérnökinformatikus tanulmányaidhoz kell",
+    "intro": "Tantárgyak, jegyzetek és források egy helyen, egyetemekre és félévekre bontva.",
+    "browseUniversities": "Egyetemek böngészése",
+    "coursesTitle": "tantárgyak",
+    "universitiesTitle": "egyetemek",
+    "noCourses": "Még nincs tárgy az adatbázisban."
   },
   "UniversitiesPage": {
     "title": "Egyetemek",
-    "empty": "Még nincs egyetem az adatbázisban."
+    "intro": "Válaszd ki az egyetemedet, és nézd meg a tárgyait félévek szerint.",
+    "empty": "Még nincs egyetem az adatbázisban.",
+    "courseCount": "{count, plural, =0 {még nincs tárgy} other {# tárgy}}"
   },
   "UniversityPage": {
-    "coursesTitle": "Tantárgyak",
-    "noCourses": "Ehhez az egyetemhez még nincs tantárgy.",
-    "website": "Weboldal"
+    "eyebrow": "Egyetemek",
+    "coursesTitle": "tantárgyak",
+    "noCourses": "Ehhez az egyetemhez még nincs tárgy.",
+    "website": "Weboldal",
+    "semester": "{semester}. félév",
+    "noSemester": "Félév nincs megadva",
+    "credits": "{credits} kredit"
   },
   "CoursePage": {
     "code": "Tárgykód",
     "credits": "Kredit",
     "language": "Oktatási nyelv",
-    "programs": "Szakok",
-    "semester": "Ajánlott félév: {semester}",
-    "topics": "Témakörök",
+    "semester": "{semester}. félév",
+    "topics": "témakörök",
     "noTopics": "A tananyag hamarosan érkezik.",
-    "resources": "Források",
-    "unknown": "nincs megadva",
+    "resources": "források",
     "level": {
       "bsc": "BSc",
       "msc": "MSc",
       "phd": "PhD",
       "other": "egyéb"
-    }
+    },
+    "noResources": "Még nincs forrás ehhez a tárgyhoz.",
+    "breadcrumb": "Útvonal"
   },
   "NotFound": {
     "title": "Az oldal nem található",
-    "backHome": "Vissza a főoldalra"
+    "backHome": "Vissza a főoldalra",
+    "code": "404",
+    "text": "Lehet, hogy elírtad a címet, vagy az oldal már nem létezik."
   }
 }

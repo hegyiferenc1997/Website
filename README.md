@@ -25,7 +25,7 @@ Postgrest indít, és betölti a kezdő adatot (Gábor Dénes Egyetem, Programoz
 | Nyelv             | TypeScript                                 |
 | Többnyelvűség     | next-intl                                  |
 | Adatbázis         | PostgreSQL + Drizzle ORM (helyben: PGlite) |
-| Stílus            | Tailwind CSS (téma és dizájn még nincs)    |
+| Stílus            | Tailwind CSS (téma: `src/app/globals.css`) |
 | Minőségbiztosítás | ESLint, Prettier, Vitest, GitHub Actions   |
 
 ## Szerkezet
