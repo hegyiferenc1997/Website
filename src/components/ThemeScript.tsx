@@ -1,7 +1,17 @@
+"use client";
+
 // Még az oldal kirajzolása előtt visszaállítja a mentett témát, így nincs villanás.
-// Kliens oldali navigációnál nem fut újra, de akkor a <html> már a helyes témán van.
+// A szerver futtatható szkriptként küldi, a böngészőben a React már csak szövegként látja
+// (type="text/plain"), így nem jelez hibát, hogy szkriptet renderel. Lásd a Next.js
+// "Preventing flash before hydration" útmutatóját.
 const script = `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}})()`;
 
 export function ThemeScript() {
-  return <script dangerouslySetInnerHTML={{ __html: script }} />;
+  return (
+    <script
+      type={typeof window === "undefined" ? "text/javascript" : "text/plain"}
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{ __html: script }}
+    />
+  );
 }
