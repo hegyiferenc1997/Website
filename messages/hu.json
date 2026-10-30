@@ -3,11 +3,11 @@
     "loading": "Betöltés…"
   },
   "Metadata": {
-    "title": "Mérnökinformatikus tanulmányi portál",
-    "description": "Tantárgyak, jegyzetek és források mérnökinformatikus hallgatóknak."
+    "title": "Engineering Maxxing",
+    "description": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is."
   },
   "Layout": {
-    "siteName": "Mérnökinformatikus portál",
+    "siteName": "Engineering Maxxing",
     "nav": {
       "label": "Fő menü",
       "home": "Főoldal",
@@ -17,16 +17,34 @@
       "toLight": "Váltás világos témára",
       "toDark": "Váltás sötét témára"
     },
-    "footer": "Tantárgyak, jegyzetek és források mérnökinformatikus hallgatóknak."
+    "footer": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is.",
+    "language": {
+      "label": "Nyelv",
+      "current": "Magyar",
+      "soon": "Az angol változat hamarosan érkezik"
+    },
+    "login": {
+      "open": "Bejelentkezés",
+      "close": "Bezárás",
+      "title": "Bejelentkezés",
+      "username": "Felhasználónév",
+      "password": "Jelszó",
+      "submit": "Bejelentkezés",
+      "or": "vagy",
+      "google": "Bejelentkezés / regisztráció Google-fiókkal",
+      "apple": "Bejelentkezés / regisztráció Apple-fiókkal",
+      "soon": "A bejelentkezés még nem működik, hamarosan érkezik."
+    }
   },
   "HomePage": {
-    "eyebrow": "~/mernokinformatikus",
-    "title": "Minden, ami a mérnökinformatikus tanulmányaidhoz kell",
-    "intro": "Tantárgyak, jegyzetek és források egy helyen, egyetemekre és félévekre bontva.",
+    "eyebrow": "~/mérnökinformatikus",
+    "title": "Engineering Maxxing",
+    "intro": "Mérnökinformatikus tantárgyak, jegyzetek és források egy helyen, egyetemekre és félévekre bontva.",
     "browseUniversities": "Egyetemek böngészése",
     "coursesTitle": "tantárgyak",
     "universitiesTitle": "egyetemek",
-    "noCourses": "Még nincs tárgy az adatbázisban."
+    "noCourses": "Még nincs tárgy az adatbázisban.",
+    "tagline": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is."
   },
   "UniversitiesPage": {
     "title": "Egyetemek",

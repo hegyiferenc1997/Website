@@ -1,4 +1,6 @@
-# Mérnökinformatikus tanulmányi portál
+# Engineering Maxxing
+
+> Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is.
 
 Weboldal, amely a mérnökinformatikus hallgatók tanulmányait segíti: egyetemek, tantárgyak, jegyzetek és források egy helyen.
 Jelenleg magyar nyelvű, de a szerkezet több nyelvre is fel van készítve.
