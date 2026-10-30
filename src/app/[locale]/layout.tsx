@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { JetBrains_Mono, Source_Sans_3 } from "next/font/google";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { ThemeScript } from "@/components/ThemeScript";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
+
+// Betűtípusok: címekhez és kódhoz JetBrains Mono, szöveghez Source Sans 3 (mindkettő tud ő/ű-t).
+const mono = JetBrains_Mono({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-jetbrains-mono",
+});
+const sans = Source_Sans_3({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-source-sans",
+});
 
 // Minden nyelvhez előre generált oldalak.
 export function generateStaticParams() {
@@ -18,30 +31,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Közös keret minden oldalhoz. Csak szerkezet: a fejléc, menü és lábléc dizájnja később jön.
+// Közös keret minden oldalhoz: fejléc, tartalom, lábléc.
 export default async function LocaleLayout({ children }: LayoutProps<"/[locale]">) {
   const locale = await getLocale();
-  const t = await getTranslations("Layout");
 
   return (
-    <html lang={locale}>
-      <body>
+    // A témát a ThemeScript állítja be a kirajzolás előtt, ezért itt eltérhet a szervertől.
+    <html lang={locale} className={`${mono.variable} ${sans.variable}`} suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
-          <header>
-            <Link href="/">{t("siteName")}</Link>
-            <nav>
-              <ul>
-                <li>
-                  <Link href="/">{t("nav.home")}</Link>
-                </li>
-                <li>
-                  <Link href="/universities">{t("nav.universities")}</Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
-          <main>{children}</main>
-          <footer>{t("footer")}</footer>
+          <SiteHeader />
+          <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:py-14">{children}</main>
+          <SiteFooter />
         </NextIntlClientProvider>
       </body>
     </html>

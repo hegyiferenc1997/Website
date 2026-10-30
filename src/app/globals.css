@@ -1,3 +1,74 @@
 @import "tailwindcss";
 
-/* Szándékosan üres: a dizájn (színek, betűk, téma) komponensenként kerül ide. */
+/*
+ * Téma: "Kódszerkesztő" (B irány).
+ * Alapból sötét; a <html data-theme="light"> kapcsolja világosra (lásd ThemeToggle).
+ * A színeket itt, változókban állítjuk, a komponensek Tailwind osztályokkal használják őket:
+ * bg-bg, bg-surface, text-fg, text-muted, border-line, text-accent, bg-accent-soft, text-highlight.
+ */
+
+:root {
+  --bg: #0d1318;
+  --surface: #141c23;
+  --surface-hover: #1a242d;
+  --fg: #d6dfe6;
+  --muted: #8595a2;
+  --line: #24313c;
+  --accent: #3cc4a8;
+  --accent-fg: #06231d;
+  --accent-soft: #15302b;
+  --highlight: #e8b04b;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f4f7f8;
+  --surface: #ffffff;
+  --surface-hover: #eef3f4;
+  --fg: #142026;
+  --muted: #586771;
+  --line: #d6e0e4;
+  --accent: #0f8a72;
+  --accent-fg: #ffffff;
+  --accent-soft: #dcf2ec;
+  --highlight: #a86a00;
+  color-scheme: light;
+}
+
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-highlight: var(--highlight);
+
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-mono font-bold tracking-tight text-balance;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
+  ::selection {
+    @apply bg-accent text-accent-fg;
+  }
+}

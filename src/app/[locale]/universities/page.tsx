@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
+import { EmptyState, LinkCardBody, PageHeader } from "@/components/ui";
 import { localize } from "@/features/courses/localize";
 import { getUniversities } from "@/features/courses/queries";
 import { Link } from "@/i18n/navigation";
@@ -9,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title") };
 }
 
-// Egyetemek listája
+// Egyetemek listája, kártyarácsban
 export default async function UniversitiesPage() {
   const [t, locale, list] = await Promise.all([
     getTranslations("UniversitiesPage"),
@@ -18,23 +19,29 @@ export default async function UniversitiesPage() {
   ]);
 
   return (
-    <>
-      <h1>{t("title")}</h1>
+    <div className="grid gap-10">
+      <PageHeader title={t("title")}>{t("intro")}</PageHeader>
       {list.length === 0 ? (
-        <p>{t("empty")}</p>
+        <EmptyState>{t("empty")}</EmptyState>
       ) : (
-        <ul>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((u) => (
             <li key={u.id}>
               <Link
+                className="group block h-full"
                 href={{ pathname: "/universities/[university]", params: { university: u.slug } }}
               >
-                {localize(u.name, locale)}
+                <LinkCardBody
+                  title={localize(u.name, locale)}
+                  meta={[u.city, t("courseCount", { count: u.courses.length })]
+                    .filter(Boolean)
+                    .join(" · ")}
+                />
               </Link>
             </li>
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 }

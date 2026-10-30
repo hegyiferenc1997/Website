@@ -9,7 +9,21 @@ export async function getUniversities() {
   "use cache";
   cacheTag("courses");
   const db = await getDb();
-  return db.query.universities.findMany({ orderBy: asc(universities.slug) });
+  return db.query.universities.findMany({
+    orderBy: asc(universities.slug),
+    with: { courses: { columns: { id: true } } },
+  });
+}
+
+/** Az összes tárgy az egyetemével, a főoldali listához. */
+export async function getCourses() {
+  "use cache";
+  cacheTag("courses");
+  const db = await getDb();
+  return db.query.courses.findMany({
+    orderBy: asc(courses.slug),
+    with: { university: true, programCourses: { with: { program: true } } },
+  });
 }
 
 export async function getUniversity(slug: string) {
@@ -18,7 +32,7 @@ export async function getUniversity(slug: string) {
   const db = await getDb();
   const university = await db.query.universities.findFirst({
     where: eq(universities.slug, slug),
-    with: { courses: { orderBy: asc(courses.slug) } },
+    with: { courses: { orderBy: asc(courses.slug), with: { programCourses: true } } },
   });
   return university ?? null;
 }
