@@ -1,0 +1,49 @@
+{
+  "Metadata": {
+    "title": "Mérnökinformatikus tanulmányi portál",
+    "description": "Tantárgyak, jegyzetek és források mérnökinformatikus hallgatóknak."
+  },
+  "Layout": {
+    "siteName": "Mérnökinformatikus portál",
+    "nav": {
+      "home": "Főoldal",
+      "universities": "Egyetemek"
+    },
+    "footer": "Mérnökinformatikus portál"
+  },
+  "HomePage": {
+    "title": "Mérnökinformatikus tanulmányi portál",
+    "intro": "Tantárgyak, jegyzetek és források egy helyen.",
+    "browseUniversities": "Egyetemek böngészése"
+  },
+  "UniversitiesPage": {
+    "title": "Egyetemek",
+    "empty": "Még nincs egyetem az adatbázisban."
+  },
+  "UniversityPage": {
+    "coursesTitle": "Tantárgyak",
+    "noCourses": "Ehhez az egyetemhez még nincs tantárgy.",
+    "website": "Weboldal"
+  },
+  "CoursePage": {
+    "code": "Tárgykód",
+    "credits": "Kredit",
+    "language": "Oktatási nyelv",
+    "programs": "Szakok",
+    "semester": "Ajánlott félév: {semester}",
+    "topics": "Témakörök",
+    "noTopics": "A tananyag hamarosan érkezik.",
+    "resources": "Források",
+    "unknown": "nincs megadva",
+    "level": {
+      "bsc": "BSc",
+      "msc": "MSc",
+      "phd": "PhD",
+      "other": "egyéb"
+    }
+  },
+  "NotFound": {
+    "title": "Az oldal nem található",
+    "backHome": "Vissza a főoldalra"
+  }
+}
