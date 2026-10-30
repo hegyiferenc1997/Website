@@ -1,4 +1,7 @@
 {
+  "Common": {
+    "loading": "Betöltés…"
+  },
   "Metadata": {
     "title": "Mérnökinformatikus tanulmányi portál",
     "description": "Tantárgyak, jegyzetek és források mérnökinformatikus hallgatóknak."
