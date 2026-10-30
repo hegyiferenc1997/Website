@@ -22,6 +22,18 @@
       "label": "Nyelv",
       "current": "Magyar",
       "soon": "Az angol változat hamarosan érkezik"
+    },
+    "login": {
+      "open": "Bejelentkezés",
+      "close": "Bezárás",
+      "title": "Bejelentkezés",
+      "username": "Felhasználónév",
+      "password": "Jelszó",
+      "submit": "Bejelentkezés",
+      "or": "vagy",
+      "google": "Bejelentkezés / regisztráció Google-fiókkal",
+      "apple": "Bejelentkezés / regisztráció Apple-fiókkal",
+      "soon": "A bejelentkezés még nem működik, hamarosan érkezik."
     }
   },
   "HomePage": {
