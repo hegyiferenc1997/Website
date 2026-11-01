@@ -12,7 +12,8 @@ Amíg egy módhoz nincs megadva kulcs, a gombja látszik, de kattintásra kiírj
 
 ## Hogyan működik
 
-- **Regisztráció**: név, e-mail, jelszó (legalább 8 karakter). A jelszót csak hash-ként (scrypt) tároljuk.
+- **Regisztráció**: név, e-mail, jelszó. A jelszónak legalább 8 karakterből kell állnia, és kell benne egy nagybetű,
+  egy szám és egy speciális karakter (a böngésző és a szerver is ellenőrzi). A jelszót csak hash-ként (scrypt) tároljuk.
 - **Jelszó megjegyzése**: ha be van pipálva, 30 napig bejelentkezve maradsz; ha nincs, a böngésző bezárásáig.
 - **Elfelejtett jelszó**: e-mail küldő szolgáltatás még nincs bekötve. Fejlesztés közben a visszaállító link
   a `pnpm dev` terminálablakában jelenik meg, onnan kell megnyitni. Élesben (amíg nincs e-mail küldés) nem megy ki.
