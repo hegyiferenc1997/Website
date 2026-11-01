@@ -42,16 +42,60 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
   if (!university) notFound();
 
   // Tárgyak csoportosítva az ajánlott félév szerint (mint egy mintatanterv); félév nélküliek a végén.
-  const groups = new Map<number | null, typeof university.courses>();
+  // Egy félévben előbb a közös tárgyak jönnek, utána specializációnként a többi.
+  type Course = (typeof university.courses)[number];
+  type Specialization = NonNullable<Course["programCourses"][number]["specialization"]>;
+  type Group = { common: Course[]; specs: Map<number, { spec: Specialization; list: Course[] }> };
+  const groups = new Map<number | null, Group>();
   for (const c of university.courses) {
-    const semesters = c.programCourses
-      .map((pc) => pc.recommendedSemester)
-      .filter((s): s is number => s !== null);
-    const key = semesters.length > 0 ? Math.min(...semesters) : null;
-    groups.set(key, [...(groups.get(key) ?? []), c]);
+    const pc = c.programCourses
+      .filter((p) => p.recommendedSemester !== null)
+      .sort((a, b) => a.recommendedSemester! - b.recommendedSemester!)[0];
+    const key = pc?.recommendedSemester ?? null;
+    const group: Group = groups.get(key) ?? { common: [], specs: new Map() };
+    groups.set(key, group);
+    if (pc?.specialization) {
+      const entry = group.specs.get(pc.specialization.id) ?? {
+        spec: pc.specialization,
+        list: [],
+      };
+      entry.list.push(c);
+      group.specs.set(pc.specialization.id, entry);
+    } else {
+      group.common.push(c);
+    }
   }
   const sortedGroups = [...groups.entries()].sort(([a], [b]) =>
     a === null ? 1 : b === null ? -1 : a - b,
+  );
+  const collator = new Intl.Collator(locale);
+  const byName = (list: Course[]) =>
+    [...list].sort((a, b) => collator.compare(localize(a.name, locale), localize(b.name, locale)));
+
+  const courseList = (list: Course[]) => (
+    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {byName(list).map((c) => (
+        <li key={c.id}>
+          <Link
+            className="group block h-full"
+            href={{
+              pathname: "/universities/[university]/courses/[course]",
+              params: { university: university.slug, course: c.slug },
+            }}
+          >
+            <LinkCardBody
+              title={localize(c.name, locale)}
+              meta={[
+                c.credits !== null ? t("credits", { credits: c.credits }) : null,
+                c.isActive ? null : t("comingSoon"),
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            />
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 
   return (
@@ -84,29 +128,22 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
         {university.courses.length === 0 ? (
           <EmptyState>{t("noCourses")}</EmptyState>
         ) : (
-          sortedGroups.map(([semester, list]) => (
+          sortedGroups.map(([semester, group]) => (
             <div key={semester ?? "none"} className="grid gap-3">
               <h3 className="font-mono text-sm font-medium text-highlight">
                 {semester === null ? t("noSemester") : t("semester", { semester })}
               </h3>
-              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {list.map((c) => (
-                  <li key={c.id}>
-                    <Link
-                      className="group block h-full"
-                      href={{
-                        pathname: "/universities/[university]/courses/[course]",
-                        params: { university: university.slug, course: c.slug },
-                      }}
-                    >
-                      <LinkCardBody
-                        title={localize(c.name, locale)}
-                        meta={c.credits !== null ? t("credits", { credits: c.credits }) : undefined}
-                      />
-                    </Link>
-                  </li>
+              {group.common.length > 0 && courseList(group.common)}
+              {[...group.specs.values()]
+                .sort((a, b) => a.spec.position - b.spec.position)
+                .map(({ spec, list }) => (
+                  <div key={spec.id} className="grid gap-3 pt-2">
+                    <h4 className="font-mono text-xs font-medium text-accent">
+                      {t("specialization", { name: localize(spec.name, locale) })}
+                    </h4>
+                    {courseList(list)}
+                  </div>
                 ))}
-              </ul>
             </div>
           ))
         )}

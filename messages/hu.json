@@ -59,7 +59,9 @@
     "website": "Weboldal",
     "semester": "{semester}. félév",
     "noSemester": "Félév nincs megadva",
-    "credits": "{credits} kredit"
+    "credits": "{credits} kredit",
+    "specialization": "{name} specializáció",
+    "comingSoon": "hamarosan"
   },
   "CoursePage": {
     "code": "Tárgykód",
@@ -76,7 +78,10 @@
       "other": "egyéb"
     },
     "noResources": "Még nincs forrás ehhez a tárgyhoz.",
-    "breadcrumb": "Útvonal"
+    "breadcrumb": "Útvonal",
+    "elective": "Szabadon választható",
+    "specializationLabel": "Specializáció",
+    "type": "Jelleg"
   },
   "NotFound": {
     "title": "Az oldal nem található",

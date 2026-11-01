@@ -1,19 +1,16 @@
-import { eq } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import type { Database } from "./index";
-import { courses, programCourses, programs, universities } from "./schema";
+import { courses, programCourses, programs, specializations, universities } from "./schema";
+import * as gde from "./data/gde-mernokinformatikus";
 
 /**
- * Kezdő adat: a Gábor Dénes Egyetem és a Programozás alapjai tárgy.
- * Csak biztos adatot tartalmaz; a tárgykód, kredit, félév és tematika később kerül be.
- * Többször futtatható: ha az egyetem már létezik, nem csinál semmit.
+ * Kezdő adat: a Gábor Dénes Egyetem Mérnökinformatikus BSc szakja mind a 7 félévvel,
+ * a tárgyakkal, kreditekkel és az 5–6. félév két specializációjával.
+ * Egyelőre csak a Programozási alapok tárgy aktív, a többi helykitöltő.
+ * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
 export async function seed(db: Database) {
-  const existing = await db.query.universities.findFirst({
-    where: eq(universities.slug, "gabor-denes-egyetem"),
-  });
-  if (existing) return;
-
-  const [gde] = await db
+  const [university] = await db
     .insert(universities)
     .values({
       slug: "gabor-denes-egyetem",
@@ -22,27 +19,65 @@ export async function seed(db: Database) {
       city: "Budapest",
       website: "https://gde.hu",
     })
+    .onConflictDoUpdate({ target: universities.slug, set: { updatedAt: sql`now()` } })
     .returning();
 
   const [program] = await db
     .insert(programs)
     .values({
-      universityId: gde.id,
+      universityId: university.id,
       slug: "mernokinformatikus-bsc",
       name: { hu: "Mérnökinformatikus", en: "Computer Engineering" },
       level: "bsc",
     })
-    .returning();
-
-  const [course] = await db
-    .insert(courses)
-    .values({
-      universityId: gde.id,
-      slug: "programozas-alapjai",
-      name: { hu: "Programozás alapjai", en: "Programming Basics" },
-      language: "hu",
+    .onConflictDoUpdate({
+      target: [programs.universityId, programs.slug],
+      set: { updatedAt: sql`now()` },
     })
     .returning();
 
-  await db.insert(programCourses).values({ programId: program.id, courseId: course.id });
+  const specializationIds = new Map<string, number>();
+  for (const [position, s] of gde.specializations.entries()) {
+    const [row] = await db
+      .insert(specializations)
+      .values({ programId: program.id, slug: s.slug, name: { hu: s.name }, position })
+      .onConflictDoUpdate({
+        target: [specializations.programId, specializations.slug],
+        set: { name: { hu: s.name }, position, updatedAt: sql`now()` },
+      })
+      .returning();
+    specializationIds.set(s.slug, row.id);
+  }
+
+  for (const [index, list] of gde.semesters.entries()) {
+    for (const c of list) {
+      const values = {
+        name: { hu: c.name },
+        credits: c.credits,
+        language: "hu",
+        isActive: c.active ?? false,
+      };
+      const [course] = await db
+        .insert(courses)
+        .values({ universityId: university.id, slug: c.slug ?? gde.slugify(c.name), ...values })
+        .onConflictDoUpdate({
+          target: [courses.universityId, courses.slug],
+          set: { ...values, updatedAt: sql`now()` },
+        })
+        .returning();
+
+      const link = {
+        recommendedSemester: index + 1,
+        requirement: c.elective ? ("elective" as const) : ("mandatory" as const),
+        specializationId: c.specialization ? specializationIds.get(c.specialization)! : null,
+      };
+      await db
+        .insert(programCourses)
+        .values({ programId: program.id, courseId: course.id, ...link })
+        .onConflictDoUpdate({
+          target: [programCourses.programId, programCourses.courseId],
+          set: link,
+        });
+    }
+  }
 }
