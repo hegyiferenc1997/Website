@@ -2,6 +2,7 @@
 
 import { useEffect, useId, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
+import { PROGRESS_STYLE_ID } from "./script";
 import {
   courseKey,
   courseRatio,
@@ -10,6 +11,16 @@ import {
   toggleTopic,
   useProgress,
 } from "./store";
+
+/**
+ * Amint a React a mentett haladással rajzolt, a ProgressScript ideiglenes stílusa törölhető,
+ * innentől a React kezeli a lenyitást (különben a stílus nyitva tartaná a fület bezárás után is).
+ */
+function useHandOverFromScript(ready: boolean) {
+  useEffect(() => {
+    if (ready) document.getElementById(PROGRESS_STYLE_ID)?.remove();
+  }, [ready]);
+}
 
 /** Vékony haladásjelző csík százalékkal. */
 export function ProgressBar({ ratio, label }: { ratio: number; label: string }) {
@@ -39,7 +50,8 @@ export type SemesterCourse = { slug: string; credits: number; topics: string[] }
 /**
  * Lenyitható félév: fejlécben a félév neve, kreditösszeg és haladás
  * (a félév összes listázott tárgyára, kredittel súlyozva).
- * Alapból az 1. félév nyitott; a felhasználó választását megjegyezzük.
+ * Alapból minden félév zárva; a felhasználó választását megjegyezzük.
+ * A mentett állapotot a ProgressScript már az első kirajzolás előtt alkalmazza (nincs villanás).
  */
 export function SemesterSection({
   university,
@@ -60,8 +72,9 @@ export function SemesterSection({
   const t = useTranslations("Progress");
   const progress = useProgress();
   const panelId = useId();
-  const openList = progress?.openSemesters[university] ?? [1];
+  const openList = progress?.openSemesters[university] ?? [];
   const open = openList.includes(semester);
+  useHandOverFromScript(progress !== null);
 
   const totalCredits = courses.reduce((s, c) => s + c.credits, 0);
   const weighted = courses.reduce(
@@ -89,6 +102,7 @@ export function SemesterSection({
         <span className="flex items-baseline gap-3">
           <span
             aria-hidden="true"
+            data-semester-chevron={`${university}:${semester}`}
             className={"font-mono text-accent transition-transform " + (open ? "rotate-90" : "")}
           >
             ›
@@ -100,7 +114,12 @@ export function SemesterSection({
         </span>
         <ProgressBar ratio={ratio} label={t("semesterProgress", { title })} />
       </button>
-      <div id={panelId} hidden={!open} className="grid gap-3 border-t border-line p-5">
+      {/* A „hidden” attribútum helyett osztály, hogy a ProgressScript stílusa felülírhassa. */}
+      <div
+        id={panelId}
+        data-semester-panel={`${university}:${semester}`}
+        className={(open ? "grid" : "hidden") + " gap-3 border-t border-line p-5"}
+      >
         {children}
       </div>
     </section>
@@ -120,17 +139,22 @@ export function CourseCardProgress({
   const t = useTranslations("Progress");
   const progress = useProgress();
   const isLast = progress?.lastCourse[university] === course;
+  useHandOverFromScript(progress !== null);
   return (
     <span className="grid gap-2 pt-1">
       <ProgressBar
         ratio={courseRatio(progress, courseKey(university, course), topics)}
         label={t("courseProgress")}
       />
-      {isLast && (
-        <span className="w-fit rounded bg-accent-soft px-1.5 py-0.5 font-mono text-xs text-accent">
-          {t("youAreHere")}
-        </span>
-      )}
+      <span
+        data-last-course={`${university}:${course}`}
+        className={
+          (isLast ? "inline-block" : "hidden") +
+          " w-fit rounded bg-accent-soft px-1.5 py-0.5 font-mono text-xs text-accent"
+        }
+      >
+        {t("youAreHere")}
+      </span>
     </span>
   );
 }
