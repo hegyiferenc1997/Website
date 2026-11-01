@@ -22,18 +22,21 @@ export async function getSearchItems(locale: string): Promise<SearchItem[]> {
 
   const uniItems: SearchItem[] = universities.map((u) => {
     const name = localize(u.name, locale);
+    const huName = u.name.hu;
     return {
       kind: "university",
       key: `university:${u.slug}`,
       title: name,
       meta: [u.city, tUni("courseCount", { count: u.courses.length })].filter(Boolean).join(" · "),
-      keywords: [u.slug, acronym(name), u.city].filter(Boolean).join(" "),
+      // A magyar név és rövidítése (pl. GDE) más nyelven is kereshető.
+      keywords: [u.slug, acronym(name), huName, acronym(huName), u.city].filter(Boolean).join(" "),
       university: u.slug,
     };
   });
 
   const courseItems: SearchItem[] = catalog.map((c) => {
     const uniName = localize(c.university.name, locale);
+    const huUniName = c.university.name.hu;
     return {
       kind: "course",
       key: `course:${c.university.slug}/${c.slug}`,
@@ -46,7 +49,16 @@ export async function getSearchItems(locale: string): Promise<SearchItem[]> {
       ]
         .filter(Boolean)
         .join(" · "),
-      keywords: [uniName, acronym(uniName), c.university.slug, c.university.city, c.code]
+      keywords: [
+        uniName,
+        acronym(uniName),
+        huUniName,
+        acronym(huUniName),
+        c.name.hu,
+        c.university.slug,
+        c.university.city,
+        c.code,
+      ]
         .filter(Boolean)
         .join(" "),
       university: c.university.slug,

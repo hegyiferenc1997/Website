@@ -2,20 +2,46 @@
 
 import { useTranslations } from "next-intl";
 
+/** Az átváltás hossza; a globals.css-ben ugyanennyi (--theme-fade). */
+const THEME_FADE_MS = 350;
+
 // Sötét/világos téma váltó. A választás a böngészőben marad (localStorage),
 // betöltéskor a ThemeScript állítja vissza még a kirajzolás előtt.
+//
+// Az átváltás egyetlen, egész oldalas áttűnés (View Transitions API): a régi kép
+// egyszerre úszik át az újba, így nem váltanak a komponensek egyenként, eltérő
+// sebességgel. Közben a komponensek saját színátmenetei ki vannak kapcsolva
+// (theme-switching osztály, lásd globals.css). Ahol a böngésző ezt nem tudja,
+// minden szín egyszerre, ugyanannyi idő alatt vált (theme-fade osztály).
 export function ThemeToggle() {
   const t = useTranslations("Layout.theme");
 
   function toggle() {
     const root = document.documentElement;
     const next = root.dataset.theme === "light" ? "dark" : "light";
-    root.dataset.theme = next;
-    try {
-      localStorage.setItem("theme", next);
-    } catch {
-      // Ha a böngésző tiltja a tárolást, a váltás csak erre a látogatásra él.
+    const apply = () => {
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem("theme", next);
+      } catch {
+        // Ha a böngésző tiltja a tárolást, a váltás csak erre a látogatásra él.
+      }
+    };
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reduceMotion && typeof document.startViewTransition === "function") {
+      root.classList.add("theme-switching");
+      const transition = document.startViewTransition(apply);
+      transition.finished.finally(() => root.classList.remove("theme-switching"));
+      return;
     }
+
+    // Tartalék: animáció nélkül (csökkentett mozgás) vagy egységes színátmenettel.
+    const cls = reduceMotion ? "theme-switching" : "theme-fade";
+    root.classList.add(cls);
+    apply();
+    window.setTimeout(() => root.classList.remove(cls), reduceMotion ? 50 : THEME_FADE_MS);
   }
 
   return (

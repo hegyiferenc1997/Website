@@ -3,7 +3,7 @@
 > Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is.
 
 Weboldal, amely a mérnökinformatikus hallgatók tanulmányait segíti: egyetemek, tantárgyak, jegyzetek és források egy helyen.
-Jelenleg magyar nyelvű, de a szerkezet több nyelvre is fel van készítve.
+Magyarul és angolul érhető el (a magyar az alap, az angol oldalak címe `/en`-nel kezdődik).
 
 ## Indítás
 
@@ -41,6 +41,7 @@ src/
   i18n/                   nyelvek és fordított URL-ek
   proxy.ts                nyelvfelismerés, URL-átirányítás
 messages/hu.json          minden felületi szöveg magyarul
+messages/en.json          ugyanezek angolul
 content/courses/          tananyag (MDX)
 drizzle/                  adatbázis migrációk
 ```
@@ -70,6 +71,6 @@ drizzle/                  adatbázis migrációk
 
 ## Szabályok
 
-- Felületi szöveget ne írj közvetlenül a komponensbe: a `messages/hu.json`-ba kerüljön, és `getTranslations` / `useTranslations` olvassa.
+- Felületi szöveget ne írj közvetlenül a komponensbe: a `messages/hu.json`-ba **és** a `messages/en.json`-ba is kerüljön, és `getTranslations` / `useTranslations` olvassa. A tesztek jeleznek, ha valamelyik nyelvből hiányzik egy szöveg.
 - Linkekhez a `@/i18n/navigation` `Link`-jét használd, ez tudja a magyar URL-eket.
-- Az adatbázisban a neveket és leírásokat nyelvenként tároljuk (`{ "hu": "...", "en": "..." }`).
+- Az adatbázisban a neveket és leírásokat nyelvenként tároljuk (`{ "hu": "...", "en": "..." }`); új tárgynál az angol nevet is add meg (`en`).
