@@ -26,19 +26,63 @@
     },
     "login": {
       "open": "Log in",
+      "openAccount": "My account",
       "close": "Close",
       "title": "Log in",
-      "username": "Username",
+      "registerTitle": "Sign up",
+      "forgotTitle": "Forgot password",
+      "accountTitle": "My account",
+      "name": "Name",
+      "email": "Email",
       "password": "Password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "strength": {
+        "label": "Password strength",
+        "weak": "weak",
+        "fair": "fair",
+        "good": "good",
+        "strong": "strong"
+      },
+      "rules": {
+        "length": "At least {min} characters",
+        "upper": "One uppercase letter",
+        "digit": "One number",
+        "special": "One special character"
+      },
+      "ruleMet": "(met)",
+      "ruleMissing": "(missing)",
       "remember": "Remember me",
       "forgot": "Forgot password?",
       "submit": "Log in",
+      "registerSubmit": "Create account",
+      "busy": "One moment…",
       "or": "or",
       "google": "Log in / sign up with Google",
       "apple": "Log in / sign up with Apple",
-      "soon": "Logging in doesn't work yet, it's coming soon.",
+      "socialMissing": "This sign-in option is not set up yet.",
       "registerPrefix": "or",
-      "register": "Sign up here"
+      "register": "Sign up here",
+      "haveAccountPrefix": "Already have an account?",
+      "haveAccount": "Sign in",
+      "forgotIntro": "Enter your email and we'll send you a link to set a new password.",
+      "forgotSubmit": "Send link",
+      "forgotSent": "If an account exists for this email, we've sent the link to it.",
+      "back": "Back to sign in",
+      "signedInAs": "Signed in as",
+      "synced": "Your progress is saved to your account, so you can continue on any device.",
+      "signOut": "Sign out",
+      "errors": {
+        "invalidCredentials": "Wrong email or password.",
+        "userExists": "An account with this email already exists. Sign in or reset your password.",
+        "passwordTooShort": "The password is too short.",
+        "passwordTooLong": "The password is too long.",
+        "invalidEmail": "Invalid email address.",
+        "tooMany": "Too many attempts. Wait a little and try again.",
+        "accountNotLinked": "You already signed up with this email and a password. Sign in with your email and password.",
+        "generic": "Something went wrong. Please try again.",
+        "passwordTooWeak": "The password doesn't meet the requirements: at least 8 characters, one uppercase letter, one number and one special character."
+      }
     }
   },
   "HomePage": {
@@ -119,5 +163,16 @@
     "semester": "Semester {semester}",
     "credits": "{credits, plural, one {# credit} other {# credits}}",
     "count": "{count, plural, one {# course} other {# courses}}"
+  },
+  "ResetPasswordPage": {
+    "title": "Set a new password",
+    "intro": "Enter your new password. You'll be signed out on all devices and can sign in with the new password.",
+    "password": "New password",
+    "confirm": "Repeat new password",
+    "submit": "Save password",
+    "mismatch": "The passwords don't match.",
+    "success": "Done! You can now sign in with your new password in the top right corner.",
+    "invalidToken": "This link is invalid or has expired. Request a new one with “Forgot password?”.",
+    "home": "Back to the home page"
   }
 }

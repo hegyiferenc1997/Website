@@ -24,6 +24,10 @@ export const routing = defineRouting({
       hu: "/targyak",
       en: "/courses",
     },
+    "/reset-password": {
+      hu: "/jelszo-visszaallitas",
+      en: "/reset-password",
+    },
     "/universities/[university]/courses/[course]": {
       hu: "/egyetemek/[university]/targyak/[course]",
       en: "/universities/[university]/courses/[course]",

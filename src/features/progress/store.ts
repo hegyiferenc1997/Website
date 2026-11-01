@@ -3,19 +3,17 @@
 import { useSyncExternalStore } from "react";
 
 // A felhasználó haladása: melyik félév van lenyitva, melyik tárgynál tart, és melyik témakört végezte el.
-// Amíg nincs bejelentkezés, a böngészőben tároljuk (localStorage); később a fiókhoz kerül.
+// Mindig a böngészőben is tároljuk (localStorage), így az oldal villanás nélkül, azonnal mutatja.
+// Bejelentkezve ez csak gyorsítótár: minden változás a fiókba is mentődik (lásd ProgressSync).
 
-export type Progress = {
-  /** Lenyitott félévek egyetemenként; ha még nincs mentve, az 1. félév nyitott. */
-  openSemesters: Record<string, number[]>;
-  /** Az utoljára megnyitott tárgy egyetemenként (a tárgy slugja). */
-  lastCourse: Record<string, string>;
-  /** Elvégzett témakörök tárgyanként ("egyetem/tárgy" kulcs → témakör slugok). */
-  doneTopics: Record<string, string[]>;
-};
+import { emptyProgress, mergeProgress, sanitizeProgress, type Progress } from "./data";
+
+export type { Progress };
 
 const KEY = "em:progress";
-const empty: Progress = { openSemesters: {}, lastCourse: {}, doneTopics: {} };
+/** Kinek a haladása van most a böngészőben: a felhasználó azonosítója, vagy üres (vendég). */
+const OWNER_KEY = "em:progress-owner";
+const empty = emptyProgress;
 
 let cache: Progress | null = null;
 const listeners = new Set<() => void>();
@@ -31,14 +29,20 @@ function read(): Progress {
   return cache;
 }
 
-function write(update: (p: Progress) => Progress) {
-  cache = update(read());
+function save(next: Progress) {
+  cache = next;
   try {
-    localStorage.setItem(KEY, JSON.stringify(cache));
+    localStorage.setItem(KEY, JSON.stringify(next));
   } catch {
     // Ha a böngésző tiltja a tárolást, a haladás csak erre a látogatásra él.
   }
   listeners.forEach((l) => l());
+}
+
+function write(update: (p: Progress) => Progress) {
+  save(update(read()));
+  sync.dirty = true;
+  scheduleUpload();
 }
 
 function subscribe(listener: () => void) {
@@ -85,4 +89,120 @@ export function courseRatio(p: Progress | null, key: string, topics: string[]): 
   if (!p || topics.length === 0) return 0;
   const done = new Set(p.doneTopics[key] ?? []);
   return topics.filter((t) => done.has(t)).length / topics.length;
+}
+
+// ---------------------------------------------------------------------------
+// Szinkronizálás a fiókkal
+// ---------------------------------------------------------------------------
+
+const sync = {
+  /** A bejelentkezett felhasználó, akinek a fiókjába mentünk; null, ha vendég (vagy még tölt). */
+  userId: null as string | null,
+  /** Volt-e helyi változás, ami még nincs a szerveren. */
+  dirty: false,
+  timer: undefined as ReturnType<typeof setTimeout> | undefined,
+  connecting: undefined as { userId: string; promise: Promise<void> } | undefined,
+};
+
+function upload(keepalive = false): Promise<void> {
+  clearTimeout(sync.timer);
+  if (!sync.userId || !sync.dirty) return Promise.resolve();
+  sync.dirty = false;
+  return fetch("/api/progress", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ progress: read() }),
+    keepalive,
+  }).then(
+    () => undefined,
+    () => {
+      sync.dirty = true; // következő változáskor újra próbálja
+    },
+  );
+}
+
+function scheduleUpload() {
+  if (!sync.userId) return;
+  clearTimeout(sync.timer);
+  sync.timer = setTimeout(() => void upload(), 600);
+}
+
+function readOwner(): string | null {
+  try {
+    return localStorage.getItem(OWNER_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function setOwner(owner: string | null) {
+  try {
+    if (owner) localStorage.setItem(OWNER_KEY, owner);
+    else localStorage.removeItem(OWNER_KEY);
+  } catch {}
+}
+
+/**
+ * Bejelentkezéskor: a fiók haladásának letöltése és összefésülése a böngészőben lévővel.
+ * - Vendégként gyűjtött haladás → hozzáadódik a fiókhoz.
+ * - Ugyanennek a felhasználónak a gyorsítótára → a fiók állapota nyer (más eszközön is haladhatott).
+ * - Egy másik felhasználó maradéka → eldobjuk.
+ */
+export function connectAccount(userId: string): Promise<void> {
+  if (sync.userId === userId) return Promise.resolve();
+  if (sync.connecting?.userId !== userId) {
+    const promise = loadAccount(userId).finally(() => {
+      if (sync.connecting?.promise === promise) sync.connecting = undefined;
+    });
+    sync.connecting = { userId, promise };
+  }
+  return sync.connecting.promise;
+}
+
+async function loadAccount(userId: string): Promise<void> {
+  sync.userId = null;
+  const owner = readOwner();
+  sync.dirty = false;
+  let remote: Progress | null;
+  try {
+    const res = await fetch("/api/progress", { cache: "no-store" });
+    if (!res.ok) return;
+    const body = (await res.json()) as { progress: unknown };
+    remote = body.progress ? sanitizeProgress(body.progress) : null;
+  } catch {
+    return; // hálózati hiba: vendégként működik tovább, a következő oldalbetöltés újrapróbálja
+  }
+  if (sync.connecting?.userId !== userId) return; // közben kijelentkezett vagy más lépett be
+  const local = read();
+  const changedWhileLoading = sync.dirty;
+  let next: Progress;
+  if (owner === userId)
+    next = remote && !changedWhileLoading ? remote : mergeProgress(local, remote ?? empty);
+  else if (owner === null) next = mergeProgress(local, remote ?? empty);
+  else next = remote ?? empty;
+
+  save(next);
+  setOwner(userId);
+  sync.userId = userId;
+  sync.dirty = JSON.stringify(next) !== JSON.stringify(remote);
+  void upload();
+}
+
+/** A még el nem küldött változások azonnali mentése (pl. kijelentkezés előtt). */
+export function flushProgress(): Promise<void> {
+  return upload(true);
+}
+
+/** Kijelentkezéskor (vagy lejárt munkamenetnél): a fiók haladása nem marad a böngészőben. */
+export function disconnectAccount() {
+  sync.userId = null;
+  sync.connecting = undefined;
+  if (readOwner() === null) return;
+  setOwner(null);
+  save(empty);
+}
+
+if (typeof window !== "undefined") {
+  // Az oldal elhagyásakor a még el nem küldött változás is kimegy.
+  window.addEventListener("pagehide", () => void upload(true));
 }

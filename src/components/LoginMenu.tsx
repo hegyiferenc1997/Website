@@ -1,26 +1,107 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { authClient } from "@/features/auth/client";
+import { PasswordField } from "@/features/auth/PasswordField";
+import { isPasswordValid, type SocialProviders } from "@/features/auth/shared";
+import type { SessionUser } from "@/features/auth/server";
+import { useOneTimeParam } from "@/features/auth/url-param";
+import { disconnectAccount, flushProgress } from "@/features/progress/store";
+import { getPathname } from "@/i18n/navigation";
 
-// Bejelentkezés ikon a fejlécben, kattintásra lenyíló panellel.
-// Egyelőre csak megjelenés: a gombok nem jelentkeztetnek be (később Better Auth / Auth.js).
-export function LoginMenu() {
+type Mode = "login" | "register" | "forgot";
+type ErrorKey =
+  | "invalidCredentials"
+  | "userExists"
+  | "passwordTooShort"
+  | "passwordTooLong"
+  | "passwordTooWeak"
+  | "invalidEmail"
+  | "tooMany"
+  | "accountNotLinked"
+  | "generic";
+
+/** A Better Auth hibakódjából a felhasználónak szóló üzenet kulcsa. */
+function errorKey(error: { code?: string; status?: number } | null | undefined): ErrorKey {
+  if (error?.status === 429) return "tooMany";
+  switch (error?.code?.toUpperCase()) {
+    case "INVALID_EMAIL_OR_PASSWORD":
+      return "invalidCredentials";
+    case "USER_ALREADY_EXISTS":
+    case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
+      return "userExists";
+    case "PASSWORD_TOO_SHORT":
+      return "passwordTooShort";
+    case "PASSWORD_TOO_LONG":
+      return "passwordTooLong";
+    case "PASSWORD_TOO_WEAK":
+      return "passwordTooWeak";
+    case "INVALID_EMAIL":
+      return "invalidEmail";
+    case "ACCOUNT_NOT_LINKED":
+      return "accountNotLinked";
+    default:
+      return "generic";
+  }
+}
+
+/**
+ * Bejelentkezés ikon a fejlécben, kattintásra lenyíló panellel: belépés, regisztráció,
+ * elfelejtett jelszó, Google / Apple, bejelentkezve pedig a fiók és a kijelentkezés.
+ * A user értéke: undefined = még töltődik, null = vendég.
+ */
+export function LoginMenu({
+  user,
+  social,
+}: {
+  user: SessionUser | null | undefined;
+  social: SocialProviders;
+}) {
   const t = useTranslations("Layout.login");
-  const [open, setOpen] = useState(false);
+  const locale = useLocale();
+  const router = useRouter();
+  const [open, setOpenState] = useState(false);
+  const [mode, setMode] = useState<Mode>("login");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<ErrorKey | "socialMissing" | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const firstFieldRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const id = useId();
 
-  // Bezárás Esc-re vagy a panelen kívüli kattintásra.
+  // Ha a Google / Apple belépés hibával tért vissza (?error=...), a panel nyitva, az üzenettel.
+  const returnedError = useOneTimeParam("error");
+  const [returnHandled, setReturnHandled] = useState(false);
+  const pendingReturn = Boolean(returnedError) && !returnHandled;
+  const isOpen = open || pendingReturn;
+  const shownError = error ?? (pendingReturn ? errorKey({ code: returnedError! }) : null);
+  function setOpen(next: boolean | ((o: boolean) => boolean)) {
+    setReturnHandled(true);
+    setOpenState(typeof next === "function" ? next(isOpen) : next);
+  }
+
+  function switchMode(next: Mode) {
+    setReturnHandled(true);
+    setMode(next);
+    setError(null);
+    setNotice(null);
+  }
+
+  // Bezárás Esc-re vagy a panelen kívüli kattintásra; nyitáskor az első mezőre ugrik.
   useEffect(() => {
-    if (!open) return;
-    firstFieldRef.current?.focus();
+    if (!isOpen) return;
+    panelRef.current?.querySelector<HTMLElement>("input, [data-autofocus]")?.focus();
+    function close() {
+      setReturnHandled(true);
+      setOpenState(false);
+    }
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") close();
     }
     function onClick(e: MouseEvent) {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+      if (!rootRef.current?.contains(e.target as Node)) close();
     }
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClick);
@@ -28,28 +109,126 @@ export function LoginMenu() {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClick);
     };
-  }, [open]);
+  }, [isOpen, mode, user]);
+
+  function finishSignIn() {
+    setOpen(false);
+    switchMode("login");
+    router.refresh(); // a fejléc és a haladás-szinkron megkapja a bejelentkezett felhasználót
+  }
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+    if (mode === "register" && !isPasswordValid(password)) {
+      setError("passwordTooWeak");
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    setNotice(null);
+    setReturnHandled(true);
+    try {
+      if (mode === "login") {
+        const { error } = await authClient.signIn.email({
+          email,
+          password,
+          rememberMe: form.get("remember") === "on",
+        });
+        if (error) setError(errorKey(error));
+        else finishSignIn();
+      } else if (mode === "register") {
+        const { error } = await authClient.signUp.email({
+          name: String(form.get("name") ?? "").trim(),
+          email,
+          password,
+        });
+        if (error) setError(errorKey(error));
+        else finishSignIn();
+      } else {
+        const redirectTo =
+          window.location.origin + getPathname({ href: "/reset-password", locale });
+        const { error } = await authClient.requestPasswordReset({ email, redirectTo });
+        if (error) setError(errorKey(error));
+        else setNotice(t("forgotSent"));
+      }
+    } catch {
+      setError("generic");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function signInWith(provider: "google" | "apple") {
+    if (!social[provider]) {
+      setError("socialMissing");
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    // A szolgáltató oldalára visz, majd ugyanide tér vissza.
+    const back = window.location.pathname;
+    const { error } = await authClient.signIn.social({
+      provider,
+      callbackURL: back,
+      errorCallbackURL: back,
+    });
+    if (error) {
+      setError(errorKey(error));
+      setBusy(false);
+    }
+  }
+
+  async function signOut() {
+    setBusy(true);
+    await flushProgress();
+    await authClient.signOut();
+    disconnectAccount();
+    setBusy(false);
+    setOpen(false);
+    router.refresh();
+  }
+
+  const title =
+    user != null
+      ? t("accountTitle")
+      : mode === "register"
+        ? t("registerTitle")
+        : mode === "forgot"
+          ? t("forgotTitle")
+          : t("title");
 
   return (
     <div ref={rootRef} className="sm:relative">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
+        aria-expanded={isOpen}
         aria-controls={`${id}-panel`}
         className={
-          "inline-flex size-9 items-center justify-center rounded-md border transition-colors " +
-          (open
+          "relative inline-flex size-9 items-center justify-center rounded-md border transition-colors " +
+          (isOpen
             ? "border-accent bg-accent-soft text-accent"
-            : "border-line text-muted hover:bg-surface-hover hover:text-fg")
+            : user
+              ? "border-accent text-accent hover:bg-surface-hover"
+              : "border-line text-muted hover:bg-surface-hover hover:text-fg")
         }
       >
-        <span className="sr-only">{t("open")}</span>
-        <UserIcon />
+        <span className="sr-only">{user ? t("openAccount") : t("open")}</span>
+        {user ? (
+          <span aria-hidden="true" className="font-mono text-sm font-bold">
+            {initial(user)}
+          </span>
+        ) : (
+          <UserIcon />
+        )}
       </button>
 
-      {open && (
+      {isOpen && (
         <div
+          ref={panelRef}
           id={`${id}-panel`}
           role="dialog"
           aria-labelledby={`${id}-title`}
@@ -57,7 +236,7 @@ export function LoginMenu() {
         >
           <div className="mb-4 flex items-center justify-between">
             <h2 id={`${id}-title`} className="text-lg">
-              {t("title")}
+              {title}
             </h2>
             <button
               type="button"
@@ -69,93 +248,190 @@ export function LoginMenu() {
             </button>
           </div>
 
-          <form className="grid gap-3" onSubmit={(e) => e.preventDefault()}>
-            <label className="grid gap-1.5 text-sm">
-              <span className="text-muted">{t("username")}</span>
-              <input
-                ref={firstFieldRef}
-                id={`${id}-username`}
-                name="username"
-                autoComplete="username"
-                className="rounded-md border border-line bg-bg px-3 py-2 text-fg outline-none focus:border-accent"
-              />
-            </label>
-            <label className="grid gap-1.5 text-sm">
-              <span className="text-muted">{t("password")}</span>
-              <input
-                id={`${id}-password`}
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                className="rounded-md border border-line bg-bg px-3 py-2 text-fg outline-none focus:border-accent"
-              />
-            </label>
-            <div className="flex items-center justify-between gap-3 text-sm">
-              <label className="flex cursor-pointer items-center gap-2 text-muted hover:text-fg">
-                <input
-                  type="checkbox"
-                  name="remember"
-                  defaultChecked
-                  className="size-4 accent-[var(--accent)]"
-                />
-                {t("remember")}
-              </label>
-              {/* Egyelőre funkció nélkül. */}
-              <button type="button" className="text-accent hover:underline">
-                {t("forgot")}
+          {user === undefined ? (
+            <p className="text-sm text-muted">{t("busy")}</p>
+          ) : user ? (
+            <div className="grid gap-4">
+              <div className="grid gap-0.5 text-sm">
+                <span className="text-muted">{t("signedInAs")}</span>
+                <span className="font-semibold text-fg">{user.name}</span>
+                <span className="break-all text-muted">{user.email}</span>
+              </div>
+              <p className="text-xs text-muted">{t("synced")}</p>
+              <button
+                type="button"
+                data-autofocus
+                disabled={busy}
+                onClick={signOut}
+                className="rounded-md border border-line px-4 py-2.5 text-sm transition-colors hover:border-accent hover:bg-surface-hover disabled:opacity-60"
+              >
+                {busy ? t("busy") : t("signOut")}
               </button>
             </div>
-            <button
-              type="submit"
-              className="mt-1 rounded-md bg-accent px-4 py-2.5 font-semibold text-accent-fg transition-opacity hover:opacity-90"
-            >
-              {t("submit")}
-            </button>
-          </form>
+          ) : (
+            <>
+              <form
+                key={mode}
+                className="grid gap-3"
+                onSubmit={onSubmit}
+                onChange={() => shownError && setError(null)}
+              >
+                {mode === "forgot" && <p className="text-sm text-muted">{t("forgotIntro")}</p>}
+                {mode === "register" && (
+                  <Field label={t("name")}>
+                    <input
+                      name="name"
+                      required
+                      maxLength={100}
+                      autoComplete="name"
+                      className={inputClass}
+                    />
+                  </Field>
+                )}
+                <Field label={t("email")}>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    maxLength={254}
+                    autoComplete={mode === "login" ? "username" : "email"}
+                    className={inputClass}
+                  />
+                </Field>
+                {mode !== "forgot" && (
+                  <PasswordField
+                    label={t("password")}
+                    name="password"
+                    autoComplete={mode === "register" ? "new-password" : "current-password"}
+                    withStrength={mode === "register"}
+                  />
+                )}
+                {mode === "login" && (
+                  <div className="flex items-center justify-between gap-3 text-sm">
+                    <label className="flex cursor-pointer items-center gap-2 text-muted hover:text-fg">
+                      <input
+                        type="checkbox"
+                        name="remember"
+                        defaultChecked
+                        className="size-4 accent-[var(--accent)]"
+                      />
+                      {t("remember")}
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => switchMode("forgot")}
+                      className="text-accent hover:underline"
+                    >
+                      {t("forgot")}
+                    </button>
+                  </div>
+                )}
+                {shownError && (
+                  <p role="alert" className="text-sm text-[var(--danger,#e5534b)]">
+                    {shownError === "socialMissing"
+                      ? t("socialMissing")
+                      : t(`errors.${shownError}`)}
+                  </p>
+                )}
+                {notice && (
+                  <p role="status" className="text-sm text-accent">
+                    {notice}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={busy}
+                  className="mt-1 rounded-md bg-accent px-4 py-2.5 font-semibold text-accent-fg transition-opacity hover:opacity-90 disabled:opacity-60"
+                >
+                  {busy
+                    ? t("busy")
+                    : mode === "register"
+                      ? t("registerSubmit")
+                      : mode === "forgot"
+                        ? t("forgotSubmit")
+                        : t("submit")}
+                </button>
+              </form>
 
-          <div className="my-4 flex items-center gap-3 text-xs text-muted">
-            <span className="h-px flex-1 bg-line" />
-            {t("or")}
-            <span className="h-px flex-1 bg-line" />
-          </div>
+              {mode === "forgot" ? (
+                <button
+                  type="button"
+                  onClick={() => switchMode("login")}
+                  className="mt-3 text-sm text-accent hover:underline"
+                >
+                  {t("back")}
+                </button>
+              ) : (
+                <>
+                  <div className="my-4 flex items-center gap-3 text-xs text-muted">
+                    <span className="h-px flex-1 bg-line" />
+                    {t("or")}
+                    <span className="h-px flex-1 bg-line" />
+                  </div>
 
-          {/* Csak ikonok, egymás mellett; a feliratot a képernyőolvasó és az egérrel rámutatás adja. */}
-          <div className="flex gap-3">
-            <button
-              type="button"
-              className={socialClass}
-              aria-label={t("google")}
-              title={t("google")}
-            >
-              <GoogleIcon />
-            </button>
-            <button
-              type="button"
-              className={socialClass}
-              aria-label={t("apple")}
-              title={t("apple")}
-            >
-              <AppleIcon />
-            </button>
-          </div>
+                  {/* Csak ikonok, egymás mellett; a feliratot a képernyőolvasó és az egérrel rámutatás adja. */}
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => signInWith("google")}
+                      className={socialClass}
+                      aria-label={t("google")}
+                      title={t("google")}
+                    >
+                      <GoogleIcon />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => signInWith("apple")}
+                      className={socialClass}
+                      aria-label={t("apple")}
+                      title={t("apple")}
+                    >
+                      <AppleIcon />
+                    </button>
+                  </div>
 
-          {/* Regisztráció: egyelőre funkció nélkül. */}
-          <button
-            type="button"
-            className="mt-3 w-full rounded-md border border-dashed border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-accent hover:bg-surface-hover hover:text-fg"
-          >
-            {t("registerPrefix")} <span className="font-semibold text-accent">{t("register")}</span>
-          </button>
-
-          <p className="mt-4 text-xs text-muted">{t("soon")}</p>
+                  <button
+                    type="button"
+                    onClick={() => switchMode(mode === "login" ? "register" : "login")}
+                    className="mt-3 w-full rounded-md border border-dashed border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-accent hover:bg-surface-hover hover:text-fg"
+                  >
+                    {mode === "login" ? t("registerPrefix") : t("haveAccountPrefix")}{" "}
+                    <span className="font-semibold text-accent">
+                      {mode === "login" ? t("register") : t("haveAccount")}
+                    </span>
+                  </button>
+                </>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>
   );
 }
 
+/** A név (vagy e-mail) első betűje a fejléc gombján bejelentkezve. */
+function initial(user: SessionUser) {
+  return (user.name.trim() || user.email).charAt(0).toLocaleUpperCase();
+}
+
+function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <label className="grid gap-1.5 text-sm">
+      <span className="text-muted">{label}</span>
+      {children}
+    </label>
+  );
+}
+
+const inputClass =
+  "rounded-md border border-line bg-bg px-3 py-2 text-fg outline-none focus:border-accent";
+
 const socialClass =
-  "flex flex-1 items-center justify-center rounded-md border border-line bg-bg py-2.5 text-fg transition-colors hover:border-accent hover:bg-surface-hover";
+  "flex flex-1 items-center justify-center rounded-md border border-line bg-bg py-2.5 text-fg transition-colors hover:border-accent hover:bg-surface-hover disabled:opacity-60";
 
 function UserIcon() {
   return (

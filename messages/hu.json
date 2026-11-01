@@ -26,19 +26,63 @@
     },
     "login": {
       "open": "Bejelentkezés",
+      "openAccount": "Fiókom",
       "close": "Bezárás",
       "title": "Bejelentkezés",
-      "username": "Felhasználónév",
+      "registerTitle": "Regisztráció",
+      "forgotTitle": "Elfelejtett jelszó",
+      "accountTitle": "Fiókom",
+      "name": "Név",
+      "email": "E-mail cím",
       "password": "Jelszó",
+      "showPassword": "Jelszó megjelenítése",
+      "hidePassword": "Jelszó elrejtése",
+      "strength": {
+        "label": "Jelszó erőssége",
+        "weak": "gyenge",
+        "fair": "közepes",
+        "good": "jó",
+        "strong": "erős"
+      },
+      "rules": {
+        "length": "Legalább {min} karakter",
+        "upper": "Egy nagybetű",
+        "digit": "Egy szám",
+        "special": "Egy speciális karakter"
+      },
+      "ruleMet": "(teljesítve)",
+      "ruleMissing": "(még hiányzik)",
       "remember": "Jelszó megjegyzése",
       "forgot": "Elfelejtett jelszó?",
       "submit": "Bejelentkezés",
+      "registerSubmit": "Fiók létrehozása",
+      "busy": "Egy pillanat…",
       "or": "vagy",
       "google": "Bejelentkezés / regisztráció Google-fiókkal",
       "apple": "Bejelentkezés / regisztráció Apple-fiókkal",
-      "soon": "A bejelentkezés még nem működik, hamarosan érkezik.",
+      "socialMissing": "Ez a belépési mód még nincs beállítva.",
       "registerPrefix": "vagy",
-      "register": "Regisztrálj itt"
+      "register": "Regisztrálj itt",
+      "haveAccountPrefix": "Már van fiókod?",
+      "haveAccount": "Jelentkezz be",
+      "forgotIntro": "Add meg az e-mail címed, és küldünk egy linket, amivel új jelszót állíthatsz be.",
+      "forgotSubmit": "Link küldése",
+      "forgotSent": "Ha van fiók ezzel a címmel, elküldtük rá a linket.",
+      "back": "Vissza a bejelentkezéshez",
+      "signedInAs": "Bejelentkezve:",
+      "synced": "A haladásod a fiókodba mentődik, így bármelyik eszközön folytathatod.",
+      "signOut": "Kijelentkezés",
+      "errors": {
+        "invalidCredentials": "Hibás e-mail cím vagy jelszó.",
+        "userExists": "Ezzel az e-mail címmel már van fiók. Jelentkezz be, vagy kérj új jelszót.",
+        "passwordTooShort": "A jelszó túl rövid.",
+        "passwordTooLong": "A jelszó túl hosszú.",
+        "invalidEmail": "Érvénytelen e-mail cím.",
+        "tooMany": "Túl sok próbálkozás. Várj egy kicsit, és próbáld újra.",
+        "accountNotLinked": "Ezzel az e-mail címmel már regisztráltál jelszóval. Jelentkezz be e-maillel és jelszóval.",
+        "generic": "Valami hiba történt. Próbáld újra.",
+        "passwordTooWeak": "A jelszó nem felel meg a szabályoknak: legalább 8 karakter, egy nagybetű, egy szám és egy speciális karakter."
+      }
     }
   },
   "HomePage": {
@@ -119,5 +163,16 @@
     "semester": "{semester}. félév",
     "credits": "{credits} kredit",
     "count": "{count} tárgy"
+  },
+  "ResetPasswordPage": {
+    "title": "Új jelszó beállítása",
+    "intro": "Add meg az új jelszavad. Utána minden eszközön ki leszel jelentkeztetve, és az új jelszóval léphetsz be.",
+    "password": "Új jelszó",
+    "confirm": "Új jelszó még egyszer",
+    "submit": "Jelszó mentése",
+    "mismatch": "A két jelszó nem egyezik.",
+    "success": "Kész! Az új jelszavaddal már be tudsz jelentkezni a jobb felső sarokban.",
+    "invalidToken": "Ez a link érvénytelen vagy lejárt. Kérj újat az „Elfelejtett jelszó?” gombbal.",
+    "home": "Vissza a főoldalra"
   }
 }

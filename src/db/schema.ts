@@ -1,5 +1,6 @@
 import {
   boolean,
+  index,
   integer,
   jsonb,
   pgEnum,
@@ -220,4 +221,99 @@ export const topicsRelations = relations(topics, ({ one, many }) => ({
 export const resourcesRelations = relations(resources, ({ one }) => ({
   course: one(courses, { fields: [resources.courseId], references: [courses.id] }),
   topic: one(topics, { fields: [resources.topicId], references: [topics.id] }),
+}));
+
+// ---------------------------------------------------------------------------
+// Fiókok és bejelentkezés (Better Auth). A mezők nevét a Better Auth várja, ne nevezd át őket.
+// ---------------------------------------------------------------------------
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").notNull().default(false),
+  image: text("image"),
+  ...timestamps,
+});
+
+/** Bejelentkezett munkamenetek; a böngésző sütijében csak a véletlenszerű token van. */
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    token: text("token").notNull().unique(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    ...timestamps,
+  },
+  (t) => [index("sessions_user_id").on(t.userId)],
+);
+
+/**
+ * Belépési módok egy felhasználóhoz: „credential” (e-mail + jelszó, a jelszó csak hash-ként),
+ * vagy egy külső fiók (Google, Apple). Egy felhasználónak több is lehet.
+ */
+export const accounts = pgTable(
+  "accounts",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    idToken: text("id_token"),
+    accessTokenExpiresAt: timestamp("access_token_expires_at", { withTimezone: true }),
+    refreshTokenExpiresAt: timestamp("refresh_token_expires_at", { withTimezone: true }),
+    scope: text("scope"),
+    password: text("password"),
+    ...timestamps,
+  },
+  (t) => [index("accounts_user_id").on(t.userId)],
+);
+
+/** Egyszer használható, lejáró kódok (pl. jelszó-visszaállítás). */
+export const verifications = pgTable(
+  "verifications",
+  {
+    id: text("id").primaryKey(),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    ...timestamps,
+  },
+  (t) => [index("verifications_identifier").on(t.identifier)],
+);
+
+/** A felhasználó haladása (lenyitott félévek, utolsó tárgy, elvégzett témakörök) egy JSON-ban. */
+export const userProgress = pgTable("user_progress", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  data: jsonb("data").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const usersRelations = relations(users, ({ many, one }) => ({
+  sessions: many(sessions),
+  accounts: many(accounts),
+  progress: one(userProgress),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+}));
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, { fields: [accounts.userId], references: [users.id] }),
+}));
+
+export const userProgressRelations = relations(userProgress, ({ one }) => ({
+  user: one(users, { fields: [userProgress.userId], references: [users.id] }),
 }));
