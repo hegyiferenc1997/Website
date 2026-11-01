@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Függvények",
+    "en": "Functions"
+  },
+  "description": {
+    "hu": "Újrahasznosítható kódrészletek: paraméterek, visszatérési érték, hatókör, rekurzió.",
+    "en": "Reusable pieces of code: parameters, return values, scope, recursion."
+  }
+}

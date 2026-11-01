@@ -32,6 +32,10 @@ export const routing = defineRouting({
       hu: "/egyetemek/[university]/targyak/[course]",
       en: "/universities/[university]/courses/[course]",
     },
+    "/universities/[university]/courses/[course]/[topic]/[lesson]": {
+      hu: "/egyetemek/[university]/targyak/[course]/[topic]/[lesson]",
+      en: "/universities/[university]/courses/[course]/[topic]/[lesson]",
+    },
   },
 });
 

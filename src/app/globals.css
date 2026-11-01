@@ -135,3 +135,134 @@
 :root[data-theme="light"] .matrix-rain[data-ready] {
   opacity: 0.16;
 }
+
+/* Kész lecke jelölése (a ProgressScript ugyanezt a kinézetet adja, még a React előtt). */
+.lesson-done.is-done {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+/*
+ * Lecke szövege (Markdown-ból készült HTML, lásd features/lessons/markdown.ts).
+ * A kódrészletek színei témánként a Shiki változóiból jönnek.
+ */
+.lesson-body {
+  display: grid;
+  gap: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 72ch;
+}
+
+.lesson-body h2 {
+  margin-top: 1rem;
+  font-size: 1.375rem;
+}
+
+.lesson-body h3 {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.lesson-body a {
+  color: var(--accent);
+}
+
+.lesson-body a:hover {
+  text-decoration: underline;
+}
+
+.lesson-body strong {
+  color: var(--highlight);
+  font-weight: 600;
+}
+
+.lesson-body ul,
+.lesson-body ol {
+  display: grid;
+  gap: 0.375rem;
+  padding-left: 1.5rem;
+}
+
+.lesson-body ul {
+  list-style: disc;
+}
+
+.lesson-body ol {
+  list-style: decimal;
+}
+
+.lesson-body li::marker {
+  color: var(--accent);
+}
+
+.lesson-body blockquote {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 0.375rem 0.375rem 0;
+  padding: 0.75rem 1rem;
+}
+
+.lesson-body :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  padding: 0.0625rem 0.3rem;
+}
+
+.lesson-body .table-wrap {
+  overflow-x: auto;
+}
+
+.lesson-body table {
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.lesson-body th,
+.lesson-body td {
+  border: 1px solid var(--line);
+  padding: 0.375rem 0.75rem;
+  text-align: left;
+}
+
+.lesson-body th {
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.lesson-body .code-block {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--surface);
+}
+
+.lesson-body .code-label {
+  border-bottom: 1px solid var(--line);
+  padding: 0.375rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.lesson-body pre {
+  overflow-x: auto;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+.lesson-body pre span {
+  color: var(--shiki-dark);
+}
+
+:root[data-theme="light"] .lesson-body pre span {
+  color: var(--shiki-light);
+}

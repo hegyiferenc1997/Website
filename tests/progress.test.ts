@@ -8,13 +8,13 @@ describe("haladás", () => {
       sanitizeProgress({
         openSemesters: { gde: [1, 2, 2, -1, "x", 1.5] },
         lastCourse: { gde: "programozas-alapjai", rossz: 5 },
-        doneTopics: { "gde/prog": ["a", "a", "", 3] },
+        doneLessons: { "gde/prog": ["a", "a", "", 3] },
         idegen: "mező",
       }),
     ).toEqual({
       openSemesters: { gde: [1, 2] },
       lastCourse: { gde: "programozas-alapjai" },
-      doneTopics: { "gde/prog": ["a"] },
+      doneLessons: { "gde/prog": ["a"] },
     });
   });
 
@@ -22,17 +22,23 @@ describe("haladás", () => {
     const local = {
       openSemesters: { gde: [1] },
       lastCourse: { gde: "uj" },
-      doneTopics: { "gde/prog": ["a", "b"] },
+      doneLessons: { "gde/prog": ["a", "b"] },
     };
     const remote = {
       openSemesters: { gde: [3] },
       lastCourse: { gde: "regi", bme: "x" },
-      doneTopics: { "gde/prog": ["b", "c"], "gde/matek": ["d"] },
+      doneLessons: { "gde/prog": ["b", "c"], "gde/matek": ["d"] },
     };
     expect(mergeProgress(local, remote)).toEqual({
       openSemesters: { gde: [3, 1] },
       lastCourse: { gde: "uj", bme: "x" },
-      doneTopics: { "gde/prog": ["b", "c", "a"], "gde/matek": ["d"] },
+      doneLessons: { "gde/prog": ["b", "c", "a"], "gde/matek": ["d"] },
     });
+  });
+});
+
+describe("leckék haladása", () => {
+  it("a régi, témakör alapú jelölések eldobódnak", () => {
+    expect(sanitizeProgress({ doneTopics: { "gde/prog": ["a"] } }).doneLessons).toEqual({});
   });
 });

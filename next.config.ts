@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   // A helyi, beépített Postgres (PGlite) WASM fájlokat tölt be, ezért nem csomagolható be.
   serverExternalPackages: ["@electric-sql/pglite"],
+  // A tananyag fájljai futáskor töltődnek be (lásd src/db/content.ts), ezért kerüljenek a kimenetbe.
+  outputFileTracingIncludes: { "/*": ["./content/**/*"] },
   experimental: {
     // Saját 404 oldal azokra az URL-ekre, amik egyik útvonalra sem illenek.
     globalNotFound: true,

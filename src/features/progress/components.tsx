@@ -6,9 +6,11 @@ import { PROGRESS_STYLE_ID } from "./script";
 import {
   courseKey,
   courseRatio,
+  doneCount,
+  isLessonDone,
   setLastCourse,
+  setLessonDone,
   setOpenSemesters,
-  toggleTopic,
   useProgress,
 } from "./store";
 
@@ -45,7 +47,8 @@ export function ProgressBar({ ratio, label }: { ratio: number; label: string }) 
   );
 }
 
-export type SemesterCourse = { slug: string; credits: number; topics: string[] };
+/** Egy tárgy a félév haladásához; a leckék "témakör/lecke" azonosítók (lásd lessonKey). */
+export type SemesterCourse = { slug: string; credits: number; lessons: string[] };
 
 /**
  * Lenyitható félév: fejlécben a félév neve, kreditösszeg és haladás
@@ -78,7 +81,7 @@ export function SemesterSection({
 
   const totalCredits = courses.reduce((s, c) => s + c.credits, 0);
   const weighted = courses.reduce(
-    (s, c) => s + c.credits * courseRatio(progress, courseKey(university, c.slug), c.topics),
+    (s, c) => s + c.credits * courseRatio(progress, courseKey(university, c.slug), c.lessons),
     0,
   );
   const ratio = totalCredits > 0 ? weighted / totalCredits : 0;
@@ -130,11 +133,11 @@ export function SemesterSection({
 export function CourseCardProgress({
   university,
   course,
-  topics,
+  lessons,
 }: {
   university: string;
   course: string;
-  topics: string[];
+  lessons: string[];
 }) {
   const t = useTranslations("Progress");
   const progress = useProgress();
@@ -143,7 +146,7 @@ export function CourseCardProgress({
   return (
     <span className="grid gap-2 pt-1">
       <ProgressBar
-        ratio={courseRatio(progress, courseKey(university, course), topics)}
+        ratio={courseRatio(progress, courseKey(university, course), lessons)}
         label={t("courseProgress")}
       />
       <span
@@ -163,11 +166,11 @@ export function CourseCardProgress({
 export function CourseProgressHeader({
   university,
   course,
-  topics,
+  lessons,
 }: {
   university: string;
   course: string;
-  topics: string[];
+  lessons: string[];
 }) {
   const t = useTranslations("Progress");
   const progress = useProgress();
@@ -175,42 +178,96 @@ export function CourseProgressHeader({
   return (
     <div className="max-w-md">
       <ProgressBar
-        ratio={courseRatio(progress, courseKey(university, course), topics)}
+        ratio={courseRatio(progress, courseKey(university, course), lessons)}
         label={t("courseProgress")}
       />
     </div>
   );
 }
 
-/** Témakör elvégzettnek jelölése. */
-export function TopicDoneToggle({
-  university,
-  course,
-  topic,
-}: {
-  university: string;
-  course: string;
-  topic: string;
-}) {
-  const t = useTranslations("Progress");
+/** A ProgressScript ezzel az attribútummal jelöli meg (még a React előtt) az elvégzett leckéket. */
+const doneAttr = (university: string, course: string, lesson: string) =>
+  `${courseKey(university, course)}:${lesson}`;
+
+type LessonRef = { university: string; course: string; lesson: string };
+
+function useLessonDone({ university, course, lesson }: LessonRef) {
   const progress = useProgress();
+  useHandOverFromScript(progress !== null);
   const key = courseKey(university, course);
-  const done = progress?.doneTopics[key]?.includes(topic) ?? false;
+  const done = isLessonDone(progress, key, lesson);
+  return [done, () => setLessonDone(key, lesson, !done)] as const;
+}
+
+/** Kis jelölőnégyzet a leckék listájában. */
+export function LessonDoneToggle(props: LessonRef & { title: string }) {
+  const t = useTranslations("Progress");
+  const [done, toggle] = useLessonDone(props);
   return (
     <button
       type="button"
       role="checkbox"
       aria-checked={done}
-      aria-label={t("markDone")}
-      onClick={() => toggleTopic(key, topic)}
+      aria-label={t("markLessonDone", { title: props.title })}
+      onClick={toggle}
+      data-lesson-done={doneAttr(props.university, props.course, props.lesson)}
       className={
-        "inline-flex size-5 shrink-0 items-center justify-center rounded border font-mono text-xs transition-colors " +
-        (done
-          ? "border-accent bg-accent text-accent-fg"
-          : "border-line text-transparent hover:border-accent")
+        "lesson-done inline-flex size-5 shrink-0 items-center justify-center rounded border border-line font-mono text-xs text-transparent transition-colors hover:border-accent" +
+        (done ? " is-done" : "")
       }
     >
       ✓
     </button>
+  );
+}
+
+/** Nagy „Kész” gomb a lecke alján. */
+export function LessonDoneButton(props: LessonRef) {
+  const t = useTranslations("Progress");
+  const [done, toggle] = useLessonDone(props);
+  return (
+    <button
+      type="button"
+      aria-pressed={done}
+      onClick={toggle}
+      data-lesson-done={doneAttr(props.university, props.course, props.lesson)}
+      className={
+        "lesson-done inline-flex items-center gap-2 rounded-md border border-line px-4 py-2 font-mono text-sm text-fg transition-colors hover:border-accent" +
+        (done ? " is-done" : "")
+      }
+    >
+      <span data-when="todo" className={done ? "hidden" : ""}>
+        {t("markDoneButton")}
+      </span>
+      <span data-when="done" className={done ? "" : "hidden"}>
+        ✓ {t("doneButton")}
+      </span>
+    </button>
+  );
+}
+
+/** Egy témakör elvégzett leckéinek száma, pl. „2/4”. */
+export function TopicProgress({
+  university,
+  course,
+  lessons,
+}: {
+  university: string;
+  course: string;
+  lessons: string[];
+}) {
+  const t = useTranslations("Progress");
+  const progress = useProgress();
+  const done = doneCount(progress, courseKey(university, course), lessons);
+  return (
+    <span
+      className={
+        "font-mono text-xs tabular-nums " +
+        (done === lessons.length && lessons.length > 0 ? "text-accent" : "text-muted")
+      }
+      aria-label={t("topicProgress", { done, total: lessons.length })}
+    >
+      {done}/{lessons.length}
+    </span>
   );
 }

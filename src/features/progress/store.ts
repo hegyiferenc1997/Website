@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-// A felhasználó haladása: melyik félév van lenyitva, melyik tárgynál tart, és melyik témakört végezte el.
+// A felhasználó haladása: melyik félév van lenyitva, melyik tárgynál tart, és melyik leckét végezte el.
 // Mindig a böngészőben is tároljuk (localStorage), így az oldal villanás nélkül, azonnal mutatja.
 // Bejelentkezve ez csak gyorsítótár: minden változás a fiókba is mentődik (lásd ProgressSync).
 
@@ -76,19 +76,31 @@ export function setLastCourse(university: string, course: string) {
   write((p) => ({ ...p, lastCourse: { ...p.lastCourse, [university]: course } }));
 }
 
-export function toggleTopic(key: string, topic: string) {
+/** Lecke késznek jelölése (vagy a jelölés visszavonása). A lecke azonosítója: lessonKey(témakör, lecke). */
+export function setLessonDone(key: string, lesson: string, done: boolean) {
   write((p) => {
-    const done = p.doneTopics[key] ?? [];
-    const next = done.includes(topic) ? done.filter((t) => t !== topic) : [...done, topic];
-    return { ...p, doneTopics: { ...p.doneTopics, [key]: next } };
+    const list = p.doneLessons[key] ?? [];
+    if (list.includes(lesson) === done) return p;
+    const next = done ? [...list, lesson] : list.filter((l) => l !== lesson);
+    return { ...p, doneLessons: { ...p.doneLessons, [key]: next } };
   });
 }
 
-/** Egy tárgy haladása 0 és 1 között: elvégzett / összes témakör (csak a ma is létező témakörök számítanak). */
-export function courseRatio(p: Progress | null, key: string, topics: string[]): number {
-  if (!p || topics.length === 0) return 0;
-  const done = new Set(p.doneTopics[key] ?? []);
-  return topics.filter((t) => done.has(t)).length / topics.length;
+export function isLessonDone(p: Progress | null, key: string, lesson: string): boolean {
+  return p?.doneLessons[key]?.includes(lesson) ?? false;
+}
+
+/** Elvégzett leckék száma a megadottak közül (csak a ma is létező leckék számítanak). */
+export function doneCount(p: Progress | null, key: string, lessons: string[]): number {
+  if (!p) return 0;
+  const done = new Set(p.doneLessons[key] ?? []);
+  return lessons.filter((l) => done.has(l)).length;
+}
+
+/** Egy tárgy haladása 0 és 1 között: elvégzett / összes lecke. */
+export function courseRatio(p: Progress | null, key: string, lessons: string[]): number {
+  if (lessons.length === 0) return 0;
+  return doneCount(p, key, lessons) / lessons.length;
 }
 
 // ---------------------------------------------------------------------------

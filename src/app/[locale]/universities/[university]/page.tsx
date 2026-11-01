@@ -7,6 +7,7 @@ import { getUniversities, getUniversity } from "@/features/courses/queries";
 import { EmptyState, LinkCardBody, PageHeader, SectionTitle } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
 import { CourseCardProgress, SemesterSection } from "@/features/progress/components";
+import { courseLessons } from "@/features/courses/lessons";
 
 type Props = PageProps<"/[locale]/universities/[university]">;
 
@@ -100,7 +101,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
               <CourseCardProgress
                 university={university.slug}
                 course={c.slug}
-                topics={c.topics.map((x) => x.slug)}
+                lessons={courseLessons(c)}
               />
             </LinkCardBody>
           </Link>
@@ -151,7 +152,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
                   (c) => ({
                     slug: c.slug,
                     credits: c.credits ?? 0,
-                    topics: c.topics.map((x) => x.slug),
+                    lessons: courseLessons(c),
                   }),
                 )}
               >

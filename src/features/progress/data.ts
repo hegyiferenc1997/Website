@@ -5,11 +5,14 @@ export type Progress = {
   openSemesters: Record<string, number[]>;
   /** Az utoljára megnyitott tárgy egyetemenként (a tárgy slugja). */
   lastCourse: Record<string, string>;
-  /** Elvégzett témakörök tárgyanként ("egyetem/tárgy" kulcs → témakör slugok). */
-  doneTopics: Record<string, string[]>;
+  /** Elvégzett leckék tárgyanként ("egyetem/tárgy" kulcs → "témakör/lecke" azonosítók). */
+  doneLessons: Record<string, string[]>;
 };
 
-export const emptyProgress: Progress = { openSemesters: {}, lastCourse: {}, doneTopics: {} };
+/** Egy lecke azonosítója a tárgyon belül, pl. "vezerlesi-szerkezetek/for-ciklus". */
+export const lessonKey = (topic: string, lesson: string) => `${topic}/${lesson}`;
+
+export const emptyProgress: Progress = { openSemesters: {}, lastCourse: {}, doneLessons: {} };
 
 /** A tárolt haladás felső mérete (bájt), hogy egy fiók ne tölthesse tele az adatbázist. */
 export const MAX_PROGRESS_BYTES = 64 * 1024;
@@ -46,7 +49,7 @@ export function sanitizeProgress(value: unknown): Progress {
         : undefined,
     ),
     lastCourse: cleanRecord(v.lastCourse, (s) => (isShortString(s) ? s : undefined)),
-    doneTopics: cleanRecord(v.doneTopics, (list) =>
+    doneLessons: cleanRecord(v.doneLessons, (list) =>
       Array.isArray(list) ? uniqueList(list.filter(isShortString)) : undefined,
     ),
   };
@@ -54,7 +57,7 @@ export function sanitizeProgress(value: unknown): Progress {
 
 /**
  * Vendégként gyűjtött haladás összefésülése a fiókban tárolttal bejelentkezéskor.
- * Az elvégzett témakörök és a lenyitott félévek uniója marad meg; az „itt tartasz” tárgynál
+ * Az elvégzett leckék és a lenyitott félévek uniója marad meg; az „itt tartasz” tárgynál
  * a böngészőben lévő (frissebb) érték nyer.
  */
 export function mergeProgress(local: Progress, remote: Progress): Progress {
@@ -66,6 +69,6 @@ export function mergeProgress(local: Progress, remote: Progress): Progress {
   return {
     openSemesters: union(local.openSemesters, remote.openSemesters),
     lastCourse: { ...remote.lastCourse, ...local.lastCourse },
-    doneTopics: union(local.doneTopics, remote.doneTopics),
+    doneLessons: union(local.doneLessons, remote.doneLessons),
   };
 }
