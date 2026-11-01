@@ -6,6 +6,7 @@ import { localize } from "@/features/courses/localize";
 import { getCourse, getCourseSlugs } from "@/features/courses/queries";
 import { Card, Chip, EmptyState, SectionTitle } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
+import { CourseProgressHeader, TopicDoneToggle } from "@/features/progress/components";
 
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]">;
 
@@ -72,6 +73,11 @@ async function CourseContent({ params }: Pick<Props, "params">) {
         </nav>
         <h1 className="text-3xl leading-tight sm:text-4xl">{localize(course.name, locale)}</h1>
         {description && <p className="max-w-2xl text-lg text-muted">{description}</p>}
+        <CourseProgressHeader
+          university={course.university.slug}
+          course={course.slug}
+          topics={course.topics.map((x) => x.slug)}
+        />
 
         <div className="flex flex-wrap gap-2">
           {course.code && <Chip label={t("code")}>{course.code}</Chip>}
@@ -113,7 +119,12 @@ async function CourseContent({ params }: Pick<Props, "params">) {
             <Card className="p-0">
               <ol className="divide-y divide-line">
                 {course.topics.map((topic, i) => (
-                  <li key={topic.id} className="flex items-baseline gap-4 px-5 py-3.5">
+                  <li key={topic.id} className="flex items-center gap-4 px-5 py-3.5">
+                    <TopicDoneToggle
+                      university={course.university.slug}
+                      course={course.slug}
+                      topic={topic.slug}
+                    />
                     <span className="font-mono text-xs text-muted tabular-nums">
                       {String(i + 1).padStart(2, "0")}
                     </span>
