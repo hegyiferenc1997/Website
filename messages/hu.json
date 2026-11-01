@@ -21,8 +21,8 @@
     "footer": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is.",
     "language": {
       "label": "Nyelv",
-      "current": "Magyar",
-      "soon": "Az angol változat hamarosan érkezik"
+      "hu": "Magyar",
+      "en": "English"
     },
     "login": {
       "open": "Bejelentkezés",

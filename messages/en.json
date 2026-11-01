@@ -1,0 +1,123 @@
+{
+  "Common": {
+    "loading": "Loading…"
+  },
+  "Metadata": {
+    "title": "Engineering Maxxing",
+    "description": "Where you can effectively gain and practise your knowledge before, during and after your university studies."
+  },
+  "Layout": {
+    "siteName": "Engineering Maxxing",
+    "nav": {
+      "label": "Main menu",
+      "home": "Home",
+      "universities": "Universities",
+      "courses": "Courses"
+    },
+    "theme": {
+      "toLight": "Switch to light theme",
+      "toDark": "Switch to dark theme"
+    },
+    "footer": "Where you can effectively gain and practise your knowledge before, during and after your university studies.",
+    "language": {
+      "label": "Language",
+      "hu": "Magyar",
+      "en": "English"
+    },
+    "login": {
+      "open": "Log in",
+      "close": "Close",
+      "title": "Log in",
+      "username": "Username",
+      "password": "Password",
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Log in",
+      "or": "or",
+      "google": "Log in / sign up with Google",
+      "apple": "Log in / sign up with Apple",
+      "soon": "Logging in doesn't work yet, it's coming soon.",
+      "registerPrefix": "or",
+      "register": "Sign up here"
+    }
+  },
+  "HomePage": {
+    "eyebrow": "~/computer-engineering",
+    "title": "Engineering Maxxing",
+    "intro": "Computer engineering courses, notes and resources in one place, organised by university and semester.",
+    "browseUniversities": "Browse universities",
+    "tagline": "Where you can effectively gain and practise your knowledge before, during and after your university studies."
+  },
+  "UniversitiesPage": {
+    "title": "Universities",
+    "intro": "Choose your university and see its courses by semester.",
+    "empty": "There are no universities in the database yet.",
+    "courseCount": "{count, plural, =0 {no courses yet} one {# course} other {# courses}}"
+  },
+  "UniversityPage": {
+    "eyebrow": "Universities",
+    "coursesTitle": "courses",
+    "noCourses": "This university has no courses yet.",
+    "website": "Website",
+    "semester": "Semester {semester}",
+    "noSemester": "No semester given",
+    "credits": "{credits, plural, one {# credit} other {# credits}}",
+    "specialization": "{name} specialisation",
+    "comingSoon": "coming soon"
+  },
+  "CoursePage": {
+    "code": "Course code",
+    "credits": "Credits",
+    "language": "Language of instruction",
+    "semester": "Semester {semester}",
+    "topics": "topics",
+    "noTopics": "Course material is coming soon.",
+    "resources": "resources",
+    "level": {
+      "bsc": "BSc",
+      "msc": "MSc",
+      "phd": "PhD",
+      "other": "other"
+    },
+    "noResources": "There are no resources for this course yet.",
+    "breadcrumb": "Breadcrumb",
+    "elective": "Free elective",
+    "specializationLabel": "Specialisation",
+    "type": "Type"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "backHome": "Back to the home page",
+    "code": "404",
+    "text": "You may have mistyped the address, or the page no longer exists."
+  },
+  "Progress": {
+    "courseCount": "{count, plural, one {# course} other {# courses}}",
+    "credits": "{credits, plural, one {# credit} other {# credits}}",
+    "semesterProgress": "{title} progress",
+    "courseProgress": "Course progress",
+    "youAreHere": "you are here",
+    "markDone": "Mark as done"
+  },
+  "Search": {
+    "open": "Search",
+    "placeholder": "University or course name…",
+    "hint": "Start typing the name of a university or course. Courses appear at every university that offers them.",
+    "noResults": "No results for “{query}”.",
+    "universities": "universities",
+    "courses": "courses",
+    "semester": "Semester {semester}",
+    "credits": "{credits, plural, one {# credit} other {# credits}}",
+    "comingSoon": "coming soon"
+  },
+  "CoursesPage": {
+    "title": "Courses",
+    "intro": "All courses in one place, in alphabetical order. Each card shows the university, the semester and the credits, so if a course is offered at several universities, you can find each one separately.",
+    "activeTitle": "with course material",
+    "comingTitle": "coming soon",
+    "empty": "There are no courses in the database yet.",
+    "semester": "Semester {semester}",
+    "credits": "{credits, plural, one {# credit} other {# credits}}",
+    "count": "{count, plural, one {# course} other {# courses}}"
+  }
+}

@@ -10,29 +10,34 @@ import * as gde from "./data/gde-mernokinformatikus";
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
 export async function seed(db: Database) {
+  const universityName = { hu: "Gábor Dénes Egyetem", en: "Gábor Dénes University" };
   const [university] = await db
     .insert(universities)
     .values({
       slug: "gabor-denes-egyetem",
-      name: { hu: "Gábor Dénes Egyetem", en: "Gábor Dénes University" },
+      name: universityName,
       country: "HU",
       city: "Budapest",
       website: "https://gde.hu",
     })
-    .onConflictDoUpdate({ target: universities.slug, set: { updatedAt: sql`now()` } })
+    .onConflictDoUpdate({
+      target: universities.slug,
+      set: { name: universityName, updatedAt: sql`now()` },
+    })
     .returning();
 
+  const programName = { hu: "Mérnökinformatikus", en: "Computer Science Engineering" };
   const [program] = await db
     .insert(programs)
     .values({
       universityId: university.id,
       slug: "mernokinformatikus-bsc",
-      name: { hu: "Mérnökinformatikus", en: "Computer Engineering" },
+      name: programName,
       level: "bsc",
     })
     .onConflictDoUpdate({
       target: [programs.universityId, programs.slug],
-      set: { updatedAt: sql`now()` },
+      set: { name: programName, updatedAt: sql`now()` },
     })
     .returning();
 
@@ -40,10 +45,10 @@ export async function seed(db: Database) {
   for (const [position, s] of gde.specializations.entries()) {
     const [row] = await db
       .insert(specializations)
-      .values({ programId: program.id, slug: s.slug, name: { hu: s.name }, position })
+      .values({ programId: program.id, slug: s.slug, name: { hu: s.name, en: s.en }, position })
       .onConflictDoUpdate({
         target: [specializations.programId, specializations.slug],
-        set: { name: { hu: s.name }, position, updatedAt: sql`now()` },
+        set: { name: { hu: s.name, en: s.en }, position, updatedAt: sql`now()` },
       })
       .returning();
     specializationIds.set(s.slug, row.id);
@@ -52,7 +57,7 @@ export async function seed(db: Database) {
   for (const [index, list] of gde.semesters.entries()) {
     for (const c of list) {
       const values = {
-        name: { hu: c.name },
+        name: { hu: c.name, en: c.en },
         credits: c.credits,
         language: "hu",
         isActive: c.active ?? false,
