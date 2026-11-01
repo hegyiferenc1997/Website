@@ -15,6 +15,9 @@ export const routing = defineRouting({
     "/universities/[university]": {
       hu: "/egyetemek/[university]",
     },
+    "/courses": {
+      hu: "/targyak",
+    },
     "/universities/[university]/courses/[course]": {
       hu: "/egyetemek/[university]/targyak/[course]",
     },
