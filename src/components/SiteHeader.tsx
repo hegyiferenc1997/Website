@@ -2,7 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { getSearchItems } from "@/features/search/items";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { LoginMenu } from "./LoginMenu";
+import { AccountMenu } from "@/features/auth/AccountMenu";
 import { NavLink } from "./NavLink";
 import { SearchMenu } from "./SearchMenu";
 import { ThemeToggle } from "./ThemeToggle";
@@ -50,7 +50,7 @@ export async function SiteHeader() {
         <div className="ml-auto flex items-center gap-2 sm:ml-0">
           <ThemeToggle />
           <LanguageSwitcher />
-          <LoginMenu />
+          <AccountMenu />
         </div>
       </div>
     </header>

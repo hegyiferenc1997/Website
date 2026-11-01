@@ -17,7 +17,12 @@ pnpm dev
 Utána nyisd meg: http://localhost:3000
 
 Adatbázist nem kell telepíteni: ha nincs megadva `DATABASE_URL`, a szerver egy beépített, memóriában futó
-Postgrest indít, és betölti a kezdő adatot (Gábor Dénes Egyetem, Mérnökinformatikus BSc: 7 félév, minden tárgy kredittel; a mintatanterv a `src/db/data/` mappában van).
+Postgrest indít (a regisztrált fiókokat a `pnpm dev` a `.data/` mappába menti, így azok megmaradnak), és betölti a kezdő adatot (Gábor Dénes Egyetem, Mérnökinformatikus BSc: 7 félév, minden tárgy kredittel; a mintatanterv a `src/db/data/` mappában van).
+
+## Bejelentkezés
+
+E-mail + jelszóval rögtön működik. A Google és az Apple belépés beállítása lépésről lépésre:
+[docs/bejelentkezes.md](docs/bejelentkezes.md). A beállítások mintája: [.env.example](.env.example).
 
 ## Technológia
 
@@ -26,6 +31,7 @@ Postgrest indít, és betölti a kezdő adatot (Gábor Dénes Egyetem, Mérnöki
 | Keretrendszer     | Next.js (App Router, Cache Components)     |
 | Nyelv             | TypeScript                                 |
 | Többnyelvűség     | next-intl                                  |
+| Bejelentkezés     | Better Auth                                |
 | Adatbázis         | PostgreSQL + Drizzle ORM (helyben: PGlite) |
 | Stílus            | Tailwind CSS (téma: `src/app/globals.css`) |
 | Minőségbiztosítás | ESLint, Prettier, Vitest, GitHub Actions   |
@@ -37,6 +43,8 @@ src/
   app/[locale]/           oldalak (a [locale] a nyelv, magyarnál nem látszik az URL-ben)
   components/             saját UI komponensek
   features/courses/       egyetemek és tárgyak lekérdezései
+  features/auth/          bejelentkezés, fiókok
+  features/progress/      haladás (böngészőben + fiókban)
   db/                     adatbázis séma, kapcsolat, kezdő adat
   i18n/                   nyelvek és fordított URL-ek
   proxy.ts                nyelvfelismerés, URL-átirányítás
