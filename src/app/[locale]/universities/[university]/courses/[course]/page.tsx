@@ -6,7 +6,13 @@ import { localize } from "@/features/courses/localize";
 import { getCourse, getCourseSlugs } from "@/features/courses/queries";
 import { Card, Chip, EmptyState, SectionTitle } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
-import { CourseProgressHeader, TopicDoneToggle } from "@/features/progress/components";
+import {
+  CourseProgressHeader,
+  LessonDoneToggle,
+  TopicProgress,
+} from "@/features/progress/components";
+import { courseLessons } from "@/features/courses/lessons";
+import { lessonKey } from "@/features/progress/data";
 
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]">;
 
@@ -46,6 +52,11 @@ async function CourseContent({ params }: Pick<Props, "params">) {
   if (!course) notFound();
 
   const description = localize(course.description, locale);
+  const first = course.topics.find((x) => x.lessons.length > 0);
+  const lessonHref = (topic: string, lesson: string) => ({
+    pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]" as const,
+    params: { university: course.university.slug, course: course.slug, topic, lesson },
+  });
 
   return (
     <div className="grid gap-10">
@@ -76,8 +87,16 @@ async function CourseContent({ params }: Pick<Props, "params">) {
         <CourseProgressHeader
           university={course.university.slug}
           course={course.slug}
-          topics={course.topics.map((x) => x.slug)}
+          lessons={courseLessons(course)}
         />
+        {first && (
+          <Link
+            href={lessonHref(first.slug, first.lessons[0].slug)}
+            className="w-fit rounded-md bg-accent px-4 py-2 font-mono text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
+          >
+            {t("start")} →
+          </Link>
+        )}
 
         <div className="flex flex-wrap gap-2">
           {course.code && <Chip label={t("code")}>{course.code}</Chip>}
@@ -116,23 +135,61 @@ async function CourseContent({ params }: Pick<Props, "params">) {
           {course.topics.length === 0 ? (
             <EmptyState>{t("noTopics")}</EmptyState>
           ) : (
-            <Card className="p-0">
-              <ol className="divide-y divide-line">
-                {course.topics.map((topic, i) => (
-                  <li key={topic.id} className="flex items-center gap-4 px-5 py-3.5">
-                    <TopicDoneToggle
-                      university={course.university.slug}
-                      course={course.slug}
-                      topic={topic.slug}
-                    />
-                    <span className="font-mono text-xs text-muted tabular-nums">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{localize(topic.title, locale)}</span>
-                  </li>
-                ))}
-              </ol>
-            </Card>
+            <ol className="grid gap-4">
+              {course.topics.map((topic, i) => (
+                <li key={topic.id}>
+                  <Card padded={false}>
+                    <div className="flex items-start gap-4 border-b border-line px-5 py-4">
+                      <span className="pt-0.5 font-mono text-sm text-accent tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div className="grid flex-1 gap-1">
+                        <h3 className="text-base">{localize(topic.title, locale)}</h3>
+                        {topic.description && (
+                          <p className="text-sm text-muted">
+                            {localize(topic.description, locale)}
+                          </p>
+                        )}
+                      </div>
+                      <TopicProgress
+                        university={course.university.slug}
+                        course={course.slug}
+                        lessons={topic.lessons.map((l) => lessonKey(topic.slug, l.slug))}
+                      />
+                    </div>
+                    <ol className="divide-y divide-line">
+                      {topic.lessons.map((lesson, j) => {
+                        const title = localize(lesson.title, locale);
+                        return (
+                          <li key={lesson.id} className="flex items-center gap-4 px-5 py-3">
+                            <LessonDoneToggle
+                              university={course.university.slug}
+                              course={course.slug}
+                              lesson={lessonKey(topic.slug, lesson.slug)}
+                              title={title}
+                            />
+                            <span className="w-8 font-mono text-xs text-muted tabular-nums">
+                              {i + 1}.{j + 1}
+                            </span>
+                            <Link
+                              href={lessonHref(topic.slug, lesson.slug)}
+                              className="flex-1 hover:text-accent"
+                            >
+                              {title}
+                            </Link>
+                            {lesson.minutes !== null && (
+                              <span className="hidden font-mono text-xs text-muted sm:inline">
+                                {t("minutes", { minutes: lesson.minutes })}
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  </Card>
+                </li>
+              ))}
+            </ol>
           )}
         </section>
 

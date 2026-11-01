@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Vezérlési szerkezetek",
+    "en": "Control Flow"
+  },
+  "description": {
+    "hu": "Elágazások és ciklusok: hogyan dönt és ismétel a program.",
+    "en": "Branches and loops: how a program decides and repeats."
+  }
+}

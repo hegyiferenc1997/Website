@@ -135,7 +135,10 @@ export const programCourses = pgTable(
   (t) => [primaryKey({ columns: [t.programId, t.courseId] })],
 );
 
-/** Egy tárgy témakörei sorrendben; a tananyag MDX fájlban él a content/ mappában. */
+/**
+ * Egy tárgy témakörei sorrendben (pl. „Vezérlési szerkezetek”). Egy témakör leckékből áll.
+ * A tananyag forrása a content/courses/<egyetem>/<tárgy>/ mappa; a seed tölti be az adatbázisba.
+ */
 export const topics = pgTable(
   "topics",
   {
@@ -146,10 +149,37 @@ export const topics = pgTable(
     slug: text("slug").notNull(),
     position: integer("position").notNull(),
     title: localized("title").notNull(),
-    contentPath: text("content_path"),
+    description: localized("description"),
     ...timestamps,
   },
   (t) => [uniqueIndex("topics_course_slug").on(t.courseId, t.slug)],
+);
+
+/**
+ * A lecke fajtája. Egyelőre csak „lesson” (olvasnivaló) van; a gyakorló feladatok és kvízek
+ * ugyanebbe a sorrendbe kerülnek majd, saját megjelenítéssel.
+ */
+export const lessonKind = pgEnum("lesson_kind", ["lesson", "practice", "quiz"]);
+
+/** Egy témakör leckéi sorrendben. A törzs nyelvenként Markdown (kódrészletekkel). */
+export const lessons = pgTable(
+  "lessons",
+  {
+    id: serial("id").primaryKey(),
+    topicId: integer("topic_id")
+      .notNull()
+      .references(() => topics.id, { onDelete: "cascade" }),
+    slug: text("slug").notNull(),
+    position: integer("position").notNull(),
+    kind: lessonKind("kind").notNull().default("lesson"),
+    title: localized("title").notNull(),
+    summary: localized("summary"),
+    body: localized("body").notNull(),
+    /** Becsült feldolgozási idő percben. */
+    minutes: integer("minutes"),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("lessons_topic_slug").on(t.topicId, t.slug)],
 );
 
 /** Forrás egy tárgyhoz, opcionálisan egy témakörhöz kötve. */
@@ -215,7 +245,12 @@ export const programCoursesRelations = relations(programCourses, ({ one }) => ({
 
 export const topicsRelations = relations(topics, ({ one, many }) => ({
   course: one(courses, { fields: [topics.courseId], references: [courses.id] }),
+  lessons: many(lessons),
   resources: many(resources),
+}));
+
+export const lessonsRelations = relations(lessons, ({ one }) => ({
+  topic: one(topics, { fields: [lessons.topicId], references: [topics.id] }),
 }));
 
 export const resourcesRelations = relations(resources, ({ one }) => ({
@@ -291,7 +326,7 @@ export const verifications = pgTable(
   (t) => [index("verifications_identifier").on(t.identifier)],
 );
 
-/** A felhasználó haladása (lenyitott félévek, utolsó tárgy, elvégzett témakörök) egy JSON-ban. */
+/** A felhasználó haladása (lenyitott félévek, utolsó tárgy, elvégzett leckék) egy JSON-ban. */
 export const userProgress = pgTable("user_progress", {
   userId: text("user_id")
     .primaryKey()

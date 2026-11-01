@@ -1,7 +1,7 @@
 import { and, asc, eq } from "drizzle-orm";
 import { cacheTag } from "next/cache";
 import { getDb } from "@/db";
-import { courses, universities } from "@/db/schema";
+import { courses, lessons, universities } from "@/db/schema";
 
 // Az eredmények gyorsítótárazva vannak; adatmódosítás után a "courses" címkével érvényteleníthetők.
 
@@ -38,7 +38,13 @@ export async function getUniversity(slug: string) {
         orderBy: asc(courses.slug),
         with: {
           programCourses: { with: { specialization: true } },
-          topics: { columns: { slug: true }, orderBy: (t, { asc }) => asc(t.position) },
+          topics: {
+            columns: { slug: true },
+            orderBy: (t, { asc }) => asc(t.position),
+            with: {
+              lessons: { columns: { slug: true }, orderBy: (l, { asc }) => asc(l.position) },
+            },
+          },
         },
       },
     },
@@ -59,7 +65,15 @@ export async function getCourse(universitySlug: string, courseSlug: string) {
     where: and(eq(courses.universityId, university.id), eq(courses.slug, courseSlug)),
     with: {
       programCourses: { with: { program: true, specialization: true } },
-      topics: { orderBy: (t, { asc }) => asc(t.position) },
+      topics: {
+        orderBy: (t, { asc }) => asc(t.position),
+        with: {
+          lessons: {
+            columns: { body: false },
+            orderBy: (l, { asc }) => asc(l.position),
+          },
+        },
+      },
       resources: true,
     },
   });
@@ -98,5 +112,62 @@ export async function getCourseCatalog() {
         .map((p) => p.recommendedSemester)
         .filter((s): s is number => s !== null)
         .sort((a, b) => a - b)[0] ?? null,
+  }));
+}
+
+/**
+ * Egy lecke a teljes szövegével, a tárgy vázlatával (oldalsáv) és az előző/következő leckével.
+ * A leckék sorrendje a témakörökön át folytonos: egy témakör utolsó leckéje után a következő első jön.
+ */
+export async function getLesson(
+  universitySlug: string,
+  courseSlug: string,
+  topicSlug: string,
+  lessonSlug: string,
+) {
+  "use cache";
+  cacheTag("courses");
+  const course = await getCourse(universitySlug, courseSlug);
+  if (!course) return null;
+  const flat = course.topics.flatMap((topic) => topic.lessons.map((lesson) => ({ topic, lesson })));
+  const index = flat.findIndex((x) => x.topic.slug === topicSlug && x.lesson.slug === lessonSlug);
+  if (index === -1) return null;
+
+  const db = await getDb();
+  const lesson = await db.query.lessons.findFirst({
+    where: eq(lessons.id, flat[index].lesson.id),
+  });
+  if (!lesson) return null;
+  return {
+    course,
+    topic: flat[index].topic,
+    lesson,
+    number: flat[index].topic.lessons.indexOf(flat[index].lesson) + 1,
+    prev: flat[index - 1] ?? null,
+    next: flat[index + 1] ?? null,
+  };
+}
+
+/** Minden lecke URL-paramétere, a build idején előre generált oldalakhoz. */
+export async function getLessonSlugs() {
+  "use cache";
+  cacheTag("courses");
+  const db = await getDb();
+  const rows = await db.query.lessons.findMany({
+    columns: { slug: true },
+    with: {
+      topic: {
+        columns: { slug: true },
+        with: {
+          course: { columns: { slug: true }, with: { university: { columns: { slug: true } } } },
+        },
+      },
+    },
+  });
+  return rows.map((l) => ({
+    university: l.topic.course.university.slug,
+    course: l.topic.course.slug,
+    topic: l.topic.slug,
+    lesson: l.slug,
   }));
 }

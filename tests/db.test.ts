@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { createLocalDb } from "@/db/local";
-import { courses } from "@/db/schema";
-import { seed } from "@/db/seed";
+import { courses, lessons } from "@/db/schema";
+import { seed, seedContent } from "@/db/seed";
 
 describe("adatbázis", () => {
   it("a migrációk lefutnak, és a kezdő adat betöltődik", async () => {
@@ -45,5 +45,48 @@ describe("adatbázis", () => {
 
     const active = await db.query.courses.findMany({ where: eq(courses.isActive, true) });
     expect(active.map((c) => c.slug)).toEqual(["programozas-alapjai"]);
+  });
+});
+
+describe("tananyag", () => {
+  it("a Programozási alapok témakörei és leckéi betöltődnek, mindkét nyelven", async () => {
+    const db = await createLocalDb();
+    const course = await db.query.courses.findFirst({
+      where: eq(courses.slug, "programozas-alapjai"),
+      with: {
+        topics: {
+          orderBy: (t, { asc }) => asc(t.position),
+          with: { lessons: { orderBy: (l, { asc }) => asc(l.position) } },
+        },
+      },
+    });
+    const topics = course!.topics;
+    expect(topics.length).toBeGreaterThan(3);
+    expect(topics[0].slug).toBe("bevezetes");
+    for (const topic of topics) {
+      expect(topic.title.en, topic.slug).toBeTruthy();
+      expect(topic.lessons.length, topic.slug).toBeGreaterThan(0);
+      for (const lesson of topic.lessons) {
+        expect(lesson.title.en, lesson.slug).toBeTruthy();
+        expect(lesson.body.hu.length, lesson.slug).toBeGreaterThan(50);
+        expect(lesson.body.en, lesson.slug).toBeTruthy();
+      }
+    }
+  });
+
+  it("a mappából törölt lecke az adatbázisból is eltűnik", async () => {
+    const db = await createLocalDb();
+    const [topic] = await db.query.topics.findMany({ limit: 1 });
+    await db.insert(lessons).values({
+      topicId: topic.id,
+      slug: "regi-lecke",
+      position: 99,
+      title: { hu: "Régi" },
+      body: { hu: "…" },
+    });
+    await seedContent(db);
+    expect(await db.query.lessons.findFirst({ where: eq(lessons.slug, "regi-lecke") })).toBe(
+      undefined,
+    );
   });
 });

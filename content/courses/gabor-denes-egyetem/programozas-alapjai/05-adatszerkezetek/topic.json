@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatszerkezetek",
+    "en": "Data Structures"
+  },
+  "description": {
+    "hu": "Listák, tuple-ök, halmazok, szótárak és szövegek kezelése.",
+    "en": "Lists, tuples, sets, dictionaries and working with strings."
+  }
+}

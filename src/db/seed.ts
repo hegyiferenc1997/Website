@@ -1,12 +1,22 @@
-import { sql } from "drizzle-orm";
+import { and, eq, notInArray, sql } from "drizzle-orm";
 import type { Database } from "./index";
-import { courses, programCourses, programs, specializations, universities } from "./schema";
+import { loadContent } from "./content";
+import {
+  courses,
+  lessons,
+  programCourses,
+  programs,
+  specializations,
+  topics,
+  universities,
+} from "./schema";
 import * as gde from "./data/gde-mernokinformatikus";
 
 /**
  * Kezdő adat: a Gábor Dénes Egyetem Mérnökinformatikus BSc szakja mind a 7 félévvel,
  * a tárgyakkal, kreditekkel és az 5–6. félév két specializációjával.
  * Egyelőre csak a Programozási alapok tárgy aktív, a többi helykitöltő.
+ * A témakörök és leckék a content/courses mappából jönnek (lásd content.ts).
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
 export async function seed(db: Database) {
@@ -84,5 +94,76 @@ export async function seed(db: Database) {
           set: link,
         });
     }
+  }
+
+  await seedContent(db);
+}
+
+/**
+ * A tananyag (témakörök, leckék) betöltése a mappából. A mappában már nem szereplő
+ * témakörök és leckék törlődnek, így egy átnevezés nem hagy maga után árva sort.
+ */
+export async function seedContent(db: Database) {
+  for (const content of loadContent()) {
+    const university = await db.query.universities.findFirst({
+      where: eq(universities.slug, content.university),
+    });
+    const course =
+      university &&
+      (await db.query.courses.findFirst({
+        where: and(eq(courses.universityId, university.id), eq(courses.slug, content.course)),
+      }));
+    if (!course) {
+      throw new Error(`Ismeretlen tárgy a tananyagban: ${content.university}/${content.course}`);
+    }
+
+    const keptTopics: number[] = [];
+    for (const t of content.topics) {
+      const values = { position: t.position, title: t.title, description: t.description };
+      const [topic] = await db
+        .insert(topics)
+        .values({ courseId: course.id, slug: t.slug, ...values })
+        .onConflictDoUpdate({
+          target: [topics.courseId, topics.slug],
+          set: { ...values, updatedAt: sql`now()` },
+        })
+        .returning();
+      keptTopics.push(topic.id);
+
+      const keptLessons: number[] = [];
+      for (const l of t.lessons) {
+        const lessonValues = {
+          position: l.position,
+          kind: l.kind,
+          title: l.title,
+          summary: l.summary,
+          body: l.body,
+          minutes: l.minutes,
+        };
+        const [lesson] = await db
+          .insert(lessons)
+          .values({ topicId: topic.id, slug: l.slug, ...lessonValues })
+          .onConflictDoUpdate({
+            target: [lessons.topicId, lessons.slug],
+            set: { ...lessonValues, updatedAt: sql`now()` },
+          })
+          .returning({ id: lessons.id });
+        keptLessons.push(lesson.id);
+      }
+      await db
+        .delete(lessons)
+        .where(
+          keptLessons.length
+            ? and(eq(lessons.topicId, topic.id), notInArray(lessons.id, keptLessons))
+            : eq(lessons.topicId, topic.id),
+        );
+    }
+    await db
+      .delete(topics)
+      .where(
+        keptTopics.length
+          ? and(eq(topics.courseId, course.id), notInArray(topics.id, keptTopics))
+          : eq(topics.courseId, course.id),
+      );
   }
 }

@@ -31,10 +31,20 @@ export function SectionTitle({ children }: { children: ReactNode }) {
   );
 }
 
-/** Keretes doboz tartalomnak. */
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+/** Keretes doboz tartalomnak. padded={false}: belső margó nélkül (pl. elválasztott sorokból álló listához). */
+export function Card({
+  children,
+  className = "",
+  padded = true,
+}: {
+  children: ReactNode;
+  className?: string;
+  padded?: boolean;
+}) {
   return (
-    <div className={"rounded-lg border border-line bg-surface p-5 " + className}>{children}</div>
+    <div className={`rounded-lg border border-line bg-surface ${padded ? "p-5" : ""} ${className}`}>
+      {children}
+    </div>
   );
 }
 

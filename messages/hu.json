@@ -127,7 +127,9 @@
     "breadcrumb": "Útvonal",
     "elective": "Szabadon választható",
     "specializationLabel": "Specializáció",
-    "type": "Jelleg"
+    "type": "Jelleg",
+    "minutes": "{minutes} perc",
+    "start": "Tananyag indítása"
   },
   "NotFound": {
     "title": "Az oldal nem található",
@@ -141,7 +143,10 @@
     "semesterProgress": "{title} haladás",
     "courseProgress": "Haladás a tárgyban",
     "youAreHere": "itt tartasz",
-    "markDone": "Elvégeztem"
+    "markLessonDone": "„{title}” elvégezve",
+    "markDoneButton": "Megjelölöm késznek",
+    "doneButton": "Kész",
+    "topicProgress": "{done} / {total} lecke kész"
   },
   "Search": {
     "open": "Keresés",
@@ -174,5 +179,16 @@
     "success": "Kész! Az új jelszavaddal már be tudsz jelentkezni a jobb felső sarokban.",
     "invalidToken": "Ez a link érvénytelen vagy lejárt. Kérj újat az „Elfelejtett jelszó?” gombbal.",
     "home": "Vissza a főoldalra"
+  },
+  "LessonPage": {
+    "breadcrumb": "Útvonal",
+    "outline": "tartalom",
+    "prev": "Előző",
+    "next": "Következő",
+    "position": "{topic}. témakör · {lesson}. lecke",
+    "minutes": "kb. {minutes} perc",
+    "finished": "Elérted a tárgy utolsó leckéjét.",
+    "backToCourse": "Vissza a tárgyhoz",
+    "lessonNav": "Leckék közötti lapozás"
   }
 }
