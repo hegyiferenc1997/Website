@@ -3,7 +3,7 @@
 import type { ComponentProps } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 
-type Props = ComponentProps<typeof Link> & { href: "/" | "/universities" };
+type Props = ComponentProps<typeof Link> & { href: "/" | "/universities" | "/courses" };
 
 // Menüpont, ami kiemelve látszik, ha azon az oldalon (vagy alatta) vagyunk.
 export function NavLink({ href, children, ...rest }: Props) {

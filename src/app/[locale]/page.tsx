@@ -1,82 +1,24 @@
-import { getLocale, getTranslations } from "next-intl/server";
-import { LinkCardBody, SectionTitle } from "@/components/ui";
-import { localize } from "@/features/courses/localize";
-import { getCourses, getUniversities } from "@/features/courses/queries";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
-// Főoldal: bemutatkozás, tantárgyak, egyetemek.
+// Főoldal: bemutatkozás és az egyetemek böngészése gomb. A tárgyak a Tárgyak menüpontban vannak.
 export default async function HomePage() {
-  const [t, tUni, locale, courses, universities] = await Promise.all([
-    getTranslations("HomePage"),
-    getTranslations("UniversitiesPage"),
-    getLocale(),
-    getCourses(),
-    getUniversities(),
-  ]);
+  const t = await getTranslations("HomePage");
 
   return (
-    <div className="grid gap-14">
-      <section className="grid gap-5 py-4 sm:py-8">
-        <p className="font-mono text-sm text-accent">{t("eyebrow")}</p>
-        <h1 className="text-4xl leading-tight sm:text-6xl sm:leading-[1.05]">{t("title")}</h1>
-        <p className="max-w-3xl text-xl leading-snug text-fg sm:text-2xl">{t("tagline")}</p>
-        <p className="max-w-2xl text-lg text-muted">{t("intro")}</p>
-        <div>
-          <Link
-            href="/universities"
-            className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 font-semibold text-accent-fg transition-opacity hover:opacity-90"
-          >
-            {t("browseUniversities")} <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </section>
-
-      <section className="grid gap-4">
-        <SectionTitle>{t("coursesTitle")}</SectionTitle>
-        {courses.length === 0 ? (
-          <p className="text-muted">{t("noCourses")}</p>
-        ) : (
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((c) => (
-              <li key={c.id}>
-                <Link
-                  className="group block h-full"
-                  href={{
-                    pathname: "/universities/[university]/courses/[course]",
-                    params: { university: c.university.slug, course: c.slug },
-                  }}
-                >
-                  <LinkCardBody
-                    title={localize(c.name, locale)}
-                    meta={localize(c.university.name, locale)}
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section className="grid gap-4">
-        <SectionTitle>{t("universitiesTitle")}</SectionTitle>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {universities.map((u) => (
-            <li key={u.id}>
-              <Link
-                className="group block h-full"
-                href={{ pathname: "/universities/[university]", params: { university: u.slug } }}
-              >
-                <LinkCardBody
-                  title={localize(u.name, locale)}
-                  meta={[u.city, tUni("courseCount", { count: u.courses.length })]
-                    .filter(Boolean)
-                    .join(" · ")}
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+    <section className="grid gap-5 py-4 sm:py-8">
+      <p className="font-mono text-sm text-accent">{t("eyebrow")}</p>
+      <h1 className="text-4xl leading-tight sm:text-6xl sm:leading-[1.05]">{t("title")}</h1>
+      <p className="max-w-3xl text-xl leading-snug text-fg sm:text-2xl">{t("tagline")}</p>
+      <p className="max-w-2xl text-lg text-muted">{t("intro")}</p>
+      <div>
+        <Link
+          href="/universities"
+          className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 font-semibold text-accent-fg transition-opacity hover:opacity-90"
+        >
+          {t("browseUniversities")} <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+    </section>
   );
 }

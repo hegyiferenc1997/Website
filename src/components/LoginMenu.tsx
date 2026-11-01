@@ -90,6 +90,21 @@ export function LoginMenu() {
                 className="rounded-md border border-line bg-bg px-3 py-2 text-fg outline-none focus:border-accent"
               />
             </label>
+            <div className="flex items-center justify-between gap-3 text-sm">
+              <label className="flex cursor-pointer items-center gap-2 text-muted hover:text-fg">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  defaultChecked
+                  className="size-4 accent-[var(--accent)]"
+                />
+                {t("remember")}
+              </label>
+              {/* Egyelőre funkció nélkül. */}
+              <button type="button" className="text-accent hover:underline">
+                {t("forgot")}
+              </button>
+            </div>
             <button
               type="submit"
               className="mt-1 rounded-md bg-accent px-4 py-2.5 font-semibold text-accent-fg transition-opacity hover:opacity-90"
@@ -104,16 +119,33 @@ export function LoginMenu() {
             <span className="h-px flex-1 bg-line" />
           </div>
 
-          <div className="grid gap-2">
-            <button type="button" className={socialClass}>
+          {/* Csak ikonok, egymás mellett; a feliratot a képernyőolvasó és az egérrel rámutatás adja. */}
+          <div className="flex gap-3">
+            <button
+              type="button"
+              className={socialClass}
+              aria-label={t("google")}
+              title={t("google")}
+            >
               <GoogleIcon />
-              {t("google")}
             </button>
-            <button type="button" className={socialClass}>
+            <button
+              type="button"
+              className={socialClass}
+              aria-label={t("apple")}
+              title={t("apple")}
+            >
               <AppleIcon />
-              {t("apple")}
             </button>
           </div>
+
+          {/* Regisztráció: egyelőre funkció nélkül. */}
+          <button
+            type="button"
+            className="mt-3 w-full rounded-md border border-dashed border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-accent hover:bg-surface-hover hover:text-fg"
+          >
+            {t("registerPrefix")} <span className="font-semibold text-accent">{t("register")}</span>
+          </button>
 
           <p className="mt-4 text-xs text-muted">{t("soon")}</p>
         </div>
@@ -123,7 +155,7 @@ export function LoginMenu() {
 }
 
 const socialClass =
-  "flex items-center gap-3 rounded-md border border-line bg-bg px-3 py-2.5 text-left text-sm text-fg transition-colors hover:border-accent hover:bg-surface-hover";
+  "flex flex-1 items-center justify-center rounded-md border border-line bg-bg py-2.5 text-fg transition-colors hover:border-accent hover:bg-surface-hover";
 
 function UserIcon() {
   return (
@@ -163,7 +195,7 @@ function CloseIcon() {
 
 function GoogleIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" className="shrink-0">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" className="shrink-0">
       <path
         fill="#4285F4"
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -187,8 +219,8 @@ function GoogleIcon() {
 function AppleIcon() {
   return (
     <svg
-      width="18"
-      height="18"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"

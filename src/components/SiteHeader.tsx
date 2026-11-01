@@ -1,13 +1,16 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { getSearchItems } from "@/features/search/items";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { LoginMenu } from "./LoginMenu";
 import { NavLink } from "./NavLink";
+import { SearchMenu } from "./SearchMenu";
 import { ThemeToggle } from "./ThemeToggle";
 
-// Felső menüsor: logó, menüpontok, témaváltó, nyelvváltó, bejelentkezés.
+// Felső menüsor: logó, menüpontok, kereső, témaváltó, nyelvváltó, bejelentkezés.
 export async function SiteHeader() {
-  const t = await getTranslations("Layout");
+  const locale = await getLocale();
+  const [t, searchItems] = await Promise.all([getTranslations("Layout"), getSearchItems(locale)]);
 
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-surface/90 backdrop-blur">
@@ -24,7 +27,10 @@ export async function SiteHeader() {
           </span>
           {t("siteName")}
         </Link>
-        <nav aria-label={t("nav.label")} className="order-last w-full sm:order-none sm:w-auto">
+        <nav
+          aria-label={t("nav.label")}
+          className="order-last flex-1 basis-[calc(100%-3.5rem)] sm:order-none sm:flex-none sm:basis-auto"
+        >
           <ul className="flex gap-1">
             <li>
               <NavLink href="/">{t("nav.home")}</NavLink>
@@ -32,9 +38,16 @@ export async function SiteHeader() {
             <li>
               <NavLink href="/universities">{t("nav.universities")}</NavLink>
             </li>
+            <li>
+              <NavLink href="/courses">{t("nav.courses")}</NavLink>
+            </li>
           </ul>
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        {/* Mobilon a kereső a menüpontok sorának végére kerül, hogy a felső sorban elférjen minden. */}
+        <div className="order-last sm:order-none sm:-mr-4 sm:ml-auto">
+          <SearchMenu items={searchItems} />
+        </div>
+        <div className="ml-auto flex items-center gap-2 sm:ml-0">
           <ThemeToggle />
           <LanguageSwitcher />
           <LoginMenu />

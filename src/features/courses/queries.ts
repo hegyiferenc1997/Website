@@ -74,3 +74,29 @@ export async function getCourseSlugs() {
   const rows = await db.query.courses.findMany({ with: { university: true } });
   return rows.map((c) => ({ university: c.university.slug, course: c.slug }));
 }
+
+/**
+ * Minden tárgy az egyetemével és az ajánlott félévével, a Tárgyak oldalhoz és a keresőhöz.
+ * Egy tárgy egyetemenként külön sor, így ugyanaz a tárgynév több egyetemnél is megjelenik.
+ */
+export async function getCourseCatalog() {
+  "use cache";
+  cacheTag("courses");
+  const db = await getDb();
+  const rows = await db.query.courses.findMany({
+    orderBy: asc(courses.slug),
+    columns: { slug: true, name: true, code: true, credits: true, isActive: true },
+    with: {
+      university: { columns: { slug: true, name: true, city: true } },
+      programCourses: { columns: { recommendedSemester: true } },
+    },
+  });
+  return rows.map(({ programCourses, ...c }) => ({
+    ...c,
+    semester:
+      programCourses
+        .map((p) => p.recommendedSemester)
+        .filter((s): s is number => s !== null)
+        .sort((a, b) => a - b)[0] ?? null,
+  }));
+}

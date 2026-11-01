@@ -11,7 +11,8 @@
     "nav": {
       "label": "Fő menü",
       "home": "Főoldal",
-      "universities": "Egyetemek"
+      "universities": "Egyetemek",
+      "courses": "Tárgyak"
     },
     "theme": {
       "toLight": "Váltás világos témára",
@@ -29,11 +30,15 @@
       "title": "Bejelentkezés",
       "username": "Felhasználónév",
       "password": "Jelszó",
+      "remember": "Jelszó megjegyzése",
+      "forgot": "Elfelejtett jelszó?",
       "submit": "Bejelentkezés",
       "or": "vagy",
       "google": "Bejelentkezés / regisztráció Google-fiókkal",
       "apple": "Bejelentkezés / regisztráció Apple-fiókkal",
-      "soon": "A bejelentkezés még nem működik, hamarosan érkezik."
+      "soon": "A bejelentkezés még nem működik, hamarosan érkezik.",
+      "registerPrefix": "vagy",
+      "register": "Regisztrálj itt"
     }
   },
   "HomePage": {
@@ -41,9 +46,6 @@
     "title": "Engineering Maxxing",
     "intro": "Mérnökinformatikus tantárgyak, jegyzetek és források egy helyen, egyetemekre és félévekre bontva.",
     "browseUniversities": "Egyetemek böngészése",
-    "coursesTitle": "tantárgyak",
-    "universitiesTitle": "egyetemek",
-    "noCourses": "Még nincs tárgy az adatbázisban.",
     "tagline": "Ahol eredményesen megszerezheted és gyakorolhatod a tudásodat egyetemi tanulmányaid előtt, alatt és után is."
   },
   "UniversitiesPage": {
@@ -96,5 +98,26 @@
     "courseProgress": "Haladás a tárgyban",
     "youAreHere": "itt tartasz",
     "markDone": "Elvégeztem"
+  },
+  "Search": {
+    "open": "Keresés",
+    "placeholder": "Egyetem vagy tárgy neve…",
+    "hint": "Kezdd el beírni egy egyetem vagy tárgy nevét. A tárgyak minden egyetemnél megjelennek, ahol szerepelnek.",
+    "noResults": "Nincs találat erre: „{query}”.",
+    "universities": "egyetemek",
+    "courses": "tárgyak",
+    "semester": "{semester}. félév",
+    "credits": "{credits} kredit",
+    "comingSoon": "hamarosan"
+  },
+  "CoursesPage": {
+    "title": "Tárgyak",
+    "intro": "Az összes tárgy egy helyen, ábécérendben. Minden kártyán látod az egyetemet, a félévet és a kreditet, így ha egy tárgy több egyetemen is szerepel, mindegyiket külön megtalálod.",
+    "activeTitle": "elérhető tananyaggal",
+    "comingTitle": "hamarosan",
+    "empty": "Még nincs tárgy az adatbázisban.",
+    "semester": "{semester}. félév",
+    "credits": "{credits} kredit",
+    "count": "{count} tárgy"
   }
 }
