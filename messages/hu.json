@@ -88,5 +88,13 @@
     "backHome": "Vissza a főoldalra",
     "code": "404",
     "text": "Lehet, hogy elírtad a címet, vagy az oldal már nem létezik."
+  },
+  "Progress": {
+    "courseCount": "{count} tárgy",
+    "credits": "{credits} kredit",
+    "semesterProgress": "{title} haladás",
+    "courseProgress": "Haladás a tárgyban",
+    "youAreHere": "itt tartasz",
+    "markDone": "Elvégeztem"
   }
 }

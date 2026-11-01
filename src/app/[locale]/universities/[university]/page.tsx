@@ -6,6 +6,7 @@ import { localize } from "@/features/courses/localize";
 import { getUniversities, getUniversity } from "@/features/courses/queries";
 import { EmptyState, LinkCardBody, PageHeader, SectionTitle } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
+import { CourseCardProgress, SemesterSection } from "@/features/progress/components";
 
 type Props = PageProps<"/[locale]/universities/[university]">;
 
@@ -68,6 +69,10 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
   const sortedGroups = [...groups.entries()].sort(([a], [b]) =>
     a === null ? 1 : b === null ? -1 : a - b,
   );
+  // A félév kreditje: közös tárgyak + egy specializáció (a hallgató csak egyet választ).
+  const sumCredits = (list: Course[]) => list.reduce((s, c) => s + (c.credits ?? 0), 0);
+  const semesterCredits = (g: Group) =>
+    sumCredits(g.common) + Math.max(0, ...[...g.specs.values()].map((x) => sumCredits(x.list)));
   const collator = new Intl.Collator(locale);
   const byName = (list: Course[]) =>
     [...list].sort((a, b) => collator.compare(localize(a.name, locale), localize(b.name, locale)));
@@ -91,7 +96,13 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
               ]
                 .filter(Boolean)
                 .join(" · ")}
-            />
+            >
+              <CourseCardProgress
+                university={university.slug}
+                course={c.slug}
+                topics={c.topics.map((x) => x.slug)}
+              />
+            </LinkCardBody>
           </Link>
         </li>
       ))}
@@ -128,24 +139,36 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
         {university.courses.length === 0 ? (
           <EmptyState>{t("noCourses")}</EmptyState>
         ) : (
-          sortedGroups.map(([semester, group]) => (
-            <div key={semester ?? "none"} className="grid gap-3">
-              <h3 className="font-mono text-sm font-medium text-highlight">
-                {semester === null ? t("noSemester") : t("semester", { semester })}
-              </h3>
-              {group.common.length > 0 && courseList(group.common)}
-              {[...group.specs.values()]
-                .sort((a, b) => a.spec.position - b.spec.position)
-                .map(({ spec, list }) => (
-                  <div key={spec.id} className="grid gap-3 pt-2">
-                    <h4 className="font-mono text-xs font-medium text-accent">
-                      {t("specialization", { name: localize(spec.name, locale) })}
-                    </h4>
-                    {courseList(list)}
-                  </div>
-                ))}
-            </div>
-          ))
+          <div className="grid gap-3">
+            {sortedGroups.map(([semester, group]) => (
+              <SemesterSection
+                key={semester ?? "none"}
+                university={university.slug}
+                semester={semester ?? 0}
+                title={semester === null ? t("noSemester") : t("semester", { semester })}
+                credits={semesterCredits(group)}
+                courses={[...group.common, ...[...group.specs.values()].flatMap((g) => g.list)].map(
+                  (c) => ({
+                    slug: c.slug,
+                    credits: c.credits ?? 0,
+                    topics: c.topics.map((x) => x.slug),
+                  }),
+                )}
+              >
+                {group.common.length > 0 && courseList(group.common)}
+                {[...group.specs.values()]
+                  .sort((a, b) => a.spec.position - b.spec.position)
+                  .map(({ spec, list }) => (
+                    <div key={spec.id} className="grid gap-3 pt-2">
+                      <h4 className="font-mono text-xs font-medium text-accent">
+                        {t("specialization", { name: localize(spec.name, locale) })}
+                      </h4>
+                      {courseList(list)}
+                    </div>
+                  ))}
+              </SemesterSection>
+            ))}
+          </div>
         )}
       </section>
     </div>

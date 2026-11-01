@@ -36,7 +36,10 @@ export async function getUniversity(slug: string) {
     with: {
       courses: {
         orderBy: asc(courses.slug),
-        with: { programCourses: { with: { specialization: true } } },
+        with: {
+          programCourses: { with: { specialization: true } },
+          topics: { columns: { slug: true }, orderBy: (t, { asc }) => asc(t.position) },
+        },
       },
     },
   });

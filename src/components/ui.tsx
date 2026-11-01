@@ -55,12 +55,21 @@ export function EmptyState({ children }: { children: ReactNode }) {
 }
 
 /** Kattintható kártya-tartalom: cím, alatta kisebb szöveg, jobbra nyíl. A linket a hívó adja köré. */
-export function LinkCardBody({ title, meta }: { title: ReactNode; meta?: ReactNode }) {
+export function LinkCardBody({
+  title,
+  meta,
+  children,
+}: {
+  title: ReactNode;
+  meta?: ReactNode;
+  children?: ReactNode;
+}) {
   return (
     <span className="flex h-full items-start justify-between gap-4 rounded-lg border border-line bg-surface p-5 transition-colors group-hover:border-accent group-hover:bg-surface-hover">
-      <span className="grid gap-1.5">
+      <span className="grid flex-1 gap-1.5">
         <span className="font-mono text-base font-bold text-fg">{title}</span>
         {meta && <span className="text-sm text-muted">{meta}</span>}
+        {children}
       </span>
       <span
         aria-hidden="true"
