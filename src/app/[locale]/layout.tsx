@@ -5,6 +5,7 @@ import { JetBrains_Mono, Source_Sans_3 } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeScript } from "@/components/ThemeScript";
+import { ProgressScript } from "@/features/progress/script";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -40,6 +41,7 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
     <html lang={locale} className={`${mono.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <ProgressScript />
       </head>
       <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
