@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   jsonb,
   pgEnum,
@@ -88,12 +89,33 @@ export const courses = pgTable(
     code: text("code"), // az egyetem saját tárgykódja
     credits: integer("credits"),
     language: text("language"), // oktatási nyelv kódja, pl. "hu"
+    /** Van-e már használható tananyag; a többi tárgy egyelőre csak helykitöltő („hamarosan”). */
+    isActive: boolean("is_active").notNull().default(false),
     ...timestamps,
   },
   (t) => [uniqueIndex("courses_university_slug").on(t.universityId, t.slug)],
 );
 
-/** Melyik tárgy melyik szakon szerepel, hányadik félévben és milyen jelleggel. */
+/** Specializáció egy szakon belül, pl. „Szoftverfejlesztés”. */
+export const specializations = pgTable(
+  "specializations",
+  {
+    id: serial("id").primaryKey(),
+    programId: integer("program_id")
+      .notNull()
+      .references(() => programs.id, { onDelete: "cascade" }),
+    slug: text("slug").notNull(),
+    name: localized("name").notNull(),
+    position: integer("position").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("specializations_program_slug").on(t.programId, t.slug)],
+);
+
+/**
+ * Melyik tárgy melyik szakon szerepel, hányadik félévben és milyen jelleggel.
+ * Ha a specializáció ki van töltve, a tárgy csak azon a specializáción kötelező.
+ */
 export const programCourses = pgTable(
   "program_courses",
   {
@@ -105,6 +127,9 @@ export const programCourses = pgTable(
       .references(() => courses.id, { onDelete: "cascade" }),
     recommendedSemester: integer("recommended_semester"),
     requirement: courseRequirement("requirement"),
+    specializationId: integer("specialization_id").references(() => specializations.id, {
+      onDelete: "set null",
+    }),
   },
   (t) => [primaryKey({ columns: [t.programId, t.courseId] })],
 );
@@ -160,6 +185,12 @@ export const programsRelations = relations(programs, ({ one, many }) => ({
   }),
   faculty: one(faculties, { fields: [programs.facultyId], references: [faculties.id] }),
   programCourses: many(programCourses),
+  specializations: many(specializations),
+}));
+
+export const specializationsRelations = relations(specializations, ({ one, many }) => ({
+  program: one(programs, { fields: [specializations.programId], references: [programs.id] }),
+  programCourses: many(programCourses),
 }));
 
 export const coursesRelations = relations(courses, ({ one, many }) => ({
@@ -175,6 +206,10 @@ export const coursesRelations = relations(courses, ({ one, many }) => ({
 export const programCoursesRelations = relations(programCourses, ({ one }) => ({
   program: one(programs, { fields: [programCourses.programId], references: [programs.id] }),
   course: one(courses, { fields: [programCourses.courseId], references: [courses.id] }),
+  specialization: one(specializations, {
+    fields: [programCourses.specializationId],
+    references: [specializations.id],
+  }),
 }));
 
 export const topicsRelations = relations(topics, ({ one, many }) => ({

@@ -15,12 +15,13 @@ export async function getUniversities() {
   });
 }
 
-/** Az összes tárgy az egyetemével, a főoldali listához. */
+/** A már használható tananyaggal rendelkező tárgyak az egyetemükkel, a főoldali listához. */
 export async function getCourses() {
   "use cache";
   cacheTag("courses");
   const db = await getDb();
   return db.query.courses.findMany({
+    where: eq(courses.isActive, true),
     orderBy: asc(courses.slug),
     with: { university: true, programCourses: { with: { program: true } } },
   });
@@ -32,7 +33,12 @@ export async function getUniversity(slug: string) {
   const db = await getDb();
   const university = await db.query.universities.findFirst({
     where: eq(universities.slug, slug),
-    with: { courses: { orderBy: asc(courses.slug), with: { programCourses: true } } },
+    with: {
+      courses: {
+        orderBy: asc(courses.slug),
+        with: { programCourses: { with: { specialization: true } } },
+      },
+    },
   });
   return university ?? null;
 }
@@ -49,7 +55,7 @@ export async function getCourse(universitySlug: string, courseSlug: string) {
   const course = await db.query.courses.findFirst({
     where: and(eq(courses.universityId, university.id), eq(courses.slug, courseSlug)),
     with: {
-      programCourses: { with: { program: true } },
+      programCourses: { with: { program: true, specialization: true } },
       topics: { orderBy: (t, { asc }) => asc(t.position) },
       resources: true,
     },

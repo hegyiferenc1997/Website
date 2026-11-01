@@ -90,6 +90,17 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                 t("semester", { semester: pc.recommendedSemester })}
             </Chip>
           ))}
+          {course.programCourses.map(
+            (pc) =>
+              pc.specialization && (
+                <Chip key={`spec-${pc.programId}`} label={t("specializationLabel")}>
+                  {localize(pc.specialization.name, locale)}
+                </Chip>
+              ),
+          )}
+          {course.programCourses.some((pc) => pc.requirement === "elective") && (
+            <Chip label={t("type")}>{t("elective")}</Chip>
+          )}
         </div>
       </div>
 

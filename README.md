@@ -17,7 +17,7 @@ pnpm dev
 Utána nyisd meg: http://localhost:3000
 
 Adatbázist nem kell telepíteni: ha nincs megadva `DATABASE_URL`, a szerver egy beépített, memóriában futó
-Postgrest indít, és betölti a kezdő adatot (Gábor Dénes Egyetem, Programozás alapjai).
+Postgrest indít, és betölti a kezdő adatot (Gábor Dénes Egyetem, Mérnökinformatikus BSc: 7 félév, minden tárgy kredittel; a mintatanterv a `src/db/data/` mappában van).
 
 ## Technológia
 
