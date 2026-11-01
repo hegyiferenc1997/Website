@@ -13,7 +13,7 @@ describe("bejelentkezés", () => {
   it("regisztráció után a jelszó csak hash-ként tárolódik, és be lehet lépni", async () => {
     const { db, auth } = await setup();
     await auth.api.signUpEmail({
-      body: { name: "Teszt Elek", email: "Teszt@Example.com", password: "nagyontitkos1" },
+      body: { name: "Teszt Elek", email: "Teszt@Example.com", password: "Nagyon-titkos1" },
     });
 
     const user = await db.query.users.findFirst({ where: eq(users.email, "teszt@example.com") });
@@ -21,10 +21,10 @@ describe("bejelentkezés", () => {
     const account = await db.query.accounts.findFirst({ where: eq(accounts.userId, user!.id) });
     expect(account?.providerId).toBe("credential");
     expect(account?.password).toBeTruthy();
-    expect(account?.password).not.toContain("nagyontitkos1");
+    expect(account?.password).not.toContain("Nagyon-titkos1");
 
     const res = await auth.api.signInEmail({
-      body: { email: "teszt@example.com", password: "nagyontitkos1" },
+      body: { email: "teszt@example.com", password: "Nagyon-titkos1" },
       asResponse: true,
     });
     expect(res.status).toBe(200);
@@ -36,7 +36,7 @@ describe("bejelentkezés", () => {
   it("hibás jelszóval és túl rövid jelszóval nem enged", async () => {
     const { auth } = await setup();
     await auth.api.signUpEmail({
-      body: { name: "A", email: "a@example.com", password: "nagyontitkos1" },
+      body: { name: "A", email: "a@example.com", password: "Nagyon-titkos1" },
     });
     await expect(
       auth.api.signInEmail({ body: { email: "a@example.com", password: "rossz-jelszo" } }),
@@ -46,9 +46,18 @@ describe("bejelentkezés", () => {
     ).rejects.toThrow();
   });
 
+  it("a szerver is elutasítja a szabályoknak nem megfelelő jelszót", async () => {
+    const { auth } = await setup();
+    for (const password of ["nagyontitkos1", "NAGYONTITKOS", "Nagyontitkos1", "Nagyon-titkos"]) {
+      await expect(
+        auth.api.signUpEmail({ body: { name: "C", email: "c@example.com", password } }),
+      ).rejects.toThrow();
+    }
+  });
+
   it("ugyanazzal az e-mail címmel nem lehet kétszer regisztrálni", async () => {
     const { auth } = await setup();
-    const body = { name: "A", email: "dupla@example.com", password: "nagyontitkos1" };
+    const body = { name: "A", email: "dupla@example.com", password: "Nagyon-titkos1" };
     await auth.api.signUpEmail({ body });
     await expect(auth.api.signUpEmail({ body })).rejects.toThrow();
   });

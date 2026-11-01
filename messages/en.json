@@ -35,7 +35,23 @@
       "name": "Name",
       "email": "Email",
       "password": "Password",
-      "passwordHint": "At least {min} characters",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "strength": {
+        "label": "Password strength",
+        "weak": "weak",
+        "fair": "fair",
+        "good": "good",
+        "strong": "strong"
+      },
+      "rules": {
+        "length": "At least {min} characters",
+        "upper": "One uppercase letter",
+        "digit": "One number",
+        "special": "One special character"
+      },
+      "ruleMet": "(met)",
+      "ruleMissing": "(missing)",
       "remember": "Remember me",
       "forgot": "Forgot password?",
       "submit": "Log in",
@@ -64,7 +80,8 @@
         "invalidEmail": "Invalid email address.",
         "tooMany": "Too many attempts. Wait a little and try again.",
         "accountNotLinked": "You already signed up with this email and a password. Sign in with your email and password.",
-        "generic": "Something went wrong. Please try again."
+        "generic": "Something went wrong. Please try again.",
+        "passwordTooWeak": "The password doesn't meet the requirements: at least 8 characters, one uppercase letter, one number and one special character."
       }
     }
   },

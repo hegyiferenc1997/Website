@@ -1,8 +1,14 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 import type { Database } from "@/db";
 import { accounts, sessions, users, verifications } from "@/db/schema";
-import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, type SocialProviders } from "./shared";
+import {
+  isPasswordValid,
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  type SocialProviders,
+} from "./shared";
 
 /** A külső belépési módok, amelyekhez meg vannak adva a kulcsok (lásd .env.example). */
 export function configuredSocialProviders(): SocialProviders {
@@ -73,6 +79,24 @@ export function createAuth(db: Database) {
     },
     advanced: {
       cookiePrefix: "em",
+    },
+    hooks: {
+      // Regisztrációnál és új jelszónál a szerver is ellenőrzi a jelszó szabályait
+      // (legalább 8 karakter, nagybetű, szám, speciális karakter), nem csak a böngésző.
+      before: createAuthMiddleware(async (ctx) => {
+        const password =
+          ctx.path === "/sign-up/email"
+            ? ctx.body?.password
+            : ctx.path === "/reset-password"
+              ? ctx.body?.newPassword
+              : undefined;
+        if (password !== undefined && !isPasswordValid(String(password))) {
+          throw new APIError("BAD_REQUEST", {
+            code: "PASSWORD_TOO_WEAK",
+            message: "Password does not meet the requirements",
+          });
+        }
+      }),
     },
     telemetry: { enabled: false },
   });

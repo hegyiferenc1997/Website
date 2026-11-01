@@ -35,7 +35,23 @@
       "name": "Név",
       "email": "E-mail cím",
       "password": "Jelszó",
-      "passwordHint": "Legalább {min} karakter",
+      "showPassword": "Jelszó megjelenítése",
+      "hidePassword": "Jelszó elrejtése",
+      "strength": {
+        "label": "Jelszó erőssége",
+        "weak": "gyenge",
+        "fair": "közepes",
+        "good": "jó",
+        "strong": "erős"
+      },
+      "rules": {
+        "length": "Legalább {min} karakter",
+        "upper": "Egy nagybetű",
+        "digit": "Egy szám",
+        "special": "Egy speciális karakter"
+      },
+      "ruleMet": "(teljesítve)",
+      "ruleMissing": "(még hiányzik)",
       "remember": "Jelszó megjegyzése",
       "forgot": "Elfelejtett jelszó?",
       "submit": "Bejelentkezés",
@@ -64,7 +80,8 @@
         "invalidEmail": "Érvénytelen e-mail cím.",
         "tooMany": "Túl sok próbálkozás. Várj egy kicsit, és próbáld újra.",
         "accountNotLinked": "Ezzel az e-mail címmel már regisztráltál jelszóval. Jelentkezz be e-maillel és jelszóval.",
-        "generic": "Valami hiba történt. Próbáld újra."
+        "generic": "Valami hiba történt. Próbáld újra.",
+        "passwordTooWeak": "A jelszó nem felel meg a szabályoknak: legalább 8 karakter, egy nagybetű, egy szám és egy speciális karakter."
       }
     }
   },

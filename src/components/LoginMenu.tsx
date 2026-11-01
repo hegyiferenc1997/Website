@@ -4,11 +4,8 @@ import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } fr
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { authClient } from "@/features/auth/client";
-import {
-  MAX_PASSWORD_LENGTH,
-  MIN_PASSWORD_LENGTH,
-  type SocialProviders,
-} from "@/features/auth/shared";
+import { PasswordField } from "@/features/auth/PasswordField";
+import { isPasswordValid, type SocialProviders } from "@/features/auth/shared";
 import type { SessionUser } from "@/features/auth/server";
 import { useOneTimeParam } from "@/features/auth/url-param";
 import { disconnectAccount, flushProgress } from "@/features/progress/store";
@@ -20,6 +17,7 @@ type ErrorKey =
   | "userExists"
   | "passwordTooShort"
   | "passwordTooLong"
+  | "passwordTooWeak"
   | "invalidEmail"
   | "tooMany"
   | "accountNotLinked"
@@ -38,6 +36,8 @@ function errorKey(error: { code?: string; status?: number } | null | undefined):
       return "passwordTooShort";
     case "PASSWORD_TOO_LONG":
       return "passwordTooLong";
+    case "PASSWORD_TOO_WEAK":
+      return "passwordTooWeak";
     case "INVALID_EMAIL":
       return "invalidEmail";
     case "ACCOUNT_NOT_LINKED":
@@ -122,6 +122,10 @@ export function LoginMenu({
     const form = new FormData(e.currentTarget);
     const email = String(form.get("email") ?? "").trim();
     const password = String(form.get("password") ?? "");
+    if (mode === "register" && !isPasswordValid(password)) {
+      setError("passwordTooWeak");
+      return;
+    }
     setBusy(true);
     setError(null);
     setNotice(null);
@@ -266,7 +270,12 @@ export function LoginMenu({
             </div>
           ) : (
             <>
-              <form key={mode} className="grid gap-3" onSubmit={onSubmit}>
+              <form
+                key={mode}
+                className="grid gap-3"
+                onSubmit={onSubmit}
+                onChange={() => shownError && setError(null)}
+              >
                 {mode === "forgot" && <p className="text-sm text-muted">{t("forgotIntro")}</p>}
                 {mode === "register" && (
                   <Field label={t("name")}>
@@ -290,24 +299,12 @@ export function LoginMenu({
                   />
                 </Field>
                 {mode !== "forgot" && (
-                  <Field
+                  <PasswordField
                     label={t("password")}
-                    hint={
-                      mode === "register"
-                        ? t("passwordHint", { min: MIN_PASSWORD_LENGTH })
-                        : undefined
-                    }
-                  >
-                    <input
-                      name="password"
-                      type="password"
-                      required
-                      minLength={mode === "register" ? MIN_PASSWORD_LENGTH : undefined}
-                      maxLength={MAX_PASSWORD_LENGTH}
-                      autoComplete={mode === "register" ? "new-password" : "current-password"}
-                      className={inputClass}
-                    />
-                  </Field>
+                    name="password"
+                    autoComplete={mode === "register" ? "new-password" : "current-password"}
+                    withStrength={mode === "register"}
+                  />
                 )}
                 {mode === "login" && (
                   <div className="flex items-center justify-between gap-3 text-sm">
@@ -330,7 +327,7 @@ export function LoginMenu({
                   </div>
                 )}
                 {shownError && (
-                  <p role="alert" className="text-sm text-red-500">
+                  <p role="alert" className="text-sm text-danger">
                     {shownError === "socialMissing"
                       ? t("socialMissing")
                       : t(`errors.${shownError}`)}
@@ -421,12 +418,11 @@ function initial(user: SessionUser) {
   return (user.name.trim() || user.email).charAt(0).toLocaleUpperCase();
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
+function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="grid gap-1.5 text-sm">
       <span className="text-muted">{label}</span>
       {children}
-      {hint && <span className="text-xs text-muted">{hint}</span>}
     </label>
   );
 }
