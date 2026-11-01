@@ -13,9 +13,25 @@ import {
 const inputClass =
   "w-full rounded-md border border-line bg-bg py-2 pr-10 pl-3 text-fg outline-none focus:border-accent";
 
-/** Erősség szerinti szín a csíkhoz: gyenge piros, közepes sárga, jó és erős türkiz. */
-const levelColor = ["", "bg-danger", "bg-highlight", "bg-accent", "bg-accent"] as const;
-const levelText = ["", "text-danger", "text-highlight", "text-accent", "text-accent"] as const;
+/**
+ * Erősség szerinti szín a csíkhoz: gyenge piros, közepes sárga, jó és erős türkiz.
+ * A piros tartalék színnel (#e5534b) van megadva, így akkor is látszik, ha a böngésző vagy
+ * a fejlesztői szerver még a régi stíluslapot adja (amelyben nincs --danger).
+ */
+const levelColor = [
+  "",
+  "bg-[var(--danger,#e5534b)]",
+  "bg-highlight",
+  "bg-accent",
+  "bg-accent",
+] as const;
+const levelText = [
+  "",
+  "text-[var(--danger,#e5534b)]",
+  "text-highlight",
+  "text-accent",
+  "text-accent",
+] as const;
 const levelKey = ["", "weak", "fair", "good", "strong"] as const;
 
 /**

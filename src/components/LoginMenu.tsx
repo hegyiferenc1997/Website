@@ -327,7 +327,7 @@ export function LoginMenu({
                   </div>
                 )}
                 {shownError && (
-                  <p role="alert" className="text-sm text-danger">
+                  <p role="alert" className="text-sm text-[var(--danger,#e5534b)]">
                     {shownError === "socialMissing"
                       ? t("socialMissing")
                       : t(`errors.${shownError}`)}

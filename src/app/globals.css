@@ -4,7 +4,7 @@
  * Téma: "Kódszerkesztő" (B irány).
  * Alapból sötét; a <html data-theme="light"> kapcsolja világosra (lásd ThemeToggle).
  * A színeket itt, változókban állítjuk, a komponensek Tailwind osztályokkal használják őket:
- * bg-bg, bg-surface, text-fg, text-muted, border-line, text-accent, bg-accent-soft, text-highlight, text-danger.
+ * bg-bg, bg-surface, text-fg, text-muted, border-line, text-accent, bg-accent-soft, text-highlight, text-[var(--danger,#e5534b)].
  */
 
 :root {

@@ -45,7 +45,10 @@ export function ResetPasswordForm() {
   if (state === "done" || state === "invalid") {
     return (
       <div className="grid gap-4 text-sm">
-        <p role="status" className={state === "done" ? "text-accent" : "text-danger"}>
+        <p
+          role="status"
+          className={state === "done" ? "text-accent" : "text-[var(--danger,#e5534b)]"}
+        >
           {state === "done" ? t("success") : t("invalidToken")}
         </p>
         <Link href="/" className="text-accent hover:underline">
@@ -69,7 +72,7 @@ export function ResetPasswordForm() {
       />
       <PasswordField label={t("confirm")} name="confirm" autoComplete="new-password" />
       {(state === "mismatch" || state === "weak" || state === "error") && (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-sm text-[var(--danger,#e5534b)]">
           {state === "mismatch"
             ? t("mismatch")
             : state === "weak"
