@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Fájlkezelés és I/O műveletek", "en": "File Handling and I/O" },
+  "description": {
+    "hu": "Fájlok megnyitása, olvasása, írása és bezárása, be- és kimeneti áramlások (stdin, stdout, stderr), CSV és JSON fájlok, valamint a fájlkezelési hibák kezelése.",
+    "en": "Opening, reading, writing and closing files, input and output streams (stdin, stdout, stderr), CSV and JSON files, and handling file errors."
+  }
+}
