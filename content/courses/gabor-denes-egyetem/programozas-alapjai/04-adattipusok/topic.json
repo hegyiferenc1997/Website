@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adattípusok", "en": "Data Types" },
+  "description": {
+    "hu": "Primitív adattípusok és literálok, számok és szövegek részletesen, típusok közötti átalakítások.",
+    "en": "Primitive data types and literals, numbers and strings in detail, and conversions between types."
+  }
+}

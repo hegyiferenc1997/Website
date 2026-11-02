@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Fordítók és interpreterek", "en": "Compilers and Interpreters" },
+  "description": {
+    "hu": "Hogyan lesz a forráskódból futó program: a fordítás lépései, a fordítók és interpreterek különbségei, build rendszerek és kódoptimalizáció.",
+    "en": "How source code becomes a running program: the stages of compilation, compilers versus interpreters, build systems and code optimisation."
+  }
+}

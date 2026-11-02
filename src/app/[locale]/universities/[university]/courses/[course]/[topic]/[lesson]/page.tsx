@@ -38,9 +38,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /** A Markdown → HTML átalakítás eredménye gyorsítótárban marad, csak a szöveg változásakor fut újra. */
-async function renderLessonBody(markdown: string) {
+async function renderLessonBody(markdown: string, locale: string) {
   "use cache";
-  return renderMarkdown(markdown);
+  return renderMarkdown(markdown, locale);
 }
 
 // Egy lecke oldala: balra a tárgy tartalomjegyzéke, középen a lecke, alul „Kész” gomb és lapozás.
@@ -64,7 +64,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   // Ismeretlen lecke → 404 oldal.
   if (!data) notFound();
   const { course, topic, lesson, number, prev, next } = data;
-  const html = await renderLessonBody(localize(lesson.body, locale));
+  const html = await renderLessonBody(localize(lesson.body, locale), locale);
 
   const university = course.university.slug;
   // Hányadik témakörben vagyunk (1-től számolva).

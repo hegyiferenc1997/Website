@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Programozási nyelvek és paradigmák", "en": "Programming Languages and Paradigms" },
+  "description": {
+    "hu": "A programozási nyelvek szintjei, az imperatív és deklaratív szemlélet, az objektumorientált és a funkcionális programozás alapjai Python példákkal.",
+    "en": "Levels of programming languages, imperative and declarative thinking, and the basics of object-oriented and functional programming with Python examples."
+  }
+}

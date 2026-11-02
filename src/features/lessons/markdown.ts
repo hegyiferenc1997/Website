@@ -2,6 +2,7 @@ import "server-only";
 import { Marked, type Tokens } from "marked";
 import { createHighlighterCore, type HighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+import { parseCodeInfo, type CodeRole } from "./code-info";
 
 // A leckék Markdown szövegét HTML-lé alakítja a szerveren, színezett kódrészletekkel.
 // A böngészőbe kész HTML megy, így a kódkiemeléshez nem kell JavaScriptet letölteni.
@@ -65,11 +66,20 @@ function getHighlighter() {
 const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-// Egy kódblokk HTML-je: fejléc a nyelv nevével, alatta a színezett kód (ismeretlen nyelvnél színezés nélkül).
-function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code): string {
-  const raw = (lang ?? "").trim().split(/\s+/)[0].toLowerCase();
+// A szerepek felirata a kódblokk fejlécében, nyelvenként.
+const ROLE_LABELS: Record<string, Record<CodeRole, string>> = {
+  hu: { run: "futtatható példa", starter: "kiinduló kód", solution: "megoldás", test: "ellenőrzés" },
+  en: { run: "runnable example", starter: "starter code", solution: "solution", test: "check" },
+};
+
+// Egy kódblokk HTML-je: fejléc a nyelv nevével (és szerepével), alatta a színezett kód
+// (ismeretlen nyelvnél színezés nélkül).
+function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code, locale: string): string {
+  const { lang: raw, role } = parseCodeInfo(lang);
   const name = (raw in LANGS ? raw : ALIASES[raw]) as keyof typeof LANGS | undefined;
-  const label = name ? LABELS[name] : raw;
+  const base = name ? LABELS[name] : raw;
+  const roleLabel = role ? (ROLE_LABELS[locale] ?? ROLE_LABELS.hu)[role] : "";
+  const label = [base, roleLabel].filter(Boolean).join(" · ");
   const code = name
     ? h.codeToHtml(text, {
         lang: name,
@@ -78,16 +88,21 @@ function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code): string {
       })
     : `<pre class="shiki"><code>${escapeHtml(text)}</code></pre>`;
   const header = label ? `<div class="code-label">${escapeHtml(label)}</div>` : "";
-  return `<div class="code-block">${header}${code}</div>`;
+  // A data-role / data-lang a későbbi futtatónak szól (melyik blokk mit jelent).
+  const data = role ? ` data-role="${role}" data-lang="${escapeHtml(name ?? raw)}"` : "";
+  return `<div class="code-block"${data}>${header}${code}</div>`;
 }
 
-/** Markdown → HTML. A címsorok egy szinttel lejjebb kerülnek (# → h2), mert az oldal címe a h1. */
-export async function renderMarkdown(markdown: string): Promise<string> {
+/**
+ * Markdown → HTML. A címsorok egy szinttel lejjebb kerülnek (# → h2), mert az oldal címe a h1.
+ * A `locale` a kódblokkok szerep-feliratainak nyelve.
+ */
+export async function renderMarkdown(markdown: string, locale = "hu"): Promise<string> {
   const h = await getHighlighter();
   const marked = new Marked({
     gfm: true,
     renderer: {
-      code: (token) => codeBlock(h, token),
+      code: (token) => codeBlock(h, token, locale),
       // Címsorok egy szinttel lejjebb.
       heading({ tokens, depth }) {
         const level = Math.min(depth + 1, 6);
