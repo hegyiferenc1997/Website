@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Digitális tervezés és szimuláció", "en": "Digital Design and Simulation" },
+  "description": {
+    "hu": "A digitális rendszertervezés lépései, hierarchikus tervezés, időzítés (setup, hold, kritikus út, maximális órajel), szinkron tervezési szabályok; szimuláció és testbench; hibakeresés logikai szondával, logikai analizátorral és oszcilloszkóppal.",
+    "en": "The steps of digital system design, hierarchical design, timing (setup, hold, critical path, maximum clock), synchronous design rules; simulation and testbenches; debugging with a logic probe, a logic analyser and an oscilloscope."
+  }
+}
