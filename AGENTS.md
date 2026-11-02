@@ -17,3 +17,18 @@ Minden kód rövid, lényegretörő **magyar** kommenteket kap:
 - a nem magától értetődő lépéseknél (miért így, nem csak mit) egy sor.
 
 Ez az új és a módosított kódra is mindig vonatkozik.
+
+## Kipróbáló parancsok (a projekt tulajdonosának kérése)
+
+Minden elkészült változtatáshoz (PR / ág) adj bemásolható PowerShell parancsokat a helyi kipróbáláshoz
+(a tulajdonos Windows + VS Code + pnpm környezetben dolgozik), pl.:
+
+```powershell
+git fetch origin
+git checkout <ág-neve>
+git pull
+pnpm install
+pnpm dev
+```
+
+és írd le, hogyan lehet visszaállni: `git checkout main`.
