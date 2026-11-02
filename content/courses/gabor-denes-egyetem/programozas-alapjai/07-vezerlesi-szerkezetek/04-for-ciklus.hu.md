@@ -109,3 +109,49 @@ Ez lényegében egy tömörebben leírt `while` ciklus. A Python `for i in range
 - `for i in range(a, b, lepes)` – számlálós ciklus; a felső határ nincs benne.
 - `for elem in gyujtemeny` – bejárás; `enumerate()` indexet is ad, `zip()` párosít.
 - A Python `for`-ja bejáró ciklus; a C/Java `for` egy tömör `while`.
+
+## A lecke feladata: Rangsor zip-pel és enumerate-tel
+
+Két párhuzamos lista adott: a hallgatók nevei és a pontszámaik. Írj `rangsor(nevek, pontok)` függvényt, amely a pontszám szerint **csökkenő** sorrendben ilyen sorokból álló listát ad vissza:
+
+```text
+1. Csilla (92)
+2. Anna (87)
+3. Béla (64)
+```
+
+Használd a `zip()`-et a párosításhoz, a `sorted()`-et a rendezéshez és az `enumerate(..., start=1)`-et a sorszámhoz! Egyenlő pontszámnál maradjon az eredeti sorrend (a `sorted` ezt magától tudja).
+
+```python starter required
+def rangsor(nevek, pontok):
+    parok = list(zip(nevek, pontok))
+    # rendezés pont szerint csökkenőben, majd sorok készítése enumerate-tel
+    pass
+
+
+print(rangsor(["Anna", "Béla", "Csilla"], [87, 64, 92]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def rangsor(nevek, pontok):
+    parok = list(zip(nevek, pontok))
+    rendezett = sorted(parok, key=lambda par: par[1], reverse=True)
+    sorok = []
+    for helyezes, (nev, pont) in enumerate(rendezett, start=1):
+        sorok.append(f"{helyezes}. {nev} ({pont})")
+    return sorok
+
+
+print(rangsor(["Anna", "Béla", "Csilla"], [87, 64, 92]))
+```
+
+</details>
+
+```python test
+assert rangsor(["Anna", "Béla", "Csilla"], [87, 64, 92]) == ["1. Csilla (92)", "2. Anna (87)", "3. Béla (64)"], "A példa rangsora nem stimmel."
+assert rangsor([], []) == [], "Üres listákra üres rangsor."
+assert rangsor(["X", "Y"], [50, 50]) == ["1. X (50)", "2. Y (50)"], "Egyenlő pontnál marad az eredeti sorrend."
+```

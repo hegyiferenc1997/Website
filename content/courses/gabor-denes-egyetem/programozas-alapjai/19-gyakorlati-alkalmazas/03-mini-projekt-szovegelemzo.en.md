@@ -145,3 +145,79 @@ print("All checks passed!")
 - The **longest word**, the **longest sentence**, the **length distribution** of words (how many 1-, 2-, 3-letter words there are).
 - Simple **stemming**: cutting off common suffixes (-s, -ing, -ed) so that "language" and "languages" count as one word.
 - **Comparing** two texts: common words with a set operation (`&`).
+
+## Lesson exercise: Extended text statistics
+
+Implement one of the text analyser's extension ideas! Write an `extended_stats(text)` function that returns a dictionary:
+
+- `"longest_word"`: the longest word in lowercase (on ties, the first one),
+- `"length_distribution"`: a dictionary giving how many 1-, 2-, 3-… letter words there are; keys in **ascending** order,
+- `"longest_sentence"`: the text of the sentence with the most words, without the closing punctuation and surrounding spaces (on ties, the first).
+
+Words are the runs of letters (`re.findall(r"[^\W\d_]+", ...)`), sentences end with `.`, `!` or `?` (the last sentence may have no punctuation). For empty text: `{"longest_word": "", "length_distribution": {}, "longest_sentence": ""}`.
+
+```python starter required
+import re
+
+
+def extended_stats(text):
+    words = text.split()
+    return {
+        "longest_word": max(words, key=len) if words else "",
+        "length_distribution": {},
+        "longest_sentence": "",
+    }
+
+
+print(extended_stats("What a nice day. Python is a really easy language to learn! Right?"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import re
+from collections import Counter
+
+WORD = re.compile(r"[^\W\d_]+")
+
+
+def extended_stats(text):
+    words = WORD.findall(text.lower())
+    longest_word = ""
+    for word in words:
+        if len(word) > len(longest_word):
+            longest_word = word
+    distribution = Counter(len(word) for word in words)
+    # Sentences: split at punctuation, drop the empty ones
+    sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
+    longest_sentence = ""
+    most = 0
+    for sentence in sentences:
+        count = len(WORD.findall(sentence))
+        if count > most:
+            most, longest_sentence = count, sentence
+    return {
+        "longest_word": longest_word,
+        "length_distribution": dict(sorted(distribution.items())),
+        "longest_sentence": longest_sentence,
+    }
+
+
+print(extended_stats("What a nice day. Python is a really easy language to learn! Right?"))
+```
+
+</details>
+
+```python test
+r = extended_stats("What a nice day. Python is a really easy language to learn! Right?")
+assert r["longest_word"] == "language", "The longest word: language."
+assert r["length_distribution"] == {1: 2, 2: 2, 3: 1, 4: 3, 5: 2, 6: 2, 8: 1}, "The word length distribution is wrong."
+assert list(r["length_distribution"]) == sorted(r["length_distribution"]), "The distribution's keys must be in ascending order."
+assert r["longest_sentence"] == "Python is a really easy language to learn", "The longest sentence without punctuation and surrounding spaces."
+r = extended_stats("One two three. Four five six")
+assert r["longest_sentence"] == "One two three", "On ties the first sentence; the last sentence may lack punctuation."
+assert r["longest_word"] == "three", "On equal lengths, the first word."
+assert extended_stats("") == {"longest_word": "", "length_distribution": {}, "longest_sentence": ""}, "Empty text gives an empty result."
+assert extended_stats("Hm... 42!!! OK?")["longest_sentence"] == "Hm", "Several punctuation marks in a row end one sentence; numbers are not words."
+```

@@ -115,3 +115,73 @@ numpy==2.1.0
 - External packages come from **PyPI**, via **pip**.
 - Each project gets its own **virtual environment** (`python -m venv .venv`).
 - Dependencies go into **`requirements.txt`**, the `.venv` folder into `.gitignore`.
+
+## Lesson exercise: Checking installed packages
+
+A project's `requirements.txt` pins exact versions. Write a `check(requirements, installed)` function that compares it with the packages actually installed in the environment:
+
+- `requirements`: the text of `requirements.txt`; every non-empty, non-comment line looks like `name==version` (a trailing `#` comment is allowed),
+- `installed`: a `{name: version}` dictionary,
+- compare package names **normalised**: lowercased, and `_` and `.` mean the same as `-` (so `Flask_Login` = `flask-login`),
+- result: a dictionary with two keys: `"missing"` – the normalised names of missing packages in **alphabetical order**; `"mismatch"` – an alphabetical list of `(name, wanted, installed)` triples for packages whose version differs.
+
+```python starter required
+def check(requirements, installed):
+    missing = []
+    for line in requirements.splitlines():
+        name, version = line.split("==")
+        if name not in installed:
+            missing.append(name)
+    return {"missing": missing, "mismatch": []}
+
+
+req = "requests==2.32.3\nFlask_Login==0.6.3\n"
+print(check(req, {"requests": "2.31.0"}))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def normalise(name):
+    # In package names case and the characters _ . - are equivalent
+    return name.strip().lower().replace("_", "-").replace(".", "-")
+
+
+def check(requirements, installed):
+    present = {normalise(n): v for n, v in installed.items()}
+    missing, mismatch = [], []
+    for line in requirements.splitlines():
+        line = line.split("#", 1)[0].strip()   # strip the comment
+        if not line:
+            continue
+        name, version = line.split("==", 1)
+        name, version = normalise(name), version.strip()
+        if name not in present:
+            missing.append(name)
+        elif present[name] != version:
+            mismatch.append((name, version, present[name]))
+    return {"missing": sorted(missing), "mismatch": sorted(mismatch)}
+
+
+req = "requests==2.32.3\nFlask_Login==0.6.3\n"
+print(check(req, {"requests": "2.31.0"}))
+```
+
+</details>
+
+```python test
+req = """
+# For web requests
+requests==2.32.3
+Flask_Login==0.6.3   # login
+numpy==2.1.0
+
+zope.interface==7.0
+"""
+installed = {"Requests": "2.31.0", "flask-login": "0.6.3", "Zope-Interface": "7.0"}
+assert check(req, installed) == {"missing": ["numpy"], "mismatch": [("requests", "2.32.3", "2.31.0")]}, "Compare normalised names and skip comments and empty lines."
+assert check("b==1\na==1\n", {}) == {"missing": ["a", "b"], "mismatch": []}, "Missing packages in alphabetical order."
+assert check("z==2\ny==3\n", {"y": "1", "z": "1"})["mismatch"] == [("y", "3", "1"), ("z", "2", "1")], "Mismatches in alphabetical order."
+assert check("", {"x": "1"}) == {"missing": [], "mismatch": []}, "An empty requirements.txt has no differences."
+```

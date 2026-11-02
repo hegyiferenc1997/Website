@@ -129,3 +129,65 @@ print(Path("allapot.json").read_text(encoding="utf-8"))
 - Kapd el a konkrét kivételt, és soronként kezeld a hibás tartalmat.
 - Útvonalakhoz `pathlib`: `Path("mappa") / "fajl.txt"`.
 - Fontos adatot ideiglenes fájlon keresztül ments.
+
+## A lecke feladata: Számok beolvasása hibatűrően
+
+Írj `szamok_beolvasasa(fajlnev)` függvényt, amely egy soronként egy egész számot tartalmazó fájlt olvas be, és egy `(szamok, hibas_sorok)` párt ad vissza:
+
+- `szamok`: a helyes sorokból kapott egészek listája,
+- `hibas_sorok`: azoknak a soroknak a sorszáma (1-től), amelyekben nem egész szám áll (az üres sorok nem hibásak, egyszerűen kimaradnak).
+
+Ha a fájl nem létezik (`FileNotFoundError`), a függvény ne álljon le hibával, hanem `([], [])`-t adjon vissza. A fájlt a `pathlib` modul `Path` osztályával kezeld (`Path(fajlnev).read_text(encoding="utf-8")`).
+
+```python starter required
+from pathlib import Path
+
+
+def szamok_beolvasasa(fajlnev):
+    szamok, hibas_sorok = [], []
+    # try: Path(...).read_text(...)  except FileNotFoundError: ...
+    return szamok, hibas_sorok
+
+
+Path("adat.txt").write_text("4\nhét\n\n10\n", encoding="utf-8")
+print(szamok_beolvasasa("adat.txt"))   # ([4, 10], [2])
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from pathlib import Path
+
+
+def szamok_beolvasasa(fajlnev):
+    szamok, hibas_sorok = [], []
+    try:
+        szoveg = Path(fajlnev).read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return [], []
+    for sorszam, sor in enumerate(szoveg.splitlines(), start=1):
+        sor = sor.strip()
+        if not sor:
+            continue
+        try:
+            szamok.append(int(sor))
+        except ValueError:
+            hibas_sorok.append(sorszam)
+    return szamok, hibas_sorok
+
+
+Path("adat.txt").write_text("4\nhét\n\n10\n", encoding="utf-8")
+print(szamok_beolvasasa("adat.txt"))   # ([4, 10], [2])
+```
+
+</details>
+
+```python test
+from pathlib import Path
+Path("e1.txt").write_text("4\nhét\n\n10\n2.5\n-3\n", encoding="utf-8")
+assert szamok_beolvasasa("e1.txt") == ([4, 10, -3], [2, 5]), "Számok: [4, 10, -3]; hibás sorok: 2 (szöveg) és 5 (nem egész)."
+assert szamok_beolvasasa("nincs_ilyen_fajl.txt") == ([], []), "Hiányzó fájlnál ([], [])."
+Path("e2.txt").write_text("", encoding="utf-8")
+assert szamok_beolvasasa("e2.txt") == ([], []), "Üres fájlnál ([], [])."
+```

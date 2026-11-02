@@ -1,0 +1,1 @@
+ALTER TABLE "lessons" ADD COLUMN "has_exercise" boolean DEFAULT false NOT NULL;

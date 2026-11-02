@@ -127,3 +127,59 @@ print(good)                     # [[1, 0, 0], [0, 0, 0]]
 - An array is a row of consecutively stored elements of the same type; access by index is **O(1)**.
 - Inserting and deleting at the start/middle is **O(n)**, because elements must shift.
 - In Python `list` is a dynamic array; for a matrix use a list of lists (`[[0]*m for _ in range(n)]`).
+
+## Lesson exercise: Rotating a matrix
+
+Write a `rotate(matrix)` function that **rotates a two-dimensional array (a list of lists) 90 degrees clockwise** and returns it as a new matrix. The matrix is not necessarily square: an `r × c` matrix becomes `c × r`. Don't modify the original!
+
+```text
+1 2 3        4 1
+4 5 6   →    5 2
+             6 3
+```
+
+Tip: row `i` of the result is column `i` of the original, read from bottom to top.
+
+```python starter required
+def rotate(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0]) if matrix else 0
+    # new matrix: cols rows, each with rows elements
+    pass
+
+
+print(rotate([[1, 2, 3], [4, 5, 6]]))   # [[4, 1], [5, 2], [6, 3]]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def rotate(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0]) if matrix else 0
+    result = []
+    for j in range(cols):
+        new_row = []
+        for i in range(rows - 1, -1, -1):
+            new_row.append(matrix[i][j])
+        result.append(new_row)
+    return result
+
+
+print(rotate([[1, 2, 3], [4, 5, 6]]))   # [[4, 1], [5, 2], [6, 3]]
+```
+
+</details>
+
+```python test
+m = [[1, 2, 3], [4, 5, 6]]
+assert rotate(m) == [[4, 1], [5, 2], [6, 3]], "Rotating the 2×3 matrix is not right."
+assert m == [[1, 2, 3], [4, 5, 6]], "The original matrix must not change."
+assert rotate([[1, 2], [3, 4]]) == [[3, 1], [4, 2]], "Rotating the 2×2 matrix is not right."
+assert rotate([[7]]) == [[7]], "A 1×1 matrix is itself."
+four = [[1, 2, 3], [4, 5, 6]]
+for _ in range(4):
+    four = rotate(four)
+assert four == m, "After four rotations you must get the original back."
+```

@@ -127,3 +127,47 @@ if score >= 76:          # this is true too → also printed
 - `if` – one-way, `if-else` – two-way, `if-elif-else` – multi-way branching.
 - Of the `elif` branches only the **first true** one runs; put the stricter condition first.
 - Simplify deep nesting with logical operators or reordering.
+
+## Lesson exercise: Grade in words
+
+Write a `grade_text(grade)` function with an `if – elif – else` branch that returns the grades 1–5 in words: 1 → `"fail"`, 2 → `"pass"`, 3 → `"satisfactory"`, 4 → `"good"`, 5 → `"excellent"`. For any other value the result is `"invalid"`.
+
+```python starter required
+def grade_text(grade):
+    pass
+
+
+print(grade_text(5))   # excellent
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def grade_text(grade):
+    if grade == 1:
+        return "fail"
+    elif grade == 2:
+        return "pass"
+    elif grade == 3:
+        return "satisfactory"
+    elif grade == 4:
+        return "good"
+    elif grade == 5:
+        return "excellent"
+    else:
+        return "invalid"
+
+
+print(grade_text(5))   # excellent
+```
+
+</details>
+
+```python test
+expected = {1: "fail", 2: "pass", 3: "satisfactory", 4: "good", 5: "excellent"}
+for grade, text in expected.items():
+    assert grade_text(grade) == text, f"Grade {grade} in words: {text}"
+for bad in [0, 6, -1]:
+    assert grade_text(bad) == "invalid", f"{bad} is an invalid grade."
+```

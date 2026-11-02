@@ -89,3 +89,51 @@ A rekurzió működését (hívási verem), az iterációval való összehasonl�
 - A rekurzív függvény önmagát hívja, kisebb részfeladatra.
 - Kell **alapeset** (megállás) és **rekurzív eset** (a feladat csökkentése).
 - Alapeset nélkül `RecursionError` keletkezik.
+
+## A lecke feladata: Számjegyek összege rekurzívan
+
+Írj **rekurzív** `szamjegy_osszeg(n)` függvényt, amely egy nemnegatív egész szám számjegyeinek összegét adja vissza – ciklus és `str()` nélkül.
+
+- **Alapeset:** ha `n < 10`, az eredmény maga `n`.
+- **Rekurzív eset:** az utolsó számjegy (`n % 10`) plusz a többi számjegy összege (`n // 10`-re hívva).
+
+```python starter required
+def szamjegy_osszeg(n):
+    # alapeset, majd rekurzív hívás
+    pass
+
+
+print(szamjegy_osszeg(1234))   # 10
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szamjegy_osszeg(n):
+    if n < 10:
+        return n
+    return n % 10 + szamjegy_osszeg(n // 10)
+
+
+print(szamjegy_osszeg(1234))   # 10
+```
+
+</details>
+
+```python test
+assert szamjegy_osszeg(1234) == 10, "1 + 2 + 3 + 4 = 10"
+assert szamjegy_osszeg(7) == 7, "Egyjegyű számnál maga a szám."
+assert szamjegy_osszeg(0) == 0, "A 0 számjegyeinek összege 0."
+assert szamjegy_osszeg(99999) == 45, "9 · 5 = 45"
+hivasok = 0
+eredeti = szamjegy_osszeg
+def figyelo(n):
+    global hivasok
+    hivasok += 1
+    return eredeti(n)
+szamjegy_osszeg = figyelo
+eredeti(512)
+szamjegy_osszeg = eredeti
+assert hivasok >= 2, "A függvény hívja önmagát (rekurzió) – ciklus helyett."
+```

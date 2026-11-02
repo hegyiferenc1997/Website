@@ -225,3 +225,88 @@ with open("app.log", encoding="utf-8") as f:
     assert f.read() == "indítás\nbejelentkezés\n"
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Naplófájl összesítése JSON-be
+
+A témakör összefoglaló feladata: fájl olvasása és írása, adatfolyam soronként, JSON, és a fájlhibák kezelése.
+
+Egy alkalmazás naplófájljának minden sora így néz ki: `2026-11-02 10:15:03 ERROR Az adatbázis nem érhető el`. (Dátum, idő, szint, üzenet – szóközzel elválasztva; a szint `INFO`, `WARNING` vagy `ERROR`.)
+
+Írj `naplo_osszesito(naplo_fajl, kimeneti_fajl)` függvényt, amely:
+
+1. soronként végigolvassa a naplót (ne olvasd be egyszerre az egészet!),
+2. megszámolja, hány sor van szintenként (a hibás – négynél kevesebb részből álló vagy ismeretlen szintű – sorokat a `"hibas"` kulcs alatt számolja),
+3. az `ERROR` szintű sorok üzeneteit egy listába gyűjti,
+4. az eredményt JSON-ként kiírja a kimeneti fájlba: `{"INFO": 2, "WARNING": 0, "ERROR": 1, "hibas": 1, "hibauzenetek": ["..."]}`, és vissza is adja szótárként.
+
+Ha a naplófájl nem létezik, dobjon `FileNotFoundError`-t egy érthető magyar üzenettel – és ilyenkor ne jöjjön létre kimeneti fájl.
+
+```python starter required
+import json
+
+
+def naplo_osszesito(naplo_fajl, kimeneti_fajl):
+    osszesites = {"INFO": 0, "WARNING": 0, "ERROR": 0, "hibas": 0, "hibauzenetek": []}
+    # with open(...) as f: for sor in f: ...
+    pass
+
+
+with open("app.log", "w", encoding="utf-8") as f:
+    f.write("2026-11-02 10:00:00 INFO Indulás\n2026-11-02 10:01:00 ERROR Nincs adatbázis\n")
+print(naplo_osszesito("app.log", "osszesites.json"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import json
+
+
+def naplo_osszesito(naplo_fajl, kimeneti_fajl):
+    osszesites = {"INFO": 0, "WARNING": 0, "ERROR": 0, "hibas": 0, "hibauzenetek": []}
+    try:
+        f = open(naplo_fajl, encoding="utf-8")
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Nem található a naplófájl: {naplo_fajl}") from None
+    with f:
+        for sor in f:
+            reszek = sor.strip().split(" ", 3)
+            if len(reszek) < 4 or reszek[2] not in ("INFO", "WARNING", "ERROR"):
+                osszesites["hibas"] += 1
+                continue
+            szint, uzenet = reszek[2], reszek[3]
+            osszesites[szint] += 1
+            if szint == "ERROR":
+                osszesites["hibauzenetek"].append(uzenet)
+    with open(kimeneti_fajl, "w", encoding="utf-8") as ki:
+        json.dump(osszesites, ki, ensure_ascii=False)
+    return osszesites
+
+
+with open("app.log", "w", encoding="utf-8") as f:
+    f.write("2026-11-02 10:00:00 INFO Indulás\n2026-11-02 10:01:00 ERROR Nincs adatbázis\n")
+print(naplo_osszesito("app.log", "osszesites.json"))
+```
+
+</details>
+
+```python test
+import json, os
+with open("teszt.log", "w", encoding="utf-8") as f:
+    f.write("2026-11-02 10:00:00 INFO Indulás\n"
+            "2026-11-02 10:01:00 ERROR Az adatbázis nem érhető el\n"
+            "értelmetlen sor\n"
+            "2026-11-02 10:02:00 INFO Újrapróbálás\n"
+            "2026-11-02 10:03:00 DEBUG részletek\n")
+varhato = {"INFO": 2, "WARNING": 0, "ERROR": 1, "hibas": 2, "hibauzenetek": ["Az adatbázis nem érhető el"]}
+assert naplo_osszesito("teszt.log", "ki.json") == varhato, "A visszaadott összesítés nem stimmel."
+with open("ki.json", encoding="utf-8") as f:
+    assert json.load(f) == varhato, "A kiírt JSON tartalma nem stimmel."
+try:
+    naplo_osszesito("nincs.log", "nem_kell.json")
+    assert False, "Hiányzó naplónál FileNotFoundError kell."
+except FileNotFoundError:
+    pass
+assert not os.path.exists("nem_kell.json"), "Hiba esetén ne jöjjön létre kimeneti fájl."
+```

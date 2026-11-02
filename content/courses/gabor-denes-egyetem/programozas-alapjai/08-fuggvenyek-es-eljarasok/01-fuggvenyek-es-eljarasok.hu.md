@@ -110,3 +110,76 @@ print(terulet(3, 4), kerulet(3, 4))
 - Az alprogram elnevezett, többször hívható kódrészlet; javítja az áttekinthetőséget és az újrafelhasználást.
 - A **függvény** értéket ad vissza (`return`), az **eljárás** csak végrehajt valamit (Pythonban `None`-t ad).
 - A `return` azonnal befejezi a függvényt.
+
+## A lecke feladata: Függvény és eljárás
+
+Írj két alprogramot:
+
+- `terulet(szelesseg, magassag)` – **függvény**: visszaadja a téglalap területét (nem ír ki semmit);
+- `keret(szelesseg, magassag)` – **eljárás**: kirajzol `#` jelekből egy téglalap keretet, és nem ad vissza semmit (`None`).
+
+Például `keret(5, 3)` ezt írja ki:
+
+```text
+#####
+#   #
+#####
+```
+
+Ha a magasság 1, csak egy sor `#` legyen; 1-nél kisebb szélességnél vagy magasságnál ne írjon ki semmit.
+
+```python starter required
+def terulet(szelesseg, magassag):
+    pass
+
+
+def keret(szelesseg, magassag):
+    # felső sor, közbülső sorok (# + szóközök + #), alsó sor
+    pass
+
+
+keret(5, 3)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def terulet(szelesseg, magassag):
+    return szelesseg * magassag
+
+
+def keret(szelesseg, magassag):
+    if szelesseg < 1 or magassag < 1:
+        return
+    print("#" * szelesseg)
+    for _ in range(magassag - 2):
+        if szelesseg == 1:
+            print("#")
+        else:
+            print("#" + " " * (szelesseg - 2) + "#")
+    if magassag > 1:
+        print("#" * szelesseg)
+
+
+keret(5, 3)
+```
+
+</details>
+
+```python test
+import contextlib, io
+
+def rajz(sz, m):
+    kiiras = io.StringIO()
+    with contextlib.redirect_stdout(kiiras):
+        vissza = keret(sz, m)
+    assert vissza is None, "Az eljárás ne adjon vissza értéket."
+    return kiiras.getvalue()
+
+assert terulet(5, 3) == 15, "Az 5×3-as téglalap területe 15."
+assert rajz(5, 3) == "#####\n#   #\n#####\n", "keret(5, 3) rajza nem stimmel."
+assert rajz(4, 4) == "####\n#  #\n#  #\n####\n", "keret(4, 4) rajza nem stimmel."
+assert rajz(3, 1) == "###\n", "1 magasságnál egyetlen sor."
+assert rajz(0, 3) == "", "0 szélességnél semmit se rajzoljon."
+```

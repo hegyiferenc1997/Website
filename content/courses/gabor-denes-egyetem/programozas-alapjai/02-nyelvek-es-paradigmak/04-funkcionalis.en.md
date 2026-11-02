@@ -89,3 +89,48 @@ Besides purely functional languages (Haskell, Elm), almost every language has ad
 - The functional style relies on **pure functions** and **immutable data**.
 - Functions are values: they can be passed and returned (**higher-order functions**).
 - Python tools: `lambda`, `map`, `filter`, `sorted(key=…)`, list comprehensions.
+
+## Lesson exercise: A pure function with map, filter and sorted
+
+Write a **pure** `process(numbers)` function that:
+
+1. keeps the positive numbers (`filter`),
+2. squares each of them (`map`),
+3. sorts them in descending order (`sorted`),
+
+and returns the result in a new list. Use `lambda` functions! The input list must not change, and the same input must always give the same output.
+
+```python starter required
+def process(numbers):
+    # positives = filter(lambda x: ..., numbers)
+    # squares = map(lambda x: ..., positives)
+    # return sorted(..., reverse=True)
+    pass
+
+
+print(process([3, -1, 2, 0, -5, 4]))   # [16, 9, 4]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def process(numbers):
+    positives = filter(lambda x: x > 0, numbers)
+    squares = map(lambda x: x * x, positives)
+    return sorted(squares, reverse=True)
+
+
+print(process([3, -1, 2, 0, -5, 4]))   # [16, 9, 4]
+```
+
+</details>
+
+```python test
+data = [3, -1, 2, 0, -5, 4]
+assert process(data) == [16, 9, 4], "process([3, -1, 2, 0, -5, 4]) → [16, 9, 4]"
+assert process(data) == [16, 9, 4], "It must give the same result the second time too (pure function)."
+assert data == [3, -1, 2, 0, -5, 4], "The input list must not change."
+assert process([]) == [], "An empty list gives an empty list."
+assert isinstance(process([1]), list), "Return a list (sorted() returns a list)."
+```

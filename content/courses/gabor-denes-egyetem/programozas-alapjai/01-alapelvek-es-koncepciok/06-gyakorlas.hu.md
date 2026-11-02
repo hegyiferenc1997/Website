@@ -163,3 +163,52 @@ Elágazás vége
 ```
 
 </details>
+
+## Összefoglaló feladat: Mérési statisztika
+
+Ez a témakör összefoglaló feladata – az összes eddigi lépést használja: algoritmus tervezése, ciklus, elágazás, függvény.
+
+Írj `statisztika(meresek)` függvényt, amely egy számokat tartalmazó listából egy háromelemű listát ad vissza: `[legkisebb, legnagyobb, átlag]`. Az átlagot **két tizedesjegyre kerekítsd** (`round(x, 2)`). A `min()`, `max()` és `sum()` beépített függvényeket **ne** használd – egyetlen ciklusban számold ki mindhármat! Üres listára `None` legyen az eredmény.
+
+```python starter required
+def statisztika(meresek):
+    # 1. Üres lista? → None
+    # 2. Kezdőértékek az első elemből
+    # 3. Egyetlen ciklus: legkisebb, legnagyobb, összeg frissítése
+    # 4. Vissza: [legkisebb, legnagyobb, átlag két tizedesre kerekítve]
+    pass
+
+
+print(statisztika([12, 7, 21, 3]))   # [3, 21, 10.75]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def statisztika(meresek):
+    if len(meresek) == 0:
+        return None
+    legkisebb = meresek[0]
+    legnagyobb = meresek[0]
+    osszeg = 0
+    for x in meresek:
+        if x < legkisebb:
+            legkisebb = x
+        if x > legnagyobb:
+            legnagyobb = x
+        osszeg += x
+    return [legkisebb, legnagyobb, round(osszeg / len(meresek), 2)]
+
+
+print(statisztika([12, 7, 21, 3]))   # [3, 21, 10.75]
+```
+
+</details>
+
+```python test
+assert statisztika([12, 7, 21, 3]) == [3, 21, 10.75], "statisztika([12, 7, 21, 3]) → [3, 21, 10.75]"
+assert statisztika([5]) == [5, 5, 5.0], "Egyetlen mérésnél mindhárom érték ugyanaz."
+assert statisztika([-1.5, 2, 0]) == [-1.5, 2, 0.17], "Negatív és tört számokkal is működjön (átlag: 0.17)."
+assert statisztika([]) is None, "Üres listára None az eredmény."
+```

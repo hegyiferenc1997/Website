@@ -201,3 +201,81 @@ assert reverse("") == ""
 assert reverse("a") == "a"
 print("All checks passed!")
 ```
+
+## Summary exercise: Password checker with helper functions
+
+The summary exercise of the topic: break a task into smaller functions, with parameters, a default value and return values.
+
+Write a `password_problems(password, min_length=8)` function that returns a **list** of the password's problems, in this order:
+
+1. `"too short"` – if it is shorter than `min_length`,
+2. `"no digit"`,
+3. `"no uppercase letter"`,
+4. `"no special character"` – special: anything that is not a letter, a digit or a space.
+
+If the password is fine, return an empty list. Write a small helper function for each rule (e.g. `has_digit(text)`) and call them from the main function!
+
+```python starter required
+def has_digit(text):
+    pass
+
+
+def has_upper(text):
+    pass
+
+
+def has_special(text):
+    pass
+
+
+def password_problems(password, min_length=8):
+    problems = []
+    # the rules in order
+    return problems
+
+
+print(password_problems("apple"))   # all four problems
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def has_digit(text):
+    return any(c.isdigit() for c in text)
+
+
+def has_upper(text):
+    return any(c.isupper() for c in text)
+
+
+def has_special(text):
+    return any(not c.isalnum() and not c.isspace() for c in text)
+
+
+def password_problems(password, min_length=8):
+    problems = []
+    if len(password) < min_length:
+        problems.append("too short")
+    if not has_digit(password):
+        problems.append("no digit")
+    if not has_upper(password):
+        problems.append("no uppercase letter")
+    if not has_special(password):
+        problems.append("no special character")
+    return problems
+
+
+print(password_problems("apple"))   # all four problems
+```
+
+</details>
+
+```python test
+assert password_problems("apple") == ["too short", "no digit", "no uppercase letter", "no special character"], "\"apple\" breaks all four rules."
+assert password_problems("Secret123!") == [], "\"Secret123!\" is a good password."
+assert password_problems("Secr12!x", min_length=10) == ["too short"], "With a minimum of 10 it is too short."
+assert password_problems("SECRETSECRET!") == ["no digit"], "Only the digit is missing."
+assert password_problems("Secret 1234") == ["no special character"], "A space does not count as a special character."
+assert has_digit("a1") and not has_digit("ab"), "The has_digit helper must work too."
+```

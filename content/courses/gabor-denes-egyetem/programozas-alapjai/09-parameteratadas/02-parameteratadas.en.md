@@ -120,3 +120,49 @@ print(deep)      # [[1, 2], [3, 4]]     – completely independent
 - Python: **pass by sharing** – the parameter refers to the same object.
 - For immutable objects this acts like pass by value; for mutable ones in-place changes are visible outside.
 - Against unwanted side effects: copy (`copy()`, `deepcopy()`) or return a new value.
+
+## Lesson exercise: Adding a grade without modifying the gradebook
+
+The `gradebook` is a dictionary: name → list of grades. Write an `add_grade(gradebook, name, grade)` function that returns a **new** gradebook in which the new grade has been added to the student's grades (if the student is not in the gradebook yet, a new entry is created).
+
+It **must not change the given gradebook in any way** – not even the lists inside it! (In Python parameters are passed by sharing: if you appended to the old list, the original gradebook would change too.)
+
+```python starter required
+def add_grade(gradebook, name, grade):
+    new = gradebook        # careful: this is not a copy, it is the same object!
+    new[name].append(grade)
+    return new
+
+
+original = {"Anna": [5, 4]}
+new = add_grade(original, "Anna", 3)
+print(original, new)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def add_grade(gradebook, name, grade):
+    new = {key: list(grades) for key, grades in gradebook.items()}
+    new[name] = new.get(name, []) + [grade]
+    return new
+
+
+original = {"Anna": [5, 4]}
+new = add_grade(original, "Anna", 3)
+print(original, new)
+```
+
+</details>
+
+```python test
+original = {"Anna": [5, 4], "Bob": [2]}
+new = add_grade(original, "Anna", 3)
+assert new == {"Anna": [5, 4, 3], "Bob": [2]}, "In the new gradebook Anna's grades are [5, 4, 3]."
+assert original == {"Anna": [5, 4], "Bob": [2]}, "The original gradebook (and the list inside it) must not change!"
+assert new is not original, "Return a new dictionary."
+new["Bob"].append(5)
+assert original["Bob"] == [2], "The lists of the new gradebook must not be shared with the original either."
+assert add_grade({}, "Cecil", 5) == {"Cecil": [5]}, "A new student gets a new entry."
+```

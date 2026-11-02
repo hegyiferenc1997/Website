@@ -227,3 +227,92 @@ assert beallitas(b, "timeout", 30) == 30
 assert beallitas(b, "retry", 3) == 3
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Pontszámlista feldolgozása hibakezeléssel
+
+A témakör összefoglaló feladata: saját kivétel, `raise`, `try – except – else`, és a hibák összegyűjtése a program leállítása helyett.
+
+Egy fájlból beolvasott sorok listája adott, mindegyik `"név;pont"` alakú. Írj `feldolgoz(sorok)` függvényt, amely egy `(eredmenyek, hibak)` párt ad vissza:
+
+- `eredmenyek`: szótár név → pont (egész szám), a helyes sorokból;
+- `hibak`: a hibás sorokról szóló üzenetek listája, pl. `"3. sor: hibás pontszám"` (a sorszám 1-től számít).
+
+Hibás egy sor, ha nem pontosan egy `;` van benne (`"hibás formátum"`), ha a név üres (`"hiányzó név"`), ha a pont nem egész szám (`"hibás pontszám"`), vagy ha a pont nincs 0 és 100 között (`"tartományon kívül"`). Az üres sorokat egyszerűen hagyd ki.
+
+Írj egy `sor_ertelmez(sor)` segédfüggvényt, amely hibánál egy saját `SorHiba` kivételt dob a megfelelő üzenettel – a fő függvény ezt kapja el.
+
+```python starter required
+class SorHiba(Exception):
+    pass
+
+
+def sor_ertelmez(sor):
+    # visszaad: (nev, pont), vagy raise SorHiba("...")
+    pass
+
+
+def feldolgoz(sorok):
+    eredmenyek, hibak = {}, []
+    for szam, sor in enumerate(sorok, start=1):
+        pass
+    return eredmenyek, hibak
+
+
+print(feldolgoz(["Anna;87", "Béla;sok", "", ";50", "Csilla;101"]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class SorHiba(Exception):
+    pass
+
+
+def sor_ertelmez(sor):
+    reszek = sor.split(";")
+    if len(reszek) != 2:
+        raise SorHiba("hibás formátum")
+    nev, pont_szoveg = reszek[0].strip(), reszek[1].strip()
+    if not nev:
+        raise SorHiba("hiányzó név")
+    try:
+        pont = int(pont_szoveg)
+    except ValueError:
+        raise SorHiba("hibás pontszám") from None
+    if not 0 <= pont <= 100:
+        raise SorHiba("tartományon kívül")
+    return nev, pont
+
+
+def feldolgoz(sorok):
+    eredmenyek, hibak = {}, []
+    for szam, sor in enumerate(sorok, start=1):
+        if not sor.strip():
+            continue
+        try:
+            nev, pont = sor_ertelmez(sor)
+        except SorHiba as hiba:
+            hibak.append(f"{szam}. sor: {hiba}")
+        else:
+            eredmenyek[nev] = pont
+    return eredmenyek, hibak
+
+
+print(feldolgoz(["Anna;87", "Béla;sok", "", ";50", "Csilla;101"]))
+```
+
+</details>
+
+```python test
+eredmenyek, hibak = feldolgoz(["Anna;87", "Béla;sok", "", ";50", "Csilla;101", "Dóra;60;1", " Ede ; 45 "])
+assert eredmenyek == {"Anna": 87, "Ede": 45}, "A helyes sorok: Anna 87, Ede 45 (a szóközöket le kell vágni)."
+assert hibak == ["2. sor: hibás pontszám", "4. sor: hiányzó név", "5. sor: tartományon kívül", "6. sor: hibás formátum"], "A hibalista nem stimmel."
+assert issubclass(SorHiba, Exception), "Legyen SorHiba saját kivételosztály."
+try:
+    sor_ertelmez("X;abc")
+    assert False, "A sor_ertelmez hibás sornál SorHiba-t dobjon."
+except SorHiba as h:
+    assert str(h) == "hibás pontszám", "Az üzenet: hibás pontszám"
+assert feldolgoz([]) == ({}, []), "Üres listára üres eredmény."
+```

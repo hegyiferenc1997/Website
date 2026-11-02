@@ -201,3 +201,81 @@ assert fordit("") == ""
 assert fordit("a") == "a"
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Jelszóellenőrző segédfüggvényekkel
+
+A témakör összefoglaló feladata: bonts egy feladatot kisebb függvényekre, paraméterekkel, alapértelmezett értékkel és visszatérési értékkel.
+
+Írj `jelszo_hibak(jelszo, min_hossz=8)` függvényt, amely egy **listát** ad vissza a jelszó hibáiról, ebben a sorrendben:
+
+1. `"túl rövid"` – ha rövidebb, mint `min_hossz`,
+2. `"nincs benne szám"`,
+3. `"nincs benne nagybetű"`,
+4. `"nincs benne speciális karakter"` – speciális: ami nem betű, nem szám és nem szóköz.
+
+Ha a jelszó jó, üres listát adjon vissza. Minden szabályhoz írj külön kis segédfüggvényt (pl. `van_szam(szoveg)`), és a fő függvény ezeket hívja!
+
+```python starter required
+def van_szam(szoveg):
+    pass
+
+
+def van_nagybetu(szoveg):
+    pass
+
+
+def van_specialis(szoveg):
+    pass
+
+
+def jelszo_hibak(jelszo, min_hossz=8):
+    hibak = []
+    # a szabályok sorban
+    return hibak
+
+
+print(jelszo_hibak("alma"))   # mind a négy hiba
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def van_szam(szoveg):
+    return any(k.isdigit() for k in szoveg)
+
+
+def van_nagybetu(szoveg):
+    return any(k.isupper() for k in szoveg)
+
+
+def van_specialis(szoveg):
+    return any(not k.isalnum() and not k.isspace() for k in szoveg)
+
+
+def jelszo_hibak(jelszo, min_hossz=8):
+    hibak = []
+    if len(jelszo) < min_hossz:
+        hibak.append("túl rövid")
+    if not van_szam(jelszo):
+        hibak.append("nincs benne szám")
+    if not van_nagybetu(jelszo):
+        hibak.append("nincs benne nagybetű")
+    if not van_specialis(jelszo):
+        hibak.append("nincs benne speciális karakter")
+    return hibak
+
+
+print(jelszo_hibak("alma"))   # mind a négy hiba
+```
+
+</details>
+
+```python test
+assert jelszo_hibak("alma") == ["túl rövid", "nincs benne szám", "nincs benne nagybetű", "nincs benne speciális karakter"], "Az \"alma\" mind a négy szabályt megszegi."
+assert jelszo_hibak("Titok123!") == [], "A \"Titok123!\" jó jelszó."
+assert jelszo_hibak("Titok12!", min_hossz=10) == ["túl rövid"], "10-es minimummal már túl rövid."
+assert jelszo_hibak("TITOKTITOK!") == ["nincs benne szám"], "Csak a szám hiányzik."
+assert jelszo_hibak("Titok 1234") == ["nincs benne speciális karakter"], "A szóköz nem számít speciális karakternek."
+assert van_szam("a1") and not van_szam("ab"), "A van_szam segédfüggvény is működjön."
+```

@@ -233,3 +233,27 @@ if (typeof window !== "undefined") {
   // Az oldal elhagyásakor a még el nem küldött változás is kimegy.
   window.addEventListener("pagehide", () => void upload(true));
 }
+
+// ---------------------------------------------------------------------------
+// Sorrendi zárolás: egy lecke csak akkor nyitható meg, ha az összes előző kész
+// ---------------------------------------------------------------------------
+
+/**
+ * Az első még el nem végzett lecke sorszáma (0-tól); ha minden kész, a leckék száma.
+ * Ennél nagyobb sorszámú lecke zárolva van, ez és az előtte lévők nyitva.
+ */
+export function firstOpenIndex(p: Progress | null, key: string, lessons: string[]): number {
+  const done = new Set(p?.doneLessons[key] ?? []);
+  const i = lessons.findIndex((l) => !done.has(l));
+  return i === -1 ? lessons.length : i;
+}
+
+/** Zárolva van-e az index. sorszámú lecke. A szerveren / első kirajzoláskor (p = null) soha. */
+export function isLessonLocked(
+  p: Progress | null,
+  key: string,
+  lessons: string[],
+  index: number,
+): boolean {
+  return p !== null && index > firstOpenIndex(p, key, lessons);
+}

@@ -173,3 +173,78 @@ public static double average(double a, double b) { return (a + b) / 2; }
 - A **docstring** (`"""..."""`) documents a function/class/module; `help()` displays it.
 - PEP 257: short first line, blank line, details; Google style: `Args`, `Returns`, `Raises`.
 - Every project needs a **README**; other languages use Javadoc, XML comments, JSDoc, Doxygen.
+
+## Lesson exercise: Google-style docstring and type hints
+
+Write the `pass_price(age, student)` function that calculates the price of a monthly travel pass:
+
+- for a negative age it raises `ValueError`,
+- under 6 and from 65 the pass is **free** (`0`),
+- otherwise students (`student=True`) pay `3450`, everyone else `9500` forints.
+
+Standard documentation is part of the task too:
+
+- **type hints**: `age: int`, `student: bool`, return value `int`,
+- a **Google-style docstring** with `Args:`, `Returns:` and `Raises:` sections, naming both parameters under `Args:`.
+
+```python starter required
+# function
+def pass_price(age, student):
+    # if
+    if age < 6 or age >= 65:
+        return 0
+    if student:
+        return 3450
+    return 9500
+
+
+print(pass_price(20, True))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def pass_price(age: int, student: bool) -> int:
+    """Calculate the price of a monthly travel pass in forints.
+
+    Args:
+        age: The passenger's age in years.
+        student: True if the passenger has a valid student card.
+
+    Returns:
+        The price of the pass in forints (0 if it is free).
+
+    Raises:
+        ValueError: If the age is negative.
+    """
+    if age < 0:
+        raise ValueError("The age cannot be negative.")
+    # Travel is free under 6 and from 65
+    if age < 6 or age >= 65:
+        return 0
+    return 3450 if student else 9500
+
+
+print(pass_price(20, True))
+```
+
+</details>
+
+```python test
+assert pass_price(20, True) == 3450 and pass_price(20, False) == 9500, "Student: 3450, adult: 9500."
+assert pass_price(5, False) == 0 and pass_price(65, False) == 0 and pass_price(80, True) == 0, "Free under 6 and from 65."
+assert pass_price(6, False) == 9500 and pass_price(64, True) == 3450, "Watch the boundaries (6 and 64 years)!"
+try:
+    pass_price(-1, False)
+    assert False, "A negative age should raise ValueError."
+except ValueError:
+    pass
+hints = pass_price.__annotations__
+assert hints.get("age") is int and hints.get("student") is bool and hints.get("return") is int, "Type hints are missing or wrong (age: int, student: bool, -> int)."
+doc = pass_price.__doc__ or ""
+for section in ("Args:", "Returns:", "Raises:"):
+    assert section in doc, f"The docstring is missing the {section} section."
+args = doc.split("Args:")[1].split("Returns:")[0]
+assert "age" in args and "student" in args, "Describe both parameters (age, student) in the Args: section."
+```

@@ -106,3 +106,65 @@ while True:
 - A program magja az **érzékel–gondolkodik–cselekszik** ciklus.
 - A döntési logikát válaszd külön a hardvertől – így szimulációban is tesztelhető.
 - A robotikában Python (Raspberry Pi, MicroPython, ROS) és C/C++ (Arduino, ROS) a legelterjedtebb.
+
+## A lecke feladata: Érzékel–gondolkodik–cselekszik akkumulátorral
+
+Bővítsd a lecke szimulációját: a robotnak most akkumulátora is van. Írj `ciklus(meresek, akku=100)` függvényt, amely a távolságmérések (cm) listáján lépésenként végigmegy, és visszaadja a kiadott parancsok listáját. Minden lépésben, **ebben a sorrendben** dönt:
+
+1. ha az akku 15 % alatt van: `"töltőre"`, és a ciklus véget ér,
+2. ha a távolság 20 cm alatt van: `"állj"`, és a ciklus véget ér,
+3. ha a távolság 50 cm alatt van: `"lassan"` – ez 2 % akkut fogyaszt,
+4. egyébként: `"előre"` – ez 5 % akkut fogyaszt.
+
+Ha a mérések elfogynak, a ciklus magától véget ér.
+
+```python starter required
+def ciklus(meresek, akku=100):
+    parancsok = []
+    for tavolsag in meresek:
+        if tavolsag < 20:
+            parancsok.append("állj")
+        else:
+            parancsok.append("előre")
+    return parancsok
+
+
+print(ciklus([120, 95, 70, 48, 31, 19, 12]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ciklus(meresek, akku=100):
+    parancsok = []
+    for tavolsag in meresek:
+        # Érzékelés után döntés – a sorrend számít!
+        if akku < 15:
+            parancsok.append("töltőre")
+            break
+        if tavolsag < 20:
+            parancsok.append("állj")
+            break
+        if tavolsag < 50:
+            parancsok.append("lassan")
+            akku -= 2
+        else:
+            parancsok.append("előre")
+            akku -= 5
+    return parancsok
+
+
+print(ciklus([120, 95, 70, 48, 31, 19, 12]))
+```
+
+</details>
+
+```python test
+assert ciklus([120, 95, 70, 48, 31, 19, 12]) == ["előre", "előre", "előre", "lassan", "lassan", "állj"], "A lecke méréssorozatán: 3× előre, 2× lassan, majd állj (és utána már nincs parancs)."
+assert ciklus([100] * 10, akku=25) == ["előre", "előre", "előre", "töltőre"], "25 % akkuval 3 előre lépés után 15 % alá esik: töltőre."
+assert ciklus([30, 30, 30], akku=16) == ["lassan", "töltőre"], "Lassan haladva 2 %-ot fogy; 14 %-nál töltőre."
+assert ciklus([10], akku=10) == ["töltőre"], "Az akku ellenőrzése az első, még akadály előtt is."
+assert ciklus([]) == [], "Mérések nélkül nincs parancs."
+assert ciklus([60, 50, 49, 20]) == ["előre", "előre", "lassan", "lassan"], "A határok: 50 már előre, 20 még lassan."
+```

@@ -156,3 +156,51 @@ print(discounted_price(10_000, 15))
 - **EAFP** is idiomatic in Python, but LBYL is fine in simple cases.
 - Use `with` / `finally` for resources and `logging` for errors.
 - Raise an exception with a clear message immediately for invalid input.
+
+## Lesson exercise: Reading a setting EAFP-style
+
+Settings are stored in a nested dictionary, e.g. `{"database": {"port": "5432"}}`. Write a `setting(config, path, default=None)` function that reads the value along a dot-separated path (e.g. `"database.port"`).
+
+- Work in **EAFP** style: don't check the keys in advance, just try it and catch `KeyError` (and `TypeError`, if you run into something that is not a dictionary on the way).
+- If the value is not found, return `default`.
+- Catch only the exceptions you can handle – a bare `except:` would be a mistake here!
+
+```python starter required
+def setting(config, path, default=None):
+    value = config
+    # for key in path.split("."): ...  try / except KeyError, TypeError
+    return value
+
+
+config = {"database": {"port": "5432", "name": "test"}}
+print(setting(config, "database.port"))   # 5432
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def setting(config, path, default=None):
+    value = config
+    try:
+        for key in path.split("."):
+            value = value[key]
+    except (KeyError, TypeError):
+        return default
+    return value
+
+
+config = {"database": {"port": "5432", "name": "test"}}
+print(setting(config, "database.port"))   # 5432
+```
+
+</details>
+
+```python test
+config = {"database": {"port": "5432", "name": "test"}, "debug": False}
+assert setting(config, "database.port") == "5432", "database.port → \"5432\""
+assert setting(config, "debug") is False, "False is a valid value too (not the default)."
+assert setting(config, "database.password", "none") == "none", "A missing key gives the default."
+assert setting(config, "database.port.number", 0) == 0, "Running into a non-dictionary on the way: default."
+assert setting(config, "log.level") is None, "The default default is None."
+```

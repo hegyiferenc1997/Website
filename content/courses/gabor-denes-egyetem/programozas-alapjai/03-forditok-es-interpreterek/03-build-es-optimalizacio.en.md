@@ -99,3 +99,52 @@ print(f"set:  {set_time:.6f} s")
 - A **build** produces the final product from the source; build systems: Make, CMake, Maven, Gradle, pip, npm.
 - The compiler optimises automatically (constant folding, inlining, dead code elimination).
 - The biggest gain is a good algorithm; optimise only after measuring.
+
+## Lesson exercise: Speed it up: a better algorithm
+
+The `has_duplicates(items)` function tells whether some value appears more than once in the list. The starter code is **correct but slow**: it compares every element with every other one (n² steps). Rewrite it to work in a single pass – remember the elements already seen in a **set**!
+
+The check measures the time on a list of 6000 elements; the slow version fails there.
+
+```python starter required
+def has_duplicates(items):
+    # Slow: compares every pair – rewrite it with a set!
+    for i in range(len(items)):
+        for j in range(i + 1, len(items)):
+            if items[i] == items[j]:
+                return True
+    return False
+
+
+print(has_duplicates([3, 1, 4, 1, 5]))   # True
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def has_duplicates(items):
+    seen = set()
+    for item in items:
+        if item in seen:
+            return True
+        seen.add(item)
+    return False
+
+
+print(has_duplicates([3, 1, 4, 1, 5]))   # True
+```
+
+</details>
+
+```python test
+import time
+assert has_duplicates([3, 1, 4, 1, 5]) is True, "In [3, 1, 4, 1, 5] the 1 appears twice."
+assert has_duplicates([1, 2, 3]) is False, "[1, 2, 3] has no duplicates."
+assert has_duplicates([]) is False, "An empty list has no duplicates."
+big = list(range(6000))
+start = time.perf_counter()
+assert has_duplicates(big) is False
+elapsed = time.perf_counter() - start
+assert elapsed < 0.2, f"Too slow: {elapsed:.2f} s on a 6000-element list. Use a set!"
+```

@@ -237,3 +237,104 @@ if __name__ == "__main__":
 ```
 
 </details>
+
+## Összefoglaló feladat: Pénzváltó parancssori program
+
+Készíts egy teljes parancssori programot `main(argv, env)` belépési ponttal, amely forintot vált át más pénznemre. A `main` **kilépési kódot** ad vissza (`0` = siker), az eredményt pedig kiírja.
+
+- Argumentumok (`argparse`): `osszeg` (float, forintban), `--penznem` (`EUR` vagy `USD`), `--tizedes` (egész, alapértéke `2`).
+- Ha nincs `--penznem`, a `PENZNEM` környezeti változó dönt; ha az sincs, `EUR`.
+- Árfolyamok: `ARFOLYAMOK = {"EUR": 400.0, "USD": 370.0}` (1 egység hány forint). A `ARFOLYAM_EUR` / `ARFOLYAM_USD` környezeti változó felülírhatja.
+- Siker: kiírja például `10000 HUF = 25.00 EUR` (az összeg a megadott alakban, az eredmény `--tizedes` tizedesre formázva), és `0`-t ad vissza.
+- Érvénytelen árfolyam a környezetben (nem szám vagy nem pozitív), vagy érvénytelen `PENZNEM`: kiírja `Hiba: ...`, és `1`-et ad vissza – nem szabad összeomlania.
+- Hibás argumentumoknál az `argparse` `SystemExit`-et dob: kapd el, és add vissza a kódját (`2`).
+
+Az `env` egy szótár (a valódi programban `os.environ`); így a program környezettől függetlenül tesztelhető.
+
+```python starter required
+import argparse
+
+ARFOLYAMOK = {"EUR": 400.0, "USD": 370.0}
+
+
+def main(argv, env):
+    parser = argparse.ArgumentParser(description="Pénzváltó")
+    parser.add_argument("osszeg", type=float)
+    args = parser.parse_args(argv)
+    print(args.osszeg / 400)
+
+
+main(["10000"], {})
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import argparse
+
+ARFOLYAMOK = {"EUR": 400.0, "USD": 370.0}
+
+
+def main(argv, env):
+    parser = argparse.ArgumentParser(description="Pénzváltó")
+    parser.add_argument("osszeg", type=float)
+    parser.add_argument("--penznem", choices=sorted(ARFOLYAMOK))
+    parser.add_argument("--tizedes", type=int, default=2)
+    try:
+        args = parser.parse_args(argv)
+    except SystemExit as hiba:
+        return hiba.code   # az argparse hibakódja (2)
+
+    # A pénznem: argumentum > környezeti változó > alapérték
+    penznem = args.penznem or env.get("PENZNEM", "EUR")
+    if penznem not in ARFOLYAMOK:
+        print(f"Hiba: ismeretlen pénznem: {penznem}")
+        return 1
+
+    arfolyam = ARFOLYAMOK[penznem]
+    if f"ARFOLYAM_{penznem}" in env:
+        try:
+            arfolyam = float(env[f"ARFOLYAM_{penznem}"])
+        except ValueError:
+            print(f"Hiba: az ARFOLYAM_{penznem} nem szám.")
+            return 1
+        if arfolyam <= 0:
+            print(f"Hiba: az ARFOLYAM_{penznem} nem pozitív.")
+            return 1
+
+    eredmeny = args.osszeg / arfolyam
+    osszeg = int(args.osszeg) if args.osszeg.is_integer() else args.osszeg
+    print(f"{osszeg} HUF = {eredmeny:.{args.tizedes}f} {penznem}")
+    return 0
+
+
+if __name__ == "__main__":
+    kod = main(["10000"], {})
+    print("Kilépési kód:", kod)
+```
+
+</details>
+
+```python test
+import contextlib, io
+
+def futas(argv, env):
+    ki = io.StringIO()
+    with contextlib.redirect_stdout(ki), contextlib.redirect_stderr(io.StringIO()):
+        kod = main(argv, env)
+    return kod, ki.getvalue().strip()
+
+assert futas(["10000"], {}) == (0, "10000 HUF = 25.00 EUR"), "Alapból EUR, 2 tizedes: 10000 HUF = 25.00 EUR"
+assert futas(["3700", "--penznem", "USD", "--tizedes", "1"], {}) == (0, "3700 HUF = 10.0 USD"), "A --penznem és a --tizedes kapcsoló nem működik."
+assert futas(["1000"], {"PENZNEM": "USD", "ARFOLYAM_USD": "400"}) == (0, "1000 HUF = 2.50 USD"), "A PENZNEM és az ARFOLYAM_USD környezeti változót is vedd figyelembe."
+assert futas(["800", "--penznem", "EUR"], {"PENZNEM": "USD"}) == (0, "800 HUF = 2.00 EUR"), "Az argumentum erősebb a környezeti változónál."
+assert futas(["1234.6"], {"ARFOLYAM_EUR": "100"}) == (0, "1234.6 HUF = 12.35 EUR"), "Tört összeg is megengedett."
+kod, ki = futas(["1000"], {"ARFOLYAM_EUR": "sok"})
+assert kod == 1 and ki.startswith("Hiba:"), "Nem szám árfolyamnál 'Hiba: ...' és 1-es kód."
+kod, ki = futas(["1000"], {"ARFOLYAM_EUR": "0"})
+assert kod == 1 and ki.startswith("Hiba:"), "Nem pozitív árfolyamnál 'Hiba: ...' és 1-es kód."
+kod, ki = futas(["1000"], {"PENZNEM": "GBP"})
+assert kod == 1 and ki.startswith("Hiba:"), "Ismeretlen PENZNEM-nél 'Hiba: ...' és 1-es kód."
+assert futas(["sok"], {})[0] == 2 and futas([], {})[0] == 2, "Hibás argumentumoknál az argparse kódját (2) add vissza."
+```

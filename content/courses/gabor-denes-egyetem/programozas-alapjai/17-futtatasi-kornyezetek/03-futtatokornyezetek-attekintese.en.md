@@ -114,3 +114,78 @@ print("New mode:", os.environ["APP_MODE"])
 - The runtime provides everything needed to run apart from the code.
 - **Containers** solve the "works on my machine" problem.
 - Pass settings and secrets in **environment variables**, not in the code.
+
+## Lesson exercise: Generating a Dockerfile
+
+Write a `dockerfile(version, entry_point="main.py", dependencies=True)` function that builds the Dockerfile of a Python program following the lesson's sample and returns it **as a string** (lines joined with `"\n"`, no trailing newline):
+
+```text
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "main.py"]
+```
+
+- `version` goes into the `FROM` line; only versions like `3.x` are accepted (e.g. `"3.9"`, `"3.12"`), otherwise `ValueError`,
+- `entry_point` goes into the `CMD` line; if it does not end in `.py`, `ValueError`,
+- if `dependencies` is false, the `COPY requirements.txt .` and `RUN pip …` lines are left out.
+
+```python starter required
+def dockerfile(version, entry_point="main.py", dependencies=True):
+    return "FROM python:3.12-slim\nCMD python main.py"
+
+
+print(dockerfile("3.12"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import re
+
+
+def dockerfile(version, entry_point="main.py", dependencies=True):
+    # Only Python versions like 3.x are accepted
+    if not re.fullmatch(r"3\.\d{1,2}", version):
+        raise ValueError(f"Invalid Python version: {version}")
+    if not entry_point.endswith(".py"):
+        raise ValueError("The entry point must be a .py file.")
+    lines = [f"FROM python:{version}-slim", "WORKDIR /app"]
+    if dependencies:
+        lines += ["COPY requirements.txt .", "RUN pip install --no-cache-dir -r requirements.txt"]
+    lines += ["COPY . .", f'CMD ["python", "{entry_point}"]']
+    return "\n".join(lines)
+
+
+print(dockerfile("3.12"))
+```
+
+</details>
+
+```python test
+expected = "\n".join([
+    "FROM python:3.12-slim",
+    "WORKDIR /app",
+    "COPY requirements.txt .",
+    "RUN pip install --no-cache-dir -r requirements.txt",
+    "COPY . .",
+    'CMD ["python", "main.py"]',
+])
+assert dockerfile("3.12") == expected, "The default Dockerfile does not match the sample."
+d = dockerfile("3.9", "app.py", dependencies=False)
+assert d == 'FROM python:3.9-slim\nWORKDIR /app\nCOPY . .\nCMD ["python", "app.py"]', "Without dependencies the COPY requirements and RUN lines are left out."
+for bad in ("2.7", "3", "python3.12", "3.12.1", "3.x"):
+    try:
+        dockerfile(bad)
+        assert False, f"Version {bad!r} should raise ValueError."
+    except ValueError:
+        pass
+try:
+    dockerfile("3.12", "main.js")
+    assert False, "A non-.py entry point should raise ValueError."
+except ValueError:
+    pass
+```

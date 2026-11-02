@@ -125,3 +125,39 @@ Ez a viselkedés nagyon fontos a **paraméterátadásnál**, amivel külön tém
 - Pythonban nincs külön deklaráció, a változó az első értékadáskor jön létre.
 - Nevek: betűvel kezdődnek, `snake_case`, beszédesek.
 - A `b = a` nem másol, csak egy újabb nevet ad ugyanannak az objektumnak.
+
+## A lecke feladata: Változók cseréje és körbeforgatása
+
+Adott három változó: `a`, `b` és `c`. Forgasd el körbe az értéküket úgy, hogy `a` megkapja `b` régi értékét, `b` a `c`-ét, `c` pedig az `a`-ét – **egyetlen többszörös értékadással**, segédváltozó nélkül. Utána a rövidített értékadással (`+=`) növeld meg `c` értékét 10-zel.
+
+Végül írd ki a három változót egy sorban, szóközzel elválasztva.
+
+```python starter required
+a = 1
+b = 2
+c = 3
+
+# 1. körbeforgatás egyetlen sorban: a, b, c = ...
+# 2. c növelése 10-zel
+# 3. kiírás
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+a = 1
+b = 2
+c = 3
+
+a, b, c = b, c, a
+c += 10
+print(a, b, c)
+```
+
+</details>
+
+```python test
+assert (a, b, c) == (2, 3, 11), "A forgatás után a = 2, b = 3, c = 1, majd c += 10 → 11."
+assert kimenet.strip() == "2 3 11", "A kiírt sor: 2 3 11"
+```

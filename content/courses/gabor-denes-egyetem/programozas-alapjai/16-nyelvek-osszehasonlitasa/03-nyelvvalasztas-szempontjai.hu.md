@@ -88,3 +88,71 @@ print(f"Python ciklus: {python_ido:.4f} s, beépített sum(): {c_ido:.4f} s")
 - A nyelveket **teljesítmény, fejlesztési sebesség, biztonság, ökoszisztéma és hordozhatóság** szerint hasonlítjuk össze.
 - A legfontosabb kompromisszum: **gyors futás ↔ gyors fejlesztés**.
 - A nyelvet **a feladathoz és a platformhoz** választjuk, nem divat alapján.
+
+## A lecke feladata: Súlyozott nyelvválasztás
+
+Egy projekthez nyelvet választunk. Minden nyelvet szempontonként 1–5 pontra értékeltünk, és a szempontoknak súlyuk van. Írd meg a `rangsor(pontszamok, sulyok)` függvényt:
+
+- `pontszamok`: `{nyelv: {szempont: pont}}` szótár, `sulyok`: `{szempont: súly}` szótár,
+- egy nyelv összpontszáma a **súlyozott átlag**: `Σ(pont · súly) / Σ súly`, 2 tizedesre kerekítve; ha egy nyelvnél hiányzik egy szempont, az 0 pontnak számít,
+- az eredmény `(nyelv, pontszám)` párok listája, **csökkenő** pontszám szerint, egyenlőségnél ábécérendben,
+- ha a súlyok összege 0 (vagy nincs súly), dobjon `ValueError`-t.
+
+```python starter required
+def rangsor(pontszamok, sulyok):
+    eredmeny = []
+    for nyelv, pontok in pontszamok.items():
+        eredmeny.append((nyelv, sum(pontok.values())))
+    return eredmeny
+
+
+pontok = {
+    "Python": {"tanulhatóság": 5, "sebesség": 2, "könyvtárak": 5},
+    "C++": {"tanulhatóság": 2, "sebesség": 5, "könyvtárak": 4},
+}
+print(rangsor(pontok, {"tanulhatóság": 2, "sebesség": 1, "könyvtárak": 1}))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def rangsor(pontszamok, sulyok):
+    ossz_suly = sum(sulyok.values())
+    if ossz_suly == 0:
+        raise ValueError("A súlyok összege nem lehet 0.")
+    eredmeny = []
+    for nyelv, pontok in pontszamok.items():
+        # Hiányzó szempont 0 pontot ér
+        osszeg = sum(pontok.get(szempont, 0) * suly for szempont, suly in sulyok.items())
+        eredmeny.append((nyelv, round(osszeg / ossz_suly, 2)))
+    # Csökkenő pontszám, egyenlőségnél ábécérend
+    return sorted(eredmeny, key=lambda par: (-par[1], par[0]))
+
+
+pontok = {
+    "Python": {"tanulhatóság": 5, "sebesség": 2, "könyvtárak": 5},
+    "C++": {"tanulhatóság": 2, "sebesség": 5, "könyvtárak": 4},
+}
+print(rangsor(pontok, {"tanulhatóság": 2, "sebesség": 1, "könyvtárak": 1}))
+```
+
+</details>
+
+```python test
+pontok = {
+    "Python": {"tanulhatóság": 5, "sebesség": 2, "könyvtárak": 5},
+    "C++": {"tanulhatóság": 2, "sebesség": 5, "könyvtárak": 4},
+}
+assert rangsor(pontok, {"tanulhatóság": 2, "sebesség": 1, "könyvtárak": 1}) == [("Python", 4.25), ("C++", 3.25)], "A súlyozott átlag vagy a sorrend hibás."
+assert rangsor(pontok, {"sebesség": 1}) == [("C++", 5.0), ("Python", 2.0)], "Csak a súllyal rendelkező szempontok számítanak."
+e = rangsor({"Go": {"a": 3}, "C": {"a": 3}, "Rust": {}}, {"a": 1})
+assert e == [("C", 3.0), ("Go", 3.0), ("Rust", 0.0)], "Egyenlőségnél ábécérend; a hiányzó szempont 0 pont."
+assert rangsor({"X": {"a": 1, "b": 2}}, {"a": 1, "b": 2}) == [("X", 1.67)], "Kerekíts 2 tizedesre."
+for rossz in ({}, {"a": 0}):
+    try:
+        rangsor(pontok, rossz)
+        assert False, "0 összsúlynál ValueError kell."
+    except ValueError:
+        pass
+```

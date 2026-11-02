@@ -118,3 +118,68 @@ A VS Code-ban a jobb felső sarok ▶ gombjával vagy a terminálban (`python fa
 - Az `if __name__ == "__main__":` választja el a főprogramot az importálható részektől.
 - Parancssori argumentumok: `sys.argv`, kényelmesebben `argparse`.
 - Kezdésnek a **VS Code** vagy az **IDLE**, adatelemzéshez a **Jupyter** ajánlott.
+
+## A lecke feladata: Jegyátlag parancssorból
+
+Írj `jegyatlag(argv)` függvényt, amely az `argparse` segítségével dolgozza fel a parancssori argumentumokat (az `argv` lista, pl. `["5", "4", "4", "--tizedes", "1"]`), és **szöveget ad vissza**:
+
+- `jegyek`: egy vagy több egész szám, csak 1–5 között (`nargs="+"`, `choices=range(1, 6)`),
+- `--tizedes N`: hány tizedesre kerekítsünk (egész, alapértéke `2`),
+- `--reszletes`: kapcsoló (`store_true`); ha meg van adva, a jegyeket is felsorolja.
+
+Az eredmény alakja `Átlag: 4.33`, részletes módban `Jegyek: 5, 4, 4 | Átlag: 4.33`. Érvénytelen bemenetnél (pl. `6`-os jegy) az `argparse` magától leállítja a programot (`SystemExit`) – ezt nem kell elkapnod.
+
+```python starter required
+import argparse
+
+
+def jegyatlag(argv):
+    parser = argparse.ArgumentParser(description="Jegyátlag számítása")
+    parser.add_argument("jegyek", nargs="+")
+    args = parser.parse_args(argv)
+    return f"Átlag: {args.jegyek}"
+
+
+print(jegyatlag(["5", "4", "4"]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import argparse
+
+
+def jegyatlag(argv):
+    parser = argparse.ArgumentParser(description="Jegyátlag számítása")
+    parser.add_argument("jegyek", type=int, nargs="+", choices=range(1, 6))
+    parser.add_argument("--tizedes", type=int, default=2)
+    parser.add_argument("--reszletes", action="store_true")
+    args = parser.parse_args(argv)
+    atlag = round(sum(args.jegyek) / len(args.jegyek), args.tizedes)
+    if args.reszletes:
+        felsorolas = ", ".join(str(j) for j in args.jegyek)
+        return f"Jegyek: {felsorolas} | Átlag: {atlag}"
+    return f"Átlag: {atlag}"
+
+
+print(jegyatlag(["5", "4", "4"]))
+print(jegyatlag(["5", "4", "4", "--tizedes", "1", "--reszletes"]))
+```
+
+</details>
+
+```python test
+import contextlib, io
+assert jegyatlag(["5", "4", "4"]) == "Átlag: 4.33", "Alapból 2 tizedesre kerekíts."
+assert jegyatlag(["5", "4", "4", "--tizedes", "1"]) == "Átlag: 4.3", "A --tizedes kapcsoló állítja a kerekítést."
+assert jegyatlag(["--reszletes", "3", "5"]) == "Jegyek: 3, 5 | Átlag: 4.0", "Részletes módban: Jegyek: 3, 5 | Átlag: 4.0"
+assert jegyatlag(["2"]) == "Átlag: 2.0", "Egyetlen jegy is elég."
+for rossz in (["6"], ["0", "5"], [], ["négy"]):
+    try:
+        with contextlib.redirect_stderr(io.StringIO()):
+            jegyatlag(rossz)
+        assert False, f"Érvénytelen bemenetnél ({rossz}) az argparse-nak le kell állítania a programot."
+    except SystemExit:
+        pass
+```

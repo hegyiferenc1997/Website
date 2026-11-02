@@ -4,12 +4,15 @@ import { useEffect, useId, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { lessonKey } from "./data";
+import { GATE_STYLE_ID } from "./gate-script";
 import { PROGRESS_STYLE_ID } from "./script";
 import {
   courseKey,
   courseRatio,
   doneCount,
+  firstOpenIndex,
   isLessonDone,
+  isLessonLocked,
   setLastCourse,
   setLessonDone,
   setOpenSemesters,
@@ -308,5 +311,166 @@ export function StartCourseLink({
     >
       {children}
     </Link>
+  );
+}
+
+/** Kész-jelző a leckék listájában azoknál a leckéknél, amelyek a feladat teljesítésével lesznek készek. */
+export function LessonDoneMark(props: LessonRef & { title: string }) {
+  const t = useTranslations("Progress");
+  const progress = useProgress();
+  useHandOverFromScript(progress !== null);
+  const done = isLessonDone(progress, courseKey(props.university, props.course), props.lesson);
+  return (
+    <span
+      role="img"
+      aria-label={
+        done
+          ? t("lessonDoneLabel", { title: props.title })
+          : t("lessonTodoLabel", { title: props.title })
+      }
+      data-lesson-done={doneAttr(props.university, props.course, props.lesson)}
+      className={
+        "lesson-done inline-flex size-5 shrink-0 items-center justify-center rounded border border-line font-mono text-xs text-transparent" +
+        (done ? " is-done" : "")
+      }
+    >
+      ✓
+    </span>
+  );
+}
+
+/** A lecke „Kész” állapota a lecke alján, ha a leckét a feladat teljesítése zárja le (nem kattintható). */
+export function LessonExerciseStatus(props: LessonRef) {
+  const t = useTranslations("Progress");
+  const progress = useProgress();
+  useHandOverFromScript(progress !== null);
+  const done = isLessonDone(progress, courseKey(props.university, props.course), props.lesson);
+  return (
+    <p
+      data-lesson-done={doneAttr(props.university, props.course, props.lesson)}
+      className={
+        "lesson-done inline-flex w-fit items-center gap-2 rounded-md border border-line px-4 py-2 font-mono text-sm text-muted" +
+        (done ? " is-done" : "")
+      }
+    >
+      <span data-when="todo" className={done ? "hidden" : ""}>
+        {t("exerciseTodo")}
+      </span>
+      <span data-when="done" className={done ? "" : "hidden"}>
+        ✓ {t("exerciseDone")}
+      </span>
+    </p>
+  );
+}
+
+/** A zárolás ideiglenes stílusának törlése, amint a React a mentett haladással rajzolt. */
+function useHandOverGate(ready: boolean) {
+  useEffect(() => {
+    if (ready) document.getElementById(GATE_STYLE_ID)?.remove();
+  }, [ready]);
+}
+
+// Egy tárgy leckéi a zároláshoz: a tárgy és a leckék sorrendben ("témakör/lecke").
+type GateProps = { university: string; course: string; lessons: string[] };
+
+/** A zárolás állapota az index. leckére, és a hozzá tartozó HTML attribútumok. */
+function useGate({ university, course, lessons }: GateProps, index: number) {
+  const progress = useProgress();
+  useHandOverGate(progress !== null);
+  const key = courseKey(university, course);
+  const locked = isLessonLocked(progress, key, lessons, index);
+  return {
+    progress,
+    key,
+    locked,
+    attrs: { "data-gate": `${key}#${index}`, "data-locked": locked ? "" : undefined },
+  };
+}
+
+/**
+ * Lecke link, amely zárolt, amíg az előző leckék nincsenek kész: halványabb, lakat ikon,
+ * kattintásra nem visz sehova, és egérrel fölé érve megmondja, miért.
+ */
+export function GatedLessonLink({
+  gate,
+  index,
+  href,
+  className,
+  children,
+  current,
+  lockIcon = true,
+}: {
+  gate: GateProps;
+  index: number;
+  href: {
+    pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]";
+    params: { university: string; course: string; topic: string; lesson: string };
+  };
+  className?: string;
+  children: ReactNode;
+  current?: boolean;
+  /** false: a lakat ikont a hívó teszi a megfelelő helyre (a .gate-lock osztállyal). */
+  lockIcon?: boolean;
+}) {
+  const t = useTranslations("Progress");
+  const { locked, attrs } = useGate(gate, index);
+  return (
+    <Link
+      href={href}
+      {...attrs}
+      aria-current={current ? "page" : undefined}
+      aria-disabled={locked || undefined}
+      data-tooltip={locked ? t("lockedHint") : undefined}
+      onClick={(e) => {
+        if (locked) e.preventDefault();
+      }}
+      className={"gate-link " + (className ?? "")}
+    >
+      {lockIcon && (
+        <span className="gate-lock mr-1.5 hidden" aria-hidden="true">
+          🔒
+        </span>
+      )}
+      {children}
+    </Link>
+  );
+}
+
+/**
+ * A lecke tartalma, amely zárolt, amíg az előző leckék nincsenek kész. Ilyenkor a tartalom helyett
+ * egy üzenet látszik, linkkel az első el nem végzett leckére.
+ */
+export function LessonGate({
+  gate,
+  index,
+  children,
+}: {
+  gate: GateProps;
+  index: number;
+  children: ReactNode;
+}) {
+  const t = useTranslations("Progress");
+  const { progress, key, attrs } = useGate(gate, index);
+  // Az első el nem végzett lecke; a haladás betöltése előtt az első lecke (ugyanaz a felirat, nincs villanás).
+  const open =
+    gate.lessons[Math.min(firstOpenIndex(progress, key, gate.lessons), gate.lessons.length - 1)];
+  const [topic, lesson] = (progress ? open : gate.lessons[0]).split("/");
+  return (
+    <div {...attrs} className="grid gap-8">
+      <div className="gate-notice hidden gap-3 rounded-lg border border-line bg-surface p-6">
+        <p className="font-mono text-lg text-highlight">🔒 {t("lockedTitle")}</p>
+        <p className="text-muted">{t("lockedText")}</p>
+        <Link
+          href={{
+            pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]",
+            params: { university: gate.university, course: gate.course, topic, lesson },
+          }}
+          className="w-fit rounded-md bg-accent px-4 py-2 font-mono text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
+        >
+          {t("goToOpen")} →
+        </Link>
+      </div>
+      <div className="gate-content grid gap-8">{children}</div>
+    </div>
   );
 }

@@ -78,3 +78,66 @@ Several indexes measure language popularity (e.g. TIOBE, the Stack Overflow Deve
 - **Java, C#:** static typing, bytecode + virtual machine, enterprise environments.
 - **C, C++, Rust, Go:** compile to machine code; the goal is speed and resource efficiency.
 - The core concepts are shared by all languages – learning a new one is mostly a matter of syntax.
+
+## Lesson exercise: Languages by typing
+
+Store the lesson's table in a dictionary, then query it!
+
+- `TYPING`: a dictionary that maps all **ten** languages of the table (`"Python"`, `"Java"`, `"C#"`, `"Ruby"`, `"C"`, `"C++"`, `"JavaScript"`, `"TypeScript"`, `"Go"`, `"Rust"`) to the word `"static"` or `"dynamic"`,
+- `languages_by_typing(kind)`: returns the **alphabetically sorted** list of languages with the given typing; for an unknown kind (e.g. `"quantum"`) it raises `ValueError`.
+
+```python starter required
+TYPING = {
+    "Python": "dynamic",
+    "Java": "static",
+    # add the other languages!
+}
+
+
+def languages_by_typing(kind):
+    pass
+
+
+print(languages_by_typing("dynamic"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+TYPING = {
+    "Python": "dynamic",
+    "Java": "static",
+    "C#": "static",
+    "Ruby": "dynamic",
+    "C": "static",
+    "C++": "static",
+    "JavaScript": "dynamic",
+    "TypeScript": "static",
+    "Go": "static",
+    "Rust": "static",
+}
+
+
+def languages_by_typing(kind):
+    # Only the two known kinds are accepted
+    if kind not in ("static", "dynamic"):
+        raise ValueError(f"Unknown typing: {kind}")
+    return sorted(lang for lang, t in TYPING.items() if t == kind)
+
+
+print(languages_by_typing("dynamic"))
+```
+
+</details>
+
+```python test
+assert len(TYPING) == 10, "All ten languages of the table must be in the dictionary."
+assert languages_by_typing("dynamic") == ["JavaScript", "Python", "Ruby"], "Dynamically typed: JavaScript, Python, Ruby (alphabetical)."
+assert languages_by_typing("static") == ["C", "C#", "C++", "Go", "Java", "Rust", "TypeScript"], "The list of static languages is wrong."
+try:
+    languages_by_typing("quantum")
+    assert False, "An unknown kind should raise ValueError."
+except ValueError:
+    pass
+```

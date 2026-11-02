@@ -135,3 +135,45 @@ This idea – storing the results of subproblems – is the basis of **dynamic p
 - Every recursion can be turned into a loop and vice versa.
 - Naive recursive Fibonacci is exponential; with iteration or **memoisation** (`@cache`) it is linear.
 - Use recursion for recursively structured tasks, loops for linear ones.
+
+## Lesson exercise: Climbing stairs with memoisation
+
+On a staircase of `n` steps you may climb 1 or 2 steps at a time. In how many ways can you get to the top? Write a `stairs(n)` function!
+
+- For 0 steps there is 1 way (you don't move), for 1 step also 1.
+- For `n` steps: the last move was 1 or 2 steps, so `stairs(n - 1) + stairs(n - 2)`.
+
+Naive recursion – like the Fibonacci trap – is exponentially slow. Use **memoisation** (store already computed values in a dictionary) or **iteration**: the check also asks for `stairs(300)`!
+
+```python starter required
+def stairs(n):
+    pass
+
+
+print(stairs(4))   # 5
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+memo = {0: 1, 1: 1}
+
+
+def stairs(n):
+    if n not in memo:
+        memo[n] = stairs(n - 1) + stairs(n - 2)
+    return memo[n]
+
+
+print(stairs(4))   # 5
+```
+
+</details>
+
+```python test
+assert stairs(4) == 5, "There are 5 ways for 4 steps: 1111, 112, 121, 211, 22."
+assert stairs(0) == 1 and stairs(1) == 1, "1 way for 0 and 1 steps."
+assert stairs(10) == 89, "89 ways for 10 steps."
+assert stairs(300) == 359579325206583560961765665172189099052367214309267232255589801, "stairs(300) is not right – memoise!"
+```

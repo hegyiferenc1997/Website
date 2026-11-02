@@ -154,3 +154,72 @@ for name, function in [("read", read), ("average", average), ("report", report)]
 - Small, unambiguous tasks, fixed module boundaries, a Kanban board.
 - Git: your own branch, small commits, Pull Request, review.
 - The parts of the documentation: **specification, README, developer and user documentation, test report, project log**.
+
+## Lesson exercise: Commit message checker
+
+Your team agreed on a format for commit messages (a simplified version of the popular _Conventional Commits_ standard). Write a `commit_errors(message)` function that returns the **codes** of the broken rules in a list, in the order below (an empty list for a valid message):
+
+1. `"format"`: the first line is not of the form `type: description` or `type(scope): description`, where `type` is one of `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, the scope consists of lowercase letters and hyphens, and the colon is followed by **exactly one** space and a non-empty description,
+2. `"length"`: the first line is longer than 72 characters,
+3. `"period"`: the first line ends with a period,
+4. `"blank_line"`: in a multi-line message the second line is not empty.
+
+Tip: a regular expression is the easiest way to check the format, e.g. `re.fullmatch(...)`.
+
+```python starter required
+def commit_errors(message):
+    errors = []
+    first = message.splitlines()[0]
+    if ":" not in first:
+        errors.append("format")
+    return errors
+
+
+print(commit_errors("feat(reader): CSV reading and its tests"))
+print(commit_errors("fixed some stuff."))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import re
+
+# type, optional (scope), colon, one space, non-empty description
+PATTERN = re.compile(r"(feat|fix|docs|test|refactor|chore)(\([a-z-]+\))?: \S.*")
+
+
+def commit_errors(message):
+    lines = message.splitlines() or [""]
+    first = lines[0]
+    errors = []
+    if not PATTERN.fullmatch(first):
+        errors.append("format")
+    if len(first) > 72:
+        errors.append("length")
+    if first.endswith("."):
+        errors.append("period")
+    if len(lines) > 1 and lines[1].strip():
+        errors.append("blank_line")
+    return errors
+
+
+print(commit_errors("feat(reader): CSV reading and its tests"))
+print(commit_errors("fixed some stuff."))
+```
+
+</details>
+
+```python test
+assert commit_errors("feat(reader): CSV reading and its tests") == [], "A valid message with a scope."
+assert commit_errors("fix: division by zero in the average") == [], "A valid message without a scope."
+assert commit_errors("docs: README\n\nAdded installation steps.") == [], "Multi-line with an empty second line: valid."
+assert commit_errors("fixed some stuff.") == ["format", "period"], "Wrong format and a trailing period."
+assert commit_errors("feature: new menu") == ["format"], "Only the allowed types are valid."
+assert commit_errors("fix:missing space") == ["format"] and commit_errors("fix:  two spaces") == ["format"], "Exactly one space must follow the colon."
+assert commit_errors("fix(Menu): capital scope") == ["format"] and commit_errors("fix: ") == ["format"], "The scope is lowercase and the description is not empty."
+assert commit_errors("feat: " + "x" * 70) == ["length"], "A first line longer than 72 characters."
+assert commit_errors("feat: " + "x" * 66) == [], "Exactly 72 characters is still fine."
+assert commit_errors("test: new tests\nDetails here.") == ["blank_line"], "The second line must be empty."
+assert commit_errors("") == ["format"], "An empty message is a format error."
+```

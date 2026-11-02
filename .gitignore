@@ -45,3 +45,6 @@ next-env.d.ts
 
 # a minta env fájl mehet a repóba
 !.env.example
+
+# a böngészős Python fájljai (a pnpm install másolja be, lásd scripts/copy-pyodide.mjs)
+/public/pyodide/

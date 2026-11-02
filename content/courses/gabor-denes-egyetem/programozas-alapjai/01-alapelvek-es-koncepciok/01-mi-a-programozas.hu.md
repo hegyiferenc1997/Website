@@ -75,3 +75,35 @@ print("Fizetendő:", fizetendo, "Ft")   # kimenet
 - A **program** pontos utasítássorozat, a **programozás** a probléma megértésétől a tesztelésig tart.
 - A gép csak egyszerű lépéseket tud, ezért mindent részletesen le kell írni.
 - A legtöbb program szerkezete: **bemenet → feldolgozás → kimenet**.
+
+## A lecke feladata: Az első programod
+
+Írj programot, amely **két sort** ír ki, pontosan így:
+
+```text
+Helló, világ!
+Programozni tanulok.
+```
+
+Írd meg a kódot, nyomd meg a **Futtatás** gombot, hogy lásd a kimenetet, majd az **Ellenőrzés** gombbal nézesd meg a géppel, hogy jó-e. Ha minden stimmel, a lecke kész, és megnyílik a következő.
+
+```python starter required
+# Írd ide a két print() sort!
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+print("Helló, világ!")
+print("Programozni tanulok.")
+```
+
+</details>
+
+```python test
+sorok = kimenet.splitlines()
+assert len(sorok) == 2, "Pontosan két sort kell kiírni."
+assert sorok[0] == "Helló, világ!", "Az első sor nem stimmel (figyelj a vesszőre és a felkiáltójelre)."
+assert sorok[1] == "Programozni tanulok.", "A második sor nem stimmel (a pont is kell a végére)."
+```

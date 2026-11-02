@@ -218,3 +218,116 @@ print("All checks passed!")
 - A **log** of every stock movement (date, SKU, quantity) in a CSV file.
 - **Search** by part of a name, case-insensitively.
 - Rewrite the tests as a `unittest` class in a separate `test_inventory.py` file.
+
+## Lesson exercise: Order: all or nothing
+
+Extend the warehouse with an `order(items)` method! `items` is a list of `(item_code, quantity)` pairs. An order is an **atomic** operation:
+
+- if **every** item can be fulfilled, it issues all of them from stock and returns the total price of the order (Σ quantity · unit price),
+- if **any** item is invalid (unknown item code, non-positive quantity, or not enough stock), it raises `StockError` and the stock **does not change at all** – not even the items before it are issued,
+- the same item code may appear several times in an order: then the combined quantity must be available.
+
+The starting code already contains a simplified `Warehouse` class; its current `order` issues item by item, so on an error it leaves a "half-done" order behind. Tip: check everything first, and only then modify.
+
+```python starter required
+class StockError(Exception):
+    """An invalid warehouse operation."""
+
+
+class Warehouse:
+    def __init__(self):
+        self.products = {}   # item code -> [name, unit price, quantity]
+
+    def add(self, code, name, price, quantity):
+        self.products[code] = [name, price, quantity]
+
+    def stock(self, code):
+        return self.products[code][2]
+
+    def order(self, items):
+        total = 0
+        for code, qty in items:
+            if self.products[code][2] < qty:
+                raise StockError(f"Not enough: {code}")
+            self.products[code][2] -= qty
+            total += qty * self.products[code][1]
+        return total
+
+
+w = Warehouse()
+w.add("A1", "Screw", 20, 100)
+w.add("B2", "Nut", 15, 10)
+print(w.order([("A1", 30), ("B2", 5)]), w.stock("A1"), w.stock("B2"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from collections import Counter
+
+
+class StockError(Exception):
+    """An invalid warehouse operation."""
+
+
+class Warehouse:
+    def __init__(self):
+        self.products = {}   # item code -> [name, unit price, quantity]
+
+    def add(self, code, name, price, quantity):
+        self.products[code] = [name, price, quantity]
+
+    def stock(self, code):
+        return self.products[code][2]
+
+    def order(self, items):
+        # 1. Validation – nothing is modified yet
+        need = Counter()
+        for code, qty in items:
+            if code not in self.products:
+                raise StockError(f"Unknown item code: {code}")
+            if qty <= 0:
+                raise StockError(f"Invalid quantity: {qty}")
+            need[code] += qty
+        for code, qty in need.items():
+            if self.products[code][2] < qty:
+                raise StockError(f"Not enough stock: {code}")
+        # 2. Execution – nothing can fail here any more
+        total = 0
+        for code, qty in need.items():
+            self.products[code][2] -= qty
+            total += qty * self.products[code][1]
+        return total
+
+
+w = Warehouse()
+w.add("A1", "Screw", 20, 100)
+w.add("B2", "Nut", 15, 10)
+print(w.order([("A1", 30), ("B2", 5)]), w.stock("A1"), w.stock("B2"))
+```
+
+</details>
+
+```python test
+def fresh():
+    w = Warehouse()
+    w.add("A1", "Screw", 20, 100)
+    w.add("B2", "Nut", 15, 10)
+    return w
+
+w = fresh()
+assert w.order([("A1", 30), ("B2", 5)]) == 675, "30 · 20 + 5 · 15 = 675."
+assert w.stock("A1") == 70 and w.stock("B2") == 5, "A successful order reduces the stock."
+for bad in ([("A1", 10), ("B2", 50)], [("A1", 10), ("X9", 1)], [("A1", 10), ("B2", 0)], [("B2", 6), ("B2", 6)]):
+    w = fresh()
+    try:
+        w.order(bad)
+        assert False, f"The order {bad} should raise StockError."
+    except StockError:
+        pass
+    assert w.stock("A1") == 100 and w.stock("B2") == 10, f"After a failed order ({bad}) the stock must not change."
+w = fresh()
+assert w.order([("B2", 4), ("B2", 6)]) == 150 and w.stock("B2") == 0, "The same item code several times: the combined quantity counts."
+assert w.order([]) == 0, "An empty order costs 0."
+```

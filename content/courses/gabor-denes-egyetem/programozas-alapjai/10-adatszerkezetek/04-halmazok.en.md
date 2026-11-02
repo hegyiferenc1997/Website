@@ -98,3 +98,51 @@ print(f, {f: "works as a key too"})
 - Membership tests are **O(1)** on average thanks to the hash table.
 - Operations: `|` union, `&` intersection, `-` difference, `^` symmetric difference.
 - Elements must be immutable (hashable) objects.
+
+## Lesson exercise: Shared and different courses with set operations
+
+Two students' lists of enrolled courses are given (they may contain repetitions). Write a `compare_courses(a, b)` function **using set operations** that returns a dictionary:
+
+- `"shared"`: courses that appear for both (intersection),
+- `"only_a"`: courses only the first student has (difference),
+- `"only_b"`: courses only the second student has,
+- `"total"`: how many different courses appear altogether (size of the union).
+
+The lists (`shared`, `only_a`, `only_b`) must be in **alphabetical order**.
+
+```python starter required
+def compare_courses(a, b):
+    sa, sb = set(a), set(b)
+    # & intersection, - difference, | union; sorted() for the lists
+    pass
+
+
+print(compare_courses(["Maths", "Physics", "Maths"], ["Physics", "Chemistry"]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def compare_courses(a, b):
+    sa, sb = set(a), set(b)
+    return {
+        "shared": sorted(sa & sb),
+        "only_a": sorted(sa - sb),
+        "only_b": sorted(sb - sa),
+        "total": len(sa | sb),
+    }
+
+
+print(compare_courses(["Maths", "Physics", "Maths"], ["Physics", "Chemistry"]))
+```
+
+</details>
+
+```python test
+r = compare_courses(["Maths", "Physics", "Maths"], ["Physics", "Chemistry"])
+assert r == {"shared": ["Physics"], "only_a": ["Maths"], "only_b": ["Chemistry"], "total": 3}, "The example result is not right."
+r = compare_courses(["C", "B", "A"], ["A", "B", "C"])
+assert r == {"shared": ["A", "B", "C"], "only_a": [], "only_b": [], "total": 3}, "Identical courses, in alphabetical order."
+assert compare_courses([], [])["total"] == 0, "Empty lists give 0 courses."
+```

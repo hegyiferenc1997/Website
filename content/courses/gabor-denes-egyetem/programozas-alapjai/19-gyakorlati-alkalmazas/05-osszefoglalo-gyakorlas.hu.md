@@ -305,3 +305,124 @@ print("Minden ellenőrzés sikeres!")
 ## Hogyan tovább?
 
 Ha minden feladat ment: gratulálunk, a félév anyagát elsajátítottad! Gyakorolj tovább a mini projektek bővítési ötleteivel, és a csoportos projektben alkalmazd a tanultakat.
+
+## Összefoglaló feladat: Zárthelyi kiértékelése CSV-ből
+
+A félév záró feladata: egy zárthelyi dolgozat eredményeit kell kiértékelni. Írj `zh_kiertekeles(csv_szoveg)` függvényt! A bemenet pontosvesszővel tagolt CSV szöveg, fejléccel:
+
+```text
+nev;neptun;f1;f2;f3
+Kiss Anna;ABC123;30;25;40
+```
+
+- A három feladat pontszáma egész szám, 0 és 40 között (összesen legfeljebb 120 → de a jegy a **100**-as skálán értendő, a 100 feletti összeg 100-nak számít).
+- Jegy az összpont alapján: 50 alatt `1`, 50–61: `2`, 62–74: `3`, 75–87: `4`, 88-tól `5`.
+- **Hibás sor** (nem öt mező, nem egész pontszám, 0–40-en kívüli pontszám): kimarad a kiértékelésből, a **sorszáma** (a fejléc az 1. sor) a `"hibas"` listába kerül. Az üres sorokat hagyd figyelmen kívül.
+
+Az eredmény szótár:
+
+- `"eredmenyek"`: `(név, összpont, jegy)` hármasok listája, összpont szerint **csökkenő** sorrendben, egyenlőségnél név szerint ábécérendben (az összpont itt a valódi, nem levágott összeg),
+- `"atlag"`: a jegyek átlaga 2 tizedesre kerekítve (ha nincs érvényes sor: `0.0`),
+- `"hibas"`: a hibás sorok sorszámai növekvő sorrendben.
+
+Tipp: `csv.reader(io.StringIO(csv_szoveg), delimiter=";")`, `enumerate(..., start=1)`, `try`/`except ValueError`.
+
+```python starter required
+import csv
+import io
+
+
+def zh_kiertekeles(csv_szoveg):
+    sorok = list(csv.reader(io.StringIO(csv_szoveg), delimiter=";"))
+    eredmenyek = []
+    for sor in sorok[1:]:
+        nev, neptun, f1, f2, f3 = sor
+        eredmenyek.append((nev, int(f1) + int(f2) + int(f3), 0))
+    return {"eredmenyek": eredmenyek, "atlag": 0.0, "hibas": []}
+
+
+ADAT = """nev;neptun;f1;f2;f3
+Kiss Anna;ABC123;30;25;40
+Nagy Béla;XYZ789;10;20;15
+"""
+print(zh_kiertekeles(ADAT))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import csv
+import io
+
+# (alsó határ, jegy) párok csökkenő sorrendben
+HATAROK = [(88, 5), (75, 4), (62, 3), (50, 2)]
+
+
+def jegy(pont):
+    """Az összpontszámhoz tartozó jegy (100 feletti összeg 100-nak számít)."""
+    pont = min(pont, 100)
+    for hatar, j in HATAROK:
+        if pont >= hatar:
+            return j
+    return 1
+
+
+def zh_kiertekeles(csv_szoveg):
+    eredmenyek, hibas = [], []
+    olvaso = csv.reader(io.StringIO(csv_szoveg), delimiter=";")
+    for sorszam, sor in enumerate(olvaso, start=1):
+        if sorszam == 1 or not any(mezo.strip() for mezo in sor):
+            continue            # fejléc vagy üres sor
+        try:
+            if len(sor) != 5:
+                raise ValueError("nem öt mező")
+            pontok = [int(p) for p in sor[2:]]
+            if any(not 0 <= p <= 40 for p in pontok):
+                raise ValueError("pontszám a tartományon kívül")
+        except ValueError:
+            hibas.append(sorszam)
+            continue
+        osszpont = sum(pontok)
+        eredmenyek.append((sor[0].strip(), osszpont, jegy(osszpont)))
+    eredmenyek.sort(key=lambda e: (-e[1], e[0]))
+    atlag = round(sum(e[2] for e in eredmenyek) / len(eredmenyek), 2) if eredmenyek else 0.0
+    return {"eredmenyek": eredmenyek, "atlag": atlag, "hibas": hibas}
+
+
+ADAT = """nev;neptun;f1;f2;f3
+Kiss Anna;ABC123;30;25;40
+Nagy Béla;XYZ789;10;20;15
+"""
+print(zh_kiertekeles(ADAT))
+```
+
+</details>
+
+```python test
+ADAT = """nev;neptun;f1;f2;f3
+Kiss Anna;ABC123;30;25;40
+Nagy Béla;XYZ789;10;20;15
+Tóth Csilla;QWE456;20;20;22
+
+Szabó Dénes;RTY111;20;tizenöt;20
+Varga Emese;UIO222;40;40;40
+Kovács Feri;PAS333;41;0;0
+Fekete Gábor;DFG444;25;25
+Balogh Hanna;HJK555;20;20;22
+"""
+e = zh_kiertekeles(ADAT)
+assert e["hibas"] == [6, 8, 9], "Hibás sorok: 6. (nem szám), 8. (41 pont), 9. (csak négy mező); az üres 5. sor nem hiba."
+assert e["eredmenyek"] == [
+    ("Varga Emese", 120, 5),
+    ("Kiss Anna", 95, 5),
+    ("Balogh Hanna", 62, 3),
+    ("Tóth Csilla", 62, 3),
+    ("Nagy Béla", 45, 1),
+], "Az eredmények (sorrend, összpont, jegy) nem stimmelnek."
+assert e["atlag"] == 3.4, "A jegyek átlaga (5 + 5 + 3 + 3 + 1) / 5 = 3.4."
+hatarok = "nev;neptun;f1;f2;f3\nA;1;10;20;19\nB;2;10;20;20\nC;3;20;20;21\nD;4;20;20;22\nE;5;25;25;24\nF;6;25;25;25\nG;7;30;30;27\nH;8;30;30;28\n"
+jegyek = {nev: j for nev, _, j in zh_kiertekeles(hatarok)["eredmenyek"]}
+assert jegyek == {"A": 1, "B": 2, "C": 2, "D": 3, "E": 3, "F": 4, "G": 4, "H": 5}, "A jegyhatárok: 50, 62, 75, 88."
+assert zh_kiertekeles("nev;neptun;f1;f2;f3\n") == {"eredmenyek": [], "atlag": 0.0, "hibas": []}, "Csak fejléc: üres eredmény, 0.0 átlag."
+```

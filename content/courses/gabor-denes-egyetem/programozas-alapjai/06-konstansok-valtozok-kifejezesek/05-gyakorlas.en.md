@@ -198,3 +198,58 @@ print(f"Total: {price * quantity:.2f}")
 ```
 
 </details>
+
+## Summary exercise: BMI calculator
+
+The summary exercise of the topic: constants, expressions, a conditional expression and formatted output together.
+
+Write a `bmi_report(name, weight_kg, height_cm)` function that returns text such as `"Anna: BMI 22.9 (normal)"`.
+
+- BMI = weight (kg) / height (m)², shown with one decimal (`:.1f`).
+- Categories: below 18.5 `underweight`, below 25 `normal`, otherwise `overweight`. Put the limits in **constants** (`UNDERWEIGHT_LIMIT`, `OVERWEIGHT_LIMIT`) and choose the category with a **conditional expression** (`x if cond else y`), without an `if` statement.
+- For a non-positive weight or height raise `ValueError` (here you may use `if`).
+
+```python starter required
+UNDERWEIGHT_LIMIT = 18.5
+OVERWEIGHT_LIMIT = 25
+
+
+def bmi_report(name, weight_kg, height_cm):
+    pass
+
+
+print(bmi_report("Anna", 62, 164.5))   # Anna: BMI 22.9 (normal)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+UNDERWEIGHT_LIMIT = 18.5
+OVERWEIGHT_LIMIT = 25
+
+
+def bmi_report(name, weight_kg, height_cm):
+    if weight_kg <= 0 or height_cm <= 0:
+        raise ValueError("Weight and height must be positive.")
+    bmi = weight_kg / (height_cm / 100) ** 2
+    category = "underweight" if bmi < UNDERWEIGHT_LIMIT else "normal" if bmi < OVERWEIGHT_LIMIT else "overweight"
+    return f"{name}: BMI {bmi:.1f} ({category})"
+
+
+print(bmi_report("Anna", 62, 164.5))   # Anna: BMI 22.9 (normal)
+```
+
+</details>
+
+```python test
+assert bmi_report("Anna", 62, 164.5) == "Anna: BMI 22.9 (normal)", "The example result is not right."
+assert bmi_report("Bob", 50, 180) == "Bob: BMI 15.4 (underweight)", "50 kg, 180 cm → 15.4, underweight"
+assert bmi_report("Carl", 95, 175) == "Carl: BMI 31.0 (overweight)", "95 kg, 175 cm → 31.0, overweight"
+assert bmi_report("Dora", 75, 173.2) == "Dora: BMI 25.0 (overweight)", "25 is already overweight (25.0023…)."
+try:
+    bmi_report("X", 70, 0)
+    assert False, "A height of 0 must raise ValueError."
+except ValueError:
+    pass
+```

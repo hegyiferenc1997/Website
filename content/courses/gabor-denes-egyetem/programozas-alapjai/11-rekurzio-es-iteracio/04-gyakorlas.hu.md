@@ -207,3 +207,52 @@ assert melyseg([1, 2]) == 1
 assert melyseg([1, [2, [3]], [4]]) == 3
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Permutációk rekurzívan
+
+A témakör összefoglaló feladata. Írj **rekurzív** `permutaciok(szoveg)` függvényt, amely egy szöveg betűinek összes különböző sorrendjét (permutációját) adja vissza **ábécérendű listában**, ismétlődés nélkül. Az `itertools` modult ne használd!
+
+Ötlet: minden betűt egyszer előre veszel, és a maradék betűk permutációit rekurzívan elé fűzöd. Az alapeset az üres (vagy egybetűs) szöveg. Ha a szövegben ismétlődő betű van (pl. `"aab"`), a duplikátumokat szűrd ki (halmazzal).
+
+Például `permutaciok("abc")` → `["abc", "acb", "bac", "bca", "cab", "cba"]`.
+
+```python starter required
+def permutaciok(szoveg):
+    if len(szoveg) <= 1:
+        return [szoveg]
+    eredmeny = set()
+    for i, betu in enumerate(szoveg):
+        maradek = szoveg[:i] + szoveg[i + 1:]
+        # a maradék permutációi elé fűzd a betűt
+    return sorted(eredmeny)
+
+
+print(permutaciok("abc"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def permutaciok(szoveg):
+    if len(szoveg) <= 1:
+        return [szoveg]
+    eredmeny = set()
+    for i, betu in enumerate(szoveg):
+        maradek = szoveg[:i] + szoveg[i + 1:]
+        for vege in permutaciok(maradek):
+            eredmeny.add(betu + vege)
+    return sorted(eredmeny)
+
+
+print(permutaciok("abc"))
+```
+
+</details>
+
+```python test
+assert permutaciok("abc") == ["abc", "acb", "bac", "bca", "cab", "cba"], "Az \"abc\" permutációi nem stimmelnek."
+assert permutaciok("aab") == ["aab", "aba", "baa"], "Ismétlődő betűnél a duplikátumokat ki kell szűrni."
+assert permutaciok("") == [""], "Az üres szöveg egyetlen permutációja az üres szöveg."
+assert len(permutaciok("abcde")) == 120, "5 különböző betűnek 5! = 120 permutációja van."
+```

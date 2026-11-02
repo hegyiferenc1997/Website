@@ -132,3 +132,63 @@ print(data, list(data))
 - Modes: `r` read, `w` overwrite, `a` append, `x` new file, `b` binary.
 - Read line by line: `for line in f:`; write: `write()` (add line breaks yourself), `print(..., file=f)`.
 - For text files always use `encoding="utf-8"`.
+
+## Lesson exercise: Analysing the lines of a file
+
+Write a `file_info(filename)` function that opens a text file with a `with` statement and UTF-8 encoding, and returns a dictionary:
+
+- `"lines"`: the number of lines,
+- `"words"`: the number of words (split on spaces and line breaks),
+- `"longest"`: the text of the longest line without the line ending (for ties the first; `""` for an empty file).
+
+For trying it out, a small file is created at the bottom of the code – the in-browser Python works in its own temporary folder.
+
+```python starter required
+def file_info(filename):
+    with open(filename, encoding="utf-8") as f:
+        lines = f.read().splitlines()
+    # number of lines, number of words, longest line
+    pass
+
+
+with open("sample.txt", "w", encoding="utf-8") as f:
+    f.write("First line\nThis is the longest line here\nEnd\n")
+print(file_info("sample.txt"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def file_info(filename):
+    with open(filename, encoding="utf-8") as f:
+        lines = f.read().splitlines()
+    longest = ""
+    for line in lines:
+        if len(line) > len(longest):
+            longest = line
+    return {
+        "lines": len(lines),
+        "words": sum(len(line.split()) for line in lines),
+        "longest": longest,
+    }
+
+
+with open("sample.txt", "w", encoding="utf-8") as f:
+    f.write("First line\nThis is the longest line here\nEnd\n")
+print(file_info("sample.txt"))
+```
+
+</details>
+
+```python test
+with open("check1.txt", "w", encoding="utf-8") as f:
+    f.write("First line\nThis is the longest line here\nEnd\n")
+assert file_info("check1.txt") == {"lines": 3, "words": 9, "longest": "This is the longest line here"}, "The data of the three-line file is not right."
+with open("check2.txt", "w", encoding="utf-8") as f:
+    f.write("")
+assert file_info("check2.txt") == {"lines": 0, "words": 0, "longest": ""}, "For an empty file 0, 0, \"\"."
+with open("check3.txt", "w", encoding="utf-8") as f:
+    f.write("naïve café")
+assert file_info("check3.txt")["words"] == 2, "It must work with accented text and no final line break."
+```

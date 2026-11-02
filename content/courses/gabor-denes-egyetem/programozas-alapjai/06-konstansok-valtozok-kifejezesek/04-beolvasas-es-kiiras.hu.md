@@ -89,3 +89,43 @@ A formátum leíró felépítése: `{érték:[igazítás][szélesség][.pontoss�
 - Az `input(prompt)` szöveget ad vissza; számoláshoz `int()` vagy `float()` kell.
 - Több érték egy sorból: `split()`, majd átalakítás (`map(int, …)`).
 - A `print` `sep` és `end` paraméterekkel hangolható; a formázás f-stringgel a legegyszerűbb.
+
+## A lecke feladata: Beolvasás és formázott kiírás
+
+Írj `program()` függvényt, amely:
+
+1. beolvassa a felhasználó **nevét** (`input("Neved: ")`),
+2. beolvassa az **életkorát** egész számként (`int(input("Korod: "))`),
+3. kiírja: `Szia, Anna! Jövőre 21 éves leszel.` (a beolvasott adatokkal).
+
+A függvényt az ellenőrzés hívja meg „gépelt” válaszokkal. Ha te magad szeretnéd kipróbálni, írd a kód aljára, hogy `program()`, a **Bemenet** mezőbe pedig két sorba a nevet és a kort – az ellenőrzés előtt viszont ezt a sort töröld ki.
+
+```python starter required
+def program():
+    # nev = input(...)
+    # kor = int(input(...))
+    # print(f"...")
+    pass
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def program():
+    nev = input("Neved: ")
+    kor = int(input("Korod: "))
+    print(f"Szia, {nev}! Jövőre {kor + 1} éves leszel.")
+```
+
+</details>
+
+```python test
+import builtins, contextlib, io
+valaszok = iter(["Anna", "20"])
+builtins.input = lambda kerdes="": next(valaszok)
+kiiras = io.StringIO()
+with contextlib.redirect_stdout(kiiras):
+    program()
+assert kiiras.getvalue().strip().endswith("Szia, Anna! Jövőre 21 éves leszel."), "Anna, 20 esetén: Szia, Anna! Jövőre 21 éves leszel."
+```

@@ -116,3 +116,60 @@ If you don't know where the data goes wrong, **halve** the code: print the value
 - Debugging: **reproduce → error message → narrow down → hypothesis → fix → test**.
 - Tools: `print(f"{x=}")`, `logging`, the **debugger** (breakpoints, Step Over/Into/Out, variables), `breakpoint()`.
 - Methods: rubber duck, bisection (`git bisect`).
+
+## Lesson exercise: Find the bugs in the median
+
+The `median(numbers)` function should return the median of the numbers (the middle element of the sorted sequence; for an even count the average of the two middle ones) – but it has **three bugs**. Use the methods of the lesson: run it with different inputs, print intermediate values (`print`), and think it through step by step!
+
+Things worth trying: an unsorted list, an even-length list, and look at the original list after the call too.
+
+The fixed function must raise `ValueError` for an empty list.
+
+```python starter required
+def median(numbers):
+    numbers.sort()
+    n = len(numbers)
+    middle = n // 2
+    if n % 2 == 1:
+        return numbers[middle]
+    return (numbers[middle] + numbers[middle + 1]) / 2
+
+
+data = [7, 1, 5, 3]
+print(median(data), data)   # should be 4.0 [7, 1, 5, 3]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def median(numbers):
+    if not numbers:
+        raise ValueError("An empty list has no median.")
+    ordered = sorted(numbers)     # the original list must not change
+    n = len(ordered)
+    middle = n // 2
+    if n % 2 == 1:
+        return ordered[middle]
+    return (ordered[middle - 1] + ordered[middle]) / 2
+
+
+data = [7, 1, 5, 3]
+print(median(data), data)   # 4.0 [7, 1, 5, 3]
+```
+
+</details>
+
+```python test
+data = [7, 1, 5, 3]
+assert median(data) == 4.0, "The median of [7, 1, 5, 3] is (3 + 5) / 2 = 4.0 – which two elements are in the middle?"
+assert data == [7, 1, 5, 3], "The function must not reorder the original list (sorted instead of sort)."
+assert median([3, 9, 1]) == 3, "The median of [3, 9, 1] is 3."
+assert median([10, 20]) == 15, "The median of [10, 20] is 15."
+assert median([4]) == 4, "The median of a one-element list is the element itself."
+try:
+    median([])
+    assert False, "An empty list must raise ValueError (not IndexError)."
+except ValueError:
+    pass
+```

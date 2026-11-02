@@ -129,3 +129,46 @@ BaseException
 - **Syntax** error: won't start; **runtime** error: an exception while running; **logic** error: wrong result without a message.
 - Read a traceback **bottom-up**: type → location → call chain.
 - Exceptions form a class hierarchy; catching a parent also catches its subclasses.
+
+## Lesson exercise: Three kinds of errors in one program
+
+All three error types appear in the code below. Run it, read the traceback, and fix them one by one:
+
+1. **syntax error** – the program doesn't even start;
+2. **runtime error** (exception) – concatenating text and a number;
+3. **logic error** – it runs but gives a wrong result (the average is off).
+
+The fixed `average_text(grades)` function should return text like `"The average: 4.0"` (`"No grades"` for an empty list).
+
+```python starter required
+def average_text(grades)
+    if len(grades) == 0:
+        return "No grades"
+    average = sum(grades) / (len(grades) - 1)
+    return "The average: " + average
+
+
+print(average_text([5, 4, 3]))   # The average: 4.0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def average_text(grades):
+    if len(grades) == 0:
+        return "No grades"
+    average = sum(grades) / len(grades)
+    return "The average: " + str(average)
+
+
+print(average_text([5, 4, 3]))   # The average: 4.0
+```
+
+</details>
+
+```python test
+assert average_text([5, 4, 3]) == "The average: 4.0", "[5, 4, 3] → \"The average: 4.0\" (logic error: what do you divide by?)"
+assert average_text([5]) == "The average: 5.0", "It must work with a single grade (the buggy version divides by zero here)."
+assert average_text([]) == "No grades", "An empty list gives: No grades"
+```

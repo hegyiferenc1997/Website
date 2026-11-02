@@ -91,3 +91,61 @@ Python's `float` corresponds to `double` in other languages (8 bytes, IEEE 754 s
 - Python basic types: `int`, `float`, `bool`, `str`, `None`, `complex`.
 - A **literal** writes a value directly in code (`42`, `3.14`, `"apple"`, `True`).
 - Primitive types in C/Java/C# have fixed sizes and can overflow; Python's `int` is unlimited.
+
+## Lesson exercise: What type is it?
+
+Write a `type_name(value)` function that tells the type of a value:
+
+| Example value | Result      |
+| ------------- | ----------- |
+| `42`          | `"integer"` |
+| `3.14`        | `"float"`   |
+| `True`        | `"boolean"` |
+| `"apple"`     | `"string"`  |
+| `None`        | `"none"`    |
+| anything else | `"other"`   |
+
+Careful: in Python `bool` is a "subtype" of `int`, so `isinstance(True, int)` is also true! Think about the order in which you check the types.
+
+```python starter required
+def type_name(value):
+    # isinstance(value, ...) checks in the right order
+    pass
+
+
+print(type_name(42), type_name(True))   # integer boolean
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def type_name(value):
+    if value is None:
+        return "none"
+    if isinstance(value, bool):      # bool must be checked before int!
+        return "boolean"
+    if isinstance(value, int):
+        return "integer"
+    if isinstance(value, float):
+        return "float"
+    if isinstance(value, str):
+        return "string"
+    return "other"
+
+
+print(type_name(42), type_name(True))   # integer boolean
+```
+
+</details>
+
+```python test
+assert type_name(42) == "integer", "42 is an integer."
+assert type_name(-7) == "integer", "-7 is an integer too."
+assert type_name(3.14) == "float", "3.14 is a float."
+assert type_name(True) == "boolean", "True is a boolean – check bool before int!"
+assert type_name(False) == "boolean", "False is a boolean too."
+assert type_name("apple") == "string", "\"apple\" is a string."
+assert type_name(None) == "none", "None: none."
+assert type_name([1, 2]) == "other", "A list: other."
+```

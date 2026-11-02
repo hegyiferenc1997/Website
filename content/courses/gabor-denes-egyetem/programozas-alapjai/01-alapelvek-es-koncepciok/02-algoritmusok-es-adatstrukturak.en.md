@@ -87,3 +87,53 @@ print("Found it in", steps, "steps.")
 - An **algorithm** is an unambiguous, finite, general sequence of steps with input and output.
 - A **data structure** is how data is stored (list, set, dictionary, stack, queue …).
 - A good choice makes the program faster; efficiency is measured with **big O notation**.
+
+## Lesson exercise: Linear search with a step count
+
+Extend the linear search from the lesson: the program should find the `target` number in the list and print **in which step** it found it, exactly like this:
+
+```text
+Found it in 5 steps.
+```
+
+If the number is not in the list, print `Not in the list.` – checking after the loop whether we found it helps here.
+
+```python starter required
+numbers = [8, 3, 9, 1, 7, 4]
+target = 7
+
+steps = 0
+found = False
+for number in numbers:
+    steps += 1
+    # If number equals target: remember that you found it and leave the loop (break).
+
+# Print the result based on the found variable!
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+numbers = [8, 3, 9, 1, 7, 4]
+target = 7
+
+steps = 0
+found = False
+for number in numbers:
+    steps += 1
+    if number == target:
+        found = True
+        break
+
+if found:
+    print("Found it in", steps, "steps.")
+else:
+    print("Not in the list.")
+```
+
+</details>
+
+```python test
+assert output.strip() == "Found it in 5 steps.", "7 is the fifth element, so print: Found it in 5 steps."
+```

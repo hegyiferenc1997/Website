@@ -126,3 +126,56 @@ print(atlag([4, 5]))
 - Saját kivétel: `class SajatHiba(Exception): ...`; érdemes közös őst adni a rokon hibáknak.
 - Üres `raise` – továbbdobás; `raise Uj(...) from eredeti` – láncolás.
 - `assert` – belső ellenőrzés és tesztek, nem bemenet-ellenőrzés.
+
+## A lecke feladata: Saját kivétel a jegyek rögzítéséhez
+
+1. Készíts `ErvenytelenJegyError` nevű saját kivételosztályt, amely a `ValueError`-ból származik.
+2. Írj `jegy_rogzit(jegyek, jegy)` függvényt, amely a jegyet a lista végére fűzi és visszaadja a listát – de ha a jegy nem egész szám (vagy `bool`), vagy nem 1 és 5 közé esik, **dobjon** `ErvenytelenJegyError`-t, amelynek üzenetében benne van a hibás érték.
+
+Hibás jegynél a lista ne változzon meg!
+
+```python starter required
+class ErvenytelenJegyError(ValueError):
+    pass
+
+
+def jegy_rogzit(jegyek, jegy):
+    # ellenőrzés, raise ErvenytelenJegyError(f"..."), majd hozzáfűzés
+    pass
+
+
+print(jegy_rogzit([5], 4))   # [5, 4]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class ErvenytelenJegyError(ValueError):
+    pass
+
+
+def jegy_rogzit(jegyek, jegy):
+    if isinstance(jegy, bool) or not isinstance(jegy, int) or not 1 <= jegy <= 5:
+        raise ErvenytelenJegyError(f"Érvénytelen jegy: {jegy!r}")
+    jegyek.append(jegy)
+    return jegyek
+
+
+print(jegy_rogzit([5], 4))   # [5, 4]
+```
+
+</details>
+
+```python test
+assert issubclass(ErvenytelenJegyError, ValueError), "Az ErvenytelenJegyError a ValueError-ból származzon."
+assert jegy_rogzit([5], 4) == [5, 4], "Érvényes jegynél hozzáfűzi: [5, 4]"
+for rossz in [0, 6, 3.5, "5", True]:
+    lista = [3]
+    try:
+        jegy_rogzit(lista, rossz)
+        assert False, f"A(z) {rossz!r} jegynél ErvenytelenJegyError kell."
+    except ErvenytelenJegyError as h:
+        assert repr(rossz) in str(h) or str(rossz) in str(h), "Az üzenetben legyen benne a hibás érték."
+    assert lista == [3], "Hibás jegynél a lista nem változhat."
+```

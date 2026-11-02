@@ -36,18 +36,20 @@ print("A kódrészletek színezve jelennek meg.")
 - Új lecke: új fájlpár a témakör mappájában. Új témakör: új mappa `topic.json`-nal.
 - Átnevezéskor az URL is megváltozik, és a lecke „kész” jelölése elvész, ezért a már élő leckéket ne nevezd át.
 
-## Kódblokk-szerepek (a későbbi beépített Python-futtatóhoz)
+## Kódblokk-szerepek (a beépített Python-futtatóhoz)
 
 A ` ```python ` után írt második szó a blokk szerepét adja meg. Az oldalon a fejlécben is megjelenik
-(pl. „Python · futtatható példa”), a HTML-ben pedig `data-role` attribútumként – erre épül majd a futtató.
+(pl. „Python · futtatható példa”). A `run` és `starter` blokkok a böngészőben futtatható szerkesztővé
+alakulnak (Pyodide, `src/features/python/`).
 
-| Jelölés                | Jelentés                                                                                           |
-| ---------------------- | -------------------------------------------------------------------------------------------------- |
-| ` ```python run `      | önállóan futtatható példa                                                                          |
-| ` ```python starter `  | egy feladat kiinduló kódja                                                                         |
-| ` ```python solution ` | a feladat megoldása (egy `<details><summary>Megoldás</summary>` blokkban, üres sorokkal körülvéve) |
-| ` ```python test `     | `assert`-ekkel ellenőrzés, a közvetlenül előtte lévő megoldás után fut                             |
-| ` ```python `          | csak megjelenített kód (pl. szándékosan hibás vagy hardvert igénylő példa)                         |
+| Jelölés                        | Jelentés                                                                                           |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- |
+| ` ```python run `              | önállóan futtatható példa                                                                          |
+| ` ```python starter `          | egy feladat kiinduló kódja                                                                         |
+| ` ```python solution `         | a feladat megoldása (egy `<details><summary>Megoldás</summary>` blokkban, üres sorokkal körülvéve) |
+| ` ```python test `             | `assert`-ekkel ellenőrzés, a közvetlenül előtte lévő megoldás után fut                             |
+| ` ```python starter required ` | a lecke **kötelező feladata** (leckénként pontosan egy); a sikeres ellenőrzés teljesíti a leckét   |
+| ` ```python `                  | csak megjelenített kód (pl. szándékosan hibás vagy hardvert igénylő példa)                         |
 
 Szabályok, hogy a blokkok tényleg fussanak:
 
@@ -56,3 +58,9 @@ Szabályok, hogy a blokkok tényleg fussanak:
   `TextTestRunner(stream=sys.stdout)`. A szándékosan hibát dobó példák sima ` ```python ` blokkok.
 - A `pnpm test` (`tests/python-examples.test.ts`) minden `run` blokkot, és minden `solution` + `test` párt
   lefuttat egy üres ideiglenes mappában; ha bármelyik hibázik, a teszt elbukik.
+- A `starter required` blokk utáni első `test` blokk az ellenőrzése. A kiinduló kódnak **el kell buknia**
+  az ellenőrzésen (ezt is teszteljük), a megoldásnak át kell mennie. Az `assert` üzenete a hallgatónak
+  szól, ezért legyen érthető tipp (hu/en).
+- A `test` blokk eléri a futás kimenetét a `kimenet` (angolul `output`) változóban.
+- Minden leckének van kötelező feladata; a témakör utolsó (gyakorló) leckéjéé az összefoglaló feladat.
+  A leckék sorban nyílnak: a következő csak az előzőek teljesítése után.

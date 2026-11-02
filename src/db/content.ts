@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { hasRequiredExercise } from "@/features/lessons/code-info";
 import type { LocalizedText } from "./schema";
 
 // A tananyag beolvasása a content/courses mappából. A seed ebből tölti fel a témaköröket és leckéket.
@@ -30,6 +31,8 @@ export type LessonContent = {
   summary: LocalizedText | null;
   body: LocalizedText;
   minutes: number | null;
+  /** Van-e kötelező feladata (```python starter required blokk a magyar szövegben). */
+  hasExercise: boolean;
 };
 
 /** Egy témakör a leckéivel. */
@@ -118,6 +121,7 @@ function readTopic(dir: string, name: string): TopicContent {
       summary: summary.hu ? summary : null,
       body,
       minutes,
+      hasExercise: hasRequiredExercise(body.hu),
     });
   }
   lessons.sort((a, b) => a.position - b.position);

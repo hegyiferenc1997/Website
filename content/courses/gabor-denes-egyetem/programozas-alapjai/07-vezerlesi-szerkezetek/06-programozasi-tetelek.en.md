@@ -144,3 +144,57 @@ if good:                                    # decision: are there any at all
 - The basic patterns are ready-made templates: **summation, counting, maximum selection, decision, selection, search, filtering**.
 - Many have built-in Python equivalents: `sum`, `max`, `any`, `all`, `index`, comprehensions – but for exams and other languages you need to know the template.
 - Try to break every task down into patterns.
+
+## Lesson exercise: Weather analysis with the basic algorithms
+
+The daily mean temperatures of a month are given in a list. Write an `analyse(temperatures)` function that returns a five-element tuple – each element is one basic algorithm:
+
+1. **summation**: the average temperature rounded to one decimal,
+2. **maximum selection**: the **position** of the warmest day (counting from 1; for ties the first),
+3. **decision**: was there a freezing day (below 0 °C) – `True`/`False`,
+4. **counting**: how many summer days there were (at least 25 °C),
+5. **search**: the position of the first freezing day (from 1), or `None` if there was none.
+
+Write the algorithms with loops (`max()` and `sum()` don't count now!). The list is not empty.
+
+```python starter required
+def analyse(temperatures):
+    # 1. summation  2. maximum selection  3. decision  4. counting  5. search
+    pass
+
+
+print(analyse([3, -2, 7, 26, 25, -1]))   # (9.7, 4, True, 2, 2)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def analyse(temperatures):
+    total = 0
+    max_index = 0
+    summer = 0
+    first_frost = None
+    for i, t in enumerate(temperatures):
+        total += t
+        if t > temperatures[max_index]:
+            max_index = i
+        if t >= 25:
+            summer += 1
+        if t < 0 and first_frost is None:
+            first_frost = i + 1
+    average = round(total / len(temperatures), 1)
+    had_frost = first_frost is not None
+    return (average, max_index + 1, had_frost, summer, first_frost)
+
+
+print(analyse([3, -2, 7, 26, 25, -1]))   # (9.7, 4, True, 2, 2)
+```
+
+</details>
+
+```python test
+assert analyse([3, -2, 7, 26, 25, -1]) == (9.7, 4, True, 2, 2), "The example result is not right."
+assert analyse([10, 12, 12]) == (11.3, 2, False, 0, None), "For equal maximums the first counts; without frost None."
+assert analyse([-5]) == (-5.0, 1, True, 0, 1), "A single freezing day."
+```

@@ -139,3 +139,54 @@ for i in range(10):
 - `sorted()` új listát ad, a `sort()` helyben rendez és `None`-t ad.
 - Listaértelmezés: `[kif for x in gy if felt]`.
 - A lista dinamikus tömb: a végére fűzés gyors, az elejére szúrás lassú.
+
+## A lecke feladata: Két rendezett lista összefésülése
+
+Írj `osszefesul(a, b)` függvényt, amely két **növekvő sorrendű** listából egyetlen növekvő sorrendű listát készít – a `sort()` és a `sorted()` használata nélkül. Két „mutatóval” (indexszel) haladj párhuzamosan a két listán: mindig a kisebbik aktuális elemet vedd át, és lépj tovább abban a listában. Ha az egyik lista elfogyott, a másik maradékát fűzd a végére (szeleteléssel).
+
+A bemeneti listák ne változzanak meg.
+
+```python starter required
+def osszefesul(a, b):
+    i = j = 0
+    eredmeny = []
+    # while i < len(a) and j < len(b): ...
+    # maradékok hozzáfűzése: a[i:] és b[j:]
+    return eredmeny
+
+
+print(osszefesul([1, 4, 9], [2, 3, 10, 12]))   # [1, 2, 3, 4, 9, 10, 12]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def osszefesul(a, b):
+    i = j = 0
+    eredmeny = []
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            eredmeny.append(a[i])
+            i += 1
+        else:
+            eredmeny.append(b[j])
+            j += 1
+    eredmeny.extend(a[i:])
+    eredmeny.extend(b[j:])
+    return eredmeny
+
+
+print(osszefesul([1, 4, 9], [2, 3, 10, 12]))   # [1, 2, 3, 4, 9, 10, 12]
+```
+
+</details>
+
+```python test
+a, b = [1, 4, 9], [2, 3, 10, 12]
+assert osszefesul(a, b) == [1, 2, 3, 4, 9, 10, 12], "A példa összefésülése nem stimmel."
+assert a == [1, 4, 9] and b == [2, 3, 10, 12], "A bemeneti listák nem változhatnak meg."
+assert osszefesul([], [1, 2]) == [1, 2], "Üres listával is működjön."
+assert osszefesul([1, 1], [1]) == [1, 1, 1], "Az ismétlődő elemek is maradjanak meg."
+assert osszefesul([5, 6], [1, 2]) == [1, 2, 5, 6], "Ha az egyik lista minden eleme kisebb."
+```

@@ -128,3 +128,46 @@ print(word)             # Apple
 - Key methods: `strip`, `split`, `join`, `replace`, `upper`, `lower`, `find`, `count`.
 - Use **f-strings** for formatting: `f"{value:.2f}"`.
 - Strings are **immutable**.
+
+## Lesson exercise: A name card with string operations
+
+Write a `name_card(name)` function that turns a messy name into a nice name card text:
+
+- it removes extra spaces (from the start, the end and between words),
+- it writes every part of the name with a capital first letter and the rest in lowercase,
+- it adds the initials in parentheses at the end: the first letters of the parts with dots.
+
+For example `name_card("  smith   ANNA ")` → `"Smith Anna (S.A.)"`.
+
+Tip: `split()`, `capitalize()`, `" ".join(...)`, indexing and an f-string.
+
+```python starter required
+def name_card(name):
+    parts = name.split()    # split() without arguments also handles multiple spaces
+    # nice name parts, initials, then an f-string
+    pass
+
+
+print(name_card("  smith   ANNA "))   # Smith Anna (S.A.)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def name_card(name):
+    parts = [part.capitalize() for part in name.split()]
+    initials = "".join(part[0] + "." for part in parts)
+    return f"{' '.join(parts)} ({initials})"
+
+
+print(name_card("  smith   ANNA "))   # Smith Anna (S.A.)
+```
+
+</details>
+
+```python test
+assert name_card("  smith   ANNA ") == "Smith Anna (S.A.)", "name_card(\"  smith   ANNA \") → \"Smith Anna (S.A.)\""
+assert name_card("john ronald reuel") == "John Ronald Reuel (J.R.R.)", "It must work with three name parts."
+assert name_card("ÉVA") == "Éva (É.)", "It must work with a single part (and accented letters)."
+```

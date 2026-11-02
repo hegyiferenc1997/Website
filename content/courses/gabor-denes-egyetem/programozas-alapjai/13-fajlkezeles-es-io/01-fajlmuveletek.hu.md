@@ -132,3 +132,63 @@ print(adat, list(adat))
 - Módok: `r` olvasás, `w` felülírás, `a` hozzáfűzés, `x` új fájl, `b` bináris.
 - Olvasás soronként: `for sor in f:`; írás: `write()` (sortörést te adod hozzá), `print(..., file=f)`.
 - Szöveges fájlnál mindig: `encoding="utf-8"`.
+
+## A lecke feladata: Fájl sorainak elemzése
+
+Írj `fajl_info(fajlnev)` függvényt, amely `with` utasítással, UTF-8 kódolással megnyit egy szöveges fájlt, és egy szótárat ad vissza:
+
+- `"sorok"`: a sorok száma,
+- `"szavak"`: a szavak száma (szóközök és sortörések mentén),
+- `"leghosszabb"`: a leghosszabb sor szövege a sorvége-jel nélkül (egyenlőségnél az első; üres fájlnál `""`).
+
+A kipróbáláshoz a kód alján létrehozunk egy kis fájlt – a böngészős Python egy saját, ideiglenes mappában dolgozik.
+
+```python starter required
+def fajl_info(fajlnev):
+    with open(fajlnev, encoding="utf-8") as f:
+        sorok = f.read().splitlines()
+    # sorok száma, szavak száma, leghosszabb sor
+    pass
+
+
+with open("proba.txt", "w", encoding="utf-8") as f:
+    f.write("Első sor\nEz a leghosszabb sor itt\nVége\n")
+print(fajl_info("proba.txt"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def fajl_info(fajlnev):
+    with open(fajlnev, encoding="utf-8") as f:
+        sorok = f.read().splitlines()
+    leghosszabb = ""
+    for sor in sorok:
+        if len(sor) > len(leghosszabb):
+            leghosszabb = sor
+    return {
+        "sorok": len(sorok),
+        "szavak": sum(len(sor.split()) for sor in sorok),
+        "leghosszabb": leghosszabb,
+    }
+
+
+with open("proba.txt", "w", encoding="utf-8") as f:
+    f.write("Első sor\nEz a leghosszabb sor itt\nVége\n")
+print(fajl_info("proba.txt"))
+```
+
+</details>
+
+```python test
+with open("ell1.txt", "w", encoding="utf-8") as f:
+    f.write("Első sor\nEz a leghosszabb sor itt\nVége\n")
+assert fajl_info("ell1.txt") == {"sorok": 3, "szavak": 8, "leghosszabb": "Ez a leghosszabb sor itt"}, "A háromsoros fájl adatai nem stimmelnek."
+with open("ell2.txt", "w", encoding="utf-8") as f:
+    f.write("")
+assert fajl_info("ell2.txt") == {"sorok": 0, "szavak": 0, "leghosszabb": ""}, "Üres fájlnál 0, 0, \"\"."
+with open("ell3.txt", "w", encoding="utf-8") as f:
+    f.write("árvíztűrő tükörfúrógép")
+assert fajl_info("ell3.txt")["szavak"] == 2, "Ékezetes szöveg, záró sortörés nélkül is működjön."
+```

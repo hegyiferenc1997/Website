@@ -261,3 +261,84 @@ assert step_count([
 ]) == 7
 print("All checks passed!")
 ```
+
+## Summary exercise: Robot vacuum: what can it clean?
+
+A robot vacuum starts from cell `R` and cleans every free (`.`) cell it can reach by stepping up, down, left or right. Write a `clean(floor)` function that returns a dictionary:
+
+- `"cleaned"`: how many `.` cells it cleaned,
+- `"unreachable"`: how many `.` cells stayed dirty because they cannot be reached,
+- `"floor"`: the new map (list of strings) with `o` in place of the cleaned cells; `R`, the walls and the unreachable cells are unchanged.
+
+Don't modify the input map! The map is surrounded by walls. Tip: breadth-first or depth-first traversal (flood fill) with a set for the visited cells.
+
+```python starter required
+def clean(floor):
+    cleaned = sum(line.count(".") for line in floor)
+    return {"cleaned": cleaned, "unreachable": 0, "floor": floor}
+
+
+FLOOR = [
+    "########",
+    "#R..#..#",
+    "#.#.#..#",
+    "#...####",
+    "########",
+]
+for line in clean(FLOOR)["floor"]:
+    print(line)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from collections import deque
+
+
+def clean(floor):
+    for r, line in enumerate(floor):
+        if "R" in line:
+            start = (r, line.index("R"))
+    # Flood fill: visit every reachable cell
+    seen = {start}
+    queue = deque([start])
+    while queue:
+        r, c = queue.popleft()
+        for nb in ((r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)):
+            if nb not in seen and floor[nb[0]][nb[1]] == ".":
+                seen.add(nb)
+                queue.append(nb)
+    # New map: cleaned cells become o
+    new = []
+    for r, line in enumerate(floor):
+        new.append("".join("o" if (r, c) in seen and ch == "." else ch for c, ch in enumerate(line)))
+    cleaned = len(seen) - 1           # the R cell is not counted
+    total = sum(line.count(".") for line in floor)
+    return {"cleaned": cleaned, "unreachable": total - cleaned, "floor": new}
+
+
+FLOOR = [
+    "########",
+    "#R..#..#",
+    "#.#.#..#",
+    "#...####",
+    "########",
+]
+for line in clean(FLOOR)["floor"]:
+    print(line)
+```
+
+</details>
+
+```python test
+FLOOR = ["########", "#R..#..#", "#.#.#..#", "#...####", "########"]
+copy = list(FLOOR)
+r = clean(FLOOR)
+assert FLOOR == copy, "Don't modify the input map."
+assert r["cleaned"] == 7 and r["unreachable"] == 4, "7 cells are reachable, 4 stay behind the wall."
+assert r["floor"] == ["########", "#Roo#..#", "#o#o#..#", "#ooo####", "########"], "Cleaned cells become o, everything else is unchanged."
+assert clean(["###", "#R#", "###"]) == {"cleaned": 0, "unreachable": 0, "floor": ["###", "#R#", "###"]}, "With no free cells there is nothing to clean."
+r = clean(["#####", "#.#R#", "#.#.#", "#####"])
+assert r["cleaned"] == 1 and r["unreachable"] == 2 and r["floor"][2] == "#.#o#", "It can only move to neighbouring (not diagonal) cells."
+```

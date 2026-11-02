@@ -186,3 +186,94 @@ A 100% lefedettség sem jelenti azt, hogy nincs hiba – csak azt, hogy minden s
 - **unittest:** `TestCase` osztály, `test_` metódusok, `assertEqual`, `assertRaises`, `setUp`.
 - **pytest:** egyszerű függvények sima `assert`-tel, `pytest.raises`, paraméterezés.
 - **doctest:** példák a docstringben; **coverage:** lefedettség mérése.
+
+## A lecke feladata: Egységtesztek a unittest keretrendszerrel
+
+Írj `unittest`-tesztosztályt a lecke `atlag(szamok)` függvényéhez! A `TestAtlag(unittest.TestCase)` osztályban legyen **legalább három** `test_` kezdetű metódus:
+
+- egy egész számos eset (`assertEqual`),
+- egy olyan, ahol az átlag nem egész (pl. `assertAlmostEqual`),
+- egy, amely azt ellenőrzi, hogy üres listára `ValueError` jön (`with self.assertRaises(ValueError):`).
+
+Az ellenőrzés lefuttatja a tesztosztályodat a helyes függvénnyel (minden tesztnek át kell mennie), majd hibás változatokkal – azoknál legalább egy tesztnek el kell buknia.
+
+```python starter required
+import sys
+import unittest
+
+
+def atlag(szamok):
+    if not szamok:
+        raise ValueError("Üres listának nincs átlaga.")
+    return sum(szamok) / len(szamok)
+
+
+class TestAtlag(unittest.TestCase):
+    def test_pelda(self):
+        self.assertTrue(True)   # cseréld le valódi tesztekre!
+
+
+# A tesztek futtatása – az eredmény a kimenetben látszik
+futtato = unittest.TextTestRunner(stream=sys.stdout, verbosity=2)
+futtato.run(unittest.TestLoader().loadTestsFromTestCase(TestAtlag))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import sys
+import unittest
+
+
+def atlag(szamok):
+    if not szamok:
+        raise ValueError("Üres listának nincs átlaga.")
+    return sum(szamok) / len(szamok)
+
+
+class TestAtlag(unittest.TestCase):
+    def test_egesz_atlag(self):
+        self.assertEqual(atlag([2, 4, 6]), 4)
+
+    def test_tort_atlag(self):
+        self.assertAlmostEqual(atlag([1, 2]), 1.5)
+
+    def test_egy_elem(self):
+        self.assertEqual(atlag([7]), 7)
+
+    def test_ures_lista(self):
+        with self.assertRaises(ValueError):
+            atlag([])
+
+
+# A tesztek futtatása – az eredmény a kimenetben látszik
+futtato = unittest.TextTestRunner(stream=sys.stdout, verbosity=2)
+futtato.run(unittest.TestLoader().loadTestsFromTestCase(TestAtlag))
+```
+
+</details>
+
+```python test
+import io, unittest
+
+def futtat():
+    csomag = unittest.TestLoader().loadTestsFromTestCase(TestAtlag)
+    return unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(csomag)
+
+eredmeny = futtat()
+assert eredmeny.testsRun >= 3, f"Legalább három test_ metódus kell (most {eredmeny.testsRun} van)."
+assert eredmeny.wasSuccessful(), "A helyes függvénnyel minden tesztnek át kell mennie."
+
+helyes = atlag
+mutansok = [
+    (lambda s: 0 if not s else sum(s) / len(s), "üres listára 0-t ad hiba helyett"),
+    (lambda s: sum(s) // len(s), "egész osztást használ (1.5 helyett 1)"),
+    (lambda s: sum(s) / (len(s) + 1), "rossz számmal oszt"),
+]
+for mutans, leiras in mutansok:
+    atlag = mutans
+    elkapta = not futtat().wasSuccessful()
+    atlag = helyes
+    assert elkapta, f"A tesztjeid nem vették észre ezt a hibát: {leiras}."
+```

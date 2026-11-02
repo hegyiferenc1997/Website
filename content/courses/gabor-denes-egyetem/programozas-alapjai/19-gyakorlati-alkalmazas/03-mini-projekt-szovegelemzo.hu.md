@@ -145,3 +145,79 @@ print("Minden ellenőrzés sikeres!")
 - **Leghosszabb szó**, **leghosszabb mondat**, a szavak **hosszeloszlása** (hány 1, 2, 3… betűs szó van).
 - Egyszerű **szótövezés**: a gyakori magyar toldalékok (-ban, -ben, -nak, -nek) levágása, hogy a „nyelv” és a „nyelvben” egy szónak számítson.
 - Két szöveg **összehasonlítása**: közös szavak halmazművelettel (`&`).
+
+## A lecke feladata: Bővített szövegstatisztika
+
+Valósítsd meg a szövegelemző egyik bővítési ötletét! Írj `bovitett_statisztika(szoveg)` függvényt, amely szótárat ad vissza:
+
+- `"leghosszabb_szo"`: a leghosszabb szó kisbetűvel (egyenlőségnél az első előforduló),
+- `"hosszeloszlas"`: szótár, amely megadja, hány 1, 2, 3… betűs szó van; a kulcsok **növekvő** sorrendben,
+- `"leghosszabb_mondat"`: a legtöbb szóból álló mondat szövege, a záró írásjel nélkül, a szélein szóköz nélkül (egyenlőségnél az első).
+
+Szónak a betűkből álló részeket tekintjük (`re.findall(r"[^\W\d_]+", ...)`), a mondatokat a `.`, `!` és `?` jelek zárják (az utolsó mondat után lehet, hogy nincs írásjel). Üres szövegre: `{"leghosszabb_szo": "", "hosszeloszlas": {}, "leghosszabb_mondat": ""}`.
+
+```python starter required
+import re
+
+
+def bovitett_statisztika(szoveg):
+    szavak = szoveg.split()
+    return {
+        "leghosszabb_szo": max(szavak, key=len) if szavak else "",
+        "hosszeloszlas": {},
+        "leghosszabb_mondat": "",
+    }
+
+
+print(bovitett_statisztika("Szép napunk van. A Python nyelv igazán könnyen tanulható! Ugye?"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import re
+from collections import Counter
+
+SZO = re.compile(r"[^\W\d_]+")
+
+
+def bovitett_statisztika(szoveg):
+    szavak = SZO.findall(szoveg.lower())
+    leghosszabb_szo = ""
+    for szo in szavak:
+        if len(szo) > len(leghosszabb_szo):
+            leghosszabb_szo = szo
+    eloszlas = Counter(len(szo) for szo in szavak)
+    # Mondatok: írásjelek mentén darabolunk, az üreseket eldobjuk
+    mondatok = [m.strip() for m in re.split(r"[.!?]+", szoveg) if m.strip()]
+    leghosszabb_mondat = ""
+    legtobb = 0
+    for mondat in mondatok:
+        db = len(SZO.findall(mondat))
+        if db > legtobb:
+            legtobb, leghosszabb_mondat = db, mondat
+    return {
+        "leghosszabb_szo": leghosszabb_szo,
+        "hosszeloszlas": dict(sorted(eloszlas.items())),
+        "leghosszabb_mondat": leghosszabb_mondat,
+    }
+
+
+print(bovitett_statisztika("Szép napunk van. A Python nyelv igazán könnyen tanulható! Ugye?"))
+```
+
+</details>
+
+```python test
+e = bovitett_statisztika("Szép napunk van. A Python nyelv igazán könnyen tanulható! Ugye?")
+assert e["leghosszabb_szo"] == "tanulható", "A leghosszabb szó: tanulható."
+assert e["hosszeloszlas"] == {1: 1, 3: 1, 4: 2, 5: 1, 6: 3, 7: 1, 9: 1}, "A szóhossz-eloszlás nem stimmel."
+assert list(e["hosszeloszlas"]) == sorted(e["hosszeloszlas"]), "A hosszeloszlás kulcsai növekvő sorrendben legyenek."
+assert e["leghosszabb_mondat"] == "A Python nyelv igazán könnyen tanulható", "A leghosszabb mondat írásjel és szélső szóközök nélkül."
+e = bovitett_statisztika("Egy kettő három. Négy öt hat")
+assert e["leghosszabb_mondat"] == "Egy kettő három", "Egyenlőségnél az első mondat; az utolsó mondat végén nem kötelező az írásjel."
+assert e["leghosszabb_szo"] == "kettő", "Egyenlő hosszú szavaknál az első."
+assert bovitett_statisztika("") == {"leghosszabb_szo": "", "hosszeloszlas": {}, "leghosszabb_mondat": ""}, "Üres szövegre üres eredmény."
+assert bovitett_statisztika("Hm... 42!!! Jó?")["leghosszabb_mondat"] == "Hm", "Több írásjel egymás után egy mondatvéget jelent; a számok nem szavak."
+```

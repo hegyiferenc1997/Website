@@ -265,3 +265,119 @@ end
 - Az alapszerkezetek (változó, ciklus, elágazás, függvény, osztály) **minden nyelvben megvannak**.
 - A különbségek főleg: **típusmegadás** (statikus vs. dinamikus), **blokkjelölés** (`{}` vs. behúzás vs. `end`), **körítés** (`main`, osztály).
 - Ha egy nyelvet jól ismersz, a következőt sokkal gyorsabban tanulod meg.
+
+## A lecke feladata: Java-osztály Pythonban
+
+Írd át Pythonra az alábbi Java osztályt `BankSzamla` néven!
+
+```java
+public class BankSzamla {
+    private final String tulajdonos;
+    private int egyenleg;
+
+    public BankSzamla(String tulajdonos) { this.tulajdonos = tulajdonos; }
+
+    public void befizet(int osszeg) {
+        if (osszeg <= 0) throw new IllegalArgumentException("Csak pozitív összeg fizethető be.");
+        egyenleg += osszeg;
+    }
+
+    public void kivesz(int osszeg) {
+        if (osszeg <= 0) throw new IllegalArgumentException("Csak pozitív összeg vehető ki.");
+        if (osszeg > egyenleg) throw new IllegalStateException("Nincs elég fedezet.");
+        egyenleg -= osszeg;
+    }
+
+    public int getEgyenleg() { return egyenleg; }
+
+    @Override
+    public String toString() { return tulajdonos + ": " + egyenleg + " Ft"; }
+}
+```
+
+Pythonos megfelelők:
+
+- az `IllegalArgumentException` helyett `ValueError`, az `IllegalStateException` helyett `RuntimeError`,
+- a `getEgyenleg()` getter helyett **csak olvasható** `egyenleg` tulajdonság (`@property`) – az értékadás (`szamla.egyenleg = 5`) dobjon `AttributeError`-t,
+- a privát mezőket `_`-sal kezdd (`_egyenleg`), a `toString()` helyett `__str__`.
+
+```python starter required
+class BankSzamla:
+    def __init__(self, tulajdonos):
+        self.tulajdonos = tulajdonos
+        self.egyenleg = 0
+
+    def getEgyenleg(self):
+        return self.egyenleg
+
+
+sz = BankSzamla("Kiss Anna")
+print(sz.getEgyenleg())
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class BankSzamla:
+    """Egy egyszerű bankszámla (a Java osztály Python megfelelője)."""
+
+    def __init__(self, tulajdonos):
+        self._tulajdonos = tulajdonos
+        self._egyenleg = 0
+
+    def befizet(self, osszeg):
+        if osszeg <= 0:
+            raise ValueError("Csak pozitív összeg fizethető be.")
+        self._egyenleg += osszeg
+
+    def kivesz(self, osszeg):
+        if osszeg <= 0:
+            raise ValueError("Csak pozitív összeg vehető ki.")
+        if osszeg > self._egyenleg:
+            raise RuntimeError("Nincs elég fedezet.")
+        self._egyenleg -= osszeg
+
+    @property
+    def egyenleg(self):
+        # Getter helyett tulajdonság; setter nincs, így csak olvasható
+        return self._egyenleg
+
+    def __str__(self):
+        return f"{self._tulajdonos}: {self._egyenleg} Ft"
+
+
+sz = BankSzamla("Kiss Anna")
+sz.befizet(2000)
+sz.kivesz(500)
+print(sz, sz.egyenleg)
+```
+
+</details>
+
+```python test
+sz = BankSzamla("Kiss Anna")
+assert sz.egyenleg == 0, "Új számla egyenlege 0."
+sz.befizet(2000)
+sz.kivesz(500)
+assert sz.egyenleg == 1500, "2000 befizetés és 500 kivét után 1500 az egyenleg."
+assert str(sz) == "Kiss Anna: 1500 Ft", "A str() alakja: Kiss Anna: 1500 Ft"
+for hibas in (lambda: sz.befizet(0), lambda: sz.befizet(-5), lambda: sz.kivesz(0)):
+    try:
+        hibas()
+        assert False, "Nem pozitív összegnél ValueError kell."
+    except ValueError:
+        pass
+try:
+    sz.kivesz(10000)
+    assert False, "Fedezet nélküli kivétnél RuntimeError kell."
+except RuntimeError:
+    pass
+assert sz.egyenleg == 1500, "Hibás művelet nem változtathatja meg az egyenleget."
+assert isinstance(BankSzamla.__dict__.get("egyenleg"), property), "Az egyenleg legyen @property."
+try:
+    sz.egyenleg = 99
+    assert False, "Az egyenleg legyen csak olvasható (értékadásra AttributeError)."
+except AttributeError:
+    pass
+```

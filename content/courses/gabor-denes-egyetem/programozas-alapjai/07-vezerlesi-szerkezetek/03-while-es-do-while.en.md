@@ -103,3 +103,49 @@ print("Thanks:", number)
 - A loop has a condition and a body; something must change in the body.
 - `while` is **pre-test**: it may run zero times.
 - **do-while** is post-test and runs at least once; in Python use `while True` + `break`.
+
+## Lesson exercise: How long until it adds up?
+
+Write a `years_needed(savings, goal, interest_percent)` function **with a `while` loop**: how many years does it take for the savings to reach (or exceed) the goal with yearly compound interest? Every year the money grows by `interest_percent` percent.
+
+- If the savings already reach the goal at the start, the answer is 0.
+- If the interest is 0 (or negative) and the goal is not reached yet, it would never add up: then return `-1` (otherwise it would be an infinite loop!).
+
+```python starter required
+def years_needed(savings, goal, interest_percent):
+    years = 0
+    # while ... : grow savings, years += 1
+    return years
+
+
+print(years_needed(100000, 150000, 10))   # 5
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def years_needed(savings, goal, interest_percent):
+    if savings >= goal:
+        return 0
+    if interest_percent <= 0:
+        return -1
+    years = 0
+    while savings < goal:
+        savings *= 1 + interest_percent / 100
+        years += 1
+    return years
+
+
+print(years_needed(100000, 150000, 10))   # 5
+```
+
+</details>
+
+```python test
+assert years_needed(100000, 150000, 10) == 5, "100,000 at 10% a year reaches 150,000 in 5 years."
+assert years_needed(1000, 2000, 100) == 1, "At 100% interest it doubles in one year."
+assert years_needed(5000, 5000, 3) == 0, "If the goal is already reached: 0 years."
+assert years_needed(1000, 2000, 0) == -1, "At 0% interest it never adds up: -1."
+assert years_needed(1000, 1001, 0.5) == 1, "It must work with a fractional rate too."
+```

@@ -146,3 +146,53 @@ finally:
 - `try`: a kockázatos kód; `except Típus`: a kezelés; `as e`: a kivétel objektum.
 - Több `except` ág lehet; a specifikusabb kerüljön előre.
 - `else`: ha nem volt kivétel; `finally`: mindig lefut.
+
+## A lecke feladata: Biztonságos osztás
+
+Írj `biztonsagos_osztas(a, b)` függvényt, amely két **szövegként** kapott számot (pl. `"10"`, `"2.5"`) valós számmá alakít és eloszt egymással. A hibákat `try – except` blokkal kezeld, és ilyenkor szöveges üzenetet adj vissza:
+
+- ha valamelyik nem szám (`ValueError`): `"Hibás szám"`,
+- ha nullával osztanál (`ZeroDivisionError`): `"Nullával nem lehet osztani"`,
+- egyébként az eredményt (`float`) – ezt az `else` ágban add vissza.
+
+Több `except` ágat használj, ne egy általános `except`-et!
+
+```python starter required
+def biztonsagos_osztas(a, b):
+    try:
+        pass
+    except ValueError:
+        pass
+    # további ágak: ZeroDivisionError, else
+
+
+print(biztonsagos_osztas("10", "4"))   # 2.5
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def biztonsagos_osztas(a, b):
+    try:
+        eredmeny = float(a) / float(b)
+    except ValueError:
+        return "Hibás szám"
+    except ZeroDivisionError:
+        return "Nullával nem lehet osztani"
+    else:
+        return eredmeny
+
+
+print(biztonsagos_osztas("10", "4"))   # 2.5
+```
+
+</details>
+
+```python test
+assert biztonsagos_osztas("10", "4") == 2.5, "10 / 4 = 2.5"
+assert biztonsagos_osztas("-3", "1.5") == -2.0, "-3 / 1.5 = -2.0"
+assert biztonsagos_osztas("tíz", "2") == "Hibás szám", "Nem szám bemenet: Hibás szám"
+assert biztonsagos_osztas("1", "") == "Hibás szám", "Üres szöveg sem szám."
+assert biztonsagos_osztas("1", "0") == "Nullával nem lehet osztani", "Nullával osztás: Nullával nem lehet osztani"
+```

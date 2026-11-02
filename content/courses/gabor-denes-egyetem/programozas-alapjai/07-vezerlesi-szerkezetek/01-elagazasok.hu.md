@@ -127,3 +127,47 @@ if pont >= 76:          # ez is igaz → ez is kiíródik
 - `if` – egyirányú, `if-else` – kétirányú, `if-elif-else` – többirányú elágazás.
 - Az `elif` ágak közül csak az **első igaz** fut le; a szigorúbb feltételt írd előre.
 - A mély beágyazást logikai operátorokkal vagy átrendezéssel egyszerűsítsd.
+
+## A lecke feladata: Jegy szövegesen
+
+Írj `jegy_szoveg(jegy)` függvényt `if – elif – else` elágazással, amely az 1–5 jegyet szövegesen adja vissza: 1 → `"elégtelen"`, 2 → `"elégséges"`, 3 → `"közepes"`, 4 → `"jó"`, 5 → `"jeles"`. Minden más értékre `"érvénytelen"` legyen az eredmény.
+
+```python starter required
+def jegy_szoveg(jegy):
+    pass
+
+
+print(jegy_szoveg(5))   # jeles
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def jegy_szoveg(jegy):
+    if jegy == 1:
+        return "elégtelen"
+    elif jegy == 2:
+        return "elégséges"
+    elif jegy == 3:
+        return "közepes"
+    elif jegy == 4:
+        return "jó"
+    elif jegy == 5:
+        return "jeles"
+    else:
+        return "érvénytelen"
+
+
+print(jegy_szoveg(5))   # jeles
+```
+
+</details>
+
+```python test
+varhato = {1: "elégtelen", 2: "elégséges", 3: "közepes", 4: "jó", 5: "jeles"}
+for jegy, szoveg in varhato.items():
+    assert jegy_szoveg(jegy) == szoveg, f"A(z) {jegy} jegy szövegesen: {szoveg}"
+for rossz in [0, 6, -1]:
+    assert jegy_szoveg(rossz) == "érvénytelen", f"A(z) {rossz} érvénytelen jegy."
+```

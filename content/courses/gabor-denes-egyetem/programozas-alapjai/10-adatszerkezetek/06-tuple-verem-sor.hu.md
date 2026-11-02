@@ -121,3 +121,54 @@ print(list(sor))
 - **Verem**: LIFO, Pythonban lista `append` + `pop`.
 - **Sor**: FIFO, Pythonban `deque` `append` + `popleft`.
 - A választásnál gondold végig: kell-e sorrend, index, gyors keresés, kulcs, módosíthatóság.
+
+## A lecke feladata: Zárójelek ellenőrzése veremmel
+
+Írj `zarojelek_rendben(szoveg)` függvényt, amely **verem** segítségével eldönti, hogy egy szövegben helyesen vannak-e párosítva a `()`, `[]` és `{}` zárójelek. Minden más karaktert hagyj figyelmen kívül.
+
+- Nyitó zárójelnél tedd a verembe (`append`).
+- Csukónál nézd meg a verem tetejét (`pop`): a hozzá illő nyitónak kell ott lennie – ha üres a verem vagy nem illik, a válasz `False`.
+- A végén a veremnek üresnek kell lennie.
+
+Tipp: egy szótár a párokhoz: `{")": "(", "]": "[", "}": "{"}`.
+
+```python starter required
+def zarojelek_rendben(szoveg):
+    parok = {")": "(", "]": "[", "}": "{"}
+    verem = []
+    for k in szoveg:
+        pass
+    return True
+
+
+print(zarojelek_rendben("f(a[1]) + {x}"))   # True
+print(zarojelek_rendben("(]"))              # False
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def zarojelek_rendben(szoveg):
+    parok = {")": "(", "]": "[", "}": "{"}
+    verem = []
+    for k in szoveg:
+        if k in "([{":
+            verem.append(k)
+        elif k in parok:
+            if not verem or verem.pop() != parok[k]:
+                return False
+    return not verem
+
+
+print(zarojelek_rendben("f(a[1]) + {x}"))   # True
+print(zarojelek_rendben("(]"))              # False
+```
+
+</details>
+
+```python test
+for szoveg, varhato in [("f(a[1]) + {x}", True), ("(]", False), ("", True), ("((", False), ("())", False),
+                        ("{[()()]}", True), ("([)]", False), ("nincs benne zárójel", True), (")(", False)]:
+    assert zarojelek_rendben(szoveg) is varhato, f"{szoveg!r} → {varhato}"
+```

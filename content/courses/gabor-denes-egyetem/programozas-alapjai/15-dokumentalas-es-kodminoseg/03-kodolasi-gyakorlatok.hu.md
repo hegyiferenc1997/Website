@@ -170,3 +170,61 @@ A VS Code-ban ezek bővítményként a gépelés közben jeleznek.
 - Elvek: **beszédes nevek**, **DRY**, **KISS**, **YAGNI**, **egy függvény – egy feladat**, korai visszatérés.
 - **Refaktorálás** csak tesztek védelmében.
 - Használj lintert és formázót (Ruff, Black) – a gép unalmas munkáját bízd a gépre.
+
+## A lecke feladata: Ismétlődő kód átírása (DRY)
+
+Valaki megírta a kiadások kategóriánkénti összesítését – háromszor ugyanazt a ciklust, három rögzített kategóriára. Ha új kategória jön, a kód hallgat róla.
+
+Írd át a `kategoria_osszegek(tetelek)` függvényt a **DRY** („ne ismételd magad”) elv szerint! A `tetelek` `(kategória, összeg)` párok listája. A függvény adjon vissza szótárat:
+
+- **bármilyen** kategóriára működjön (ne legyenek beégetett kategórianevek),
+- a kulcsok sorrendje az első előfordulás sorrendje legyen,
+- az összegeket kerekítsd 2 tizedesre (`round(..., 2)`),
+- üres listára `{}` legyen az eredmény.
+
+```python starter required
+def kategoria_osszegek(tetelek):
+    elelmiszer = 0
+    for kategoria, osszeg in tetelek:
+        if kategoria == "élelmiszer":
+            elelmiszer += osszeg
+    kozlekedes = 0
+    for kategoria, osszeg in tetelek:
+        if kategoria == "közlekedés":
+            kozlekedes += osszeg
+    szorakozas = 0
+    for kategoria, osszeg in tetelek:
+        if kategoria == "szórakozás":
+            szorakozas += osszeg
+    return {"élelmiszer": elelmiszer, "közlekedés": kozlekedes, "szórakozás": szorakozas}
+
+
+print(kategoria_osszegek([("élelmiszer", 1200), ("közlekedés", 450), ("élelmiszer", 800)]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kategoria_osszegek(tetelek):
+    # Egyetlen ciklus, tetszőleges kategóriákra
+    osszegek = {}
+    for kategoria, osszeg in tetelek:
+        osszegek[kategoria] = osszegek.get(kategoria, 0) + osszeg
+    return {k: round(v, 2) for k, v in osszegek.items()}
+
+
+print(kategoria_osszegek([("élelmiszer", 1200), ("közlekedés", 450), ("élelmiszer", 800)]))
+```
+
+</details>
+
+```python test
+e = kategoria_osszegek([("élelmiszer", 1200), ("közlekedés", 450), ("élelmiszer", 800)])
+assert e == {"élelmiszer": 2000, "közlekedés": 450}, "Csak az előforduló kategóriák kerüljenek a szótárba."
+e = kategoria_osszegek([("lakhatás", 90000), ("könyv", 4990.5), ("lakhatás", 5000)])
+assert e == {"lakhatás": 95000, "könyv": 4990.5}, "Új, előre nem ismert kategóriákra is működjön."
+assert list(kategoria_osszegek([("b", 1), ("a", 2), ("b", 3)])) == ["b", "a"], "A kulcsok az első előfordulás sorrendjében jöjjenek."
+assert kategoria_osszegek([("x", 0.1), ("x", 0.2)]) == {"x": 0.3}, "Kerekíts 2 tizedesre."
+assert kategoria_osszegek([]) == {}, "Üres listára üres szótár."
+```

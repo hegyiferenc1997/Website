@@ -150,3 +150,69 @@ print(lapit([1, [2, [3, 4], 5], [[6]], 7]))
 - **Hanoi tornyai:** `2ⁿ − 1` lépés, rekurzívan néhány sor.
 - **Összefésülő rendezés:** O(n log n).
 - Rekurzív szerkezetű adat (fa, egymásba ágyazott lista) → rekurzív bejárás.
+
+## A lecke feladata: Összefésülő rendezés
+
+Írd meg az **összefésülő rendezést** (merge sort) rekurzívan: `osszefesulo_rendezes(lista)` egy új, növekvő sorrendű listát ad vissza – a `sort()` és `sorted()` használata nélkül.
+
+1. Alapeset: a legfeljebb egyelemű lista már rendezett (adj vissza róla másolatot).
+2. Oszd meg: vágd ketté a listát a közepén.
+3. Uralkodj: rendezd a két felet rekurzívan.
+4. Fésüld össze a két rendezett felet (mint az Adatszerkezetek témakör listás feladatában).
+
+```python starter required
+def osszefesul(a, b):
+    # két rendezett lista összefésülése
+    pass
+
+
+def osszefesulo_rendezes(lista):
+    pass
+
+
+print(osszefesulo_rendezes([5, 2, 9, 1, 5, 6]))   # [1, 2, 5, 5, 6, 9]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def osszefesul(a, b):
+    i = j = 0
+    eredmeny = []
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            eredmeny.append(a[i])
+            i += 1
+        else:
+            eredmeny.append(b[j])
+            j += 1
+    return eredmeny + a[i:] + b[j:]
+
+
+def osszefesulo_rendezes(lista):
+    if len(lista) <= 1:
+        return list(lista)
+    kozep = len(lista) // 2
+    bal = osszefesulo_rendezes(lista[:kozep])
+    jobb = osszefesulo_rendezes(lista[kozep:])
+    return osszefesul(bal, jobb)
+
+
+print(osszefesulo_rendezes([5, 2, 9, 1, 5, 6]))   # [1, 2, 5, 5, 6, 9]
+```
+
+</details>
+
+```python test
+import random
+assert osszefesulo_rendezes([5, 2, 9, 1, 5, 6]) == [1, 2, 5, 5, 6, 9], "A példa rendezése nem stimmel."
+assert osszefesulo_rendezes([]) == [], "Üres lista."
+assert osszefesulo_rendezes([3]) == [3], "Egyelemű lista."
+random.seed(1)
+for _ in range(20):
+    adat = [random.randint(-50, 50) for _ in range(random.randint(0, 40))]
+    masolat = list(adat)
+    assert osszefesulo_rendezes(adat) == sorted(adat), f"Rossz rendezés: {adat}"
+    assert adat == masolat, "Az eredeti lista nem változhat meg."
+```

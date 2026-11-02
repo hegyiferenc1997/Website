@@ -89,3 +89,43 @@ The format specifier: `{value:[align][width][.precision][type]}`
 - `input(prompt)` returns text; use `int()` or `float()` for calculations.
 - Several values from one line: `split()`, then convert (`map(int, …)`).
 - `print` can be tuned with `sep` and `end`; formatting is easiest with f-strings.
+
+## Lesson exercise: Reading input and formatted output
+
+Write a `program()` function that:
+
+1. reads the user's **name** (`input("Your name: ")`),
+2. reads their **age** as an integer (`int(input("Your age: "))`),
+3. prints: `Hi, Anna! Next year you will be 21.` (with the data read).
+
+The check calls the function with "typed" answers. If you want to try it yourself, add `program()` at the bottom of the code and type the name and the age on two lines into the **Input** box – but delete that line before checking.
+
+```python starter required
+def program():
+    # name = input(...)
+    # age = int(input(...))
+    # print(f"...")
+    pass
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def program():
+    name = input("Your name: ")
+    age = int(input("Your age: "))
+    print(f"Hi, {name}! Next year you will be {age + 1}.")
+```
+
+</details>
+
+```python test
+import builtins, contextlib, io
+answers = iter(["Anna", "20"])
+builtins.input = lambda prompt="": next(answers)
+printed = io.StringIO()
+with contextlib.redirect_stdout(printed):
+    program()
+assert printed.getvalue().strip().endswith("Hi, Anna! Next year you will be 21."), "For Anna, 20: Hi, Anna! Next year you will be 21."
+```

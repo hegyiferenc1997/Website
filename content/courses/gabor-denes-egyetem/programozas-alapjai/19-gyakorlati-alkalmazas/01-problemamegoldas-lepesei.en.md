@@ -124,3 +124,73 @@ Every function has a docstring. A finished project also needs a README: what the
 - Understand → plan → implement → test → refine → document.
 - Break the task into **small functions** and test each one immediately.
 - Think about **edge cases** and **invalid data**.
+
+## Lesson exercise: Credit index and adjusted credit index
+
+Solve it following the six steps! At Hungarian universities scholarships are often awarded by the **credit index**:
+
+- **credit index** = Σ(credits · grade) over the **passed** courses (grade ≥ 2), divided by **30**,
+- **adjusted credit index** = credit index · passed credits / enrolled credits.
+
+Write a `credit_indices(courses)` function where `courses` is a list of `(name, credits, grade)` triples. The result is the `(credit_index, adjusted)` pair, both rounded to 2 decimals.
+
+- For an empty list the result is `(0.0, 0.0)` – without dividing by zero!
+- For invalid data (the grade is not an integer between 1 and 5, or the credits are not a positive integer) raise `ValueError`.
+
+```python starter required
+def credit_indices(courses):
+    total = sum(credits * grade for name, credits, grade in courses)
+    return (total / 30, total / 30)
+
+
+COURSES = [("Programming basics", 6, 5), ("Mathematics", 5, 3), ("Physics", 4, 1)]
+print(credit_indices(COURSES))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def validate(course):
+    """Raise ValueError for invalid data."""
+    name, credits, grade = course
+    if not isinstance(grade, int) or not 1 <= grade <= 5:
+        raise ValueError(f"{name}: the grade must be an integer between 1 and 5.")
+    if not isinstance(credits, int) or credits <= 0:
+        raise ValueError(f"{name}: the credits must be a positive integer.")
+
+
+def credit_indices(courses):
+    for course in courses:
+        validate(course)
+    enrolled = sum(credits for _, credits, _ in courses)
+    if enrolled == 0:
+        return (0.0, 0.0)
+    # Only passed courses (grade 2 or better) count
+    passed = [(credits, grade) for _, credits, grade in courses if grade >= 2]
+    ci = sum(credits * grade for credits, grade in passed) / 30
+    passed_credits = sum(credits for credits, _ in passed)
+    aci = ci * passed_credits / enrolled
+    return (round(ci, 2), round(aci, 2))
+
+
+COURSES = [("Programming basics", 6, 5), ("Mathematics", 5, 3), ("Physics", 4, 1)]
+print(credit_indices(COURSES))
+```
+
+</details>
+
+```python test
+COURSES = [("Programming basics", 6, 5), ("Mathematics", 5, 3), ("Physics", 4, 1)]
+assert credit_indices(COURSES) == (1.5, 1.1), "A failed course doesn't count in the credit index (45 / 30 = 1.5), but it does in the enrolled credits (1.5 · 11 / 15 = 1.1)."
+assert credit_indices([("A", 30, 5)]) == (5.0, 5.0), "30 credits with all fives: 5.0 and 5.0."
+assert credit_indices([("A", 4, 1), ("B", 2, 1)]) == (0.0, 0.0), "All failed: 0.0 and 0.0."
+assert credit_indices([]) == (0.0, 0.0), "For an empty list (0.0, 0.0), without dividing by zero."
+assert credit_indices([("A", 5, 4), ("B", 3, 3)]) == (0.97, 0.97), "Round to 2 decimals."
+for bad in ([("A", 5, 6)], [("A", 5, 0)], [("A", 0, 3)], [("A", -2, 3)], [("A", 5, 4.5)]):
+    try:
+        credit_indices(bad)
+        assert False, f"Invalid data ({bad}) should raise ValueError."
+    except ValueError:
+        pass
+```

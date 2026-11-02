@@ -144,3 +144,57 @@ if jo_jegyek:                                       # eldöntés: van-e egyálta
 - A programozási tételek kész sablonok: **összegzés, megszámlálás, maximumkiválasztás, eldöntés, kiválasztás, keresés, kiválogatás**.
 - Pythonban sokuknak van beépített megfelelője: `sum`, `max`, `any`, `all`, `index`, listaértelmezés – de a vizsgán és más nyelvekben a sablont kell tudni.
 - A feladatot próbáld meg tételekre bontani.
+
+## A lecke feladata: Időjárás-elemzés a programozási tételekkel
+
+Egy hónap napi középhőmérsékletei adottak egy listában. Írj `elemzes(homersekletek)` függvényt, amely egy ötelemű tuple-t ad vissza – mindegyik egy-egy programozási tétel:
+
+1. **összegzés**: az átlaghőmérséklet egy tizedesre kerekítve,
+2. **maximumkiválasztás**: a legmelegebb nap **sorszáma** (1-től számolva; egyenlőségnél az első),
+3. **eldöntés**: volt-e fagyos nap (0 °C alatti) – `True`/`False`,
+4. **megszámlálás**: hány nyári nap volt (legalább 25 °C),
+5. **keresés**: az első fagyos nap sorszáma (1-től), vagy `None`, ha nem volt.
+
+A tételeket ciklusokkal írd meg (a `max()` és `sum()` most nem ér!). A lista nem üres.
+
+```python starter required
+def elemzes(homersekletek):
+    # 1. összegzés  2. maximumkiválasztás  3. eldöntés  4. megszámlálás  5. keresés
+    pass
+
+
+print(elemzes([3, -2, 7, 26, 25, -1]))   # (9.7, 4, True, 2, 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elemzes(homersekletek):
+    osszeg = 0
+    max_index = 0
+    nyari = 0
+    elso_fagy = None
+    for i, t in enumerate(homersekletek):
+        osszeg += t
+        if t > homersekletek[max_index]:
+            max_index = i
+        if t >= 25:
+            nyari += 1
+        if t < 0 and elso_fagy is None:
+            elso_fagy = i + 1
+    atlag = round(osszeg / len(homersekletek), 1)
+    volt_fagy = elso_fagy is not None
+    return (atlag, max_index + 1, volt_fagy, nyari, elso_fagy)
+
+
+print(elemzes([3, -2, 7, 26, 25, -1]))   # (9.7, 4, True, 2, 2)
+```
+
+</details>
+
+```python test
+assert elemzes([3, -2, 7, 26, 25, -1]) == (9.7, 4, True, 2, 2), "A példa eredménye nem stimmel."
+assert elemzes([10, 12, 12]) == (11.3, 2, False, 0, None), "Egyenlő maximumnál az első számít; fagy nélkül None."
+assert elemzes([-5]) == (-5.0, 1, True, 0, 1), "Egyetlen fagyos nap."
+```

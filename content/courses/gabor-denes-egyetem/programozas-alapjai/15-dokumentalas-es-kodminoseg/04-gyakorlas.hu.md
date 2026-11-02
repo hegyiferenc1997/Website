@@ -206,3 +206,86 @@ assert belepes("anna", False, False) == "Hibás jelszó"
 assert belepes("anna", True, False) == "Sikeres belépés"
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Dokumentált hőmérséklet-osztály
+
+Készíts egy jól dokumentált `Homerseklet` osztályt, amely a témakör minden szabályát betartja:
+
+- `Homerseklet(celsius)`: ha az érték kisebb, mint az abszolút nulla (`-273.15`), dobjon `ValueError`-t; az értéket a `celsius` attribútumban tárolja,
+- `fahrenheit()`: a hőmérséklet Fahrenheitben (`C * 9 / 5 + 32`),
+- `kelvin()`: a hőmérséklet Kelvinben (`C + 273.15`),
+- `Homerseklet.fahrenheitbol(f)`: **osztálymetódus** (`@classmethod`), amely Fahrenheit-értékből hoz létre példányt,
+- `repr()`-je legyen `Homerseklet(21.5)` alakú.
+
+Dokumentáció: az osztálynak és **minden** nyilvános metódusnak (`__init__` kivételével) legyen docstringje, a nevek feleljenek meg a PEP 8-nak, és ne legyenek „mágikus számok” szétszórva – az abszolút nullát tedd egy `ABSZOLUT_NULLA` osztályszintű konstansba.
+
+```python starter required
+class Homerseklet:
+    def __init__(self, c):
+        self.celsius = c
+
+    def fahrenheit(self):
+        return self.celsius * 9 / 5 + 32
+
+
+print(Homerseklet(21.5).fahrenheit())
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class Homerseklet:
+    """Egy hőmérséklet-érték, Celsius-fokban tárolva."""
+
+    ABSZOLUT_NULLA = -273.15
+
+    def __init__(self, celsius):
+        if celsius < self.ABSZOLUT_NULLA:
+            raise ValueError("Az abszolút nullánál nem lehet hidegebb.")
+        self.celsius = celsius
+
+    @classmethod
+    def fahrenheitbol(cls, f):
+        """Új példányt hoz létre egy Fahrenheit-értékből."""
+        return cls((f - 32) * 5 / 9)
+
+    def fahrenheit(self):
+        """Visszaadja a hőmérsékletet Fahrenheitben."""
+        return self.celsius * 9 / 5 + 32
+
+    def kelvin(self):
+        """Visszaadja a hőmérsékletet Kelvinben."""
+        return self.celsius - self.ABSZOLUT_NULLA
+
+    def __repr__(self):
+        return f"Homerseklet({self.celsius})"
+
+
+h = Homerseklet(21.5)
+print(h, h.fahrenheit(), h.kelvin())
+print(Homerseklet.fahrenheitbol(212))
+```
+
+</details>
+
+```python test
+h = Homerseklet(21.5)
+assert h.celsius == 21.5, "Az értéket a celsius attribútumban tárold."
+assert abs(h.fahrenheit() - 70.7) < 1e-9, "21,5 °C = 70,7 °F."
+assert abs(Homerseklet(0).kelvin() - 273.15) < 1e-9, "0 °C = 273,15 K."
+assert repr(h) == "Homerseklet(21.5)", "A repr() alakja: Homerseklet(21.5)."
+f = Homerseklet.fahrenheitbol(212)
+assert isinstance(f, Homerseklet) and abs(f.celsius - 100) < 1e-9, "212 °F = 100 °C, és Homerseklet példányt kell adni."
+assert isinstance(Homerseklet.__dict__.get("fahrenheitbol"), classmethod), "A fahrenheitbol legyen @classmethod."
+assert getattr(Homerseklet, "ABSZOLUT_NULLA", None) == -273.15, "Kell egy ABSZOLUT_NULLA = -273.15 osztálykonstans."
+Homerseklet(-273.15)
+try:
+    Homerseklet(-300)
+    assert False, "Az abszolút nulla alatt ValueError kell."
+except ValueError:
+    pass
+assert (Homerseklet.__doc__ or "").strip(), "Az osztálynak legyen docstringje."
+for nev in ("fahrenheit", "kelvin", "fahrenheitbol"):
+    assert (getattr(Homerseklet, nev).__doc__ or "").strip(), f"A(z) {nev} metódusnak legyen docstringje."
+```

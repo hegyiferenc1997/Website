@@ -116,3 +116,60 @@ Ha nem tudod, hol romlik el az adat, **felezd meg** a kódot: írasd ki az ért�
 - Hibakeresés: **reprodukálás → hibaüzenet → szűkítés → hipotézis → javítás → teszt**.
 - Eszközök: `print(f"{x=}")`, `logging`, **debugger** (töréspont, Step Over/Into/Out, változók), `breakpoint()`.
 - Módszerek: gumikacsa, felezés (`git bisect`).
+
+## A lecke feladata: Keresd meg a hibákat a mediánban
+
+A `median(szamok)` függvény a számok mediánját (a rendezett sor középső elemét; páros darabszámnál a két középső átlagát) adná vissza – de **három hiba** van benne. Használd a lecke módszereit: futtasd különböző bemenetekkel, írj ki köztes értékeket (`print`), és gondold végig lépésenként!
+
+Tippek, mit érdemes kipróbálni: rendezetlen listát, páros hosszú listát, és nézd meg a hívás után az eredeti listát is.
+
+A javított függvény üres listára dobjon `ValueError`-t.
+
+```python starter required
+def median(szamok):
+    szamok.sort()
+    n = len(szamok)
+    kozep = n // 2
+    if n % 2 == 1:
+        return szamok[kozep]
+    return (szamok[kozep] + szamok[kozep + 1]) / 2
+
+
+adat = [7, 1, 5, 3]
+print(median(adat), adat)   # 4.0 [7, 1, 5, 3] kellene
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def median(szamok):
+    if not szamok:
+        raise ValueError("Üres listának nincs mediánja.")
+    rendezett = sorted(szamok)     # az eredeti lista ne változzon
+    n = len(rendezett)
+    kozep = n // 2
+    if n % 2 == 1:
+        return rendezett[kozep]
+    return (rendezett[kozep - 1] + rendezett[kozep]) / 2
+
+
+adat = [7, 1, 5, 3]
+print(median(adat), adat)   # 4.0 [7, 1, 5, 3]
+```
+
+</details>
+
+```python test
+adat = [7, 1, 5, 3]
+assert median(adat) == 4.0, "[7, 1, 5, 3] mediánja (3 + 5) / 2 = 4.0 – melyik két elem a középső?"
+assert adat == [7, 1, 5, 3], "A függvény nem rendezheti át az eredeti listát (sort helyett sorted)."
+assert median([3, 9, 1]) == 3, "[3, 9, 1] mediánja 3."
+assert median([10, 20]) == 15, "[10, 20] mediánja 15."
+assert median([4]) == 4, "Egyelemű lista mediánja maga az elem."
+try:
+    median([])
+    assert False, "Üres listánál ValueError kell (nem IndexError)."
+except ValueError:
+    pass
+```

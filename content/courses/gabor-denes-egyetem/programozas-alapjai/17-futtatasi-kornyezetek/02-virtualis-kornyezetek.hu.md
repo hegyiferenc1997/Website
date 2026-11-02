@@ -115,3 +115,73 @@ numpy==2.1.0
 - Külső csomagok a **PyPI**-ról, a **pip**-pel.
 - Minden projektnek saját **virtuális környezet** (`python -m venv .venv`).
 - A függőségek a **`requirements.txt`**-be kerülnek, a `.venv` mappa a `.gitignore`-ba.
+
+## A lecke feladata: Telepített csomagok ellenőrzése
+
+Egy projekt `requirements.txt`-je pontos verziókat rögzít. Írj `ellenoriz(kovetelmenyek, telepitett)` függvényt, amely összeveti ezt a környezetbe ténylegesen telepített csomagokkal:
+
+- `kovetelmenyek`: a `requirements.txt` szövege; minden nem üres, nem komment sor `név==verzió` alakú (sor végi `#` komment is lehet),
+- `telepitett`: `{név: verzió}` szótár,
+- a csomagneveket **normalizálva** hasonlítsd össze: kisbetűsítve, és a `_` meg a `.` ugyanazt jelenti, mint a `-` (így `Flask_Login` = `flask-login`),
+- eredmény: szótár két kulccsal: `"hianyzik"` – a hiányzó csomagok normalizált neve **ábécérendben**; `"elter"` – `(név, várt, telepített)` hármasok listája ábécérendben azokra, amelyeknél más a verzió.
+
+```python starter required
+def ellenoriz(kovetelmenyek, telepitett):
+    hianyzik = []
+    for sor in kovetelmenyek.splitlines():
+        nev, verzio = sor.split("==")
+        if nev not in telepitett:
+            hianyzik.append(nev)
+    return {"hianyzik": hianyzik, "elter": []}
+
+
+req = "requests==2.32.3\nFlask_Login==0.6.3\n"
+print(ellenoriz(req, {"requests": "2.31.0"}))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def normalizal(nev):
+    # A csomagnevekben a kis- és nagybetű, valamint a _ . - jelek egyenértékűek
+    return nev.strip().lower().replace("_", "-").replace(".", "-")
+
+
+def ellenoriz(kovetelmenyek, telepitett):
+    meglevo = {normalizal(n): v for n, v in telepitett.items()}
+    hianyzik, elter = [], []
+    for sor in kovetelmenyek.splitlines():
+        sor = sor.split("#", 1)[0].strip()   # komment levágása
+        if not sor:
+            continue
+        nev, verzio = sor.split("==", 1)
+        nev, verzio = normalizal(nev), verzio.strip()
+        if nev not in meglevo:
+            hianyzik.append(nev)
+        elif meglevo[nev] != verzio:
+            elter.append((nev, verzio, meglevo[nev]))
+    return {"hianyzik": sorted(hianyzik), "elter": sorted(elter)}
+
+
+req = "requests==2.32.3\nFlask_Login==0.6.3\n"
+print(ellenoriz(req, {"requests": "2.31.0"}))
+```
+
+</details>
+
+```python test
+req = """
+# Webes kérésekhez
+requests==2.32.3
+Flask_Login==0.6.3   # bejelentkezés
+numpy==2.1.0
+
+zope.interface==7.0
+"""
+telepitett = {"Requests": "2.31.0", "flask-login": "0.6.3", "Zope-Interface": "7.0"}
+assert ellenoriz(req, telepitett) == {"hianyzik": ["numpy"], "elter": [("requests", "2.32.3", "2.31.0")]}, "Normalizált nevekkel hasonlíts, a kommenteket és üres sorokat hagyd ki."
+assert ellenoriz("b==1\na==1\n", {}) == {"hianyzik": ["a", "b"], "elter": []}, "A hiányzó csomagok ábécérendben."
+assert ellenoriz("z==2\ny==3\n", {"y": "1", "z": "1"})["elter"] == [("y", "3", "1"), ("z", "2", "1")], "Az eltérések ábécérendben."
+assert ellenoriz("", {"x": "1"}) == {"hianyzik": [], "elter": []}, "Üres requirements.txt-nél nincs eltérés."
+```

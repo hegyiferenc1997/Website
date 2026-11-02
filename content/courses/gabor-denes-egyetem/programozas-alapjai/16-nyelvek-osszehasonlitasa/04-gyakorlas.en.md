@@ -208,3 +208,72 @@ Choose a language for each task and justify it in one sentence.
 4. **C# (Unity)** or **C++ (Unreal)** – the game engines' languages, which export to many platforms.
 
 </details>
+
+## Summary exercise: Text statistics from Ruby to Python
+
+Translate the Ruby function below into Python as `word_stats(text)`!
+
+```ruby
+def word_stats(text)
+  words = text.downcase.scan(/[[:alpha:]]+/)           # words made of letters only
+  counts = words.tally                                  # word => count
+  top = counts.sort_by { |w, n| [-n, w] }.first(3)      # the 3 most common
+  avg = words.empty? ? 0.0 : (words.sum(&:length).to_f / words.size).round(2)
+  { words: words.size, unique: counts.size, most_common: top, avg_length: avg }
+end
+```
+
+The Python version returns a dictionary with the keys `"words"`, `"unique"`, `"most_common"` and `"avg_length"`; the value of `"most_common"` is a **list of `(word, count)` tuples**.
+
+Hints for the mapping:
+
+- `scan(/[[:alpha:]]+/)` → `re.findall(r"[^\W\d_]+", ...)` (letters, accented ones too),
+- `tally` → `collections.Counter`,
+- `sort_by { [-n, w] }` → `sorted(..., key=lambda p: (-p[1], p[0]))`.
+
+```python starter required
+import re
+from collections import Counter
+
+
+def word_stats(text):
+    words = text.split()
+    return {"words": len(words)}
+
+
+print(word_stats("Apple, pear, apple! The pear is ripe, the apple is red."))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import re
+from collections import Counter
+
+
+def word_stats(text):
+    # Words made of letters only, lowercased (the equivalent of Ruby's scan)
+    words = re.findall(r"[^\W\d_]+", text.lower())
+    counts = Counter(words)
+    # Descending count, alphabetical on ties – the first three
+    top = sorted(counts.items(), key=lambda p: (-p[1], p[0]))[:3]
+    avg = round(sum(len(w) for w in words) / len(words), 2) if words else 0.0
+    return {"words": len(words), "unique": len(counts), "most_common": top, "avg_length": avg}
+
+
+print(word_stats("Apple, pear, apple! The pear is ripe, the apple is red."))
+```
+
+</details>
+
+```python test
+r = word_stats("Apple, pear, apple! The pear is ripe, the apple is red.")
+assert r["words"] == 11 and r["unique"] == 6, "11 words, 6 of them different (no punctuation, lowercased)."
+assert r["most_common"] == [("apple", 3), ("is", 2), ("pear", 2)], "The top three: apple 3, then is 2 and pear 2 alphabetically."
+assert r["avg_length"] == 3.64, "The average word length is 40 / 11 ≈ 3.64."
+r = word_stats("R2D2 and C-3PO in 2024")
+assert r["words"] == 6 and r["unique"] == 6, "Digits are not part of words: r, d, and, c, po, in."
+assert word_stats("") == {"words": 0, "unique": 0, "most_common": [], "avg_length": 0.0}, "For empty text: 0, 0, [], 0.0."
+assert word_stats("b a b a c")["most_common"] == [("a", 2), ("b", 2), ("c", 1)], "Alphabetical order on equal counts."
+```

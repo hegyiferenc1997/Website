@@ -146,3 +146,53 @@ finally:
 - `try`: the risky code; `except Type`: the handling; `as e`: the exception object.
 - There can be several `except` branches; put the more specific one first.
 - `else`: if there was no exception; `finally`: always runs.
+
+## Lesson exercise: Safe division
+
+Write a `safe_divide(a, b)` function that converts two numbers given **as text** (e.g. `"10"`, `"2.5"`) to floats and divides them. Handle errors with a `try – except` block and return a text message in that case:
+
+- if either is not a number (`ValueError`): `"Invalid number"`,
+- if you would divide by zero (`ZeroDivisionError`): `"Cannot divide by zero"`,
+- otherwise the result (`float`) – return it in the `else` branch.
+
+Use several `except` branches, not one general `except`!
+
+```python starter required
+def safe_divide(a, b):
+    try:
+        pass
+    except ValueError:
+        pass
+    # more branches: ZeroDivisionError, else
+
+
+print(safe_divide("10", "4"))   # 2.5
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def safe_divide(a, b):
+    try:
+        result = float(a) / float(b)
+    except ValueError:
+        return "Invalid number"
+    except ZeroDivisionError:
+        return "Cannot divide by zero"
+    else:
+        return result
+
+
+print(safe_divide("10", "4"))   # 2.5
+```
+
+</details>
+
+```python test
+assert safe_divide("10", "4") == 2.5, "10 / 4 = 2.5"
+assert safe_divide("-3", "1.5") == -2.0, "-3 / 1.5 = -2.0"
+assert safe_divide("ten", "2") == "Invalid number", "Non-numeric input: Invalid number"
+assert safe_divide("1", "") == "Invalid number", "An empty string is not a number either."
+assert safe_divide("1", "0") == "Cannot divide by zero", "Division by zero: Cannot divide by zero"
+```

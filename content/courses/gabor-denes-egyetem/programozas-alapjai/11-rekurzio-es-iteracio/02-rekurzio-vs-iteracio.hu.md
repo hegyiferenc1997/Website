@@ -135,3 +135,45 @@ Ez a gondolat – részproblémák eredményeinek tárolása – a **dinamikus p
 - Minden rekurzió átírható ciklussá és fordítva.
 - A naiv rekurzív Fibonacci exponenciális; iterációval vagy **memoizációval** (`@cache`) lineáris.
 - Rekurzív szerkezetű feladathoz rekurzió, lineárishoz ciklus.
+
+## A lecke feladata: Lépcsőmászás memoizációval
+
+Egy `n` fokú lépcsőn egyszerre 1 vagy 2 fokot léphetsz. Hányféleképpen juthatsz fel? Írj `lepcso(n)` függvényt!
+
+- 0 fokra 1 mód van (nem lépsz semmit), 1 fokra szintén 1.
+- `n` fokra: az utolsó lépés 1 vagy 2 fok volt, tehát `lepcso(n - 1) + lepcso(n - 2)`.
+
+A naiv rekurzió – mint a Fibonacci-csapdánál – exponenciálisan lassú. Használj **memoizációt** (szótárban tárold a már kiszámolt értékeket) vagy **iterációt**: az ellenőrzés `lepcso(300)`-at is kér!
+
+```python starter required
+def lepcso(n):
+    pass
+
+
+print(lepcso(4))   # 5
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+emlek = {0: 1, 1: 1}
+
+
+def lepcso(n):
+    if n not in emlek:
+        emlek[n] = lepcso(n - 1) + lepcso(n - 2)
+    return emlek[n]
+
+
+print(lepcso(4))   # 5
+```
+
+</details>
+
+```python test
+assert lepcso(4) == 5, "4 fokra 5 mód van: 1111, 112, 121, 211, 22."
+assert lepcso(0) == 1 and lepcso(1) == 1, "0 és 1 fokra 1 mód."
+assert lepcso(10) == 89, "10 fokra 89 mód."
+assert lepcso(300) == 359579325206583560961765665172189099052367214309267232255589801, "lepcso(300) nem stimmel – memoizálj!"
+```

@@ -75,3 +75,35 @@ print("Total:", total)     # output
 - A **program** is a precise sequence of instructions; **programming** spans from understanding the problem to testing.
 - The computer only knows simple steps, so everything must be spelled out in detail.
 - Most programs follow the pattern **input → processing → output**.
+
+## Lesson exercise: Your first program
+
+Write a program that prints **two lines**, exactly like this:
+
+```text
+Hello, world!
+I am learning to program.
+```
+
+Write the code, press **Run** to see the output, then press **Check** to let the computer verify it. When everything is right, the lesson is complete and the next one unlocks.
+
+```python starter required
+# Write the two print() lines here!
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+print("Hello, world!")
+print("I am learning to program.")
+```
+
+</details>
+
+```python test
+lines = output.splitlines()
+assert len(lines) == 2, "You need to print exactly two lines."
+assert lines[0] == "Hello, world!", "The first line is not right (mind the comma and the exclamation mark)."
+assert lines[1] == "I am learning to program.", "The second line is not right (don't forget the full stop)."
+```

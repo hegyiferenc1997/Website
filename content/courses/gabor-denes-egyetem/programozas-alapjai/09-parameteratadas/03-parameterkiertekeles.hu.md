@@ -107,3 +107,44 @@ print(hozzaad(2))   # [2]
 - A Python **mohó**: az argumentumok a hívás előtt, **balról jobbra** értékelődnek ki.
 - Lusta kiértékelés Pythonban: rövidzár, feltételes kifejezés, **generátorok** (`yield`, `(… for …)`).
 - Az alapértelmezett érték a definíciókor értékelődik ki egyszer: listához, szótárhoz használj `None`-t.
+
+## A lecke feladata: Az alapértelmezett érték csapdája
+
+A kiinduló `gyujt(elem, lista=[])` függvény hibás: az alapértelmezett lista csak **egyszer**, a függvény definiálásakor jön létre, ezért a hívások között megmarad, és „összegyűlnek” benne az elemek. Futtasd le, és nézd meg!
+
+Javítsd ki a szokásos mintával: az alapérték legyen `None`, és a függvényen belül készíts új listát, ha nem kaptál. Ha a hívó adott listát, ahhoz fűzd hozzá (és azt add vissza).
+
+```python starter required
+def gyujt(elem, lista=[]):
+    lista.append(elem)
+    return lista
+
+
+print(gyujt(1))   # [1]
+print(gyujt(2))   # [2] kellene, de [1, 2] lesz!
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def gyujt(elem, lista=None):
+    if lista is None:
+        lista = []
+    lista.append(elem)
+    return lista
+
+
+print(gyujt(1))   # [1]
+print(gyujt(2))   # [2]
+```
+
+</details>
+
+```python test
+assert gyujt(1) == [1], "gyujt(1) → [1]"
+assert gyujt(2) == [2], "gyujt(2) → [2] – az előző hívás eleme nem maradhat meg!"
+sajat = [0]
+assert gyujt(3, sajat) == [0, 3] and sajat == [0, 3], "Kapott listánál ahhoz kell hozzáfűzni."
+assert gyujt(4) == [4], "Utána is friss lista jár."
+```

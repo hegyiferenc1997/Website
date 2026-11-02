@@ -146,6 +146,7 @@ export async function seedContent(db: Database) {
           summary: l.summary,
           body: l.body,
           minutes: l.minutes,
+          hasExercise: l.hasExercise,
         };
         const [lesson] = await db
           .insert(lessons)

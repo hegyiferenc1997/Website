@@ -183,3 +183,81 @@ You can see that the bad reading of 250 spoils the average for three steps, whil
 - It's worth modelling a robot with a **class**: sensor and actuator methods.
 - A **state machine** is a clear description of robot behaviour: states + transitions.
 - Sensor data must be **filtered**; against outliers, the **median** works best.
+
+## Lesson exercise: Robot on the map: commands and collisions
+
+Write a `run_commands(grid, commands)` function! `grid` is a list of strings (`#` wall, `.` free cell, `R` the robot's start); the robot initially faces **north** (`"N"`). The commands:
+
+- `F`: step one cell forward – if there is a wall in front, it stays in place, and this counts as a **collision**,
+- `R`: turn right, `L`: turn left (directions clockwise: `"N"`, `"E"`, `"S"`, `"W"`),
+- an unknown command raises `ValueError`.
+
+The result is the `(row, col, direction, collisions)` quadruple. The `R` cell counts as a free cell.
+
+```python starter required
+DIRECTIONS = ["N", "E", "S", "W"]
+MOVES = {"N": (-1, 0), "E": (0, 1), "S": (1, 0), "W": (0, -1)}
+
+
+def run_commands(grid, commands):
+    row, col, direction = 0, 0, "N"
+    for c in commands:
+        if c == "F":
+            dr, dc = MOVES[direction]
+            row, col = row + dr, col + dc
+    return (row, col, direction, 0)
+
+
+GRID = ["#####", "#..R#", "#.#.#", "#...#", "#####"]
+print(run_commands(GRID, "LFF"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+DIRECTIONS = ["N", "E", "S", "W"]
+MOVES = {"N": (-1, 0), "E": (0, 1), "S": (1, 0), "W": (0, -1)}
+
+
+def run_commands(grid, commands):
+    # Find the starting cell
+    for r, line in enumerate(grid):
+        if "R" in line:
+            row, col = r, line.index("R")
+    direction, collisions = "N", 0
+    for c in commands:
+        if c == "F":
+            dr, dc = MOVES[direction]
+            if grid[row + dr][col + dc] == "#":
+                collisions += 1      # wall: stay in place
+            else:
+                row, col = row + dr, col + dc
+        elif c in ("R", "L"):
+            step = 1 if c == "R" else -1
+            direction = DIRECTIONS[(DIRECTIONS.index(direction) + step) % 4]
+        else:
+            raise ValueError(f"Unknown command: {c}")
+    return (row, col, direction, collisions)
+
+
+GRID = ["#####", "#..R#", "#.#.#", "#...#", "#####"]
+print(run_commands(GRID, "LFF"))
+```
+
+</details>
+
+```python test
+GRID = ["#####", "#..R#", "#.#.#", "#...#", "#####"]
+assert run_commands(GRID, "") == (1, 3, "N", 0), "With no commands it stays at the start, facing north."
+assert run_commands(GRID, "F") == (1, 3, "N", 1), "There is a wall to the north: collision, it stays in place."
+assert run_commands(GRID, "LFF") == (1, 1, "W", 0), "Turn left, two steps west."
+assert run_commands(GRID, "LFFF") == (1, 1, "W", 1), "On the third step it hits the wall."
+assert run_commands(GRID, "RRFFRF") == (3, 2, "W", 0), "Two steps south, then right (west) one step."
+assert run_commands(GRID, "RRRR")[2] == "N" and run_commands(GRID, "LLL")[2] == "E", "Turning wraps around."
+try:
+    run_commands(GRID, "FX")
+    assert False, "An unknown command should raise ValueError."
+except ValueError:
+    pass
+```

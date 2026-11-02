@@ -63,3 +63,51 @@ print(felnottek)
 - **Imperatív:** lépésenként módosítjuk az állapotot (a procedurális ennek függvényekre bontott formája).
 - **Deklaratív:** a kívánt eredményt írjuk le (SQL, HTML, listaértelmezés).
 - A **mellékhatások** csökkentése megbízhatóbb kódot eredményez.
+
+## A lecke feladata: Páros számok négyzetei – kétféleképpen
+
+Írd meg ugyanazt kétféle szemlélettel! Mindkét függvény a lista **páros** elemeinek négyzetét adja vissza egy új listában, az eredeti sorrendben.
+
+- `imperativ(szamok)`: üres listából indulj, `for` ciklussal és `append()`-del építsd fel;
+- `deklarativ(szamok)`: egyetlen listaértelmezés (`[... for ... if ...]`).
+
+Az eredeti listát egyik se módosítsa!
+
+```python starter required
+def imperativ(szamok):
+    eredmeny = []
+    # ciklus + feltétel + append
+    return eredmeny
+
+
+def deklarativ(szamok):
+    # return [... for ... in szamok if ...]
+    pass
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def imperativ(szamok):
+    eredmeny = []
+    for x in szamok:
+        if x % 2 == 0:
+            eredmeny.append(x * x)
+    return eredmeny
+
+
+def deklarativ(szamok):
+    return [x * x for x in szamok if x % 2 == 0]
+```
+
+</details>
+
+```python test
+adat = [1, 2, 3, 4, 5, 6]
+assert imperativ(adat) == [4, 16, 36], "imperativ([1, 2, 3, 4, 5, 6]) → [4, 16, 36]"
+assert deklarativ(adat) == [4, 16, 36], "deklarativ([1, 2, 3, 4, 5, 6]) → [4, 16, 36]"
+assert adat == [1, 2, 3, 4, 5, 6], "Az eredeti lista nem változhat meg."
+assert imperativ([]) == [] and deklarativ([]) == [], "Üres listára üres lista az eredmény."
+assert deklarativ([-2, 7, 0]) == [4, 0], "A negatív páros szám és a 0 is páros."
+```

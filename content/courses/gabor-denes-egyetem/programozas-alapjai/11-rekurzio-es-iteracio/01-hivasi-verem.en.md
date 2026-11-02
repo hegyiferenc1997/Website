@@ -96,3 +96,49 @@ print(is_even(10), is_odd(7), is_even(3))
 - Recursion builds the stack in the **descending** phase and unwinds it in the **ascending** phase.
 - Too deep recursion → `RecursionError` (stack overflow); Python's default limit is about 1000.
 - Indirect recursion: functions call each other.
+
+## Lesson exercise: Depth of nested lists
+
+Write a **recursive** `depth(data)` function that tells how deeply lists are nested:
+
+- anything that is not a list has depth 0;
+- the depth of a list is 1 + the greatest depth of its elements (1 for an empty list).
+
+For example `depth([1, [2, [3]], 4])` → 3. Think about how many stack frames are on the call stack at the same time during such a call!
+
+```python starter required
+def depth(data):
+    if not isinstance(data, list):
+        return 0
+    # 1 + the depth of the deepest element
+    pass
+
+
+print(depth([1, [2, [3]], 4]))   # 3
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def depth(data):
+    if not isinstance(data, list):
+        return 0
+    deepest = 0
+    for item in data:
+        deepest = max(deepest, depth(item))
+    return 1 + deepest
+
+
+print(depth([1, [2, [3]], 4]))   # 3
+```
+
+</details>
+
+```python test
+assert depth([1, [2, [3]], 4]) == 3, "The depth of [1, [2, [3]], 4] is 3."
+assert depth(5) == 0, "Anything that is not a list has depth 0."
+assert depth([]) == 1, "An empty list has depth 1."
+assert depth([[], [[]]]) == 3, "The depth of [[], [[]]] is 3."
+assert depth([1, 2, 3]) == 1, "A flat list has depth 1."
+```

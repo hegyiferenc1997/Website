@@ -118,3 +118,68 @@ In VS Code you can run with the ▶ button in the top right or in the terminal (
 - `if __name__ == "__main__":` separates the main program from importable parts.
 - Command-line arguments: `sys.argv`, more conveniently `argparse`.
 - To start, **VS Code** or **IDLE** is recommended; for data analysis, **Jupyter**.
+
+## Lesson exercise: Grade average from the command line
+
+Write a `grade_average(argv)` function that uses `argparse` to process the command-line arguments (the `argv` list, e.g. `["5", "4", "4", "--decimals", "1"]`) and **returns a string**:
+
+- `grades`: one or more integers, only between 1 and 5 (`nargs="+"`, `choices=range(1, 6)`),
+- `--decimals N`: how many decimals to round to (integer, default `2`),
+- `--verbose`: a flag (`store_true`); when given, the grades are listed too.
+
+The result looks like `Average: 4.33`, in verbose mode `Grades: 5, 4, 4 | Average: 4.33`. For invalid input (e.g. a grade of `6`) `argparse` stops the program by itself (`SystemExit`) – you don't need to catch it.
+
+```python starter required
+import argparse
+
+
+def grade_average(argv):
+    parser = argparse.ArgumentParser(description="Grade average")
+    parser.add_argument("grades", nargs="+")
+    args = parser.parse_args(argv)
+    return f"Average: {args.grades}"
+
+
+print(grade_average(["5", "4", "4"]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import argparse
+
+
+def grade_average(argv):
+    parser = argparse.ArgumentParser(description="Grade average")
+    parser.add_argument("grades", type=int, nargs="+", choices=range(1, 6))
+    parser.add_argument("--decimals", type=int, default=2)
+    parser.add_argument("--verbose", action="store_true")
+    args = parser.parse_args(argv)
+    average = round(sum(args.grades) / len(args.grades), args.decimals)
+    if args.verbose:
+        listing = ", ".join(str(g) for g in args.grades)
+        return f"Grades: {listing} | Average: {average}"
+    return f"Average: {average}"
+
+
+print(grade_average(["5", "4", "4"]))
+print(grade_average(["5", "4", "4", "--decimals", "1", "--verbose"]))
+```
+
+</details>
+
+```python test
+import contextlib, io
+assert grade_average(["5", "4", "4"]) == "Average: 4.33", "Round to 2 decimals by default."
+assert grade_average(["5", "4", "4", "--decimals", "1"]) == "Average: 4.3", "The --decimals option sets the rounding."
+assert grade_average(["--verbose", "3", "5"]) == "Grades: 3, 5 | Average: 4.0", "Verbose mode: Grades: 3, 5 | Average: 4.0"
+assert grade_average(["2"]) == "Average: 2.0", "A single grade is enough."
+for bad in (["6"], ["0", "5"], [], ["four"]):
+    try:
+        with contextlib.redirect_stderr(io.StringIO()):
+            grade_average(bad)
+        assert False, f"For invalid input ({bad}) argparse must stop the program."
+    except SystemExit:
+        pass
+```

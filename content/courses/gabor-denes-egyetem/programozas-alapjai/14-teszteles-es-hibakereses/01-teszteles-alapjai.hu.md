@@ -110,3 +110,125 @@ Ennek az oldalnak a gyakorlófeladatai is így épülnek fel: az „ellenőrzés
 - Szintek: **egység → integrációs → rendszer → elfogadási**.
 - Teszteset = bemenet + elvárt kimenet; mindig gondolj **normál, határ- és hibás** esetekre.
 - TDD: piros → zöld → refaktorálás.
+
+## A lecke feladata: Írj teszteket, amelyek elkapják a hibákat
+
+Most fordul a kocka: nem te írod a függvényt, hanem a **tesztjeit**. A `kedvezmeny(kor)` a jegyár kedvezményét adja százalékban:
+
+| Életkor | Kedvezmény   |
+| ------- | ------------ |
+| 0–5     | 100          |
+| 6–17    | 50           |
+| 18–64   | 0            |
+| 65-től  | 50           |
+| negatív | `ValueError` |
+
+Írd meg a `teszt_kedvezmeny()` függvényt `assert` sorokkal úgy, hogy a **normál esetek mellett a határeseteket** (5, 6, 17, 18, 64, 65) és a hibás bemenetet is vizsgálja.
+
+Az ellenőrzés így dolgozik: először a helyes függvénnyel futtatja a tesztjeidet (át kell menniük), utána szándékosan elrontott változatokkal („mutánsokkal”) – ezeknél a tesztjeidnek **el kell bukniuk**. Ha egy hibás változat átcsúszik, a tesztjeid nem elég alaposak.
+
+```python starter required
+def kedvezmeny(kor):
+    if kor < 0:
+        raise ValueError("Az életkor nem lehet negatív.")
+    if kor < 6:
+        return 100
+    if kor < 18:
+        return 50
+    if kor < 65:
+        return 0
+    return 50
+
+
+def teszt_kedvezmeny():
+    # assert kedvezmeny(...) == ...
+    # a ValueError tesztelése: try: kedvezmeny(-1) ... except ValueError: ...
+    pass
+
+
+teszt_kedvezmeny()
+print("A tesztek lefutottak.")
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kedvezmeny(kor):
+    if kor < 0:
+        raise ValueError("Az életkor nem lehet negatív.")
+    if kor < 6:
+        return 100
+    if kor < 18:
+        return 50
+    if kor < 65:
+        return 0
+    return 50
+
+
+def teszt_kedvezmeny():
+    # normál esetek
+    assert kedvezmeny(3) == 100
+    assert kedvezmeny(10) == 50
+    assert kedvezmeny(30) == 0
+    assert kedvezmeny(80) == 50
+    # határesetek
+    assert kedvezmeny(0) == 100
+    assert kedvezmeny(5) == 100
+    assert kedvezmeny(6) == 50
+    assert kedvezmeny(17) == 50
+    assert kedvezmeny(18) == 0
+    assert kedvezmeny(64) == 0
+    assert kedvezmeny(65) == 50
+    # hibás bemenet
+    try:
+        kedvezmeny(-1)
+        assert False, "ValueError kellett volna"
+    except ValueError:
+        pass
+
+
+teszt_kedvezmeny()
+print("A tesztek lefutottak.")
+```
+
+</details>
+
+```python test
+helyes = kedvezmeny
+teszt_kedvezmeny()   # a helyes függvénnyel át kell mennie
+
+def m1(kor):
+    if kor < 0: raise ValueError
+    return 100 if kor <= 6 else 50 if kor < 18 else 0 if kor < 65 else 50
+
+def m2(kor):
+    if kor < 0: raise ValueError
+    return 100 if kor < 6 else 50 if kor <= 18 else 0 if kor < 65 else 50
+
+def m3(kor):
+    if kor < 0: raise ValueError
+    return 100 if kor < 6 else 50 if kor < 18 else 0 if kor <= 65 else 50
+
+def m4(kor):
+    return 100 if kor < 6 else 50 if kor < 18 else 0 if kor < 65 else 50
+
+def m5(kor):
+    if kor < 0: raise ValueError
+    return 100 if kor < 6 else 50 if kor < 18 else 0 if kor < 65 else 0
+
+mutansok = [(m1, "a 6 évesek is 100%-ot kapnak"), (m2, "a 18 évesek is 50%-ot kapnak"),
+            (m3, "a 65 évesek nem kapnak kedvezményt"), (m4, "negatív életkornál nincs ValueError"),
+            (m5, "a nyugdíjasok nem kapnak kedvezményt")]
+for mutans, leiras in mutansok:
+    kedvezmeny = mutans
+    try:
+        teszt_kedvezmeny()
+        elkapta = False
+    except AssertionError:
+        elkapta = True
+    except Exception:
+        elkapta = True
+    kedvezmeny = helyes
+    assert elkapta, f"A tesztjeid nem vették észre ezt a hibát: {leiras}."
+```

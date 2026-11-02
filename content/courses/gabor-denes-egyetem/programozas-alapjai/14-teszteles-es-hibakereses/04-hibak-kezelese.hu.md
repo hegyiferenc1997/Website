@@ -84,3 +84,67 @@ print(round(kredit_atlag([5, 4, 3], [8, 5, 3]), 2))
 - Tévedés → hiba a kódban → meghibásodás futás közben.
 - A hibákat hibakövető rendszerben tartjuk nyilván; a jó jelentés reprodukálható.
 - Megelőzés: tesztek, kódáttekintés, statikus elemzés, defenzív programozás, CI.
+
+## A lecke feladata: Javítsd a bejelentett hibát
+
+Hibajelentés érkezett a csapat hibakövetőjébe:
+
+> **Cím:** Az `ido_formaz()` rossz szöveget ad kerek óráknál és 0 percnél
+>
+> **Lépések:** `ido_formaz(60)`, `ido_formaz(0)`, `ido_formaz(-5)`
+>
+> **Elvárt:** `"1 óra"`, `"0 perc"`, illetve `ValueError` negatív értékre
+>
+> **Tapasztalt:** `"1 óra 0 perc"`, `""` (üres szöveg), `"55 perc"`
+>
+> **Súlyosság:** közepes – a felhasználói felületen furcsa feliratok jelennek meg
+
+Javítsd ki a függvényt úgy, hogy a jelentésben leírt elvárt viselkedést adja, és a többi eset (pl. `ido_formaz(125)` → `"2 óra 5 perc"`, `ido_formaz(59)` → `"59 perc"`) se romoljon el.
+
+```python starter required
+def ido_formaz(perc):
+    ora = perc // 60
+    maradek = perc % 60
+    if ora > 0:
+        return f"{ora} óra {maradek} perc"
+    return f"{maradek} perc" if maradek else ""
+
+
+for p in [125, 60, 0, 59]:
+    print(p, "→", repr(ido_formaz(p)))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ido_formaz(perc):
+    if perc < 0:
+        raise ValueError("Az időtartam nem lehet negatív.")
+    ora, maradek = divmod(perc, 60)
+    reszek = []
+    if ora > 0:
+        reszek.append(f"{ora} óra")
+    if maradek > 0 or ora == 0:
+        reszek.append(f"{maradek} perc")
+    return " ".join(reszek)
+
+
+for p in [125, 60, 0, 59]:
+    print(p, "→", repr(ido_formaz(p)))
+```
+
+</details>
+
+```python test
+assert ido_formaz(60) == "1 óra", "60 perc → \"1 óra\" (a hibajelentés 1. pontja)"
+assert ido_formaz(0) == "0 perc", "0 perc → \"0 perc\" (a hibajelentés 2. pontja)"
+try:
+    ido_formaz(-5)
+    assert False, "Negatív értékre ValueError kell (a hibajelentés 3. pontja)."
+except ValueError:
+    pass
+assert ido_formaz(125) == "2 óra 5 perc", "125 perc → \"2 óra 5 perc\" – ez nem romolhat el!"
+assert ido_formaz(59) == "59 perc", "59 perc → \"59 perc\""
+assert ido_formaz(180) == "3 óra", "180 perc → \"3 óra\""
+```

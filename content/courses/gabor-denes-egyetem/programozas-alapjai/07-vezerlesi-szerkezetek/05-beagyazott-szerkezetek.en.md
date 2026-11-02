@@ -128,3 +128,53 @@ In old languages the `goto` statement could jump anywhere in the program, produc
 - `break` – leave the innermost loop; `continue` – jump to the next iteration; `pass` – empty statement.
 - A loop's `else` runs if there was no `break`.
 - Leave several levels with `return` from a function.
+
+## Lesson exercise: Prime numbers with the loop's else branch
+
+Write a `primes(n)` function that returns the list of **prime numbers** between 2 and `n` (including `n`). Work with two nested loops: the outer one goes through the candidates, the inner one tries the divisors. If the inner loop finds a divisor, leave it with `break`; if it ran to the end without a divisor, the **loop's `else` branch** should add the number to the list.
+
+It is enough to check divisors up to the square root of the number (`divisor * divisor <= number`).
+
+```python starter required
+def primes(n):
+    result = []
+    for number in range(2, n + 1):
+        divisor = 2
+        while divisor * divisor <= number:
+            # if number is divisible by divisor: break
+            divisor += 1
+        # else branch: runs if there was no break
+    return result
+
+
+print(primes(30))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def primes(n):
+    result = []
+    for number in range(2, n + 1):
+        divisor = 2
+        while divisor * divisor <= number:
+            if number % divisor == 0:
+                break
+            divisor += 1
+        else:
+            result.append(number)
+    return result
+
+
+print(primes(30))
+```
+
+</details>
+
+```python test
+assert primes(30) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], "The primes up to 30 are not right."
+assert primes(2) == [2], "primes(2) → [2]"
+assert primes(1) == [], "There are no primes up to 1."
+assert len(primes(1000)) == 168, "There are 168 primes up to 1000."
+```

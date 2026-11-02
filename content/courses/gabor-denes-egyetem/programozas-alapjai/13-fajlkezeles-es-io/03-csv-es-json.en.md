@@ -116,3 +116,74 @@ print(json.dumps(data))        # text from a Python object
 - **CSV**: a table, one row per line; `csv.writer` / `csv.DictReader`, `newline=""`.
 - **JSON**: nested data; `json.dump` / `json.load` for files, `dumps` / `loads` for text.
 - Don't split by hand with `split(",")` – use the modules.
+
+## Lesson exercise: From CSV to JSON
+
+Write a `csv_to_json(csv_file, json_file)` function that reads a CSV file with a `name,score` header (with the `csv` module's `DictReader`) and writes a JSON file (with the `json` module) containing the list of students in **descending order of score**, like this:
+
+```json
+[
+  { "name": "Cecil", "score": 92 },
+  { "name": "Anna", "score": 87 }
+]
+```
+
+- The score must be an integer in the JSON (not text).
+- Accented letters must stay readable (`ensure_ascii=False`); handle the files with UTF-8 encoding.
+- The function returns how many students it wrote.
+
+```python starter required
+import csv
+import json
+
+
+def csv_to_json(csv_file, json_file):
+    with open(csv_file, encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    # convert, sort, json.dump(...)
+    pass
+
+
+with open("scores.csv", "w", encoding="utf-8") as f:
+    f.write("name,score\nAnna,87\nCecil,92\n")
+print(csv_to_json("scores.csv", "scores.json"))
+print(open("scores.json", encoding="utf-8").read())
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import csv
+import json
+
+
+def csv_to_json(csv_file, json_file):
+    with open(csv_file, encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    students = [{"name": r["name"], "score": int(r["score"])} for r in rows]
+    students.sort(key=lambda s: s["score"], reverse=True)
+    with open(json_file, "w", encoding="utf-8") as f:
+        json.dump(students, f, ensure_ascii=False)
+    return len(students)
+
+
+with open("scores.csv", "w", encoding="utf-8") as f:
+    f.write("name,score\nAnna,87\nCecil,92\n")
+print(csv_to_json("scores.csv", "scores.json"))
+print(open("scores.json", encoding="utf-8").read())
+```
+
+</details>
+
+```python test
+import json
+with open("in.csv", "w", encoding="utf-8") as f:
+    f.write("name,score\nAnna,87\nBéla,64\nCecil,92\n")
+assert csv_to_json("in.csv", "out.json") == 3, "Three students must be written (and that is returned)."
+with open("out.json", encoding="utf-8") as f:
+    text = f.read()
+data = json.loads(text)
+assert data == [{"name": "Cecil", "score": 92}, {"name": "Anna", "score": 87}, {"name": "Béla", "score": 64}], "The JSON content is not right (descending order, integer scores)."
+assert "Béla" in text, "Accented letters must stay readable (ensure_ascii=False)."
+```

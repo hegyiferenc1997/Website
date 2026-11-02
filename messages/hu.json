@@ -149,7 +149,15 @@
     "markLessonDone": "„{title}” elvégezve",
     "markDoneButton": "Megjelölöm késznek",
     "doneButton": "Kész",
-    "topicProgress": "{done} / {total} lecke kész"
+    "topicProgress": "{done} / {total} lecke kész",
+    "lessonDoneLabel": "„{title}” kész",
+    "lessonTodoLabel": "„{title}” még nincs kész",
+    "exerciseTodo": "A lecke akkor lesz kész, ha a lecke feladatát sikeresen ellenőrizted.",
+    "exerciseDone": "Lecke kész – a feladatot teljesítetted",
+    "lockedHint": "Zárolva: előbb végezd el az előző leckéket",
+    "lockedTitle": "Ez a lecke még zárolva van",
+    "lockedText": "A tananyag sorban halad: egy lecke akkor nyílik meg, ha az összes előzőnek teljesítetted a feladatát.",
+    "goToOpen": "Ugrás az aktuális leckéhez"
   },
   "Search": {
     "open": "Keresés",
@@ -193,5 +201,31 @@
     "finished": "Elérted a tárgy utolsó leckéjét.",
     "backToCourse": "Vissza a tárgyhoz",
     "lessonNav": "Leckék közötti lapozás"
+  },
+  "Python": {
+    "run": "Futtatás",
+    "check": "Ellenőrzés",
+    "stop": "Leállítás",
+    "loading": "Python betöltése…",
+    "edit": "Szerkesztés",
+    "reset": "Alaphelyzet",
+    "restoreDraft": "Mentett kódom",
+    "output": "Kimenet",
+    "running": "Fut…",
+    "noOutput": "A program lefutott, de nem írt ki semmit.",
+    "stdin": "Bemenet (soronként egy beolvasott érték)",
+    "stdinPlaceholder": "pl. 5",
+    "timeout": "Túl sokáig futott, ezért leállítottuk. Lehet, hogy végtelen ciklus van a kódban?",
+    "stopped": "Leállítva.",
+    "loadFailed": "Nem sikerült betölteni a Pythont. Ellenőrizd az internetkapcsolatot, és próbáld újra!",
+    "passed": "Siker! Minden ellenőrzés teljesült.",
+    "lessonDone": "A lecke kész, a következő lecke feloldva.",
+    "nextLesson": "Tovább: {title}",
+    "failedTest": "Még nem jó: az ellenőrzés hibát talált. Ez a feltétel nem teljesült:",
+    "failedCode": "Hiba történt a kódod futtatása közben:",
+    "requiredHint": "Ez a lecke feladata: sikeres ellenőrzés után a lecke kész, és megnyílik a következő.",
+    "requiredDone": "Ezt a feladatot már teljesítetted.",
+    "editorLabel": "Python kódszerkesztő",
+    "keys": "Ctrl+Enter: futtatás / ellenőrzés · Tab: behúzás · Esc, majd Tab: kilépés a szerkesztőből"
   }
 }

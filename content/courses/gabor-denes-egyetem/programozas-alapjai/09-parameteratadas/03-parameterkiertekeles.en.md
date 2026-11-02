@@ -107,3 +107,44 @@ print(add(2))   # [2]
 - Python is **eager**: arguments are evaluated before the call, **left to right**.
 - Lazy evaluation in Python: short-circuiting, conditional expressions, **generators** (`yield`, `(… for …)`).
 - A default value is evaluated once at definition time: use `None` for lists and dictionaries.
+
+## Lesson exercise: The default value trap
+
+The starter `collect(item, items=[])` function is buggy: the default list is created only **once**, when the function is defined, so it survives between calls and the items "pile up" in it. Run it and see!
+
+Fix it with the usual pattern: make the default `None` and create a new list inside the function if none was given. If the caller passed a list, append to that one (and return it).
+
+```python starter required
+def collect(item, items=[]):
+    items.append(item)
+    return items
+
+
+print(collect(1))   # [1]
+print(collect(2))   # should be [2], but it becomes [1, 2]!
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def collect(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items
+
+
+print(collect(1))   # [1]
+print(collect(2))   # [2]
+```
+
+</details>
+
+```python test
+assert collect(1) == [1], "collect(1) → [1]"
+assert collect(2) == [2], "collect(2) → [2] – the item of the previous call must not remain!"
+mine = [0]
+assert collect(3, mine) == [0, 3] and mine == [0, 3], "With a given list, append to it."
+assert collect(4) == [4], "A fresh list again afterwards."
+```

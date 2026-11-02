@@ -149,7 +149,15 @@
     "markLessonDone": "“{title}” done",
     "markDoneButton": "Mark as done",
     "doneButton": "Done",
-    "topicProgress": "{done} of {total} lessons done"
+    "topicProgress": "{done} of {total} lessons done",
+    "lessonDoneLabel": "“{title}” done",
+    "lessonTodoLabel": "“{title}” not done yet",
+    "exerciseTodo": "The lesson is complete once you pass the lesson exercise's check.",
+    "exerciseDone": "Lesson complete – you passed the exercise",
+    "lockedHint": "Locked: finish the previous lessons first",
+    "lockedTitle": "This lesson is still locked",
+    "lockedText": "The course goes in order: a lesson unlocks once you have passed the exercises of all previous lessons.",
+    "goToOpen": "Go to your current lesson"
   },
   "Search": {
     "open": "Search",
@@ -193,5 +201,31 @@
     "finished": "You've reached the last lesson of this course.",
     "backToCourse": "Back to the course",
     "lessonNav": "Lesson navigation"
+  },
+  "Python": {
+    "run": "Run",
+    "check": "Check",
+    "stop": "Stop",
+    "loading": "Loading Python…",
+    "edit": "Edit",
+    "reset": "Reset",
+    "restoreDraft": "My saved code",
+    "output": "Output",
+    "running": "Running…",
+    "noOutput": "The program finished but printed nothing.",
+    "stdin": "Input (one value per line)",
+    "stdinPlaceholder": "e.g. 5",
+    "timeout": "It ran for too long, so we stopped it. Is there an infinite loop in your code?",
+    "stopped": "Stopped.",
+    "loadFailed": "Could not load Python. Check your internet connection and try again!",
+    "passed": "Success! All checks passed.",
+    "lessonDone": "Lesson complete, the next lesson is unlocked.",
+    "nextLesson": "Next: {title}",
+    "failedTest": "Not quite yet: the checker found a problem. This condition failed:",
+    "failedCode": "An error occurred while running your code:",
+    "requiredHint": "This is the lesson exercise: once the check passes, the lesson is complete and the next one unlocks.",
+    "requiredDone": "You have already passed this exercise.",
+    "editorLabel": "Python code editor",
+    "keys": "Ctrl+Enter: run / check · Tab: indent · Esc, then Tab: leave the editor"
   }
 }

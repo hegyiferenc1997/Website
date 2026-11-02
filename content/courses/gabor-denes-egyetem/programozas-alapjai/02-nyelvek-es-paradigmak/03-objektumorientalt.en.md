@@ -122,3 +122,73 @@ For small scripts, however, it can be unnecessary complexity – a few functions
 - **Class** = blueprint, **object** = instance; data = attribute, operation = method.
 - Four pillars: **encapsulation, inheritance, polymorphism, abstraction**.
 - In Python the keywords are `class`, `__init__` and `self`.
+
+## Lesson exercise: A bank account class
+
+Create a `BankAccount` class:
+
+- the constructor receives the `owner`'s name; `balance` starts at 0;
+- `deposit(amount)`: increases the balance; for a non-positive amount it raises `ValueError`;
+- `withdraw(amount)`: if there are enough funds it deducts the amount and returns `True`, otherwise it changes nothing and returns `False`.
+
+In the spirit of encapsulation, only these methods should change the balance.
+
+```python starter required
+class BankAccount:
+    def __init__(self, owner):
+        self.owner = owner
+        # balance starts at 0
+
+    def deposit(self, amount):
+        pass
+
+    def withdraw(self, amount):
+        pass
+
+
+account = BankAccount("Anna")
+account.deposit(5000)
+print(account.withdraw(2000), account.balance)   # True 3000
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class BankAccount:
+    def __init__(self, owner):
+        self.owner = owner
+        self.balance = 0
+
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValueError("The deposited amount must be positive.")
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            return False
+        self.balance -= amount
+        return True
+
+
+account = BankAccount("Anna")
+account.deposit(5000)
+print(account.withdraw(2000), account.balance)   # True 3000
+```
+
+</details>
+
+```python test
+a = BankAccount("Bob")
+assert a.owner == "Bob" and a.balance == 0, "A new account has a balance of 0."
+a.deposit(1000)
+assert a.balance == 1000, "After the deposit the balance is 1000."
+assert a.withdraw(300) is True and a.balance == 700, "After withdrawing 300, 700 remains and the answer is True."
+assert a.withdraw(5000) is False and a.balance == 700, "Without funds: False, and the balance does not change."
+try:
+    a.deposit(-5)
+    assert False, "A negative deposit must raise ValueError."
+except ValueError:
+    pass
+```

@@ -106,3 +106,54 @@ print(isinstance(x, (int, float)))   # True – any of several types
 - **Explicit** conversion: `int()`, `float()`, `str()`, `bool()`. `int()` truncates, it doesn't round!
 - `input()` always returns text.
 - False values: `False`, `None`, `0`, empty string/collection; everything else is true.
+
+## Lesson exercise: Numbers from a line of text
+
+Data read from a file or the keyboard is always **text**. Write a `sum_from_text(line)` function that adds up a comma-separated list of numbers (e.g. `"3, 4.5, 10"`) and returns the sum **as a float** (`17.5`).
+
+- There may be spaces around the numbers.
+- Skip empty items (e.g. `"1,,2"` or an empty line).
+- If an item is not a number, raise `ValueError` (`float()` does this by itself).
+
+```python starter required
+def sum_from_text(line):
+    total = 0.0
+    for piece in line.split(","):
+        # piece.strip(), skip empty ones, convert with float()
+        pass
+    return total
+
+
+print(sum_from_text("3, 4.5, 10"))   # 17.5
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def sum_from_text(line):
+    total = 0.0
+    for piece in line.split(","):
+        piece = piece.strip()
+        if piece:
+            total += float(piece)
+    return total
+
+
+print(sum_from_text("3, 4.5, 10"))   # 17.5
+```
+
+</details>
+
+```python test
+assert sum_from_text("3, 4.5, 10") == 17.5, "3 + 4.5 + 10 = 17.5"
+assert sum_from_text("1,,2") == 3.0, "Empty items must be skipped."
+assert sum_from_text("") == 0.0, "An empty line gives 0.0."
+assert isinstance(sum_from_text("2"), float), "Return a float."
+assert sum_from_text(" -1.5 , 1 ") == -0.5, "Negative numbers and spaces are allowed."
+try:
+    sum_from_text("1, two")
+    assert False, "A non-numeric item must raise ValueError."
+except ValueError:
+    pass
+```

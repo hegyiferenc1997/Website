@@ -135,3 +135,98 @@ print(d, d.popleft(), d.pop())
 - A láncolt lista csomópontokból áll: **adat + mutató** a következőre (kétszeres láncolásnál az előzőre is).
 - Beszúrás/törlés ismert helyen **O(1)**, viszont index szerinti elérés **O(n)**.
 - Pythonban nincs beépített láncolt lista osztály; osztályokkal megírható, vagy használható a `collections.deque`.
+
+## A lecke feladata: Láncolt lista megfordítása
+
+Egészítsd ki a lecke `LancoltLista` osztályát egy `megfordit()` metódussal, amely a listát **helyben** megfordítja: nem hoz létre új csomópontokat, csak átállítja a `kovetkezo` hivatkozásokat. Három segédváltozóval dolgozz: `elozo`, `akt` és `kovetkezo` – minden lépésben az aktuális csomópont „visszafelé” mutasson, a végén pedig a fej a régi utolsó elem legyen.
+
+```python starter required
+class Csomopont:
+    def __init__(self, adat, kovetkezo=None):
+        self.adat = adat
+        self.kovetkezo = kovetkezo
+
+
+class LancoltLista:
+    def __init__(self, elemek=()):
+        self.fej = None
+        for adat in reversed(elemek):
+            self.fej = Csomopont(adat, self.fej)
+
+    def lista(self):
+        eredmeny, akt = [], self.fej
+        while akt is not None:
+            eredmeny.append(akt.adat)
+            akt = akt.kovetkezo
+        return eredmeny
+
+    def megfordit(self):
+        elozo = None
+        akt = self.fej
+        # while akt is not None: ... (három lépés: mentés, visszafordítás, továbblépés)
+        pass
+
+
+ll = LancoltLista([1, 2, 3])
+ll.megfordit()
+print(ll.lista())   # [3, 2, 1]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class Csomopont:
+    def __init__(self, adat, kovetkezo=None):
+        self.adat = adat
+        self.kovetkezo = kovetkezo
+
+
+class LancoltLista:
+    def __init__(self, elemek=()):
+        self.fej = None
+        for adat in reversed(elemek):
+            self.fej = Csomopont(adat, self.fej)
+
+    def lista(self):
+        eredmeny, akt = [], self.fej
+        while akt is not None:
+            eredmeny.append(akt.adat)
+            akt = akt.kovetkezo
+        return eredmeny
+
+    def megfordit(self):
+        elozo = None
+        akt = self.fej
+        while akt is not None:
+            kovetkezo = akt.kovetkezo   # megjegyezzük, hová kell lépni
+            akt.kovetkezo = elozo       # visszafelé mutatunk
+            elozo = akt
+            akt = kovetkezo
+        self.fej = elozo
+
+
+ll = LancoltLista([1, 2, 3])
+ll.megfordit()
+print(ll.lista())   # [3, 2, 1]
+```
+
+</details>
+
+```python test
+ll = LancoltLista([1, 2, 3, 4])
+csomopontok = []
+akt = ll.fej
+while akt:
+    csomopontok.append(akt)
+    akt = akt.kovetkezo
+ll.megfordit()
+assert ll.lista() == [4, 3, 2, 1], "Megfordítva: [4, 3, 2, 1]"
+assert ll.fej is csomopontok[-1], "Helyben fordíts: a fej a régi utolsó csomópont legyen (ne hozz létre újat)."
+ures = LancoltLista()
+ures.megfordit()
+assert ures.lista() == [], "Üres lista megfordítva is üres."
+egy = LancoltLista(["a"])
+egy.megfordit()
+assert egy.lista() == ["a"], "Egyelemű lista önmaga."
+```

@@ -237,3 +237,104 @@ if __name__ == "__main__":
 ```
 
 </details>
+
+## Summary exercise: Currency converter command-line program
+
+Build a complete command-line program with a `main(argv, env)` entry point that converts forints to another currency. `main` **returns an exit code** (`0` = success) and prints the result.
+
+- Arguments (`argparse`): `amount` (float, in forints), `--currency` (`EUR` or `USD`), `--decimals` (integer, default `2`).
+- If there is no `--currency`, the `CURRENCY` environment variable decides; if that is missing too, `EUR`.
+- Rates: `RATES = {"EUR": 400.0, "USD": 370.0}` (how many forints one unit is). The `RATE_EUR` / `RATE_USD` environment variable can override them.
+- Success: prints e.g. `10000 HUF = 25.00 EUR` (the amount as given, the result formatted to `--decimals` decimals) and returns `0`.
+- An invalid rate in the environment (not a number or not positive), or an invalid `CURRENCY`: prints `Error: ...` and returns `1` – it must not crash.
+- For bad arguments `argparse` raises `SystemExit`: catch it and return its code (`2`).
+
+`env` is a dictionary (in the real program `os.environ`), so the program can be tested independently of the environment.
+
+```python starter required
+import argparse
+
+RATES = {"EUR": 400.0, "USD": 370.0}
+
+
+def main(argv, env):
+    parser = argparse.ArgumentParser(description="Currency converter")
+    parser.add_argument("amount", type=float)
+    args = parser.parse_args(argv)
+    print(args.amount / 400)
+
+
+main(["10000"], {})
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import argparse
+
+RATES = {"EUR": 400.0, "USD": 370.0}
+
+
+def main(argv, env):
+    parser = argparse.ArgumentParser(description="Currency converter")
+    parser.add_argument("amount", type=float)
+    parser.add_argument("--currency", choices=sorted(RATES))
+    parser.add_argument("--decimals", type=int, default=2)
+    try:
+        args = parser.parse_args(argv)
+    except SystemExit as error:
+        return error.code   # argparse's error code (2)
+
+    # The currency: argument > environment variable > default
+    currency = args.currency or env.get("CURRENCY", "EUR")
+    if currency not in RATES:
+        print(f"Error: unknown currency: {currency}")
+        return 1
+
+    rate = RATES[currency]
+    if f"RATE_{currency}" in env:
+        try:
+            rate = float(env[f"RATE_{currency}"])
+        except ValueError:
+            print(f"Error: RATE_{currency} is not a number.")
+            return 1
+        if rate <= 0:
+            print(f"Error: RATE_{currency} is not positive.")
+            return 1
+
+    result = args.amount / rate
+    amount = int(args.amount) if args.amount.is_integer() else args.amount
+    print(f"{amount} HUF = {result:.{args.decimals}f} {currency}")
+    return 0
+
+
+if __name__ == "__main__":
+    code = main(["10000"], {})
+    print("Exit code:", code)
+```
+
+</details>
+
+```python test
+import contextlib, io
+
+def run_cli(argv, env):
+    out = io.StringIO()
+    with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+        code = main(argv, env)
+    return code, out.getvalue().strip()
+
+assert run_cli(["10000"], {}) == (0, "10000 HUF = 25.00 EUR"), "EUR and 2 decimals by default: 10000 HUF = 25.00 EUR"
+assert run_cli(["3700", "--currency", "USD", "--decimals", "1"], {}) == (0, "3700 HUF = 10.0 USD"), "The --currency and --decimals options don't work."
+assert run_cli(["1000"], {"CURRENCY": "USD", "RATE_USD": "400"}) == (0, "1000 HUF = 2.50 USD"), "Take the CURRENCY and RATE_USD environment variables into account."
+assert run_cli(["800", "--currency", "EUR"], {"CURRENCY": "USD"}) == (0, "800 HUF = 2.00 EUR"), "The argument beats the environment variable."
+assert run_cli(["1234.6"], {"RATE_EUR": "100"}) == (0, "1234.6 HUF = 12.35 EUR"), "Fractional amounts are allowed."
+code, out = run_cli(["1000"], {"RATE_EUR": "lots"})
+assert code == 1 and out.startswith("Error:"), "A non-numeric rate gives 'Error: ...' and code 1."
+code, out = run_cli(["1000"], {"RATE_EUR": "0"})
+assert code == 1 and out.startswith("Error:"), "A non-positive rate gives 'Error: ...' and code 1."
+code, out = run_cli(["1000"], {"CURRENCY": "GBP"})
+assert code == 1 and out.startswith("Error:"), "An unknown CURRENCY gives 'Error: ...' and code 1."
+assert run_cli(["lots"], {})[0] == 2 and run_cli([], {})[0] == 2, "For bad arguments return argparse's code (2)."
+```

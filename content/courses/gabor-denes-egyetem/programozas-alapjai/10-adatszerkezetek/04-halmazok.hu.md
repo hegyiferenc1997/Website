@@ -98,3 +98,51 @@ print(f, {f: "kulcsként is jó"})
 - Tartalmazás-vizsgálat átlagosan **O(1)** a hasítótábla miatt.
 - Műveletek: `|` unió, `&` metszet, `-` különbség, `^` szimmetrikus különbség.
 - Elemei csak megváltoztathatatlan (hash-elhető) objektumok lehetnek.
+
+## A lecke feladata: Közös és eltérő tárgyak halmazműveletekkel
+
+Két hallgató felvett tárgyainak listája adott (lehetnek benne ismétlődések). Írj `targy_osszevetes(a, b)` függvényt **halmazműveletekkel**, amely egy szótárat ad vissza:
+
+- `"kozos"`: a mindkettőjüknél szereplő tárgyak (metszet),
+- `"csak_a"`: csak az első hallgatónál szereplők (különbség),
+- `"csak_b"`: csak a második hallgatónál szereplők,
+- `"osszes"`: hány különböző tárgy szerepel összesen (unió mérete).
+
+A listák (`kozos`, `csak_a`, `csak_b`) **ábécérendben** legyenek.
+
+```python starter required
+def targy_osszevetes(a, b):
+    ha, hb = set(a), set(b)
+    # & metszet, - különbség, | unió; sorted() a listákhoz
+    pass
+
+
+print(targy_osszevetes(["Matek", "Fizika", "Matek"], ["Fizika", "Kémia"]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def targy_osszevetes(a, b):
+    ha, hb = set(a), set(b)
+    return {
+        "kozos": sorted(ha & hb),
+        "csak_a": sorted(ha - hb),
+        "csak_b": sorted(hb - ha),
+        "osszes": len(ha | hb),
+    }
+
+
+print(targy_osszevetes(["Matek", "Fizika", "Matek"], ["Fizika", "Kémia"]))
+```
+
+</details>
+
+```python test
+e = targy_osszevetes(["Matek", "Fizika", "Matek"], ["Fizika", "Kémia"])
+assert e == {"kozos": ["Fizika"], "csak_a": ["Matek"], "csak_b": ["Kémia"], "osszes": 3}, "A példa eredménye nem stimmel."
+e = targy_osszevetes(["C", "B", "A"], ["A", "B", "C"])
+assert e == {"kozos": ["A", "B", "C"], "csak_a": [], "csak_b": [], "osszes": 3}, "Azonos tárgyak, ábécérendben."
+assert targy_osszevetes([], [])["osszes"] == 0, "Üres listáknál 0 tárgy."
+```

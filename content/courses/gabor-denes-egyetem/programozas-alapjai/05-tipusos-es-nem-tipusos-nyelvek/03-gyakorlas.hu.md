@@ -123,3 +123,79 @@ print(type(x).__name__)
 `int`, `float` (az osztás mindig float), `str`, `bool`.
 
 </details>
+
+## Összefoglaló feladat: Futásidejű típusellenőrző
+
+A témakör összefoglaló feladata. A Python futás közben **nem** ellenőrzi a típusjelöléseket – most te teszed meg!
+
+Írj `ellenorzott_hivas(fuggveny, *ertekek)` függvényt, amely:
+
+1. a `fuggveny.__annotations__` alapján sorban végignézi a paraméterek jelölt típusát (a `"return"` kulcsot hagyd ki),
+2. ha egy érték nem a jelölt típusú (`isinstance`), `TypeError`-t dob, amelynek üzenetében benne van a paraméter neve,
+3. ha minden rendben, meghívja a függvényt az értékekkel, és visszaadja az eredményét – de előtte azt is ellenőrzi, hogy a visszatérési érték a `"return"` jelölés szerinti típusú-e (ha van ilyen jelölés).
+
+Elég az egyszerű típusokat (`int`, `str`, `float`, `bool`, `list`) kezelni.
+
+```python starter required
+def ellenorzott_hivas(fuggveny, *ertekek):
+    jelolesek = dict(fuggveny.__annotations__)
+    vissza_tipus = jelolesek.pop("return", None)
+    # zip(jelolesek.items(), ertekek) → (név, típus), érték párok
+    pass
+
+
+def duplaz(x: int) -> int:
+    return 2 * x
+
+
+print(ellenorzott_hivas(duplaz, 21))   # 42
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ellenorzott_hivas(fuggveny, *ertekek):
+    jelolesek = dict(fuggveny.__annotations__)
+    vissza_tipus = jelolesek.pop("return", None)
+    for (nev, tipus), ertek in zip(jelolesek.items(), ertekek):
+        if not isinstance(ertek, tipus):
+            raise TypeError(f"A(z) {nev} paraméter típusa {tipus.__name__} kellene legyen, nem {type(ertek).__name__}.")
+    eredmeny = fuggveny(*ertekek)
+    if vissza_tipus is not None and not isinstance(eredmeny, vissza_tipus):
+        raise TypeError(f"A visszatérési érték típusa {vissza_tipus.__name__} kellene legyen.")
+    return eredmeny
+
+
+def duplaz(x: int) -> int:
+    return 2 * x
+
+
+print(ellenorzott_hivas(duplaz, 21))   # 42
+```
+
+</details>
+
+```python test
+def duplaz(x: int) -> int:
+    return 2 * x
+
+def udvozol(nev: str, szor: int) -> str:
+    return ("Szia " + nev + "! ") * szor
+
+def hibas(x: int) -> str:
+    return x
+
+assert ellenorzott_hivas(duplaz, 21) == 42, "Jó típusnál a függvény eredményét kell visszaadni."
+assert ellenorzott_hivas(udvozol, "Anna", 2) == "Szia Anna! Szia Anna! ", "Több paraméterrel is működjön."
+try:
+    ellenorzott_hivas(udvozol, "Anna", "2")
+    assert False, "Rossz típusú paraméternél TypeError kell."
+except TypeError as h:
+    assert "szor" in str(h), "A hibaüzenetben legyen benne a paraméter neve (szor)."
+try:
+    ellenorzott_hivas(hibas, 5)
+    assert False, "Rossz típusú visszatérési értéknél TypeError kell."
+except TypeError:
+    pass
+```

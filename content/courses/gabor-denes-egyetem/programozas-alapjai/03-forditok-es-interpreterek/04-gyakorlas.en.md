@@ -129,3 +129,81 @@ assert is_valid("if x > 3\n    pass") is False
 assert is_valid("x = 1 / 0") is True, "That would be a run-time error, but the syntax is fine!"
 print("All checks passed!")
 ```
+
+## Summary exercise: Mini compiler: evaluating an expression
+
+The summary exercise of the topic: build a mini "compiler" that **tokenizes** an expression and then **evaluates** it – with the `+`, `-` and `*` operators and the usual precedence (multiplication first). There are no parentheses or division, only non-negative integers.
+
+Write a `calculate(expression)` function! Using `eval()` is forbidden – it would skip the whole point. For example `calculate("2 + 3*4")` → 14, `calculate("10 - 2*3 - 1")` → 3.
+
+Tip: work in two steps. First compute products from the tokens (multiply the numbers joined by `*`) and remember the sign in front of each; then add up the products with their signs.
+
+```python starter required
+def tokenize(expression):
+    # the tokenizer from the lesson (numbers and operators)
+    pass
+
+
+def calculate(expression):
+    # 1. tokens
+    # 2. terms: [+product, -product, ...]
+    # 3. the sum of the terms
+    pass
+
+
+print(calculate("2 + 3*4"))       # 14
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def tokenize(expression):
+    result = []
+    number = ""
+    for char in expression:
+        if char.isdigit():
+            number += char
+            continue
+        if number:
+            result.append(number)
+            number = ""
+        if char in "+-*":
+            result.append(char)
+        elif char != " ":
+            raise ValueError(f"Unknown character: {char!r}")
+    if number:
+        result.append(number)
+    return result
+
+
+def calculate(expression):
+    tokens = tokenize(expression)
+    total = 0
+    sign = 1
+    product = int(tokens[0])
+    i = 1
+    while i < len(tokens):
+        op, number = tokens[i], int(tokens[i + 1])
+        if op == "*":
+            product *= number
+        else:
+            total += sign * product      # close the previous term
+            sign = 1 if op == "+" else -1
+            product = number
+        i += 2
+    return total + sign * product
+
+
+print(calculate("2 + 3*4"))       # 14
+```
+
+</details>
+
+```python test
+assert calculate("2 + 3*4") == 14, "2 + 3*4 = 14 (multiplication first!)"
+assert calculate("10 - 2*3 - 1") == 3, "10 - 2*3 - 1 = 3"
+assert calculate("7") == 7, "A single number is itself."
+assert calculate("2*3*4 - 4*5 + 1") == 5, "2*3*4 - 4*5 + 1 = 5"
+assert calculate("100-1-1") == 98, "Subtraction goes left to right: 100-1-1 = 98"
+```

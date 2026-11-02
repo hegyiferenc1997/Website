@@ -135,3 +135,63 @@ print("Átlag:", atlag)
 - A map kulcs–érték párokat tárol; Pythonban `dict`, átlagosan **O(1)** elérés.
 - Elérés: `d[k]` (KeyError, ha nincs) vagy `d.get(k, alap)`; bejárás: `keys()`, `values()`, `items()`.
 - Minták: számlálás (`get(k, 0) + 1`, `Counter`), csoportosítás (`setdefault`).
+
+## A lecke feladata: Szógyakoriság szótárral
+
+Írj `szogyakorisag(szoveg)` függvényt, amely egy szótárban megszámolja, melyik szó hányszor fordul elő a szövegben:
+
+- a kis- és nagybetű ne számítson (minden szót kisbetűsre alakíts),
+- a szavak végéről és elejéről a `.,!?;:` írásjeleket távolítsd el (`strip(...)`),
+- az így üressé váló „szavakat” hagyd ki.
+
+Írj mellé egy `leggyakoribb(szoveg)` függvényt is, amely a leggyakoribb szót adja vissza (egyenlőségnél az ábécérendben elsőt; üres szövegre `None`-t).
+
+```python starter required
+def szogyakorisag(szoveg):
+    gyakorisag = {}
+    for szo in szoveg.split():
+        # tisztítás, kisbetű, számlálás: gyakorisag.get(szo, 0) + 1
+        pass
+    return gyakorisag
+
+
+def leggyakoribb(szoveg):
+    pass
+
+
+print(szogyakorisag("Alma, körte, alma!"))   # {'alma': 2, 'körte': 1}
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szogyakorisag(szoveg):
+    gyakorisag = {}
+    for szo in szoveg.split():
+        szo = szo.strip(".,!?;:").lower()
+        if szo:
+            gyakorisag[szo] = gyakorisag.get(szo, 0) + 1
+    return gyakorisag
+
+
+def leggyakoribb(szoveg):
+    gyakorisag = szogyakorisag(szoveg)
+    if not gyakorisag:
+        return None
+    return min(gyakorisag, key=lambda szo: (-gyakorisag[szo], szo))
+
+
+print(szogyakorisag("Alma, körte, alma!"))   # {'alma': 2, 'körte': 1}
+```
+
+</details>
+
+```python test
+assert szogyakorisag("Alma, körte, alma!") == {"alma": 2, "körte": 1}, "A példa szótára nem stimmel."
+assert szogyakorisag("") == {}, "Üres szövegre üres szótár."
+assert szogyakorisag("Igen? IGEN. igen ; nem") == {"igen": 3, "nem": 1}, "A magában álló írásjel nem szó; a kis- és nagybetű nem számít."
+assert leggyakoribb("b a b a c") == "a", "Egyenlőségnél az ábécérendben első (a)."
+assert leggyakoribb("Alma, körte, alma!") == "alma", "A leggyakoribb: alma."
+assert leggyakoribb("") is None, "Üres szövegre None."
+```

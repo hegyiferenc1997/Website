@@ -104,3 +104,51 @@ Az **absztrakció** azt jelenti, hogy elrejtjük a részleteket, és csak a lén
 - Minden algoritmus felépíthető **szekvenciából, elágazásból és ciklusból**.
 - A **pszeudokód** és a **folyamatábra** nyelvfüggetlen tervezési eszközök.
 - A **lépésenkénti finomítás** (dekompozíció) és az **absztrakció** a nagy feladatok kezelésének kulcsa.
+
+## A lecke feladata: Maximumkeresés pszeudokódból
+
+Valósítsd meg Pythonban az alábbi pszeudokódot a `legnagyobb(lista)` függvényben (a beépített `max()` használata nélkül):
+
+```text
+függvény legnagyobb(lista):
+    ha a lista üres: vissza „semmi” (None)
+    legjobb ← lista első eleme
+    ciklus minden x elemre a listában:
+        ha x > legjobb: legjobb ← x
+    vissza legjobb
+```
+
+```python starter required
+def legnagyobb(lista):
+    # Kövesd a pszeudokódot lépésről lépésre!
+    pass
+
+
+print(legnagyobb([3, 9, 2]))   # 9
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def legnagyobb(lista):
+    if len(lista) == 0:
+        return None
+    legjobb = lista[0]
+    for x in lista:
+        if x > legjobb:
+            legjobb = x
+    return legjobb
+
+
+print(legnagyobb([3, 9, 2]))   # 9
+```
+
+</details>
+
+```python test
+assert legnagyobb([3, 9, 2]) == 9, "legnagyobb([3, 9, 2]) eredménye 9 kell legyen."
+assert legnagyobb([-5, -2, -8]) == -2, "Csupa negatív számnál is működnie kell (-2)."
+assert legnagyobb([7]) == 7, "Egyelemű listánál az egyetlen elem a legnagyobb."
+assert legnagyobb([]) is None, "Üres listára None-t kell visszaadni."
+```

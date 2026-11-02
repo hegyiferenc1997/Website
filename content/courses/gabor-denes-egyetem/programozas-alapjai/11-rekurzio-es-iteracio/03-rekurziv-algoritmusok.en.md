@@ -150,3 +150,69 @@ print(flatten([1, [2, [3, 4], 5], [[6]], 7]))
 - **Towers of Hanoi:** `2ⁿ − 1` moves, a few lines recursively.
 - **Merge sort:** O(n log n).
 - Recursively structured data (trees, nested lists) → recursive traversal.
+
+## Lesson exercise: Merge sort
+
+Write **merge sort** recursively: `merge_sort(items)` returns a new ascending list – without using `sort()` or `sorted()`.
+
+1. Base case: a list with at most one element is already sorted (return a copy of it).
+2. Divide: cut the list in half in the middle.
+3. Conquer: sort the two halves recursively.
+4. Merge the two sorted halves (as in the list exercise of the Data Structures topic).
+
+```python starter required
+def merge(a, b):
+    # merging two sorted lists
+    pass
+
+
+def merge_sort(items):
+    pass
+
+
+print(merge_sort([5, 2, 9, 1, 5, 6]))   # [1, 2, 5, 5, 6, 9]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def merge(a, b):
+    i = j = 0
+    result = []
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    return result + a[i:] + b[j:]
+
+
+def merge_sort(items):
+    if len(items) <= 1:
+        return list(items)
+    middle = len(items) // 2
+    left = merge_sort(items[:middle])
+    right = merge_sort(items[middle:])
+    return merge(left, right)
+
+
+print(merge_sort([5, 2, 9, 1, 5, 6]))   # [1, 2, 5, 5, 6, 9]
+```
+
+</details>
+
+```python test
+import random
+assert merge_sort([5, 2, 9, 1, 5, 6]) == [1, 2, 5, 5, 6, 9], "Sorting the example is not right."
+assert merge_sort([]) == [], "An empty list."
+assert merge_sort([3]) == [3], "A one-element list."
+random.seed(1)
+for _ in range(20):
+    data = [random.randint(-50, 50) for _ in range(random.randint(0, 40))]
+    copy = list(data)
+    assert merge_sort(data) == sorted(data), f"Wrong sort: {data}"
+    assert data == copy, "The original list must not change."
+```

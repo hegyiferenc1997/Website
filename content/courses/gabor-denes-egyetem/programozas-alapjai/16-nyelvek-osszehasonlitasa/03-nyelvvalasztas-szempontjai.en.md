@@ -88,3 +88,71 @@ print(f"Python loop: {python_time:.4f} s, built-in sum(): {c_time:.4f} s")
 - Languages are compared by **performance, development speed, safety, ecosystem and portability**.
 - The key trade-off: **fast execution ↔ fast development**.
 - Choose a language **for the task and the platform**, not because it is trendy.
+
+## Lesson exercise: Weighted language choice
+
+We are choosing a language for a project. Every language was scored 1–5 per criterion, and the criteria have weights. Write the `ranking(scores, weights)` function:
+
+- `scores`: a `{language: {criterion: score}}` dictionary, `weights`: a `{criterion: weight}` dictionary,
+- a language's total is the **weighted average** `Σ(score · weight) / Σ weight`, rounded to 2 decimals; a criterion missing for a language counts as 0 points,
+- the result is a list of `(language, total)` pairs in **descending** order of total, alphabetical on ties,
+- if the weights sum to 0 (or there are no weights), raise `ValueError`.
+
+```python starter required
+def ranking(scores, weights):
+    result = []
+    for lang, points in scores.items():
+        result.append((lang, sum(points.values())))
+    return result
+
+
+scores = {
+    "Python": {"learnability": 5, "speed": 2, "libraries": 5},
+    "C++": {"learnability": 2, "speed": 5, "libraries": 4},
+}
+print(ranking(scores, {"learnability": 2, "speed": 1, "libraries": 1}))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def ranking(scores, weights):
+    total_weight = sum(weights.values())
+    if total_weight == 0:
+        raise ValueError("The weights cannot sum to 0.")
+    result = []
+    for lang, points in scores.items():
+        # A missing criterion is worth 0 points
+        total = sum(points.get(criterion, 0) * weight for criterion, weight in weights.items())
+        result.append((lang, round(total / total_weight, 2)))
+    # Descending total, alphabetical on ties
+    return sorted(result, key=lambda pair: (-pair[1], pair[0]))
+
+
+scores = {
+    "Python": {"learnability": 5, "speed": 2, "libraries": 5},
+    "C++": {"learnability": 2, "speed": 5, "libraries": 4},
+}
+print(ranking(scores, {"learnability": 2, "speed": 1, "libraries": 1}))
+```
+
+</details>
+
+```python test
+scores = {
+    "Python": {"learnability": 5, "speed": 2, "libraries": 5},
+    "C++": {"learnability": 2, "speed": 5, "libraries": 4},
+}
+assert ranking(scores, {"learnability": 2, "speed": 1, "libraries": 1}) == [("Python", 4.25), ("C++", 3.25)], "The weighted average or the order is wrong."
+assert ranking(scores, {"speed": 1}) == [("C++", 5.0), ("Python", 2.0)], "Only weighted criteria count."
+r = ranking({"Go": {"a": 3}, "C": {"a": 3}, "Rust": {}}, {"a": 1})
+assert r == [("C", 3.0), ("Go", 3.0), ("Rust", 0.0)], "Alphabetical on ties; a missing criterion is 0 points."
+assert ranking({"X": {"a": 1, "b": 2}}, {"a": 1, "b": 2}) == [("X", 1.67)], "Round to 2 decimals."
+for bad in ({}, {"a": 0}):
+    try:
+        ranking(scores, bad)
+        assert False, "A total weight of 0 should raise ValueError."
+    except ValueError:
+        pass
+```

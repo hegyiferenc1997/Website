@@ -29,6 +29,13 @@
       "when": 1793575306784,
       "tag": "0003_lessons",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793627148022,
+      "tag": "0004_lesson_exercises",
+      "breakpoints": true
     }
   ]
 }

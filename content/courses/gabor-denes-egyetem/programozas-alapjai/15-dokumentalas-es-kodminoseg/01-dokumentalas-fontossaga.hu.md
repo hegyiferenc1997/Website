@@ -73,3 +73,70 @@ print(f([40, 60, 80]), sikeres_dolgozatok_atlaga([40, 60, 80]))
 - Szintek: kódon belüli, API (docstring), fejlesztői (README), felhasználói.
 - A _miért_-et dokumentáld, ne a nyilvánvalót; tartsd naprakészen.
 - A legjobb kiindulópont az önmagát magyarázó, beszédes nevű kód.
+
+## A lecke feladata: Docstring futtatható példákkal
+
+A `kor_terulet(r)` függvény már működik, de semmi nem árulja el, hogyan kell használni. Írj hozzá **docstringet**, amely:
+
+- egy mondatban leírja, mit csinál a függvény,
+- legalább **két doctest-példát** tartalmaz (`>>>` kezdetű sorok a várt eredménnyel), például `round(kor_terulet(1), 2)` → `3.14`.
+
+Ezen felül negatív sugárnál a függvény dobjon `ValueError`-t.
+
+Az ellenőrzés a docstringben lévő példákat is lefuttatja a `doctest` modullal – mindnek helyes eredményt kell adnia.
+
+```python starter required
+import math
+
+
+def kor_terulet(r):
+    return math.pi * r ** 2
+
+
+print(kor_terulet(2))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import math
+
+
+def kor_terulet(r):
+    """Visszaadja az r sugarú kör területét.
+
+    >>> round(kor_terulet(1), 2)
+    3.14
+    >>> kor_terulet(0)
+    0.0
+    """
+    if r < 0:
+        raise ValueError("A sugár nem lehet negatív.")
+    return math.pi * r ** 2
+
+
+print(kor_terulet(2))
+```
+
+</details>
+
+```python test
+import doctest, math
+doc = kor_terulet.__doc__ or ""
+assert doc.strip(), "A függvénynek nincs docstringje."
+assert doc.count(">>>") >= 2, "Legalább két >>> kezdetű doctest-példa kell a docstringbe."
+tesztek = doctest.DocTestFinder().find(kor_terulet, "kor_terulet", module=False, globs={"kor_terulet": kor_terulet, "math": math})
+futtato = doctest.DocTestRunner(verbose=False)
+for t in tesztek:
+    futtato.run(t, out=lambda s: None)
+eredmeny = futtato.summarize(verbose=False)
+assert eredmeny.attempted >= 2, "Nem találtam legalább két doctest-példát."
+assert eredmeny.failed == 0, "Valamelyik doctest-példa nem a leírt eredményt adja."
+assert abs(kor_terulet(3) - 28.274333882308138) < 1e-9, "A terület számítása elromlott."
+try:
+    kor_terulet(-1)
+    assert False, "Negatív sugárnál ValueError kell."
+except ValueError:
+    pass
+```

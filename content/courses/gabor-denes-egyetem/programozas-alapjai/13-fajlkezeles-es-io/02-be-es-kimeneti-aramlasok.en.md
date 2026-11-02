@@ -119,3 +119,59 @@ For more complex options use the `argparse` module (flags, help, defaults).
 - `stdin` – input, `stdout` – results, `stderr` – errors; they can be redirected in the terminal (`>`, `<`, `2>`, `|`).
 - Writing is buffered: close or `flush` is needed.
 - Command-line arguments: `sys.argv`; exit code: `sys.exit(code)`.
+
+## Lesson exercise: Summing numbers from a stream
+
+Write a `total(stream)` function that receives a **text stream** (anything you can iterate line by line: an open file, `sys.stdin` or `io.StringIO`) and returns the sum of the numbers in it.
+
+- There is one number per line; skip empty lines and comment lines starting with `#`.
+- Trim the spaces at the start and end of each line.
+
+This way the same function works with a file and with data coming from the keyboard – that's the point of the stream concept.
+
+```python starter required
+import io
+
+
+def total(stream):
+    result = 0
+    for line in stream:
+        pass
+    return result
+
+
+print(total(io.StringIO("10\n# comment\n\n2.5\n")))   # 12.5
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import io
+
+
+def total(stream):
+    result = 0
+    for line in stream:
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        result += float(line)
+    return result
+
+
+print(total(io.StringIO("10\n# comment\n\n2.5\n")))   # 12.5
+```
+
+</details>
+
+```python test
+import io
+assert total(io.StringIO("10\n# comment\n\n2.5\n")) == 12.5, "10 + 2.5 = 12.5 (the comment and the empty line are skipped)"
+assert total(io.StringIO("")) == 0, "An empty stream gives 0."
+assert total(io.StringIO("  -1 \n  3\n")) == 2, "Spaces must be trimmed."
+with open("numbers.txt", "w", encoding="utf-8") as f:
+    f.write("1\n2\n3\n")
+with open("numbers.txt", encoding="utf-8") as f:
+    assert total(f) == 6, "It must work with an open file too."
+```

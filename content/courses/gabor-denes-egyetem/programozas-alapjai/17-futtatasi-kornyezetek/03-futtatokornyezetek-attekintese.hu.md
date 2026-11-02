@@ -114,3 +114,78 @@ print("Új mód:", os.environ["ALKALMAZAS_MOD"])
 - A futtatókörnyezet adja mindazt, ami a kódon kívül kell a futáshoz.
 - A **konténer** megoldja az „én gépemen működik” problémát.
 - Beállításokat és titkokat **környezeti változóban** adj át, ne a kódban.
+
+## A lecke feladata: Dockerfile generálása
+
+Írj `dockerfile(verzio, belepesi_pont="main.py", fuggosegek=True)` függvényt, amely a lecke mintája alapján elkészíti egy Python program Dockerfile-ját, és **szövegként** adja vissza (a sorokat `"\n"` köti össze, a végén nincs sortörés):
+
+```text
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "main.py"]
+```
+
+- a `FROM` sorba a `verzio` kerül; csak `3.x` alakú verzió fogadható el (pl. `"3.9"`, `"3.12"`), különben `ValueError`,
+- a `CMD` sorba a `belepesi_pont` kerül; ha nem `.py`-ra végződik, `ValueError`,
+- ha `fuggosegek` hamis, a `COPY requirements.txt .` és a `RUN pip …` sor kimarad.
+
+```python starter required
+def dockerfile(verzio, belepesi_pont="main.py", fuggosegek=True):
+    return "FROM python:3.12-slim\nCMD python main.py"
+
+
+print(dockerfile("3.12"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import re
+
+
+def dockerfile(verzio, belepesi_pont="main.py", fuggosegek=True):
+    # Csak 3.x alakú Python-verziót fogadunk el
+    if not re.fullmatch(r"3\.\d{1,2}", verzio):
+        raise ValueError(f"Érvénytelen Python-verzió: {verzio}")
+    if not belepesi_pont.endswith(".py"):
+        raise ValueError("A belépési pont egy .py fájl legyen.")
+    sorok = [f"FROM python:{verzio}-slim", "WORKDIR /app"]
+    if fuggosegek:
+        sorok += ["COPY requirements.txt .", "RUN pip install --no-cache-dir -r requirements.txt"]
+    sorok += ["COPY . .", f'CMD ["python", "{belepesi_pont}"]']
+    return "\n".join(sorok)
+
+
+print(dockerfile("3.12"))
+```
+
+</details>
+
+```python test
+vart = "\n".join([
+    "FROM python:3.12-slim",
+    "WORKDIR /app",
+    "COPY requirements.txt .",
+    "RUN pip install --no-cache-dir -r requirements.txt",
+    "COPY . .",
+    'CMD ["python", "main.py"]',
+])
+assert dockerfile("3.12") == vart, "Az alapértelmezett Dockerfile nem egyezik a mintával."
+d = dockerfile("3.9", "app.py", fuggosegek=False)
+assert d == 'FROM python:3.9-slim\nWORKDIR /app\nCOPY . .\nCMD ["python", "app.py"]', "Függőségek nélkül a COPY requirements és a RUN sor marad ki."
+for rossz in ("2.7", "3", "python3.12", "3.12.1", "3.x"):
+    try:
+        dockerfile(rossz)
+        assert False, f"A(z) {rossz!r} verzióra ValueError kell."
+    except ValueError:
+        pass
+try:
+    dockerfile("3.12", "main.js")
+    assert False, "Nem .py belépési pontra ValueError kell."
+except ValueError:
+    pass
+```

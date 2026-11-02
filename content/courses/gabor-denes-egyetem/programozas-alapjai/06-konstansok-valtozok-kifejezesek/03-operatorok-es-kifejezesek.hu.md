@@ -146,3 +146,35 @@ print(eredmeny)
 - Összehasonlítás: `== != < > <= >=`, láncolható; `None`-hoz `is`.
 - Logikai: `and`, `or`, `not`; **rövidzár**: a jobb oldal csak szükség esetén értékelődik ki.
 - Kétség esetén **zárójelezz**.
+
+## A lecke feladata: Szökőév egyetlen kifejezéssel
+
+Egy év **szökőév**, ha osztható 4-gyel, de 100-zal nem – kivéve, ha 400-zal is osztható (akkor mégis szökőév).
+
+Írj `szokoev(ev)` függvényt, amely ezt **egyetlen logikai kifejezéssel** dönti el (`and`, `or`, `not`, `%`, összehasonlítás) – `if` nélkül, egy `return` sorral.
+
+```python starter required
+def szokoev(ev):
+    return False   # írd ide a logikai kifejezést
+
+
+print(szokoev(2024), szokoev(1900), szokoev(2000))   # True False True
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szokoev(ev):
+    return ev % 4 == 0 and (ev % 100 != 0 or ev % 400 == 0)
+
+
+print(szokoev(2024), szokoev(1900), szokoev(2000))   # True False True
+```
+
+</details>
+
+```python test
+for ev, varhato in [(2024, True), (2023, False), (1900, False), (2000, True), (2100, False), (1600, True), (4, True)]:
+    assert szokoev(ev) is varhato, f"{ev}: {'szökőév' if varhato else 'nem szökőév'}"
+```

@@ -75,3 +75,73 @@ Az importált modulok bájtkódja a `__pycache__` mappába kerül (`.pyc` fájlo
 | hordozhatóság     | platformonként újrafordítás | ahol van értelmező      |
 
 A Python bájtkódra fordít, és azt egy virtuális gép futtatja.
+
+## A lecke feladata: Írj egy veremgépes interpretert
+
+A bájtkódot egy virtuális gép **értelmezi** utasításról utasításra. Írj egy pici veremgépet: a `futtat(program)` függvény utasítások listáját kapja, és a verem tetején lévő értéket adja vissza a végén.
+
+| Utasítás | Jelentés                                               |
+| -------- | ------------------------------------------------------ |
+| `PUSH n` | az `n` egész számot a verem tetejére teszi             |
+| `ADD`    | leveszi a felső két értéket, az összegüket visszateszi |
+| `SUB`    | leveszi `b`-t, majd `a`-t, és `a - b`-t teszi vissza   |
+| `MUL`    | leveszi a felső két értéket, a szorzatukat visszateszi |
+
+Ismeretlen utasításnál dobj `ValueError` kivételt. Például `["PUSH 2", "PUSH 3", "ADD", "PUSH 4", "MUL"]` eredménye 20.
+
+```python starter required
+def futtat(program):
+    verem = []
+    for utasitas in program:
+        reszek = utasitas.split()     # pl. ["PUSH", "2"]
+        muvelet = reszek[0]
+        # PUSH: verem.append(int(reszek[1]))
+        # ADD / SUB / MUL: b = verem.pop(), a = verem.pop(), majd az eredmény vissza a verembe
+        # egyébként: ValueError
+    return verem[-1]
+
+
+print(futtat(["PUSH 2", "PUSH 3", "ADD", "PUSH 4", "MUL"]))   # 20
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def futtat(program):
+    verem = []
+    for utasitas in program:
+        reszek = utasitas.split()
+        muvelet = reszek[0]
+        if muvelet == "PUSH":
+            verem.append(int(reszek[1]))
+        elif muvelet in ("ADD", "SUB", "MUL"):
+            b = verem.pop()
+            a = verem.pop()
+            if muvelet == "ADD":
+                verem.append(a + b)
+            elif muvelet == "SUB":
+                verem.append(a - b)
+            else:
+                verem.append(a * b)
+        else:
+            raise ValueError(f"Ismeretlen utasítás: {utasitas}")
+    return verem[-1]
+
+
+print(futtat(["PUSH 2", "PUSH 3", "ADD", "PUSH 4", "MUL"]))   # 20
+```
+
+</details>
+
+```python test
+assert futtat(["PUSH 2", "PUSH 3", "ADD", "PUSH 4", "MUL"]) == 20, "(2 + 3) * 4 = 20"
+assert futtat(["PUSH 10", "PUSH 4", "SUB"]) == 6, "10 - 4 = 6 (a sorrend számít!)"
+assert futtat(["PUSH 7"]) == 7, "Egyetlen PUSH után a szám van a verem tetején."
+assert futtat(["PUSH 1", "PUSH 2", "PUSH 3", "MUL", "ADD"]) == 7, "1 + 2 * 3 = 7"
+try:
+    futtat(["PUSH 1", "JUMP"])
+    assert False, "Ismeretlen utasításnál ValueError kell."
+except ValueError:
+    pass
+```

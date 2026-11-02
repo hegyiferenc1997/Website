@@ -84,3 +84,49 @@ Running options are covered in more detail in the **Runtime Environments** topic
 - Everything after `#` is a comment.
 - In Python **indentation** marks blocks.
 - Read error messages bottom-up: type, location, line.
+
+## Lesson exercise: Fix the broken program
+
+The program below has **three bugs** (a missing quotation mark, wrong indentation and a misspelled function name). Fix it so that it runs and prints:
+
+```text
+Circle perimeter and area
+Radius: 2
+Perimeter: 12.56636
+Area: 12.56636
+```
+
+Tip: run it and read the error message – it tells you which line has the problem.
+
+```python starter required
+# Circle perimeter and area
+radius = 2
+print("Circle perimeter and area)
+print("Radius:", radius)
+if radius > 0:
+print("Perimeter:", 2 * 3.14159 * radius)
+    prnt("Area:", 3.14159 * radius ** 2)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+# Circle perimeter and area
+radius = 2
+print("Circle perimeter and area")
+print("Radius:", radius)
+if radius > 0:
+    print("Perimeter:", 2 * 3.14159 * radius)
+    print("Area:", 3.14159 * radius ** 2)
+```
+
+</details>
+
+```python test
+lines = output.splitlines()
+assert lines[0] == "Circle perimeter and area", "The first line is the title."
+assert lines[1] == "Radius: 2", "The second line: Radius: 2"
+assert lines[2] == "Perimeter: 12.56636", "The third line: Perimeter: 12.56636"
+assert lines[3] == "Area: 12.56636", "The fourth line: Area: 12.56636"
+```

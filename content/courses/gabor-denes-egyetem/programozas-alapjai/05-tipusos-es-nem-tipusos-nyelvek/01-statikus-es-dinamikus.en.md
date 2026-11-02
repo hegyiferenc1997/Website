@@ -100,3 +100,54 @@ Strictly speaking, in an **untyped** language all data is just a bit pattern and
 - **Strong:** no surprising automatic conversions; **weak:** there are.
 - Python is **dynamically and strongly** typed.
 - Truly untyped languages (assembly) work only with bit patterns.
+
+## Lesson exercise: Strong typing by hand
+
+Python is **strongly typed**: `1 + "2"` gives an error, it doesn't guess. Write a `safe_add(a, b)` function that takes this strictness even further:
+
+- if both values are numbers (`int` or `float`, but **not** `bool`), return their sum;
+- if both are strings, concatenate them;
+- in every other case raise `TypeError` with a clear message (e.g. `"Cannot add: int and str"`).
+
+Tip: the name of a type: `type(x).__name__`.
+
+```python starter required
+def safe_add(a, b):
+    # numbers? strings? otherwise raise TypeError(...)
+    pass
+
+
+print(safe_add(2, 3.5), safe_add("ab", "c"))   # 5.5 abc
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def is_number(x):
+    return isinstance(x, (int, float)) and not isinstance(x, bool)
+
+
+def safe_add(a, b):
+    if is_number(a) and is_number(b):
+        return a + b
+    if isinstance(a, str) and isinstance(b, str):
+        return a + b
+    raise TypeError(f"Cannot add: {type(a).__name__} and {type(b).__name__}")
+
+
+print(safe_add(2, 3.5), safe_add("ab", "c"))   # 5.5 abc
+```
+
+</details>
+
+```python test
+assert safe_add(2, 3.5) == 5.5, "The sum of two numbers."
+assert safe_add("ab", "c") == "abc", "Two strings are concatenated."
+for a, b in [(1, "2"), ("1", 2), (True, 1), (1, None), ([1], [2])]:
+    try:
+        safe_add(a, b)
+        assert False, f"safe_add({a!r}, {b!r}) must raise TypeError."
+    except TypeError as error:
+        assert str(error), "The exception should have a clear message."
+```
