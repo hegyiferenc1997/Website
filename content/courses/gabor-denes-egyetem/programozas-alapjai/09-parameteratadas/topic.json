@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Paraméterkiértékelés és paraméterátadás", "en": "Parameter Evaluation and Passing" },
+  "description": {
+    "hu": "Pozicionális, kulcsszavas és változó számú paraméterek, érték és cím szerinti átadás, a Python objektummodellje, valamint a mohó és lusta kiértékelés.",
+    "en": "Positional, keyword and variable-length parameters, pass by value and by reference, Python's object model, and eager versus lazy evaluation."
+  }
+}
