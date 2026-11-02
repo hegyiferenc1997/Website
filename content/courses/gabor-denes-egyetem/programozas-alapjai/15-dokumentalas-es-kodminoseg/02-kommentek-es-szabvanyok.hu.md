@@ -173,3 +173,78 @@ public static double atlag(double a, double b) { return (a + b) / 2; }
 - A **docstring** (`"""..."""`) a függvény/osztály/modul dokumentációja; a `help()` megjeleníti.
 - PEP 257: rövid első sor, üres sor, részletek; Google-stílus: `Args`, `Returns`, `Raises`.
 - Minden projekthez kell **README**; más nyelvekben Javadoc, XML-kommentek, JSDoc, Doxygen.
+
+## A lecke feladata: Google-stílusú docstring és típusjelölés
+
+Írd meg a `berlet_ar(kor, diak)` függvényt egy havi bérlet árának kiszámítására:
+
+- negatív életkornál dobjon `ValueError`-t,
+- 6 év alatt és 65 évtől a bérlet **ingyenes** (`0`),
+- egyébként diákoknak (`diak=True`) `3450`, mindenki másnak `9500` forint.
+
+A szabványos dokumentáció is része a feladatnak:
+
+- **típusjelölés**: `kor: int`, `diak: bool`, visszatérési érték `int`,
+- **Google-stílusú docstring** `Args:`, `Returns:` és `Raises:` szakasszal, az `Args:` alatt mindkét paraméter nevével.
+
+```python starter required
+# függvény
+def berlet_ar(kor, diak):
+    # ha
+    if kor < 6 or kor >= 65:
+        return 0
+    if diak:
+        return 3450
+    return 9500
+
+
+print(berlet_ar(20, True))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def berlet_ar(kor: int, diak: bool) -> int:
+    """Kiszámítja egy havi bérlet árát forintban.
+
+    Args:
+        kor: Az utas életkora években.
+        diak: Igaz, ha az utas érvényes diákigazolvánnyal rendelkezik.
+
+    Returns:
+        A bérlet ára forintban (ingyenes esetben 0).
+
+    Raises:
+        ValueError: Ha az életkor negatív.
+    """
+    if kor < 0:
+        raise ValueError("Az életkor nem lehet negatív.")
+    # 6 év alatt és 65 év felett ingyenes az utazás
+    if kor < 6 or kor >= 65:
+        return 0
+    return 3450 if diak else 9500
+
+
+print(berlet_ar(20, True))
+```
+
+</details>
+
+```python test
+assert berlet_ar(20, True) == 3450 and berlet_ar(20, False) == 9500, "Diák: 3450, felnőtt: 9500."
+assert berlet_ar(5, False) == 0 and berlet_ar(65, False) == 0 and berlet_ar(80, True) == 0, "6 év alatt és 65 évtől ingyenes."
+assert berlet_ar(6, False) == 9500 and berlet_ar(64, True) == 3450, "A határokat (6 és 64 év) figyeld!"
+try:
+    berlet_ar(-1, False)
+    assert False, "Negatív életkornál ValueError kell."
+except ValueError:
+    pass
+jel = berlet_ar.__annotations__
+assert jel.get("kor") is int and jel.get("diak") is bool and jel.get("return") is int, "Hiányzik vagy hibás a típusjelölés (kor: int, diak: bool, -> int)."
+doc = berlet_ar.__doc__ or ""
+for szakasz in ("Args:", "Returns:", "Raises:"):
+    assert szakasz in doc, f"A docstringből hiányzik a(z) {szakasz} szakasz."
+args = doc.split("Args:")[1].split("Returns:")[0]
+assert "kor" in args and "diak" in args, "Az Args: szakaszban mindkét paramétert (kor, diak) írd le."
+```

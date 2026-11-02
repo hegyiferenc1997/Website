@@ -73,3 +73,70 @@ print(f([40, 60, 80]), average_of_passing_scores([40, 60, 80]))
 - Levels: in-code, API (docstrings), developer (README), user.
 - Document the _why_, not the obvious; keep it up to date.
 - The best starting point is self-explanatory code with descriptive names.
+
+## Lesson exercise: A docstring with runnable examples
+
+The `circle_area(r)` function already works, but nothing tells you how to use it. Write a **docstring** for it that:
+
+- describes in one sentence what the function does,
+- contains at least **two doctest examples** (lines starting with `>>>` followed by the expected result), for example `round(circle_area(1), 2)` → `3.14`.
+
+In addition, the function should raise a `ValueError` for a negative radius.
+
+The checker also runs the examples in your docstring with the `doctest` module – all of them must produce the right result.
+
+```python starter required
+import math
+
+
+def circle_area(r):
+    return math.pi * r ** 2
+
+
+print(circle_area(2))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import math
+
+
+def circle_area(r):
+    """Return the area of a circle with radius r.
+
+    >>> round(circle_area(1), 2)
+    3.14
+    >>> circle_area(0)
+    0.0
+    """
+    if r < 0:
+        raise ValueError("The radius cannot be negative.")
+    return math.pi * r ** 2
+
+
+print(circle_area(2))
+```
+
+</details>
+
+```python test
+import doctest, math
+doc = circle_area.__doc__ or ""
+assert doc.strip(), "The function has no docstring."
+assert doc.count(">>>") >= 2, "The docstring needs at least two doctest examples starting with >>>."
+tests = doctest.DocTestFinder().find(circle_area, "circle_area", module=False, globs={"circle_area": circle_area, "math": math})
+runner = doctest.DocTestRunner(verbose=False)
+for t in tests:
+    runner.run(t, out=lambda s: None)
+result = runner.summarize(verbose=False)
+assert result.attempted >= 2, "I could not find at least two doctest examples."
+assert result.failed == 0, "One of the doctest examples does not produce the documented result."
+assert abs(circle_area(3) - 28.274333882308138) < 1e-9, "The area calculation is broken."
+try:
+    circle_area(-1)
+    assert False, "A negative radius should raise ValueError."
+except ValueError:
+    pass
+```

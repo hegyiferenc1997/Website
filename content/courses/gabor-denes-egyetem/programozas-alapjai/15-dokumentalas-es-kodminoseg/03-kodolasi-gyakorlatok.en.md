@@ -170,3 +170,61 @@ In VS Code these work as extensions, flagging problems as you type.
 - Principles: **descriptive names**, **DRY**, **KISS**, **YAGNI**, **one function – one job**, early returns.
 - **Refactor** only under the protection of tests.
 - Use a linter and a formatter (Ruff, Black) – let the machine do the boring work.
+
+## Lesson exercise: Refactoring repeated code (DRY)
+
+Someone wrote a per-category expense summary – the same loop three times, for three hard-coded categories. When a new category appears, the code ignores it.
+
+Rewrite the `category_totals(items)` function following the **DRY** ("don't repeat yourself") principle! `items` is a list of `(category, amount)` pairs. The function returns a dictionary:
+
+- it works for **any** category (no hard-coded category names),
+- the keys come in the order of first appearance,
+- the totals are rounded to 2 decimals (`round(..., 2)`),
+- for an empty list the result is `{}`.
+
+```python starter required
+def category_totals(items):
+    food = 0
+    for category, amount in items:
+        if category == "food":
+            food += amount
+    transport = 0
+    for category, amount in items:
+        if category == "transport":
+            transport += amount
+    fun = 0
+    for category, amount in items:
+        if category == "fun":
+            fun += amount
+    return {"food": food, "transport": transport, "fun": fun}
+
+
+print(category_totals([("food", 1200), ("transport", 450), ("food", 800)]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def category_totals(items):
+    # A single loop, for any categories
+    totals = {}
+    for category, amount in items:
+        totals[category] = totals.get(category, 0) + amount
+    return {k: round(v, 2) for k, v in totals.items()}
+
+
+print(category_totals([("food", 1200), ("transport", 450), ("food", 800)]))
+```
+
+</details>
+
+```python test
+r = category_totals([("food", 1200), ("transport", 450), ("food", 800)])
+assert r == {"food": 2000, "transport": 450}, "Only the categories that occur should be in the dictionary."
+r = category_totals([("rent", 90000), ("books", 4990.5), ("rent", 5000)])
+assert r == {"rent": 95000, "books": 4990.5}, "It must work for new, previously unknown categories too."
+assert list(category_totals([("b", 1), ("a", 2), ("b", 3)])) == ["b", "a"], "Keys must come in the order of first appearance."
+assert category_totals([("x", 0.1), ("x", 0.2)]) == {"x": 0.3}, "Round to 2 decimals."
+assert category_totals([]) == {}, "An empty list gives an empty dictionary."
+```
