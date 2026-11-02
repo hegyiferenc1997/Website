@@ -227,3 +227,92 @@ assert setting(s, "timeout", 30) == 30
 assert setting(s, "retry", 3) == 3
 print("All checks passed!")
 ```
+
+## Summary exercise: Processing a score list with error handling
+
+The summary exercise of the topic: a custom exception, `raise`, `try – except – else`, and collecting errors instead of stopping the program.
+
+A list of lines read from a file is given, each in the form `"name;score"`. Write a `process(lines)` function that returns a `(results, errors)` pair:
+
+- `results`: a dictionary name → score (integer), from the correct lines;
+- `errors`: a list of messages about the bad lines, e.g. `"line 3: invalid score"` (line numbers start at 1).
+
+A line is bad if it doesn't contain exactly one `;` (`"invalid format"`), if the name is empty (`"missing name"`), if the score is not an integer (`"invalid score"`), or if the score is not between 0 and 100 (`"out of range"`). Simply skip empty lines.
+
+Write a `parse_line(line)` helper that raises a custom `LineError` exception with the right message on error – the main function catches it.
+
+```python starter required
+class LineError(Exception):
+    pass
+
+
+def parse_line(line):
+    # returns: (name, score), or raise LineError("...")
+    pass
+
+
+def process(lines):
+    results, errors = {}, []
+    for number, line in enumerate(lines, start=1):
+        pass
+    return results, errors
+
+
+print(process(["Anna;87", "Bob;lots", "", ";50", "Cecil;101"]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class LineError(Exception):
+    pass
+
+
+def parse_line(line):
+    parts = line.split(";")
+    if len(parts) != 2:
+        raise LineError("invalid format")
+    name, score_text = parts[0].strip(), parts[1].strip()
+    if not name:
+        raise LineError("missing name")
+    try:
+        score = int(score_text)
+    except ValueError:
+        raise LineError("invalid score") from None
+    if not 0 <= score <= 100:
+        raise LineError("out of range")
+    return name, score
+
+
+def process(lines):
+    results, errors = {}, []
+    for number, line in enumerate(lines, start=1):
+        if not line.strip():
+            continue
+        try:
+            name, score = parse_line(line)
+        except LineError as error:
+            errors.append(f"line {number}: {error}")
+        else:
+            results[name] = score
+    return results, errors
+
+
+print(process(["Anna;87", "Bob;lots", "", ";50", "Cecil;101"]))
+```
+
+</details>
+
+```python test
+results, errors = process(["Anna;87", "Bob;lots", "", ";50", "Cecil;101", "Dora;60;1", " Ed ; 45 "])
+assert results == {"Anna": 87, "Ed": 45}, "The correct lines: Anna 87, Ed 45 (spaces must be trimmed)."
+assert errors == ["line 2: invalid score", "line 4: missing name", "line 5: out of range", "line 6: invalid format"], "The error list is not right."
+assert issubclass(LineError, Exception), "LineError must be a custom exception class."
+try:
+    parse_line("X;abc")
+    assert False, "parse_line must raise LineError for a bad line."
+except LineError as e:
+    assert str(e) == "invalid score", "The message: invalid score"
+assert process([]) == ({}, []), "An empty list gives an empty result."
+```

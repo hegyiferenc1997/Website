@@ -135,3 +135,98 @@ print(d, d.popleft(), d.pop())
 - A linked list consists of nodes: **data + pointer** to the next one (and to the previous one when doubly linked).
 - Insertion/deletion at a known position is **O(1)**, but access by index is **O(n)**.
 - Python has no built-in linked list class; you can write one with classes or use `collections.deque`.
+
+## Lesson exercise: Reversing a linked list
+
+Extend the lesson's `LinkedList` class with a `reverse()` method that reverses the list **in place**: it creates no new nodes, it only redirects the `next` references. Work with three helper variables: `previous`, `current` and `following` – in every step the current node should point "backwards", and at the end the head should be the old last element.
+
+```python starter required
+class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+
+class LinkedList:
+    def __init__(self, items=()):
+        self.head = None
+        for data in reversed(items):
+            self.head = Node(data, self.head)
+
+    def to_list(self):
+        result, current = [], self.head
+        while current is not None:
+            result.append(current.data)
+            current = current.next
+        return result
+
+    def reverse(self):
+        previous = None
+        current = self.head
+        # while current is not None: ... (three steps: save, turn back, move on)
+        pass
+
+
+ll = LinkedList([1, 2, 3])
+ll.reverse()
+print(ll.to_list())   # [3, 2, 1]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+
+class LinkedList:
+    def __init__(self, items=()):
+        self.head = None
+        for data in reversed(items):
+            self.head = Node(data, self.head)
+
+    def to_list(self):
+        result, current = [], self.head
+        while current is not None:
+            result.append(current.data)
+            current = current.next
+        return result
+
+    def reverse(self):
+        previous = None
+        current = self.head
+        while current is not None:
+            following = current.next   # remember where to go next
+            current.next = previous    # point backwards
+            previous = current
+            current = following
+        self.head = previous
+
+
+ll = LinkedList([1, 2, 3])
+ll.reverse()
+print(ll.to_list())   # [3, 2, 1]
+```
+
+</details>
+
+```python test
+ll = LinkedList([1, 2, 3, 4])
+nodes = []
+current = ll.head
+while current:
+    nodes.append(current)
+    current = current.next
+ll.reverse()
+assert ll.to_list() == [4, 3, 2, 1], "Reversed: [4, 3, 2, 1]"
+assert ll.head is nodes[-1], "Reverse in place: the head must be the old last node (don't create new ones)."
+empty = LinkedList()
+empty.reverse()
+assert empty.to_list() == [], "An empty list reversed is still empty."
+one = LinkedList(["a"])
+one.reverse()
+assert one.to_list() == ["a"], "A one-element list is itself."
+```

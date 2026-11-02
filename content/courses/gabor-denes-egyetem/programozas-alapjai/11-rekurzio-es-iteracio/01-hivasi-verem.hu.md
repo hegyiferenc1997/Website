@@ -96,3 +96,49 @@ print(paros(10), paratlan(7), paros(3))
 - A rekurzió **leszálló** ágon építi, **felszálló** ágon bontja le a vermet.
 - Túl mély rekurzió → `RecursionError` (veremtúlcsordulás); a Python alapkorlátja kb. 1000.
 - Közvetett rekurzió: függvények kölcsönösen hívják egymást.
+
+## A lecke feladata: Egymásba ágyazott listák mélysége
+
+Írj **rekurzív** `melyseg(adat)` függvényt, amely megmondja, milyen mélyen vannak egymásba ágyazva a listák:
+
+- ami nem lista, annak mélysége 0;
+- egy lista mélysége 1 + a benne lévő elemek legnagyobb mélysége (üres listánál 1).
+
+Például `melyseg([1, [2, [3]], 4])` → 3. Gondold végig, hány veremkeret lesz egyszerre a hívási veremben egy ilyen hívásnál!
+
+```python starter required
+def melyseg(adat):
+    if not isinstance(adat, list):
+        return 0
+    # 1 + a legmélyebb elem mélysége
+    pass
+
+
+print(melyseg([1, [2, [3]], 4]))   # 3
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def melyseg(adat):
+    if not isinstance(adat, list):
+        return 0
+    legmelyebb = 0
+    for elem in adat:
+        legmelyebb = max(legmelyebb, melyseg(elem))
+    return 1 + legmelyebb
+
+
+print(melyseg([1, [2, [3]], 4]))   # 3
+```
+
+</details>
+
+```python test
+assert melyseg([1, [2, [3]], 4]) == 3, "[1, [2, [3]], 4] mélysége 3."
+assert melyseg(5) == 0, "Ami nem lista, annak mélysége 0."
+assert melyseg([]) == 1, "Az üres lista mélysége 1."
+assert melyseg([[], [[]]]) == 3, "[[], [[]]] mélysége 3."
+assert melyseg([1, 2, 3]) == 1, "Lapos lista mélysége 1."
+```

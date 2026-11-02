@@ -129,3 +129,65 @@ print(Path("state.json").read_text(encoding="utf-8"))
 - Catch specific exceptions and handle invalid content line by line.
 - Use `pathlib` for paths: `Path("folder") / "file.txt"`.
 - Save important data via a temporary file.
+
+## Lesson exercise: Reading numbers fault-tolerantly
+
+Write a `read_numbers(filename)` function that reads a file containing one integer per line and returns a `(numbers, bad_lines)` pair:
+
+- `numbers`: the list of integers from the correct lines,
+- `bad_lines`: the line numbers (from 1) of the lines that don't contain an integer (empty lines are not bad, they are simply skipped).
+
+If the file doesn't exist (`FileNotFoundError`), the function must not stop with an error but return `([], [])`. Handle the file with the `pathlib` module's `Path` class (`Path(filename).read_text(encoding="utf-8")`).
+
+```python starter required
+from pathlib import Path
+
+
+def read_numbers(filename):
+    numbers, bad_lines = [], []
+    # try: Path(...).read_text(...)  except FileNotFoundError: ...
+    return numbers, bad_lines
+
+
+Path("data.txt").write_text("4\nseven\n\n10\n", encoding="utf-8")
+print(read_numbers("data.txt"))   # ([4, 10], [2])
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from pathlib import Path
+
+
+def read_numbers(filename):
+    numbers, bad_lines = [], []
+    try:
+        text = Path(filename).read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return [], []
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            numbers.append(int(line))
+        except ValueError:
+            bad_lines.append(line_no)
+    return numbers, bad_lines
+
+
+Path("data.txt").write_text("4\nseven\n\n10\n", encoding="utf-8")
+print(read_numbers("data.txt"))   # ([4, 10], [2])
+```
+
+</details>
+
+```python test
+from pathlib import Path
+Path("c1.txt").write_text("4\nseven\n\n10\n2.5\n-3\n", encoding="utf-8")
+assert read_numbers("c1.txt") == ([4, 10, -3], [2, 5]), "Numbers: [4, 10, -3]; bad lines: 2 (text) and 5 (not an integer)."
+assert read_numbers("no_such_file.txt") == ([], []), "A missing file gives ([], [])."
+Path("c2.txt").write_text("", encoding="utf-8")
+assert read_numbers("c2.txt") == ([], []), "An empty file gives ([], [])."
+```

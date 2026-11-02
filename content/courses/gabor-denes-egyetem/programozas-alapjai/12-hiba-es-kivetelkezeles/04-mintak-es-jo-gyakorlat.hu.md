@@ -156,3 +156,51 @@ print(kedvezmenyes_ar(10_000, 15))
 - Pythonban az **EAFP** a megszokott, de az LBYL is rendben van egyszerű esetekben.
 - Erőforrásokhoz `with` / `finally`; hibákhoz `logging`.
 - Érvénytelen bemenetre azonnal, beszédes üzenettel dobj kivételt.
+
+## A lecke feladata: Beállítás kiolvasása EAFP-stílusban
+
+A beállítások egymásba ágyazott szótárban vannak, pl. `{"adatbazis": {"port": "5432"}}`. Írj `beallitas(konfig, utvonal, alapertek=None)` függvényt, amely egy pontokkal elválasztott útvonal (pl. `"adatbazis.port"`) szerint kiolvassa az értéket.
+
+- **EAFP** stílusban dolgozz: ne vizsgáld előre a kulcsokat, hanem próbáld meg, és kapd el a `KeyError`-t (és a `TypeError`-t, ha útközben nem szótárba futsz).
+- Ha az érték nem található, az `alapertek`-et add vissza.
+- Csak azokat a kivételeket kapd el, amelyeket kezelni tudsz – egy csupasz `except:` most hiba lenne!
+
+```python starter required
+def beallitas(konfig, utvonal, alapertek=None):
+    ertek = konfig
+    # for kulcs in utvonal.split("."): ...  try / except KeyError, TypeError
+    return ertek
+
+
+konfig = {"adatbazis": {"port": "5432", "nev": "teszt"}}
+print(beallitas(konfig, "adatbazis.port"))   # 5432
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def beallitas(konfig, utvonal, alapertek=None):
+    ertek = konfig
+    try:
+        for kulcs in utvonal.split("."):
+            ertek = ertek[kulcs]
+    except (KeyError, TypeError):
+        return alapertek
+    return ertek
+
+
+konfig = {"adatbazis": {"port": "5432", "nev": "teszt"}}
+print(beallitas(konfig, "adatbazis.port"))   # 5432
+```
+
+</details>
+
+```python test
+konfig = {"adatbazis": {"port": "5432", "nev": "teszt"}, "debug": False}
+assert beallitas(konfig, "adatbazis.port") == "5432", "adatbazis.port → \"5432\""
+assert beallitas(konfig, "debug") is False, "A False érték is érvényes érték (nem az alapérték)."
+assert beallitas(konfig, "adatbazis.jelszo", "nincs") == "nincs", "Hiányzó kulcsnál az alapérték."
+assert beallitas(konfig, "adatbazis.port.szam", 0) == 0, "Ha útközben nem szótárba futunk: alapérték."
+assert beallitas(konfig, "naplo.szint") is None, "Alapértelmezett alapérték: None."
+```

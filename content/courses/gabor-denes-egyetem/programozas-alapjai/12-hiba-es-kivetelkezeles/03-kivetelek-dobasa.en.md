@@ -126,3 +126,56 @@ print(average([4, 5]))
 - Custom exception: `class MyError(Exception): ...`; give related errors a common base.
 - Bare `raise` – re-raise; `raise New(...) from original` – chaining.
 - `assert` – internal checks and tests, not input validation.
+
+## Lesson exercise: A custom exception for recording grades
+
+1. Create a custom exception class called `InvalidGradeError` that derives from `ValueError`.
+2. Write a `record_grade(grades, grade)` function that appends the grade to the end of the list and returns the list – but if the grade is not an integer (or is a `bool`), or not between 1 and 5, **raise** `InvalidGradeError` with the wrong value in its message.
+
+For an invalid grade the list must not change!
+
+```python starter required
+class InvalidGradeError(ValueError):
+    pass
+
+
+def record_grade(grades, grade):
+    # validation, raise InvalidGradeError(f"..."), then append
+    pass
+
+
+print(record_grade([5], 4))   # [5, 4]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class InvalidGradeError(ValueError):
+    pass
+
+
+def record_grade(grades, grade):
+    if isinstance(grade, bool) or not isinstance(grade, int) or not 1 <= grade <= 5:
+        raise InvalidGradeError(f"Invalid grade: {grade!r}")
+    grades.append(grade)
+    return grades
+
+
+print(record_grade([5], 4))   # [5, 4]
+```
+
+</details>
+
+```python test
+assert issubclass(InvalidGradeError, ValueError), "InvalidGradeError must derive from ValueError."
+assert record_grade([5], 4) == [5, 4], "A valid grade is appended: [5, 4]"
+for bad in [0, 6, 3.5, "5", True]:
+    items = [3]
+    try:
+        record_grade(items, bad)
+        assert False, f"The grade {bad!r} must raise InvalidGradeError."
+    except InvalidGradeError as e:
+        assert repr(bad) in str(e) or str(bad) in str(e), "The message should contain the wrong value."
+    assert items == [3], "For an invalid grade the list must not change."
+```

@@ -121,3 +121,54 @@ print(list(queue))
 - **Stack**: LIFO, in Python list `append` + `pop`.
 - **Queue**: FIFO, in Python `deque` `append` + `popleft`.
 - When choosing, think about: order, index, fast search, keys, mutability.
+
+## Lesson exercise: Checking brackets with a stack
+
+Write a `brackets_ok(text)` function that uses a **stack** to decide whether the `()`, `[]` and `{}` brackets are correctly paired in a text. Ignore every other character.
+
+- For an opening bracket push it onto the stack (`append`).
+- For a closing one look at the top of the stack (`pop`): the matching opening bracket must be there – if the stack is empty or it doesn't match, the answer is `False`.
+- At the end the stack must be empty.
+
+Tip: a dictionary for the pairs: `{")": "(", "]": "[", "}": "{"}`.
+
+```python starter required
+def brackets_ok(text):
+    pairs = {")": "(", "]": "[", "}": "{"}
+    stack = []
+    for c in text:
+        pass
+    return True
+
+
+print(brackets_ok("f(a[1]) + {x}"))   # True
+print(brackets_ok("(]"))              # False
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def brackets_ok(text):
+    pairs = {")": "(", "]": "[", "}": "{"}
+    stack = []
+    for c in text:
+        if c in "([{":
+            stack.append(c)
+        elif c in pairs:
+            if not stack or stack.pop() != pairs[c]:
+                return False
+    return not stack
+
+
+print(brackets_ok("f(a[1]) + {x}"))   # True
+print(brackets_ok("(]"))              # False
+```
+
+</details>
+
+```python test
+for text, expected in [("f(a[1]) + {x}", True), ("(]", False), ("", True), ("((", False), ("())", False),
+                       ("{[()()]}", True), ("([)]", False), ("no brackets here", True), (")(", False)]:
+    assert brackets_ok(text) is expected, f"{text!r} → {expected}"
+```

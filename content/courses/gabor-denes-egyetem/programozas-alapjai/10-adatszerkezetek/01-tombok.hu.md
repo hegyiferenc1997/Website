@@ -127,3 +127,59 @@ print(jo)                       # [[1, 0, 0], [0, 0, 0]]
 - A tömb egymás után tárolt, azonos típusú elemek sora; az index szerinti elérés **O(1)**.
 - A beszúrás és törlés az elején/közepén **O(n)**, mert az elemeket tolni kell.
 - Pythonban a `list` dinamikus tömb; mátrixhoz listák listáját használjuk (`[[0]*m for _ in range(n)]`).
+
+## A lecke feladata: Mátrix forgatása
+
+Írj `forgat(matrix)` függvényt, amely egy kétdimenziós tömböt (listák listáját) **90 fokkal jobbra forgat**, és új mátrixként adja vissza. A mátrix nem feltétlenül négyzetes: egy `s × o` méretűből `o × s` méretű lesz. Az eredetit ne módosítsd!
+
+```text
+1 2 3        4 1
+4 5 6   →    5 2
+             6 3
+```
+
+Tipp: az eredmény `i`-edik sora az eredeti `i`-edik oszlopa, alulról felfelé olvasva.
+
+```python starter required
+def forgat(matrix):
+    sorok = len(matrix)
+    oszlopok = len(matrix[0]) if matrix else 0
+    # új mátrix: oszlopok darab sor, mindegyikben sorok darab elem
+    pass
+
+
+print(forgat([[1, 2, 3], [4, 5, 6]]))   # [[4, 1], [5, 2], [6, 3]]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def forgat(matrix):
+    sorok = len(matrix)
+    oszlopok = len(matrix[0]) if matrix else 0
+    eredmeny = []
+    for j in range(oszlopok):
+        uj_sor = []
+        for i in range(sorok - 1, -1, -1):
+            uj_sor.append(matrix[i][j])
+        eredmeny.append(uj_sor)
+    return eredmeny
+
+
+print(forgat([[1, 2, 3], [4, 5, 6]]))   # [[4, 1], [5, 2], [6, 3]]
+```
+
+</details>
+
+```python test
+m = [[1, 2, 3], [4, 5, 6]]
+assert forgat(m) == [[4, 1], [5, 2], [6, 3]], "A 2×3-as mátrix forgatása nem stimmel."
+assert m == [[1, 2, 3], [4, 5, 6]], "Az eredeti mátrix nem változhat meg."
+assert forgat([[1, 2], [3, 4]]) == [[3, 1], [4, 2]], "A 2×2-es mátrix forgatása nem stimmel."
+assert forgat([[7]]) == [[7]], "Az 1×1-es mátrix önmaga."
+negyszer = [[1, 2, 3], [4, 5, 6]]
+for _ in range(4):
+    negyszer = forgat(negyszer)
+assert negyszer == m, "Négy forgatás után vissza kell kapni az eredetit."
+```

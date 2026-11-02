@@ -129,3 +129,46 @@ BaseException
 - **Szintaktikai** hiba: el sem indul; **futási** hiba: kivétel futás közben; **logikai** hiba: rossz eredmény hibaüzenet nélkül.
 - A traceback-et **alulról** olvasd: típus → hely → hívási lánc.
 - A kivételek osztályhierarchiát alkotnak; az ős elkapása a leszármazottakat is elkapja.
+
+## A lecke feladata: Háromféle hiba egy programban
+
+Az alábbi kódban mindhárom hibatípus előfordul. Futtasd le, olvasd el a traceback-et, és javítsd ki őket egyenként:
+
+1. **szintaktikai hiba** – a program el sem indul;
+2. **futási hiba** (kivétel) – szöveg és szám összefűzése;
+3. **logikai hiba** – lefut, de rossz eredményt ad (az átlag nem stimmel).
+
+A javított `atlag_szoveg(jegyek)` függvény ilyen szöveget adjon vissza: `"Az átlag: 4.0"` (üres listánál `"Nincs jegy"`).
+
+```python starter required
+def atlag_szoveg(jegyek)
+    if len(jegyek) == 0:
+        return "Nincs jegy"
+    atlag = sum(jegyek) / (len(jegyek) - 1)
+    return "Az átlag: " + atlag
+
+
+print(atlag_szoveg([5, 4, 3]))   # Az átlag: 4.0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def atlag_szoveg(jegyek):
+    if len(jegyek) == 0:
+        return "Nincs jegy"
+    atlag = sum(jegyek) / len(jegyek)
+    return "Az átlag: " + str(atlag)
+
+
+print(atlag_szoveg([5, 4, 3]))   # Az átlag: 4.0
+```
+
+</details>
+
+```python test
+assert atlag_szoveg([5, 4, 3]) == "Az átlag: 4.0", "[5, 4, 3] → \"Az átlag: 4.0\" (logikai hiba: mennyivel osztasz?)"
+assert atlag_szoveg([5]) == "Az átlag: 5.0", "Egyetlen jegynél is működjön (itt nullával osztana a hibás változat)."
+assert atlag_szoveg([]) == "Nincs jegy", "Üres listára: Nincs jegy"
+```

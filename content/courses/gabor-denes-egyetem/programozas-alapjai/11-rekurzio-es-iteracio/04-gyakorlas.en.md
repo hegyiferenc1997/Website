@@ -207,3 +207,52 @@ assert depth([1, 2]) == 1
 assert depth([1, [2, [3]], [4]]) == 3
 print("All checks passed!")
 ```
+
+## Summary exercise: Permutations recursively
+
+The summary exercise of the topic. Write a **recursive** `permutations(text)` function that returns all the different orders (permutations) of the letters of a text **in an alphabetical list**, without repetition. Don't use the `itertools` module!
+
+Idea: take each letter to the front once, and prepend it to the permutations of the remaining letters, computed recursively. The base case is the empty (or one-letter) text. If the text has a repeated letter (e.g. `"aab"`), filter out the duplicates (with a set).
+
+For example `permutations("abc")` → `["abc", "acb", "bac", "bca", "cab", "cba"]`.
+
+```python starter required
+def permutations(text):
+    if len(text) <= 1:
+        return [text]
+    result = set()
+    for i, letter in enumerate(text):
+        rest = text[:i] + text[i + 1:]
+        # prepend the letter to the permutations of rest
+    return sorted(result)
+
+
+print(permutations("abc"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def permutations(text):
+    if len(text) <= 1:
+        return [text]
+    result = set()
+    for i, letter in enumerate(text):
+        rest = text[:i] + text[i + 1:]
+        for ending in permutations(rest):
+            result.add(letter + ending)
+    return sorted(result)
+
+
+print(permutations("abc"))
+```
+
+</details>
+
+```python test
+assert permutations("abc") == ["abc", "acb", "bac", "bca", "cab", "cba"], "The permutations of \"abc\" are not right."
+assert permutations("aab") == ["aab", "aba", "baa"], "With a repeated letter the duplicates must be filtered out."
+assert permutations("") == [""], "The only permutation of the empty text is the empty text."
+assert len(permutations("abcde")) == 120, "5 different letters have 5! = 120 permutations."
+```

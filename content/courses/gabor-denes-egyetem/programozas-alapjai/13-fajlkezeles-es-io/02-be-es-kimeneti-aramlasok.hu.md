@@ -119,3 +119,59 @@ with open(sys.argv[1], encoding="utf-8") as f:
 - `stdin` – bemenet, `stdout` – eredmény, `stderr` – hibaüzenetek; terminálban átirányíthatók (`>`, `<`, `2>`, `|`).
 - Az írás pufferelt: zárás vagy `flush` kell.
 - Parancssori argumentumok: `sys.argv`; kilépési kód: `sys.exit(kód)`.
+
+## A lecke feladata: Számok összegzése egy adatfolyamból
+
+Írj `osszegez(folyam)` függvényt, amely egy **szöveges adatfolyamot** kap (bármit, amin soronként végig lehet menni: megnyitott fájlt, `sys.stdin`-t vagy `io.StringIO`-t), és visszaadja a benne lévő számok összegét.
+
+- Soronként egy szám van; az üres sorokat és a `#`-tel kezdődő megjegyzéssorokat hagyd ki.
+- A sor elején és végén lévő szóközöket vágd le.
+
+Így ugyanaz a függvény működik fájllal és a billentyűzetről érkező adatokkal is – ez az adatfolyam-fogalom lényege.
+
+```python starter required
+import io
+
+
+def osszegez(folyam):
+    osszeg = 0
+    for sor in folyam:
+        pass
+    return osszeg
+
+
+print(osszegez(io.StringIO("10\n# megjegyzés\n\n2.5\n")))   # 12.5
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import io
+
+
+def osszegez(folyam):
+    osszeg = 0
+    for sor in folyam:
+        sor = sor.strip()
+        if not sor or sor.startswith("#"):
+            continue
+        osszeg += float(sor)
+    return osszeg
+
+
+print(osszegez(io.StringIO("10\n# megjegyzés\n\n2.5\n")))   # 12.5
+```
+
+</details>
+
+```python test
+import io
+assert osszegez(io.StringIO("10\n# megjegyzés\n\n2.5\n")) == 12.5, "10 + 2.5 = 12.5 (a megjegyzés és az üres sor kimarad)"
+assert osszegez(io.StringIO("")) == 0, "Üres adatfolyamra 0."
+assert osszegez(io.StringIO("  -1 \n  3\n")) == 2, "A szóközöket le kell vágni."
+with open("szamok.txt", "w", encoding="utf-8") as f:
+    f.write("1\n2\n3\n")
+with open("szamok.txt", encoding="utf-8") as f:
+    assert osszegez(f) == 6, "Megnyitott fájllal is működjön."
+```

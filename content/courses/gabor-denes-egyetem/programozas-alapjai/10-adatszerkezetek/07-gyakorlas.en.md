@@ -292,3 +292,58 @@ result = by_grade({"Bela": 4, "Anna": 5, "Ede": 4, "Dora": 2})
 assert result == {4: ["Bela", "Ede"], 5: ["Anna"], 2: ["Dora"]}
 print("All checks passed!")
 ```
+
+## Summary exercise: Analysing library loans
+
+The summary exercise of the topic: lists, tuples, sets and dictionaries together – each where it fits best.
+
+Loans are given as a list of `(reader, book)` pairs (a reader may have borrowed the same book several times). Write a `loan_report(loans)` function that returns a `(by_reader, popular)` pair:
+
+- `by_reader`: a dictionary – reader → alphabetical list of the **different** books they borrowed;
+- `popular`: alphabetical list of the books borrowed by **at least two different** readers.
+
+Tip: collect into sets first (reader → set of books, book → set of readers), and only turn them into sorted lists at the end.
+
+```python starter required
+def loan_report(loans):
+    books_of = {}     # reader → set of books
+    readers_of = {}   # book → set of readers
+    for reader, book in loans:
+        pass
+    # build the sorted lists
+    pass
+
+
+data = [("Anna", "Dune"), ("Bob", "Dune"), ("Anna", "Hobbit"), ("Anna", "Dune")]
+print(loan_report(data))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def loan_report(loans):
+    books_of = {}
+    readers_of = {}
+    for reader, book in loans:
+        books_of.setdefault(reader, set()).add(book)
+        readers_of.setdefault(book, set()).add(reader)
+    by_reader = {reader: sorted(books) for reader, books in books_of.items()}
+    popular = sorted(book for book, readers in readers_of.items() if len(readers) >= 2)
+    return by_reader, popular
+
+
+data = [("Anna", "Dune"), ("Bob", "Dune"), ("Anna", "Hobbit"), ("Anna", "Dune")]
+print(loan_report(data))
+```
+
+</details>
+
+```python test
+data = [("Anna", "Dune"), ("Bob", "Dune"), ("Anna", "Hobbit"), ("Anna", "Dune"), ("Cecil", "Hobbit"), ("Bob", "Emma")]
+by_reader, popular = loan_report(data)
+assert by_reader == {"Anna": ["Dune", "Hobbit"], "Bob": ["Dune", "Emma"], "Cecil": ["Hobbit"]}, "The per-reader lists are not right (no repeats, alphabetical)."
+assert popular == ["Dune", "Hobbit"], "Popular: borrowed by at least two different readers."
+assert loan_report([("Anna", "X"), ("Anna", "X")]) == ({"Anna": ["X"]}, []), "The same reader twice: not popular."
+assert loan_report([]) == ({}, []), "An empty list gives an empty result."
+```

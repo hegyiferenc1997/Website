@@ -135,3 +135,63 @@ print("Average:", average)
 - A map stores key–value pairs; in Python it's `dict`, with **O(1)** access on average.
 - Access: `d[k]` (KeyError if missing) or `d.get(k, default)`; iteration: `keys()`, `values()`, `items()`.
 - Patterns: counting (`get(k, 0) + 1`, `Counter`), grouping (`setdefault`).
+
+## Lesson exercise: Word frequency with a dictionary
+
+Write a `word_frequency(text)` function that counts in a dictionary how many times each word appears in the text:
+
+- upper and lower case don't matter (convert every word to lowercase),
+- remove the punctuation marks `.,!?;:` from the start and end of the words (`strip(...)`),
+- skip "words" that become empty this way.
+
+Also write a `most_common(text)` function that returns the most frequent word (for ties the alphabetically first; `None` for empty text).
+
+```python starter required
+def word_frequency(text):
+    frequency = {}
+    for word in text.split():
+        # clean, lowercase, count: frequency.get(word, 0) + 1
+        pass
+    return frequency
+
+
+def most_common(text):
+    pass
+
+
+print(word_frequency("Apple, pear, apple!"))   # {'apple': 2, 'pear': 1}
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def word_frequency(text):
+    frequency = {}
+    for word in text.split():
+        word = word.strip(".,!?;:").lower()
+        if word:
+            frequency[word] = frequency.get(word, 0) + 1
+    return frequency
+
+
+def most_common(text):
+    frequency = word_frequency(text)
+    if not frequency:
+        return None
+    return min(frequency, key=lambda word: (-frequency[word], word))
+
+
+print(word_frequency("Apple, pear, apple!"))   # {'apple': 2, 'pear': 1}
+```
+
+</details>
+
+```python test
+assert word_frequency("Apple, pear, apple!") == {"apple": 2, "pear": 1}, "The example dictionary is not right."
+assert word_frequency("") == {}, "Empty text gives an empty dictionary."
+assert word_frequency("Yes? YES. yes ; no") == {"yes": 3, "no": 1}, "A punctuation mark alone is not a word; case does not matter."
+assert most_common("b a b a c") == "a", "For ties the alphabetically first (a)."
+assert most_common("Apple, pear, apple!") == "apple", "The most common: apple."
+assert most_common("") is None, "Empty text gives None."
+```

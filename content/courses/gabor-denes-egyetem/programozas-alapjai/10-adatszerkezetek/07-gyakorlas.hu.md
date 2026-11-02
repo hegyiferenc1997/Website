@@ -293,3 +293,58 @@ eredmeny = jegy_szerint({"Béla": 4, "Anna": 5, "Ede": 4, "Dóra": 2})
 assert eredmeny == {4: ["Béla", "Ede"], 5: ["Anna"], 2: ["Dóra"]}
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Könyvtári kölcsönzések elemzése
+
+A témakör összefoglaló feladata: listák, tuple-ök, halmazok és szótárak együtt – mindegyik ott, ahol a legjobban illik.
+
+A kölcsönzések `(olvasó, könyv)` párok listájaként adottak (egy olvasó ugyanazt a könyvet többször is kikölcsönözhette). Írj `kolcsonzes_jelentes(kolcsonzesek)` függvényt, amely egy `(olvasonkent, nepszeru)` párt ad vissza:
+
+- `olvasonkent`: szótár – olvasó → az általa kölcsönzött **különböző** könyvek ábécérendű listája;
+- `nepszeru`: azoknak a könyveknek az ábécérendű listája, amelyeket **legalább két különböző** olvasó kölcsönzött.
+
+Tipp: gyűjts előbb halmazokba (olvasó → könyvek halmaza, könyv → olvasók halmaza), és csak a végén alakíts rendezett listává.
+
+```python starter required
+def kolcsonzes_jelentes(kolcsonzesek):
+    konyvei = {}     # olvasó → könyvek halmaza
+    olvasoi = {}     # könyv → olvasók halmaza
+    for olvaso, konyv in kolcsonzesek:
+        pass
+    # rendezett listák készítése
+    pass
+
+
+adat = [("Anna", "Dűne"), ("Béla", "Dűne"), ("Anna", "Hobbit"), ("Anna", "Dűne")]
+print(kolcsonzes_jelentes(adat))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kolcsonzes_jelentes(kolcsonzesek):
+    konyvei = {}
+    olvasoi = {}
+    for olvaso, konyv in kolcsonzesek:
+        konyvei.setdefault(olvaso, set()).add(konyv)
+        olvasoi.setdefault(konyv, set()).add(olvaso)
+    olvasonkent = {olvaso: sorted(konyvek) for olvaso, konyvek in konyvei.items()}
+    nepszeru = sorted(konyv for konyv, olvasok in olvasoi.items() if len(olvasok) >= 2)
+    return olvasonkent, nepszeru
+
+
+adat = [("Anna", "Dűne"), ("Béla", "Dűne"), ("Anna", "Hobbit"), ("Anna", "Dűne")]
+print(kolcsonzes_jelentes(adat))
+```
+
+</details>
+
+```python test
+adat = [("Anna", "Dűne"), ("Béla", "Dűne"), ("Anna", "Hobbit"), ("Anna", "Dűne"), ("Csilla", "Hobbit"), ("Béla", "Emma")]
+olvasonkent, nepszeru = kolcsonzes_jelentes(adat)
+assert olvasonkent == {"Anna": ["Dűne", "Hobbit"], "Béla": ["Dűne", "Emma"], "Csilla": ["Hobbit"]}, "Az olvasónkénti lista nem stimmel (ismétlés nélkül, ábécérendben)."
+assert nepszeru == ["Dűne", "Hobbit"], "Népszerű: amit legalább két különböző olvasó vitt el."
+assert kolcsonzes_jelentes([("Anna", "X"), ("Anna", "X")]) == ({"Anna": ["X"]}, []), "Ugyanaz az olvasó kétszer: nem népszerű."
+assert kolcsonzes_jelentes([]) == ({}, []), "Üres listára üres eredmény."
+```

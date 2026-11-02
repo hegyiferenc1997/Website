@@ -116,3 +116,71 @@ print(json.dumps(adat))        # Python objektumból szöveg
 - **CSV**: táblázat soronként; `csv.writer` / `csv.DictReader`, `newline=""`.
 - **JSON**: egymásba ágyazott adat; `json.dump` / `json.load` fájlhoz, `dumps` / `loads` szöveghez.
 - Ne darabold kézzel `split(",")`-tel – használd a modulokat.
+
+## A lecke feladata: CSV-ből JSON
+
+Írj `csv_bol_json(csv_fajl, json_fajl)` függvényt, amely beolvas egy `nev,pont` fejlécű CSV fájlt (a `csv` modul `DictReader`-ével), és kiír egy JSON fájlt (a `json` modullal), amelyben a hallgatók listája szerepel **pontszám szerint csökkenő** sorrendben, így:
+
+```json
+[{"nev": "Csilla", "pont": 92}, {"nev": "Anna", "pont": 87}]
+```
+
+- A pont egész szám legyen a JSON-ban (ne szöveg).
+- Az ékezetes betűk maradjanak olvashatók (`ensure_ascii=False`), a fájlokat UTF-8 kódolással kezeld.
+- A függvény adja vissza, hány hallgatót írt ki.
+
+```python starter required
+import csv
+import json
+
+
+def csv_bol_json(csv_fajl, json_fajl):
+    with open(csv_fajl, encoding="utf-8", newline="") as f:
+        sorok = list(csv.DictReader(f))
+    # átalakítás, rendezés, json.dump(...)
+    pass
+
+
+with open("pontok.csv", "w", encoding="utf-8") as f:
+    f.write("nev,pont\nAnna,87\nCsilla,92\n")
+print(csv_bol_json("pontok.csv", "pontok.json"))
+print(open("pontok.json", encoding="utf-8").read())
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import csv
+import json
+
+
+def csv_bol_json(csv_fajl, json_fajl):
+    with open(csv_fajl, encoding="utf-8", newline="") as f:
+        sorok = list(csv.DictReader(f))
+    hallgatok = [{"nev": s["nev"], "pont": int(s["pont"])} for s in sorok]
+    hallgatok.sort(key=lambda h: h["pont"], reverse=True)
+    with open(json_fajl, "w", encoding="utf-8") as f:
+        json.dump(hallgatok, f, ensure_ascii=False)
+    return len(hallgatok)
+
+
+with open("pontok.csv", "w", encoding="utf-8") as f:
+    f.write("nev,pont\nAnna,87\nCsilla,92\n")
+print(csv_bol_json("pontok.csv", "pontok.json"))
+print(open("pontok.json", encoding="utf-8").read())
+```
+
+</details>
+
+```python test
+import json
+with open("be.csv", "w", encoding="utf-8") as f:
+    f.write("nev,pont\nAnna,87\nBéla,64\nCsilla,92\n")
+assert csv_bol_json("be.csv", "ki.json") == 3, "Három hallgatót kell kiírni (ezt adja vissza)."
+with open("ki.json", encoding="utf-8") as f:
+    szoveg = f.read()
+adat = json.loads(szoveg)
+assert adat == [{"nev": "Csilla", "pont": 92}, {"nev": "Anna", "pont": 87}, {"nev": "Béla", "pont": 64}], "A JSON tartalma nem stimmel (csökkenő sorrend, egész pontok)."
+assert "Béla" in szoveg, "Az ékezetes betűk maradjanak olvashatók (ensure_ascii=False)."
+```

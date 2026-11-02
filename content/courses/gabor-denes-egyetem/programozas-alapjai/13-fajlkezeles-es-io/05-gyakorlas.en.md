@@ -225,3 +225,88 @@ with open("app.log", encoding="utf-8") as f:
     assert f.read() == "start\nlogin\n"
 print("All checks passed!")
 ```
+
+## Summary exercise: Summarising a log file into JSON
+
+The summary exercise of the topic: reading and writing files, streaming line by line, JSON, and handling file errors.
+
+Every line of an application's log file looks like this: `2026-11-02 10:15:03 ERROR The database is unreachable`. (Date, time, level, message – separated by spaces; the level is `INFO`, `WARNING` or `ERROR`.)
+
+Write a `log_summary(log_file, output_file)` function that:
+
+1. reads the log line by line (don't read it all at once!),
+2. counts the lines per level (bad lines – with fewer than four parts or an unknown level – are counted under the `"bad"` key),
+3. collects the messages of `ERROR` lines into a list,
+4. writes the result as JSON to the output file: `{"INFO": 2, "WARNING": 0, "ERROR": 1, "bad": 1, "error_messages": ["..."]}`, and also returns it as a dictionary.
+
+If the log file doesn't exist, raise `FileNotFoundError` with a clear message – and in that case no output file may be created.
+
+```python starter required
+import json
+
+
+def log_summary(log_file, output_file):
+    summary = {"INFO": 0, "WARNING": 0, "ERROR": 0, "bad": 0, "error_messages": []}
+    # with open(...) as f: for line in f: ...
+    pass
+
+
+with open("app.log", "w", encoding="utf-8") as f:
+    f.write("2026-11-02 10:00:00 INFO Starting\n2026-11-02 10:01:00 ERROR No database\n")
+print(log_summary("app.log", "summary.json"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import json
+
+
+def log_summary(log_file, output_file):
+    summary = {"INFO": 0, "WARNING": 0, "ERROR": 0, "bad": 0, "error_messages": []}
+    try:
+        f = open(log_file, encoding="utf-8")
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Log file not found: {log_file}") from None
+    with f:
+        for line in f:
+            parts = line.strip().split(" ", 3)
+            if len(parts) < 4 or parts[2] not in ("INFO", "WARNING", "ERROR"):
+                summary["bad"] += 1
+                continue
+            level, message = parts[2], parts[3]
+            summary[level] += 1
+            if level == "ERROR":
+                summary["error_messages"].append(message)
+    with open(output_file, "w", encoding="utf-8") as out:
+        json.dump(summary, out, ensure_ascii=False)
+    return summary
+
+
+with open("app.log", "w", encoding="utf-8") as f:
+    f.write("2026-11-02 10:00:00 INFO Starting\n2026-11-02 10:01:00 ERROR No database\n")
+print(log_summary("app.log", "summary.json"))
+```
+
+</details>
+
+```python test
+import json, os
+with open("test.log", "w", encoding="utf-8") as f:
+    f.write("2026-11-02 10:00:00 INFO Starting\n"
+            "2026-11-02 10:01:00 ERROR The database is unreachable\n"
+            "nonsense line\n"
+            "2026-11-02 10:02:00 INFO Retrying\n"
+            "2026-11-02 10:03:00 DEBUG details\n")
+expected = {"INFO": 2, "WARNING": 0, "ERROR": 1, "bad": 2, "error_messages": ["The database is unreachable"]}
+assert log_summary("test.log", "out.json") == expected, "The returned summary is not right."
+with open("out.json", encoding="utf-8") as f:
+    assert json.load(f) == expected, "The written JSON content is not right."
+try:
+    log_summary("missing.log", "not_needed.json")
+    assert False, "A missing log must raise FileNotFoundError."
+except FileNotFoundError:
+    pass
+assert not os.path.exists("not_needed.json"), "No output file may be created on error."
+```

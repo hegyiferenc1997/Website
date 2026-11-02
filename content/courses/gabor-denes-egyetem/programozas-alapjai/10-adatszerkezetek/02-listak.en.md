@@ -139,3 +139,54 @@ for i in range(10):
 - `sorted()` returns a new list, `sort()` sorts in place and returns `None`.
 - List comprehension: `[expr for x in coll if cond]`.
 - A list is a dynamic array: appending is fast, inserting at the start is slow.
+
+## Lesson exercise: Merging two sorted lists
+
+Write a `merge(a, b)` function that builds a single ascending list from two **ascending** lists – without using `sort()` or `sorted()`. Walk the two lists in parallel with two "pointers" (indices): always take the smaller current element and move on in that list. When one list runs out, append the rest of the other one (with slicing).
+
+The input lists must not change.
+
+```python starter required
+def merge(a, b):
+    i = j = 0
+    result = []
+    # while i < len(a) and j < len(b): ...
+    # append the leftovers: a[i:] and b[j:]
+    return result
+
+
+print(merge([1, 4, 9], [2, 3, 10, 12]))   # [1, 2, 3, 4, 9, 10, 12]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def merge(a, b):
+    i = j = 0
+    result = []
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    result.extend(a[i:])
+    result.extend(b[j:])
+    return result
+
+
+print(merge([1, 4, 9], [2, 3, 10, 12]))   # [1, 2, 3, 4, 9, 10, 12]
+```
+
+</details>
+
+```python test
+a, b = [1, 4, 9], [2, 3, 10, 12]
+assert merge(a, b) == [1, 2, 3, 4, 9, 10, 12], "Merging the example is not right."
+assert a == [1, 4, 9] and b == [2, 3, 10, 12], "The input lists must not change."
+assert merge([], [1, 2]) == [1, 2], "It must work with an empty list."
+assert merge([1, 1], [1]) == [1, 1, 1], "Repeated elements must be kept."
+assert merge([5, 6], [1, 2]) == [1, 2, 5, 6], "When every element of one list is smaller."
+```
