@@ -104,3 +104,51 @@ Step 3 refined: summing, dividing by the count, rounding to two decimals. Each s
 - Every algorithm can be built from **sequence, selection and iteration**.
 - **Pseudocode** and **flowcharts** are language-independent design tools.
 - **Stepwise refinement** (decomposition) and **abstraction** are the key to handling big tasks.
+
+## Lesson exercise: Maximum search from pseudocode
+
+Implement the pseudocode below in Python in the `largest(items)` function (without using the built-in `max()`):
+
+```text
+function largest(items):
+    if items is empty: return "nothing" (None)
+    best ← first element of items
+    for each element x in items:
+        if x > best: best ← x
+    return best
+```
+
+```python starter required
+def largest(items):
+    # Follow the pseudocode step by step!
+    pass
+
+
+print(largest([3, 9, 2]))   # 9
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def largest(items):
+    if len(items) == 0:
+        return None
+    best = items[0]
+    for x in items:
+        if x > best:
+            best = x
+    return best
+
+
+print(largest([3, 9, 2]))   # 9
+```
+
+</details>
+
+```python test
+assert largest([3, 9, 2]) == 9, "largest([3, 9, 2]) should return 9."
+assert largest([-5, -2, -8]) == -2, "It must work with all-negative numbers too (-2)."
+assert largest([7]) == 7, "In a one-element list that element is the largest."
+assert largest([]) is None, "For an empty list return None."
+```

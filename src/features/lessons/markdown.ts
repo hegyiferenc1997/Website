@@ -1,5 +1,5 @@
 import "server-only";
-import { Marked, type Tokens } from "marked";
+import { Marked, type Token, type Tokens, type TokensList } from "marked";
 import { createHighlighterCore, type HighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import { parseCodeInfo, type CodeRole } from "./code-info";
@@ -82,44 +82,70 @@ const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 // A szerepek felirata a kódblokk fejlécében, nyelvenként.
-const ROLE_LABELS: Record<string, Record<CodeRole, string>> = {
+const ROLE_LABELS: Record<string, Record<CodeRole | "required", string>> = {
   hu: {
     run: "futtatható példa",
     starter: "kiinduló kód",
     solution: "megoldás",
     test: "ellenőrzés",
+    required: "a lecke feladata",
   },
-  en: { run: "runnable example", starter: "starter code", solution: "solution", test: "check" },
+  en: {
+    run: "runnable example",
+    starter: "starter code",
+    solution: "solution",
+    test: "check",
+    required: "lesson exercise",
+  },
 };
 
-// Egy kódblokk HTML-je: fejléc a nyelv nevével (és szerepével), alatta a színezett kód
-// (ismeretlen nyelvnél színezés nélkül).
-function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code, locale: string): string {
-  const { lang: raw, role } = parseCodeInfo(lang);
+// Az ellenőrző kód lenyitható dobozának címe.
+const TEST_SUMMARY: Record<string, string> = {
+  hu: "Mit ellenőriz a gép? (ellenőrző kód)",
+  en: "What does the checker test? (check code)",
+};
+
+/** A kódblokk fejlécének felirata, pl. „Python · futtatható példa”. */
+function blockLabel(info: string | undefined, locale: string): string {
+  const { lang: raw, role, required } = parseCodeInfo(info);
   const name = (raw in LANGS ? raw : ALIASES[raw]) as keyof typeof LANGS | undefined;
   const base = name ? LABELS[name] : NO_LABEL.has(raw) ? "" : raw;
-  const roleLabel = role ? (ROLE_LABELS[locale] ?? ROLE_LABELS.hu)[role] : "";
-  const label = [base, roleLabel].filter(Boolean).join(" · ");
-  const code = name
+  const labels = ROLE_LABELS[locale] ?? ROLE_LABELS.hu;
+  const roleLabel = role ? labels[required ? "required" : role] : "";
+  return [base, roleLabel].filter(Boolean).join(" · ");
+}
+
+/** Csak a színezett kód (<pre>), fejléc nélkül. */
+function highlightCode(h: HighlighterCore, text: string, info: string | undefined): string {
+  const { lang: raw } = parseCodeInfo(info);
+  const name = (raw in LANGS ? raw : ALIASES[raw]) as keyof typeof LANGS | undefined;
+  return name
     ? h.codeToHtml(text, {
         lang: name,
         themes: { dark: "github-dark", light: "github-light" },
         defaultColor: false,
       })
     : `<pre class="shiki"><code>${escapeHtml(text)}</code></pre>`;
-  const header = label ? `<div class="code-label">${escapeHtml(label)}</div>` : "";
-  // A data-role / data-lang a későbbi futtatónak szól (melyik blokk mit jelent).
-  const data = role ? ` data-role="${role}" data-lang="${escapeHtml(name ?? raw)}"` : "";
-  return `<div class="code-block"${data}>${header}${code}</div>`;
 }
 
-/**
- * Markdown → HTML. A címsorok egy szinttel lejjebb kerülnek (# → h2), mert az oldal címe a h1.
- * A `locale` a kódblokkok szerep-feliratainak nyelve.
- */
-export async function renderMarkdown(markdown: string, locale = "hu"): Promise<string> {
-  const h = await getHighlighter();
-  const marked = new Marked({
+// Egy kódblokk HTML-je: fejléc a nyelv nevével (és szerepével), alatta a színezett kód
+// (ismeretlen nyelvnél színezés nélkül). Az ellenőrző kód (test) alapból becsukott dobozba kerül.
+function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code, locale: string): string {
+  const { lang: raw, role } = parseCodeInfo(lang);
+  const name = (raw in LANGS ? raw : ALIASES[raw]) as keyof typeof LANGS | undefined;
+  const label = blockLabel(lang, locale);
+  const header = label ? `<div class="code-label">${escapeHtml(label)}</div>` : "";
+  // A data-role / data-lang jelzi, melyik blokk mit jelent (a stílus és a tesztek is ezt nézik).
+  const data = role ? ` data-role="${role}" data-lang="${escapeHtml(name ?? raw)}"` : "";
+  const block = `<div class="code-block"${data}>${header}${highlightCode(h, text, lang)}</div>`;
+  if (role !== "test") return block;
+  const summary = TEST_SUMMARY[locale] ?? TEST_SUMMARY.hu;
+  return `<details class="check-details"><summary>${escapeHtml(summary)}</summary>\n${block}</details>`;
+}
+
+// A Marked beállítása: saját kódblokk, címsor, link és táblázat kinézet.
+function createMarked(h: HighlighterCore, locale: string) {
+  return new Marked({
     gfm: true,
     renderer: {
       code: (token) => codeBlock(h, token, locale),
@@ -153,5 +179,103 @@ export async function renderMarkdown(markdown: string, locale = "hu"): Promise<s
       },
     },
   });
-  return marked.parse(markdown, { async: false });
+}
+
+/**
+ * Markdown → HTML. A címsorok egy szinttel lejjebb kerülnek (# → h2), mert az oldal címe a h1.
+ * A `locale` a kódblokkok szerep-feliratainak nyelve.
+ */
+export async function renderMarkdown(markdown: string, locale = "hu"): Promise<string> {
+  const h = await getHighlighter();
+  return createMarked(h, locale).parse(markdown, { async: false });
+}
+
+/**
+ * A lecke egy darabja: sima HTML, futtatható Python példa, vagy feladat (szerkesztővel és ellenőrzéssel).
+ * A futtatható részeket a lecke oldala interaktív komponensként rajzolja ki (lásd features/python).
+ */
+export type LessonSegment =
+  | { kind: "html"; html: string }
+  | { kind: "run"; code: string; label: string; codeHtml: string }
+  | {
+      kind: "exercise";
+      /** Hányadik feladat a leckében (0-tól), a mentett piszkozat kulcsához. */
+      index: number;
+      starter: string;
+      /** Az ellenőrző kód (ha van); a tanuló kódja után fut. */
+      test: string | null;
+      /** A lecke kötelező feladata-e (sikeres ellenőrzés = kész a lecke). */
+      required: boolean;
+      label: string;
+    };
+
+// Hány <details> nyílik / záródik egy HTML darabban (a lenyitható dobozokon belüli kódot nem bontjuk ki).
+const detailsDelta = (raw: string) =>
+  (raw.match(/<details[\s>]/g) ?? []).length - (raw.match(/<\/details>/g) ?? []).length;
+
+/**
+ * Markdown → darabok. A Python `run` és `starter` blokkok külön darabot kapnak (ha nem lenyitható
+ * dobozban vannak); a starter blokk mellé a hozzá tartozó (utána következő) `test` kódot is odaadjuk.
+ */
+export async function renderLessonSegments(
+  markdown: string,
+  locale = "hu",
+): Promise<LessonSegment[]> {
+  const h = await getHighlighter();
+  const marked = createMarked(h, locale);
+  const tokens = marked.lexer(markdown);
+  const segments: LessonSegment[] = [];
+  let pending: Token[] = [];
+  let depth = 0;
+  let exerciseIndex = 0;
+
+  // Az eddig összegyűlt sima tartalom HTML-lé alakítása egy darabba.
+  const flush = () => {
+    if (pending.length === 0) return;
+    const list = Object.assign(pending, { links: tokens.links }) as TokensList;
+    segments.push({ kind: "html", html: marked.parser(list) });
+    pending = [];
+  };
+
+  tokens.forEach((token, i) => {
+    if (token.type === "html") depth = Math.max(0, depth + detailsDelta(token.raw));
+    const info = token.type === "code" ? parseCodeInfo((token as Tokens.Code).lang) : null;
+    if (
+      !info ||
+      info.lang !== "python" ||
+      depth > 0 ||
+      (info.role !== "run" && info.role !== "starter")
+    ) {
+      pending.push(token);
+      return;
+    }
+    flush();
+    const code = (token as Tokens.Code).text;
+    const label = blockLabel((token as Tokens.Code).lang, locale);
+    if (info.role === "run") {
+      segments.push({ kind: "run", code, label, codeHtml: highlightCode(h, code, "python") });
+      return;
+    }
+    // A feladathoz tartozó ellenőrzés: az első test blokk a következő starter előtt.
+    let test: string | null = null;
+    for (const next of tokens.slice(i + 1)) {
+      if (next.type !== "code") continue;
+      const role = parseCodeInfo((next as Tokens.Code).lang).role;
+      if (role === "starter") break;
+      if (role === "test") {
+        test = (next as Tokens.Code).text;
+        break;
+      }
+    }
+    segments.push({
+      kind: "exercise",
+      index: exerciseIndex++,
+      starter: code,
+      test,
+      required: info.required,
+      label,
+    });
+  });
+  flush();
+  return segments;
 }

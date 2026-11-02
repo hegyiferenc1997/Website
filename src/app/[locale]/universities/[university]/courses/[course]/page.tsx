@@ -8,12 +8,15 @@ import { Card, Chip, EmptyState, SectionTitle } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
 import {
   CourseProgressHeader,
+  GatedLessonLink,
+  LessonDoneMark,
   LessonDoneToggle,
   StartCourseLink,
   TopicProgress,
 } from "@/features/progress/components";
 import { courseLessons } from "@/features/courses/lessons";
 import { lessonKey } from "@/features/progress/data";
+import { GateScript } from "@/features/progress/gate-script";
 
 // Az oldal bemenete: az URL paraméterei (nyelv, egyetem, tárgy).
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]">;
@@ -66,8 +69,15 @@ async function CourseContent({ params }: Pick<Props, "params">) {
     params: { university: course.university.slug, course: course.slug, topic, lesson },
   });
 
+  // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben; a linkek folyamatos sorszámot kapnak.
+  const allLessons = courseLessons(course);
+  const gate = { university: course.university.slug, course: course.slug, lessons: allLessons };
+  let position = 0;
+
   return (
     <div className="grid gap-10">
+      {/* A zárolt leckék jelölése még a kirajzolás előtt (nincs villanás). */}
+      <GateScript courseKey={`${course.university.slug}/${course.slug}`} lessons={allLessons} />
       <div className="grid gap-4">
         {/* Morzsamenü: Egyetemek / <egyetem neve> */}
         <nav aria-label={t("breadcrumb")} className="text-sm text-muted">
@@ -96,7 +106,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
         <CourseProgressHeader
           university={course.university.slug}
           course={course.slug}
-          lessons={courseLessons(course)}
+          lessons={allLessons}
         />
         {/* „Tananyag indítása”: a sorrendben első, még ki nem pipált leckére visz */}
         {first && (
@@ -173,27 +183,35 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         lessons={topic.lessons.map((l) => lessonKey(topic.slug, l.slug))}
                       />
                     </div>
-                    {/* A témakör leckéi: kész-pipa, sorszám, cím, becsült idő */}
+                    {/* A témakör leckéi: kész-jel, sorszám, cím (zárolva, amíg az előzők nincsenek kész), idő.
+                        A feladatos leckék a feladat teljesítésével lesznek készek, a többi kézzel pipálható. */}
                     <ol className="divide-y divide-line">
                       {topic.lessons.map((lesson, j) => {
                         const title = localize(lesson.title, locale);
+                        const ref = {
+                          university: course.university.slug,
+                          course: course.slug,
+                          lesson: lessonKey(topic.slug, lesson.slug),
+                          title,
+                        };
                         return (
                           <li key={lesson.id} className="flex items-center gap-4 px-5 py-3">
-                            <LessonDoneToggle
-                              university={course.university.slug}
-                              course={course.slug}
-                              lesson={lessonKey(topic.slug, lesson.slug)}
-                              title={title}
-                            />
+                            {lesson.hasExercise ? (
+                              <LessonDoneMark {...ref} />
+                            ) : (
+                              <LessonDoneToggle {...ref} />
+                            )}
                             <span className="w-8 font-mono text-xs text-muted tabular-nums">
                               {i + 1}.{j + 1}
                             </span>
-                            <Link
+                            <GatedLessonLink
+                              gate={gate}
+                              index={position++}
                               href={lessonHref(topic.slug, lesson.slug)}
                               className="flex-1 hover:text-accent"
                             >
                               {title}
-                            </Link>
+                            </GatedLessonLink>
                             {lesson.minutes !== null && (
                               <span className="hidden font-mono text-xs text-muted sm:inline">
                                 {t("minutes", { minutes: lesson.minutes })}

@@ -5,9 +5,17 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { localize } from "@/features/courses/localize";
 import { courseLessons } from "@/features/courses/lessons";
 import { getLesson, getLessonSlugs } from "@/features/courses/queries";
-import { renderMarkdown } from "@/features/lessons/markdown";
-import { CourseProgressHeader, LessonDoneButton } from "@/features/progress/components";
+import { renderLessonSegments, type LessonSegment } from "@/features/lessons/markdown";
+import {
+  CourseProgressHeader,
+  GatedLessonLink,
+  LessonDoneButton,
+  LessonExerciseStatus,
+  LessonGate,
+} from "@/features/progress/components";
 import { lessonKey } from "@/features/progress/data";
+import { GateScript } from "@/features/progress/gate-script";
+import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
 import { Link } from "@/i18n/navigation";
 
 // Az oldal bemenete: az URL paraméterei (nyelv, egyetem, tárgy, témakör, lecke).
@@ -37,10 +45,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-/** A Markdown → HTML átalakítás eredménye gyorsítótárban marad, csak a szöveg változásakor fut újra. */
+/**
+ * A Markdown → HTML átalakítás eredménye gyorsítótárban marad, csak a szöveg változásakor fut újra.
+ * Az eredmény darabokból áll: sima HTML, futtatható példa és feladat (lásd renderLessonSegments).
+ */
 async function renderLessonBody(markdown: string, locale: string) {
   "use cache";
-  return renderMarkdown(markdown, locale);
+  return renderLessonSegments(markdown, locale);
 }
 
 // Egy lecke oldala: balra a tárgy tartalomjegyzéke, középen a lecke, alul „Kész” gomb és lapozás.
@@ -64,7 +75,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   // Ismeretlen lecke → 404 oldal.
   if (!data) notFound();
   const { course, topic, lesson, number, prev, next } = data;
-  const html = await renderLessonBody(localize(lesson.body, locale), locale);
+  const segments = await renderLessonBody(localize(lesson.body, locale), locale);
 
   const university = course.university.slug;
   // Hányadik témakörben vagyunk (1-től számolva).
@@ -78,6 +89,18 @@ async function LessonContent({ params }: Pick<Props, "params">) {
     pathname: "/universities/[university]/courses/[course]" as const,
     params: { university, course: course.slug },
   };
+  // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben, és hányadik ez közülük.
+  const allLessons = courseLessons(course);
+  const gate = { university, course: course.slug, lessons: allLessons };
+  const thisKey = lessonKey(topic.slug, lesson.slug);
+  const index = allLessons.indexOf(thisKey);
+  const lessonRef: LessonRef = { university, course: course.slug, lesson: thisKey };
+  const nextLesson = next && {
+    href: href(next.topic.slug, next.lesson.slug),
+    title: localize(next.lesson.title, locale),
+  };
+  // Folyamatos sorszám a leckék linkjeihez (a zároláshoz).
+  let position = 0;
 
   // Tartalomjegyzék: a tárgy összes témaköre és leckéje, az aktuális kiemelve.
   // Asztali nézetben bal oldalt áll, mobilon lenyitható dobozban van.
@@ -87,11 +110,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
         <Link href={courseHref} className="font-mono font-bold text-fg hover:text-accent">
           {localize(course.name, locale)}
         </Link>
-        <CourseProgressHeader
-          university={university}
-          course={course.slug}
-          lessons={courseLessons(course)}
-        />
+        <CourseProgressHeader university={university} course={course.slug} lessons={allLessons} />
       </div>
       <ol className="grid gap-3">
         {course.topics.map((x, i) => (
@@ -104,9 +123,11 @@ async function LessonContent({ params }: Pick<Props, "params">) {
                 const current = l.id === lesson.id;
                 return (
                   <li key={l.id}>
-                    <Link
+                    <GatedLessonLink
+                      gate={gate}
+                      index={position++}
                       href={href(x.slug, l.slug)}
-                      aria-current={current ? "page" : undefined}
+                      current={current}
                       className={
                         "-ml-px block border-l py-1 pl-3 transition-colors " +
                         (current
@@ -115,7 +136,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
                       }
                     >
                       {localize(l.title, locale)}
-                    </Link>
+                    </GatedLessonLink>
                   </li>
                 );
               })}
@@ -128,6 +149,8 @@ async function LessonContent({ params }: Pick<Props, "params">) {
 
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12">
+      {/* A zárolás még a kirajzolás előtt érvényesül (frissítéskor sem villan fel a zárolt tartalom). */}
+      <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />
       <aside className="hidden lg:sticky lg:top-24 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
         {outline}
       </aside>
@@ -173,53 +196,97 @@ async function LessonContent({ params }: Pick<Props, "params">) {
           <div className="pt-4">{outline}</div>
         </details>
 
-        {/* A tananyag a repó content/ mappájából jön (megbízható forrás), ezért beilleszthető HTML-ként. */}
-        <div className="lesson-body" dangerouslySetInnerHTML={{ __html: html }} />
+        {/* Zárolt lecke (az előzők még nincsenek kész): a tartalom helyett üzenet látszik. */}
+        <LessonGate gate={gate} index={index}>
+          <LessonBody segments={segments} lessonRef={lessonRef} next={nextLesson} />
 
-        {/* Alul: „Kész” gomb és lapozás az előző / következő leckére */}
-        <footer className="grid gap-6 border-t border-line pt-6">
-          <div>
-            <LessonDoneButton
-              university={university}
-              course={course.slug}
-              lesson={lessonKey(topic.slug, lesson.slug)}
+          {/* Alul: kész-állapot (vagy „Kész” gomb) és lapozás az előző / következő leckére */}
+          <footer className="grid gap-6 border-t border-line pt-6">
+            <div>
+              {lesson.hasExercise ? (
+                <LessonExerciseStatus {...lessonRef} />
+              ) : (
+                <LessonDoneButton {...lessonRef} />
+              )}
+            </div>
+            <LessonPager
+              gate={gate}
+              index={index}
+              prev={
+                prev && {
+                  href: href(prev.topic.slug, prev.lesson.slug),
+                  title: localize(prev.lesson.title, locale),
+                }
+              }
+              next={nextLesson}
+              courseHref={courseHref}
+              labels={{
+                nav: t("lessonNav"),
+                prev: t("prev"),
+                next: t("next"),
+                finished: t("finished"),
+                back: t("backToCourse"),
+              }}
             />
-          </div>
-          <LessonPager
-            prev={
-              prev && {
-                href: href(prev.topic.slug, prev.lesson.slug),
-                title: localize(prev.lesson.title, locale),
-              }
-            }
-            next={
-              next && {
-                href: href(next.topic.slug, next.lesson.slug),
-                title: localize(next.lesson.title, locale),
-              }
-            }
-            courseHref={courseHref}
-            labels={{
-              nav: t("lessonNav"),
-              prev: t("prev"),
-              next: t("next"),
-              finished: t("finished"),
-              back: t("backToCourse"),
-            }}
-          />
-        </footer>
+          </footer>
+        </LessonGate>
       </article>
     </div>
   );
 }
 
-/** Előző / következő lecke. Az utolsó lecke után vissza a tárgy oldalára. */
+/**
+ * A lecke szövege: a sima HTML darabok és a futtatható részek (példák, feladatok) sorban.
+ * A HTML darabok „display: contents” dobozban vannak, így a .lesson-body rácsának térközei megmaradnak.
+ */
+function LessonBody({
+  segments,
+  lessonRef,
+  next,
+}: {
+  segments: LessonSegment[];
+  lessonRef: LessonRef;
+  next: { href: LessonHref; title: string } | null;
+}) {
+  return (
+    <div className="lesson-body">
+      {segments.map((s, i) =>
+        s.kind === "html" ? (
+          // A tananyag a repó content/ mappájából jön (megbízható forrás), ezért beilleszthető HTML-ként.
+          <div key={i} className="contents" dangerouslySetInnerHTML={{ __html: s.html }} />
+        ) : s.kind === "run" ? (
+          <RunnableExample key={i} code={s.code} label={s.label} codeHtml={s.codeHtml} />
+        ) : (
+          <Exercise
+            key={i}
+            index={s.index}
+            starter={s.starter}
+            test={s.test}
+            required={s.required}
+            label={s.label}
+            lessonRef={lessonRef}
+            next={s.required ? next : null}
+          />
+        ),
+      )}
+    </div>
+  );
+}
+
+/**
+ * Előző / következő lecke. Az utolsó lecke után vissza a tárgy oldalára.
+ * A következő lecke zárolt, amíg ez a lecke nincs kész.
+ */
 function LessonPager({
+  gate,
+  index,
   prev,
   next,
   courseHref,
   labels,
 }: {
+  gate: { university: string; course: string; lessons: string[] };
+  index: number;
   prev: { href: LessonHref; title: string } | null;
   next: { href: LessonHref; title: string } | null;
   courseHref: {
@@ -242,10 +309,21 @@ function LessonPager({
         <span className="hidden sm:block" />
       )}
       {next ? (
-        <Link href={next.href} className={card + " sm:text-right"}>
-          <span className="font-mono text-xs text-muted">{labels.next} →</span>
+        <GatedLessonLink
+          gate={gate}
+          index={index + 1}
+          href={next.href}
+          className={card + " sm:text-right"}
+          lockIcon={false}
+        >
+          <span className="font-mono text-xs text-muted">
+            <span className="gate-lock mr-1.5 hidden" aria-hidden="true">
+              🔒
+            </span>
+            {labels.next} →
+          </span>
           <span className="group-hover:text-accent">{next.title}</span>
-        </Link>
+        </GatedLessonLink>
       ) : (
         <Link href={courseHref} className={card + " sm:text-right"}>
           <span className="font-mono text-xs text-muted">{labels.finished}</span>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "node scripts/copy-pyodide.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -24,6 +25,7 @@
     "next": "16.4.3",
     "next-intl": "^4.14.9",
     "pg": "^8.23.1",
+    "pyodide": "314.0.7",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "server-only": "^0.0.1",

@@ -398,3 +398,278 @@
 .lesson-body details .code-block {
   background: var(--bg);
 }
+
+/* Az ellenőrző kód doboza a feladatok alatt (alapból becsukva). */
+.lesson-body details.check-details > summary {
+  font-size: 0.8125rem;
+}
+
+/*
+ * Böngészős Python futtató (features/python): eszköztár, szerkesztő, kimenet.
+ * A szerkesztő egy átlátszó szövegdoboz a színezett kód fölött; a kettőnek pontosan egyeznie kell
+ * (betű, méret, sortávolság, belső margó), különben a kurzor elcsúszik a szövegtől.
+ */
+.lesson-body .py-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+}
+
+.lesson-body .py-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* A kötelező feladat kiemelése: akcentszínű keret. */
+.lesson-body .py-exercise.is-required {
+  border-color: var(--accent);
+}
+
+.code-editor {
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.code-editor-gutter {
+  display: flex;
+  flex-direction: column;
+  padding: 0.875rem 0.5rem 0.875rem 0.75rem;
+  border-right: 1px solid var(--line);
+  color: var(--muted);
+  opacity: 0.6;
+  text-align: right;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.code-editor-scroll {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+/* A színezett réteg és a szövegdoboz ugyanabban a rácscellában, egymáson. */
+.code-editor-stack {
+  display: grid;
+  width: max-content;
+  min-width: 100%;
+}
+
+.code-editor-stack > pre,
+.code-editor-stack > textarea {
+  grid-area: 1 / 1;
+  margin: 0;
+  border: 0;
+  padding: 0.875rem 1rem;
+  font: inherit;
+  line-height: inherit;
+  white-space: pre;
+  tab-size: 4;
+  letter-spacing: normal;
+}
+
+.lesson-body .code-editor-stack > pre {
+  overflow: visible;
+  color: var(--fg);
+  pointer-events: none;
+}
+
+.code-editor-stack > textarea {
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--fg);
+  outline: none;
+}
+
+.code-editor-stack > textarea::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: transparent;
+}
+
+.code-editor:focus-within {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+/* A szerkesztő színei (GitHub téma, mint a statikus kódrészleteknél). */
+.code-editor .py-kw {
+  color: #ff7b72;
+}
+.code-editor .py-str {
+  color: #a5d6ff;
+}
+.code-editor .py-com {
+  color: #8b949e;
+}
+.code-editor .py-num {
+  color: #79c0ff;
+}
+.code-editor .py-fn,
+.code-editor .py-def {
+  color: #d2a8ff;
+}
+:root[data-theme="light"] .code-editor .py-kw {
+  color: #cf222e;
+}
+:root[data-theme="light"] .code-editor .py-str {
+  color: #0a3069;
+}
+:root[data-theme="light"] .code-editor .py-com {
+  color: #6e7781;
+}
+:root[data-theme="light"] .code-editor .py-num {
+  color: #0550ae;
+}
+:root[data-theme="light"] .code-editor .py-fn,
+:root[data-theme="light"] .code-editor .py-def {
+  color: #8250df;
+}
+
+/* Bemenet mező a beolvasást használó kódhoz. */
+.lesson-body .py-stdin {
+  display: grid;
+  gap: 0.25rem;
+  border-top: 1px solid var(--line);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.lesson-body .py-stdin textarea {
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  background: var(--bg);
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  color: var(--fg);
+  resize: vertical;
+}
+
+/* A futtatás kimenete. */
+.lesson-body .py-output {
+  display: grid;
+  gap: 0.5rem;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  padding: 0.625rem 1rem 0.875rem;
+  font-size: 0.9375rem;
+}
+
+.lesson-body .py-output-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.lesson-body .py-output pre {
+  max-height: 22rem;
+  overflow: auto;
+  padding: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.lesson-body .py-output pre.py-error {
+  color: var(--danger);
+}
+
+.lesson-body .py-note {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.lesson-body .py-fail {
+  font-weight: 600;
+  color: var(--danger);
+}
+
+.lesson-body .py-fail-box {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.lesson-body .py-pass {
+  display: grid;
+  gap: 0.25rem;
+  border-radius: 0.375rem;
+  background: var(--accent-soft);
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* A kötelező feladat állapota és a billentyű-tippek a feladat alján. */
+.lesson-body .py-required-status,
+.lesson-body .py-keys {
+  border-top: 1px solid var(--line);
+  padding: 0.375rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.lesson-body .py-required-status.is-done {
+  color: var(--accent);
+}
+
+.lesson-body .py-keys {
+  opacity: 0.75;
+}
+
+/* Kis forgó kör betöltés / futás közben. */
+.py-spinner {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 9999px;
+  animation: py-spin 0.7s linear infinite;
+}
+
+@keyframes py-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .py-spinner {
+    animation-duration: 2s;
+  }
+}
+
+/*
+ * Zárolt leckék (sorrendi haladás): a React a data-locked attribútummal jelöli őket.
+ * Kirajzolás előtt ugyanezt a GateScript ideiglenes stílusa adja (features/progress/gate-script.tsx).
+ */
+[data-locked] .gate-lock {
+  display: inline-flex;
+}
+
+[data-locked].gate-link {
+  color: var(--muted);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+[data-locked] .gate-content {
+  display: none;
+}
+
+[data-locked] .gate-notice {
+  display: grid;
+}

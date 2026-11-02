@@ -163,3 +163,52 @@ Print: to_pay
 ```
 
 </details>
+
+## Summary exercise: Measurement statistics
+
+This is the summary exercise of the topic – it uses everything so far: designing an algorithm, a loop, a branch and a function.
+
+Write a `statistics(measurements)` function that returns a three-element list from a list of numbers: `[smallest, largest, average]`. **Round the average to two decimals** (`round(x, 2)`). **Don't** use the built-in `min()`, `max()` and `sum()` – compute all three in a single loop! For an empty list the result should be `None`.
+
+```python starter required
+def statistics(measurements):
+    # 1. Empty list? → None
+    # 2. Initial values from the first element
+    # 3. A single loop: update smallest, largest, total
+    # 4. Return: [smallest, largest, average rounded to two decimals]
+    pass
+
+
+print(statistics([12, 7, 21, 3]))   # [3, 21, 10.75]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def statistics(measurements):
+    if len(measurements) == 0:
+        return None
+    smallest = measurements[0]
+    largest = measurements[0]
+    total = 0
+    for x in measurements:
+        if x < smallest:
+            smallest = x
+        if x > largest:
+            largest = x
+        total += x
+    return [smallest, largest, round(total / len(measurements), 2)]
+
+
+print(statistics([12, 7, 21, 3]))   # [3, 21, 10.75]
+```
+
+</details>
+
+```python test
+assert statistics([12, 7, 21, 3]) == [3, 21, 10.75], "statistics([12, 7, 21, 3]) → [3, 21, 10.75]"
+assert statistics([5]) == [5, 5, 5.0], "With a single measurement all three values are the same."
+assert statistics([-1.5, 2, 0]) == [-1.5, 2, 0.17], "It must work with negative and fractional numbers (average: 0.17)."
+assert statistics([]) is None, "For an empty list the result is None."
+```

@@ -10,6 +10,8 @@ const eslintConfig = defineConfig([
   // A Next.js alapból kihagyott mappáinak felülírása: a .data/ (helyi adatbázis) is kimarad.
   globalIgnores([
     ".data/**",
+    // A böngészős Python bemásolt (külső) fájljai.
+    "public/pyodide/**",
     // A Next.js alapból kihagyott mappái:
     ".next/**",
     "out/**",

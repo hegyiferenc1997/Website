@@ -84,3 +84,49 @@ A futtatási lehetőségekről a **Futtatási környezetek** témakörben bőveb
 - A `#` utáni rész megjegyzés.
 - A Pythonban a **behúzás** jelöli a blokkokat.
 - A hibaüzenetet alulról felfelé olvasd: típus, hely, sor.
+
+## A lecke feladata: Javítsd ki a hibás programot
+
+Az alábbi programban **három hiba** van (egy hiányzó idézőjel, egy rossz behúzás és egy elírt függvénynév). Javítsd ki, hogy lefusson, és ezt írja ki:
+
+```text
+Kör kerülete és területe
+Sugár: 2
+Kerület: 12.56636
+Terület: 12.56636
+```
+
+Tipp: futtasd le, és olvasd el a hibaüzenetet – megmondja, melyik sorban van a gond.
+
+```python starter required
+# Kör kerülete és területe
+sugar = 2
+print("Kör kerülete és területe)
+print("Sugár:", sugar)
+if sugar > 0:
+print("Kerület:", 2 * 3.14159 * sugar)
+    prnt("Terület:", 3.14159 * sugar ** 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+# Kör kerülete és területe
+sugar = 2
+print("Kör kerülete és területe")
+print("Sugár:", sugar)
+if sugar > 0:
+    print("Kerület:", 2 * 3.14159 * sugar)
+    print("Terület:", 3.14159 * sugar ** 2)
+```
+
+</details>
+
+```python test
+sorok = kimenet.splitlines()
+assert sorok[0] == "Kör kerülete és területe", "Az első sor a cím."
+assert sorok[1] == "Sugár: 2", "A második sor: Sugár: 2"
+assert sorok[2] == "Kerület: 12.56636", "A harmadik sor: Kerület: 12.56636"
+assert sorok[3] == "Terület: 12.56636", "A negyedik sor: Terület: 12.56636"
+```

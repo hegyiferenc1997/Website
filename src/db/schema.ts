@@ -186,6 +186,8 @@ export const lessons = pgTable(
     body: localized("body").notNull(),
     /** Becsült feldolgozási idő percben. */
     minutes: integer("minutes"),
+    /** Van-e kötelező feladata (ha igen, a lecke a feladat teljesítésével lesz kész, nem kézi jelöléssel). */
+    hasExercise: boolean("has_exercise").notNull().default(false),
     ...timestamps,
   },
   (t) => [uniqueIndex("lessons_topic_slug").on(t.topicId, t.slug)],

@@ -87,3 +87,53 @@ print("Megtaláltam", lepesek, "lépésben.")
 - Az **algoritmus** egyértelmű, véges, általános lépéssorozat bemenettel és kimenettel.
 - Az **adatstruktúra** az adatok tárolási módja (lista, halmaz, szótár, verem, sor …).
 - A jó választás gyorsabbá teszi a programot; a hatékonyságot a **nagy O jelöléssel** mérjük.
+
+## A lecke feladata: Lineáris keresés lépésszámmal
+
+A lecke lineáris keresését alakítsd át: a program keresse meg a `keresett` számot a listában, és írja ki, **hányadik lépésben** találta meg, pontosan ebben a formában:
+
+```text
+Megtaláltam 5 lépésben.
+```
+
+Ha a szám nincs a listában, ezt írja ki: `Nincs a listában.` – ehhez jól jön a ciklus utáni ellenőrzés, hogy megtaláltuk-e.
+
+```python starter required
+szamok = [8, 3, 9, 1, 7, 4]
+keresett = 7
+
+lepesek = 0
+megtalaltam = False
+for szam in szamok:
+    lepesek += 1
+    # Ha a szam egyenlő a keresettel: jegyezd meg, hogy megtaláltad, és lépj ki (break).
+
+# Írd ki az eredményt a megtalaltam változó alapján!
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+szamok = [8, 3, 9, 1, 7, 4]
+keresett = 7
+
+lepesek = 0
+megtalaltam = False
+for szam in szamok:
+    lepesek += 1
+    if szam == keresett:
+        megtalaltam = True
+        break
+
+if megtalaltam:
+    print("Megtaláltam", lepesek, "lépésben.")
+else:
+    print("Nincs a listában.")
+```
+
+</details>
+
+```python test
+assert kimenet.strip() == "Megtaláltam 5 lépésben.", "A 7-es az ötödik elem, ezt kell kiírni: Megtaláltam 5 lépésben."
+```
