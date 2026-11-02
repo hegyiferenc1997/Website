@@ -65,28 +65,19 @@ async function DashboardContent() {
       ? t("remainingDays", { days: Math.floor(ms / DAY_MS) })
       : t("remainingHours", { hours: Math.floor(ms / (60 * 60 * 1000)) });
   };
-  const soonest = data.passes[0];
 
   return (
     <div className="grid gap-10">
-      {/* Üdvözlés és a fő számok */}
-      <section className="grid gap-4">
-        <p className="font-mono text-lg text-fg">
-          <span className="text-accent">$ </span>
-          {t("greeting", { name: user.name })}
-        </p>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <StatTile label={t("statTotal")} value={duration(data.totalSeconds)} />
-          <StatTile
-            label={t("statSubscription")}
-            value={soonest ? remaining(soonest.expiresAt) : t("noSubscription")}
-            hint={soonest ? t("statSubscriptionHint") : undefined}
-          />
-        </div>
-      </section>
+      {/* Üdvözlés */}
+      <p className="font-mono text-lg text-fg">
+        <span className="text-accent">$ </span>
+        {t("greeting", { name: user.name })}
+      </p>
 
+      {/* Két oszlop: fent „hol tartasz” és heti tanulás, alatta előfizetések és összes tanulás.
+          Keskeny kijelzőn egymás alá kerülnek, ebben a sorrendben. */}
       <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        {/* Bal oszlop: hol tartasz a tárgyakban */}
+        {/* Hol tartasz a tárgyakban */}
         <section className="grid content-start gap-4">
           <SectionTitle>{t("coursesTitle")}</SectionTitle>
           {data.courses.length === 0 ? (
@@ -98,62 +89,67 @@ async function DashboardContent() {
           )}
         </section>
 
-        {/* Jobb oszlop: heti tanulási idő és előfizetések */}
-        <div className="grid content-start gap-10">
-          <section className="grid gap-4">
-            <SectionTitle>{t("weekTitle")}</SectionTitle>
-            <Card>
-              <WeekChart
-                days={data.weekDays}
-                locale={locale}
-                total={duration(data.weekSeconds)}
-                totalLabel={t("weekTotal")}
-                minutesLabel={(minutes) => t("minutes", { minutes })}
-              />
-            </Card>
-            <p className="text-xs text-muted">{t("weekHint")}</p>
-          </section>
+        {/* Heti tanulási idő */}
+        <section className="grid content-start gap-4">
+          <SectionTitle>{t("weekTitle")}</SectionTitle>
+          <Card>
+            <WeekChart
+              days={data.weekDays}
+              locale={locale}
+              total={duration(data.weekSeconds)}
+              totalLabel={t("weekTotal")}
+              minutesLabel={(minutes) => t("minutes", { minutes })}
+            />
+          </Card>
+          <p className="text-xs text-muted">{t("weekHint")}</p>
+        </section>
 
-          <section className="grid gap-4">
-            <SectionTitle>{t("subscriptionsTitle")}</SectionTitle>
-            {data.passes.length === 0 ? (
-              <EmptyState>{t("subscriptionsEmpty")}</EmptyState>
-            ) : (
-              <Card padded={false}>
-                <ul className="divide-y divide-line">
-                  {data.passes.map((p) => {
-                    const u = universities.find((u) => u.slug === p.universitySlug);
-                    return (
-                      <li
-                        key={`${p.universitySlug}:${p.semester}`}
-                        className="flex flex-wrap items-center justify-between gap-3 px-5 py-4"
-                      >
-                        <span className="grid gap-0.5">
-                          <span className="font-semibold text-fg">
-                            {p.semester === 0
-                              ? tUni("noSemester")
-                              : tUni("semester", { semester: p.semester })}
-                          </span>
-                          <span className="text-xs text-muted">
-                            {u ? localize(u.name, locale) : p.universitySlug} ·{" "}
-                            {t("until", { date: formatDateUntil(p.expiresAt, locale) })}
-                          </span>
+        {/* Aktív előfizetések */}
+        <section className="grid content-start gap-4">
+          <SectionTitle>{t("subscriptionsTitle")}</SectionTitle>
+          {data.passes.length === 0 ? (
+            <EmptyState>{t("subscriptionsEmpty")}</EmptyState>
+          ) : (
+            <Card padded={false}>
+              <ul className="divide-y divide-line">
+                {data.passes.map((p) => {
+                  const u = universities.find((u) => u.slug === p.universitySlug);
+                  return (
+                    <li
+                      key={`${p.universitySlug}:${p.semester}`}
+                      className="flex flex-wrap items-center justify-between gap-3 px-5 py-4"
+                    >
+                      <span className="grid gap-0.5">
+                        <span className="font-semibold text-fg">
+                          {p.semester === 0
+                            ? tUni("noSemester")
+                            : tUni("semester", { semester: p.semester })}
                         </span>
-                        {/* Zöld címke a hátralévő idővel (mint a Tananyagaim oldalon) */}
-                        <span className="whitespace-nowrap rounded-md border border-accent px-2 py-0.5 font-mono text-xs text-accent">
-                          {remaining(p.expiresAt)}
+                        <span className="text-xs text-muted">
+                          {u ? localize(u.name, locale) : p.universitySlug} ·{" "}
+                          {t("until", { date: formatDateUntil(p.expiresAt, locale) })}
                         </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </Card>
-            )}
-            <Link href="/my-courses" className="w-fit text-sm text-muted hover:text-accent">
-              {t("allPurchases")} →
-            </Link>
-          </section>
-        </div>
+                      </span>
+                      {/* Zöld címke a hátralévő idővel (mint a Tananyagaim oldalon) */}
+                      <span className="whitespace-nowrap rounded-md border border-accent px-2 py-0.5 font-mono text-xs text-accent">
+                        {remaining(p.expiresAt)}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Card>
+          )}
+          <Link href="/my-courses" className="w-fit text-sm text-muted hover:text-accent">
+            {t("allPurchases")} →
+          </Link>
+        </section>
+
+        {/* Az oldalon töltött idő összesen */}
+        <section className="grid content-start gap-4">
+          <SectionTitle>{t("totalTitle")}</SectionTitle>
+          <StatTile label={t("statTotal")} value={duration(data.totalSeconds)} />
+        </section>
       </div>
 
       {/* Hely a későbbi funkcióknak: ismétlőkártyák, jegyzetek, XP */}
