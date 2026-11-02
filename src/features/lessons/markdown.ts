@@ -2,7 +2,8 @@ import "server-only";
 import { Marked, type Token, type Tokens, type TokensList } from "marked";
 import { createHighlighterCore, type HighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
-import { parseCodeInfo, type CodeRole } from "./code-info";
+import { parseQuiz, type QuizQuestion } from "@/features/quiz/logic";
+import { parseCodeInfo, parseQuizInfo, type CodeRole } from "./code-info";
 
 // A leckék Markdown szövegét HTML-lé alakítja a szerveren, színezett kódrészletekkel.
 // A böngészőbe kész HTML megy, így a kódkiemeléshez nem kell JavaScriptet letölteni.
@@ -207,6 +208,14 @@ export type LessonSegment =
       /** A lecke kötelező feladata-e (sikeres ellenőrzés = kész a lecke). */
       required: boolean;
       label: string;
+    }
+  | {
+      kind: "quiz";
+      /** Hányadik kvíz a leckében (0-tól). */
+      index: number;
+      /** A kérdések; a kérdés és a válaszlehetőségek szövege már HTML (a szerveren alakítva). */
+      questions: QuizQuestion[];
+      required: boolean;
     };
 
 // Hány <details> nyílik / záródik egy HTML darabban (a lenyitható dobozokon belüli kódot nem bontjuk ki).
@@ -237,8 +246,31 @@ export async function renderLessonSegments(
     pending = [];
   };
 
+  let quizIndex = 0;
+
+  // A kvíz kérdéseinek és válaszlehetőségeinek szövege soron belüli Markdown → HTML.
+  const inline = (text: string) => marked.parseInline(text, { async: false });
+
   tokens.forEach((token, i) => {
     if (token.type === "html") depth = Math.max(0, depth + detailsDelta(token.raw));
+    // Kvízblokk (```quiz): interaktív feladatlap lesz belőle.
+    const quizInfo = token.type === "code" ? parseQuizInfo((token as Tokens.Code).lang) : null;
+    if (quizInfo?.quiz && depth === 0) {
+      flush();
+      const { questions } = parseQuiz((token as Tokens.Code).text);
+      segments.push({
+        kind: "quiz",
+        index: quizIndex++,
+        required: quizInfo.required,
+        questions: questions.map((q) => ({
+          ...q,
+          prompt: inline(q.prompt),
+          hint: q.hint && inline(q.hint),
+          ...(q.kind === "choice" ? { choices: q.choices.map(inline) } : {}),
+        })),
+      });
+      return;
+    }
     const info = token.type === "code" ? parseCodeInfo((token as Tokens.Code).lang) : null;
     if (
       !info ||

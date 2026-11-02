@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Bináris számrendszer és kódolás", "en": "Binary Number System and Coding" },
+  "description": {
+    "hu": "Helyiértékes számrendszerek, átváltások, bináris aritmetika, előjeles számok és kettes komplemens, BCD, Excess-3 és Gray-kód, ASCII és Unicode, paritás, Hamming-kód és CRC.",
+    "en": "Positional number systems, conversions, binary arithmetic, signed numbers and two's complement, BCD, Excess-3 and Gray code, ASCII and Unicode, parity, Hamming code and CRC."
+  }
+}

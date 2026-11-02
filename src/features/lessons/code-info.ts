@@ -21,7 +21,13 @@ export function parseCodeInfo(info: string | undefined): {
   return { lang, role: known, required: known === "starter" && flags.includes("required") };
 }
 
-/** Van-e a leckében kötelező feladat (```python starter required blokk). */
+/** Van-e a leckében kötelező feladat (```python starter required vagy ```quiz required blokk). */
 export function hasRequiredExercise(markdown: string): boolean {
-  return /^```python[ \t]+starter[ \t]+required\b/m.test(markdown);
+  return /^```(python[ \t]+starter|quiz)[ \t]+required\b/m.test(markdown);
+}
+
+/** Kvízblokk-e (```quiz [required]), és ha igen, a lecke kötelező feladata-e. */
+export function parseQuizInfo(info: string | undefined): { quiz: boolean; required: boolean } {
+  const [lang = "", ...flags] = (info ?? "").trim().toLowerCase().split(/\s+/);
+  return { quiz: lang === "quiz", required: lang === "quiz" && flags.includes("required") };
 }

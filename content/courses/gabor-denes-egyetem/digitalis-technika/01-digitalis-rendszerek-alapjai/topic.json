@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Digitális rendszerek és alapelveik", "en": "Digital Systems and Their Principles" },
+  "description": {
+    "hu": "Analóg és digitális információ, logikai szintek és zajtartalék, a valóságos impulzus jellemzői, kombinációs és szekvenciális hálózatok, absztrakciós szintek.",
+    "en": "Analog and digital information, logic levels and noise margin, real pulse parameters, combinational and sequential circuits, levels of abstraction."
+  }
+}

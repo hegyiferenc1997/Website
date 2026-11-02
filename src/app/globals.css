@@ -629,6 +629,219 @@
   opacity: 0.75;
 }
 
+/*
+ * Feladatlap (kvíz, features/quiz): kérdések, válaszmezők, igazságtábla, visszajelzés.
+ */
+.lesson-body .quiz-block.is-required {
+  border-color: var(--accent);
+}
+
+.lesson-body .quiz-list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 1rem;
+  list-style: none;
+}
+
+/* A kérdés sorszáma; a színe az ellenőrzés eredményét mutatja. */
+.lesson-body .quiz-prompt {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lesson-body .quiz-num {
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.lesson-body .quiz-q[data-verdict="ok"] .quiz-num {
+  color: var(--accent);
+}
+
+.lesson-body .quiz-q[data-verdict="wrong"] .quiz-num,
+.lesson-body .quiz-q[data-verdict="invalid"] .quiz-num,
+.lesson-body .quiz-q[data-verdict="too-long"] .quiz-num {
+  color: var(--danger);
+}
+
+.lesson-body .quiz-q {
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* A válaszmezők a kérdés szövegével egy vonalban kezdődnek (a sorszám után). */
+.lesson-body .quiz-q > :not(.quiz-prompt) {
+  margin-left: 1.5rem;
+}
+
+
+.lesson-body .quiz-field {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.lesson-body .quiz-field input {
+  width: 100%;
+  max-width: 24rem;
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  background: var(--bg);
+  padding: 0.375rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  color: var(--fg);
+}
+
+.lesson-body .quiz-field input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.lesson-body .quiz-choices {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.lesson-body .quiz-choice {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: fit-content;
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  padding: 0.3125rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.lesson-body .quiz-choice:hover,
+.lesson-body .quiz-choice.is-selected {
+  border-color: var(--accent);
+}
+
+.lesson-body .quiz-choice input {
+  accent-color: var(--accent);
+}
+
+.lesson-body .quiz-table-wrap {
+  display: grid;
+  gap: 0.25rem;
+  overflow-x: auto;
+}
+
+.lesson-body table.quiz-table {
+  width: auto;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.lesson-body .quiz-table th,
+.lesson-body .quiz-table td {
+  min-width: 2.5rem;
+  padding: 0.125rem 0.5rem;
+  text-align: center;
+}
+
+.lesson-body .quiz-table .is-output {
+  border-left: 1px solid var(--accent);
+}
+
+.lesson-body .quiz-cell {
+  width: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  background: var(--bg);
+  font-family: var(--font-mono);
+  color: var(--fg);
+}
+
+.lesson-body .quiz-cell:hover {
+  border-color: var(--accent);
+}
+
+.lesson-body .quiz-cell[data-empty] {
+  color: var(--muted);
+}
+
+/* Gombok a feladatlapon (a Python-futtató gombjaival egyező kinézet). */
+.lesson-body .quiz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--fg);
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.lesson-body .quiz-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lesson-body .quiz-btn.is-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.lesson-body .quiz-btn.is-primary:hover {
+  opacity: 0.9;
+  color: var(--accent-fg);
+}
+
+.lesson-body .quiz-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding: 0.625rem 1rem;
+}
+
+.lesson-body .quiz-score,
+.lesson-body .quiz-note {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.lesson-body .quiz-result {
+  padding: 0 1rem 0.75rem;
+}
+
+.lesson-body .quiz-ok {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.lesson-body .quiz-bad {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--danger);
+}
+
+.lesson-body .quiz-bad > p:first-child {
+  font-weight: 600;
+}
+
+.lesson-body .quiz-hint {
+  color: var(--fg);
+}
+
+.lesson-body .quiz-hint > span:first-child {
+  font-weight: 600;
+  color: var(--highlight);
+}
+
 /* Kis forgó kör betöltés / futás közben. */
 .py-spinner {
   display: inline-block;
