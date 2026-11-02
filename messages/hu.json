@@ -87,7 +87,9 @@
         "accountNotLinked": "Ezzel az e-mail címmel már regisztráltál jelszóval. Jelentkezz be e-maillel és jelszóval.",
         "generic": "Valami hiba történt. Próbáld újra.",
         "passwordTooWeak": "A jelszó nem felel meg a szabályoknak: legalább 8 karakter, egy nagybetű, egy szám és egy speciális karakter."
-      }
+      },
+      "profile": "Profil",
+      "myCourses": "Tananyagaim"
     }
   },
   "HomePage": {
@@ -227,5 +229,40 @@
     "requiredDone": "Ezt a feladatot már teljesítetted.",
     "editorLabel": "Python kódszerkesztő",
     "keys": "Ctrl+Enter: futtatás / ellenőrzés · Tab: behúzás · Esc, majd Tab: kilépés a szerkesztőből"
+  },
+  "ProfilePage": {
+    "title": "Profil",
+    "intro": "A fiókod adatai és az oldalon töltött idő.",
+    "loading": "Betöltés…",
+    "signedOut": "A profilod megtekintéséhez jelentkezz be a jobb felső sarokban.",
+    "name": "Név",
+    "email": "E-mail cím",
+    "lastLogin": "Utolsó belépés",
+    "previousLogin": "Előző belépés",
+    "totalTime": "Az oldalon töltött idő összesen",
+    "totalTimeHint": "Bejelentkezve számoljuk, amíg az oldal látható; minden belépés ideje hozzáadódik.",
+    "never": "—",
+    "duration": "{hours, plural, =0 {} other {# óra }}{minutes} perc"
+  },
+  "MyCoursesPage": {
+    "title": "Tananyagaim",
+    "intro": "A megvásárolt tananyagaid: a jelenleg aktívak és a korábbi, már lejárt vásárlások.",
+    "loading": "Betöltés…",
+    "signedOut": "A tananyagaid megtekintéséhez jelentkezz be a jobb felső sarokban.",
+    "activeTitle": "Jelenleg aktív tananyagok",
+    "expiredTitle": "Korábbi, lejárt tananyagok",
+    "course": "Tananyag",
+    "purchasedAt": "Vásárlás dátuma",
+    "remaining": "Aktív eddig",
+    "expiresAt": "Lejárat",
+    "status": "Állapot",
+    "remainingDays": "{days, plural, one {# nap} other {# nap}}",
+    "remainingHours": "{hours, plural, =0 {kevesebb mint 1 óra} other {# óra}}",
+    "expired": "Lejárt",
+    "activeEmpty": "Jelenleg nincs aktív tananyagod.",
+    "expiredEmpty": "Még nincs lejárt tananyagod.",
+    "noPayments": "A vásárlás még nem érhető el az oldalon; amint elindul, itt jelennek meg a tananyagaid.",
+    "demoButton": "Példa vásárlások hozzáadása (csak fejlesztéshez)",
+    "unknownCourse": "Ismeretlen tananyag"
   }
 }

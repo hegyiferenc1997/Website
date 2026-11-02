@@ -348,11 +348,52 @@ export const userProgress = pgTable("user_progress", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+/**
+ * A felhasználó aktivitása: mikor lépett be utoljára (és előtte), és összesen mennyi időt töltött
+ * az oldalon. Az időt a böngésző percenként jelenti, amíg a fül látható (lásd /api/activity).
+ */
+export const userActivity = pgTable("user_activity", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  /** A legutóbbi belépés ideje (vagyis a mostani munkameneté). */
+  lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
+  /** Az azelőtti belépés ideje. */
+  previousLoginAt: timestamp("previous_login_at", { withTimezone: true }),
+  /** Az oldalon töltött idő összesen, másodpercben (minden munkamenetből összeadva). */
+  totalSeconds: integer("total_seconds").notNull().default(0),
+  /** Az utolsó jelentés ideje; ehhez képest nem számolunk több időt, mint amennyi eltelt. */
+  lastActiveAt: timestamp("last_active_at", { withTimezone: true }),
+});
+
+/**
+ * Megvásárolt tananyagok (tárgyanként): mikor vette meg, és meddig érvényes.
+ * A tárgyat az egyetem és a tárgy slugja azonosítja (nem idegen kulcs), mert fejlesztés közben
+ * a fiókok külön adatbázisban vannak, mint a tananyag. Fizetés még nincs, a sorok egyelőre kézzel kerülnek ide.
+ */
+export const coursePurchases = pgTable(
+  "course_purchases",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    universitySlug: text("university_slug").notNull(),
+    courseSlug: text("course_slug").notNull(),
+    purchasedAt: timestamp("purchased_at", { withTimezone: true }).notNull().defaultNow(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("course_purchases_user_id").on(t.userId)],
+);
+
 // A fióktáblák kapcsolatai.
 export const usersRelations = relations(users, ({ many, one }) => ({
   sessions: many(sessions),
   accounts: many(accounts),
   progress: one(userProgress),
+  activity: one(userActivity),
+  purchases: many(coursePurchases),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -365,4 +406,12 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({
   user: one(users, { fields: [userProgress.userId], references: [users.id] }),
+}));
+
+export const userActivityRelations = relations(userActivity, ({ one }) => ({
+  user: one(users, { fields: [userActivity.userId], references: [users.id] }),
+}));
+
+export const coursePurchasesRelations = relations(coursePurchases, ({ one }) => ({
+  user: one(users, { fields: [coursePurchases.userId], references: [users.id] }),
 }));

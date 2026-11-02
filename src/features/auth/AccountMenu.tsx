@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { LoginMenu } from "@/components/LoginMenu";
+import { ActivityTracker } from "@/features/account/ActivityTracker";
 import { ProgressSync } from "@/features/progress/sync";
 import { configuredSocialProviders } from "./config";
 import { getSessionUser } from "./server";
@@ -17,13 +18,14 @@ export function AccountMenu() {
   );
 }
 
-// A bejelentkezett felhasználó lekérése (kérésenként), és a haladás összekötése a fiókkal.
+// A bejelentkezett felhasználó lekérése (kérésenként), a haladás összekötése a fiókkal és az időmérés.
 async function SignedInAccountMenu() {
   const user = await getSessionUser();
   return (
     <>
       <LoginMenu user={user} social={configuredSocialProviders()} />
       <ProgressSync userId={user?.id ?? null} />
+      <ActivityTracker userId={user?.id ?? null} />
     </>
   );
 }
