@@ -41,7 +41,9 @@ function judge(q: QuizQuestion, a: Answer): Verdict {
     case "table": {
       const cells = a as (0 | 1 | null)[][];
       if (cells.some((col) => col.some((v) => v === null))) return "empty";
-      return q.outputs.every((o, i) => o.values.every((v, r) => cells[i][r] === v)) ? "ok" : "wrong";
+      return q.outputs.every((o, i) => o.values.every((v, r) => cells[i][r] === v))
+        ? "ok"
+        : "wrong";
     }
   }
 }
@@ -118,7 +120,11 @@ export function Quiz({
               onEnter={check}
             />
             {verdicts && verdicts[i] !== "empty" && (
-              <Feedback verdict={verdicts[i]} hint={q.hint} limit={q.kind === "expr" ? q.limit : null} />
+              <Feedback
+                verdict={verdicts[i]}
+                hint={q.hint}
+                limit={q.kind === "expr" ? q.limit : null}
+              />
             )}
             {verdicts && verdicts[i] === "empty" && verdicts.some((v) => v !== "empty") && (
               <p className="quiz-note">{t("unanswered")}</p>
@@ -185,7 +191,11 @@ function Feedback({
   const t = useTranslations("Quiz");
   if (verdict === "ok") return <p className="quiz-ok">✓ {t("correct")}</p>;
   const message =
-    verdict === "invalid" ? t("invalidExpr") : verdict === "too-long" ? t("tooLong", { limit: limit ?? 0 }) : t("wrong");
+    verdict === "invalid"
+      ? t("invalidExpr")
+      : verdict === "too-long"
+        ? t("tooLong", { limit: limit ?? 0 })
+        : t("wrong");
   return (
     <div className="quiz-bad">
       <p>✗ {message}</p>
@@ -242,7 +252,11 @@ function QuestionInput({
 
   if (q.kind === "choice") {
     return (
-      <div className="quiz-choices" role="radiogroup" aria-label={t("answerLabel", { n: index + 1 })}>
+      <div
+        className="quiz-choices"
+        role="radiogroup"
+        aria-label={t("answerLabel", { n: index + 1 })}
+      >
         {q.choices.map((c, j) => (
           <label key={j} className={"quiz-choice" + (answer === j ? " is-selected" : "")}>
             <input

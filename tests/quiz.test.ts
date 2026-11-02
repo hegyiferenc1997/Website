@@ -61,8 +61,12 @@ describe("logikai kifejezések", () => {
     expect(checkExpr({ ...q, limit: null }, "A +")).toBe("invalid");
     // Közömbös sorral: a 7. sorban (ABC = 111) bármi lehet.
     const v = truthColumn(parseExpr("A·B'"), ["A", "B", "C"]);
-    expect(checkExpr({ inputs: ["A", "B", "C"], values: v, limit: null, dc: [7] }, "A")).toBe("wrong");
-    expect(checkExpr({ inputs: ["A", "B", "C"], values: v, limit: null, dc: [6, 7] }, "A")).toBe("ok");
+    expect(checkExpr({ inputs: ["A", "B", "C"], values: v, limit: null, dc: [7] }, "A")).toBe(
+      "wrong",
+    );
+    expect(checkExpr({ inputs: ["A", "B", "C"], values: v, limit: null, dc: [6, 7] }, "A")).toBe(
+      "ok",
+    );
   });
 
   it("a rövid válasz egységesítése", () => {
@@ -184,7 +188,9 @@ describe("a tananyag feladatlapjai", () => {
     for (const [lesson, langs] of byLesson) {
       if (!langs.en) continue;
       if (JSON.stringify(langs.hu) !== JSON.stringify(langs.en))
-        problems.push(`${lesson}\n hu: ${langs.hu?.join("\n     ")}\n en: ${langs.en.join("\n     ")}`);
+        problems.push(
+          `${lesson}\n hu: ${langs.hu?.join("\n     ")}\n en: ${langs.en.join("\n     ")}`,
+        );
     }
     expect(problems).toEqual([]);
   });

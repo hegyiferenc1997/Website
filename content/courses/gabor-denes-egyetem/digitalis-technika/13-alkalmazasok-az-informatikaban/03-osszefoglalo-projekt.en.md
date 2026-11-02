@@ -21,16 +21,16 @@ On an FPGA development board (100 MHz clock, 2 push buttons, 4-digit seven-segme
 ## The block diagram (top-down decomposition)
 
 ```text
- 100 MHz ──> [ time base ] ──> tick (100 Hz): to the button handlers and the counter chain
+ 100 MHz ──> [ time base ] ──> tick (100 Hz) → button handlers, counters
 
  START/STOP ──> [ button handler ] ──┐
                                      ├──> [ state machine: STOP / RUN ]
  RESET ───────> [ button handler ] ──┘                │ run, reset
                                                       v
-                    [ BCD chain: hundredths → tenths → seconds → tens of s ]
+                [ BCD chain: hundredths → tenths → seconds → tens of s ]
                                                       │ d0 … d3
                                                       v
-                    [ display driver: MUX, decoder, 7-segment ] ──> display
+                    [ display driver: MUX, decoder ] ──> display
 ```
 
 **Button handler** = synchroniser + debouncer + edge detector (step 2).

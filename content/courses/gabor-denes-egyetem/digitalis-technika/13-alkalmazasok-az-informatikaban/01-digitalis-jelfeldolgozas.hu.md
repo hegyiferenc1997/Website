@@ -17,9 +17,9 @@ minutes: 40
 A **digitális jelfeldolgozás** (DSP – digital signal processing) a valós világ analóg jeleit (hang, kép, rádiójel, szenzorjel) számokká alakítja, számításokkal dolgozza fel, majd szükség esetén visszaalakítja:
 
 ```text
-érzékelő → erősítő → aluláteresztő → ADC → digitális feldolgozás → DAC → simító szűrő → hangszóró
-(mikrofon)            (antialiasing)       (szűrés, tömörítés,               (rekonstrukció)
-                                            felismerés)
+érzékelő (mikrofon) → erősítő → aluláteresztő szűrő (antialiasing) → ADC
+      → digitális feldolgozás (szűrés, tömörítés, felismerés)
+      → DAC → simító szűrő (rekonstrukció) → hangszóró
 ```
 
 Az ADC-t és a DAC-ot, a mintavételezést és a kvantálást a 8. témakörben tanultad. A digitális feldolgozás előnye, hogy **pontosan megismételhető**, nem öregszik, nem függ a hőmérséklettől, és a feldolgozás módja szoftverből vagy újraprogramozással **megváltoztatható**.

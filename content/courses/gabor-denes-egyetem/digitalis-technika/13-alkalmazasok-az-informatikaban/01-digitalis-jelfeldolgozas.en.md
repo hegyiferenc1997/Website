@@ -17,9 +17,9 @@ minutes: 40
 **Digital signal processing** (DSP) turns the analogue signals of the real world (sound, image, radio signal, sensor signal) into numbers, processes them with computations, then converts them back if needed:
 
 ```text
-sensor → amplifier → low-pass filter → ADC → digital processing → DAC → smoothing filter → speaker
-(microphone)        (anti-aliasing)         (filtering, compression,      (reconstruction)
-                                             recognition)
+sensor (microphone) → amplifier → low-pass filter (anti-aliasing) → ADC
+      → digital processing (filtering, compression, recognition)
+      → DAC → smoothing filter (reconstruction) → speaker
 ```
 
 You learnt about the ADC and DAC, sampling and quantisation in topic 8. The advantage of digital processing is that it is **exactly repeatable**, does not age, does not depend on temperature, and the processing can be **changed** by software or reprogramming.

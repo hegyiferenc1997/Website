@@ -1,5 +1,8 @@
 {
-  "title": { "hu": "Mikroprocesszorok és mikrokontrollerek", "en": "Microprocessors and Microcontrollers" },
+  "title": {
+    "hu": "Mikroprocesszorok és mikrokontrollerek",
+    "en": "Microprocessors and Microcontrollers"
+  },
   "description": {
     "hu": "A processzor felépítése (ALU, regiszterek, vezérlőegység, buszok), Neumann- és Harvard-architektúra, utasításciklus, címzési módok, megszakítás, CISC és RISC, pipeline; mikrokontrollerek perifériái és illesztése.",
     "en": "Processor structure (ALU, registers, control unit, buses), von Neumann and Harvard architectures, instruction cycle, addressing modes, interrupts, CISC and RISC, pipelining; microcontroller peripherals and interfacing."

@@ -1,5 +1,8 @@
 {
-  "title": { "hu": "Állapotgépek és tervezési módszerek", "en": "State Machines and Design Methods" },
+  "title": {
+    "hu": "Állapotgépek és tervezési módszerek",
+    "en": "State Machines and Design Methods"
+  },
   "description": {
     "hu": "Véges állapotú gépek (FSM): állapotgráf és állapottábla, Moore- és Mealy-gép, a tervezés lépései szöveges feladattól a kapcsolásig, állapotkódolás (bináris, Gray, one-hot) és állapotminimalizálás.",
     "en": "Finite state machines (FSM): state diagram and state table, Moore and Mealy machines, design steps from a word problem to the circuit, state encoding (binary, Gray, one-hot) and state minimisation."

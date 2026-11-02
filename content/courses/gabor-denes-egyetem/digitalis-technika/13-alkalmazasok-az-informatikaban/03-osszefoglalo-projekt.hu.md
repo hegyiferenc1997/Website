@@ -21,7 +21,7 @@ Egy FPGA-s fejlesztőpanelen (100 MHz-es órajel, 2 nyomógomb, 4 számjegyes h�
 ## A blokkvázlat (top-down bontás)
 
 ```text
- 100 MHz ──> [ időalap ] ──> tick (100 Hz): a gombkezelőkhöz és a számlálólánchoz
+ 100 MHz ──> [ időalap ] ──> tick (100 Hz) → gombkezelők, számlálólánc
 
  START/STOP ──> [ gombkezelő ] ──┐
                                  ├──> [ állapotgép: STOP / RUN ]
@@ -30,7 +30,7 @@ Egy FPGA-s fejlesztőpanelen (100 MHz-es órajel, 2 nyomógomb, 4 számjegyes h�
                   [ BCD-lánc: század → tized → mp egyes → mp tízes ]
                                                   │ d0 … d3
                                                   v
-                  [ kijelzővezérlő: MUX, dekóder, 7 szegmens ] ──> kijelző
+                  [ kijelzővezérlő: MUX, dekóder ] ──> kijelző
 ```
 
 A **gombkezelő** = szinkronizáló + pergésmentesítő + élérzékelő (2. lépés).
