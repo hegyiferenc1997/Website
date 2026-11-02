@@ -3,7 +3,13 @@
 import { describe, expect, it } from "vitest";
 import { createLocalDb } from "@/db/local";
 import { users } from "@/db/schema";
-import { addActiveTime, getActivity, recordLogin } from "@/features/account/activity";
+import {
+  addActiveTime,
+  budapestDay,
+  getActivity,
+  getDailySeconds,
+  recordLogin,
+} from "@/features/account/activity";
 import { addDemoPurchases, getPurchases } from "@/features/account/purchases";
 import { createAuth } from "@/features/auth/config";
 
@@ -40,6 +46,18 @@ describe("fiók adatai", () => {
     expect((await getActivity(db, "u1"))?.totalSeconds).toBe(243);
   });
 
+  it("az idő a magyar idő szerinti naphoz is hozzáadódik", async () => {
+    const db = await setup();
+    // 23:30 UTC = másnap 00:30 Budapesten (téli időszámítás).
+    const late = new Date("2026-11-02T23:30:00Z");
+    await addActiveTime(db, "u1", 60, late);
+    await addActiveTime(db, "u1", 60, new Date(late.getTime() + 60_000));
+    expect(budapestDay(late)).toBe("2026-11-03");
+    const days = await getDailySeconds(db, "u1", "2026-11-02");
+    expect(days.get("2026-11-03")).toBe(120);
+    expect(days.get("2026-11-02")).toBeUndefined();
+  });
+
   it("a vásárlások aktívra és lejártra válnak szét", async () => {
     const db = await setup();
     const now = new Date();
@@ -61,5 +79,23 @@ describe("fiók adatai", () => {
     const a = await getActivity(db, res.user.id);
     expect(a?.lastLoginAt).toBeInstanceOf(Date);
     expect(a?.previousLoginAt).toBeInstanceOf(Date);
+  });
+});
+
+describe("irányítópult", () => {
+  it("a hét hétfőtől vasárnapig tart, a magyar idő szerint", async () => {
+    const { currentWeekDays } = await import("@/features/dashboard/week");
+    // 2026-11-02 hétfő.
+    expect(currentWeekDays(new Date("2026-11-02T10:00:00Z"))).toEqual([
+      "2026-11-02",
+      "2026-11-03",
+      "2026-11-04",
+      "2026-11-05",
+      "2026-11-06",
+      "2026-11-07",
+      "2026-11-08",
+    ]);
+    // Vasárnap késő este UTC-ben már hétfő Budapesten → új hét.
+    expect(currentWeekDays(new Date("2026-11-08T23:30:00Z"))[0]).toBe("2026-11-09");
   });
 });

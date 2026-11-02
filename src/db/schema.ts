@@ -1,5 +1,6 @@
 import {
   boolean,
+  date,
   index,
   integer,
   jsonb,
@@ -365,6 +366,22 @@ export const userActivity = pgTable("user_activity", {
   /** Az utolsó jelentés ideje; ehhez képest nem számolunk több időt, mint amennyi eltelt. */
   lastActiveAt: timestamp("last_active_at", { withTimezone: true }),
 });
+
+/**
+ * Napi tanulási idő: naponta hány másodpercet töltött a felhasználó az oldalon (a heti grafikonhoz).
+ * A nap a magyar időzóna szerinti dátum (pl. 2026-11-02), így éjfélkor Budapesten kezdődik az új nap.
+ */
+export const userActivityDays = pgTable(
+  "user_activity_days",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    day: date("day", { mode: "string" }).notNull(),
+    seconds: integer("seconds").notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.day] })],
+);
 
 /**
  * Megvásárolt hozzáférések. Egyetemenként és félévenként lehet vásárolni (a semester mező), ez nyitja meg

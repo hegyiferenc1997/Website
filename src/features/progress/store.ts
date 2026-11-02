@@ -161,6 +161,9 @@ function readOwner(): string | null {
   }
 }
 
+/** Kié a böngészőben tárolt haladás (felhasználó azonosító), vagy null, ha vendégé. */
+export const progressOwner = readOwner;
+
 function setOwner(owner: string | null) {
   try {
     if (owner) localStorage.setItem(OWNER_KEY, owner);

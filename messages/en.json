@@ -88,6 +88,7 @@
         "generic": "Something went wrong. Please try again.",
         "passwordTooWeak": "The password doesn't meet the requirements: at least 8 characters, one uppercase letter, one number and one special character."
       },
+      "dashboard": "Dashboard",
       "profile": "Profile",
       "myCourses": "My courses"
     }
@@ -235,6 +236,52 @@
     "requiredDone": "You have already passed this exercise.",
     "editorLabel": "Python code editor",
     "keys": "Ctrl+Enter: run / check · Tab: indent · Esc, then Tab: leave the editor"
+  },
+  "DashboardPage": {
+    "title": "Dashboard",
+    "intro": "See where you are, what your next lesson is and how much you studied this week, all in one place.",
+    "loading": "Loading…",
+    "signedOut": "Sign in at the top right to see your dashboard.",
+    "greeting": "Hi, {name}! Shall we continue?",
+    "statTotal": "Time spent on the site, across all sign-ins",
+    "duration": "{hours, plural, =0 {} other {#h }}{minutes}m",
+    "minutes": "{minutes, plural, one {# minute} other {# minutes}}",
+    "coursesTitle": "where you are",
+    "coursesEmpty": "No courses available yet.",
+    "lessonsDone": "{done} / {total} lessons done",
+    "nextLesson": "Next lesson",
+    "finished": "You have completed every lesson! 🎉",
+    "start": "Start",
+    "continue": "Continue",
+    "review": "Review",
+    "locked": "You haven't bought this semester's material yet.",
+    "buy": "Buy access",
+    "weekTitle": "this week",
+    "weekTotal": "Total this week",
+    "weekHint": "Measured while you are signed in and the page is visible. Weeks start on Monday.",
+    "subscriptionsTitle": "your subscriptions",
+    "subscriptionsEmpty": "You have no active subscription. You can buy access to a semester on the university's page.",
+    "until": "until {date}",
+    "remainingDays": "{days, plural, one {# day left} other {# days left}}",
+    "remainingHours": "{hours, plural, one {# hour left} other {# hours left}}",
+    "allPurchases": "All my purchases",
+    "totalTitle": "total study time",
+    "soonTitle": "coming soon",
+    "soonBadge": "soon",
+    "soon": {
+      "flashcards": {
+        "title": "Flashcards",
+        "text": "Daily reviews, smartly spaced so you don't forget."
+      },
+      "notes": {
+        "title": "Notes",
+        "text": "Your own notes and bookmarks for lessons."
+      },
+      "xp": {
+        "title": "XP and levels",
+        "text": "Points for exercises, levelling up and streaks."
+      }
+    }
   },
   "ProfilePage": {
     "title": "Profile",

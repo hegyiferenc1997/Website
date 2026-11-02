@@ -88,6 +88,7 @@
         "generic": "Valami hiba történt. Próbáld újra.",
         "passwordTooWeak": "A jelszó nem felel meg a szabályoknak: legalább 8 karakter, egy nagybetű, egy szám és egy speciális karakter."
       },
+      "dashboard": "Irányítópult",
       "profile": "Profil",
       "myCourses": "Tananyagaim"
     }
@@ -235,6 +236,52 @@
     "requiredDone": "Ezt a feladatot már teljesítetted.",
     "editorLabel": "Python kódszerkesztő",
     "keys": "Ctrl+Enter: futtatás / ellenőrzés · Tab: behúzás · Esc, majd Tab: kilépés a szerkesztőből"
+  },
+  "DashboardPage": {
+    "title": "Irányítópult",
+    "intro": "Egy helyen látod, hol tartasz, mi a következő lecke, és mennyit tanultál a héten.",
+    "loading": "Betöltés…",
+    "signedOut": "Az irányítópult megtekintéséhez jelentkezz be a jobb felső sarokban.",
+    "greeting": "Szia, {name}! Folytassuk?",
+    "statTotal": "Az oldalon töltött idő, minden belépésből",
+    "duration": "{hours, plural, =0 {} other {# óra }}{minutes} perc",
+    "minutes": "{minutes} perc",
+    "coursesTitle": "hol tartasz",
+    "coursesEmpty": "Még nincs elérhető tárgy.",
+    "lessonsDone": "{done} / {total} lecke kész",
+    "nextLesson": "Következő lecke",
+    "finished": "Minden leckét elvégeztél! 🎉",
+    "start": "Kezdés",
+    "continue": "Folytatás",
+    "review": "Átismétlés",
+    "locked": "A félév tananyaga még nincs megvásárolva.",
+    "buy": "Hozzáférés vásárlása",
+    "weekTitle": "heti tanulás",
+    "weekTotal": "Ezen a héten összesen",
+    "weekHint": "Bejelentkezve mérjük, amíg az oldal látható. A hét hétfőn kezdődik.",
+    "subscriptionsTitle": "előfizetéseid",
+    "subscriptionsEmpty": "Nincs aktív előfizetésed. Az egyetem oldalán vásárolhatsz hozzáférést egy félévhez.",
+    "until": "{date}-ig",
+    "remainingDays": "még {days} nap",
+    "remainingHours": "még {hours} óra",
+    "allPurchases": "Összes vásárlásom",
+    "totalTitle": "tanulás összesen",
+    "soonTitle": "hamarosan",
+    "soonBadge": "hamarosan",
+    "soon": {
+      "flashcards": {
+        "title": "Ismétlőkártyák",
+        "text": "Napi ismétlés okosan időzítve, hogy ne felejts."
+      },
+      "notes": {
+        "title": "Jegyzetek",
+        "text": "Saját jegyzetek és könyvjelzők a leckékhez."
+      },
+      "xp": {
+        "title": "XP és szintek",
+        "text": "Pontok a feladatokért, szintlépés és sorozatok."
+      }
+    }
   },
   "ProfilePage": {
     "title": "Profil",
