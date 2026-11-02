@@ -285,17 +285,14 @@
   },
   "ProfilePage": {
     "title": "Profil",
-    "intro": "A fiókod adatai és az oldalon töltött idő.",
+    "intro": "A fiókod adatai.",
     "loading": "Betöltés…",
     "signedOut": "A profilod megtekintéséhez jelentkezz be a jobb felső sarokban.",
     "name": "Név",
     "email": "E-mail cím",
+    "registeredAt": "Regisztráció ideje",
     "lastLogin": "Utolsó belépés",
-    "previousLogin": "Előző belépés",
-    "totalTime": "Az oldalon töltött idő összesen",
-    "totalTimeHint": "Bejelentkezve számoljuk, amíg az oldal látható; minden belépés ideje hozzáadódik.",
-    "never": "—",
-    "duration": "{hours, plural, =0 {} other {# óra }}{minutes} perc"
+    "never": "—"
   },
   "MyCoursesPage": {
     "title": "Tananyagaim",

@@ -285,17 +285,14 @@
   },
   "ProfilePage": {
     "title": "Profile",
-    "intro": "Your account details and the time you have spent on the site.",
+    "intro": "Your account details.",
     "loading": "Loading…",
     "signedOut": "Sign in at the top right to see your profile.",
     "name": "Name",
     "email": "Email address",
+    "registeredAt": "Registered on",
     "lastLogin": "Last sign-in",
-    "previousLogin": "Previous sign-in",
-    "totalTime": "Total time spent on the site",
-    "totalTimeHint": "Counted while you are signed in and the page is visible; every session adds to the total.",
-    "never": "—",
-    "duration": "{hours, plural, =0 {} one {# hour } other {# hours }}{minutes, plural, one {# minute} other {# minutes}}"
+    "never": "—"
   },
   "MyCoursesPage": {
     "title": "My courses",
