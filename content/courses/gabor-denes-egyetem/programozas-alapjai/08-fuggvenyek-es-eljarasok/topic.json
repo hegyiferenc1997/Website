@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Függvények és eljárások", "en": "Functions and Procedures" },
+  "description": {
+    "hu": "A függvény és az eljárás fogalma, paraméterek és visszatérési értékek, a változók hatóköre és a rekurzív függvények alapjai.",
+    "en": "The concept of functions and procedures, parameters and return values, variable scope and the basics of recursive functions."
+  }
+}
