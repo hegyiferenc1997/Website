@@ -20,7 +20,7 @@ A robot olyan gép, amely **érzékeli** a környezetét, a beérkező adatok al
 | Rész | Feladata | Példák |
 | --- | --- | --- |
 | **Érzékelők** (szenzorok) | adatot gyűjtenek a környezetről és a robot saját állapotáról | távolságmérő (ultrahang, lézer/LiDAR), kamera, fény- és vonalérzékelő, ütközésérzékelő, gyorsulásmérő, giroszkóp, kerékjeladó (enkóder) |
-| **Vezérlő** | a „agy”: futtatja a programot | mikrovezérlő (Arduino), egylapos számítógép (Raspberry Pi), ipari PLC |
+| **Vezérlő** | az „agy”: futtatja a programot | mikrovezérlő (Arduino), egylapos számítógép (Raspberry Pi), ipari PLC |
 | **Beavatkozók** (aktuátorok) | a döntést fizikai hatássá alakítják | egyenáramú motor, szervomotor, léptetőmotor, megfogó, LED, hangszóró |
 | **Energiaellátás** | áramot ad | akkumulátor, tápegység |
 | **Kommunikáció** | kapcsolat más eszközökkel | Wi-Fi, Bluetooth, soros port |
