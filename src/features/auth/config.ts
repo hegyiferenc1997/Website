@@ -102,4 +102,5 @@ export function createAuth(db: Database) {
   });
 }
 
+/** A bejelentkezés példányának típusa. */
 export type Auth = ReturnType<typeof createAuth>;

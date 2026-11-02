@@ -2,6 +2,9 @@ import "server-only";
 import { drizzle as drizzlePg, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as schema from "./schema";
 
+// Az adatbázis elérése: getDb() a tartalomhoz, getAccountDb() a fiókokhoz.
+
+/** Az adatbázis típusa a sémával együtt, így a lekérdezések eredménye is típusos. */
 export type Database = NodePgDatabase<typeof schema>;
 
 /**
@@ -31,11 +34,13 @@ export function getAccountDb(): Promise<Database> {
   return globalForDb.accountDb;
 }
 
+// A kapcsolat a globális objektumon él, így fejlesztés közbeni újratöltéskor sem nyílik újabb.
 const globalForDb = globalThis as unknown as {
   db?: Promise<Database>;
   accountDb?: Promise<Database>;
 };
 
+// Kapcsolódás: saját Postgres, ha van DATABASE_URL, különben beépített PGlite.
 async function connect(): Promise<Database> {
   if (process.env.DATABASE_URL) {
     return drizzlePg(process.env.DATABASE_URL, { schema });

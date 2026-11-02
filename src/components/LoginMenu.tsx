@@ -11,7 +11,9 @@ import { useOneTimeParam } from "@/features/auth/url-param";
 import { disconnectAccount, flushProgress } from "@/features/progress/store";
 import { getPathname } from "@/i18n/navigation";
 
+// A panel nézetei: belépés, regisztráció, elfelejtett jelszó.
 type Mode = "login" | "register" | "forgot";
+// A hibaüzenetek kulcsai (a szövegek a messages/*.json fájlok Layout.login.errors részében vannak).
 type ErrorKey =
   | "invalidCredentials"
   | "userExists"
@@ -62,6 +64,7 @@ export function LoginMenu({
   const t = useTranslations("Layout.login");
   const locale = useLocale();
   const router = useRouter();
+  // A panel állapota: nyitva van-e, melyik nézet, fut-e kérés, hiba- és visszajelző üzenet.
   const [open, setOpenState] = useState(false);
   const [mode, setMode] = useState<Mode>("login");
   const [busy, setBusy] = useState(false);
@@ -77,11 +80,13 @@ export function LoginMenu({
   const pendingReturn = Boolean(returnedError) && !returnHandled;
   const isOpen = open || pendingReturn;
   const shownError = error ?? (pendingReturn ? errorKey({ code: returnedError! }) : null);
+  // Nyitás / zárás; egyben jelzi, hogy a visszatérési hibát már láttuk.
   function setOpen(next: boolean | ((o: boolean) => boolean)) {
     setReturnHandled(true);
     setOpenState(typeof next === "function" ? next(isOpen) : next);
   }
 
+  // Nézetváltás (belépés ↔ regisztráció ↔ elfelejtett jelszó), az üzenetek törlésével.
   function switchMode(next: Mode) {
     setReturnHandled(true);
     setMode(next);
@@ -111,12 +116,14 @@ export function LoginMenu({
     };
   }, [isOpen, mode, user]);
 
+  // Sikeres belépés vagy regisztráció után: panel bezárása, oldal frissítése.
   function finishSignIn() {
     setOpen(false);
     switchMode("login");
     router.refresh(); // a fejléc és a haladás-szinkron megkapja a bejelentkezett felhasználót
   }
 
+  // Az űrlap elküldése: a nézettől függően belépés, regisztráció vagy jelszó-visszaállító link kérése.
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -161,6 +168,7 @@ export function LoginMenu({
     }
   }
 
+  // Belépés Google- vagy Apple-fiókkal (csak ha be vannak állítva a kulcsok).
   async function signInWith(provider: "google" | "apple") {
     if (!social[provider]) {
       setError("socialMissing");
@@ -181,6 +189,7 @@ export function LoginMenu({
     }
   }
 
+  // Kijelentkezés: előbb a még el nem küldött haladás mentése, utána a böngészőből törlődik.
   async function signOut() {
     setBusy(true);
     await flushProgress();
@@ -191,6 +200,7 @@ export function LoginMenu({
     router.refresh();
   }
 
+  // A panel címe az állapottól függően.
   const title =
     user != null
       ? t("accountTitle")
@@ -202,6 +212,7 @@ export function LoginMenu({
 
   return (
     <div ref={rootRef} className="sm:relative">
+      {/* Fejléc gomb: vendégként ember ikon, bejelentkezve a név kezdőbetűje */}
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -226,6 +237,7 @@ export function LoginMenu({
         )}
       </button>
 
+      {/* A lenyíló panel */}
       {isOpen && (
         <div
           ref={panelRef}
@@ -418,6 +430,7 @@ function initial(user: SessionUser) {
   return (user.name.trim() || user.email).charAt(0).toLocaleUpperCase();
 }
 
+/** Felirat és beviteli mező egy címkében (a feliratra kattintva a mezőbe ugrik). */
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="grid gap-1.5 text-sm">
@@ -427,12 +440,14 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
+// Közös stílusok: szöveges mezők, illetve a Google / Apple gombok.
 const inputClass =
   "rounded-md border border-line bg-bg px-3 py-2 text-fg outline-none focus:border-accent";
 
 const socialClass =
   "flex flex-1 items-center justify-center rounded-md border border-line bg-bg py-2.5 text-fg transition-colors hover:border-accent hover:bg-surface-hover disabled:opacity-60";
 
+// Ikonok (SVG rajzok).
 function UserIcon() {
   return (
     <svg

@@ -10,6 +10,7 @@ import {
   passwordStrength,
 } from "./shared";
 
+// A jelszómező stílusa (jobb oldalt hely marad a szem gombnak).
 const inputClass =
   "w-full rounded-md border border-line bg-bg py-2 pr-10 pl-3 text-fg outline-none focus:border-accent";
 
@@ -25,6 +26,7 @@ const levelColor = [
   "bg-accent",
   "bg-accent",
 ] as const;
+// Ugyanez a felirat színére, és a szintek neve a fordításokban.
 const levelText = [
   "",
   "text-[var(--danger,#e5534b)]",
@@ -53,6 +55,7 @@ export function PasswordField({
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState("");
   const id = useId();
+  // Élő ellenőrzés gépelés közben: mely szabályok teljesülnek, és milyen erős a jelszó.
   const checks = checkPassword(value);
   const strength = passwordStrength(value);
 
@@ -87,6 +90,7 @@ export function PasswordField({
         </button>
       </div>
 
+      {/* Új jelszónál: erősségjelző csík és a szabályok listája */}
       {withStrength && (
         <div className="grid gap-2 pt-0.5">
           <div className="flex items-center gap-2.5">
@@ -138,6 +142,7 @@ export function PasswordField({
   );
 }
 
+// Szem ikonok (megjelenítés / elrejtés).
 function EyeIcon() {
   return (
     <svg

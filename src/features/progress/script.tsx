@@ -7,6 +7,7 @@
 
 export const PROGRESS_STYLE_ID = "em-progress-style";
 
+// Maga a szkript (tömörítve): a localStorage-ból olvassa a haladást, és CSS szabályokat készít belőle.
 const script = `(function(){try{
 var p=JSON.parse(localStorage.getItem("em:progress")||"{}"),r=[],q=function(s){return JSON.stringify(s)};
 var o=p.openSemesters||{};for(var u in o)(o[u]||[]).forEach(function(n){var k=q(u+":"+n);
@@ -17,6 +18,7 @@ r.push(k+"{background-color:var(--accent)!important;border-color:var(--accent)!i
 if(r.length){var s=document.createElement("style");s.id="${PROGRESS_STYLE_ID}";s.textContent=r.join("");document.head.appendChild(s)}
 }catch(e){}})()`;
 
+// A fenti szkriptet a <head>-be teszi.
 export function ProgressScript() {
   return (
     <script

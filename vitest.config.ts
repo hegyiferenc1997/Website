@@ -1,3 +1,5 @@
+// A tesztek beállításai (pnpm test). A „@/…” importok az src mappára mutatnak.
+
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 

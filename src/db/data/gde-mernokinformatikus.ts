@@ -1,6 +1,7 @@
 // A Gábor Dénes Egyetem Mérnökinformatikus BSc mintatanterve: félévek, tárgyak, kreditek.
 // Forrás: a GDE által közzétett mintatanterv (7 félév).
 
+/** Egy tárgy a mintatantervben. */
 export type CurriculumCourse = {
   /** URL-ben használt azonosító; ha nincs megadva, a névből készül. */
   slug?: string;
@@ -15,6 +16,7 @@ export type CurriculumCourse = {
   active?: boolean;
 };
 
+/** A szak specializációi (az 5–6. félévben választható irányok). */
 export const specializations = [
   {
     slug: "multimedia-es-digitalis-kepfeldolgozas",
@@ -24,6 +26,7 @@ export const specializations = [
   { slug: "szoftverfejlesztes", name: "Szoftverfejlesztés", en: "Software Development" },
 ] as const;
 
+// Rövid nevek a specializációkhoz a lenti listában.
 const MM = "multimedia-es-digitalis-kepfeldolgozas";
 const SW = "szoftverfejlesztes";
 

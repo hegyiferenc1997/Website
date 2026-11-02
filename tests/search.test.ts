@@ -1,3 +1,5 @@
+// Tesztek a keresőhöz (ékezetfüggetlen keresés, találatok sorrendje). Futtatás: pnpm test
+
 import { describe, expect, it } from "vitest";
 import { normalize, search, type SearchItem } from "@/features/search/match";
 

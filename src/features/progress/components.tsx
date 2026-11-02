@@ -189,8 +189,10 @@ export function CourseProgressHeader({
 const doneAttr = (university: string, course: string, lesson: string) =>
   `${courseKey(university, course)}:${lesson}`;
 
+// Melyik lecke: egyetem, tárgy és a „témakör/lecke” azonosító.
 type LessonRef = { university: string; course: string; lesson: string };
 
+// Egy lecke kész-állapota és a váltó függvény (a pipához és a „Kész” gombhoz).
 function useLessonDone({ university, course, lesson }: LessonRef) {
   const progress = useProgress();
   useHandOverFromScript(progress !== null);

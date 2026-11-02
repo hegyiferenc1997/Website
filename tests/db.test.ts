@@ -1,3 +1,5 @@
+// Tesztek az adatbázishoz: migrációk, kezdő adat, tananyag betöltése. Futtatás: pnpm test
+
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { createLocalDb } from "@/db/local";

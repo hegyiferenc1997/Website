@@ -21,11 +21,13 @@ export function checkPassword(password: string): Record<PasswordRule, boolean> {
   };
 }
 
+/** Megfelel-e a jelszó minden szabálynak (és nem túl hosszú). */
 export function isPasswordValid(password: string): boolean {
   const checks = checkPassword(password);
   return password.length <= MAX_PASSWORD_LENGTH && PASSWORD_RULES.every((r) => checks[r]);
 }
 
+/** Erősségi szint: 0 = üres, 1 = gyenge, 2 = közepes, 3 = jó, 4 = erős. */
 export type PasswordStrength = 0 | 1 | 2 | 3 | 4;
 
 /**

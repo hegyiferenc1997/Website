@@ -5,6 +5,7 @@ import { localize } from "@/features/courses/localize";
 import { getUniversities } from "@/features/courses/queries";
 import { Link } from "@/i18n/navigation";
 
+// A böngészőfül címe ezen az oldalon.
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("UniversitiesPage");
   return { title: t("title") };

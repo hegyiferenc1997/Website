@@ -1,5 +1,6 @@
 import { defineRouting } from "next-intl/routing";
 
+// A nyelvek és az URL-ek beállítása: milyen nyelvek vannak, milyen előtaggal, milyen fordított útvonalakkal.
 export const routing = defineRouting({
   // Új nyelv: ide kell felvenni, és létrehozni a messages/<nyelv>.json fájlt.
   locales: ["hu", "en"],
@@ -39,4 +40,5 @@ export const routing = defineRouting({
   },
 });
 
+/** Egy támogatott nyelv kódja: "hu" | "en". */
 export type Locale = (typeof routing.locales)[number];

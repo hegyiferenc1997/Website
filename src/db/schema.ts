@@ -13,19 +13,25 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
+// Az adatbázis szerkezete: táblák, mezők és kapcsolataik (Drizzle ORM).
+// Módosítás után a `pnpm db:generate` készít hozzá új migrációt a drizzle/ mappába.
+
 /**
  * Nyelvenként tárolt szöveg, pl. { hu: "Programozás alapjai", en: "Programming Basics" }.
  * A magyar kötelező, a többi nyelv később tölthető fel; hiányzó fordításnál a magyar jelenik meg.
  */
 export type LocalizedText = { hu: string } & Partial<Record<string, string>>;
 
+// Nyelvenkénti szöveg mező (JSON-ként tárolva).
 const localized = (name: string) => jsonb(name).$type<LocalizedText>();
 
+// Létrehozás és utolsó módosítás ideje; szinte minden táblában szerepel.
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 };
 
+// Választható értékek listái: képzési szint, kötelező / választható tárgy, forrás típusa.
 export const degreeLevel = pgEnum("degree_level", ["bsc", "msc", "phd", "other"]);
 export const courseRequirement = pgEnum("course_requirement", ["mandatory", "elective"]);
 export const resourceType = pgEnum("resource_type", [
@@ -36,6 +42,7 @@ export const resourceType = pgEnum("resource_type", [
   "past_exam",
 ]);
 
+/** Egyetemek. A slug az URL-ben szereplő azonosító (pl. gabor-denes-egyetem). */
 export const universities = pgTable("universities", {
   id: serial("id").primaryKey(),
   slug: text("slug").notNull().unique(),
@@ -46,6 +53,7 @@ export const universities = pgTable("universities", {
   ...timestamps,
 });
 
+/** Karok egy egyetemen belül. */
 export const faculties = pgTable(
   "faculties",
   {
@@ -77,6 +85,7 @@ export const programs = pgTable(
   (t) => [uniqueIndex("programs_university_slug").on(t.universityId, t.slug)],
 );
 
+/** Tárgyak egy egyetemen. */
 export const courses = pgTable(
   "courses",
   {
@@ -195,6 +204,7 @@ export const resources = pgTable("resources", {
   ...timestamps,
 });
 
+// Kapcsolatok a táblák között: ezek alapján tölti be a Drizzle a lekérdezések „with: {...}” részeit.
 export const universitiesRelations = relations(universities, ({ many }) => ({
   faculties: many(faculties),
   programs: many(programs),
@@ -262,6 +272,7 @@ export const resourcesRelations = relations(resources, ({ one }) => ({
 // Fiókok és bejelentkezés (Better Auth). A mezők nevét a Better Auth várja, ne nevezd át őket.
 // ---------------------------------------------------------------------------
 
+/** Felhasználók: név és e-mail (a jelszó az accounts táblában van, hash-ként). */
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -335,6 +346,7 @@ export const userProgress = pgTable("user_progress", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// A fióktáblák kapcsolatai.
 export const usersRelations = relations(users, ({ many, one }) => ({
   sessions: many(sessions),
   accounts: many(accounts),

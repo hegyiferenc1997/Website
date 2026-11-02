@@ -7,3 +7,28 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Kommentelési szabály (a projekt tulajdonosának kérése)
+
+Minden kód rövid, lényegretörő **magyar** kommenteket kap:
+
+- minden fájl elején 1–2 sor arról, mire való a fájl;
+- minden fontosabb függvény, komponens és típus előtt egy rövid magyarázat;
+- a nem magától értetődő lépéseknél (miért így, nem csak mit) egy sor.
+
+Ez az új és a módosított kódra is mindig vonatkozik.
+
+## Kipróbáló parancsok (a projekt tulajdonosának kérése)
+
+Minden elkészült változtatáshoz (PR / ág) adj bemásolható PowerShell parancsokat a helyi kipróbáláshoz
+(a tulajdonos Windows + VS Code + pnpm környezetben dolgozik), pl.:
+
+```powershell
+git fetch origin
+git checkout <ág-neve>
+git pull
+pnpm install
+pnpm dev
+```
+
+és írd le, hogyan lehet visszaállni: `git checkout main`.

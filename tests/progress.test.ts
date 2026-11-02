@@ -1,3 +1,5 @@
+// Tesztek a haladás ellenőrzéséhez és összefésüléséhez. Futtatás: pnpm test
+
 import { describe, expect, it } from "vitest";
 import { emptyProgress, mergeProgress, sanitizeProgress } from "@/features/progress/data";
 
