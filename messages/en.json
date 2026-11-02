@@ -116,14 +116,12 @@
     "semester": "Semester {semester}",
     "topics": "topics",
     "noTopics": "Course material is coming soon.",
-    "resources": "resources",
     "level": {
       "bsc": "BSc",
       "msc": "MSc",
       "phd": "PhD",
       "other": "other"
     },
-    "noResources": "There are no resources for this course yet.",
     "breadcrumb": "Breadcrumb",
     "elective": "Free elective",
     "specializationLabel": "Specialisation",

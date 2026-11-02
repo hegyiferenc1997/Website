@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import {
   CourseProgressHeader,
   LessonDoneToggle,
+  StartCourseLink,
   TopicProgress,
 } from "@/features/progress/components";
 import { courseLessons } from "@/features/courses/lessons";
@@ -44,7 +45,7 @@ export default async function CoursePage({ params }: Props) {
   );
 }
 
-// A tárgy oldal tartalma: fejléc az adatokkal, témakörök a leckékkel, források.
+// A tárgy oldal tartalma: fejléc az adatokkal, témakörök a leckékkel.
 async function CourseContent({ params }: Pick<Props, "params">) {
   const { university, course: slug } = await params;
   const [course, locale, t, tNav] = await Promise.all([
@@ -57,7 +58,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
   if (!course) notFound();
 
   const description = localize(course.description, locale);
-  // Az első lecke, ahová a „Kezdés” gomb visz.
+  // Van-e egyáltalán lecke (különben nincs „Tananyag indítása” gomb).
   const first = course.topics.find((x) => x.lessons.length > 0);
   // Egy lecke linkje (a nyelvnek megfelelő URL-t a Link állítja elő).
   const lessonHref = (topic: string, lesson: string) => ({
@@ -97,13 +98,17 @@ async function CourseContent({ params }: Pick<Props, "params">) {
           course={course.slug}
           lessons={courseLessons(course)}
         />
+        {/* „Tananyag indítása”: a sorrendben első, még ki nem pipált leckére visz */}
         {first && (
-          <Link
-            href={lessonHref(first.slug, first.lessons[0].slug)}
-            className="w-fit rounded-md bg-accent px-4 py-2 font-mono text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
+          <StartCourseLink
+            university={course.university.slug}
+            course={course.slug}
+            lessons={course.topics.flatMap((topic) =>
+              topic.lessons.map((l) => ({ topic: topic.slug, lesson: l.slug })),
+            )}
           >
             {t("start")} →
-          </Link>
+          </StartCourseLink>
         )}
 
         {/* Címkék: tárgykód, kredit, nyelv, szak és félév, specializáció, választható-e */}
@@ -138,8 +143,8 @@ async function CourseContent({ params }: Pick<Props, "params">) {
         </div>
       </div>
 
-      {/* Balra a témakörök és leckék, jobbra a források (mobilon egymás alatt) */}
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      {/* A témakörök és leckék */}
+      <div className="grid items-start gap-6">
         <section className="grid gap-4">
           <SectionTitle>{t("topics")}</SectionTitle>
           {course.topics.length === 0 ? (
@@ -202,35 +207,6 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                 </li>
               ))}
             </ol>
-          )}
-        </section>
-
-        <section className="grid gap-4">
-          {/* Források: jegyzetek, videók, linkek (külső link új lapon) */}
-          <SectionTitle>{t("resources")}</SectionTitle>
-          {course.resources.length === 0 ? (
-            <EmptyState>{t("noResources")}</EmptyState>
-          ) : (
-            <Card>
-              <ul className="grid gap-2.5">
-                {course.resources.map((r) => (
-                  <li key={r.id}>
-                    {r.url ? (
-                      <a
-                        href={r.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-accent hover:underline"
-                      >
-                        {localize(r.title, locale)} ↗
-                      </a>
-                    ) : (
-                      localize(r.title, locale)
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </Card>
           )}
         </section>
       </div>

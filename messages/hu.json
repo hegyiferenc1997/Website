@@ -116,14 +116,12 @@
     "semester": "{semester}. félév",
     "topics": "témakörök",
     "noTopics": "A tananyag hamarosan érkezik.",
-    "resources": "források",
     "level": {
       "bsc": "BSc",
       "msc": "MSc",
       "phd": "PhD",
       "other": "egyéb"
     },
-    "noResources": "Még nincs forrás ehhez a tárgyhoz.",
     "breadcrumb": "Útvonal",
     "elective": "Szabadon választható",
     "specializationLabel": "Specializáció",
