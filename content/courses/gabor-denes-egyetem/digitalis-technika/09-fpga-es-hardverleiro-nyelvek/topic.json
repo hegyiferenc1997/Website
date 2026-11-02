@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "FPGA és hardverleíró nyelvek", "en": "FPGA and Hardware Description Languages" },
+  "description": {
+    "hu": "Programozható logikai eszközök (PLA, PAL, GAL, CPLD, FPGA), a LUT, az FPGA felépítése és tervezési folyamata, lábkiosztás (XDC, QSF), a VHDL és a Verilog alapjai: kombinációs és sorrendi logika, számláló, állapotgép.",
+    "en": "Programmable logic devices (PLA, PAL, GAL, CPLD, FPGA), the LUT, FPGA architecture and design flow, pin assignment (XDC, QSF), VHDL and Verilog basics: combinational and sequential logic, counter, state machine."
+  }
+}

@@ -25,6 +25,10 @@ const LANGS = {
   go: () => import("shiki/langs/go.mjs"),
   rust: () => import("shiki/langs/rust.mjs"),
   kotlin: () => import("shiki/langs/kotlin.mjs"),
+  // Hardverleíró nyelvek és az FPGA-s kényszerfájlok (XDC, QSF) nyelve a Digitális technikához.
+  vhdl: () => import("shiki/langs/vhdl.mjs"),
+  verilog: () => import("shiki/langs/verilog.mjs"),
+  tcl: () => import("shiki/langs/tcl.mjs"),
 };
 
 // Más nevek ugyanarra a nyelvre, pl. ```py → python.
@@ -43,6 +47,9 @@ const ALIASES: Record<string, keyof typeof LANGS> = {
   golang: "go",
   rs: "rust",
   kt: "kotlin",
+  v: "verilog",
+  xdc: "tcl",
+  qsf: "tcl",
 };
 
 /** A kódblokk fejlécében megjelenő név. */
@@ -61,6 +68,9 @@ const LABELS: Partial<Record<keyof typeof LANGS, string>> = {
   go: "Go",
   rust: "Rust",
   kotlin: "Kotlin",
+  vhdl: "VHDL",
+  verilog: "Verilog",
+  tcl: "Tcl",
 };
 
 // Ezekhez a jelölésekhez nem írunk fejlécet (sima szöveg, kimenet).
