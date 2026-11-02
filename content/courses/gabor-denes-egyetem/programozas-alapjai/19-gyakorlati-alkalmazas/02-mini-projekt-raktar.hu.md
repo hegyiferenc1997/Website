@@ -218,3 +218,116 @@ print("Minden ellenőrzés sikeres!")
 - **Napló** minden készletmozgásról (dátum, cikkszám, mennyiség) CSV fájlba.
 - **Keresés** névrészletre, kis- és nagybetűtől függetlenül.
 - Az egységtesztek átírása `unittest` osztályba, külön `test_raktar.py` fájlba.
+
+## A lecke feladata: Rendelés: mindent vagy semmit
+
+Bővítsd a raktárat egy `rendeles(tetelek)` metódussal! A `tetelek` `(cikkszám, darab)` párok listája. A rendelés **atomi** művelet:
+
+- ha **minden** tétel teljesíthető, mindegyiket kiadja a raktárból, és visszaadja a rendelés teljes árát (Σ darab · egységár),
+- ha **bármelyik** tétel hibás (ismeretlen cikkszám, nem pozitív darabszám, vagy nincs elég készlet), `KeszletHiba`-t dob, és a raktár készlete **egyáltalán nem változik** – az előtte lévő tételek sem kerülnek kiadásra,
+- ugyanaz a cikkszám többször is szerepelhet egy rendelésben: ilyenkor az összesített darabszámnak kell rendelkezésre állnia.
+
+A kiinduló kód már tartalmaz egy egyszerűsített `Raktar` osztályt; a mostani `rendeles` tételenként ad ki, ezért hiba esetén „félig teljesített” rendelést hagy maga után. Tipp: előbb ellenőrizz mindent, és csak utána módosíts.
+
+```python starter required
+class KeszletHiba(Exception):
+    """Hibás raktárművelet."""
+
+
+class Raktar:
+    def __init__(self):
+        self.termekek = {}   # cikkszám -> [név, egységár, mennyiség]
+
+    def felvesz(self, cikkszam, nev, ar, mennyiseg):
+        self.termekek[cikkszam] = [nev, ar, mennyiseg]
+
+    def keszlet(self, cikkszam):
+        return self.termekek[cikkszam][2]
+
+    def rendeles(self, tetelek):
+        osszeg = 0
+        for cikkszam, db in tetelek:
+            if self.termekek[cikkszam][2] < db:
+                raise KeszletHiba(f"Nincs elég: {cikkszam}")
+            self.termekek[cikkszam][2] -= db
+            osszeg += db * self.termekek[cikkszam][1]
+        return osszeg
+
+
+r = Raktar()
+r.felvesz("A1", "Csavar", 20, 100)
+r.felvesz("B2", "Anya", 15, 10)
+print(r.rendeles([("A1", 30), ("B2", 5)]), r.keszlet("A1"), r.keszlet("B2"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from collections import Counter
+
+
+class KeszletHiba(Exception):
+    """Hibás raktárművelet."""
+
+
+class Raktar:
+    def __init__(self):
+        self.termekek = {}   # cikkszám -> [név, egységár, mennyiség]
+
+    def felvesz(self, cikkszam, nev, ar, mennyiseg):
+        self.termekek[cikkszam] = [nev, ar, mennyiseg]
+
+    def keszlet(self, cikkszam):
+        return self.termekek[cikkszam][2]
+
+    def rendeles(self, tetelek):
+        # 1. Ellenőrzés – még semmit nem módosítunk
+        igeny = Counter()
+        for cikkszam, db in tetelek:
+            if cikkszam not in self.termekek:
+                raise KeszletHiba(f"Ismeretlen cikkszám: {cikkszam}")
+            if db <= 0:
+                raise KeszletHiba(f"Érvénytelen darabszám: {db}")
+            igeny[cikkszam] += db
+        for cikkszam, db in igeny.items():
+            if self.termekek[cikkszam][2] < db:
+                raise KeszletHiba(f"Nincs elég készlet: {cikkszam}")
+        # 2. Végrehajtás – itt már nem lehet hiba
+        osszeg = 0
+        for cikkszam, db in igeny.items():
+            self.termekek[cikkszam][2] -= db
+            osszeg += db * self.termekek[cikkszam][1]
+        return osszeg
+
+
+r = Raktar()
+r.felvesz("A1", "Csavar", 20, 100)
+r.felvesz("B2", "Anya", 15, 10)
+print(r.rendeles([("A1", 30), ("B2", 5)]), r.keszlet("A1"), r.keszlet("B2"))
+```
+
+</details>
+
+```python test
+def uj():
+    r = Raktar()
+    r.felvesz("A1", "Csavar", 20, 100)
+    r.felvesz("B2", "Anya", 15, 10)
+    return r
+
+r = uj()
+assert r.rendeles([("A1", 30), ("B2", 5)]) == 675, "30 · 20 + 5 · 15 = 675."
+assert r.keszlet("A1") == 70 and r.keszlet("B2") == 5, "Sikeres rendelés után csökken a készlet."
+for rossz in ([("A1", 10), ("B2", 50)], [("A1", 10), ("X9", 1)], [("A1", 10), ("B2", 0)], [("B2", 6), ("B2", 6)]):
+    r = uj()
+    try:
+        r.rendeles(rossz)
+        assert False, f"A(z) {rossz} rendelésre KeszletHiba kell."
+    except KeszletHiba:
+        pass
+    assert r.keszlet("A1") == 100 and r.keszlet("B2") == 10, f"Hibás rendelés ({rossz}) után a készlet nem változhat."
+r = uj()
+assert r.rendeles([("B2", 4), ("B2", 6)]) == 150 and r.keszlet("B2") == 0, "Ugyanaz a cikkszám többször: az összesített darabszám számít."
+assert r.rendeles([]) == 0, "Üres rendelés ára 0."
+```

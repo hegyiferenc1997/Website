@@ -154,3 +154,72 @@ for nev, fuggveny in [("beolvas", beolvas), ("atlag", atlag), ("jelentes", jelen
 - Kis, egyértelmű feladatok, rögzített modulhatárok, Kanban-tábla.
 - Git: saját ág, kis commitok, Pull Request, átnézés.
 - A dokumentáció részei: **specifikáció, README, fejlesztői és felhasználói dokumentáció, tesztjegyzőkönyv, projektnapló**.
+
+## A lecke feladata: Commitüzenet-ellenőrző
+
+A csapatban megegyeztetek a commitüzenetek formájában (a népszerű _Conventional Commits_ szabvány egyszerűsített változata). Írj `commit_hibak(uzenet)` függvényt, amely visszaadja a megsértett szabályok **kódjait** egy listában, az alábbi sorrendben (hibátlan üzenetre üres lista):
+
+1. `"formatum"`: az első sor nem `tipus: leírás` vagy `tipus(hatókör): leírás` alakú, ahol a `tipus` a `feat`, `fix`, `docs`, `test`, `refactor`, `chore` egyike, a hatókör kisbetűkből és kötőjelből áll, és a kettőspont után **pontosan egy** szóköz, majd nem üres leírás jön,
+2. `"hossz"`: az első sor 72 karakternél hosszabb,
+3. `"pont"`: az első sor ponttal végződik,
+4. `"ures_sor"`: többsoros üzenetnél a második sor nem üres.
+
+Tipp: a formátumhoz egy reguláris kifejezés a legegyszerűbb, pl. `re.fullmatch(...)`.
+
+```python starter required
+def commit_hibak(uzenet):
+    hibak = []
+    elso = uzenet.splitlines()[0]
+    if ":" not in elso:
+        hibak.append("formatum")
+    return hibak
+
+
+print(commit_hibak("feat(beolvasas): CSV beolvasás és tesztjei"))
+print(commit_hibak("javítottam valamit."))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import re
+
+# típus, opcionális (hatókör), kettőspont, egy szóköz, nem üres leírás
+MINTA = re.compile(r"(feat|fix|docs|test|refactor|chore)(\([a-z-]+\))?: \S.*")
+
+
+def commit_hibak(uzenet):
+    sorok = uzenet.splitlines() or [""]
+    elso = sorok[0]
+    hibak = []
+    if not MINTA.fullmatch(elso):
+        hibak.append("formatum")
+    if len(elso) > 72:
+        hibak.append("hossz")
+    if elso.endswith("."):
+        hibak.append("pont")
+    if len(sorok) > 1 and sorok[1].strip():
+        hibak.append("ures_sor")
+    return hibak
+
+
+print(commit_hibak("feat(beolvasas): CSV beolvasás és tesztjei"))
+print(commit_hibak("javítottam valamit."))
+```
+
+</details>
+
+```python test
+assert commit_hibak("feat(beolvasas): CSV beolvasás és tesztjei") == [], "Hibátlan üzenet hatókörrel."
+assert commit_hibak("fix: nullával osztás az átlagnál") == [], "Hibátlan üzenet hatókör nélkül."
+assert commit_hibak("docs: README\n\nTelepítési lépések kiegészítve.") == [], "Többsoros, üres második sorral: hibátlan."
+assert commit_hibak("javítottam valamit.") == ["formatum", "pont"], "Rossz formátum és záró pont."
+assert commit_hibak("feature: új menü") == ["formatum"], "Csak az engedélyezett típusok jók."
+assert commit_hibak("fix:hiányzó szóköz") == ["formatum"] and commit_hibak("fix:  két szóköz") == ["formatum"], "A kettőspont után pontosan egy szóköz kell."
+assert commit_hibak("fix(Menu): nagybetűs hatókör") == ["formatum"] and commit_hibak("fix: ") == ["formatum"], "A hatókör kisbetűs, a leírás nem üres."
+assert commit_hibak("feat: " + "x" * 70) == ["hossz"], "72 karakternél hosszabb első sor."
+assert commit_hibak("feat: " + "x" * 66) == [], "Pontosan 72 karakter még jó."
+assert commit_hibak("test: új tesztek\nRészletek itt.") == ["ures_sor"], "A második sornak üresnek kell lennie."
+assert commit_hibak("") == ["formatum"], "Üres üzenet: formátumhiba."
+```

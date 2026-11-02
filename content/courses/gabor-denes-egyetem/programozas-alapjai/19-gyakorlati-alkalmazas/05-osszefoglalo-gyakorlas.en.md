@@ -303,3 +303,124 @@ print("All checks passed!")
 ## What next?
 
 If every exercise worked out: congratulations, you have mastered the semester's material! Keep practising with the mini projects' extension ideas, and apply what you've learned in the group project.
+
+## Summary exercise: Evaluating a midterm from CSV
+
+The semester's final task: evaluate the results of a midterm test. Write a `evaluate_midterm(csv_text)` function! The input is semicolon-separated CSV text with a header:
+
+```text
+name;neptun;t1;t2;t3
+Anna Kiss;ABC123;30;25;40
+```
+
+- The score of each of the three tasks is an integer between 0 and 40 (at most 120 in total → but the grade is on a **100**-point scale, a total above 100 counts as 100).
+- Grade by total: below 50 `1`, 50–61: `2`, 62–74: `3`, 75–87: `4`, from 88 `5`.
+- An **invalid line** (not five fields, a non-integer score, a score outside 0–40) is left out of the evaluation, and its **line number** (the header is line 1) goes into the `"invalid"` list. Ignore empty lines.
+
+The result is a dictionary:
+
+- `"results"`: a list of `(name, total, grade)` triples in **descending** order of total, alphabetical by name on ties (the total here is the real, uncapped sum),
+- `"average"`: the average grade rounded to 2 decimals (`0.0` if there are no valid lines),
+- `"invalid"`: the line numbers of the invalid lines in ascending order.
+
+Tip: `csv.reader(io.StringIO(csv_text), delimiter=";")`, `enumerate(..., start=1)`, `try`/`except ValueError`.
+
+```python starter required
+import csv
+import io
+
+
+def evaluate_midterm(csv_text):
+    rows = list(csv.reader(io.StringIO(csv_text), delimiter=";"))
+    results = []
+    for row in rows[1:]:
+        name, neptun, t1, t2, t3 = row
+        results.append((name, int(t1) + int(t2) + int(t3), 0))
+    return {"results": results, "average": 0.0, "invalid": []}
+
+
+DATA = """name;neptun;t1;t2;t3
+Anna Kiss;ABC123;30;25;40
+Bela Nagy;XYZ789;10;20;15
+"""
+print(evaluate_midterm(DATA))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import csv
+import io
+
+# (lower bound, grade) pairs in descending order
+BOUNDS = [(88, 5), (75, 4), (62, 3), (50, 2)]
+
+
+def grade(points):
+    """The grade for a total score (a total above 100 counts as 100)."""
+    points = min(points, 100)
+    for bound, g in BOUNDS:
+        if points >= bound:
+            return g
+    return 1
+
+
+def evaluate_midterm(csv_text):
+    results, invalid = [], []
+    reader = csv.reader(io.StringIO(csv_text), delimiter=";")
+    for line_no, row in enumerate(reader, start=1):
+        if line_no == 1 or not any(field.strip() for field in row):
+            continue            # header or empty line
+        try:
+            if len(row) != 5:
+                raise ValueError("not five fields")
+            scores = [int(s) for s in row[2:]]
+            if any(not 0 <= s <= 40 for s in scores):
+                raise ValueError("score out of range")
+        except ValueError:
+            invalid.append(line_no)
+            continue
+        total = sum(scores)
+        results.append((row[0].strip(), total, grade(total)))
+    results.sort(key=lambda r: (-r[1], r[0]))
+    average = round(sum(r[2] for r in results) / len(results), 2) if results else 0.0
+    return {"results": results, "average": average, "invalid": invalid}
+
+
+DATA = """name;neptun;t1;t2;t3
+Anna Kiss;ABC123;30;25;40
+Bela Nagy;XYZ789;10;20;15
+"""
+print(evaluate_midterm(DATA))
+```
+
+</details>
+
+```python test
+DATA = """name;neptun;t1;t2;t3
+Anna Kiss;ABC123;30;25;40
+Bela Nagy;XYZ789;10;20;15
+Csilla Toth;QWE456;20;20;22
+
+Denes Szabo;RTY111;20;fifteen;20
+Emese Varga;UIO222;40;40;40
+Feri Kovacs;PAS333;41;0;0
+Gabor Fekete;DFG444;25;25
+Hanna Balogh;HJK555;20;20;22
+"""
+r = evaluate_midterm(DATA)
+assert r["invalid"] == [6, 8, 9], "Invalid lines: 6 (not a number), 8 (41 points), 9 (only four fields); the empty line 5 is not an error."
+assert r["results"] == [
+    ("Emese Varga", 120, 5),
+    ("Anna Kiss", 95, 5),
+    ("Csilla Toth", 62, 3),
+    ("Hanna Balogh", 62, 3),
+    ("Bela Nagy", 45, 1),
+], "The results (order, total, grade) are wrong."
+assert r["average"] == 3.4, "The average grade is (5 + 5 + 3 + 3 + 1) / 5 = 3.4."
+bounds = "name;neptun;t1;t2;t3\nA;1;10;20;19\nB;2;10;20;20\nC;3;20;20;21\nD;4;20;20;22\nE;5;25;25;24\nF;6;25;25;25\nG;7;30;30;27\nH;8;30;30;28\n"
+grades = {name: g for name, _, g in evaluate_midterm(bounds)["results"]}
+assert grades == {"A": 1, "B": 2, "C": 2, "D": 3, "E": 3, "F": 4, "G": 4, "H": 5}, "The grade boundaries: 50, 62, 75, 88."
+assert evaluate_midterm("name;neptun;t1;t2;t3\n") == {"results": [], "average": 0.0, "invalid": []}, "Header only: empty result, 0.0 average."
+```
