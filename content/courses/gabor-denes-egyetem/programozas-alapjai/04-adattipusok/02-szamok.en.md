@@ -103,3 +103,52 @@ print(math.pi)           # 3.141592653589793
 - `/` always gives a `float`, `//` is floor division (rounds down), `%` is the remainder.
 - Precedence: `**`, then `* / // %`, then `+ -`; parentheses change it.
 - Floats are inexact: use `math.isclose()` or rounding.
+
+## Lesson exercise: Splitting seconds
+
+Write a `split_time(seconds)` function that splits a non-negative whole number of seconds into **hours, minutes and seconds** and returns an `(hours, minutes, secs)` triple. Use floor division (`//`) and the remainder (`%`)!
+
+Also write a `format_time(seconds)` function that returns text in the form `"hh:mm:ss"` with two-digit parts, e.g. `format_time(3725)` → `"01:02:05"`. (Tip: in an f-string `{x:02d}` pads to two digits with zeros.)
+
+```python starter required
+def split_time(seconds):
+    # hours = ..., minutes = ..., secs = ...
+    pass
+
+
+def format_time(seconds):
+    pass
+
+
+print(split_time(3725), format_time(3725))   # (1, 2, 5) 01:02:05
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def split_time(seconds):
+    hours = seconds // 3600
+    minutes = seconds % 3600 // 60
+    secs = seconds % 60
+    return (hours, minutes, secs)
+
+
+def format_time(seconds):
+    hours, minutes, secs = split_time(seconds)
+    return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+
+
+print(split_time(3725), format_time(3725))   # (1, 2, 5) 01:02:05
+```
+
+</details>
+
+```python test
+assert split_time(3725) == (1, 2, 5), "3725 s = 1 hour 2 minutes 5 seconds"
+assert split_time(59) == (0, 0, 59), "59 s = 0 hours 0 minutes 59 seconds"
+assert split_time(86399) == (23, 59, 59), "86399 s = 23:59:59"
+assert split_time(0) == (0, 0, 0), "0 s = 0, 0, 0"
+assert format_time(3725) == "01:02:05", "format_time(3725) → \"01:02:05\""
+assert format_time(36000) == "10:00:00", "format_time(36000) → \"10:00:00\""
+```

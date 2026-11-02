@@ -112,3 +112,61 @@ print(NAPOK.get(9, "érvénytelen"))
 - A **switch** (C, Java, C#) érték szerint választ ágat; vigyázz a `break`-re.
 - Pythonban a **match-case** (3.10+) a megfelelője; `|` több érték, `_` az alapértelmezett ág, `if` a feltétel.
 - Egyszerű leképezésnél a **szótár** is jó megoldás.
+
+## A lecke feladata: Robotparancsok mintaillesztéssel
+
+Írj `ertelmez(parancs)` függvényt, amely egy szöveges robotparancsot a `match` utasítással értelmez. A parancsot szóközök mentén darabold (`split()`), és a kapott listára illessz mintákat:
+
+| Parancs          | Eredmény                       |
+| ---------------- | ------------------------------ |
+| `"előre 3"`      | `("mozog", 3)` – a szám egészként |
+| `"fordulj balra"`| `("fordul", "bal")`            |
+| `"fordulj jobbra"`| `("fordul", "jobb")`          |
+| `"állj"`         | `("áll", None)`                |
+| bármi más        | `("ismeretlen", parancs)`      |
+
+```python starter required
+def ertelmez(parancs):
+    match parancs.split():
+        case ["állj"]:
+            return ("áll", None)
+        # további esetek: ["előre", lepes], ["fordulj", "balra"], ...
+        case _:
+            return ("ismeretlen", parancs)
+
+
+print(ertelmez("előre 3"))   # ('mozog', 3)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ertelmez(parancs):
+    match parancs.split():
+        case ["állj"]:
+            return ("áll", None)
+        case ["előre", lepes] if lepes.isdigit():
+            return ("mozog", int(lepes))
+        case ["fordulj", "balra"]:
+            return ("fordul", "bal")
+        case ["fordulj", "jobbra"]:
+            return ("fordul", "jobb")
+        case _:
+            return ("ismeretlen", parancs)
+
+
+print(ertelmez("előre 3"))   # ('mozog', 3)
+```
+
+</details>
+
+```python test
+assert ertelmez("előre 3") == ("mozog", 3), "\"előre 3\" → (\"mozog\", 3) – a szám egész legyen!"
+assert ertelmez("előre 12") == ("mozog", 12), "\"előre 12\" → (\"mozog\", 12)"
+assert ertelmez("fordulj balra") == ("fordul", "bal"), "\"fordulj balra\" → (\"fordul\", \"bal\")"
+assert ertelmez("fordulj jobbra") == ("fordul", "jobb"), "\"fordulj jobbra\" → (\"fordul\", \"jobb\")"
+assert ertelmez("állj") == ("áll", None), "\"állj\" → (\"áll\", None)"
+assert ertelmez("ugorj") == ("ismeretlen", "ugorj"), "Ismeretlen parancs."
+assert ertelmez("előre sok") == ("ismeretlen", "előre sok"), "Ha az előre után nem szám áll, ismeretlen."
+```

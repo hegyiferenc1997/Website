@@ -63,3 +63,51 @@ A **side effect** is when a statement changes something beyond the value it retu
 - **Imperative:** we change the state step by step (procedural is its function-based form).
 - **Declarative:** we describe the desired result (SQL, HTML, comprehensions).
 - Reducing **side effects** leads to more reliable code.
+
+## Lesson exercise: Squares of even numbers – two ways
+
+Write the same thing in two styles! Both functions return the squares of the **even** elements of the list in a new list, in the original order.
+
+- `imperative(numbers)`: start from an empty list and build it with a `for` loop and `append()`;
+- `declarative(numbers)`: a single list comprehension (`[... for ... if ...]`).
+
+Neither may modify the original list!
+
+```python starter required
+def imperative(numbers):
+    result = []
+    # loop + condition + append
+    return result
+
+
+def declarative(numbers):
+    # return [... for ... in numbers if ...]
+    pass
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def imperative(numbers):
+    result = []
+    for x in numbers:
+        if x % 2 == 0:
+            result.append(x * x)
+    return result
+
+
+def declarative(numbers):
+    return [x * x for x in numbers if x % 2 == 0]
+```
+
+</details>
+
+```python test
+data = [1, 2, 3, 4, 5, 6]
+assert imperative(data) == [4, 16, 36], "imperative([1, 2, 3, 4, 5, 6]) → [4, 16, 36]"
+assert declarative(data) == [4, 16, 36], "declarative([1, 2, 3, 4, 5, 6]) → [4, 16, 36]"
+assert data == [1, 2, 3, 4, 5, 6], "The original list must not change."
+assert imperative([]) == [] and declarative([]) == [], "An empty list gives an empty list."
+assert declarative([-2, 7, 0]) == [4, 0], "Negative even numbers and 0 are even too."
+```

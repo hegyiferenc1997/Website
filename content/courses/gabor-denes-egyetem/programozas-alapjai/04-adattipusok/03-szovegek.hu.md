@@ -128,3 +128,46 @@ print(szo)            # Alma
 - Fontos metódusok: `strip`, `split`, `join`, `replace`, `upper`, `lower`, `find`, `count`.
 - Formázáshoz használj **f-stringet**: `f"{ertek:.2f}"`.
 - A string **megváltoztathatatlan** (immutable).
+
+## A lecke feladata: Névkártya szövegműveletekkel
+
+Írj `nevkartya(nev)` függvényt, amely egy kusza formában megadott névből szép névkártya-szöveget készít:
+
+- a fölösleges szóközöket eltávolítja (az elejéről, a végéről és a szavak közül),
+- minden névrészt nagy kezdőbetűvel, a többit kisbetűvel ír,
+- a végére zárójelben a monogramot teszi: a névrészek kezdőbetűi ponttal.
+
+Például `nevkartya("  kovács   ANNA ")` → `"Kovács Anna (K.A.)"`.
+
+Tipp: `split()`, `capitalize()`, `" ".join(...)`, indexelés és f-string.
+
+```python starter required
+def nevkartya(nev):
+    reszek = nev.split()    # a split() paraméter nélkül a több szóközt is kezeli
+    # szép névrészek, monogram, majd f-string
+    pass
+
+
+print(nevkartya("  kovács   ANNA "))   # Kovács Anna (K.A.)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def nevkartya(nev):
+    reszek = [resz.capitalize() for resz in nev.split()]
+    monogram = "".join(resz[0] + "." for resz in reszek)
+    return f"{' '.join(reszek)} ({monogram})"
+
+
+print(nevkartya("  kovács   ANNA "))   # Kovács Anna (K.A.)
+```
+
+</details>
+
+```python test
+assert nevkartya("  kovács   ANNA ") == "Kovács Anna (K.A.)", "nevkartya(\"  kovács   ANNA \") → \"Kovács Anna (K.A.)\""
+assert nevkartya("nagy béla józsef") == "Nagy Béla József (N.B.J.)", "Háromrészes névnél is működjön."
+assert nevkartya("ÉVA") == "Éva (É.)", "Egyetlen névrésznél is működjön (ékezetes betűvel is)."
+```

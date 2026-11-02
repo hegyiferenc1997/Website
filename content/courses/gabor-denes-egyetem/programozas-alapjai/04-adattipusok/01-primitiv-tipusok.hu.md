@@ -91,3 +91,61 @@ A Python `float` típusa a más nyelvekbeli `double`-nek felel meg (8 bájt, IEE
 - Python alaptípusok: `int`, `float`, `bool`, `str`, `None`, `complex`.
 - A **literál** az érték közvetlen leírása a kódban (`42`, `3.14`, `"alma"`, `True`).
 - C/Java/C# primitív típusai fix méretűek és túlcsordulhatnak; a Python `int` korlátlan.
+
+## A lecke feladata: Milyen típusú?
+
+Írj `tipus_nev(ertek)` függvényt, amely magyarul megmondja egy érték típusát:
+
+| Érték példa | Eredmény    |
+| ----------- | ----------- |
+| `42`        | `"egész"`   |
+| `3.14`      | `"valós"`   |
+| `True`      | `"logikai"` |
+| `"alma"`    | `"szöveg"`  |
+| `None`      | `"semmi"`   |
+| bármi más   | `"egyéb"`   |
+
+Vigyázz: Pythonban a `bool` az `int` „alesete”, ezért az `isinstance(True, int)` is igaz! Gondold át, milyen sorrendben vizsgálod a típusokat.
+
+```python starter required
+def tipus_nev(ertek):
+    # isinstance(ertek, ...) vizsgálatok a megfelelő sorrendben
+    pass
+
+
+print(tipus_nev(42), tipus_nev(True))   # egész logikai
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def tipus_nev(ertek):
+    if ertek is None:
+        return "semmi"
+    if isinstance(ertek, bool):      # a bool-t az int előtt kell vizsgálni!
+        return "logikai"
+    if isinstance(ertek, int):
+        return "egész"
+    if isinstance(ertek, float):
+        return "valós"
+    if isinstance(ertek, str):
+        return "szöveg"
+    return "egyéb"
+
+
+print(tipus_nev(42), tipus_nev(True))   # egész logikai
+```
+
+</details>
+
+```python test
+assert tipus_nev(42) == "egész", "A 42 egész."
+assert tipus_nev(-7) == "egész", "A -7 is egész."
+assert tipus_nev(3.14) == "valós", "A 3.14 valós."
+assert tipus_nev(True) == "logikai", "A True logikai – a bool-t az int előtt vizsgáld!"
+assert tipus_nev(False) == "logikai", "A False is logikai."
+assert tipus_nev("alma") == "szöveg", "Az \"alma\" szöveg."
+assert tipus_nev(None) == "semmi", "A None: semmi."
+assert tipus_nev([1, 2]) == "egyéb", "A lista: egyéb."
+```

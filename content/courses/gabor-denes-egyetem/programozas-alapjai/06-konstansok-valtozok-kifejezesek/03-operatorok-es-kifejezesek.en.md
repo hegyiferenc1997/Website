@@ -146,3 +146,35 @@ print(result)
 - Comparison: `== != < > <= >=`, chainable; use `is` for `None`.
 - Logical: `and`, `or`, `not`; **short-circuit**: the right side is evaluated only if needed.
 - When in doubt, **use parentheses**.
+
+## Lesson exercise: Leap year in a single expression
+
+A year is a **leap year** if it is divisible by 4 but not by 100 – unless it is also divisible by 400 (then it is a leap year after all).
+
+Write an `is_leap(year)` function that decides this with **a single boolean expression** (`and`, `or`, `not`, `%`, comparison) – without `if`, in one `return` line.
+
+```python starter required
+def is_leap(year):
+    return False   # write the boolean expression here
+
+
+print(is_leap(2024), is_leap(1900), is_leap(2000))   # True False True
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def is_leap(year):
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
+print(is_leap(2024), is_leap(1900), is_leap(2000))   # True False True
+```
+
+</details>
+
+```python test
+for year, expected in [(2024, True), (2023, False), (1900, False), (2000, True), (2100, False), (1600, True), (4, True)]:
+    assert is_leap(year) is expected, f"{year}: {'leap year' if expected else 'not a leap year'}"
+```

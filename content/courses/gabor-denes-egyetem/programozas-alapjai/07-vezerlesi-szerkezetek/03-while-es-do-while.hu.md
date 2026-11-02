@@ -103,3 +103,49 @@ print("Köszönöm:", szam)
 - A ciklus feltételből és magból áll; a magban változnia kell valaminek.
 - A `while` **elöltesztelő**: lehet, hogy egyszer sem fut le.
 - A **do-while** hátultesztelő, legalább egyszer lefut; Pythonban `while True` + `break`.
+
+## A lecke feladata: Mennyi idő alatt gyűlik össze?
+
+Írj `hany_ev(megtakaritas, cel, kamat_szazalek)` függvényt **`while` ciklussal**: hány év kell ahhoz, hogy a megtakarítás évi kamatos kamattal elérje (vagy meghaladja) a célt? Minden évben a pénz `kamat_szazalek` százalékkal nő.
+
+- Ha a megtakarítás már kezdetben eléri a célt, 0 a válasz.
+- Ha a kamat 0 (vagy negatív) és a cél még nincs meg, sosem gyűlne össze: ilyenkor `-1` legyen az eredmény (különben végtelen ciklus lenne!).
+
+```python starter required
+def hany_ev(megtakaritas, cel, kamat_szazalek):
+    evek = 0
+    # while ... : megtakaritas növelése, evek += 1
+    return evek
+
+
+print(hany_ev(100000, 150000, 10))   # 5
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def hany_ev(megtakaritas, cel, kamat_szazalek):
+    if megtakaritas >= cel:
+        return 0
+    if kamat_szazalek <= 0:
+        return -1
+    evek = 0
+    while megtakaritas < cel:
+        megtakaritas *= 1 + kamat_szazalek / 100
+        evek += 1
+    return evek
+
+
+print(hany_ev(100000, 150000, 10))   # 5
+```
+
+</details>
+
+```python test
+assert hany_ev(100000, 150000, 10) == 5, "100 000 Ft évi 10%-kal 5 év alatt éri el a 150 000-et."
+assert hany_ev(1000, 2000, 100) == 1, "100% kamattal egy év alatt duplázódik."
+assert hany_ev(5000, 5000, 3) == 0, "Ha már megvan a cél: 0 év."
+assert hany_ev(1000, 2000, 0) == -1, "0% kamattal sosem gyűlik össze: -1."
+assert hany_ev(1000, 1001, 0.5) == 1, "Tört kamatlábbal is működjön."
+```

@@ -116,3 +116,55 @@ print(len("abc"))       # len comes from the Built-in namespace
 - **Local**: inside a function, visible only there, destroyed at the end of the call.
 - **Global**: module level, functions can read it; modifying needs `global` – but better avoid it.
 - Name lookup: **L → E → G → B**.
+
+## Lesson exercise: Without a global variable
+
+The starter code is broken: the function tries to modify the global `total` variable, but it raises `UnboundLocalError` (run it!). The `global` keyword would "fix" it, but global state is bad practice.
+
+Rewrite it **without a global variable**: the `add(total, value)` function receives the total so far as a parameter and **returns** the new one. The `sum_all(values)` function uses it to add up the elements of a list (collecting in a local variable).
+
+```python starter required
+total = 0
+
+
+def add(value):
+    total = total + value
+    return total
+
+
+def sum_all(values):
+    for value in values:
+        add(value)
+    return total
+
+
+print(sum_all([1, 2, 3]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def add(total, value):
+    return total + value
+
+
+def sum_all(values):
+    total = 0
+    for value in values:
+        total = add(total, value)
+    return total
+
+
+print(sum_all([1, 2, 3]))
+```
+
+</details>
+
+```python test
+assert add(10, 5) == 15, "add(10, 5) → 15 (two parameters: the total so far and the value)"
+assert sum_all([1, 2, 3]) == 6, "sum_all([1, 2, 3]) → 6"
+assert sum_all([1, 2, 3]) == 6, "6 again the second time – nothing may remain from the previous call."
+assert sum_all([]) == 0, "An empty list gives 0."
+assert "total" not in globals() or globals()["total"] == 0, "Don't use a global total variable."
+```

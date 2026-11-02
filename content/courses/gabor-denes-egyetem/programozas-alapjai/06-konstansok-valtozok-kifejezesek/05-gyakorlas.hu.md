@@ -198,3 +198,58 @@ print(f"Végösszeg: {ar * darab:.2f} Ft")
 ```
 
 </details>
+
+## Összefoglaló feladat: BMI-kalkulátor
+
+A témakör összefoglaló feladata: konstansok, kifejezések, feltételes kifejezés és formázott kiírás együtt.
+
+Írj `bmi_jelentes(nev, suly_kg, magassag_cm)` függvényt, amely szöveget ad vissza, pl. `"Anna: BMI 22.9 (normál)"`.
+
+- BMI = testtömeg (kg) / magasság (m)², egy tizedesjegyre kerekítve a kiírásban (`:.1f`).
+- Kategóriák: 18.5 alatt `sovány`, 25 alatt `normál`, különben `túlsúlyos`. A határokat tedd **konstansokba** (`SOVANY_HATAR`, `TULSULY_HATAR`), és a kategóriát egy **feltételes kifejezéssel** (`x if felt else y`) válaszd ki, `if` utasítás nélkül.
+- Nem pozitív súlynál vagy magasságnál `ValueError` legyen (ehhez kivételesen használhatsz `if`-et).
+
+```python starter required
+SOVANY_HATAR = 18.5
+TULSULY_HATAR = 25
+
+
+def bmi_jelentes(nev, suly_kg, magassag_cm):
+    pass
+
+
+print(bmi_jelentes("Anna", 62, 164.5))   # Anna: BMI 22.9 (normál)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+SOVANY_HATAR = 18.5
+TULSULY_HATAR = 25
+
+
+def bmi_jelentes(nev, suly_kg, magassag_cm):
+    if suly_kg <= 0 or magassag_cm <= 0:
+        raise ValueError("A súlynak és a magasságnak pozitívnak kell lennie.")
+    bmi = suly_kg / (magassag_cm / 100) ** 2
+    kategoria = "sovány" if bmi < SOVANY_HATAR else "normál" if bmi < TULSULY_HATAR else "túlsúlyos"
+    return f"{nev}: BMI {bmi:.1f} ({kategoria})"
+
+
+print(bmi_jelentes("Anna", 62, 164.5))   # Anna: BMI 22.9 (normál)
+```
+
+</details>
+
+```python test
+assert bmi_jelentes("Anna", 62, 164.5) == "Anna: BMI 22.9 (normál)", "A példa eredménye nem stimmel."
+assert bmi_jelentes("Béla", 50, 180) == "Béla: BMI 15.4 (sovány)", "50 kg, 180 cm → 15.4, sovány"
+assert bmi_jelentes("Csaba", 95, 175) == "Csaba: BMI 31.0 (túlsúlyos)", "95 kg, 175 cm → 31.0, túlsúlyos"
+assert bmi_jelentes("Dóra", 75, 173.2) == "Dóra: BMI 25.0 (túlsúlyos)", "A 25 már túlsúlyos (25.0023…)."
+try:
+    bmi_jelentes("X", 70, 0)
+    assert False, "0 magasságnál ValueError kell."
+except ValueError:
+    pass
+```

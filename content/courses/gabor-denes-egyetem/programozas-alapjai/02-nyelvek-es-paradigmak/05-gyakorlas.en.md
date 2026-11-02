@@ -173,3 +173,63 @@ print(ranking)
 assert [name for name, _ in ranking] == ["Csilla", "Anna", "Bela"]
 print("All checks passed!")
 ```
+
+## Summary exercise: Student ranking – OOP and functional tools together
+
+The summary exercise of the topic: object-oriented and functional tools together.
+
+1. Create a `Student` class: the constructor receives the `name` and a list of `scores`; the `average()` method returns the average of the scores (0 for an empty list).
+2. Write a `top_students(students, n)` function that returns the **names of the best `n` students** by average in descending order. For equal averages, alphabetical order of the names decides. Use `sorted()` with a `key=lambda ...` key!
+
+```python starter required
+class Student:
+    def __init__(self, name, scores):
+        pass
+
+    def average(self):
+        pass
+
+
+def top_students(students, n):
+    # sorted(..., key=lambda s: (-s.average(), s.name)) – the minus sign reverses the order of averages
+    pass
+
+
+group = [Student("Bob", [60, 70]), Student("Anna", [90, 80]), Student("Cecil", [85, 85])]
+print(top_students(group, 2))   # ['Anna', 'Cecil']
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class Student:
+    def __init__(self, name, scores):
+        self.name = name
+        self.scores = scores
+
+    def average(self):
+        if not self.scores:
+            return 0
+        return sum(self.scores) / len(self.scores)
+
+
+def top_students(students, n):
+    ordered = sorted(students, key=lambda s: (-s.average(), s.name))
+    return [s.name for s in ordered[:n]]
+
+
+group = [Student("Bob", [60, 70]), Student("Anna", [90, 80]), Student("Cecil", [85, 85])]
+print(top_students(group, 2))   # ['Anna', 'Cecil']
+```
+
+</details>
+
+```python test
+assert Student("X", [50, 100]).average() == 75, "The average of 50 and 100 is 75."
+assert Student("Y", []).average() == 0, "Without scores the average is 0."
+g = [Student("Bob", [60, 70]), Student("Anna", [90, 80]), Student("Cecil", [85, 85])]
+assert top_students(g, 2) == ["Anna", "Cecil"], "The best two: Anna (85), Cecil (85) – ties go alphabetically."
+assert top_students(g, 5) == ["Anna", "Cecil", "Bob"], "If n is larger, everyone is included."
+assert top_students([], 3) == [], "An empty group gives an empty list."
+```

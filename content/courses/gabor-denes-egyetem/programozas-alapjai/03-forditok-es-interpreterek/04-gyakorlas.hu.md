@@ -129,3 +129,81 @@ assert helyes_e("if x > 3\n    pass") is False
 assert helyes_e("x = 1 / 0") is True, "Ez futási hiba lenne, szintaktikailag helyes!"
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Mini fordító: kifejezés kiértékelése
+
+A témakör összefoglaló feladata: építs egy mini „fordítót”, amely egy kifejezést **tokenekre bont**, majd **kiértékel** – a `+`, `-` és `*` műveletekkel, a szokásos precedenciával (a szorzás előbb). Zárójel és osztás nincs, csak nemnegatív egész számok.
+
+Írj `kiszamol(kifejezes)` függvényt! Az `eval()` használata tilos – az éppen a lényeget spórolná meg. Például `kiszamol("2 + 3*4")` → 14, `kiszamol("10 - 2*3 - 1")` → 3.
+
+Tipp: két lépésben dolgozz. Először a tokenekből szorzatokat számolj (a `*`-gal összekötött számokat összeszorzod), és jegyezd meg előttük az előjelet; utána a szorzatokat előjelestől összeadod.
+
+```python starter required
+def tokenek(kifejezes):
+    # a lecke tokenizálója (számok és műveleti jelek)
+    pass
+
+
+def kiszamol(kifejezes):
+    # 1. tokenek
+    # 2. tagok: [+szorzat, -szorzat, ...]
+    # 3. a tagok összege
+    pass
+
+
+print(kiszamol("2 + 3*4"))        # 14
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def tokenek(kifejezes):
+    eredmeny = []
+    szam = ""
+    for karakter in kifejezes:
+        if karakter.isdigit():
+            szam += karakter
+            continue
+        if szam:
+            eredmeny.append(szam)
+            szam = ""
+        if karakter in "+-*":
+            eredmeny.append(karakter)
+        elif karakter != " ":
+            raise ValueError(f"Ismeretlen karakter: {karakter!r}")
+    if szam:
+        eredmeny.append(szam)
+    return eredmeny
+
+
+def kiszamol(kifejezes):
+    lista = tokenek(kifejezes)
+    osszeg = 0
+    elojel = 1
+    szorzat = int(lista[0])
+    i = 1
+    while i < len(lista):
+        jel, szam = lista[i], int(lista[i + 1])
+        if jel == "*":
+            szorzat *= szam
+        else:
+            osszeg += elojel * szorzat      # lezárjuk az előző tagot
+            elojel = 1 if jel == "+" else -1
+            szorzat = szam
+        i += 2
+    return osszeg + elojel * szorzat
+
+
+print(kiszamol("2 + 3*4"))        # 14
+```
+
+</details>
+
+```python test
+assert kiszamol("2 + 3*4") == 14, "2 + 3*4 = 14 (a szorzás előbb!)"
+assert kiszamol("10 - 2*3 - 1") == 3, "10 - 2*3 - 1 = 3"
+assert kiszamol("7") == 7, "Egyetlen szám önmaga."
+assert kiszamol("2*3*4 - 4*5 + 1") == 5, "2*3*4 - 4*5 + 1 = 5"
+assert kiszamol("100-1-1") == 98, "A kivonás balról jobbra halad: 100-1-1 = 98"
+```

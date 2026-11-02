@@ -97,3 +97,54 @@ print(True, False, None)      # the language's built-in constants
 - A constant is a named, unchanging value; it makes code more readable and easier to change.
 - Java uses `final`, C uses `const`; in Python the convention is an **ALL_CAPS** name (optionally `Final`).
 - Avoid **magic numbers**, use descriptive constants.
+
+## Lesson exercise: Constants instead of magic numbers
+
+The function below works, but it is full of **magic numbers**. Rewrite it:
+
+1. Introduce constants at the top of the file: `VAT_RATE = 0.27`, `SHIPPING_FEE = 1490`, `FREE_SHIPPING_LIMIT = 20000`.
+2. The `final_price(net)` function uses them: gross = net · (1 + VAT), rounded to a whole number; if the gross is **below** the limit, the shipping fee is added.
+
+The behaviour must not change!
+
+```python starter required
+def final_price(net):
+    gross = round(net * 1.27)
+    if gross < 20000:
+        gross += 1490
+    return gross
+
+
+print(final_price(10000), final_price(20000))   # 14190 25400
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+VAT_RATE = 0.27
+SHIPPING_FEE = 1490
+FREE_SHIPPING_LIMIT = 20000
+
+
+def final_price(net):
+    gross = round(net * (1 + VAT_RATE))
+    if gross < FREE_SHIPPING_LIMIT:
+        gross += SHIPPING_FEE
+    return gross
+
+
+print(final_price(10000), final_price(20000))   # 14190 25400
+```
+
+</details>
+
+```python test
+assert VAT_RATE == 0.27, "There should be a VAT_RATE = 0.27 constant."
+assert SHIPPING_FEE == 1490, "There should be a SHIPPING_FEE = 1490 constant."
+assert FREE_SHIPPING_LIMIT == 20000, "There should be a FREE_SHIPPING_LIMIT = 20000 constant."
+assert final_price(10000) == 14190, "net 10000 → gross 12700 + shipping 1490 = 14190"
+assert final_price(20000) == 25400, "net 20000 → gross 25400, free shipping"
+SHIPPING_FEE = 990
+assert final_price(1000) == 1270 + 990, "The function must use the constant, not the literal number."
+```

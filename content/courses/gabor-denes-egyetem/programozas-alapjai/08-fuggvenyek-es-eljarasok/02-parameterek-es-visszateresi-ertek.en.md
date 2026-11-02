@@ -119,3 +119,56 @@ Parameter kinds (`*args`, `**kwargs`) and how values get into a function are cov
 - Default value: `def f(x, y=0)`; keyword call: `f(y=1, x=2)`.
 - Returning several values: `return a, b` (a tuple).
 - A function should return its result, not print it.
+
+## Lesson exercise: A price calculator with default parameters
+
+Write a `price_calculator(net, vat=27, discount=0)` function that returns **two values**: the gross price to pay and the amount saved with the discount (both rounded to a whole number).
+
+1. gross = net · (1 + vat/100),
+2. the discount is `discount` percent of the gross,
+3. to pay = gross − savings.
+
+Validate the input: for a negative net price or a discount outside 0–100 raise `ValueError`.
+
+```python starter required
+def price_calculator(net, vat=27, discount=0):
+    # validate input, compute, return to_pay, savings
+    pass
+
+
+print(price_calculator(10000))                # (12700, 0)
+print(price_calculator(10000, discount=10))   # (11430, 1270)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def price_calculator(net, vat=27, discount=0):
+    if net < 0:
+        raise ValueError("The net price cannot be negative.")
+    if not 0 <= discount <= 100:
+        raise ValueError("The discount must be between 0 and 100.")
+    gross = net * (1 + vat / 100)
+    savings = gross * discount / 100
+    return round(gross - savings), round(savings)
+
+
+print(price_calculator(10000))                # (12700, 0)
+print(price_calculator(10000, discount=10))   # (11430, 1270)
+```
+
+</details>
+
+```python test
+assert price_calculator(10000) == (12700, 0), "With the default 27% VAT and no discount: (12700, 0)"
+assert price_calculator(10000, discount=10) == (11430, 1270), "With a 10% discount: (11430, 1270)"
+assert price_calculator(10000, vat=5) == (10500, 0), "With 5% VAT: (10500, 0)"
+assert price_calculator(net=2000, discount=50, vat=0) == (1000, 1000), "Keyword arguments in any order."
+for bad in [dict(net=-1), dict(net=100, discount=120), dict(net=100, discount=-5)]:
+    try:
+        price_calculator(**bad)
+        assert False, f"Invalid input must raise ValueError: {bad}"
+    except ValueError:
+        pass
+```

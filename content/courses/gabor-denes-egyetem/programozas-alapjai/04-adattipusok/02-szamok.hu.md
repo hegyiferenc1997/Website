@@ -103,3 +103,52 @@ print(math.pi)           # 3.141592653589793
 - A `/` mindig `float`, a `//` egész osztás (lefelé kerekít), a `%` a maradék.
 - A műveleti sorrend: `**`, majd `* / // %`, majd `+ -`; zárójellel módosítható.
 - A lebegőpontos számok pontatlanok: használj `math.isclose()`-t vagy kerekítést.
+
+## A lecke feladata: Másodpercek felbontása
+
+Írj `felbont(masodperc)` függvényt, amely egy nemnegatív egész másodpercszámot **órára, percre és másodpercre** bont, és egy `(ora, perc, mp)` hármast ad vissza. Használd az egész osztást (`//`) és a maradékot (`%`)!
+
+Írj mellé egy `formaz(masodperc)` függvényt is, amely `"óó:pp:mm"` alakú szöveget ad, kétjegyű részekkel, pl. `formaz(3725)` → `"01:02:05"`. (Tipp: f-stringben a `{x:02d}` két jegyre egészít ki nullákkal.)
+
+```python starter required
+def felbont(masodperc):
+    # ora = ..., perc = ..., mp = ...
+    pass
+
+
+def formaz(masodperc):
+    pass
+
+
+print(felbont(3725), formaz(3725))   # (1, 2, 5) 01:02:05
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def felbont(masodperc):
+    ora = masodperc // 3600
+    perc = masodperc % 3600 // 60
+    mp = masodperc % 60
+    return (ora, perc, mp)
+
+
+def formaz(masodperc):
+    ora, perc, mp = felbont(masodperc)
+    return f"{ora:02d}:{perc:02d}:{mp:02d}"
+
+
+print(felbont(3725), formaz(3725))   # (1, 2, 5) 01:02:05
+```
+
+</details>
+
+```python test
+assert felbont(3725) == (1, 2, 5), "3725 mp = 1 óra 2 perc 5 mp"
+assert felbont(59) == (0, 0, 59), "59 mp = 0 óra 0 perc 59 mp"
+assert felbont(86399) == (23, 59, 59), "86399 mp = 23:59:59"
+assert felbont(0) == (0, 0, 0), "0 mp = 0, 0, 0"
+assert formaz(3725) == "01:02:05", "formaz(3725) → \"01:02:05\""
+assert formaz(36000) == "10:00:00", "formaz(36000) → \"10:00:00\""
+```

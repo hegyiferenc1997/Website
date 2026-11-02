@@ -108,3 +108,49 @@ print(terfogat(**adatok))          # terfogat(a=1, b=5, c=10)
 | `def f(*, x)`              | csak kulcsszavas paraméter                  |
 | `def f(x, /)`              | csak pozicionális paraméter                 |
 | `f(*lista)`, `f(**szotar)` | kicsomagolás híváskor                       |
+
+## A lecke feladata: Átlag tetszőleges számú paraméterrel
+
+Írj `atlag(*szamok, kerekites=2)` függvényt:
+
+- tetszőleges számú pozicionális számot fogad (`*szamok`),
+- az átlagukat `kerekites` tizedesjegyre kerekítve adja vissza,
+- a `kerekites` **csak kulcsszavasan** adható meg (mert a `*szamok` után áll),
+- ha nem kapott egyetlen számot sem, `None`-t ad vissza.
+
+Egy listát kicsomagolva is át lehet adni: `atlag(*[1, 2, 3])`.
+
+```python starter required
+def atlag(*szamok, kerekites=2):
+    # a szamok egy tuple
+    pass
+
+
+print(atlag(1, 2, 2))                 # 1.67
+print(atlag(1, 2, 2, kerekites=0))    # 2.0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def atlag(*szamok, kerekites=2):
+    if not szamok:
+        return None
+    return round(sum(szamok) / len(szamok), kerekites)
+
+
+print(atlag(1, 2, 2))                 # 1.67
+print(atlag(1, 2, 2, kerekites=0))    # 2.0
+```
+
+</details>
+
+```python test
+assert atlag(1, 2, 2) == 1.67, "atlag(1, 2, 2) → 1.67"
+assert atlag(1, 2, 2, kerekites=0) == 2.0, "kerekites=0 esetén 2.0"
+assert atlag(10) == 10, "Egyetlen szám átlaga önmaga."
+assert atlag() is None, "Paraméter nélkül None."
+assert atlag(*[4, 5, 6]) == 5, "Kicsomagolt listával is működjön."
+assert atlag(1, 2, 3, 4) == 2.5, "A kerekites ne nyeljen el pozicionális számot (1, 2, 3, 4 → 2.5)."
+```

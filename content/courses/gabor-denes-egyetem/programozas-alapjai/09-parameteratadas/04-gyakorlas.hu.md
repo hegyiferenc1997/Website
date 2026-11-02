@@ -207,3 +207,69 @@ import types
 assert isinstance(parosak(3), types.GeneratorType), "Generátorfüggvény kell (yield)!"
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Webshop-kosár
+
+A témakör összefoglaló feladata: pozicionális, alapértelmezett, csak kulcsszavas és tetszőleges kulcsszavas paraméterek, megosztás szerinti átadás és az alapérték-csapda – egy függvényben.
+
+Írj `kosarba(termek, mennyiseg=1, *, kosar=None, **opciok)` függvényt, amely egy tételt tesz a kosárba, és visszaadja a kosarat (egy listát):
+
+- a tétel egy szótár: `{"termek": ..., "mennyiseg": ..., "opciok": {...}}` – az `opciok` a kapott kulcsszavas paraméterek szótára (pl. `szin="kék"`);
+- ha nem kapott `kosar`-at, **új** listát kezd (és nem egy közös, megmaradó listát!);
+- ha a kosárban már van ugyanilyen termék **ugyanazokkal az opciókkal**, ne új tételt vegyen fel, hanem növelje a mennyiségét;
+- nem pozitív mennyiségnél `ValueError`.
+
+```python starter required
+def kosarba(termek, mennyiseg=1, *, kosar=None, **opciok):
+    pass
+
+
+k = kosarba("póló", szin="kék", meret="M")
+k = kosarba("póló", 2, kosar=k, szin="kék", meret="M")
+print(k)   # egy tétel, 3 darab
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kosarba(termek, mennyiseg=1, *, kosar=None, **opciok):
+    if mennyiseg <= 0:
+        raise ValueError("A mennyiség legyen pozitív.")
+    if kosar is None:
+        kosar = []
+    for tetel in kosar:
+        if tetel["termek"] == termek and tetel["opciok"] == opciok:
+            tetel["mennyiseg"] += mennyiseg
+            return kosar
+    kosar.append({"termek": termek, "mennyiseg": mennyiseg, "opciok": opciok})
+    return kosar
+
+
+k = kosarba("póló", szin="kék", meret="M")
+k = kosarba("póló", 2, kosar=k, szin="kék", meret="M")
+print(k)   # egy tétel, 3 darab
+```
+
+</details>
+
+```python test
+k = kosarba("póló", szin="kék", meret="M")
+assert k == [{"termek": "póló", "mennyiseg": 1, "opciok": {"szin": "kék", "meret": "M"}}], "Az első tétel szerkezete nem stimmel."
+k = kosarba("póló", 2, kosar=k, szin="kék", meret="M")
+assert len(k) == 1 and k[0]["mennyiseg"] == 3, "Ugyanaz a termék ugyanazzal az opcióval: a mennyiség nő (3)."
+k = kosarba("póló", kosar=k, szin="piros", meret="M")
+assert len(k) == 2, "Más opcióval új tétel kell."
+assert kosarba("bögre") == [{"termek": "bögre", "mennyiseg": 1, "opciok": {}}], "Kosár nélkül mindig új, üres kosár indul."
+assert kosarba("toll") == [{"termek": "toll", "mennyiseg": 1, "opciok": {}}], "Az előző hívás tétele nem maradhat meg."
+try:
+    kosarba("toll", 0)
+    assert False, "0 mennyiségnél ValueError kell."
+except ValueError:
+    pass
+try:
+    kosarba("toll", 1, [])
+    assert False, "A kosar csak kulcsszavasan adható meg (TypeError)."
+except TypeError:
+    pass
+```

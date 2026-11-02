@@ -116,3 +116,55 @@ print(len("abc"))       # a len a beépített (Built-in) névtérből jön
 - **Lokális**: függvényen belül, csak ott látszik, a hívás végén megszűnik.
 - **Globális**: modul szintű, a függvények olvashatják; módosításhoz `global` kell – de inkább kerüld.
 - Névkeresés: **L → E → G → B**.
+
+## A lecke feladata: Globális változó nélkül
+
+A kiinduló kód hibás: a függvény a globális `osszeg` változót próbálja módosítani, de `UnboundLocalError` lesz belőle (futtasd le!). A `global` kulcsszó „megjavítaná”, de a globális állapot rossz gyakorlat.
+
+Írd át **globális változó nélkül**: a `hozzaad(osszeg, ertek)` függvény paraméterként kapja az eddigi összeget, és az újat **adja vissza**. Az `osszesit(ertekek)` függvény pedig ezzel összegezze egy lista elemeit (helyi változóban gyűjtve).
+
+```python starter required
+osszeg = 0
+
+
+def hozzaad(ertek):
+    osszeg = osszeg + ertek
+    return osszeg
+
+
+def osszesit(ertekek):
+    for ertek in ertekek:
+        hozzaad(ertek)
+    return osszeg
+
+
+print(osszesit([1, 2, 3]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def hozzaad(osszeg, ertek):
+    return osszeg + ertek
+
+
+def osszesit(ertekek):
+    osszeg = 0
+    for ertek in ertekek:
+        osszeg = hozzaad(osszeg, ertek)
+    return osszeg
+
+
+print(osszesit([1, 2, 3]))
+```
+
+</details>
+
+```python test
+assert hozzaad(10, 5) == 15, "hozzaad(10, 5) → 15 (két paraméter: az eddigi összeg és az érték)"
+assert osszesit([1, 2, 3]) == 6, "osszesit([1, 2, 3]) → 6"
+assert osszesit([1, 2, 3]) == 6, "Másodszorra is 6 – nem maradhat meg semmi az előző hívásból."
+assert osszesit([]) == 0, "Üres listára 0."
+assert "osszeg" not in globals() or globals()["osszeg"] == 0, "Ne használj globális összeg változót."
+```

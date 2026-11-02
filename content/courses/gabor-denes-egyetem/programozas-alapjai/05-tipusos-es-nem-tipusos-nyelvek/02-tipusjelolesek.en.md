@@ -82,3 +82,39 @@ Python follows **gradual typing**: you can annotate part of the code and leave t
 - Type hints: `variable: type`, for functions `def f(x: int) -> str:`.
 - Hints are optional and Python doesn't check them at run time.
 - **mypy** and the IDE find errors from the hints without running the code.
+
+## Lesson exercise: A function with type hints
+
+Write a `word_lengths` function **with full type hints**: it receives a list of words (`list[str]`) and returns a dictionary (`dict[str, int]`) mapping each word to its length.
+
+The check looks at the behaviour and also at the type hints (`word_lengths.__annotations__`): the parameter must be called `words`.
+
+```python starter required
+def word_lengths(words):
+    # type hints: words: list[str], return: dict[str, int]
+    pass
+
+
+print(word_lengths(["apple", "kiwi", "plum"]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def word_lengths(words: list[str]) -> dict[str, int]:
+    return {word: len(word) for word in words}
+
+
+print(word_lengths(["apple", "kiwi", "plum"]))
+```
+
+</details>
+
+```python test
+assert word_lengths(["apple", "kiwi", "plum"]) == {"apple": 5, "kiwi": 4, "plum": 4}, "The word lengths are not right."
+assert word_lengths([]) == {}, "An empty list gives an empty dictionary."
+hints = word_lengths.__annotations__
+assert hints.get("words") == list[str], "The parameter hint should be: words: list[str]"
+assert hints.get("return") == dict[str, int], "The return hint should be: -> dict[str, int]"
+```

@@ -197,3 +197,52 @@ assert szamma("abc") is None
 assert szamma("") is None
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Hőmérséklet-jelentés
+
+A témakör összefoglaló feladata: szövegfeldolgozás, típuskonverzió, számok és formázás együtt.
+
+Írj `jelentes(sor)` függvényt, amely egy vesszővel elválasztott hőmérséklet-sorból (pl. `"12.5, -3, 7, 0.5"`) ilyen szöveget készít:
+
+```text
+min: -3.0, max: 12.5, átlag: 4.25
+```
+
+- Minden érték valós számként, legalább egy tizedesjeggyel jelenjen meg (ezt a `float` kiírása magától megadja), az átlagot **két tizedesjegyre kerekítsd**.
+- Ha a sorban nincs egyetlen szám sem, az eredmény `"nincs adat"` legyen.
+
+```python starter required
+def jelentes(sor):
+    # 1. darabolás, strip, üresek kihagyása, float()
+    # 2. nincs adat?
+    # 3. min, max, átlag (round(..., 2)), majd f-string
+    pass
+
+
+print(jelentes("12.5, -3, 7, 0.5"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def jelentes(sor):
+    ertekek = [float(d) for d in sor.split(",") if d.strip()]
+    if not ertekek:
+        return "nincs adat"
+    atlag = round(sum(ertekek) / len(ertekek), 2)
+    return f"min: {min(ertekek)}, max: {max(ertekek)}, átlag: {atlag}"
+
+
+print(jelentes("12.5, -3, 7, 0.5"))
+```
+
+</details>
+
+```python test
+assert jelentes("12.5, -3, 7, 0.5") == "min: -3.0, max: 12.5, átlag: 4.25", "A példa eredménye nem stimmel."
+assert jelentes("20") == "min: 20.0, max: 20.0, átlag: 20.0", "Egyetlen értéknél mindhárom ugyanaz."
+assert jelentes("1, 2, 2") == "min: 1.0, max: 2.0, átlag: 1.67", "Az átlagot két tizedesre kell kerekíteni (1.67)."
+assert jelentes("") == "nincs adat", "Üres sorra: nincs adat"
+assert jelentes(" , ") == "nincs adat", "Csak üres elemekre is: nincs adat"
+```

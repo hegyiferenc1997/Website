@@ -257,3 +257,88 @@ assert passed({"Csilla": 92, "Anna": 50, "Bela": 49}) == ["Anna", "Csilla"]
 assert passed({}) == []
 print("All checks passed!")
 ```
+
+## Summary exercise: Exam statistics
+
+The summary exercise of the topic: branches, loops and the basic algorithms in a single program.
+
+The scores (0–100) of an exam are given. Grades: 0–49 → 1, 50–62 → 2, 63–75 → 3, 76–88 → 4, 89–100 → 5. Write an `exam_statistics(scores)` function that returns a dictionary:
+
+- `"distribution"`: a five-element list – how many 1s, 2s, …, 5s there are,
+- `"average"`: the average of the grades rounded to two decimals (0 for an empty list),
+- `"best"`: the highest score (`None` for an empty list),
+- `"failed"`: the number of fails (grade 1),
+- `"invalid"`: the number of scores outside 0–100 – these do **not** count in the other values.
+
+It's worth writing a separate `grade(score)` helper function.
+
+```python starter required
+def grade(score):
+    pass
+
+
+def exam_statistics(scores):
+    distribution = [0, 0, 0, 0, 0]
+    # loop over scores: invalid? grade → distribution, best, sum of grades
+    pass
+
+
+print(exam_statistics([95, 40, 63, 77, 50, 101]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def grade(score):
+    if score >= 89:
+        return 5
+    if score >= 76:
+        return 4
+    if score >= 63:
+        return 3
+    if score >= 50:
+        return 2
+    return 1
+
+
+def exam_statistics(scores):
+    distribution = [0, 0, 0, 0, 0]
+    best = None
+    invalid = 0
+    for score in scores:
+        if score < 0 or score > 100:
+            invalid += 1
+            continue
+        distribution[grade(score) - 1] += 1
+        if best is None or score > best:
+            best = score
+    count = sum(distribution)
+    grade_total = sum((i + 1) * n for i, n in enumerate(distribution))
+    average = round(grade_total / count, 2) if count else 0
+    return {
+        "distribution": distribution,
+        "average": average,
+        "best": best,
+        "failed": distribution[0],
+        "invalid": invalid,
+    }
+
+
+print(exam_statistics([95, 40, 63, 77, 50, 101]))
+```
+
+</details>
+
+```python test
+s = exam_statistics([95, 40, 63, 77, 50, 101])
+assert s["distribution"] == [1, 1, 1, 1, 1], "The distribution: one of each grade."
+assert s["average"] == 3.0, "The average grade is 3.0 (101 does not count)."
+assert s["best"] == 95, "The best valid score is 95."
+assert s["failed"] == 1, "There was one fail (40 points)."
+assert s["invalid"] == 1, "There was one invalid score (101)."
+s = exam_statistics([88, 89, 49, -3])
+assert s["distribution"] == [1, 0, 0, 1, 1] and s["average"] == 3.33, "88 → 4, 89 → 5, 49 → 1; average 3.33."
+s = exam_statistics([])
+assert s == {"distribution": [0, 0, 0, 0, 0], "average": 0, "best": None, "failed": 0, "invalid": 0}, "An empty list gives the default values."
+```

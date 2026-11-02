@@ -125,3 +125,39 @@ This behaviour is very important for **parameter passing**, which has its own to
 - Python has no separate declaration; a variable is created at its first assignment.
 - Names: start with a letter, `snake_case`, descriptive.
 - `b = a` doesn't copy, it just gives the same object another name.
+
+## Lesson exercise: Swapping and rotating variables
+
+There are three variables: `a`, `b` and `c`. Rotate their values so that `a` gets the old value of `b`, `b` the value of `c`, and `c` the value of `a` – **in a single multiple assignment**, without a helper variable. Then use augmented assignment (`+=`) to increase `c` by 10.
+
+Finally print the three variables on one line, separated by spaces.
+
+```python starter required
+a = 1
+b = 2
+c = 3
+
+# 1. rotate in a single line: a, b, c = ...
+# 2. increase c by 10
+# 3. print
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+a = 1
+b = 2
+c = 3
+
+a, b, c = b, c, a
+c += 10
+print(a, b, c)
+```
+
+</details>
+
+```python test
+assert (a, b, c) == (2, 3, 11), "After the rotation a = 2, b = 3, c = 1, then c += 10 → 11."
+assert output.strip() == "2 3 11", "The printed line: 2 3 11"
+```

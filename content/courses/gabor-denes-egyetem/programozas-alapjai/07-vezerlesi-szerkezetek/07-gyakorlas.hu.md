@@ -257,3 +257,88 @@ assert atmentek({"Csilla": 92, "Anna": 50, "Béla": 49}) == ["Anna", "Csilla"]
 assert atmentek({}) == []
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Zárthelyi-statisztika
+
+A témakör összefoglaló feladata: elágazások, ciklusok és programozási tételek egyetlen programban.
+
+Egy zárthelyi pontszámai (0–100) adottak. A jegyek: 0–49 → 1, 50–62 → 2, 63–75 → 3, 76–88 → 4, 89–100 → 5. Írj `zh_statisztika(pontok)` függvényt, amely egy szótárat ad vissza:
+
+- `"eloszlas"`: ötelemű lista – hány darab 1-es, 2-es, …, 5-ös született,
+- `"atlag"`: a jegyek átlaga két tizedesre kerekítve (üres listánál 0),
+- `"legjobb"`: a legmagasabb pontszám (üres listánál `None`),
+- `"bukott"`: a bukások (1-esek) száma,
+- `"ervenytelen"`: a 0–100 tartományon kívüli pontszámok száma – ezek **nem** számítanak bele a többi értékbe.
+
+Érdemes egy külön `jegy(pont)` segédfüggvényt írni.
+
+```python starter required
+def jegy(pont):
+    pass
+
+
+def zh_statisztika(pontok):
+    eloszlas = [0, 0, 0, 0, 0]
+    # ciklus a pontokon: érvénytelen? jegy → eloszlás, legjobb, jegyek összege
+    pass
+
+
+print(zh_statisztika([95, 40, 63, 77, 50, 101]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def jegy(pont):
+    if pont >= 89:
+        return 5
+    if pont >= 76:
+        return 4
+    if pont >= 63:
+        return 3
+    if pont >= 50:
+        return 2
+    return 1
+
+
+def zh_statisztika(pontok):
+    eloszlas = [0, 0, 0, 0, 0]
+    legjobb = None
+    ervenytelen = 0
+    for pont in pontok:
+        if pont < 0 or pont > 100:
+            ervenytelen += 1
+            continue
+        eloszlas[jegy(pont) - 1] += 1
+        if legjobb is None or pont > legjobb:
+            legjobb = pont
+    darab = sum(eloszlas)
+    jegyek_osszege = sum((i + 1) * db for i, db in enumerate(eloszlas))
+    atlag = round(jegyek_osszege / darab, 2) if darab else 0
+    return {
+        "eloszlas": eloszlas,
+        "atlag": atlag,
+        "legjobb": legjobb,
+        "bukott": eloszlas[0],
+        "ervenytelen": ervenytelen,
+    }
+
+
+print(zh_statisztika([95, 40, 63, 77, 50, 101]))
+```
+
+</details>
+
+```python test
+e = zh_statisztika([95, 40, 63, 77, 50, 101])
+assert e["eloszlas"] == [1, 1, 1, 1, 1], "Az eloszlás: egy-egy darab minden jegyből."
+assert e["atlag"] == 3.0, "A jegyek átlaga 3.0 (a 101 nem számít)."
+assert e["legjobb"] == 95, "A legjobb érvényes pontszám 95."
+assert e["bukott"] == 1, "Egy bukás volt (40 pont)."
+assert e["ervenytelen"] == 1, "Egy érvénytelen pontszám volt (101)."
+e = zh_statisztika([88, 89, 49, -3])
+assert e["eloszlas"] == [1, 0, 0, 1, 1] and e["atlag"] == 3.33, "88 → 4, 89 → 5, 49 → 1; átlag 3.33."
+e = zh_statisztika([])
+assert e == {"eloszlas": [0, 0, 0, 0, 0], "atlag": 0, "legjobb": None, "bukott": 0, "ervenytelen": 0}, "Üres listára az alapértékek."
+```

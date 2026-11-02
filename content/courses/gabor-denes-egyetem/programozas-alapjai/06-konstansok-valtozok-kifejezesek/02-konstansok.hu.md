@@ -97,3 +97,54 @@ print(True, False, None)      # a nyelv beépített konstansai
 - A konstans nem változó, elnevezett érték; olvashatóbbá és könnyebben módosíthatóvá teszi a kódot.
 - Javában `final`, C-ben `const`; Pythonban a **CSUPA_NAGYBETŰS** név a szokás (opcionálisan `Final`).
 - Kerüld a **mágikus számokat**, használj beszédes konstansokat.
+
+## A lecke feladata: Mágikus számok helyett konstansok
+
+Az alábbi függvény működik, de tele van **mágikus számokkal**. Írd át:
+
+1. Vezess be konstansokat a fájl elején: `AFA_KULCS = 0.27`, `SZALLITASI_DIJ = 1490`, `INGYENES_SZALLITAS_HATAR = 20000`.
+2. A `vegosszeg(netto)` függvény ezeket használja: bruttó = nettó · (1 + ÁFA), egész forintra kerekítve; ha a bruttó a határ **alatt** van, hozzá jön a szállítási díj.
+
+A működés ne változzon!
+
+```python starter required
+def vegosszeg(netto):
+    brutto = round(netto * 1.27)
+    if brutto < 20000:
+        brutto += 1490
+    return brutto
+
+
+print(vegosszeg(10000), vegosszeg(20000))   # 14190 25400
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+AFA_KULCS = 0.27
+SZALLITASI_DIJ = 1490
+INGYENES_SZALLITAS_HATAR = 20000
+
+
+def vegosszeg(netto):
+    brutto = round(netto * (1 + AFA_KULCS))
+    if brutto < INGYENES_SZALLITAS_HATAR:
+        brutto += SZALLITASI_DIJ
+    return brutto
+
+
+print(vegosszeg(10000), vegosszeg(20000))   # 14190 25400
+```
+
+</details>
+
+```python test
+assert AFA_KULCS == 0.27, "Legyen AFA_KULCS = 0.27 konstans."
+assert SZALLITASI_DIJ == 1490, "Legyen SZALLITASI_DIJ = 1490 konstans."
+assert INGYENES_SZALLITAS_HATAR == 20000, "Legyen INGYENES_SZALLITAS_HATAR = 20000 konstans."
+assert vegosszeg(10000) == 14190, "10000 nettó → 12700 bruttó + 1490 szállítás = 14190"
+assert vegosszeg(20000) == 25400, "20000 nettó → 25400 bruttó, ingyenes szállítás"
+SZALLITASI_DIJ = 990
+assert vegosszeg(1000) == 1270 + 990, "A függvény a konstanst használja, ne a beírt számot."
+```

@@ -89,3 +89,51 @@ How recursion works (the call stack), comparison with iteration and recursive al
 - A recursive function calls itself on a smaller subtask.
 - It needs a **base case** (stopping) and a **recursive case** (reducing the task).
 - Without a base case a `RecursionError` occurs.
+
+## Lesson exercise: Digit sum recursively
+
+Write a **recursive** `digit_sum(n)` function that returns the sum of the digits of a non-negative integer – without a loop and without `str()`.
+
+- **Base case:** if `n < 10`, the result is `n` itself.
+- **Recursive case:** the last digit (`n % 10`) plus the sum of the other digits (calling it with `n // 10`).
+
+```python starter required
+def digit_sum(n):
+    # base case, then the recursive call
+    pass
+
+
+print(digit_sum(1234))   # 10
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def digit_sum(n):
+    if n < 10:
+        return n
+    return n % 10 + digit_sum(n // 10)
+
+
+print(digit_sum(1234))   # 10
+```
+
+</details>
+
+```python test
+assert digit_sum(1234) == 10, "1 + 2 + 3 + 4 = 10"
+assert digit_sum(7) == 7, "For a one-digit number it is the number itself."
+assert digit_sum(0) == 0, "The digit sum of 0 is 0."
+assert digit_sum(99999) == 45, "9 · 5 = 45"
+calls = 0
+original = digit_sum
+def watcher(n):
+    global calls
+    calls += 1
+    return original(n)
+digit_sum = watcher
+original(512)
+digit_sum = original
+assert calls >= 2, "The function must call itself (recursion) – instead of a loop."
+```

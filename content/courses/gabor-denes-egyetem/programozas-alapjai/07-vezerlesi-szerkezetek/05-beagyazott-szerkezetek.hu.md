@@ -128,3 +128,53 @@ Régi nyelvekben a `goto` utasítással a program bármely pontjára lehetett ug
 - `break` – kilépés a legbelső ciklusból; `continue` – a következő körre ugrás; `pass` – üres utasítás.
 - A ciklus `else` ága akkor fut, ha nem volt `break`.
 - Több szintből `return`-nel lépj ki egy függvényből.
+
+## A lecke feladata: Prímszámok a ciklus else ágával
+
+Írj `primek(n)` függvényt, amely visszaadja a 2 és `n` közötti (az `n`-et is beleértve) **prímszámok** listáját. Két egymásba ágyazott ciklussal dolgozz: a külső a jelölteken megy végig, a belső az osztókat próbálja. Ha a belső ciklus talál osztót, lépj ki belőle `break`-kel; ha végigfutott osztó nélkül, a **ciklus `else` ága** tegye be a számot a listába.
+
+Elég az osztókat a szám négyzetgyökéig vizsgálni (`oszto * oszto <= szam`).
+
+```python starter required
+def primek(n):
+    eredmeny = []
+    for szam in range(2, n + 1):
+        oszto = 2
+        while oszto * oszto <= szam:
+            # ha szam osztható oszto-val: break
+            oszto += 1
+        # else ág: ide jön, ha nem volt break
+    return eredmeny
+
+
+print(primek(30))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def primek(n):
+    eredmeny = []
+    for szam in range(2, n + 1):
+        oszto = 2
+        while oszto * oszto <= szam:
+            if szam % oszto == 0:
+                break
+            oszto += 1
+        else:
+            eredmeny.append(szam)
+    return eredmeny
+
+
+print(primek(30))
+```
+
+</details>
+
+```python test
+assert primek(30) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], "A 30-ig terjedő prímek nem stimmelnek."
+assert primek(2) == [2], "primek(2) → [2]"
+assert primek(1) == [], "1-ig nincs prím."
+assert len(primek(1000)) == 168, "1000-ig 168 prím van."
+```

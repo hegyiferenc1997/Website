@@ -110,3 +110,76 @@ print(area(3, 4), perimeter(3, 4))
 - A subprogram is a named, reusable piece of code; it improves clarity and reuse.
 - A **function** returns a value (`return`), a **procedure** only performs something (in Python it returns `None`).
 - `return` ends the function immediately.
+
+## Lesson exercise: Function and procedure
+
+Write two subprograms:
+
+- `area(width, height)` – a **function**: returns the area of the rectangle (prints nothing);
+- `frame(width, height)` – a **procedure**: draws a rectangle frame of `#` characters and returns nothing (`None`).
+
+For example `frame(5, 3)` prints:
+
+```text
+#####
+#   #
+#####
+```
+
+If the height is 1, print a single row of `#`; if the width or height is below 1, print nothing.
+
+```python starter required
+def area(width, height):
+    pass
+
+
+def frame(width, height):
+    # top row, middle rows (# + spaces + #), bottom row
+    pass
+
+
+frame(5, 3)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def area(width, height):
+    return width * height
+
+
+def frame(width, height):
+    if width < 1 or height < 1:
+        return
+    print("#" * width)
+    for _ in range(height - 2):
+        if width == 1:
+            print("#")
+        else:
+            print("#" + " " * (width - 2) + "#")
+    if height > 1:
+        print("#" * width)
+
+
+frame(5, 3)
+```
+
+</details>
+
+```python test
+import contextlib, io
+
+def drawing(w, h):
+    printed = io.StringIO()
+    with contextlib.redirect_stdout(printed):
+        returned = frame(w, h)
+    assert returned is None, "The procedure must not return a value."
+    return printed.getvalue()
+
+assert area(5, 3) == 15, "The area of a 5×3 rectangle is 15."
+assert drawing(5, 3) == "#####\n#   #\n#####\n", "The drawing of frame(5, 3) is not right."
+assert drawing(4, 4) == "####\n#  #\n#  #\n####\n", "The drawing of frame(4, 4) is not right."
+assert drawing(3, 1) == "###\n", "A height of 1 gives a single row."
+assert drawing(0, 3) == "", "With a width of 0 draw nothing."
+```

@@ -119,3 +119,56 @@ A paraméterek fajtáiról (`*args`, `**kwargs`) és arról, hogyan kerül az é
 - Alapértelmezett érték: `def f(x, y=0)`; kulcsszavas hívás: `f(y=1, x=2)`.
 - Több érték visszaadása: `return a, b` (tuple).
 - A függvény adja vissza az eredményt, ne írja ki.
+
+## A lecke feladata: Árkalkulátor alapértelmezett paraméterekkel
+
+Írj `arkalkulator(netto, afa=27, kedvezmeny=0)` függvényt, amely **két értéket** ad vissza: a fizetendő bruttó árat és a kedvezménnyel megspórolt összeget (mindkettőt egész forintra kerekítve).
+
+1. bruttó = nettó · (1 + áfa/100),
+2. a kedvezmény a bruttóból számolt `kedvezmeny` százalék,
+3. fizetendő = bruttó − megtakarítás.
+
+Ellenőrizd a bemenetet: negatív nettónál, illetve 0–100 közé nem eső kedvezménynél dobj `ValueError` kivételt.
+
+```python starter required
+def arkalkulator(netto, afa=27, kedvezmeny=0):
+    # bemenet ellenőrzése, számolás, return fizetendo, megtakaritas
+    pass
+
+
+print(arkalkulator(10000))                  # (12700, 0)
+print(arkalkulator(10000, kedvezmeny=10))   # (11430, 1270)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def arkalkulator(netto, afa=27, kedvezmeny=0):
+    if netto < 0:
+        raise ValueError("A nettó ár nem lehet negatív.")
+    if not 0 <= kedvezmeny <= 100:
+        raise ValueError("A kedvezmény 0 és 100 között lehet.")
+    brutto = netto * (1 + afa / 100)
+    megtakaritas = brutto * kedvezmeny / 100
+    return round(brutto - megtakaritas), round(megtakaritas)
+
+
+print(arkalkulator(10000))                  # (12700, 0)
+print(arkalkulator(10000, kedvezmeny=10))   # (11430, 1270)
+```
+
+</details>
+
+```python test
+assert arkalkulator(10000) == (12700, 0), "Alapértelmezett 27% áfával, kedvezmény nélkül: (12700, 0)"
+assert arkalkulator(10000, kedvezmeny=10) == (11430, 1270), "10% kedvezménnyel: (11430, 1270)"
+assert arkalkulator(10000, afa=5) == (10500, 0), "5% áfával: (10500, 0)"
+assert arkalkulator(netto=2000, kedvezmeny=50, afa=0) == (1000, 1000), "Kulcsszavas argumentumokkal tetszőleges sorrendben."
+for rossz in [dict(netto=-1), dict(netto=100, kedvezmeny=120), dict(netto=100, kedvezmeny=-5)]:
+    try:
+        arkalkulator(**rossz)
+        assert False, f"Hibás bemenetnél ValueError kell: {rossz}"
+    except ValueError:
+        pass
+```

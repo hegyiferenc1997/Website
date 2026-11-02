@@ -207,3 +207,69 @@ import types
 assert isinstance(evens(3), types.GeneratorType), "A generator function is required (yield)!"
 print("All checks passed!")
 ```
+
+## Summary exercise: A webshop basket
+
+The summary exercise of the topic: positional, default, keyword-only and arbitrary keyword parameters, passing by sharing and the default value trap – in a single function.
+
+Write an `add_to_basket(product, quantity=1, *, basket=None, **options)` function that puts an item into the basket and returns the basket (a list):
+
+- an item is a dictionary: `{"product": ..., "quantity": ..., "options": {...}}` – `options` is the dictionary of the keyword parameters received (e.g. `colour="blue"`);
+- if no `basket` was given, it starts a **new** list (not a shared list that survives!);
+- if the basket already contains the same product **with the same options**, don't add a new item but increase its quantity;
+- for a non-positive quantity raise `ValueError`.
+
+```python starter required
+def add_to_basket(product, quantity=1, *, basket=None, **options):
+    pass
+
+
+b = add_to_basket("t-shirt", colour="blue", size="M")
+b = add_to_basket("t-shirt", 2, basket=b, colour="blue", size="M")
+print(b)   # one item, quantity 3
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def add_to_basket(product, quantity=1, *, basket=None, **options):
+    if quantity <= 0:
+        raise ValueError("The quantity must be positive.")
+    if basket is None:
+        basket = []
+    for item in basket:
+        if item["product"] == product and item["options"] == options:
+            item["quantity"] += quantity
+            return basket
+    basket.append({"product": product, "quantity": quantity, "options": options})
+    return basket
+
+
+b = add_to_basket("t-shirt", colour="blue", size="M")
+b = add_to_basket("t-shirt", 2, basket=b, colour="blue", size="M")
+print(b)   # one item, quantity 3
+```
+
+</details>
+
+```python test
+b = add_to_basket("t-shirt", colour="blue", size="M")
+assert b == [{"product": "t-shirt", "quantity": 1, "options": {"colour": "blue", "size": "M"}}], "The structure of the first item is not right."
+b = add_to_basket("t-shirt", 2, basket=b, colour="blue", size="M")
+assert len(b) == 1 and b[0]["quantity"] == 3, "The same product with the same options: the quantity grows (3)."
+b = add_to_basket("t-shirt", basket=b, colour="red", size="M")
+assert len(b) == 2, "Different options need a new item."
+assert add_to_basket("mug") == [{"product": "mug", "quantity": 1, "options": {}}], "Without a basket a new, empty basket always starts."
+assert add_to_basket("pen") == [{"product": "pen", "quantity": 1, "options": {}}], "The item of the previous call must not remain."
+try:
+    add_to_basket("pen", 0)
+    assert False, "A quantity of 0 must raise ValueError."
+except ValueError:
+    pass
+try:
+    add_to_basket("pen", 1, [])
+    assert False, "basket can only be given as a keyword (TypeError)."
+except TypeError:
+    pass
+```

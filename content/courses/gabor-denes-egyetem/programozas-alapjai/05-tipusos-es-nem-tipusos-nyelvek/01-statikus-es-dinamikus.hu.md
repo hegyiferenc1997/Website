@@ -100,3 +100,54 @@ Szigorú értelemben **típus nélküli (untyped)** nyelvben minden adat csak bi
 - **Erős:** nincs meglepő automatikus átalakítás; **gyenge:** van.
 - A Python **dinamikusan és erősen** típusos.
 - A valóban típus nélküli nyelvek (assembly) csak bitmintákkal dolgoznak.
+
+## A lecke feladata: Erős típusosság kézzel
+
+A Python **erősen típusos**: `1 + "2"` hibát ad, nem talál ki semmit. Írj `biztos_osszead(a, b)` függvényt, amely ezt a szigort még tovább viszi:
+
+- ha mindkét érték szám (`int` vagy `float`, de **nem** `bool`), az összegüket adja vissza;
+- ha mindkettő szöveg, összefűzi őket;
+- minden más esetben `TypeError` kivételt dob egy érthető üzenettel (pl. `"Nem összeadható: int és str"`).
+
+Tipp: a típus neve: `type(x).__name__`.
+
+```python starter required
+def biztos_osszead(a, b):
+    # számok? szövegek? különben raise TypeError(...)
+    pass
+
+
+print(biztos_osszead(2, 3.5), biztos_osszead("ab", "c"))   # 5.5 abc
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szam_e(x):
+    return isinstance(x, (int, float)) and not isinstance(x, bool)
+
+
+def biztos_osszead(a, b):
+    if szam_e(a) and szam_e(b):
+        return a + b
+    if isinstance(a, str) and isinstance(b, str):
+        return a + b
+    raise TypeError(f"Nem összeadható: {type(a).__name__} és {type(b).__name__}")
+
+
+print(biztos_osszead(2, 3.5), biztos_osszead("ab", "c"))   # 5.5 abc
+```
+
+</details>
+
+```python test
+assert biztos_osszead(2, 3.5) == 5.5, "Két szám összege."
+assert biztos_osszead("ab", "c") == "abc", "Két szöveg összefűzése."
+for a, b in [(1, "2"), ("1", 2), (True, 1), (1, None), ([1], [2])]:
+    try:
+        biztos_osszead(a, b)
+        assert False, f"biztos_osszead({a!r}, {b!r}) esetén TypeError kell."
+    except TypeError as hiba:
+        assert str(hiba), "A kivételnek legyen érthető üzenete."
+```

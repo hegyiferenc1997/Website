@@ -99,3 +99,52 @@ print(f"halmaz: {halmaz_ido:.6f} s")
 - A **build** a forrásból kész terméket állít elő; build rendszerek: Make, CMake, Maven, Gradle, pip, npm.
 - A fordító automatikusan optimalizál (konstans összevonás, inlining, halott kód eltávolítása).
 - A legnagyobb nyereség a jó algoritmus; optimalizálni csak mérés után érdemes.
+
+## A lecke feladata: Gyorsítsd fel: jobb algoritmus
+
+A `van_ismetlodes(lista)` függvény megmondja, van-e a listában olyan érték, amely többször is előfordul. A kiinduló kód **helyes, de lassú**: minden elemet minden másikkal összehasonlít (n² lépés). Írd át úgy, hogy egyetlen bejárással dolgozzon – jegyezd meg egy **halmazban** a már látott elemeket!
+
+Az ellenőrzés egy 6000 elemű listával méri az időt; a lassú változat ezen elbukik.
+
+```python starter required
+def van_ismetlodes(lista):
+    # Lassú: minden pár összehasonlítása – írd át halmazzal!
+    for i in range(len(lista)):
+        for j in range(i + 1, len(lista)):
+            if lista[i] == lista[j]:
+                return True
+    return False
+
+
+print(van_ismetlodes([3, 1, 4, 1, 5]))   # True
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def van_ismetlodes(lista):
+    latott = set()
+    for elem in lista:
+        if elem in latott:
+            return True
+        latott.add(elem)
+    return False
+
+
+print(van_ismetlodes([3, 1, 4, 1, 5]))   # True
+```
+
+</details>
+
+```python test
+import time
+assert van_ismetlodes([3, 1, 4, 1, 5]) is True, "[3, 1, 4, 1, 5]-ben az 1 kétszer szerepel."
+assert van_ismetlodes([1, 2, 3]) is False, "[1, 2, 3]-ban nincs ismétlődés."
+assert van_ismetlodes([]) is False, "Üres listában nincs ismétlődés."
+nagy = list(range(6000))
+kezdes = time.perf_counter()
+assert van_ismetlodes(nagy) is False
+eltelt = time.perf_counter() - kezdes
+assert eltelt < 0.2, f"Túl lassú: {eltelt:.2f} mp egy 6000 elemű listán. Használj halmazt!"
+```

@@ -120,3 +120,49 @@ print(mely)     # [[1, 2], [3, 4]]     – teljesen független
 - Python: **megosztás szerinti** átadás – a paraméter ugyanarra az objektumra mutat.
 - Immutable objektumnál ez úgy hat, mint az érték szerinti; mutable objektumnál a helyben módosítás kívül is látszik.
 - Nem kívánt mellékhatás ellen: másolat (`copy()`, `deepcopy()`), vagy új érték visszaadása.
+
+## A lecke feladata: Jegy beírása a napló módosítása nélkül
+
+A `naplo` egy szótár: név → jegyek listája. Írj `jegyet_ir(naplo, nev, jegy)` függvényt, amely egy **új** naplót ad vissza, amelyben a hallgató jegyei közé bekerült az új jegy (ha még nem szerepelt a naplóban, új bejegyzés készül).
+
+A kapott naplót **semmilyen módon nem változtathatja meg** – a benne lévő listákat sem! (Pythonban a paraméter megosztás szerint adódik át: ha a régi listához fűznél, az eredeti napló is megváltozna.)
+
+```python starter required
+def jegyet_ir(naplo, nev, jegy):
+    uj = naplo            # vigyázz: ez nem másolat, ugyanaz az objektum!
+    uj[nev].append(jegy)
+    return uj
+
+
+eredeti = {"Anna": [5, 4]}
+uj = jegyet_ir(eredeti, "Anna", 3)
+print(eredeti, uj)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def jegyet_ir(naplo, nev, jegy):
+    uj = {kulcs: list(jegyek) for kulcs, jegyek in naplo.items()}
+    uj[nev] = uj.get(nev, []) + [jegy]
+    return uj
+
+
+eredeti = {"Anna": [5, 4]}
+uj = jegyet_ir(eredeti, "Anna", 3)
+print(eredeti, uj)
+```
+
+</details>
+
+```python test
+eredeti = {"Anna": [5, 4], "Béla": [2]}
+uj = jegyet_ir(eredeti, "Anna", 3)
+assert uj == {"Anna": [5, 4, 3], "Béla": [2]}, "Az új naplóban Annának [5, 4, 3] a jegyei."
+assert eredeti == {"Anna": [5, 4], "Béla": [2]}, "Az eredeti napló (és a benne lévő lista) nem változhat meg!"
+assert uj is not eredeti, "Új szótárat adj vissza."
+uj["Béla"].append(5)
+assert eredeti["Béla"] == [2], "Az új napló listái se legyenek közösek az eredetivel."
+assert jegyet_ir({}, "Csilla", 5) == {"Csilla": [5]}, "Új hallgatónál új bejegyzés készül."
+```

@@ -82,3 +82,39 @@ A Python **fokozatos típusosságot** követ: a kód egy részét jelölheted, a
 - Típusjelölés: `valtozo: tipus`, függvénynél `def f(x: int) -> str:`.
 - A jelölés nem kötelező, és a Python futáskor nem ellenőrzi.
 - A **mypy** és a fejlesztőkörnyezet a jelölések alapján futtatás nélkül talál hibákat.
+
+## A lecke feladata: Függvény típusjelölésekkel
+
+Írj `szohosszak` függvényt **teljes típusjelöléssel**: egy szavakból álló listát (`list[str]`) kap, és egy szótárat (`dict[str, int]`) ad vissza, amely minden szóhoz a hosszát rendeli.
+
+Az ellenőrzés a függvény működését és a típusjelöléseit (`szohosszak.__annotations__`) is megnézi: a paraméter neve legyen `szavak`.
+
+```python starter required
+def szohosszak(szavak):
+    # típusjelölés: szavak: list[str], visszatérés: dict[str, int]
+    pass
+
+
+print(szohosszak(["alma", "kiwi", "szilva"]))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szohosszak(szavak: list[str]) -> dict[str, int]:
+    return {szo: len(szo) for szo in szavak}
+
+
+print(szohosszak(["alma", "kiwi", "szilva"]))
+```
+
+</details>
+
+```python test
+assert szohosszak(["alma", "kiwi", "szilva"]) == {"alma": 4, "kiwi": 4, "szilva": 6}, "A szavak hossza nem stimmel."
+assert szohosszak([]) == {}, "Üres listára üres szótár."
+jelolesek = szohosszak.__annotations__
+assert jelolesek.get("szavak") == list[str], "A paraméter típusjelölése legyen: szavak: list[str]"
+assert jelolesek.get("return") == dict[str, int], "A visszatérési érték jelölése legyen: -> dict[str, int]"
+```

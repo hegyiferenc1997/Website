@@ -67,3 +67,48 @@ print(average)
 - Languages range from machine code to high-level languages; the higher the level, the more readable and portable the code.
 - **Syntax** = form, **semantics** = meaning.
 - There are general-purpose and domain-specific languages.
+
+## Lesson exercise: Syntactically right, semantically wrong
+
+The two functions below are **syntactically correct** (they run) but **semantically wrong**: they don't compute what their names promise. Fix both!
+
+- `rectangle_perimeter(a, b)` – the perimeter of a rectangle: 2 · (a + b);
+- `average(a, b, c)` – the average of three numbers.
+
+```python starter required
+def rectangle_perimeter(a, b):
+    return a * b
+
+
+def average(a, b, c):
+    return a + b + c / 3
+
+
+print(rectangle_perimeter(3, 4))   # should be 14
+print(average(2, 4, 6))            # should be 4.0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def rectangle_perimeter(a, b):
+    return 2 * (a + b)
+
+
+def average(a, b, c):
+    return (a + b + c) / 3
+
+
+print(rectangle_perimeter(3, 4))   # 14
+print(average(2, 4, 6))            # 4.0
+```
+
+</details>
+
+```python test
+assert rectangle_perimeter(3, 4) == 14, "The perimeter of a 3×4 rectangle is 14."
+assert rectangle_perimeter(1, 1) == 4, "The perimeter of a 1×1 square is 4."
+assert average(2, 4, 6) == 4, "The average of 2, 4 and 6 is 4 (mind the parentheses!)."
+assert average(1, 2, 3) == 2, "The average of 1, 2 and 3 is 2."
+```

@@ -106,3 +106,54 @@ print(isinstance(x, (int, float)))   # True – több típus közül bármelyik
 - **Explicit** konverzió: `int()`, `float()`, `str()`, `bool()`. Az `int()` levág, nem kerekít!
 - Az `input()` mindig szöveget ad.
 - Hamis érték: `False`, `None`, `0`, üres szöveg/gyűjtemény; minden más igaz.
+
+## A lecke feladata: Számok egy szöveges sorból
+
+Egy fájlból vagy a billentyűzetről beolvasott adat mindig **szöveg**. Írj `osszeg_szovegbol(sor)` függvényt, amely egy vesszővel elválasztott számsort (pl. `"3, 4.5, 10"`) összead, és **valós számként** adja vissza az összeget (`17.5`).
+
+- A számok körül lehetnek szóközök.
+- Az üres elemeket (pl. `"1,,2"` vagy üres sor) hagyd ki.
+- Ha egy elem nem szám, dobjon `ValueError`-t (ezt a `float()` magától megteszi).
+
+```python starter required
+def osszeg_szovegbol(sor):
+    osszeg = 0.0
+    for darab in sor.split(","):
+        # darab.strip(), üres kihagyása, float() átalakítás
+        pass
+    return osszeg
+
+
+print(osszeg_szovegbol("3, 4.5, 10"))   # 17.5
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def osszeg_szovegbol(sor):
+    osszeg = 0.0
+    for darab in sor.split(","):
+        darab = darab.strip()
+        if darab:
+            osszeg += float(darab)
+    return osszeg
+
+
+print(osszeg_szovegbol("3, 4.5, 10"))   # 17.5
+```
+
+</details>
+
+```python test
+assert osszeg_szovegbol("3, 4.5, 10") == 17.5, "3 + 4.5 + 10 = 17.5"
+assert osszeg_szovegbol("1,,2") == 3.0, "Az üres elemet ki kell hagyni."
+assert osszeg_szovegbol("") == 0.0, "Üres sorra 0.0 az eredmény."
+assert isinstance(osszeg_szovegbol("2"), float), "Valós számot (float) adj vissza."
+assert osszeg_szovegbol(" -1.5 , 1 ") == -0.5, "Negatív számok és szóközök is lehetnek."
+try:
+    osszeg_szovegbol("1, kettő")
+    assert False, "Nem szám elemnél ValueError kell."
+except ValueError:
+    pass
+```

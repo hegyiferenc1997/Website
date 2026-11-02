@@ -89,3 +89,48 @@ A tisztán funkcionális nyelvek (Haskell, Elm) mellett ma szinte minden nyelv �
 - A funkcionális stílus **tiszta függvényekre** és **megváltoztathatatlan adatokra** épít.
 - A függvény érték: átadható, visszaadható (**magasabb rendű függvények**).
 - Python eszközök: `lambda`, `map`, `filter`, `sorted(key=…)`, listaértelmezés.
+
+## A lecke feladata: Tiszta függvény map-pel, filterrel, sorted-del
+
+Írj **tiszta** `feldolgoz(szamok)` függvényt, amely:
+
+1. kiszűri a pozitív számokat (`filter`),
+2. mindegyiket négyzetre emeli (`map`),
+3. csökkenő sorrendbe rendezi (`sorted`),
+
+és az eredményt új listában adja vissza. Használj `lambda` függvényeket! A bemeneti lista nem változhat meg, és ugyanarra a bemenetre mindig ugyanazt kell adnia.
+
+```python starter required
+def feldolgoz(szamok):
+    # pozitivak = filter(lambda x: ..., szamok)
+    # negyzetek = map(lambda x: ..., pozitivak)
+    # return sorted(..., reverse=True)
+    pass
+
+
+print(feldolgoz([3, -1, 2, 0, -5, 4]))   # [16, 9, 4]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def feldolgoz(szamok):
+    pozitivak = filter(lambda x: x > 0, szamok)
+    negyzetek = map(lambda x: x * x, pozitivak)
+    return sorted(negyzetek, reverse=True)
+
+
+print(feldolgoz([3, -1, 2, 0, -5, 4]))   # [16, 9, 4]
+```
+
+</details>
+
+```python test
+adat = [3, -1, 2, 0, -5, 4]
+assert feldolgoz(adat) == [16, 9, 4], "feldolgoz([3, -1, 2, 0, -5, 4]) → [16, 9, 4]"
+assert feldolgoz(adat) == [16, 9, 4], "Másodszorra is ugyanazt kell adnia (tiszta függvény)."
+assert adat == [3, -1, 2, 0, -5, 4], "A bemeneti lista nem változhat meg."
+assert feldolgoz([]) == [], "Üres listára üres lista."
+assert isinstance(feldolgoz([1]), list), "Listát adj vissza (a sorted() listát ad)."
+```

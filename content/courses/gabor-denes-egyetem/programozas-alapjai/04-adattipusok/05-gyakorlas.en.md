@@ -197,3 +197,52 @@ assert to_number("abc") is None
 assert to_number("") is None
 print("All checks passed!")
 ```
+
+## Summary exercise: Temperature report
+
+The summary exercise of the topic: string processing, type conversion, numbers and formatting together.
+
+Write a `report(line)` function that turns a comma-separated line of temperatures (e.g. `"12.5, -3, 7, 0.5"`) into text like this:
+
+```text
+min: -3.0, max: 12.5, avg: 4.25
+```
+
+- Every value appears as a float with at least one decimal (printing a `float` does this by itself); **round the average to two decimals**.
+- If the line contains no numbers at all, the result is `"no data"`.
+
+```python starter required
+def report(line):
+    # 1. split, strip, skip empty ones, float()
+    # 2. no data?
+    # 3. min, max, average (round(..., 2)), then an f-string
+    pass
+
+
+print(report("12.5, -3, 7, 0.5"))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def report(line):
+    values = [float(p) for p in line.split(",") if p.strip()]
+    if not values:
+        return "no data"
+    avg = round(sum(values) / len(values), 2)
+    return f"min: {min(values)}, max: {max(values)}, avg: {avg}"
+
+
+print(report("12.5, -3, 7, 0.5"))
+```
+
+</details>
+
+```python test
+assert report("12.5, -3, 7, 0.5") == "min: -3.0, max: 12.5, avg: 4.25", "The example result is not right."
+assert report("20") == "min: 20.0, max: 20.0, avg: 20.0", "With a single value all three are the same."
+assert report("1, 2, 2") == "min: 1.0, max: 2.0, avg: 1.67", "Round the average to two decimals (1.67)."
+assert report("") == "no data", "An empty line gives: no data"
+assert report(" , ") == "no data", "Only empty items also give: no data"
+```

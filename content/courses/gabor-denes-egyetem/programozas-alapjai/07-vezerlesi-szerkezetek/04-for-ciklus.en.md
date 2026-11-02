@@ -109,3 +109,49 @@ This is essentially a compactly written `while` loop. Python's `for i in range(5
 - `for i in range(a, b, step)` – counting loop; the upper bound is excluded.
 - `for item in collection` – iteration; `enumerate()` also gives the index, `zip()` pairs things up.
 - Python's `for` is an iterating loop; the C/Java `for` is a compact `while`.
+
+## Lesson exercise: A ranking with zip and enumerate
+
+There are two parallel lists: the students' names and their scores. Write a `ranking(names, scores)` function that returns a list of lines like these, in **descending** order of score:
+
+```text
+1. Cecil (92)
+2. Anna (87)
+3. Bob (64)
+```
+
+Use `zip()` for pairing, `sorted()` for sorting and `enumerate(..., start=1)` for the position! For equal scores keep the original order (`sorted` does this by itself).
+
+```python starter required
+def ranking(names, scores):
+    pairs = list(zip(names, scores))
+    # sort by score descending, then build the lines with enumerate
+    pass
+
+
+print(ranking(["Anna", "Bob", "Cecil"], [87, 64, 92]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def ranking(names, scores):
+    pairs = list(zip(names, scores))
+    ordered = sorted(pairs, key=lambda pair: pair[1], reverse=True)
+    lines = []
+    for place, (name, score) in enumerate(ordered, start=1):
+        lines.append(f"{place}. {name} ({score})")
+    return lines
+
+
+print(ranking(["Anna", "Bob", "Cecil"], [87, 64, 92]))
+```
+
+</details>
+
+```python test
+assert ranking(["Anna", "Bob", "Cecil"], [87, 64, 92]) == ["1. Cecil (92)", "2. Anna (87)", "3. Bob (64)"], "The example ranking is not right."
+assert ranking([], []) == [], "Empty lists give an empty ranking."
+assert ranking(["X", "Y"], [50, 50]) == ["1. X (50)", "2. Y (50)"], "Equal scores keep the original order."
+```

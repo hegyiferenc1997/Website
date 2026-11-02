@@ -67,3 +67,48 @@ print(atlag)
 - A nyelvek a gépi kódtól a magas szintű nyelvekig terjednek; minél magasabb a szint, annál olvashatóbb és hordozhatóbb a kód.
 - **Szintaxis** = forma, **szemantika** = jelentés.
 - Vannak általános célú és szakterületi nyelvek.
+
+## A lecke feladata: Szintaktikailag jó, szemantikailag hibás
+
+Az alábbi két függvény **szintaktikailag helyes** (lefut), de **szemantikailag hibás**: nem azt számolja, amit a neve ígér. Javítsd ki mindkettőt!
+
+- `teglalap_kerulet(a, b)` – a téglalap kerülete: 2 · (a + b);
+- `atlag(a, b, c)` – három szám átlaga.
+
+```python starter required
+def teglalap_kerulet(a, b):
+    return a * b
+
+
+def atlag(a, b, c):
+    return a + b + c / 3
+
+
+print(teglalap_kerulet(3, 4))   # 14 kellene
+print(atlag(2, 4, 6))           # 4.0 kellene
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def teglalap_kerulet(a, b):
+    return 2 * (a + b)
+
+
+def atlag(a, b, c):
+    return (a + b + c) / 3
+
+
+print(teglalap_kerulet(3, 4))   # 14
+print(atlag(2, 4, 6))           # 4.0
+```
+
+</details>
+
+```python test
+assert teglalap_kerulet(3, 4) == 14, "A 3×4-es téglalap kerülete 14."
+assert teglalap_kerulet(1, 1) == 4, "Az 1×1-es négyzet kerülete 4."
+assert atlag(2, 4, 6) == 4, "2, 4 és 6 átlaga 4 (a zárójelezésre figyelj!)."
+assert atlag(1, 2, 3) == 2, "1, 2 és 3 átlaga 2."
+```

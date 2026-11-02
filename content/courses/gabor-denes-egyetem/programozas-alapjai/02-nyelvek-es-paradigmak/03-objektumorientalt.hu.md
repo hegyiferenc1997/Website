@@ -122,3 +122,73 @@ Kis szkripteknél viszont felesleges bonyolítás lehet – ilyenkor elég néh�
 - **Osztály** = tervrajz, **objektum** = példány; adat = attribútum, művelet = metódus.
 - Négy pillér: **egységbezárás, öröklődés, polimorfizmus, absztrakció**.
 - Pythonban `class`, `__init__` és `self` a kulcsszavak.
+
+## A lecke feladata: Bankszámla osztály
+
+Készíts `Bankszamla` osztályt:
+
+- a konstruktor a `tulajdonos` nevét kapja; az `egyenleg` kezdetben 0;
+- `befizet(osszeg)`: növeli az egyenleget; nem pozitív összegnél `ValueError` kivételt dob;
+- `kivesz(osszeg)`: ha van rá fedezet, levonja és `True`-t ad vissza, különben nem változtat semmit és `False`-t ad vissza.
+
+Az egységbezárás szellemében az egyenleget csak ezek a metódusok változtassák.
+
+```python starter required
+class Bankszamla:
+    def __init__(self, tulajdonos):
+        self.tulajdonos = tulajdonos
+        # egyenleg kezdetben 0
+
+    def befizet(self, osszeg):
+        pass
+
+    def kivesz(self, osszeg):
+        pass
+
+
+szamla = Bankszamla("Anna")
+szamla.befizet(5000)
+print(szamla.kivesz(2000), szamla.egyenleg)   # True 3000
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class Bankszamla:
+    def __init__(self, tulajdonos):
+        self.tulajdonos = tulajdonos
+        self.egyenleg = 0
+
+    def befizet(self, osszeg):
+        if osszeg <= 0:
+            raise ValueError("A befizetett összegnek pozitívnak kell lennie.")
+        self.egyenleg += osszeg
+
+    def kivesz(self, osszeg):
+        if osszeg > self.egyenleg:
+            return False
+        self.egyenleg -= osszeg
+        return True
+
+
+szamla = Bankszamla("Anna")
+szamla.befizet(5000)
+print(szamla.kivesz(2000), szamla.egyenleg)   # True 3000
+```
+
+</details>
+
+```python test
+s = Bankszamla("Béla")
+assert s.tulajdonos == "Béla" and s.egyenleg == 0, "Új számlán 0 az egyenleg."
+s.befizet(1000)
+assert s.egyenleg == 1000, "Befizetés után 1000 az egyenleg."
+assert s.kivesz(300) is True and s.egyenleg == 700, "300 kivétele után 700 marad, és True a válasz."
+assert s.kivesz(5000) is False and s.egyenleg == 700, "Fedezet nélkül False, és nem változik az egyenleg."
+try:
+    s.befizet(-5)
+    assert False, "Negatív befizetésnél ValueError kell."
+except ValueError:
+    pass
+```

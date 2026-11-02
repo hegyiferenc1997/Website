@@ -173,3 +173,63 @@ print(rangsor)
 assert [nev for nev, _ in rangsor] == ["Csilla", "Anna", "Béla"]
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Hallgatói rangsor – OOP és funkcionális eszközök együtt
+
+A témakör összefoglaló feladata: objektumorientált és funkcionális eszközök együtt.
+
+1. Készíts `Hallgato` osztályt: a konstruktor a `nev`-et és a `pontok` listáját kapja; az `atlag()` metódus a pontok átlagát adja vissza (üres listánál 0).
+2. Írj `legjobbak(hallgatok, n)` függvényt, amely a hallgatók listájából az átlag szerint **legjobb `n` hallgató nevét** adja vissza csökkenő sorrendben. Egyenlő átlagnál a név szerinti ábécérend döntsön. Használd a `sorted()` függvényt `key=lambda ...` kulccsal!
+
+```python starter required
+class Hallgato:
+    def __init__(self, nev, pontok):
+        pass
+
+    def atlag(self):
+        pass
+
+
+def legjobbak(hallgatok, n):
+    # sorted(..., key=lambda h: (-h.atlag(), h.nev)) – a mínusz jel fordítja meg az átlag sorrendjét
+    pass
+
+
+csoport = [Hallgato("Béla", [60, 70]), Hallgato("Anna", [90, 80]), Hallgato("Csilla", [85, 85])]
+print(legjobbak(csoport, 2))   # ['Anna', 'Csilla']
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class Hallgato:
+    def __init__(self, nev, pontok):
+        self.nev = nev
+        self.pontok = pontok
+
+    def atlag(self):
+        if not self.pontok:
+            return 0
+        return sum(self.pontok) / len(self.pontok)
+
+
+def legjobbak(hallgatok, n):
+    rendezett = sorted(hallgatok, key=lambda h: (-h.atlag(), h.nev))
+    return [h.nev for h in rendezett[:n]]
+
+
+csoport = [Hallgato("Béla", [60, 70]), Hallgato("Anna", [90, 80]), Hallgato("Csilla", [85, 85])]
+print(legjobbak(csoport, 2))   # ['Anna', 'Csilla']
+```
+
+</details>
+
+```python test
+assert Hallgato("X", [50, 100]).atlag() == 75, "Az 50 és 100 átlaga 75."
+assert Hallgato("Y", []).atlag() == 0, "Pontok nélkül 0 az átlag."
+cs = [Hallgato("Béla", [60, 70]), Hallgato("Anna", [90, 80]), Hallgato("Csilla", [85, 85])]
+assert legjobbak(cs, 2) == ["Anna", "Csilla"], "A két legjobb: Anna (85), Csilla (85) – egyenlőségnél ábécérend."
+assert legjobbak(cs, 5) == ["Anna", "Csilla", "Béla"], "Ha n nagyobb, mindenki benne van."
+assert legjobbak([], 3) == [], "Üres csoportra üres lista."
+```

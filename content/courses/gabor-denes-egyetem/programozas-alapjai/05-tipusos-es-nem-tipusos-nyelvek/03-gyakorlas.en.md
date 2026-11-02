@@ -123,3 +123,79 @@ print(type(x).__name__)
 `int`, `float` (division always gives a float), `str`, `bool`.
 
 </details>
+
+## Summary exercise: A runtime type checker
+
+The summary exercise of the topic. Python does **not** check type hints at runtime – now you will!
+
+Write a `checked_call(function, *values)` function that:
+
+1. goes through the hinted types of the parameters in order using `function.__annotations__` (skip the `"return"` key),
+2. if a value is not of the hinted type (`isinstance`), raises `TypeError` with the parameter's name in the message,
+3. if everything is fine, calls the function with the values and returns its result – but first checks that the return value matches the `"return"` hint (if there is one).
+
+It is enough to handle simple types (`int`, `str`, `float`, `bool`, `list`).
+
+```python starter required
+def checked_call(function, *values):
+    hints = dict(function.__annotations__)
+    return_type = hints.pop("return", None)
+    # zip(hints.items(), values) → (name, type), value pairs
+    pass
+
+
+def double(x: int) -> int:
+    return 2 * x
+
+
+print(checked_call(double, 21))   # 42
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def checked_call(function, *values):
+    hints = dict(function.__annotations__)
+    return_type = hints.pop("return", None)
+    for (name, kind), value in zip(hints.items(), values):
+        if not isinstance(value, kind):
+            raise TypeError(f"Parameter {name} should be {kind.__name__}, not {type(value).__name__}.")
+    result = function(*values)
+    if return_type is not None and not isinstance(result, return_type):
+        raise TypeError(f"The return value should be {return_type.__name__}.")
+    return result
+
+
+def double(x: int) -> int:
+    return 2 * x
+
+
+print(checked_call(double, 21))   # 42
+```
+
+</details>
+
+```python test
+def double(x: int) -> int:
+    return 2 * x
+
+def greet(name: str, times: int) -> str:
+    return ("Hi " + name + "! ") * times
+
+def broken(x: int) -> str:
+    return x
+
+assert checked_call(double, 21) == 42, "With correct types return the function's result."
+assert checked_call(greet, "Anna", 2) == "Hi Anna! Hi Anna! ", "It must work with several parameters."
+try:
+    checked_call(greet, "Anna", "2")
+    assert False, "A parameter of the wrong type must raise TypeError."
+except TypeError as e:
+    assert "times" in str(e), "The error message should contain the parameter's name (times)."
+try:
+    checked_call(broken, 5)
+    assert False, "A return value of the wrong type must raise TypeError."
+except TypeError:
+    pass
+```
