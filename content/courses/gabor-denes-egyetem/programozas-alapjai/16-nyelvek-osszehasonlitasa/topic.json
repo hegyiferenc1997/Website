@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Programozási nyelvek összehasonlítása",
+    "en": "Comparing Programming Languages"
+  },
+  "description": {
+    "hu": "A legismertebb nyelvek (Python, Java, C#, Ruby, C/C++, JavaScript és mások) jellemzői, előnyei és hátrányai, ugyanaz a program több nyelven, és szempontok a megfelelő nyelv kiválasztásához.",
+    "en": "Key traits, strengths and weaknesses of the best-known languages (Python, Java, C#, Ruby, C/C++, JavaScript and others), the same program in several languages, and how to choose the right language."
+  }
+}

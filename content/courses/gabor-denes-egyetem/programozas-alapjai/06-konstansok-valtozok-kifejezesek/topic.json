@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Konstansok, változók és kifejezések",
+    "en": "Constants, Variables and Expressions"
+  },
+  "description": {
+    "hu": "Változók deklarálása és használata, elnevezési szabályok, konstansok, operátorok és kifejezések kiértékelése, beolvasás és kiírás.",
+    "en": "Declaring and using variables, naming rules, constants, operators and expression evaluation, input and output."
+  }
+}

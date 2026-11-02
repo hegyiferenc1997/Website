@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Programvezérlési szerkezetek", "en": "Control Structures" },
+  "description": {
+    "hu": "Elágazások (if-else, switch/match), ciklusok (for, while, do-while), beágyazott szerkezetek, vezérlő utasítások és a programozási tételek.",
+    "en": "Branching (if-else, switch/match), loops (for, while, do-while), nested structures, control statements and the classic basic algorithms."
+  }
+}

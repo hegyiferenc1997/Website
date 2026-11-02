@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Hiba- és kivételkezelés", "en": "Error and Exception Handling" },
+  "description": {
+    "hu": "A hibák típusai és a hibaüzenetek olvasása, try–except (try–catch) blokkok, saját kivételek dobása, valamint kivételkezelési minták és jó gyakorlatok.",
+    "en": "Types of errors and reading error messages, try–except (try–catch) blocks, raising your own exceptions, and exception handling patterns and good practices."
+  }
+}

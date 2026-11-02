@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Tesztelés és hibakeresés", "en": "Testing and Debugging" },
+  "description": {
+    "hu": "Miért és hogyan tesztelünk, egységtesztek a unittest és pytest keretrendszerrel, hibakeresési módszerek és eszközök, valamint a hibák előfordulása és kezelése a fejlesztés során.",
+    "en": "Why and how we test, unit tests with the unittest and pytest frameworks, debugging methods and tools, and how bugs arise and are handled during development."
+  }
+}

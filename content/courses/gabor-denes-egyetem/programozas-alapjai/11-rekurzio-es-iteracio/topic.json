@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Rekurzió és iteráció", "en": "Recursion and Iteration" },
+  "description": {
+    "hu": "Hogyan működik a rekurzió a hívási veremben, mikor jobb az iteráció, memoizáció, valamint klasszikus rekurzív algoritmusok: bináris keresés, Hanoi tornyai, összefésülő rendezés.",
+    "en": "How recursion works on the call stack, when iteration is better, memoisation, and classic recursive algorithms: binary search, Towers of Hanoi, merge sort."
+  }
+}

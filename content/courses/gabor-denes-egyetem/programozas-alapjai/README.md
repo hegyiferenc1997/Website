@@ -3,20 +3,23 @@
 Ebben a mappában van a tárgy tananyaga. Indításkor (és `pnpm db:seed` futtatásakor) az oldal innen tölti be
 az adatbázisba a témaköröket és a leckéket.
 
+A szerkezet a GDE hivatalos tantárgyleírásának (B-PROGAL) 19 témakörét követi: `01-alapelvek-es-koncepciok` …
+`19-gyakorlati-alkalmazas`. Minden témakör végén egy `gyakorlas` lecke van ellenőrző kérdésekkel és feladatokkal.
+
 ## Szerkezet
 
 ```
-01-bevezetes/                 ← témakör: a szám a sorrend, utána az URL-ben látszó név (ékezet nélkül)
+01-alapelvek-es-koncepciok/   ← témakör: a szám a sorrend, utána az URL-ben látszó név (ékezet nélkül)
   topic.json                  ← a témakör címe és leírása magyarul és angolul
-  01-mi-a-program.hu.md       ← lecke magyarul (kötelező)
-  01-mi-a-program.en.md       ← ugyanaz angolul (ha hiányzik, a magyar jelenik meg)
+  01-mi-a-programozas.hu.md   ← lecke magyarul (kötelező)
+  01-mi-a-programozas.en.md   ← ugyanaz angolul (ha hiányzik, a magyar jelenik meg)
 ```
 
 ## Egy lecke fájl
 
 ````markdown
 ---
-title: Mi a program és az algoritmus?
+title: Mi a programozás?
 summary: Egy mondat a leckéről (a listákban látszik).
 minutes: 10
 ---
@@ -29,5 +32,27 @@ print("A kódrészletek színezve jelennek meg.")
 ````
 
 - A `minutes` (becsült idő percben) a magyar fájlból számít.
+- Gyakorló leckénél a fejlécbe `kind: practice` kerül.
 - Új lecke: új fájlpár a témakör mappájában. Új témakör: új mappa `topic.json`-nal.
 - Átnevezéskor az URL is megváltozik, és a lecke „kész” jelölése elvész, ezért a már élő leckéket ne nevezd át.
+
+## Kódblokk-szerepek (a későbbi beépített Python-futtatóhoz)
+
+A ` ```python ` után írt második szó a blokk szerepét adja meg. Az oldalon a fejlécben is megjelenik
+(pl. „Python · futtatható példa”), a HTML-ben pedig `data-role` attribútumként – erre épül majd a futtató.
+
+| Jelölés                | Jelentés                                                                                           |
+| ---------------------- | -------------------------------------------------------------------------------------------------- |
+| ` ```python run `      | önállóan futtatható példa                                                                          |
+| ` ```python starter `  | egy feladat kiinduló kódja                                                                         |
+| ` ```python solution ` | a feladat megoldása (egy `<details><summary>Megoldás</summary>` blokkban, üres sorokkal körülvéve) |
+| ` ```python test `     | `assert`-ekkel ellenőrzés, a közvetlenül előtte lévő megoldás után fut                             |
+| ` ```python `          | csak megjelenített kód (pl. szándékosan hibás vagy hardvert igénylő példa)                         |
+
+Szabályok, hogy a blokkok tényleg fussanak:
+
+- Minden `run` blokk **önálló**: nem támaszkodhat másik blokkban definiált változóra vagy fájlra.
+- Nem írhat a hibakimenetre (stderr) – pl. `logging`-nál `stream=sys.stdout`, `unittest`-nél
+  `TextTestRunner(stream=sys.stdout)`. A szándékosan hibát dobó példák sima ` ```python ` blokkok.
+- A `pnpm test` (`tests/python-examples.test.ts`) minden `run` blokkot, és minden `solution` + `test` párt
+  lefuttat egy üres ideiglenes mappában; ha bármelyik hibázik, a teszt elbukik.

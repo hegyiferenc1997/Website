@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Programozás alapelvei és koncepciók",
+    "en": "Programming Principles and Concepts"
+  },
+  "description": {
+    "hu": "Mi a programozás és miért fontos, mi az algoritmus és az adatszerkezet, hogyan tervezünk meg egy megoldást, és hogyan fut az első Python programunk.",
+    "en": "What programming is and why it matters, what algorithms and data structures are, how to design a solution, and how to run your first Python program."
+  }
+}

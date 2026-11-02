@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Típusos és nem típusos nyelvek", "en": "Typed and Untyped Languages" },
+  "description": {
+    "hu": "Statikus és dinamikus, erős és gyenge típusosság, típusjelölések (type hints) Pythonban és a típusellenőrzés eszközei.",
+    "en": "Static and dynamic, strong and weak typing, type hints in Python and tools for type checking."
+  }
+}

@@ -271,3 +271,44 @@
 :root[data-theme="light"] .lesson-body pre span {
   color: var(--shiki-light);
 }
+
+/* Futtatható példa / feladat fejléce: az akcentszín jelzi, hogy ez kipróbálandó kód. */
+.lesson-body .code-block[data-role="run"] .code-label,
+.lesson-body .code-block[data-role="starter"] .code-label {
+  color: var(--accent);
+}
+
+/* Lenyitható doboz (megoldás, válasz): JavaScript nélkül nyílik, alapból zárva van. */
+.lesson-body details {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  padding: 0.625rem 1rem;
+}
+
+.lesson-body details[open] {
+  padding-bottom: 1rem;
+}
+
+.lesson-body summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.lesson-body summary:hover,
+.lesson-body details[open] > summary {
+  color: var(--accent);
+}
+
+/* A dobozon belüli elemek közé is jusson térköz (a details nem rácsként rendezi a tartalmát mindenhol). */
+.lesson-body details > * + * {
+  margin-top: 0.75rem;
+}
+
+.lesson-body details .code-block {
+  background: var(--bg);
+}

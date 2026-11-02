@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Futtatási környezetek", "en": "Runtime Environments" },
+  "description": {
+    "hu": "Hogyan futtass Python programot (interaktív mód, szkript, VS Code, Jupyter, online), virtuális környezetek és csomagkezelés (venv, pip), valamint a futtatókörnyezetek áttekintése: operációs rendszer, JVM, .NET, böngésző, Node.js, konténerek és felhő.",
+    "en": "How to run a Python program (interactive mode, script, VS Code, Jupyter, online), virtual environments and package management (venv, pip), and an overview of runtime environments: operating system, JVM, .NET, browser, Node.js, containers and the cloud."
+  }
+}

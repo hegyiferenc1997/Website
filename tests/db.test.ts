@@ -64,7 +64,8 @@ describe("tananyag", () => {
     });
     const topics = course!.topics;
     expect(topics.length).toBeGreaterThan(3);
-    expect(topics[0].slug).toBe("bevezetes");
+    expect(topics.length).toBe(19);
+    expect(topics[0].slug).toBe("alapelvek-es-koncepciok");
     for (const topic of topics) {
       expect(topic.title.en, topic.slug).toBeTruthy();
       expect(topic.lessons.length, topic.slug).toBeGreaterThan(0);

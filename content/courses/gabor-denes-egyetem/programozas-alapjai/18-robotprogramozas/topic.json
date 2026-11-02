@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Robotprogramozás", "en": "Robot Programming" },
+  "description": {
+    "hu": "A robotok felépítése (érzékelők, beavatkozók, vezérlő), az érzékel–gondolkodik–cselekszik ciklus, állapotgépek, szabályozás és útvonaltervezés – mindez szimulált robotokon, Pythonban.",
+    "en": "How robots are built (sensors, actuators, controller), the sense–think–act loop, state machines, control and path planning – all on simulated robots, in Python."
+  }
+}
