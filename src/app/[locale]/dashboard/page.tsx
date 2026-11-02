@@ -75,8 +75,7 @@ async function DashboardContent() {
           <span className="text-accent">$ </span>
           {t("greeting", { name: user.name })}
         </p>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <StatTile label={t("statWeek")} value={duration(data.weekSeconds)} />
+        <div className="grid gap-3 sm:grid-cols-2">
           <StatTile label={t("statTotal")} value={duration(data.totalSeconds)} />
           <StatTile
             label={t("statSubscription")}

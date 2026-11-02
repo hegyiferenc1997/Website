@@ -243,7 +243,6 @@
     "loading": "Loading…",
     "signedOut": "Sign in at the top right to see your dashboard.",
     "greeting": "Hi, {name}! Shall we continue?",
-    "statWeek": "Study time this week",
     "statTotal": "Study time in total",
     "statSubscription": "Subscription",
     "statSubscriptionHint": "from your soonest-expiring access",

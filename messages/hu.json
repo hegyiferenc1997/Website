@@ -243,7 +243,6 @@
     "loading": "Betöltés…",
     "signedOut": "Az irányítópult megtekintéséhez jelentkezz be a jobb felső sarokban.",
     "greeting": "Szia, {name}! Folytassuk?",
-    "statWeek": "Tanulás ezen a héten",
     "statTotal": "Tanulás összesen",
     "statSubscription": "Előfizetés",
     "statSubscriptionHint": "a leghamarabb lejáró hozzáférésedből",
