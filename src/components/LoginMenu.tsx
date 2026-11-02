@@ -9,7 +9,8 @@ import { isPasswordValid, type SocialProviders } from "@/features/auth/shared";
 import type { SessionUser } from "@/features/auth/server";
 import { useOneTimeParam } from "@/features/auth/url-param";
 import { disconnectAccount, flushProgress } from "@/features/progress/store";
-import { getPathname } from "@/i18n/navigation";
+import { flushActivity } from "@/features/account/ActivityTracker";
+import { getPathname, Link } from "@/i18n/navigation";
 
 // A panel nézetei: belépés, regisztráció, elfelejtett jelszó.
 type Mode = "login" | "register" | "forgot";
@@ -189,10 +190,10 @@ export function LoginMenu({
     }
   }
 
-  // Kijelentkezés: előbb a még el nem küldött haladás mentése, utána a böngészőből törlődik.
+  // Kijelentkezés: előbb a még el nem küldött haladás és idő mentése, utána a böngészőből törlődik.
   async function signOut() {
     setBusy(true);
-    await flushProgress();
+    await Promise.all([flushProgress(), flushActivity()]);
     await authClient.signOut();
     disconnectAccount();
     setBusy(false);
@@ -271,10 +272,25 @@ export function LoginMenu({
                 <span className="font-semibold text-fg">{user.name}</span>
                 <span className="break-all text-muted">{user.email}</span>
               </div>
+              {/* A fiók menüpontjai: Profil és Tananyagaim */}
+              <nav aria-label={t("accountTitle")} className="grid gap-1">
+                <Link
+                  href="/profile"
+                  data-autofocus
+                  onClick={() => setOpen(false)}
+                  className={menuItemClass}
+                >
+                  <ProfileIcon />
+                  {t("profile")}
+                </Link>
+                <Link href="/my-courses" onClick={() => setOpen(false)} className={menuItemClass}>
+                  <BookIcon />
+                  {t("myCourses")}
+                </Link>
+              </nav>
               <p className="text-xs text-muted">{t("synced")}</p>
               <button
                 type="button"
-                data-autofocus
                 disabled={busy}
                 onClick={signOut}
                 className="rounded-md border border-line px-4 py-2.5 text-sm transition-colors hover:border-accent hover:bg-surface-hover disabled:opacity-60"
@@ -446,6 +462,10 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 const inputClass =
   "rounded-md border border-line bg-bg px-3 py-2 text-fg outline-none focus:border-accent";
 
+// A fiók menüpontjainak stílusa.
+const menuItemClass =
+  "flex items-center gap-3 rounded-md border border-line px-3 py-2.5 text-sm text-fg transition-colors hover:border-accent hover:bg-surface-hover";
+
 const socialClass =
   "flex flex-1 items-center justify-center rounded-md border border-line bg-bg py-2.5 text-fg transition-colors hover:border-accent hover:bg-surface-hover disabled:opacity-60";
 
@@ -465,6 +485,47 @@ function UserIcon() {
     >
       <circle cx="12" cy="8" r="4" />
       <path d="M4 21a8 8 0 0 1 16 0" />
+    </svg>
+  );
+}
+
+function ProfileIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="shrink-0 text-accent"
+    >
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <circle cx="9" cy="11" r="2.5" />
+      <path d="M5.5 17a3.5 3.5 0 0 1 7 0M15 10h3M15 14h3" />
+    </svg>
+  );
+}
+
+function BookIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="shrink-0 text-accent"
+    >
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z" />
+      <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" />
     </svg>
   );
 }

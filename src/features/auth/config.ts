@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import type { Database } from "@/db";
+import { recordLogin } from "@/features/account/activity";
 import { accounts, sessions, users, verifications } from "@/db/schema";
 import {
   isPasswordValid,
@@ -97,6 +98,16 @@ export function createAuth(db: Database) {
           });
         }
       }),
+    },
+    databaseHooks: {
+      // Minden új munkamenet egy belépés: feljegyezzük az idejét (a Profil oldal mutatja).
+      session: {
+        create: {
+          after: async (session) => {
+            await recordLogin(db, session.userId, new Date(session.createdAt));
+          },
+        },
+      },
     },
     telemetry: { enabled: false },
   });

@@ -87,7 +87,9 @@
         "accountNotLinked": "You already signed up with this email and a password. Sign in with your email and password.",
         "generic": "Something went wrong. Please try again.",
         "passwordTooWeak": "The password doesn't meet the requirements: at least 8 characters, one uppercase letter, one number and one special character."
-      }
+      },
+      "profile": "Profile",
+      "myCourses": "My courses"
     }
   },
   "HomePage": {
@@ -227,5 +229,40 @@
     "requiredDone": "You have already passed this exercise.",
     "editorLabel": "Python code editor",
     "keys": "Ctrl+Enter: run / check · Tab: indent · Esc, then Tab: leave the editor"
+  },
+  "ProfilePage": {
+    "title": "Profile",
+    "intro": "Your account details and the time you have spent on the site.",
+    "loading": "Loading…",
+    "signedOut": "Sign in at the top right to see your profile.",
+    "name": "Name",
+    "email": "Email address",
+    "lastLogin": "Last sign-in",
+    "previousLogin": "Previous sign-in",
+    "totalTime": "Total time spent on the site",
+    "totalTimeHint": "Counted while you are signed in and the page is visible; every session adds to the total.",
+    "never": "—",
+    "duration": "{hours, plural, =0 {} one {# hour } other {# hours }}{minutes, plural, one {# minute} other {# minutes}}"
+  },
+  "MyCoursesPage": {
+    "title": "My courses",
+    "intro": "The course materials you have purchased: the ones active now and your earlier, expired purchases.",
+    "loading": "Loading…",
+    "signedOut": "Sign in at the top right to see your courses.",
+    "activeTitle": "Currently active courses",
+    "expiredTitle": "Earlier, expired courses",
+    "course": "Course",
+    "purchasedAt": "Purchased",
+    "remaining": "Active for",
+    "expiresAt": "Expired on",
+    "status": "Status",
+    "remainingDays": "{days, plural, one {# day} other {# days}}",
+    "remainingHours": "{hours, plural, =0 {less than 1 hour} one {# hour} other {# hours}}",
+    "expired": "Expired",
+    "activeEmpty": "You have no active courses right now.",
+    "expiredEmpty": "You have no expired courses yet.",
+    "noPayments": "Purchasing is not available on the site yet; once it launches, your courses will appear here.",
+    "demoButton": "Add example purchases (development only)",
+    "unknownCourse": "Unknown course"
   }
 }
