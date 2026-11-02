@@ -87,15 +87,17 @@ async function PurchaseTables() {
             {t("activeEmpty")} {t("noPayments")}
           </EmptyState>
         ) : (
-          <Table headers={[t("course"), t("purchasedAt"), t("remaining")]}>
+          <Table headers={[t("course"), t("purchasedAt"), t("remaining"), t("status")]}>
             {active.map((p) => (
               <tr key={p.id}>
                 <td className={cellClass}>{courseCell(p)}</td>
                 <td className={`${cellClass} font-mono`}>{formatDate(p.purchasedAt, locale)}</td>
-                <td className={`${cellClass} font-mono`}>
-                  {/* Lejárat dátuma, utána zárójelben a hátralévő idő */}
-                  {formatDate(p.expiresAt, locale)}{" "}
-                  <span className="text-accent">({remaining(p)})</span>
+                <td className={`${cellClass} font-mono`}>{formatDate(p.expiresAt, locale)}</td>
+                <td className={cellClass}>
+                  {/* Zöld címke a hátralévő idővel */}
+                  <span className="whitespace-nowrap rounded-md border border-accent px-2 py-0.5 font-mono text-xs text-accent">
+                    {remaining(p)}
+                  </span>
                 </td>
               </tr>
             ))}
