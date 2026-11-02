@@ -12,20 +12,24 @@ export type Progress = {
 /** Egy lecke azonosítója a tárgyon belül, pl. "vezerlesi-szerkezetek/for-ciklus". */
 export const lessonKey = (topic: string, lesson: string) => `${topic}/${lesson}`;
 
+/** Üres haladás (vendég, első látogatás). */
 export const emptyProgress: Progress = { openSemesters: {}, lastCourse: {}, doneLessons: {} };
 
 /** A tárolt haladás felső mérete (bájt), hogy egy fiók ne tölthesse tele az adatbázist. */
 export const MAX_PROGRESS_BYTES = 64 * 1024;
 
+// Felső korlátok, hogy hibás vagy rosszindulatú adat ne fújhassa fel a tárolást.
 const MAX_KEYS = 500;
 const MAX_ITEMS = 500;
 const MAX_STRING = 200;
 
+// Típusellenőrzők: objektum-e, illetve rövid, nem üres szöveg-e.
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 const isShortString = (v: unknown): v is string =>
   typeof v === "string" && v.length > 0 && v.length <= MAX_STRING;
 
+// Egy kulcs → érték objektum megtisztítása: csak az érvényes kulcsok és értékek maradnak.
 function cleanRecord<T>(value: unknown, clean: (v: unknown) => T | undefined): Record<string, T> {
   const out: Record<string, T> = {};
   if (!isRecord(value)) return out;
@@ -37,6 +41,7 @@ function cleanRecord<T>(value: unknown, clean: (v: unknown) => T | undefined): R
   return out;
 }
 
+// Lista ismétlődések nélkül, korlátozott hosszal.
 const uniqueList = <T>(list: T[]) => [...new Set(list)].slice(0, MAX_ITEMS);
 
 /** Bármilyen bemenetből érvényes haladást készít; az ismeretlen vagy hibás részeket eldobja. */

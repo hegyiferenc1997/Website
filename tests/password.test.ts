@@ -1,3 +1,5 @@
+// Tesztek a jelszó szabályaihoz és az erősségjelzőhöz. Futtatás: pnpm test
+
 import { describe, expect, it } from "vitest";
 import { checkPassword, isPasswordValid, passwordStrength } from "@/features/auth/shared";
 

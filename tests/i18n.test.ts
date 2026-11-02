@@ -1,3 +1,5 @@
+// Tesztek a fordításokhoz: a magyar és az angol szövegek kulcsai egyeznek, minden útvonal le van fordítva. Futtatás: pnpm test
+
 import { describe, expect, it } from "vitest";
 import en from "../messages/en.json";
 import hu from "../messages/hu.json";

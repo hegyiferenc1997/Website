@@ -8,9 +8,11 @@ import { ThemeScript } from "@/components/ThemeScript";
 import { routing } from "@/i18n/routing";
 import "./globals.css";
 
+// Ugyanazok a betűtípusok, mint a fő layoutban (ez az oldal azt megkerüli).
 const mono = JetBrains_Mono({ subsets: ["latin", "latin-ext"], variable: "--font-jetbrains-mono" });
 const sans = Source_Sans_3({ subsets: ["latin", "latin-ext"], variable: "--font-source-sans" });
 
+// Fülcím.
 export const metadata: Metadata = {
   title: "404",
 };

@@ -1,3 +1,5 @@
+// Kódellenőrzés (pnpm lint) a Next.js ajánlott szabályaival.
+
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
@@ -5,10 +7,10 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // Override default ignores of eslint-config-next.
+  // A Next.js alapból kihagyott mappáinak felülírása: a .data/ (helyi adatbázis) is kimarad.
   globalIgnores([
     ".data/**",
-    // Default ignores of eslint-config-next:
+    // A Next.js alapból kihagyott mappái:
     ".next/**",
     "out/**",
     "build/**",

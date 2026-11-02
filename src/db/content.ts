@@ -18,8 +18,10 @@ import type { LocalizedText } from "./schema";
 //   minutes: 10
 //   ---
 
+/** A lecke fajtája (egyelőre csak a „lesson” van használatban). */
 export type LessonKind = "lesson" | "practice" | "quiz";
 
+/** Egy lecke a fájlokból beolvasva, minden nyelvi változatával. */
 export type LessonContent = {
   slug: string;
   position: number;
@@ -30,6 +32,7 @@ export type LessonContent = {
   minutes: number | null;
 };
 
+/** Egy témakör a leckéivel. */
 export type TopicContent = {
   slug: string;
   position: number;
@@ -38,12 +41,15 @@ export type TopicContent = {
   lessons: LessonContent[];
 };
 
+/** Egy tárgy teljes tananyaga. */
 export type CourseContent = { university: string; course: string; topics: TopicContent[] };
 
+// Mappa- és fájlnév minták: „01-slug” és „01-slug.hu.md”.
 const ORDERED = /^(\d+)-([a-z0-9-]+)$/;
 const LESSON_FILE = /^(\d+)-([a-z0-9-]+)\.([a-z]{2})\.md$/;
 const KINDS: LessonKind[] = ["lesson", "practice", "quiz"];
 
+// Egy mappa almappái ábécérendben.
 const dirs = (dir: string) =>
   readdirSync(dir, { withFileTypes: true })
     .filter((d) => d.isDirectory())
@@ -63,6 +69,7 @@ export function parseFrontmatter(source: string): { data: Record<string, string>
   return { data, body: text.slice(match[0].length).trim() };
 }
 
+/** Egy témakör mappájának beolvasása: topic.json és a leckék nyelvenkénti .md fájljai. */
 function readTopic(dir: string, name: string): TopicContent {
   const [, position, slug] = ORDERED.exec(name)!;
   const where = path.join(dir, name);
@@ -83,6 +90,7 @@ function readTopic(dir: string, name: string): TopicContent {
     byLesson.set(lessonSlug, entry);
   }
 
+  // Leckénként a nyelvi változatok összerakása egy objektumba.
   const lessons: LessonContent[] = [];
   for (const [lessonSlug, { position: pos, files }] of byLesson) {
     if (!files.hu) throw new Error(`Hiányzik a magyar változat: ${where}/${lessonSlug}`);

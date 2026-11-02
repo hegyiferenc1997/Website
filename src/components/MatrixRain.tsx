@@ -18,6 +18,7 @@ const FONT_SIZE = 16; // px, egy oszlop szélessége is ennyi
 const FRAME_MS = 50; // ~20 képkocka/mp
 const TRAIL_FADE = 0.09; // milyen gyorsan halványul a csík (nagyobb = rövidebb csík)
 
+// A komponens csak egy <canvas>-t ad vissza; minden rajzolás a useEffect-ben, a böngészőben történik.
 export function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -40,6 +41,7 @@ export function MatrixRain() {
 
     const randomChar = () => CHARS[(Math.random() * CHARS.length) | 0];
 
+    // A téma kiemelőszínének és betűtípusának kiolvasása a CSS változókból.
     const readTheme = () => {
       const style = getComputedStyle(root);
       color = style.getPropertyValue("--accent").trim() || "#3cc4a8";
@@ -47,6 +49,7 @@ export function MatrixRain() {
       font = `${FONT_SIZE}px ${family ? `${family}, ` : ""}ui-monospace, monospace`;
     };
 
+    // A vászon méretének igazítása az ablakhoz (éles kijelzőn nagyobb felbontással).
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = window.innerWidth;
@@ -65,6 +68,7 @@ export function MatrixRain() {
       speeds = speeds.slice(0, columns);
     };
 
+    // Egy animációs lépés: a régi karakterek halványítása, majd új karakterek az oszlopokba.
     const step = () => {
       // A régi karakterek halványítása átlátszóság felé (a háttérszíntől független, így témaváltásnál sincs folt).
       ctx.globalCompositeOperation = "destination-out";
@@ -88,6 +92,7 @@ export function MatrixRain() {
       }
     };
 
+    // Képkocka-ciklus, ~20 képkocka/mp-re fékezve.
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
       if (now - last < FRAME_MS) return;
@@ -95,6 +100,7 @@ export function MatrixRain() {
       step();
     };
 
+    // Az animáció leállítása, illetve indítása.
     const stop = () => {
       cancelAnimationFrame(raf);
       raf = 0;
@@ -112,6 +118,7 @@ export function MatrixRain() {
       raf = requestAnimationFrame(loop);
     };
 
+    // Eseménykezelők: fül elrejtése, ablak átméretezése, mozgás-beállítás és téma változása.
     const onVisibility = () => (document.hidden ? stop() : play());
     const onResize = () => {
       resize();
@@ -123,6 +130,7 @@ export function MatrixRain() {
     };
     const themeObserver = new MutationObserver(readTheme);
 
+    // Indítás: beállítások, első kép, majd az eseményfigyelők felrakása.
     const start = () => {
       started = true;
       readTheme();
@@ -142,6 +150,7 @@ export function MatrixRain() {
       ? window.requestIdleCallback(start, { timeout: 600 })
       : window.setTimeout(start, 200);
 
+    // Takarítás, amikor a komponens eltűnik az oldalról (pl. másik oldalra lépéskor).
     return () => {
       if (window.cancelIdleCallback) window.cancelIdleCallback(idle);
       else window.clearTimeout(idle);

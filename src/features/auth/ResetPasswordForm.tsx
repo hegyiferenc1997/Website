@@ -8,6 +8,7 @@ import { PasswordField } from "./PasswordField";
 import { isPasswordValid } from "./shared";
 import { useOneTimeParam } from "./url-param";
 
+// Az űrlap állapotai: kész, folyamatban, sikeres, érvénytelen link, nem egyező jelszavak, gyenge jelszó, egyéb hiba.
 type State = "ready" | "busy" | "done" | "invalid" | "mismatch" | "weak" | "error";
 
 /** Új jelszó megadása a linkben kapott kóddal. A kód csak a böngészőben olvasható ki a címből. */
@@ -21,6 +22,7 @@ export function ResetPasswordForm() {
   const state: State | "loading" =
     token === undefined ? "loading" : !token || linkError ? "invalid" : submitState;
 
+  // Elküldés: előbb helyben ellenőrizzük a jelszót, aztán a szerver beállítja az újat.
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -41,7 +43,9 @@ export function ResetPasswordForm() {
     else setState("error");
   }
 
+  // Amíg a kódot kiolvassuk a címből, csak egy „Folyamatban…” felirat látszik.
   if (state === "loading") return <p className="text-sm text-muted">{tl("busy")}</p>;
+  // Siker vagy érvénytelen link esetén egy üzenet és egy link a főoldalra.
   if (state === "done" || state === "invalid") {
     return (
       <div className="grid gap-4 text-sm">

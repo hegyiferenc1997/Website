@@ -10,16 +10,20 @@ import { CourseProgressHeader, LessonDoneButton } from "@/features/progress/comp
 import { lessonKey } from "@/features/progress/data";
 import { Link } from "@/i18n/navigation";
 
+// Az oldal bemenete: az URL paraméterei (nyelv, egyetem, tárgy, témakör, lecke).
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]/[topic]/[lesson]">;
+// Egy lecke linkjének típusa (minden lecke link erre az útvonalra mutat).
 type LessonHref = {
   pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]";
   params: { university: string; course: string; topic: string; lesson: string };
 };
 
+// Build idején minden lecke oldala előre elkészül, így azonnal betölt.
 export async function generateStaticParams() {
   return getLessonSlugs();
 }
 
+// Fülcím és leírás: a lecke címe és összefoglalója.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = await params;
   const [data, locale] = await Promise.all([
@@ -49,6 +53,7 @@ export default async function LessonPage({ params }: Props) {
   );
 }
 
+// A lecke tartalma: adatok betöltése, Markdown → HTML, majd az oldal felépítése.
 async function LessonContent({ params }: Pick<Props, "params">) {
   const p = await params;
   const [data, locale, t] = await Promise.all([
@@ -56,12 +61,15 @@ async function LessonContent({ params }: Pick<Props, "params">) {
     getLocale(),
     getTranslations("LessonPage"),
   ]);
+  // Ismeretlen lecke → 404 oldal.
   if (!data) notFound();
   const { course, topic, lesson, number, prev, next } = data;
   const html = await renderLessonBody(localize(lesson.body, locale));
 
   const university = course.university.slug;
+  // Hányadik témakörben vagyunk (1-től számolva).
   const topicNumber = course.topics.findIndex((x) => x.id === topic.id) + 1;
+  // Linkek egy másik leckére, illetve vissza a tárgy oldalára.
   const href = (topicSlug: string, lessonSlug: string): LessonHref => ({
     pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]",
     params: { university, course: course.slug, topic: topicSlug, lesson: lessonSlug },
@@ -71,6 +79,8 @@ async function LessonContent({ params }: Pick<Props, "params">) {
     params: { university, course: course.slug },
   };
 
+  // Tartalomjegyzék: a tárgy összes témaköre és leckéje, az aktuális kiemelve.
+  // Asztali nézetben bal oldalt áll, mobilon lenyitható dobozban van.
   const outline = (
     <nav aria-label={t("outline")} className="grid gap-4 text-sm">
       <div className="grid gap-2">
@@ -123,6 +133,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
       </aside>
 
       <article className="grid gap-8">
+        {/* A lecke fejléce: morzsamenü, hol tartunk, cím, összefoglaló */}
         <header className="grid gap-3">
           <nav aria-label={t("breadcrumb")} className="text-sm text-muted">
             <ol className="flex flex-wrap items-center gap-x-2">
@@ -165,6 +176,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
         {/* A tananyag a repó content/ mappájából jön (megbízható forrás), ezért beilleszthető HTML-ként. */}
         <div className="lesson-body" dangerouslySetInnerHTML={{ __html: html }} />
 
+        {/* Alul: „Kész” gomb és lapozás az előző / következő leckére */}
         <footer className="grid gap-6 border-t border-line pt-6">
           <div>
             <LessonDoneButton
@@ -216,6 +228,7 @@ function LessonPager({
   };
   labels: { nav: string; prev: string; next: string; finished: string; back: string };
 }) {
+  // Közös kinézet a lapozó kártyákhoz.
   const card =
     "group grid gap-1 rounded-lg border border-line bg-surface px-4 py-3 transition-colors hover:border-accent hover:bg-surface-hover";
   return (

@@ -5,6 +5,7 @@ import { courses, lessons, universities } from "@/db/schema";
 
 // Az eredmények gyorsítótárazva vannak; adatmódosítás után a "courses" címkével érvényteleníthetők.
 
+/** Az összes egyetem a tárgyaik azonosítójával (a darabszámhoz), az Egyetemek oldalhoz és a keresőhöz. */
 export async function getUniversities() {
   "use cache";
   cacheTag("courses");
@@ -27,6 +28,7 @@ export async function getCourses() {
   });
 }
 
+/** Egy egyetem minden tárgyával, a félévekkel, specializációkkal és a leckék azonosítóival (a haladáshoz). */
 export async function getUniversity(slug: string) {
   "use cache";
   cacheTag("courses");
@@ -52,6 +54,7 @@ export async function getUniversity(slug: string) {
   return university ?? null;
 }
 
+/** Egy tárgy a szakokkal, témakörökkel, leckékkel (szövegük nélkül) és forrásokkal; null, ha nincs ilyen. */
 export async function getCourse(universitySlug: string, courseSlug: string) {
   "use cache";
   cacheTag("courses");

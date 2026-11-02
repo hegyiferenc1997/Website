@@ -1,3 +1,5 @@
+// Közös oldalváz minden (nyelvi) oldalhoz: betűtípusok, villanásgátló szkriptek, fejléc, lábléc.
+
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -24,6 +26,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// A böngészőfül címe és a keresőknek szóló leírás (aloldalakon: „Oldal | Engineering Maxxing”).
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Metadata");
   return {

@@ -1,3 +1,5 @@
+// Tesztek a lecke fájlok beolvasásához. Futtatás: pnpm test
+
 import { describe, expect, it } from "vitest";
 import { parseFrontmatter } from "@/db/content";
 

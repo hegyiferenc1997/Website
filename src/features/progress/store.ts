@@ -10,14 +10,17 @@ import { emptyProgress, mergeProgress, sanitizeProgress, type Progress } from ".
 
 export type { Progress };
 
+// A localStorage kulcsa, ahol a haladás van.
 const KEY = "em:progress";
 /** Kinek a haladása van most a böngészőben: a felhasználó azonosítója, vagy üres (vendég). */
 const OWNER_KEY = "em:progress-owner";
 const empty = emptyProgress;
 
+// Memóriabeli másolat, és a változásokra feliratkozott komponensek.
 let cache: Progress | null = null;
 const listeners = new Set<() => void>();
 
+// Beolvasás: először a localStorage-ból, utána a memóriából.
 function read(): Progress {
   if (cache) return cache;
   try {
@@ -29,6 +32,7 @@ function read(): Progress {
   return cache;
 }
 
+// Mentés memóriába és localStorage-ba, majd minden feliratkozó értesítése.
 function save(next: Progress) {
   cache = next;
   try {
@@ -39,12 +43,14 @@ function save(next: Progress) {
   listeners.forEach((l) => l());
 }
 
+// Módosítás: mentés helyben, és a feltöltés ütemezése a fiókba.
 function write(update: (p: Progress) => Progress) {
   save(update(read()));
   sync.dirty = true;
   scheduleUpload();
 }
 
+// Feliratkozás a változásokra (egy másik böngészőfülön történt változást is észrevesz).
 function subscribe(listener: () => void) {
   listeners.add(listener);
   const onStorage = (e: StorageEvent) => {
@@ -65,12 +71,15 @@ export function useProgress(): Progress | null {
   return useSyncExternalStore(subscribe, read, () => null);
 }
 
+/** Egy tárgy kulcsa a haladásban, pl. "gabor-denes-egyetem/programozas-alapjai". */
 export const courseKey = (university: string, course: string) => `${university}/${course}`;
 
+/** Mely félévek legyenek lenyitva egy egyetem oldalán. */
 export function setOpenSemesters(university: string, semesters: number[]) {
   write((p) => ({ ...p, openSemesters: { ...p.openSemesters, [university]: semesters } }));
 }
 
+/** Az utoljára megnyitott tárgy megjegyzése („itt tartasz”). */
 export function setLastCourse(university: string, course: string) {
   if (read().lastCourse[university] === course) return;
   write((p) => ({ ...p, lastCourse: { ...p.lastCourse, [university]: course } }));
@@ -86,6 +95,7 @@ export function setLessonDone(key: string, lesson: string, done: boolean) {
   });
 }
 
+/** Kész-e a lecke. */
 export function isLessonDone(p: Progress | null, key: string, lesson: string): boolean {
   return p?.doneLessons[key]?.includes(lesson) ?? false;
 }
@@ -107,6 +117,7 @@ export function courseRatio(p: Progress | null, key: string, lessons: string[]):
 // Szinkronizálás a fiókkal
 // ---------------------------------------------------------------------------
 
+// A fiókkal való szinkronizálás állapota.
 const sync = {
   /** A bejelentkezett felhasználó, akinek a fiókjába mentünk; null, ha vendég (vagy még tölt). */
   userId: null as string | null,
@@ -116,6 +127,7 @@ const sync = {
   connecting: undefined as { userId: string; promise: Promise<void> } | undefined,
 };
 
+// Feltöltés a szerverre, ha van még el nem küldött változás. keepalive: az oldal elhagyásakor is kimegy.
 function upload(keepalive = false): Promise<void> {
   clearTimeout(sync.timer);
   if (!sync.userId || !sync.dirty) return Promise.resolve();
@@ -133,12 +145,14 @@ function upload(keepalive = false): Promise<void> {
   );
 }
 
+// Késleltetett feltöltés: a gyors egymás utáni változásokból egyetlen kérés lesz.
 function scheduleUpload() {
   if (!sync.userId) return;
   clearTimeout(sync.timer);
   sync.timer = setTimeout(() => void upload(), 600);
 }
 
+// Kié a böngészőben lévő haladás: felhasználó azonosító, vagy null (vendég).
 function readOwner(): string | null {
   try {
     return localStorage.getItem(OWNER_KEY);
@@ -171,6 +185,7 @@ export function connectAccount(userId: string): Promise<void> {
   return sync.connecting.promise;
 }
 
+// A connectAccount munkája: letöltés, összefésülés, mentés, feltöltés.
 async function loadAccount(userId: string): Promise<void> {
   sync.userId = null;
   const owner = readOwner();

@@ -5,9 +5,11 @@ import { useEffect, useSyncExternalStore } from "react";
 // Egyszer használatos URL paraméterek (pl. ?token=..., ?error=...) kiolvasása betöltéskor.
 // Az értéket megjegyezzük, a címből pedig kivesszük, hogy frissítéskor vagy az előzményekben ne maradjon ott.
 
+// A már kiolvasott paraméterek (oldalbetöltésenként egyszer).
 const captured = new Map<string, string | null>();
 const noopSubscribe = () => () => {};
 
+// Az első híváskor kiolvassa a címből, utána a megjegyzett értéket adja.
 function capture(name: string): string | null {
   if (!captured.has(name)) captured.set(name, new URL(window.location.href).searchParams.get(name));
   return captured.get(name)!;

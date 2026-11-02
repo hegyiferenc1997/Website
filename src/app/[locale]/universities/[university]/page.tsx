@@ -9,13 +9,16 @@ import { Link } from "@/i18n/navigation";
 import { CourseCardProgress, SemesterSection } from "@/features/progress/components";
 import { courseLessons } from "@/features/courses/lessons";
 
+// Az oldal bemenete: az URL paraméterei (nyelv, egyetem azonosító).
 type Props = PageProps<"/[locale]/universities/[university]">;
 
+// Build idején minden egyetem oldala előre elkészül, így azonnal betölt.
 export async function generateStaticParams() {
   const list = await getUniversities();
   return list.map((u) => ({ university: u.slug }));
 }
 
+// Fülcím: az egyetem neve.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { university: slug } = await params;
   const [university, locale] = await Promise.all([getUniversity(slug), getLocale()]);
@@ -34,6 +37,7 @@ export default async function UniversityPage({ params }: Props) {
   );
 }
 
+// A tényleges tartalom: az egyetem adatai és a tárgyak félévenként csoportosítva.
 async function UniversityContent({ params }: Pick<Props, "params">) {
   const { university: slug } = await params;
   const [university, locale, t] = await Promise.all([
@@ -41,6 +45,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
     getLocale(),
     getTranslations("UniversityPage"),
   ]);
+  // Ismeretlen egyetem → 404 oldal.
   if (!university) notFound();
 
   // Tárgyak csoportosítva az ajánlott félév szerint (mint egy mintatanterv); félév nélküliek a végén.
@@ -67,6 +72,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
       group.common.push(c);
     }
   }
+  // Félévek növekvő sorrendben, a félév nélküli csoport a végén.
   const sortedGroups = [...groups.entries()].sort(([a], [b]) =>
     a === null ? 1 : b === null ? -1 : a - b,
   );
@@ -74,10 +80,12 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
   const sumCredits = (list: Course[]) => list.reduce((s, c) => s + (c.credits ?? 0), 0);
   const semesterCredits = (g: Group) =>
     sumCredits(g.common) + Math.max(0, ...[...g.specs.values()].map((x) => sumCredits(x.list)));
+  // Tárgyak ábécérendben, a nyelv szabályai szerint.
   const collator = new Intl.Collator(locale);
   const byName = (list: Course[]) =>
     [...list].sort((a, b) => collator.compare(localize(a.name, locale), localize(b.name, locale)));
 
+  // Tárgykártyák rácsa: név, kredit, „hamarosan” jelzés és haladás csík.
   const courseList = (list: Course[]) => (
     <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {byName(list).map((c) => (
@@ -135,6 +143,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
         </span>
       </PageHeader>
 
+      {/* Tárgyak félévenként lenyitható dobozokban */}
       <section className="grid gap-6">
         <SectionTitle>{t("coursesTitle")}</SectionTitle>
         {university.courses.length === 0 ? (

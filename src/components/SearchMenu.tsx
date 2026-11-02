@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { search, type SearchItem } from "@/features/search/match";
 
+// Egy találat linkje: tárgy oldalra vagy egyetem oldalra.
 const hrefOf = (item: SearchItem) =>
   item.kind === "course"
     ? {
@@ -19,6 +20,7 @@ const hrefOf = (item: SearchItem) =>
 export function SearchMenu({ items }: { items: SearchItem[] }) {
   const t = useTranslations("Search");
   const router = useRouter();
+  // Állapot: nyitva van-e, a beírt szöveg, és hányadik találat van kijelölve.
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -27,12 +29,14 @@ export function SearchMenu({ items }: { items: SearchItem[] }) {
   const listRef = useRef<HTMLUListElement>(null);
   const id = useId();
 
+  // A találatok, előbb az egyetemek, aztán a tárgyak.
   const results = useMemo(() => search(items, query), [items, query]);
   const universities = results.filter((r) => r.kind === "university");
   const courses = results.filter((r) => r.kind === "course");
   // Billentyűs lépkedéshez ugyanabban a sorrendben, ahogy a listában látszanak.
   const ordered = [...universities, ...courses];
 
+  // Bezárás és alaphelyzet.
   function close() {
     setOpen(false);
     setQuery("");
@@ -76,6 +80,7 @@ export function SearchMenu({ items }: { items: SearchItem[] }) {
       ?.scrollIntoView({ block: "nearest" });
   }, [active]);
 
+  // Billentyűk a keresőmezőben: ↑ / ↓ lépked, Enter megnyitja a kijelöltet.
   function onInputKey(e: React.KeyboardEvent<HTMLInputElement>) {
     if (ordered.length === 0) return;
     if (e.key === "ArrowDown") {
@@ -92,6 +97,7 @@ export function SearchMenu({ items }: { items: SearchItem[] }) {
     }
   }
 
+  // Egy találati csoport a listában, pl. „// Egyetemek (1)”.
   const group = (title: string, list: SearchItem[], offset: number) =>
     list.length > 0 && (
       <li role="group" aria-label={title}>
@@ -204,6 +210,7 @@ export function SearchMenu({ items }: { items: SearchItem[] }) {
   );
 }
 
+// Nagyító ikon (SVG).
 function SearchIcon() {
   return (
     <svg

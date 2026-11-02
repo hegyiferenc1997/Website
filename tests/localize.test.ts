@@ -1,3 +1,5 @@
+// Tesztek a localize() függvényhez (nyelv kiválasztása, magyar tartalék). Futtatás: pnpm test
+
 import { describe, expect, it } from "vitest";
 import { localize } from "@/features/courses/localize";
 

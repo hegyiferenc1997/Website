@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Card, PageHeader } from "@/components/ui";
 import { ResetPasswordForm } from "@/features/auth/ResetPasswordForm";
 
+// Fülcím; a keresők ne vegyék fel ezt az oldalt a találataik közé.
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("ResetPasswordPage");
   return { title: t("title"), robots: { index: false } };

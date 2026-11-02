@@ -16,9 +16,11 @@ const THEME_FADE_MS = 350;
 export function ThemeToggle() {
   const t = useTranslations("Layout.theme");
 
+  // Kattintásra: a másik témára vált és elmenti, áttűnéssel.
   function toggle() {
     const root = document.documentElement;
     const next = root.dataset.theme === "light" ? "dark" : "light";
+    // A téma tényleges beállítása és megjegyzése.
     const apply = () => {
       root.dataset.theme = next;
       try {
@@ -63,6 +65,7 @@ export function ThemeToggle() {
   );
 }
 
+// Ikonok (SVG rajzok).
 function SunIcon() {
   return (
     <svg

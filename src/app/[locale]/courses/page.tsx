@@ -5,6 +5,7 @@ import { localize } from "@/features/courses/localize";
 import { getCourseCatalog } from "@/features/courses/queries";
 import { Link } from "@/i18n/navigation";
 
+// A böngészőfül címe ezen az oldalon.
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CoursesPage");
   return { title: t("title") };
@@ -19,6 +20,7 @@ export default async function CoursesPage() {
     getCourseCatalog(),
   ]);
 
+  // Ábécérend a nyelv szabályai szerint; azonos tárgynévnél az egyetem neve dönt.
   const collator = new Intl.Collator(locale);
   const sorted = catalog
     .map((c) => ({ ...c, title: localize(c.name, locale) }))
@@ -27,6 +29,7 @@ export default async function CoursesPage() {
         collator.compare(a.title, b.title) ||
         collator.compare(localize(a.university.name, locale), localize(b.university.name, locale)),
     );
+  // Két szakasz: tananyaggal rendelkező és „hamarosan” tárgyak (az üres szakasz kimarad).
   const sections = [
     { title: t("activeTitle"), list: sorted.filter((c) => c.isActive) },
     { title: t("comingTitle"), list: sorted.filter((c) => !c.isActive) },

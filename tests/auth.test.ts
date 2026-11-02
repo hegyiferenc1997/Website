@@ -1,3 +1,5 @@
+// Tesztek a bejelentkezéshez és a fiókokhoz, memóriában futó adatbázison. Futtatás: pnpm test
+
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { createLocalDb } from "@/db/local";

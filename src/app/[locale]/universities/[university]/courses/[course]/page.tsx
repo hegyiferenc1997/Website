@@ -14,12 +14,15 @@ import {
 import { courseLessons } from "@/features/courses/lessons";
 import { lessonKey } from "@/features/progress/data";
 
+// Az oldal bemenete: az URL paraméterei (nyelv, egyetem, tárgy).
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]">;
 
+// Build idején minden tárgy oldala előre elkészül, így azonnal betölt.
 export async function generateStaticParams() {
   return getCourseSlugs();
 }
 
+// Fülcím: „Tárgy – Egyetem”.
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { university, course: slug } = await params;
   const [course, locale] = await Promise.all([getCourse(university, slug), getLocale()]);
@@ -41,6 +44,7 @@ export default async function CoursePage({ params }: Props) {
   );
 }
 
+// A tárgy oldal tartalma: fejléc az adatokkal, témakörök a leckékkel, források.
 async function CourseContent({ params }: Pick<Props, "params">) {
   const { university, course: slug } = await params;
   const [course, locale, t, tNav] = await Promise.all([
@@ -49,10 +53,13 @@ async function CourseContent({ params }: Pick<Props, "params">) {
     getTranslations("CoursePage"),
     getTranslations("Layout.nav"),
   ]);
+  // Ismeretlen tárgy → 404 oldal.
   if (!course) notFound();
 
   const description = localize(course.description, locale);
+  // Az első lecke, ahová a „Kezdés” gomb visz.
   const first = course.topics.find((x) => x.lessons.length > 0);
+  // Egy lecke linkje (a nyelvnek megfelelő URL-t a Link állítja elő).
   const lessonHref = (topic: string, lesson: string) => ({
     pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]" as const,
     params: { university: course.university.slug, course: course.slug, topic, lesson },
@@ -61,6 +68,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
   return (
     <div className="grid gap-10">
       <div className="grid gap-4">
+        {/* Morzsamenü: Egyetemek / <egyetem neve> */}
         <nav aria-label={t("breadcrumb")} className="text-sm text-muted">
           <ol className="flex flex-wrap items-center gap-x-2">
             <li>
@@ -98,6 +106,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
           </Link>
         )}
 
+        {/* Címkék: tárgykód, kredit, nyelv, szak és félév, specializáció, választható-e */}
         <div className="flex flex-wrap gap-2">
           {course.code && <Chip label={t("code")}>{course.code}</Chip>}
           {course.credits !== null && <Chip label={t("credits")}>{course.credits}</Chip>}
@@ -129,6 +138,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
         </div>
       </div>
 
+      {/* Balra a témakörök és leckék, jobbra a források (mobilon egymás alatt) */}
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section className="grid gap-4">
           <SectionTitle>{t("topics")}</SectionTitle>
@@ -139,6 +149,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
               {course.topics.map((topic, i) => (
                 <li key={topic.id}>
                   <Card padded={false}>
+                    {/* Témakör fejléce: sorszám, cím, leírás és „2/4” haladás */}
                     <div className="flex items-start gap-4 border-b border-line px-5 py-4">
                       <span className="pt-0.5 font-mono text-sm text-accent tabular-nums">
                         {String(i + 1).padStart(2, "0")}
@@ -157,6 +168,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         lessons={topic.lessons.map((l) => lessonKey(topic.slug, l.slug))}
                       />
                     </div>
+                    {/* A témakör leckéi: kész-pipa, sorszám, cím, becsült idő */}
                     <ol className="divide-y divide-line">
                       {topic.lessons.map((lesson, j) => {
                         const title = localize(lesson.title, locale);
@@ -194,6 +206,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
         </section>
 
         <section className="grid gap-4">
+          {/* Források: jegyzetek, videók, linkek (külső link új lapon) */}
           <SectionTitle>{t("resources")}</SectionTitle>
           {course.resources.length === 0 ? (
             <EmptyState>{t("noResources")}</EmptyState>

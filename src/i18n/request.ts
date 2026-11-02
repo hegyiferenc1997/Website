@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
+// Kérésenként megadja a next-intl-nek a nyelvet és a hozzá tartozó szövegeket (messages/<nyelv>.json).
 export default getRequestConfig(async ({ locale }) => {
   // Ha a hívó nem adott meg nyelvet, az URL [locale] szegmenséből olvassuk.
   if (!locale) {

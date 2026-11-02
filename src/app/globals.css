@@ -7,6 +7,7 @@
  * bg-bg, bg-surface, text-fg, text-muted, border-line, text-accent, bg-accent-soft, text-highlight, text-[var(--danger,#e5534b)].
  */
 
+/* Sötét téma színei (ez az alapértelmezés). */
 :root {
   --bg: #0d1318;
   --surface: #141c23;
@@ -22,6 +23,7 @@
   color-scheme: dark;
 }
 
+/* Világos téma színei. */
 :root[data-theme="light"] {
   --bg: #f4f7f8;
   --surface: #ffffff;
@@ -37,8 +39,10 @@
   color-scheme: light;
 }
 
+/* „light:” előtag a Tailwind osztályokhoz, pl. light:hidden (csak világos témában hat). */
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
+/* A színváltozók Tailwind-nevei (így lesz pl. bg-surface, text-accent) és a betűtípusok. */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -56,6 +60,7 @@
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
+/* Alapstílusok: háttér, betűk, címsorok, fókuszkeret, kijelölés színe. */
 @layer base {
   body {
     @apply bg-bg font-sans text-fg antialiased;

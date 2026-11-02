@@ -17,6 +17,7 @@ export function AccountMenu() {
   );
 }
 
+// A bejelentkezett felhasználó lekérése (kérésenként), és a haladás összekötése a fiókkal.
 async function SignedInAccountMenu() {
   const user = await getSessionUser();
   return (

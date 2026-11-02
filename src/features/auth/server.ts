@@ -4,6 +4,7 @@ import { connection } from "next/server";
 import { getAccountDb } from "@/db";
 import { createAuth, type Auth } from "./config";
 
+// Egyetlen példány a globális objektumon (fejlesztés közbeni újratöltéskor sem jön létre új).
 const globalForAuth = globalThis as unknown as { auth?: Promise<Auth> };
 
 /** A bejelentkezés példánya; az első kéréskor jön létre (a build nem igényel titkos kulcsot). */
@@ -12,6 +13,7 @@ export function getAuth(): Promise<Auth> {
   return globalForAuth.auth;
 }
 
+/** A felhasználó adatai, amiket az oldalak megkapnak (jelszó és egyéb belső adat nélkül). */
 export type SessionUser = { id: string; name: string; email: string; image: string | null };
 
 /** Az aktuális kérés bejelentkezett felhasználója, vagy null. */

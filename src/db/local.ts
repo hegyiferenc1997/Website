@@ -43,6 +43,7 @@ export async function openLocalAccountDb(dataDir: string): Promise<Database> {
   return createLocalDb({ dataDir: dir, seed: false });
 }
 
+// A zárolófájlba írt folyamat-azonosító (PID), vagy null, ha nincs ilyen fájl.
 function readLockOwner(lockFile: string): number | null {
   try {
     const pid = Number(readFileSync(lockFile, "utf8"));
@@ -52,6 +53,7 @@ function readLockOwner(lockFile: string): number | null {
   }
 }
 
+// Fut-e még az adott folyamat (a 0-s jel csak ellenőriz, nem állítja le).
 function isAlive(pid: number): boolean {
   try {
     process.kill(pid, 0);

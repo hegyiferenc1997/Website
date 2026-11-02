@@ -20,6 +20,7 @@ import * as gde from "./data/gde-mernokinformatikus";
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
 export async function seed(db: Database) {
+  // 1. Az egyetem (beszúrás, vagy ha már van, frissítés).
   const universityName = { hu: "Gábor Dénes Egyetem", en: "Gábor Dénes University" };
   const [university] = await db
     .insert(universities)
@@ -36,6 +37,7 @@ export async function seed(db: Database) {
     })
     .returning();
 
+  // 2. A szak.
   const programName = { hu: "Mérnökinformatikus", en: "Computer Science Engineering" };
   const [program] = await db
     .insert(programs)
@@ -51,6 +53,7 @@ export async function seed(db: Database) {
     })
     .returning();
 
+  // 3. A specializációk; az azonosítóikat megjegyezzük a tárgyakhoz.
   const specializationIds = new Map<string, number>();
   for (const [position, s] of gde.specializations.entries()) {
     const [row] = await db
@@ -64,6 +67,7 @@ export async function seed(db: Database) {
     specializationIds.set(s.slug, row.id);
   }
 
+  // 4. Félévenként a tárgyak, és hogy melyik félévben, milyen jelleggel szerepelnek a szakon.
   for (const [index, list] of gde.semesters.entries()) {
     for (const c of list) {
       const values = {
@@ -96,6 +100,7 @@ export async function seed(db: Database) {
     }
   }
 
+  // 5. A témakörök és leckék a content mappából.
   await seedContent(db);
 }
 
@@ -117,6 +122,7 @@ export async function seedContent(db: Database) {
       throw new Error(`Ismeretlen tárgy a tananyagban: ${content.university}/${content.course}`);
     }
 
+    // A mappában lévő témakörök mentése; az azonosítókat gyűjtjük, hogy a többit törölhessük.
     const keptTopics: number[] = [];
     for (const t of content.topics) {
       const values = { position: t.position, title: t.title, description: t.description };
@@ -130,6 +136,7 @@ export async function seedContent(db: Database) {
         .returning();
       keptTopics.push(topic.id);
 
+      // Ugyanez a témakör leckéivel.
       const keptLessons: number[] = [];
       for (const l of t.lessons) {
         const lessonValues = {
@@ -150,6 +157,7 @@ export async function seedContent(db: Database) {
           .returning({ id: lessons.id });
         keptLessons.push(lesson.id);
       }
+      // A mappából már eltávolított leckék törlése.
       await db
         .delete(lessons)
         .where(
@@ -158,6 +166,7 @@ export async function seedContent(db: Database) {
             : eq(lessons.topicId, topic.id),
         );
     }
+    // A mappából már eltávolított témakörök törlése.
     await db
       .delete(topics)
       .where(

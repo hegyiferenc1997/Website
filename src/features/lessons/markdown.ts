@@ -7,6 +7,7 @@ import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 // A böngészőbe kész HTML megy, így a kódkiemeléshez nem kell JavaScriptet letölteni.
 // A színek a téma szerint váltanak (lásd .lesson-body a globals.css-ben).
 
+// A kiemelhető programozási nyelvek (a kódblokk ```nyelv jelölése alapján).
 const LANGS = {
   python: () => import("shiki/langs/python.mjs"),
   bash: () => import("shiki/langs/bash.mjs"),
@@ -20,6 +21,7 @@ const LANGS = {
   sql: () => import("shiki/langs/sql.mjs"),
 };
 
+// Más nevek ugyanarra a nyelvre, pl. ```py → python.
 const ALIASES: Record<string, keyof typeof LANGS> = {
   py: "python",
   python3: "python",
@@ -47,6 +49,7 @@ const LABELS: Partial<Record<keyof typeof LANGS, string>> = {
   java: "Java",
 };
 
+// A kódkiemelő egyszer jön létre, utána újrahasznosítjuk (lassú elindítani).
 let highlighter: Promise<HighlighterCore> | undefined;
 
 function getHighlighter() {
@@ -58,9 +61,11 @@ function getHighlighter() {
   return highlighter;
 }
 
+// A különleges karakterek kódolása, hogy a szöveg ne HTML-ként értelmeződjön.
 const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+// Egy kódblokk HTML-je: fejléc a nyelv nevével, alatta a színezett kód (ismeretlen nyelvnél színezés nélkül).
 function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code): string {
   const raw = (lang ?? "").trim().split(/\s+/)[0].toLowerCase();
   const name = (raw in LANGS ? raw : ALIASES[raw]) as keyof typeof LANGS | undefined;
@@ -83,10 +88,12 @@ export async function renderMarkdown(markdown: string): Promise<string> {
     gfm: true,
     renderer: {
       code: (token) => codeBlock(h, token),
+      // Címsorok egy szinttel lejjebb.
       heading({ tokens, depth }) {
         const level = Math.min(depth + 1, 6);
         return `<h${level}>${this.parser.parseInline(tokens)}</h${level}>`;
       },
+      // A külső link új lapon nyílik, ↗ jellel.
       link({ href, title, tokens }) {
         const text = this.parser.parseInline(tokens);
         const external = /^https?:\/\//.test(href);

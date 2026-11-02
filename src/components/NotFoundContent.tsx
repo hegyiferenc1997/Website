@@ -22,5 +22,6 @@ export function NotFoundContent({
   );
 }
 
+// A „Vissza a főoldalra” gomb stílusa (mindkét 404 oldal ezt használja).
 export const backLinkClass =
   "inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 font-semibold text-accent-fg transition-opacity hover:opacity-90";

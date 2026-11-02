@@ -1,3 +1,5 @@
+// A drizzle-kit beállításai: migráció készítése (pnpm db:generate) és futtatása (pnpm db:migrate).
+
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
