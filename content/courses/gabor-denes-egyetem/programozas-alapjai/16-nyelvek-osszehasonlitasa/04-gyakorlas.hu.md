@@ -208,3 +208,72 @@ Válassz nyelvet a következő feladatokhoz, és indokold egy mondatban!
 4. **C# (Unity)** vagy **C++ (Unreal)** – a játékmotorok nyelvei, több platformra is exportálnak.
 
 </details>
+
+## Összefoglaló feladat: Szövegstatisztika Rubyból Pythonra
+
+Fordítsd le Pythonra az alábbi Ruby függvényt `szo_statisztika(szoveg)` néven!
+
+```ruby
+def szo_statisztika(szoveg)
+  szavak = szoveg.downcase.scan(/[[:alpha:]]+/)        # csak betűkből álló szavak
+  db = szavak.tally                                     # szó => darabszám
+  top = db.sort_by { |szo, n| [-n, szo] }.first(3)      # a 3 leggyakoribb
+  atlag = szavak.empty? ? 0.0 : (szavak.sum(&:length).to_f / szavak.size).round(2)
+  { szavak: szavak.size, egyedi: db.size, leggyakoribb: top, atlagos_hossz: atlag }
+end
+```
+
+A Python változat szótárat adjon vissza `"szavak"`, `"egyedi"`, `"leggyakoribb"` és `"atlagos_hossz"` kulcsokkal; a `"leggyakoribb"` értéke `(szó, darab)` **tuple-ök listája** legyen.
+
+Segítség a megfeleltetéshez:
+
+- `scan(/[[:alpha:]]+/)` → `re.findall(r"[^\W\d_]+", ...)` (betűk, ékezetesek is),
+- `tally` → `collections.Counter`,
+- `sort_by { [-n, szo] }` → `sorted(..., key=lambda p: (-p[1], p[0]))`.
+
+```python starter required
+import re
+from collections import Counter
+
+
+def szo_statisztika(szoveg):
+    szavak = szoveg.split()
+    return {"szavak": len(szavak)}
+
+
+print(szo_statisztika("Alma, körte, alma! A körte érett, az alma piros."))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import re
+from collections import Counter
+
+
+def szo_statisztika(szoveg):
+    # Csak betűkből álló szavak, kisbetűsítve (a Ruby scan megfelelője)
+    szavak = re.findall(r"[^\W\d_]+", szoveg.lower())
+    db = Counter(szavak)
+    # Csökkenő darabszám, egyenlőségnél ábécérend – az első három
+    top = sorted(db.items(), key=lambda p: (-p[1], p[0]))[:3]
+    atlag = round(sum(len(sz) for sz in szavak) / len(szavak), 2) if szavak else 0.0
+    return {"szavak": len(szavak), "egyedi": len(db), "leggyakoribb": top, "atlagos_hossz": atlag}
+
+
+print(szo_statisztika("Alma, körte, alma! A körte érett, az alma piros."))
+```
+
+</details>
+
+```python test
+e = szo_statisztika("Alma, körte, alma! A körte érett, az alma piros.")
+assert e["szavak"] == 9 and e["egyedi"] == 6, "9 szó, ebből 6 különböző (írásjelek nélkül, kisbetűsítve)."
+assert e["leggyakoribb"] == [("alma", 3), ("körte", 2), ("a", 1)], "A leggyakoribb három: alma 3, körte 2, majd ábécérendben az első egyszeri szó."
+assert e["atlagos_hossz"] == 3.89, "Az átlagos szóhossz 35 / 9 ≈ 3.89."
+e = szo_statisztika("R2D2 és C-3PO 2024-ben")
+assert e["szavak"] == 6 and e["egyedi"] == 6, "Számjegyek nem részei a szavaknak: r, d, és, c, po, ben."
+assert szo_statisztika("") == {"szavak": 0, "egyedi": 0, "leggyakoribb": [], "atlagos_hossz": 0.0}, "Üres szövegnél 0, 0, [], 0.0."
+assert szo_statisztika("b a b a c")["leggyakoribb"] == [("a", 2), ("b", 2), ("c", 1)], "Egyenlő darabszámnál ábécérend."
+```

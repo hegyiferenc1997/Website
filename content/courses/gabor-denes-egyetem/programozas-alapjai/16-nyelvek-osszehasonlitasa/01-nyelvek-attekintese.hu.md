@@ -78,3 +78,66 @@ A nyelvek népszerűségét több index is méri (pl. TIOBE, Stack Overflow Deve
 - **Java, C#:** statikus típusosság, bájtkód + virtuális gép, nagyvállalati környezet.
 - **C, C++, Rust, Go:** gépi kódra fordulnak, a sebesség és az erőforrás-hatékonyság a cél.
 - Az alapfogalmak minden nyelvben közösek – egy új nyelv megtanulása főleg szintaxis kérdése.
+
+## A lecke feladata: Nyelvek típusosság szerint
+
+Rögzítsd a lecke táblázatát egy szótárban, majd kérdezz le belőle!
+
+- `TIPUSOSSAG`: szótár, amely a táblázat mind a **tíz** nyelvéhez (`"Python"`, `"Java"`, `"C#"`, `"Ruby"`, `"C"`, `"C++"`, `"JavaScript"`, `"TypeScript"`, `"Go"`, `"Rust"`) a `"statikus"` vagy `"dinamikus"` szót rendeli,
+- `nyelvek_szurese(tipus)`: visszaadja az adott típusosságú nyelvek **ábécérendbe** rendezett listáját; ismeretlen típusnál (pl. `"kvantum"`) dobjon `ValueError`-t.
+
+```python starter required
+TIPUSOSSAG = {
+    "Python": "dinamikus",
+    "Java": "statikus",
+    # egészítsd ki a többi nyelvvel!
+}
+
+
+def nyelvek_szurese(tipus):
+    pass
+
+
+print(nyelvek_szurese("dinamikus"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+TIPUSOSSAG = {
+    "Python": "dinamikus",
+    "Java": "statikus",
+    "C#": "statikus",
+    "Ruby": "dinamikus",
+    "C": "statikus",
+    "C++": "statikus",
+    "JavaScript": "dinamikus",
+    "TypeScript": "statikus",
+    "Go": "statikus",
+    "Rust": "statikus",
+}
+
+
+def nyelvek_szurese(tipus):
+    # Csak a két ismert típusosságot fogadjuk el
+    if tipus not in ("statikus", "dinamikus"):
+        raise ValueError(f"Ismeretlen típusosság: {tipus}")
+    return sorted(nyelv for nyelv, t in TIPUSOSSAG.items() if t == tipus)
+
+
+print(nyelvek_szurese("dinamikus"))
+```
+
+</details>
+
+```python test
+assert len(TIPUSOSSAG) == 10, "A táblázat mind a tíz nyelve kerüljön a szótárba."
+assert nyelvek_szurese("dinamikus") == ["JavaScript", "Python", "Ruby"], "Dinamikus típusú: JavaScript, Python, Ruby (ábécérendben)."
+assert nyelvek_szurese("statikus") == ["C", "C#", "C++", "Go", "Java", "Rust", "TypeScript"], "A statikus nyelvek listája nem stimmel."
+try:
+    nyelvek_szurese("kvantum")
+    assert False, "Ismeretlen típusnál ValueError kell."
+except ValueError:
+    pass
+```

@@ -265,3 +265,119 @@ end
 - The basic constructs (variable, loop, branch, function, class) **exist in every language**.
 - The differences are mainly: **type declarations** (static vs. dynamic), **block marking** (`{}` vs. indentation vs. `end`), **boilerplate** (`main`, class).
 - Once you know one language well, you learn the next one much faster.
+
+## Lesson exercise: A Java class in Python
+
+Rewrite the Java class below in Python under the name `BankAccount`!
+
+```java
+public class BankAccount {
+    private final String owner;
+    private int balance;
+
+    public BankAccount(String owner) { this.owner = owner; }
+
+    public void deposit(int amount) {
+        if (amount <= 0) throw new IllegalArgumentException("Only a positive amount can be deposited.");
+        balance += amount;
+    }
+
+    public void withdraw(int amount) {
+        if (amount <= 0) throw new IllegalArgumentException("Only a positive amount can be withdrawn.");
+        if (amount > balance) throw new IllegalStateException("Insufficient funds.");
+        balance -= amount;
+    }
+
+    public int getBalance() { return balance; }
+
+    @Override
+    public String toString() { return owner + ": " + balance + " Ft"; }
+}
+```
+
+Pythonic equivalents:
+
+- `ValueError` instead of `IllegalArgumentException`, `RuntimeError` instead of `IllegalStateException`,
+- instead of the `getBalance()` getter, a **read-only** `balance` property (`@property`) – assigning to it (`account.balance = 5`) raises `AttributeError`,
+- private fields start with `_` (`_balance`), and `__str__` replaces `toString()`.
+
+```python starter required
+class BankAccount:
+    def __init__(self, owner):
+        self.owner = owner
+        self.balance = 0
+
+    def getBalance(self):
+        return self.balance
+
+
+acc = BankAccount("Anna Kiss")
+print(acc.getBalance())
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class BankAccount:
+    """A simple bank account (the Python equivalent of the Java class)."""
+
+    def __init__(self, owner):
+        self._owner = owner
+        self._balance = 0
+
+    def deposit(self, amount):
+        if amount <= 0:
+            raise ValueError("Only a positive amount can be deposited.")
+        self._balance += amount
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            raise ValueError("Only a positive amount can be withdrawn.")
+        if amount > self._balance:
+            raise RuntimeError("Insufficient funds.")
+        self._balance -= amount
+
+    @property
+    def balance(self):
+        # A property instead of a getter; no setter, so it is read-only
+        return self._balance
+
+    def __str__(self):
+        return f"{self._owner}: {self._balance} Ft"
+
+
+acc = BankAccount("Anna Kiss")
+acc.deposit(2000)
+acc.withdraw(500)
+print(acc, acc.balance)
+```
+
+</details>
+
+```python test
+acc = BankAccount("Anna Kiss")
+assert acc.balance == 0, "A new account has a balance of 0."
+acc.deposit(2000)
+acc.withdraw(500)
+assert acc.balance == 1500, "After depositing 2000 and withdrawing 500 the balance is 1500."
+assert str(acc) == "Anna Kiss: 1500 Ft", "The str() looks like: Anna Kiss: 1500 Ft"
+for bad in (lambda: acc.deposit(0), lambda: acc.deposit(-5), lambda: acc.withdraw(0)):
+    try:
+        bad()
+        assert False, "A non-positive amount should raise ValueError."
+    except ValueError:
+        pass
+try:
+    acc.withdraw(10000)
+    assert False, "Withdrawing without funds should raise RuntimeError."
+except RuntimeError:
+    pass
+assert acc.balance == 1500, "A failed operation must not change the balance."
+assert isinstance(BankAccount.__dict__.get("balance"), property), "balance must be a @property."
+try:
+    acc.balance = 99
+    assert False, "balance must be read-only (assignment raises AttributeError)."
+except AttributeError:
+    pass
+```
