@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Digitális technika az informatikában",
+    "en": "Digital Technology in Computing"
+  },
+  "description": {
+    "hu": "Digitális jelfeldolgozás (jel-zaj viszony, a zaj hasznos szerepe: dithering, digitális szűrők, DSP-hardver); a digitális technika alkalmazási területei az informatikában; összefoglaló tervezési projekt: digitális stopper FPGA-n.",
+    "en": "Digital signal processing (signal-to-noise ratio, the useful role of noise: dithering, digital filters, DSP hardware); application areas of digital technology in computing; a summary design project: a digital stopwatch on an FPGA."
+  }
+}
