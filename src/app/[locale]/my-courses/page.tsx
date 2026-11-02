@@ -60,7 +60,7 @@ async function PurchaseTables() {
           pathname: "/universities/[university]/courses/[course]",
           params: { university: p.universitySlug, course: p.courseSlug },
         }}
-        className="grid gap-0.5 hover:text-accent"
+        className="grid justify-items-center gap-0.5 hover:text-accent"
       >
         <span className="font-semibold">{localize(c.name, locale)}</span>
         <span className="text-xs text-muted">{localize(c.university.name, locale)}</span>
@@ -143,14 +143,14 @@ async function PurchaseTables() {
   );
 }
 
-// Egy táblázatcella stílusa.
-const cellClass = "px-4 py-3 align-top";
+// Egy táblázatcella stílusa (függőlegesen is középre igazítva).
+const cellClass = "px-4 py-3 align-middle";
 
-/** Keretes táblázat fejléccel; keskeny kijelzőn vízszintesen görgethető. */
+/** Keretes táblázat fejléccel, középre igazított tartalommal, egyforma széles oszlopokkal; keskeny kijelzőn vízszintesen görgethető. */
 function Table({ headers, children }: { headers: string[]; children: ReactNode }) {
   return (
     <Card padded={false} className="overflow-x-auto">
-      <table className="w-full min-w-[32rem] text-left text-sm">
+      <table className="w-full min-w-[36rem] table-fixed text-center text-sm">
         <thead className="border-b border-line text-xs text-muted">
           <tr>
             {headers.map((h) => (
