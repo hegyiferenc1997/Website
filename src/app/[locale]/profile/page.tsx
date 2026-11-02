@@ -4,7 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { desc, eq } from "drizzle-orm";
 import { Card, EmptyState, PageHeader } from "@/components/ui";
 import { getAccountDb } from "@/db";
-import { sessions } from "@/db/schema";
+import { sessions, users } from "@/db/schema";
 import { getActivity } from "@/features/account/activity";
 import { formatDateTime } from "@/features/account/format";
 import { getSessionUser } from "@/features/auth/server";
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title"), robots: { index: false } };
 }
 
-// Profil: a cím azonnal megjelenik, a személyes adatok (belépések, összes idő) rögtön utána érkeznek.
+// Profil: a cím azonnal megjelenik, a személyes adatok (regisztráció, utolsó belépés) rögtön utána érkeznek.
 export default async function ProfilePage() {
   const t = await getTranslations("ProfilePage");
   return (
@@ -38,9 +38,15 @@ async function ProfileDetails() {
   if (!user) return <EmptyState>{t("signedOut")}</EmptyState>;
 
   const db = await getAccountDb();
-  const activity = await getActivity(db, user.id);
-  // Ha a belépés még a funkció előtt történt, a legutóbbi munkamenet kezdete az utolsó belépés.
-  let lastLogin = activity?.lastLoginAt ?? null;
+  // A regisztráció ideje (a felhasználó létrehozása) és a belépések egyszerre lekérve.
+  const [account, activity] = await Promise.all([
+    db.query.users.findFirst({ where: eq(users.id, user.id), columns: { createdAt: true } }),
+    getActivity(db, user.id),
+  ]);
+  // Utolsó belépés: a mostani előtti belépés (a mostani munkamenet kezdete nem mond újat).
+  // Ha még csak egyszer lépett be, az az egy; ha a belépés még a funkció előtt történt,
+  // a legutóbbi munkamenet kezdete.
+  let lastLogin = activity?.previousLoginAt ?? activity?.lastLoginAt ?? null;
   if (!lastLogin) {
     const latest = await db.query.sessions.findFirst({
       where: eq(sessions.userId, user.id),
@@ -49,26 +55,16 @@ async function ProfileDetails() {
     });
     lastLogin = latest?.createdAt ?? null;
   }
-  const previousLogin = activity?.previousLoginAt ?? null;
-  const total = activity?.totalSeconds ?? 0;
 
-  // A sorok: felirat és érték.
-  const rows = [
+  // A sorok: felirat és érték. Az oldalon töltött idő az irányítópulton látszik.
+  const rows: { label: string; value: string; hint?: string }[] = [
     { label: t("name"), value: user.name },
     { label: t("email"), value: user.email },
+    {
+      label: t("registeredAt"),
+      value: account ? formatDateTime(account.createdAt, locale) : t("never"),
+    },
     { label: t("lastLogin"), value: lastLogin ? formatDateTime(lastLogin, locale) : t("never") },
-    {
-      label: t("previousLogin"),
-      value: previousLogin ? formatDateTime(previousLogin, locale) : t("never"),
-    },
-    {
-      label: t("totalTime"),
-      value: t("duration", {
-        hours: Math.floor(total / 3600),
-        minutes: Math.floor((total % 3600) / 60),
-      }),
-      hint: t("totalTimeHint"),
-    },
   ];
 
   return (
