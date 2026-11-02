@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatszerkezetek", "en": "Data Structures" },
+  "description": {
+    "hu": "Tömbök és műveleteik, listák és láncolt listák, halmazok és map-ek (szótárak), tuple, verem és sor – és hogy mikor melyiket válaszd.",
+    "en": "Arrays and their operations, lists and linked lists, sets and maps (dictionaries), tuples, stacks and queues – and when to choose which."
+  }
+}
