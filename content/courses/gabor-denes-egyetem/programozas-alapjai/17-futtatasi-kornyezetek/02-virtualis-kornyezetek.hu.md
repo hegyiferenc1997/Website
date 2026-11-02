@@ -1,0 +1,117 @@
+---
+title: Modulok, csomagok és virtuális környezetek
+summary: import, a standard könyvtár, pip, venv és requirements.txt – hogyan kezeld a program függőségeit.
+minutes: 15
+---
+
+## Amit ebben a leckében megtanulsz
+
+- mi a különbség a **modul**, a **csomag** és a **könyvtár** között,
+- hogyan telepíts külső csomagot a **pip**-pel,
+- mire való a **virtuális környezet** (`venv`), és hogyan hozd létre,
+- hogyan rögzítsd a függőségeket a **`requirements.txt`**-ben.
+
+## Modulok és a standard könyvtár
+
+- **Modul:** egy `.py` fájl, amelyet importálni lehet.
+- **Csomag:** modulok mappája.
+- **Standard könyvtár:** a Pythonnal együtt települő modulok – „elemekkel együtt szállítva” (*batteries included*).
+
+```python run
+import math                      # egész modul importálása
+from random import randint, seed # csak bizonyos nevek
+import datetime as dt            # rövidebb álnévvel
+from collections import Counter
+
+seed(1)                          # ismételhető véletlenszámok
+print(math.sqrt(16), math.pi)
+print(1 <= randint(1, 6) <= 6)
+print(dt.date(2026, 9, 1).strftime("%Y.%m.%d."))
+print(Counter("programozás").most_common(2))
+```
+
+Néhány hasznos standard modul: `math`, `random`, `datetime`, `os`, `pathlib`, `json`, `csv`, `collections`, `itertools`, `statistics`, `unittest`, `argparse`, `logging`.
+
+## Hol keresi a Python a modulokat?
+
+Az `import` a `sys.path` lista mappáiban keres: először a futó szkript mappájában, majd a standard könyvtárban, végül a telepített csomagok (`site-packages`) között.
+
+```python run
+import sys
+
+# A keresési útvonal első néhány eleme.
+print(len(sys.path) > 0)
+print(any("site-packages" in p or "dist-packages" in p for p in sys.path) or "nincs site-packages")
+```
+
+> Ne nevezd el a saját fájlodat úgy, mint egy standard modult (pl. `random.py`, `math.py`) – a Python a te fájlodat importálná helyette!
+
+## Külső csomagok: pip
+
+A külső csomagok a **PyPI** (Python Package Index, [pypi.org](https://pypi.org)) oldalon érhetők el, és a **pip** csomagkezelővel telepíthetők:
+
+```bash
+pip install requests          # telepítés
+pip install requests==2.32.3  # adott verzió
+pip list                      # telepített csomagok
+pip show requests             # egy csomag adatai
+pip uninstall requests        # eltávolítás
+```
+
+Népszerű csomagok: `requests` (HTTP), `numpy` (számítások), `pandas` (táblázatos adatok), `matplotlib` (grafikonok), `pytest` (tesztelés), `flask`/`django` (web).
+
+## Virtuális környezetek (venv)
+
+**Probléma:** az egyik projektnek a `numpy` 1.x, a másiknak a 2.x verziója kell. Ha minden a gép közös Pythonjába települ, a projektek összeakadnak.
+
+**Megoldás:** minden projektnek saját **virtuális környezet** – egy mappa saját Python-értelmezővel és saját csomagokkal.
+
+```bash
+# 1. Létrehozás a projekt mappájában (a .venv mappa jön létre)
+python -m venv .venv
+
+# 2. Aktiválás
+.venv\Scripts\activate        # Windows (PowerShell / cmd)
+source .venv/bin/activate     # macOS / Linux
+
+# 3. Innentől a pip a környezetbe telepít
+pip install requests
+
+# 4. Kilépés
+deactivate
+```
+
+Aktív környezetben a prompt elején megjelenik a neve: `(.venv) C:\projekt>`. A VS Code a projekt `.venv` mappáját automatikusan felismeri.
+
+A programból is ellenőrizhető, hogy virtuális környezetben fut-e:
+
+```python run
+import sys
+
+# Virtuális környezetben a sys.prefix a környezet mappája, ami eltér az alap Pythonétól.
+virtualis = sys.prefix != sys.base_prefix
+print("Virtuális környezetben fut:", virtualis)
+```
+
+## requirements.txt
+
+A függőségeket egy szövegfájlban rögzítjük, hogy más (vagy te egy másik gépen) pontosan ugyanazt a környezetet hozhassa létre:
+
+```bash
+pip freeze > requirements.txt     # a telepített csomagok kiírása
+pip install -r requirements.txt   # telepítés a fájl alapján
+```
+
+```text
+requests==2.32.3
+numpy==2.1.0
+```
+
+> A `.venv` mappát **ne** töltsd fel a Gitre (írd be a `.gitignore`-ba) – a `requirements.txt` alapján bárki újra létrehozhatja.
+
+## Összefoglalás
+
+- **Modul** = `.py` fájl, **csomag** = modulok mappája; a standard könyvtár rengeteg kész modult ad.
+- Külső csomagok a **PyPI**-ról, a **pip**-pel.
+- Minden projektnek saját **virtuális környezet** (`python -m venv .venv`).
+- A függőségek a **`requirements.txt`**-be kerülnek, a `.venv` mappa a `.gitignore`-ba.

@@ -1,0 +1,116 @@
+---
+title: Futtatókörnyezetek áttekintése
+summary: Operációs rendszer, JVM, .NET CLR, böngésző és Node.js, konténerek (Docker), felhő – hol és hogyan fut a kód.
+minutes: 14
+---
+
+## Amit ebben a leckében megtanulsz
+
+- mi a **futtatókörnyezet** (*runtime*), és mit ad a programnak,
+- hogyan fut egy program **natívan**, **virtuális gépen**, **böngészőben**,
+- mi a **konténer** (Docker) és a **felhő** szerepe,
+- hogyan éri el a program a környezetét (**környezeti változók**, platform).
+
+## Mi a futtatókörnyezet?
+
+A futtatókörnyezet minden, ami a programod **futásához** kell a kódodon kívül: az operációs rendszer, az interpreter vagy virtuális gép, a könyvtárak, a memóriakezelés (pl. szemétgyűjtő), a fájl- és hálózatelérés.
+
+```text
+  ┌────────────────────────────┐
+  │        a te programod      │
+  ├────────────────────────────┤
+  │  futtatókörnyezet (Python  │
+  │  interpreter, JVM, .NET…)  │
+  ├────────────────────────────┤
+  │     operációs rendszer     │
+  ├────────────────────────────┤
+  │          hardver           │
+  └────────────────────────────┘
+```
+
+## Natív futtatás (C, C++, Go, Rust)
+
+A fordító **az adott processzorra és operációs rendszerre** készít gépi kódot (Windowson `.exe`). Ez nagyon gyors, de egy Windowsra fordított program Linuxon nem fut – minden platformra külön kell fordítani.
+
+## Virtuális gépek (Java, C#, Python)
+
+- **JVM (Java Virtual Machine):** a Java fordító platformfüggetlen **bájtkódot** (`.class`, `.jar`) készít, amit bármely gépen futtat a JVM. A gyakran használt részeket futás közben gépi kódra fordítja (**JIT**). Ugyanezen fut a Kotlin és a Scala is.
+- **.NET CLR (Common Language Runtime):** a C# köztes kódra (IL) fordul, ezt a CLR futtatja JIT-tel – Windowson, Linuxon és macOS-en is.
+- **CPython:** a „hivatalos” Python. A forráskódot bájtkódra (`.pyc`, a `__pycache__` mappában) fordítja, majd a saját virtuális gépén értelmezi. Más megvalósítások is léteznek: **PyPy** (JIT-tel gyorsabb), **MicroPython** (mikrovezérlőkre).
+
+A virtuális gépek közös előnye a **hordozhatóság** és az automatikus **memóriakezelés** (szemétgyűjtő).
+
+```python run
+import dis
+
+def duplaz(x):
+    return x * 2
+
+# A Python bájtkódja: ezt hajtja végre a CPython virtuális gépe.
+dis.dis(duplaz)
+```
+
+## Böngésző és Node.js
+
+- A **böngésző** JavaScript-motort tartalmaz (Chrome: V8, Firefox: SpiderMonkey), amely a weboldal kódját JIT-tel futtatja – biztonsági okból elzárt környezetben (*sandbox*): nem fér hozzá szabadon a gép fájljaihoz.
+- A **WebAssembly** (Wasm) segítségével más nyelvek (C, C++, Rust, sőt a Python is – pl. *Pyodide*) is futhatnak a böngészőben. Később ezen az oldalon is így futnak majd a Python-feladatok.
+- A **Node.js** a V8 motort a böngészőn kívül, szerveren futtatja.
+
+## Konténerek (Docker)
+
+„Az én gépemen működik!” – a klasszikus probléma: a fejlesztő gépén minden megy, a szerveren nem, mert más a Python-verzió vagy hiányzik egy könyvtár.
+
+A **konténer** a programot **a teljes futtatókörnyezetével együtt** csomagolja (rendszerkönyvtárak, interpreter, függőségek). A **Docker** a legelterjedtebb eszköz erre. A konténer könnyebb, mint egy teljes virtuális gép, mert az operációs rendszer magját (*kernel*) megosztja a gazdagéppel.
+
+```text
+# Dockerfile – egy Python program konténerbe csomagolása
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python", "main.py"]
+```
+
+## Felhő
+
+A **felhőszolgáltatók** (AWS, Microsoft Azure, Google Cloud) bérelhető számítási kapacitást adnak:
+
+- **IaaS:** virtuális gépet bérelsz, mindent te telepítesz.
+- **PaaS:** csak a kódot töltöd fel, a futtatókörnyezetet a szolgáltató adja.
+- **Serverless (FaaS):** egy-egy függvényt futtatsz eseményre, és csak a futás idejéért fizetsz.
+
+## A program és a környezete
+
+A program a futtatókörnyezettől kap információt: melyik rendszeren fut, mi a munkakönyvtár, milyen **környezeti változók** vannak beállítva. A környezeti változókban tipikusan beállításokat és titkos kulcsokat adunk át – így ezek nem kerülnek bele a forráskódba.
+
+```python run
+import os
+import platform
+from pathlib import Path
+
+print("Rendszer:", platform.system() or "ismeretlen")
+print("Munkakönyvtár létezik:", Path.cwd().exists())
+
+# Környezeti változó olvasása alapértelmezett értékkel (ha nincs beállítva).
+mod = os.environ.get("ALKALMAZAS_MOD", "fejlesztes")
+print("Mód:", mod)
+
+# Beállítás csak erre a futásra (a gyerekfolyamatok is látják).
+os.environ["ALKALMAZAS_MOD"] = "teszt"
+print("Új mód:", os.environ["ALKALMAZAS_MOD"])
+```
+
+## Összefoglalás
+
+| Környezet | Példa | Hordozható? | Sebesség |
+| --- | --- | --- | --- |
+| natív gépi kód | C, C++, Go, Rust | platformonként fordítani kell | leggyorsabb |
+| virtuális gép (JIT) | Java/JVM, C#/.NET | igen | gyors |
+| interpreter | CPython, Ruby | igen | lassabb |
+| böngésző | JavaScript, WebAssembly | igen (minden böngészőben) | gyors (JIT) |
+| konténer | Docker | igen, a környezettel együtt | natívhoz közeli |
+
+- A futtatókörnyezet adja mindazt, ami a kódon kívül kell a futáshoz.
+- A **konténer** megoldja az „én gépemen működik” problémát.
+- Beállításokat és titkokat **környezeti változóban** adj át, ne a kódban.
