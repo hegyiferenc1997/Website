@@ -50,6 +50,9 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
+      // Súgó-buborék egérrel fölé érve: sötétben „világosra vált”, világosban „sötétre vált” (lásd globals.css).
+      data-tooltip={t("toLight")}
+      data-tooltip-light={t("toDark")}
       className="inline-flex size-9 items-center justify-center rounded-md border border-line text-muted transition-colors hover:bg-surface-hover hover:text-fg"
     >
       {/* Sötét témában a napot mutatjuk (világosra vált), világosban a holdat. */}

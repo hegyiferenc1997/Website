@@ -22,7 +22,12 @@
     "language": {
       "label": "Nyelv",
       "hu": "Magyar",
-      "en": "English"
+      "en": "English",
+      "switchTo": {
+        "hu": "Váltás magyar nyelvre",
+        "en": "Váltás angol nyelvre"
+      },
+      "current": "Jelenlegi nyelv: {locale, select, hu {magyar} other {angol}}"
     },
     "login": {
       "open": "Bejelentkezés",
@@ -116,14 +121,12 @@
     "semester": "{semester}. félév",
     "topics": "témakörök",
     "noTopics": "A tananyag hamarosan érkezik.",
-    "resources": "források",
     "level": {
       "bsc": "BSc",
       "msc": "MSc",
       "phd": "PhD",
       "other": "egyéb"
     },
-    "noResources": "Még nincs forrás ehhez a tárgyhoz.",
     "breadcrumb": "Útvonal",
     "elective": "Szabadon választható",
     "specializationLabel": "Specializáció",

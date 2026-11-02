@@ -2,6 +2,8 @@
 
 import { useEffect, useId, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { lessonKey } from "./data";
 import { PROGRESS_STYLE_ID } from "./script";
 import {
   courseKey,
@@ -271,5 +273,40 @@ export function TopicProgress({
     >
       {done}/{lessons.length}
     </span>
+  );
+}
+
+/**
+ * „Tananyag indítása” gomb a tárgy oldalán: a sorrendben első, még ki nem pipált leckére visz.
+ * Szerveren és az első kirajzoláskor az első leckére mutat (ugyanaz a felirat, így nincs villanás),
+ * a mentett haladás betöltése után a link átáll a következő elvégzendő leckére.
+ * Ha minden lecke kész, az első leckére visz.
+ */
+export function StartCourseLink({
+  university,
+  course,
+  lessons,
+  children,
+}: {
+  university: string;
+  course: string;
+  /** A tárgy összes leckéje sorrendben (témakör és lecke slug). */
+  lessons: { topic: string; lesson: string }[];
+  children: ReactNode;
+}) {
+  const progress = useProgress();
+  const key = courseKey(university, course);
+  const next =
+    lessons.find((l) => !isLessonDone(progress, key, lessonKey(l.topic, l.lesson))) ?? lessons[0];
+  return (
+    <Link
+      href={{
+        pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]",
+        params: { university, course, topic: next.topic, lesson: next.lesson },
+      }}
+      className="w-fit rounded-md bg-accent px-4 py-2 font-mono text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
+    >
+      {children}
+    </Link>
   );
 }

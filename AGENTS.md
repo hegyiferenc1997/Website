@@ -32,3 +32,14 @@ pnpm dev
 ```
 
 és írd le, hogyan lehet visszaállni: `git checkout main`.
+
+## Kattintható elemek (a projekt tulajdonosának kérése)
+
+Minden kattintható elem fölött kéz alakú egérmutató legyen (`cursor: pointer`). A `globals.css`
+alapstílusa ezt megadja a linkekre, gombokra, `summary`-ra, jelölőnégyzetekre és a `role="button"` stb.
+elemekre; ha új, kattintható, de nem ilyen elem készül (pl. kattintható `div`), kapjon `cursor-pointer` osztályt.
+
+## Súgó-buborék az ikonos gombokon
+
+A csak ikont tartalmazó gombok `data-tooltip="…"` attribútumot kapnak (kétnyelvű szöveggel a messages fájlokból),
+így egérrel fölé érve megjelenik, mit csinálnak (lásd `globals.css`, „Súgó-buborék”).

@@ -218,6 +218,8 @@ export function LoginMenu({
         onClick={() => setOpen((o) => !o)}
         aria-expanded={isOpen}
         aria-controls={`${id}-panel`}
+        // Súgó-buborék egérrel fölé érve (lenyitott panelnél nem látszik, lásd globals.css).
+        data-tooltip={user ? t("openAccount") : t("open")}
         className={
           "relative inline-flex size-9 items-center justify-center rounded-md border transition-colors " +
           (isOpen

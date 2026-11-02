@@ -54,7 +54,7 @@ export async function getUniversity(slug: string) {
   return university ?? null;
 }
 
-/** Egy tárgy a szakokkal, témakörökkel, leckékkel (szövegük nélkül) és forrásokkal; null, ha nincs ilyen. */
+/** Egy tárgy a szakokkal, témakörökkel, leckékkel (szövegük nélkül); null, ha nincs ilyen. */
 export async function getCourse(universitySlug: string, courseSlug: string) {
   "use cache";
   cacheTag("courses");
@@ -77,7 +77,6 @@ export async function getCourse(universitySlug: string, courseSlug: string) {
           },
         },
       },
-      resources: true,
     },
   });
   return course ? { ...course, university } : null;
