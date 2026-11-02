@@ -28,7 +28,7 @@ print(adults)
 
 ## Declarative: what?
 
-In **declarative** programming we describe *what* we want to get and leave the "how" to the language or system.
+In **declarative** programming we describe _what_ we want to get and leave the "how" to the language or system.
 
 ```sql
 -- SQL: we don't say how to search, only what we want.
@@ -46,13 +46,13 @@ print(adults)
 
 ## Comparison
 
-| Aspect | Imperative | Declarative |
-| --- | --- | --- |
-| what we describe | the steps | the desired result |
-| state | variables are modified constantly | preferably no mutable state |
-| examples | C, Pascal, Python with loops | SQL, HTML, Prolog, Python comprehensions |
-| advantage | full control, easy to follow step by step | shorter, fewer chances for mistakes |
-| disadvantage | longer, easier to corrupt state | the "under the hood" workings stay hidden |
+| Aspect           | Imperative                                | Declarative                               |
+| ---------------- | ----------------------------------------- | ----------------------------------------- |
+| what we describe | the steps                                 | the desired result                        |
+| state            | variables are modified constantly         | preferably no mutable state               |
+| examples         | C, Pascal, Python with loops              | SQL, HTML, Prolog, Python comprehensions  |
+| advantage        | full control, easy to follow step by step | shorter, fewer chances for mistakes       |
+| disadvantage     | longer, easier to corrupt state           | the "under the hood" workings stay hidden |
 
 ## Side effects
 

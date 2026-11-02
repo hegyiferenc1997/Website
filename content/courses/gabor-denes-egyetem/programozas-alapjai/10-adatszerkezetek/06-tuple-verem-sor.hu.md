@@ -93,25 +93,25 @@ print(list(sor))
 
 ## Melyik adatszerkezetet válaszd?
 
-| Kérdés / igény | Választás |
-| --- | --- |
-| sorrend számít, index szerint érem el, módosítom | **lista** |
-| rögzített, összetartozó értékek, nem változnak | **tuple** |
-| csak az számít, benne van-e; ismétlődések kiszűrése | **halmaz** |
-| kulcs alapján keresek értéket | **szótár (map)** |
-| mindig az utoljára betett elem kell | **verem** (lista `append`/`pop`) |
-| érkezési sorrendben dolgozom fel | **sor** (`deque`) |
-| sok beszúrás/törlés az elején vagy közepén | **láncolt lista** / `deque` |
+| Kérdés / igény                                      | Választás                        |
+| --------------------------------------------------- | -------------------------------- |
+| sorrend számít, index szerint érem el, módosítom    | **lista**                        |
+| rögzített, összetartozó értékek, nem változnak      | **tuple**                        |
+| csak az számít, benne van-e; ismétlődések kiszűrése | **halmaz**                       |
+| kulcs alapján keresek értéket                       | **szótár (map)**                 |
+| mindig az utoljára betett elem kell                 | **verem** (lista `append`/`pop`) |
+| érkezési sorrendben dolgozom fel                    | **sor** (`deque`)                |
+| sok beszúrás/törlés az elején vagy közepén          | **láncolt lista** / `deque`      |
 
 ## Műveletek költsége – összefoglaló
 
-| | lista | tuple | halmaz | szótár | deque |
-| --- | --- | --- | --- | --- | --- |
-| index szerinti elérés | O(1) | O(1) | – | – | O(n) |
-| keresés (`in`) | O(n) | O(n) | **O(1)** | **O(1)** (kulcs) | O(n) |
-| beszúrás a végére | O(1)* | – | O(1)* | O(1)* | O(1) |
-| beszúrás az elejére | O(n) | – | – | – | **O(1)** |
-| módosítható | igen | nem | igen | igen | igen |
+|                       | lista | tuple | halmaz   | szótár           | deque    |
+| --------------------- | ----- | ----- | -------- | ---------------- | -------- |
+| index szerinti elérés | O(1)  | O(1)  | –        | –                | O(n)     |
+| keresés (`in`)        | O(n)  | O(n)  | **O(1)** | **O(1)** (kulcs) | O(n)     |
+| beszúrás a végére     | O(1)* | –     | O(1)*    | O(1)*            | O(1)     |
+| beszúrás az elejére   | O(n)  | –     | –        | –                | **O(1)** |
+| módosítható           | igen  | nem   | igen     | igen             | igen     |
 
 \* átlagosan
 

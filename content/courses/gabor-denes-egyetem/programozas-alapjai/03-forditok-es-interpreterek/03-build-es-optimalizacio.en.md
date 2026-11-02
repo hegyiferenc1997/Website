@@ -22,14 +22,14 @@ A real program consists of many source files, external libraries and resources (
 
 Doing this by hand after every change is slow and error-prone, so we use **build systems**.
 
-| Tool | Language / area | Description file |
-| --- | --- | --- |
-| Make | C, C++ (classic) | `Makefile` |
-| CMake | C, C++ (cross-platform) | `CMakeLists.txt` |
-| Maven, Gradle | Java, Kotlin | `pom.xml`, `build.gradle` |
-| MSBuild / dotnet | C# | `.csproj` |
-| pip, uv, Poetry | Python | `pyproject.toml`, `requirements.txt` |
-| npm, pnpm | JavaScript, TypeScript | `package.json` |
+| Tool             | Language / area         | Description file                     |
+| ---------------- | ----------------------- | ------------------------------------ |
+| Make             | C, C++ (classic)        | `Makefile`                           |
+| CMake            | C, C++ (cross-platform) | `CMakeLists.txt`                     |
+| Maven, Gradle    | Java, Kotlin            | `pom.xml`, `build.gradle`            |
+| MSBuild / dotnet | C#                      | `.csproj`                            |
+| pip, uv, Poetry  | Python                  | `pyproject.toml`, `requirements.txt` |
+| npm, pnpm        | JavaScript, TypeScript  | `package.json`                       |
 
 A simple `Makefile` excerpt:
 

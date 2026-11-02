@@ -115,12 +115,12 @@ This idea – storing the results of subproblems – is the basis of **dynamic p
 
 ## When to use which?
 
-| Aspect | Recursion | Iteration |
-| --- | --- | --- |
+| Aspect      | Recursion                                                            | Iteration                              |
+| ----------- | -------------------------------------------------------------------- | -------------------------------------- |
 | readability | very clean for naturally recursive tasks (trees, divide and conquer) | clearer for simple sequences, counting |
-| memory | every call takes a stack frame | constant memory |
-| speed | usually slower because of call overhead | usually faster |
-| limit | recursion depth (about 1000 in Python) | none |
+| memory      | every call takes a stack frame                                       | constant memory                        |
+| speed       | usually slower because of call overhead                              | usually faster                         |
+| limit       | recursion depth (about 1000 in Python)                               | none                                   |
 
 **Rule of thumb:**
 

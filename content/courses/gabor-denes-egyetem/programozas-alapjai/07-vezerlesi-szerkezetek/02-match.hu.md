@@ -101,11 +101,11 @@ print(NAPOK.get(9, "érvénytelen"))
 
 ## Mikor melyiket?
 
-| Helyzet | Javasolt |
-| --- | --- |
+| Helyzet                                    | Javasolt            |
+| ------------------------------------------ | ------------------- |
 | egy érték összevetése sok konkrét értékkel | `match` vagy szótár |
-| tartományok, összetett feltételek | `if-elif-else` |
-| adatszerkezet alakja szerinti döntés | `match` |
+| tartományok, összetett feltételek          | `if-elif-else`      |
+| adatszerkezet alakja szerinti döntés       | `match`             |
 
 ## Összefoglalás
 

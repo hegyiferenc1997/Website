@@ -147,7 +147,7 @@ print("All checks passed!")
 
 ### Exercise 4: Design (on paper)
 
-Break the following task into steps and write it in pseudocode: *"A shop gives a 10% discount on purchases over 10,000. Compute the amount to pay."*
+Break the following task into steps and write it in pseudocode: _"A shop gives a 10% discount on purchases over 10,000. Compute the amount to pay."_
 
 <details>
 <summary>A possible solution</summary>

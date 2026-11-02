@@ -24,19 +24,19 @@ print(ures, szamok, vegyes, betuk, tiz, sep="\n")
 
 ## A legfontosabb metódusok
 
-| Metódus | Mit csinál |
-| --- | --- |
-| `append(x)` | x-et a végére fűzi |
-| `extend(lista)` | egy másik lista elemeit a végére fűzi |
-| `insert(i, x)` | x-et az i. helyre szúrja |
-| `remove(x)` | az első x értékű elemet törli (ValueError, ha nincs) |
-| `pop(i)` | kiveszi és visszaadja az i. elemet (alapból az utolsót) |
-| `index(x)` | az első x indexe |
-| `count(x)` | x előfordulásainak száma |
-| `sort()` | helyben rendez |
-| `reverse()` | helyben megfordít |
-| `clear()` | kiüríti |
-| `copy()` | sekély másolat |
+| Metódus         | Mit csinál                                              |
+| --------------- | ------------------------------------------------------- |
+| `append(x)`     | x-et a végére fűzi                                      |
+| `extend(lista)` | egy másik lista elemeit a végére fűzi                   |
+| `insert(i, x)`  | x-et az i. helyre szúrja                                |
+| `remove(x)`     | az első x értékű elemet törli (ValueError, ha nincs)    |
+| `pop(i)`        | kiveszi és visszaadja az i. elemet (alapból az utolsót) |
+| `index(x)`      | az első x indexe                                        |
+| `count(x)`      | x előfordulásainak száma                                |
+| `sort()`        | helyben rendez                                          |
+| `reverse()`     | helyben megfordít                                       |
+| `clear()`       | kiüríti                                                 |
+| `copy()`        | sekély másolat                                          |
 
 ```python run
 bevasarlas = ["tej", "kenyér"]

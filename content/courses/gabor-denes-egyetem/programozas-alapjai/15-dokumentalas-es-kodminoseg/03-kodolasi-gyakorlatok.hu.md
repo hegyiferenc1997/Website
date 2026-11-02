@@ -17,18 +17,18 @@ A jó kód **helyes**, **olvasható**, **egyszerű**, **tesztelhető** és **kö
 
 ## PEP 8 – a Python stílusirányelve
 
-| Szabály | Példa |
-| --- | --- |
-| behúzás: 4 szóköz (nem tabulátor) | `····return x` |
-| sorhossz: legfeljebb 79–99 karakter | hosszú kifejezést zárójelen belül törj |
-| változók, függvények: `snake_case` | `hallgatok_szama`, `atlag_szamitas()` |
-| osztályok: `PascalCase` | `class BankSzamla:` |
-| konstansok: `NAGY_BETU` | `MAX_PONT = 100` |
-| szóköz az operátorok körül | `x = a + b`, nem `x=a+b` |
-| nincs szóköz a zárójelen belül | `f(x)`, nem `f( x )` |
-| két üres sor a függvények / osztályok között | |
-| importok a fájl elején, csoportosítva | standard → külső → saját |
-| `None`-hoz `is` | `if x is None:` |
+| Szabály                                      | Példa                                  |
+| -------------------------------------------- | -------------------------------------- |
+| behúzás: 4 szóköz (nem tabulátor)            | `····return x`                         |
+| sorhossz: legfeljebb 79–99 karakter          | hosszú kifejezést zárójelen belül törj |
+| változók, függvények: `snake_case`           | `hallgatok_szama`, `atlag_szamitas()`  |
+| osztályok: `PascalCase`                      | `class BankSzamla:`                    |
+| konstansok: `NAGY_BETU`                      | `MAX_PONT = 100`                       |
+| szóköz az operátorok körül                   | `x = a + b`, nem `x=a+b`               |
+| nincs szóköz a zárójelen belül               | `f(x)`, nem `f( x )`                   |
+| két üres sor a függvények / osztályok között |                                        |
+| importok a fájl elején, csoportosítva        | standard → külső → saját               |
+| `None`-hoz `is`                              | `if x is None:`                        |
 
 ## Beszédes nevek
 
@@ -74,7 +74,7 @@ for nev, jegyek in [("Anna", anna), ("Béla", bela)]:
 
 ## KISS – maradj egyszerű
 
-*Keep It Simple, Stupid*: a legegyszerűbb működő megoldás a legjobb. A „okos” trükkök nehezen olvashatók és javíthatók.
+_Keep It Simple, Stupid_: a legegyszerűbb működő megoldás a legjobb. A „okos” trükkök nehezen olvashatók és javíthatók.
 
 ```python run
 szam = 7
@@ -90,7 +90,7 @@ else:
 print("páros" if szam % 2 == 0 else "páratlan")
 ```
 
-Rokon elv a **YAGNI** (*You Aren't Gonna Need It*): ne írj meg olyan funkciót, amire „talán egyszer szükség lesz”.
+Rokon elv a **YAGNI** (_You Aren't Gonna Need It_): ne írj meg olyan funkciót, amire „talán egyszer szükség lesz”.
 
 ## Egy függvény – egy feladat
 
@@ -149,12 +149,12 @@ A **refaktorálás** a kód szerkezetének javítása **a működés megváltozt
 
 ## Automatikus eszközök
 
-| Eszköz | Mit csinál |
-| --- | --- |
-| **Ruff**, Flake8, Pylint | *linter*: stílushibák és gyanús kód keresése (nem használt változó, elérhetetlen kód) |
-| **Black**, Ruff format | *formázó*: automatikusan egységes formára hozza a kódot |
-| **mypy** | típusellenőrzés a típusjelölések alapján |
-| **pytest + coverage** | tesztek és lefedettség |
+| Eszköz                   | Mit csinál                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------- |
+| **Ruff**, Flake8, Pylint | _linter_: stílushibák és gyanús kód keresése (nem használt változó, elérhetetlen kód) |
+| **Black**, Ruff format   | _formázó_: automatikusan egységes formára hozza a kódot                               |
+| **mypy**                 | típusellenőrzés a típusjelölések alapján                                              |
+| **pytest + coverage**    | tesztek és lefedettség                                                                |
 
 ```bash
 pip install ruff

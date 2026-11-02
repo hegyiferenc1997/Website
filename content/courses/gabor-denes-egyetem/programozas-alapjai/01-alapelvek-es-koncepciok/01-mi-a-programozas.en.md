@@ -56,11 +56,11 @@ The computer executes the lines **from top to bottom, one after the other**. Thi
 
 ## The usual parts of a program
 
-| Part | Meaning | Example |
-| --- | --- | --- |
-| Input | data the program receives | the user types a number |
-| Processing | calculations, decisions | addition, comparison |
-| Output | the result | printing to the screen, saving to a file |
+| Part       | Meaning                   | Example                                  |
+| ---------- | ------------------------- | ---------------------------------------- |
+| Input      | data the program receives | the user types a number                  |
+| Processing | calculations, decisions   | addition, comparison                     |
+| Output     | the result                | printing to the screen, saving to a file |
 
 ```python run
 # Input → processing → output in a small example.

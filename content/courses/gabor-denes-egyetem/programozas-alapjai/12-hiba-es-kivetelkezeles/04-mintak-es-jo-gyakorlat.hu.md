@@ -53,7 +53,7 @@ print(pont)
 
 ## 3. Ne nyeld el csendben a hibát
 
-Egy üres `except: pass` órákig tartó hibakeresést okozhat. Ha tényleg figyelmen kívül hagyható a hiba, legalább írj megjegyzést, *miért*.
+Egy üres `except: pass` órákig tartó hibakeresést okozhat. Ha tényleg figyelmen kívül hagyható a hiba, legalább írj megjegyzést, _miért_.
 
 ```python run
 import contextlib
@@ -67,8 +67,8 @@ print("Kész.")
 
 ## 4. EAFP vagy LBYL?
 
-- **LBYL** – *Look Before You Leap* („nézz körül, mielőtt ugrasz”): előbb ellenőrzünk, aztán cselekszünk.
-- **EAFP** – *Easier to Ask Forgiveness than Permission* („könnyebb bocsánatot kérni, mint engedélyt”): megpróbáljuk, és ha nem sikerül, kezeljük a kivételt.
+- **LBYL** – _Look Before You Leap_ („nézz körül, mielőtt ugrasz”): előbb ellenőrzünk, aztán cselekszünk.
+- **EAFP** – _Easier to Ask Forgiveness than Permission_ („könnyebb bocsánatot kérni, mint engedélyt”): megpróbáljuk, és ha nem sikerül, kezeljük a kivételt.
 
 ```python run
 szotar = {"alma": 300}
@@ -142,13 +142,13 @@ print(kedvezmenyes_ar(10_000, 15))
 
 ## Gyakori rossz minták
 
-| Rossz minta | Miért baj | Helyette |
-| --- | --- | --- |
-| `except: pass` | minden hibát elnyel | konkrét kivétel, naplózás |
-| óriási `try` blokk | véletlenül mást is elkap | csak a kockázatos sor legyen benne |
-| kivétel helyett `-1` / `None` „hibakód” | a hívó elfelejti ellenőrizni | `raise` |
-| kivétel a normál vezérlésre (pl. ciklus megállítására) | lassú, nehezen olvasható | `if`, `break` |
-| hibaüzenet nélküli `raise ValueError()` | nem derül ki, mi a gond | beszédes üzenet |
+| Rossz minta                                            | Miért baj                    | Helyette                           |
+| ------------------------------------------------------ | ---------------------------- | ---------------------------------- |
+| `except: pass`                                         | minden hibát elnyel          | konkrét kivétel, naplózás          |
+| óriási `try` blokk                                     | véletlenül mást is elkap     | csak a kockázatos sor legyen benne |
+| kivétel helyett `-1` / `None` „hibakód”                | a hívó elfelejti ellenőrizni | `raise`                            |
+| kivétel a normál vezérlésre (pl. ciklus megállítására) | lassú, nehezen olvasható     | `if`, `break`                      |
+| hibaüzenet nélküli `raise ValueError()`                | nem derül ki, mi a gond      | beszédes üzenet                    |
 
 ## Összefoglalás
 

@@ -27,12 +27,12 @@ A dokumentáció célja, hogy a kód **megérthető, használható és karbantar
 
 ## A dokumentáció szintjei
 
-| Fajta | Kinek szól | Hol van | Példa |
-| --- | --- | --- | --- |
-| **kódon belüli** | a kódot olvasó fejlesztő | kommentek, beszédes nevek | `# A bruttó ár ÁFA-val együtt` |
-| **API-dokumentáció** | aki használja a függvényt / modult | docstringek, típusjelölések | `"""Visszaadja az átlagot…"""` |
-| **fejlesztői** | aki tovább fejleszti a projektet | README, architektúra leírás, `CONTRIBUTING` | telepítés, felépítés, döntések |
-| **felhasználói** | a program felhasználója | kézikönyv, súgó, GYIK | „Hogyan regisztrálok?” |
+| Fajta                | Kinek szól                         | Hol van                                     | Példa                          |
+| -------------------- | ---------------------------------- | ------------------------------------------- | ------------------------------ |
+| **kódon belüli**     | a kódot olvasó fejlesztő           | kommentek, beszédes nevek                   | `# A bruttó ár ÁFA-val együtt` |
+| **API-dokumentáció** | aki használja a függvényt / modult | docstringek, típusjelölések                 | `"""Visszaadja az átlagot…"""` |
+| **fejlesztői**       | aki tovább fejleszti a projektet   | README, architektúra leírás, `CONTRIBUTING` | telepítés, felépítés, döntések |
+| **felhasználói**     | a program felhasználója            | kézikönyv, súgó, GYIK                       | „Hogyan regisztrálok?”         |
 
 ## Mit dokumentálj?
 
@@ -71,5 +71,5 @@ print(f([40, 60, 80]), sikeres_dolgozatok_atlaga([40, 60, 80]))
 
 - A kódot sokkal többször olvassák, mint írják – a dokumentáció a karbantarthatóság alapja.
 - Szintek: kódon belüli, API (docstring), fejlesztői (README), felhasználói.
-- A *miért*-et dokumentáld, ne a nyilvánvalót; tartsd naprakészen.
+- A _miért_-et dokumentáld, ne a nyilvánvalót; tartsd naprakészen.
 - A legjobb kiindulópont az önmagát magyarázó, beszédes nevű kód.

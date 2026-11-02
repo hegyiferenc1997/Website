@@ -91,12 +91,12 @@ print("Köszönöm:", szam)
 
 ## Összehasonlítás
 
-| | Elöltesztelő (while) | Hátultesztelő (do-while) |
-| --- | --- | --- |
-| feltétel ellenőrzése | a kör elején | a kör végén |
-| minimum lefutás | 0-szor | 1-szer |
-| tipikus használat | ismeretlen számú ismétlés | beolvasás ellenőrzése, menü |
-| Pythonban | `while feltetel:` | `while True:` … `if not feltetel: break` |
+|                      | Elöltesztelő (while)      | Hátultesztelő (do-while)                 |
+| -------------------- | ------------------------- | ---------------------------------------- |
+| feltétel ellenőrzése | a kör elején              | a kör végén                              |
+| minimum lefutás      | 0-szor                    | 1-szer                                   |
+| tipikus használat    | ismeretlen számú ismétlés | beolvasás ellenőrzése, menü              |
+| Pythonban            | `while feltetel:`         | `while True:` … `if not feltetel: break` |
 
 ## Összefoglalás
 

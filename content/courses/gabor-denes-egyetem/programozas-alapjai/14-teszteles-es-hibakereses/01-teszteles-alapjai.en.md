@@ -25,12 +25,12 @@ The later a bug is found, the more expensive it is to fix: a few minutes during 
 
 ## Levels of testing
 
-| Level | What it tests | Example |
-| --- | --- | --- |
-| **unit test** | one function or class in isolation | `average([4, 5]) == 4.5` |
-| **integration test** | several units working together | the function reads correctly from the database |
-| **system test** | the whole application | you can complete sign-up on the website |
-| **acceptance test** | does it meet the client's needs | the user approves the feature |
+| Level                | What it tests                      | Example                                        |
+| -------------------- | ---------------------------------- | ---------------------------------------------- |
+| **unit test**        | one function or class in isolation | `average([4, 5]) == 4.5`                       |
+| **integration test** | several units working together     | the function reads correctly from the database |
+| **system test**      | the whole application              | you can complete sign-up on the website        |
+| **acceptance test**  | does it meet the client's needs    | the user approves the feature                  |
 
 In this topic we mainly deal with **unit tests**: programmers write them, they are fast, and we run them often.
 
@@ -49,13 +49,13 @@ A test case is **input + expected output**. Think in three groups:
 
 Example: `grade(score)` on the course's scale (50 → 2, 63 → 3, 76 → 4, 89 → 5).
 
-| Group | Input | Expected |
-| --- | --- | --- |
-| normal | 70 | 3 |
-| boundary | 49, 50 | 1, 2 |
-| boundary | 88, 89 | 4, 5 |
-| boundary | 0, 100 | 1, 5 |
-| invalid | −1, 101 | `ValueError` |
+| Group    | Input   | Expected     |
+| -------- | ------- | ------------ |
+| normal   | 70      | 3            |
+| boundary | 49, 50  | 1, 2         |
+| boundary | 88, 89  | 4, 5         |
+| boundary | 0, 100  | 1, 5         |
+| invalid  | −1, 101 | `ValueError` |
 
 > **Most bugs are at the boundaries** ("off-by-one": `>` or `>=`?). Always test both sides of a boundary!
 
@@ -96,7 +96,7 @@ If an `assert` is false, an `AssertionError` occurs – the test **fails**, and 
 
 ## Test-driven development (TDD)
 
-In **TDD** (*Test-Driven Development*) we write the test first and the code after:
+In **TDD** (_Test-Driven Development_) we write the test first and the code after:
 
 1. 🔴 **Red:** write a test that fails (because there's no code yet).
 2. 🟢 **Green:** write the simplest code that makes the test pass.

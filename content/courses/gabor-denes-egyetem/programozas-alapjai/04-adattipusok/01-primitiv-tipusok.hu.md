@@ -22,14 +22,14 @@ Egy adattípus megadja:
 
 ## A Python alaptípusai
 
-| Típus | Jelentés | Literál példák |
-| --- | --- | --- |
-| `int` | egész szám | `42`, `-7`, `0`, `1_000_000`, `0b1010`, `0xFF` |
-| `float` | valós (lebegőpontos) szám | `3.14`, `-0.5`, `2.0`, `1e6`, `2.5e-3` |
-| `bool` | logikai érték | `True`, `False` |
-| `str` | szöveg (karakterlánc) | `"alma"`, `'körte'`, `"""több sor"""` |
-| `NoneType` | „nincs érték” | `None` |
-| `complex` | komplex szám | `3 + 4j` |
+| Típus      | Jelentés                  | Literál példák                                 |
+| ---------- | ------------------------- | ---------------------------------------------- |
+| `int`      | egész szám                | `42`, `-7`, `0`, `1_000_000`, `0b1010`, `0xFF` |
+| `float`    | valós (lebegőpontos) szám | `3.14`, `-0.5`, `2.0`, `1e6`, `2.5e-3`         |
+| `bool`     | logikai érték             | `True`, `False`                                |
+| `str`      | szöveg (karakterlánc)     | `"alma"`, `'körte'`, `"""több sor"""`          |
+| `NoneType` | „nincs érték”             | `None`                                         |
+| `complex`  | komplex szám              | `3 + 4j`                                       |
 
 ```python run
 # A type() megmondja egy érték típusát.
@@ -65,15 +65,15 @@ többsoros szöveg.""")
 
 Statikusan típusos nyelvekben (C, Java, C#) a primitív típusoknak **fix méretük** van:
 
-| Java / C# típus | Méret | Értéktartomány |
-| --- | --- | --- |
-| `byte` | 1 bájt | −128 … 127 (Javában) |
-| `int` | 4 bájt | kb. −2,1 milliárd … 2,1 milliárd |
-| `long` | 8 bájt | kb. ±9,2 · 10¹⁸ |
-| `float` | 4 bájt | kb. 7 értékes jegy |
-| `double` | 8 bájt | kb. 15–16 értékes jegy |
-| `char` | 2 bájt | egy Unicode karakter |
-| `boolean` / `bool` | 1 bájt (általában) | true, false |
+| Java / C# típus    | Méret              | Értéktartomány                   |
+| ------------------ | ------------------ | -------------------------------- |
+| `byte`             | 1 bájt             | −128 … 127 (Javában)             |
+| `int`              | 4 bájt             | kb. −2,1 milliárd … 2,1 milliárd |
+| `long`             | 8 bájt             | kb. ±9,2 · 10¹⁸                  |
+| `float`            | 4 bájt             | kb. 7 értékes jegy               |
+| `double`           | 8 bájt             | kb. 15–16 értékes jegy           |
+| `char`             | 2 bájt             | egy Unicode karakter             |
+| `boolean` / `bool` | 1 bájt (általában) | true, false                      |
 
 Ha egy `int` értéke túllépi a tartományt, **túlcsordulás (overflow)** történik: a 2 147 483 647 + 1 hirtelen negatív lesz. Pythonban az `int` mérete **korlátlan** (csak a memória szab határt), ezért ott ez nem fordul elő:
 

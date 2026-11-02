@@ -12,15 +12,15 @@ minutes: 20
 
 ## A projekt szakaszai
 
-| Szakasz | Teendő | Eredmény |
-| --- | --- | --- |
-| 1. Ötlet és célkitűzés | téma kiválasztása, mit fog tudni a program | 1 bekezdéses projektleírás |
-| 2. Specifikáció | követelmények, bemenetek–kimenetek, korlátok | követelmény-specifikáció |
-| 3. Tervezés | modulok, adatszerkezetek, feladatok kiosztása | terv + feladatlista |
-| 4. Megvalósítás | kódolás kis lépésekben, rendszeres egyeztetés | működő program |
-| 5. Tesztelés | egységtesztek, kipróbálás, hibajavítás | tesztjegyzőkönyv |
-| 6. Dokumentálás | README, fejlesztői és felhasználói dokumentáció | kész dokumentáció |
-| 7. Bemutatás | rövid demó, ki mit csinált | prezentáció |
+| Szakasz                | Teendő                                          | Eredmény                   |
+| ---------------------- | ----------------------------------------------- | -------------------------- |
+| 1. Ötlet és célkitűzés | téma kiválasztása, mit fog tudni a program      | 1 bekezdéses projektleírás |
+| 2. Specifikáció        | követelmények, bemenetek–kimenetek, korlátok    | követelmény-specifikáció   |
+| 3. Tervezés            | modulok, adatszerkezetek, feladatok kiosztása   | terv + feladatlista        |
+| 4. Megvalósítás        | kódolás kis lépésekben, rendszeres egyeztetés   | működő program             |
+| 5. Tesztelés           | egységtesztek, kipróbálás, hibajavítás          | tesztjegyzőkönyv           |
+| 6. Dokumentálás        | README, fejlesztői és felhasználói dokumentáció | kész dokumentáció          |
+| 7. Bemutatás           | rövid demó, ki mit csinált                      | prezentáció                |
 
 > A dokumentációt **ne a végére hagyd**: a specifikáció és a terv már az elején elkészül, a többit a fejlesztéssel párhuzamosan írjátok.
 
@@ -33,7 +33,7 @@ Kis csapatban mindenki programoz, de érdemes felelősöket kijelölni:
 - **Tesztfelelős:** a tesztek megszervezése, a tesztjegyzőkönyv.
 - **Dokumentációfelelős:** a dokumentáció egységes formája (a tartalmat mindenki írja a saját részéhez).
 
-A feladatokat bontsátok **kicsi, egyértelmű** részekre („a `beolvas_csv()` függvény megírása tesztekkel”, nem „az adatkezelés”). Egy egyszerű táblázat vagy egy Kanban-tábla (pl. GitHub Projects, Trello: *Teendő – Folyamatban – Kész*) sokat segít.
+A feladatokat bontsátok **kicsi, egyértelmű** részekre („a `beolvas_csv()` függvény megírása tesztekkel”, nem „az adatkezelés”). Egy egyszerű táblázat vagy egy Kanban-tábla (pl. GitHub Projects, Trello: _Teendő – Folyamatban – Kész_) sokat segít.
 
 **A modulok közötti határ** legyen előre rögzítve: milyen függvények lesznek, milyen paraméterekkel és visszatérési értékkel. Így mindenki párhuzamosan dolgozhat.
 
@@ -56,19 +56,19 @@ Szabályok, amelyek megkímélnek a fejfájástól:
 
 - **Kis, gyakori commitok** beszédes üzenettel.
 - A `main` ágra csak **átnézett** (review) kód kerüljön.
-- Munka előtt mindig `git pull` – így ritkábban lesz **ütközés** (*merge conflict*). Ha mégis, beszéljétek meg, melyik változat maradjon.
+- Munka előtt mindig `git pull` – így ritkábban lesz **ütközés** (_merge conflict_). Ha mégis, beszéljétek meg, melyik változat maradjon.
 - Közös **kódolási szabályok**: PEP 8, egységes nevek, nyelv (magyar vagy angol azonosítók – de ne keverve).
 
 ## A dokumentáció részei
 
-| Dokumentum | Kinek szól | Tartalom |
-| --- | --- | --- |
-| **Követelmény-specifikáció** | megrendelő, csapat | mit tud a program: funkciók, bemenetek–kimenetek, korlátok, elfogadási feltételek |
-| **README.md** | mindenki, aki megnyitja a tárolót | rövid leírás, telepítés, futtatás, példa, szerzők |
-| **Fejlesztői dokumentáció** | aki a kódot továbbfejleszti | felépítés (modulok), adatszerkezetek, fontos algoritmusok, függvények leírása (docstringekből) |
-| **Felhasználói dokumentáció** | aki használja a programot | lépésről lépésre útmutató, képernyőképek, hibaüzenetek jelentése |
-| **Tesztjegyzőkönyv** | csapat, oktató | tesztesetek: bemenet, elvárt és kapott eredmény, megfelelt-e |
-| **Projektnapló** | csapat, oktató | ki, mikor, mit csinált; megbeszélések rövid összefoglalója |
+| Dokumentum                    | Kinek szól                        | Tartalom                                                                                       |
+| ----------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Követelmény-specifikáció**  | megrendelő, csapat                | mit tud a program: funkciók, bemenetek–kimenetek, korlátok, elfogadási feltételek              |
+| **README.md**                 | mindenki, aki megnyitja a tárolót | rövid leírás, telepítés, futtatás, példa, szerzők                                              |
+| **Fejlesztői dokumentáció**   | aki a kódot továbbfejleszti       | felépítés (modulok), adatszerkezetek, fontos algoritmusok, függvények leírása (docstringekből) |
+| **Felhasználói dokumentáció** | aki használja a programot         | lépésről lépésre útmutató, képernyőképek, hibaüzenetek jelentése                               |
+| **Tesztjegyzőkönyv**          | csapat, oktató                    | tesztesetek: bemenet, elvárt és kapott eredmény, megfelelt-e                                   |
+| **Projektnapló**              | csapat, oktató                    | ki, mikor, mit csinált; megbeszélések rövid összefoglalója                                     |
 
 ### README-sablon
 
@@ -102,11 +102,11 @@ python main.py adatok.csv
 
 ### Tesztjegyzőkönyv-minta
 
-| # | Teszteset | Bemenet | Elvárt eredmény | Kapott eredmény | Megfelelt |
-| --- | --- | --- | --- | --- | --- |
-| 1 | átlag normál adatokkal | `[4, 5, 3]` | `4.0` | `4.0` | ✔ |
-| 2 | átlag üres listával | `[]` | `0.0`, nincs hiba | `ZeroDivisionError` | ✘ → javítva |
-| 3 | hiányzó fájl | `nincs.csv` | érthető hibaüzenet | „Nem található a fájl” | ✔ |
+| #   | Teszteset              | Bemenet     | Elvárt eredmény    | Kapott eredmény        | Megfelelt   |
+| --- | ---------------------- | ----------- | ------------------ | ---------------------- | ----------- |
+| 1   | átlag normál adatokkal | `[4, 5, 3]` | `4.0`              | `4.0`                  | ✔           |
+| 2   | átlag üres listával    | `[]`        | `0.0`, nincs hiba  | `ZeroDivisionError`    | ✘ → javítva |
+| 3   | hiányzó fájl           | `nincs.csv` | érthető hibaüzenet | „Nem található a fájl” | ✔           |
 
 ### Fejlesztői dokumentáció a docstringekből
 

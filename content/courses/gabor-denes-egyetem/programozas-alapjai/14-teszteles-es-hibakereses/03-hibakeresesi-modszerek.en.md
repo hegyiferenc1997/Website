@@ -67,20 +67,20 @@ A **debugger** lets you **pause** the program on a given line and go step by ste
 
 Key concepts:
 
-| Concept | Meaning |
-| --- | --- |
-| **breakpoint** | the program stops at this line |
-| **Step Over** (F10) | executes the current line without entering function calls |
-| **Step Into** (F11) | enters the called function |
-| **Step Out** (Shift+F11) | finishes the current function and returns to the caller |
-| **Continue** (F5) | runs until the next breakpoint |
-| **Watch / Variables** | the current values of variables |
-| **Call Stack** | which function called which |
+| Concept                  | Meaning                                                   |
+| ------------------------ | --------------------------------------------------------- |
+| **breakpoint**           | the program stops at this line                            |
+| **Step Over** (F10)      | executes the current line without entering function calls |
+| **Step Into** (F11)      | enters the called function                                |
+| **Step Out** (Shift+F11) | finishes the current function and returns to the caller   |
+| **Continue** (F5)        | runs until the next breakpoint                            |
+| **Watch / Variables**    | the current values of variables                           |
+| **Call Stack**           | which function called which                               |
 
 **In VS Code:**
 
 1. Click to the left of a line number – a red dot appears (breakpoint).
-2. Press **F5** and choose *Python Debugger*.
+2. Press **F5** and choose _Python Debugger_.
 3. The program stops at the breakpoint; on the left you see the variables, at the top the stepping buttons.
 
 You can also pause **from code** with the built-in `breakpoint()` call – this starts Python's command-line debugger (`pdb`):
@@ -94,7 +94,7 @@ def amount_due(price, quantity, discount):
 
 ## 4. Rubber duck debugging
 
-Explain the code **line by line** to someone – even a rubber duck on your desk. While saying out loud what a line *should* do, you often realise it does something else. Surprisingly effective!
+Explain the code **line by line** to someone – even a rubber duck on your desk. While saying out loud what a line _should_ do, you often realise it does something else. Surprisingly effective!
 
 ## 5. Bisection
 
@@ -102,14 +102,14 @@ If you don't know where the data goes wrong, **halve** the code: print the value
 
 ## Common bugs worth checking first
 
-| Symptom | Common cause |
-| --- | --- |
-| one element too many/few | `range(n)` vs. `range(n + 1)`, `<` vs. `<=` |
-| the function returns `None` | a missing `return` |
-| the list changes "by itself" | two names refer to the same list (`b = a`) |
-| the condition is never true | comparing text with a number (`"5" == 5`) |
-| infinite loop | the loop variable doesn't change |
-| `UnboundLocalError` | assigning to a global name inside a function |
+| Symptom                      | Common cause                                 |
+| ---------------------------- | -------------------------------------------- |
+| one element too many/few     | `range(n)` vs. `range(n + 1)`, `<` vs. `<=`  |
+| the function returns `None`  | a missing `return`                           |
+| the list changes "by itself" | two names refer to the same list (`b = a`)   |
+| the condition is never true  | comparing text with a number (`"5" == 5`)    |
+| infinite loop                | the loop variable doesn't change             |
+| `UnboundLocalError`          | assigning to a global name inside a function |
 
 ## Summary
 

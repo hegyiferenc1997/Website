@@ -12,15 +12,15 @@ minutes: 15
 
 ## Aritmetikai műveletek
 
-| Operátor | Jelentés | Példa | Eredmény |
-| --- | --- | --- | --- |
-| `+` | összeadás | `7 + 2` | `9` |
-| `-` | kivonás | `7 - 2` | `5` |
-| `*` | szorzás | `7 * 2` | `14` |
-| `/` | osztás (mindig float) | `7 / 2` | `3.5` |
-| `//` | egész osztás (lefelé kerekít) | `7 // 2` | `3` |
-| `%` | maradék (modulo) | `7 % 2` | `1` |
-| `**` | hatványozás | `7 ** 2` | `49` |
+| Operátor | Jelentés                      | Példa    | Eredmény |
+| -------- | ----------------------------- | -------- | -------- |
+| `+`      | összeadás                     | `7 + 2`  | `9`      |
+| `-`      | kivonás                       | `7 - 2`  | `5`      |
+| `*`      | szorzás                       | `7 * 2`  | `14`     |
+| `/`      | osztás (mindig float)         | `7 / 2`  | `3.5`    |
+| `//`     | egész osztás (lefelé kerekít) | `7 // 2` | `3`      |
+| `%`      | maradék (modulo)              | `7 % 2`  | `1`      |
+| `**`     | hatványozás                   | `7 ** 2` | `49`     |
 
 ```python run
 print(7 / 2)     # 3.5   – a / mindig valós számot ad

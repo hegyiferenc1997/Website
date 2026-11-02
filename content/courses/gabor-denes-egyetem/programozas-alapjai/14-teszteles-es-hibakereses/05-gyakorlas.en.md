@@ -67,7 +67,7 @@ def second_largest(items):
 <details>
 <summary>Hint</summary>
 
-What happens with `[5, 5, 3]`? The second largest *distinct* element is 3.
+What happens with `[5, 5, 3]`? The second largest _distinct_ element is 3.
 
 </details>
 

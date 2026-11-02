@@ -107,7 +107,7 @@ for shape in [Rectangle(3, 4), Circle(1)]:
 
 ### 4. Abstraction
 
-The user only needs to know *what* an object does (`area()`), not how it computes it.
+The user only needs to know _what_ an object does (`area()`), not how it computes it.
 
 ## When is OOP a good fit?
 

@@ -36,7 +36,7 @@ print("Operating system:", platform.system() or "unknown")
 
 ## Interactive mode (REPL)
 
-If you just type `python` in the terminal, the **interactive interpreter** starts (REPL: *Read–Eval–Print Loop*). The result of an expression typed after the `>>>` prompt is printed immediately:
+If you just type `python` in the terminal, the **interactive interpreter** starts (REPL: _Read–Eval–Print Loop_). The result of an expression typed after the `>>>` prompt is printed immediately:
 
 ```text
 >>> 2 + 3
@@ -102,13 +102,13 @@ else:
 
 ## Development environments
 
-| Environment | Good for |
-| --- | --- |
-| **IDLE** | installed with Python, simple editor + REPL – enough to start |
-| **VS Code** + Python extension | free, popular; autocomplete, debugger, terminal, Git in one place |
-| **PyCharm** | a full IDE made specifically for Python (the Community edition is free) |
-| **Jupyter Notebook / JupyterLab** | a "notebook" split into cells: code, results, charts and text together – ideal for data analysis |
-| **Online** (e.g. Google Colab, Replit) | no installation, in the browser – accessible from anywhere |
+| Environment                            | Good for                                                                                         |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **IDLE**                               | installed with Python, simple editor + REPL – enough to start                                    |
+| **VS Code** + Python extension         | free, popular; autocomplete, debugger, terminal, Git in one place                                |
+| **PyCharm**                            | a full IDE made specifically for Python (the Community edition is free)                          |
+| **Jupyter Notebook / JupyterLab**      | a "notebook" split into cells: code, results, charts and text together – ideal for data analysis |
+| **Online** (e.g. Google Colab, Replit) | no installation, in the browser – accessible from anywhere                                       |
 
 In VS Code you can run with the ▶ button in the top right or in the terminal (`python file.py`), and **F5** starts the program with the debugger.
 

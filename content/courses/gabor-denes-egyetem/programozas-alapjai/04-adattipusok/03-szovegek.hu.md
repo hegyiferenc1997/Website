@@ -54,17 +54,17 @@ print("a" < "b")           # True – ábécé szerinti összehasonlítás (kara
 
 ## Hasznos metódusok
 
-| Metódus | Mit csinál | Példa → eredmény |
-| --- | --- | --- |
-| `upper()`, `lower()` | nagy- / kisbetűssé alakít | `"Alma".upper()` → `"ALMA"` |
-| `strip()` | levágja a szóközöket a széleiről | `"  hi  ".strip()` → `"hi"` |
-| `split(sep)` | darabolás listává | `"a,b,c".split(",")` → `["a", "b", "c"]` |
-| `join(lista)` | lista összefűzése | `"-".join(["a", "b"])` → `"a-b"` |
-| `replace(a, b)` | csere | `"alma".replace("a", "o")` → `"olmo"` |
-| `find(x)` | első előfordulás indexe (−1, ha nincs) | `"alma".find("m")` → `2` |
-| `count(x)` | előfordulások száma | `"banana".count("a")` → `3` |
-| `startswith(x)`, `endswith(x)` | így kezdődik / végződik-e | `"kép.png".endswith(".png")` → `True` |
-| `isdigit()` | csak számjegyekből áll-e | `"2026".isdigit()` → `True` |
+| Metódus                        | Mit csinál                             | Példa → eredmény                         |
+| ------------------------------ | -------------------------------------- | ---------------------------------------- |
+| `upper()`, `lower()`           | nagy- / kisbetűssé alakít              | `"Alma".upper()` → `"ALMA"`              |
+| `strip()`                      | levágja a szóközöket a széleiről       | `"  hi  ".strip()` → `"hi"`              |
+| `split(sep)`                   | darabolás listává                      | `"a,b,c".split(",")` → `["a", "b", "c"]` |
+| `join(lista)`                  | lista összefűzése                      | `"-".join(["a", "b"])` → `"a-b"`         |
+| `replace(a, b)`                | csere                                  | `"alma".replace("a", "o")` → `"olmo"`    |
+| `find(x)`                      | első előfordulás indexe (−1, ha nincs) | `"alma".find("m")` → `2`                 |
+| `count(x)`                     | előfordulások száma                    | `"banana".count("a")` → `3`              |
+| `startswith(x)`, `endswith(x)` | így kezdődik / végződik-e              | `"kép.png".endswith(".png")` → `True`    |
+| `isdigit()`                    | csak számjegyekből áll-e               | `"2026".isdigit()` → `True`              |
 
 ```python run
 mondat = "  A Python egy jó első nyelv.  "
@@ -93,12 +93,12 @@ print(f"{nev=}")                         # hibakereséshez: kiírja a nevet és 
 
 ## Speciális karakterek
 
-| Jelölés | Jelentés |
-| --- | --- |
-| `\n` | új sor |
-| `\t` | tabulátor |
-| `\\` | egy darab `\` |
-| `\"` | idézőjel a szövegen belül |
+| Jelölés | Jelentés                  |
+| ------- | ------------------------- |
+| `\n`    | új sor                    |
+| `\t`    | tabulátor                 |
+| `\\`    | egy darab `\`             |
+| `\"`    | idézőjel a szövegen belül |
 
 ```python run
 print("Első sor\nMásodik sor")

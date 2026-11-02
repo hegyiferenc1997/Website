@@ -14,19 +14,19 @@ minutes: 15
 
 Az **alprogram** egy elnevezett kódrészlet, amely egy jól körülhatárolt feladatot old meg, és a program bármely pontjáról **meghívható**. Előnyei:
 
-- **Újrafelhasználás:** egyszer írod meg, sokszor használod (DRY – *Don't Repeat Yourself*).
+- **Újrafelhasználás:** egyszer írod meg, sokszor használod (DRY – _Don't Repeat Yourself_).
 - **Áttekinthetőség:** a nagy feladat beszédes nevű kis részekre bomlik.
 - **Tesztelhetőség:** minden rész külön kipróbálható.
-- **Absztrakció:** a hívónak elég tudnia, *mit* csinál, nem kell tudnia, *hogyan*.
+- **Absztrakció:** a hívónak elég tudnia, _mit_ csinál, nem kell tudnia, _hogyan_.
 
 ## Függvény és eljárás
 
-| | Függvény | Eljárás |
-| --- | --- | --- |
-| mit csinál | kiszámol egy értéket, és **visszaadja** | **végrehajt** valamit (kiír, módosít, ment) |
-| visszatérési érték | van | nincs |
-| hívás helye | kifejezésben: `y = negyzet(3)` | önálló utasításként: `udvozol("Anna")` |
-| példa más nyelvben | Pascal `function`, C `int f()` | Pascal `procedure`, C `void f()` |
+|                    | Függvény                                | Eljárás                                     |
+| ------------------ | --------------------------------------- | ------------------------------------------- |
+| mit csinál         | kiszámol egy értéket, és **visszaadja** | **végrehajt** valamit (kiír, módosít, ment) |
+| visszatérési érték | van                                     | nincs                                       |
+| hívás helye        | kifejezésben: `y = negyzet(3)`          | önálló utasításként: `udvozol("Anna")`      |
+| példa más nyelvben | Pascal `function`, C `int f()`          | Pascal `procedure`, C `void f()`            |
 
 Pythonban minden alprogram `def`-fel készül. Az „eljárás” egyszerűen olyan függvény, amely nem ad vissza semmit – valójában ilyenkor is visszaad egy értéket: `None`-t.
 

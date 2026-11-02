@@ -76,13 +76,13 @@ print(f"{'Fizetendő:':<26}{osszesen:>12.1f}")
 
 A formátum leíró felépítése: `{érték:[igazítás][szélesség][.pontosság][típus]}`
 
-| Leíró | Jelentés |
-| --- | --- |
+| Leíró               | Jelentés                               |
+| ------------------- | -------------------------------------- |
 | `<10`, `>10`, `^10` | balra / jobbra / középre 10 karakteren |
-| `.2f` | valós szám 2 tizedesre |
-| `05d` | egész szám 5 jegyen, vezető nullákkal |
-| `,` | ezres elválasztó |
-| `.1%` | százalék 1 tizedesre |
+| `.2f`               | valós szám 2 tizedesre                 |
+| `05d`               | egész szám 5 jegyen, vezető nullákkal  |
+| `,`                 | ezres elválasztó                       |
+| `.1%`               | százalék 1 tizedesre                   |
 
 ## Összefoglalás
 

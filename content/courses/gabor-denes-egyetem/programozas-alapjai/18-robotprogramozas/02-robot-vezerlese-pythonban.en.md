@@ -94,13 +94,13 @@ print("Number of visited cells:", len(robot.path))
 
 A robot's behaviour can often be split into **states**: "driving", "turning", "going to charger", "charging". Each state has its own job, and specific **events** (sensor signals) trigger the **transitions**. This is called a **finite state machine**.
 
-| State | Event | New state |
-| --- | --- | --- |
-| DRIVE | obstacle ahead | TURN |
-| DRIVE | battery ≤ 15% | GO TO CHARGER |
-| TURN | finished turning | DRIVE |
-| GO TO CHARGER | at the charging station | CHARGE |
-| CHARGE | battery ≥ 50% | DRIVE |
+| State         | Event                   | New state     |
+| ------------- | ----------------------- | ------------- |
+| DRIVE         | obstacle ahead          | TURN          |
+| DRIVE         | battery ≤ 15%           | GO TO CHARGER |
+| TURN          | finished turning        | DRIVE         |
+| GO TO CHARGER | at the charging station | CHARGE        |
+| CHARGE        | battery ≥ 50%           | DRIVE         |
 
 ```python run
 # A robot vacuum's state machine: each state behaves differently,
@@ -150,8 +150,8 @@ The advantages of a state machine: it is **clear** (you can draw it), **easy to 
 
 Real sensors sometimes return **wrong values** (reflections, interference). If the robot reacted to a single bad reading, it would jerk or stop needlessly. The solution: look at several consecutive readings together.
 
-- **Moving average:** the average of the last *n* readings – smooths, but big errors drag it off.
-- **Moving median:** the median of the last *n* readings – filters out outliers completely.
+- **Moving average:** the average of the last _n_ readings – smooths, but big errors drag it off.
+- **Moving median:** the median of the last _n_ readings – filters out outliers completely.
 
 ```python run
 import statistics

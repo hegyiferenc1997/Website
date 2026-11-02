@@ -13,15 +13,15 @@ minutes: 15
 
 ## Tipikus fájlhibák
 
-| Kivétel | Mikor |
-| --- | --- |
-| `FileNotFoundError` | olvasásra nyitott fájl nem létezik, vagy a mappa nem létezik |
-| `PermissionError` | nincs jogosultság (írásvédett, rendszerfájl, más program zárolja) |
-| `IsADirectoryError` | fájl helyett mappát próbálunk megnyitni |
-| `FileExistsError` | `"x"` móddal már létező fájlt nyitunk |
-| `UnicodeDecodeError` | a fájl nem a megadott kódolásban van |
-| `ValueError` | a tartalom hibás (pl. szám helyett szöveg egy sorban) |
-| `json.JSONDecodeError` | hibás JSON (a `ValueError` leszármazottja) |
+| Kivétel                | Mikor                                                             |
+| ---------------------- | ----------------------------------------------------------------- |
+| `FileNotFoundError`    | olvasásra nyitott fájl nem létezik, vagy a mappa nem létezik      |
+| `PermissionError`      | nincs jogosultság (írásvédett, rendszerfájl, más program zárolja) |
+| `IsADirectoryError`    | fájl helyett mappát próbálunk megnyitni                           |
+| `FileExistsError`      | `"x"` móddal már létező fájlt nyitunk                             |
+| `UnicodeDecodeError`   | a fájl nem a megadott kódolásban van                              |
+| `ValueError`           | a tartalom hibás (pl. szám helyett szöveg egy sorban)             |
+| `json.JSONDecodeError` | hibás JSON (a `ValueError` leszármazottja)                        |
 
 Mindegyik (a tartalmi hibák kivételével) az **`OSError`** leszármazottja.
 
@@ -97,14 +97,14 @@ print(fajl.exists(), fajl.name, fajl.suffix, fajl.stem)
 print([p.name for p in mappa.glob("*.txt")])   # fájlok listázása mintával
 ```
 
-| Művelet | `pathlib` |
-| --- | --- |
-| létezik-e | `p.exists()`, `p.is_file()`, `p.is_dir()` |
-| mappa létrehozása | `p.mkdir(parents=True, exist_ok=True)` |
-| fájlnév, kiterjesztés | `p.name`, `p.suffix`, `p.stem` |
-| szülőmappa | `p.parent` |
-| törlés | `p.unlink(missing_ok=True)` |
-| listázás | `p.iterdir()`, `p.glob("*.csv")` |
+| Művelet               | `pathlib`                                 |
+| --------------------- | ----------------------------------------- |
+| létezik-e             | `p.exists()`, `p.is_file()`, `p.is_dir()` |
+| mappa létrehozása     | `p.mkdir(parents=True, exist_ok=True)`    |
+| fájlnév, kiterjesztés | `p.name`, `p.suffix`, `p.stem`            |
+| szülőmappa            | `p.parent`                                |
+| törlés                | `p.unlink(missing_ok=True)`               |
+| listázás              | `p.iterdir()`, `p.glob("*.csv")`          |
 
 ## Biztonságos írás
 

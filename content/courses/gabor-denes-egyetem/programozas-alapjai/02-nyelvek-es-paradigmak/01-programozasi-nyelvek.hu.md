@@ -14,12 +14,12 @@ minutes: 12
 
 A processzor csak **gépi kódot** ért: kettes számrendszerbeli utasításkódokat. Ezt embernek szinte lehetetlen olvasni, ezért egyre „magasabb” szintű nyelvek születtek.
 
-| Szint | Példa | Jellemző |
-| --- | --- | --- |
-| gépi kód | `10110000 01100001` | a processzor közvetlenül végrehajtja, processzorfüggő |
-| assembly | `MOV AL, 61h` | a gépi utasítások olvasható rövidítései, még mindig processzorfüggő |
-| alacsony szintű magas nyelv | C | hordozható, de közel van a hardverhez (memóriakezelés kézzel) |
-| magas szintű nyelv | Python, Java, C# | ember számára könnyen olvasható, a gép részleteit elrejti |
+| Szint                       | Példa               | Jellemző                                                            |
+| --------------------------- | ------------------- | ------------------------------------------------------------------- |
+| gépi kód                    | `10110000 01100001` | a processzor közvetlenül végrehajtja, processzorfüggő               |
+| assembly                    | `MOV AL, 61h`       | a gépi utasítások olvasható rövidítései, még mindig processzorfüggő |
+| alacsony szintű magas nyelv | C                   | hordozható, de közel van a hardverhez (memóriakezelés kézzel)       |
+| magas szintű nyelv          | Python, Java, C#    | ember számára könnyen olvasható, a gép részleteit elrejti           |
 
 Minél magasabb szintű a nyelv, annál kevesebb kóddal fejezhetünk ki egy gondolatot, és annál könnyebb hordozni más gépre. Cserébe a futás általában valamivel lassabb, és kevesebb közvetlen ráhatásunk van a hardverre.
 
@@ -45,8 +45,8 @@ print(a + b)
 
 ## Szintaxis és szemantika
 
-- A **szintaxis** a nyelv *nyelvtana*: milyen formában kell leírni az utasításokat (hova kell kettőspont, zárójel, behúzás). A szintaktikai hibát a gép a futtatás előtt jelzi (`SyntaxError`).
-- A **szemantika** a *jelentés*: mit csinál egy szintaktikailag helyes utasítás. Egy szemantikai hiba esetén a program lefut, csak nem azt csinálja, amit szerettél volna.
+- A **szintaxis** a nyelv _nyelvtana_: milyen formában kell leírni az utasításokat (hova kell kettőspont, zárójel, behúzás). A szintaktikai hibát a gép a futtatás előtt jelzi (`SyntaxError`).
+- A **szemantika** a _jelentés_: mit csinál egy szintaktikailag helyes utasítás. Egy szemantikai hiba esetén a program lefut, csak nem azt csinálja, amit szerettél volna.
 
 ```python run
 # Szintaktikailag helyes, de szemantikailag hibás: átlag helyett rossz képlet.

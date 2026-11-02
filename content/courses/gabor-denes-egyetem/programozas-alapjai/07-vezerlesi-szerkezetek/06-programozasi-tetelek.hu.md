@@ -8,15 +8,15 @@ minutes: 25
 
 A **programozási tételek** olyan bevált algoritmus-sablonok, amelyekkel a feladatok nagy része megoldható. Ha felismered, melyik tétel illik a feladatra, a megoldás szinte magától megíródik. Minden tételnél megadjuk a sablont és a Python beépített rövidítését is.
 
-| Tétel | Kérdés | Eredmény |
-| --- | --- | --- |
-| összegzés | mennyi az elemek összege? | egy érték |
-| megszámlálás | hány elem felel meg a feltételnek? | egy szám |
-| maximumkiválasztás | melyik a legnagyobb? | elem / index |
-| eldöntés | van-e feltételnek megfelelő elem? | igaz / hamis |
-| kiválasztás | hol van az (biztosan létező) elem? | index |
-| lineáris keresés | van-e, és ha igen, hol? | index vagy „nincs” |
-| kiválogatás | melyek felelnek meg a feltételnek? | új lista |
+| Tétel              | Kérdés                             | Eredmény           |
+| ------------------ | ---------------------------------- | ------------------ |
+| összegzés          | mennyi az elemek összege?          | egy érték          |
+| megszámlálás       | hány elem felel meg a feltételnek? | egy szám           |
+| maximumkiválasztás | melyik a legnagyobb?               | elem / index       |
+| eldöntés           | van-e feltételnek megfelelő elem?  | igaz / hamis       |
+| kiválasztás        | hol van az (biztosan létező) elem? | index              |
+| lineáris keresés   | van-e, és ha igen, hol?            | index vagy „nincs” |
+| kiválogatás        | melyek felelnek meg a feltételnek? | új lista           |
 
 ## 1. Összegzés
 
@@ -130,7 +130,7 @@ print([x for x in szamok if x % 2 == 0])   # listaértelmezéssel
 
 ## Tételek kombinálása
 
-Valódi feladatoknál a tételeket kombináljuk. Például: *„Mennyi a 4-es vagy jobb jegyek átlaga?”* = kiválogatás + összegzés + megszámlálás.
+Valódi feladatoknál a tételeket kombináljuk. Például: _„Mennyi a 4-es vagy jobb jegyek átlaga?”_ = kiválogatás + összegzés + megszámlálás.
 
 ```python run
 jegyek = [5, 3, 4, 5, 2, 4]

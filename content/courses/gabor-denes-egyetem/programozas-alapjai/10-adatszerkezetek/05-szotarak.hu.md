@@ -15,13 +15,13 @@ minutes: 18
 
 A **map** (más néven asszociatív tömb, szótár) **kulcs–érték párokat** tárol. Az értéket nem index, hanem **kulcs** alapján érjük el – mint egy telefonkönyvben a nevet keressük, és a számot kapjuk meg.
 
-| Nyelv | Map típus |
-| --- | --- |
-| Python | `dict` |
-| Java | `HashMap`, `TreeMap` |
-| C# | `Dictionary<K, V>` |
-| C++ | `std::map`, `std::unordered_map` |
-| JavaScript | `Map`, objektum |
+| Nyelv      | Map típus                        |
+| ---------- | -------------------------------- |
+| Python     | `dict`                           |
+| Java       | `HashMap`, `TreeMap`             |
+| C#         | `Dictionary<K, V>`               |
+| C++        | `std::map`, `std::unordered_map` |
+| JavaScript | `Map`, objektum                  |
 
 A kulcsok **egyediek** és megváltoztathatatlanok (szöveg, szám, tuple), az értékek bármik lehetnek. A Python szótár hasítótáblát használ, így az elérés átlagosan **O(1)**, és megőrzi a beszúrás sorrendjét (Python 3.7 óta).
 

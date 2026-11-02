@@ -21,13 +21,13 @@ Egy kis bolt raktárkészletét kell nyilvántartani. A projekt a félév szinte
 
 ## Terv
 
-| Elem | Megvalósítás | Miért így? |
-| --- | --- | --- |
-| termék | `@dataclass Termek`, `ertek` tulajdonság (`@property`) | kevés kód, automatikus `__init__` és `==` |
-| raktár | `Raktar` osztály, belül `dict[cikkszám, Termek]` | cikkszám szerint gyors keresés |
-| hibák | `class KeszletHiba(Exception)` | a hívó egyetlen kivételtípust kezel |
-| mentés | `json` + `dataclasses.asdict`, `pathlib.Path` | ember által is olvasható formátum |
-| betöltés | `@classmethod betolt(fajl)` | „alternatív konstruktor” |
+| Elem     | Megvalósítás                                           | Miért így?                                |
+| -------- | ------------------------------------------------------ | ----------------------------------------- |
+| termék   | `@dataclass Termek`, `ertek` tulajdonság (`@property`) | kevés kód, automatikus `__init__` és `==` |
+| raktár   | `Raktar` osztály, belül `dict[cikkszám, Termek]`       | cikkszám szerint gyors keresés            |
+| hibák    | `class KeszletHiba(Exception)`                         | a hívó egyetlen kivételtípust kezel       |
+| mentés   | `json` + `dataclasses.asdict`, `pathlib.Path`          | ember által is olvasható formátum         |
+| betöltés | `@classmethod betolt(fajl)`                            | „alternatív konstruktor”                  |
 
 ## Lépésről lépésre
 

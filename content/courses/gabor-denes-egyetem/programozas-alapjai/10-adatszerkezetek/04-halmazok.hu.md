@@ -64,13 +64,13 @@ print(python ^ java)    # szimmetrikus különbség: aki pontosan az egyiket
 print({"Csilla"} <= python)   # részhalmaz-e
 ```
 
-| Művelet | Jel | Metódus |
-| --- | --- | --- |
-| unió | `a \| b` | `a.union(b)` |
-| metszet | `a & b` | `a.intersection(b)` |
-| különbség | `a - b` | `a.difference(b)` |
-| szimmetrikus különbség | `a ^ b` | `a.symmetric_difference(b)` |
-| részhalmaz | `a <= b` | `a.issubset(b)` |
+| Művelet                | Jel      | Metódus                     |
+| ---------------------- | -------- | --------------------------- |
+| unió                   | `a \| b` | `a.union(b)`                |
+| metszet                | `a & b`  | `a.intersection(b)`         |
+| különbség              | `a - b`  | `a.difference(b)`           |
+| szimmetrikus különbség | `a ^ b`  | `a.symmetric_difference(b)` |
+| részhalmaz             | `a <= b` | `a.issubset(b)`             |
 
 ## Miért gyors? – Hasítás
 

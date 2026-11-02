@@ -76,13 +76,13 @@ print(f"{'To pay:':<26}{total:>12.1f}")
 
 The format specifier: `{value:[align][width][.precision][type]}`
 
-| Specifier | Meaning |
-| --- | --- |
+| Specifier           | Meaning                                |
+| ------------------- | -------------------------------------- |
 | `<10`, `>10`, `^10` | left / right / centre in 10 characters |
-| `.2f` | float with 2 decimals |
-| `05d` | integer in 5 digits with leading zeros |
-| `,` | thousands separator |
-| `.1%` | percentage with 1 decimal |
+| `.2f`               | float with 2 decimals                  |
+| `05d`               | integer in 5 digits with leading zeros |
+| `,`                 | thousands separator                    |
+| `.1%`               | percentage with 1 decimal              |
 
 ## Summary
 

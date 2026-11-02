@@ -49,15 +49,15 @@ print(szamok[1])
 
 ## Alapműveletek és költségük
 
-| Művelet | Python | Költség |
-| --- | --- | --- |
-| elérés index szerint | `t[i]` | O(1) |
-| módosítás index szerint | `t[i] = x` | O(1) |
-| hozzáfűzés a végére | `t.append(x)` | átlagosan O(1) |
-| beszúrás az elejére / közepére | `t.insert(i, x)` | O(n) – a többi elemet arrébb kell tolni |
-| törlés a végéről | `t.pop()` | O(1) |
-| törlés az elejéről / közepéről | `t.pop(i)`, `del t[i]` | O(n) |
-| keresés érték szerint | `x in t`, `t.index(x)` | O(n) |
+| Művelet                        | Python                 | Költség                                 |
+| ------------------------------ | ---------------------- | --------------------------------------- |
+| elérés index szerint           | `t[i]`                 | O(1)                                    |
+| módosítás index szerint        | `t[i] = x`             | O(1)                                    |
+| hozzáfűzés a végére            | `t.append(x)`          | átlagosan O(1)                          |
+| beszúrás az elejére / közepére | `t.insert(i, x)`       | O(n) – a többi elemet arrébb kell tolni |
+| törlés a végéről               | `t.pop()`              | O(1)                                    |
+| törlés az elejéről / közepéről | `t.pop(i)`, `del t[i]` | O(n)                                    |
+| keresés érték szerint          | `x in t`, `t.index(x)` | O(n)                                    |
 
 ```python run
 t = [10, 20, 30]

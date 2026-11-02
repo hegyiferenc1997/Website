@@ -27,12 +27,12 @@ The goal of documentation is to make code **understandable, usable and maintaina
 
 ## Levels of documentation
 
-| Kind | For whom | Where | Example |
-| --- | --- | --- | --- |
-| **in-code** | the developer reading the code | comments, descriptive names | `# Gross price including VAT` |
-| **API documentation** | whoever uses the function / module | docstrings, type hints | `"""Return the average…"""` |
-| **developer** | whoever develops the project further | README, architecture notes, `CONTRIBUTING` | installation, structure, decisions |
-| **user** | the program's user | manual, help, FAQ | "How do I sign up?" |
+| Kind                  | For whom                             | Where                                      | Example                            |
+| --------------------- | ------------------------------------ | ------------------------------------------ | ---------------------------------- |
+| **in-code**           | the developer reading the code       | comments, descriptive names                | `# Gross price including VAT`      |
+| **API documentation** | whoever uses the function / module   | docstrings, type hints                     | `"""Return the average…"""`        |
+| **developer**         | whoever develops the project further | README, architecture notes, `CONTRIBUTING` | installation, structure, decisions |
+| **user**              | the program's user                   | manual, help, FAQ                          | "How do I sign up?"                |
 
 ## What to document
 
@@ -71,5 +71,5 @@ print(f([40, 60, 80]), average_of_passing_scores([40, 60, 80]))
 
 - Code is read far more often than written – documentation is the basis of maintainability.
 - Levels: in-code, API (docstrings), developer (README), user.
-- Document the *why*, not the obvious; keep it up to date.
+- Document the _why_, not the obvious; keep it up to date.
 - The best starting point is self-explanatory code with descriptive names.

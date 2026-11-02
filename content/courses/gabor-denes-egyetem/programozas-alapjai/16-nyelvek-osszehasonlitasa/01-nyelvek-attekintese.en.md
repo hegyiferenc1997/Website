@@ -16,18 +16,18 @@ Every language is a compromise: one favours **fast execution**, another **fast d
 
 ## The languages at a glance
 
-| Language | Typing | Execution | Main paradigm | Typical area |
-| --- | --- | --- | --- | --- |
-| **Python** | dynamic, strong | interpreted (bytecode) | multi-paradigm | data analysis, AI, scripts, web backend, teaching |
-| **Java** | static, strong | bytecode + JVM (JIT) | object-oriented | enterprise systems, Android, backend |
-| **C#** | static, strong | bytecode + .NET CLR (JIT) | object-oriented | Windows apps, games (Unity), web (ASP.NET) |
-| **Ruby** | dynamic, strong | interpreted | purely object-oriented | web development (Ruby on Rails), scripts |
-| **C** | static, weak | compiled to machine code | imperative, procedural | operating systems, embedded systems, microcontrollers |
-| **C++** | static | compiled to machine code | multi-paradigm | game engines, high-performance software, robotics |
-| **JavaScript** | dynamic, weak | in the browser/Node.js, JIT | multi-paradigm | websites, web apps |
-| **TypeScript** | static (optional) | compiled to JavaScript | multi-paradigm | larger web projects |
-| **Go** | static, strong | compiled to machine code | imperative, concurrent | cloud services, network servers |
-| **Rust** | static, strong | compiled to machine code | multi-paradigm | safety-critical, high-performance systems |
+| Language       | Typing            | Execution                   | Main paradigm          | Typical area                                          |
+| -------------- | ----------------- | --------------------------- | ---------------------- | ----------------------------------------------------- |
+| **Python**     | dynamic, strong   | interpreted (bytecode)      | multi-paradigm         | data analysis, AI, scripts, web backend, teaching     |
+| **Java**       | static, strong    | bytecode + JVM (JIT)        | object-oriented        | enterprise systems, Android, backend                  |
+| **C#**         | static, strong    | bytecode + .NET CLR (JIT)   | object-oriented        | Windows apps, games (Unity), web (ASP.NET)            |
+| **Ruby**       | dynamic, strong   | interpreted                 | purely object-oriented | web development (Ruby on Rails), scripts              |
+| **C**          | static, weak      | compiled to machine code    | imperative, procedural | operating systems, embedded systems, microcontrollers |
+| **C++**        | static            | compiled to machine code    | multi-paradigm         | game engines, high-performance software, robotics     |
+| **JavaScript** | dynamic, weak     | in the browser/Node.js, JIT | multi-paradigm         | websites, web apps                                    |
+| **TypeScript** | static (optional) | compiled to JavaScript      | multi-paradigm         | larger web projects                                   |
+| **Go**         | static, strong    | compiled to machine code    | imperative, concurrent | cloud services, network servers                       |
+| **Rust**       | static, strong    | compiled to machine code    | multi-paradigm         | safety-critical, high-performance systems             |
 
 ## Python
 
@@ -50,7 +50,7 @@ Every language is a compromise: one favours **fast execution**, another **fast d
 
 - **Pros:** designed for programmer happiness – very expressive, "natural" syntax. The Ruby on Rails framework sped up web development.
 - **Cons:** slower, and its popularity is declining; a smaller community than Python's.
-- **Fun fact:** *everything* is an object, even a number: `5.times { puts "Hi" }`.
+- **Fun fact:** _everything_ is an object, even a number: `5.times { puts "Hi" }`.
 
 ## C and C++
 
@@ -64,8 +64,8 @@ Every language is a compromise: one favours **fast execution**, another **fast d
 
 ## Go and Rust
 
-- **Go:** simple, compiles fast, built-in support for concurrency (*goroutines*). Docker and Kubernetes are written in Go.
-- **Rust:** C-level speed **with memory safety** – the compiler catches most memory errors before the program runs (*ownership* system). In exchange, the learning curve is steeper.
+- **Go:** simple, compiles fast, built-in support for concurrency (_goroutines_). Docker and Kubernetes are written in Go.
+- **Rust:** C-level speed **with memory safety** – the compiler catches most memory errors before the program runs (_ownership_ system). In exchange, the learning curve is steeper.
 
 ## Popularity
 

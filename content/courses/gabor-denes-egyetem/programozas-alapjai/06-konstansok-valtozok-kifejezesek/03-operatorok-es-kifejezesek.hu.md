@@ -22,14 +22,14 @@ A kifejezés **operandusokból** (értékek, változók) és **operátorokból**
 
 Az eredményük mindig `bool` (`True` vagy `False`).
 
-| Operátor | Jelentés | Példa |
-| --- | --- | --- |
-| `==` | egyenlő | `5 == 5` → `True` |
-| `!=` | nem egyenlő | `5 != 3` → `True` |
-| `<`, `>` | kisebb, nagyobb | `3 < 5` → `True` |
-| `<=`, `>=` | kisebb-egyenlő, nagyobb-egyenlő | `5 >= 5` → `True` |
-| `in` | tartalmazás | `"a" in "alma"` → `True` |
-| `is` | ugyanaz az objektum-e | `x is None` |
+| Operátor   | Jelentés                        | Példa                    |
+| ---------- | ------------------------------- | ------------------------ |
+| `==`       | egyenlő                         | `5 == 5` → `True`        |
+| `!=`       | nem egyenlő                     | `5 != 3` → `True`        |
+| `<`, `>`   | kisebb, nagyobb                 | `3 < 5` → `True`         |
+| `<=`, `>=` | kisebb-egyenlő, nagyobb-egyenlő | `5 >= 5` → `True`        |
+| `in`       | tartalmazás                     | `"a" in "alma"` → `True` |
+| `is`       | ugyanaz az objektum-e           | `x is None`              |
 
 ```python run
 kor = 19
@@ -42,20 +42,20 @@ print("alma" == "Alma")     # False – számít a kis- és nagybetű
 
 ## Logikai operátorok
 
-| Operátor | Jelentés | Igaz, ha … |
-| --- | --- | --- |
-| `and` | és | mindkét oldal igaz |
-| `or` | vagy | legalább az egyik igaz |
-| `not` | nem | az operandus hamis |
+| Operátor | Jelentés | Igaz, ha …             |
+| -------- | -------- | ---------------------- |
+| `and`    | és       | mindkét oldal igaz     |
+| `or`     | vagy     | legalább az egyik igaz |
+| `not`    | nem      | az operandus hamis     |
 
 Igazságtábla:
 
-| A | B | A and B | A or B | not A |
-| --- | --- | --- | --- | --- |
-| True | True | True | True | False |
-| True | False | False | True | False |
-| False | True | False | True | True |
-| False | False | False | False | True |
+| A     | B     | A and B | A or B | not A |
+| ----- | ----- | ------- | ------ | ----- |
+| True  | True  | True    | True   | False |
+| True  | False | False   | True   | False |
+| False | True  | False   | True   | True  |
+| False | False | False   | False  | True  |
 
 ```python run
 kor = 20
@@ -98,17 +98,17 @@ print(megjelenitett)   # Névtelen
 
 Erősebbtől a gyengébbig (a fentiek kötnek erősebben):
 
-| Szint | Operátorok |
-| --- | --- |
-| 1. | `()` zárójel |
-| 2. | `**` |
-| 3. | `-x` (előjel) |
-| 4. | `*`, `/`, `//`, `%` |
-| 5. | `+`, `-` |
-| 6. | `<`, `<=`, `>`, `>=`, `==`, `!=`, `in`, `is` |
-| 7. | `not` |
-| 8. | `and` |
-| 9. | `or` |
+| Szint | Operátorok                                   |
+| ----- | -------------------------------------------- |
+| 1.    | `()` zárójel                                 |
+| 2.    | `**`                                         |
+| 3.    | `-x` (előjel)                                |
+| 4.    | `*`, `/`, `//`, `%`                          |
+| 5.    | `+`, `-`                                     |
+| 6.    | `<`, `<=`, `>`, `>=`, `==`, `!=`, `in`, `is` |
+| 7.    | `not`                                        |
+| 8.    | `and`                                        |
+| 9.    | `or`                                         |
 
 ```python run
 print(2 + 3 * 4 > 10 and not False)   # (2 + 12 > 10) and True → True

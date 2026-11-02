@@ -48,14 +48,14 @@ with open("jegyzet.txt", encoding="utf-8") as f:
 
 ## Megnyitási módok
 
-| Mód | Jelentés | Ha nem létezik | Ha létezik |
-| --- | --- | --- | --- |
-| `"r"` | olvasás (alapértelmezett) | `FileNotFoundError` | olvassa |
-| `"w"` | írás | létrehozza | **kiüríti** (felülírja)! |
-| `"a"` | hozzáfűzés a végére | létrehozza | a végére ír |
-| `"x"` | kizárólagos létrehozás | létrehozza | `FileExistsError` |
-| `"r+"` | olvasás és írás | `FileNotFoundError` | olvassa/írja |
-| `"b"` (pl. `"rb"`, `"wb"`) | bináris mód (képek, zip) | | |
+| Mód                        | Jelentés                  | Ha nem létezik      | Ha létezik               |
+| -------------------------- | ------------------------- | ------------------- | ------------------------ |
+| `"r"`                      | olvasás (alapértelmezett) | `FileNotFoundError` | olvassa                  |
+| `"w"`                      | írás                      | létrehozza          | **kiüríti** (felülírja)! |
+| `"a"`                      | hozzáfűzés a végére       | létrehozza          | a végére ír              |
+| `"x"`                      | kizárólagos létrehozás    | létrehozza          | `FileExistsError`        |
+| `"r+"`                     | olvasás és írás           | `FileNotFoundError` | olvassa/írja             |
+| `"b"` (pl. `"rb"`, `"wb"`) | bináris mód (képek, zip)  |                     |                          |
 
 ```python run
 with open("naplo.txt", "w", encoding="utf-8") as f:

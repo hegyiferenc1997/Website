@@ -85,10 +85,10 @@ A JavaScript **gyengén** típusos:
 
 ## Összesítő táblázat
 
-| | Erős | Gyenge |
-| --- | --- | --- |
-| **Statikus** | Java, C#, Rust, Go | C, C++ (sok implicit konverzió, pointerek) |
-| **Dinamikus** | Python, Ruby | JavaScript, PHP |
+|               | Erős               | Gyenge                                     |
+| ------------- | ------------------ | ------------------------------------------ |
+| **Statikus**  | Java, C#, Rust, Go | C, C++ (sok implicit konverzió, pointerek) |
+| **Dinamikus** | Python, Ruby       | JavaScript, PHP                            |
 
 ## „Nem típusos” nyelvek
 

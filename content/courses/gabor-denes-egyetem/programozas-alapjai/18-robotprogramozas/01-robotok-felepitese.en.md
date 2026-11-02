@@ -17,13 +17,13 @@ A robot is a machine that **senses** its environment, **makes decisions** based 
 
 ## The parts of a robot
 
-| Part | Job | Examples |
-| --- | --- | --- |
-| **Sensors** | collect data about the environment and the robot's own state | distance sensor (ultrasonic, laser/LiDAR), camera, light and line sensor, bump sensor, accelerometer, gyroscope, wheel encoder |
-| **Controller** | the "brain": runs the program | microcontroller (Arduino), single-board computer (Raspberry Pi), industrial PLC |
-| **Actuators** | turn decisions into physical effects | DC motor, servo motor, stepper motor, gripper, LED, speaker |
-| **Power supply** | provides electricity | battery, power supply unit |
-| **Communication** | connects to other devices | Wi-Fi, Bluetooth, serial port |
+| Part              | Job                                                          | Examples                                                                                                                       |
+| ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Sensors**       | collect data about the environment and the robot's own state | distance sensor (ultrasonic, laser/LiDAR), camera, light and line sensor, bump sensor, accelerometer, gyroscope, wheel encoder |
+| **Controller**    | the "brain": runs the program                                | microcontroller (Arduino), single-board computer (Raspberry Pi), industrial PLC                                                |
+| **Actuators**     | turn decisions into physical effects                         | DC motor, servo motor, stepper motor, gripper, LED, speaker                                                                    |
+| **Power supply**  | provides electricity                                         | battery, power supply unit                                                                                                     |
+| **Communication** | connects to other devices                                    | Wi-Fi, Bluetooth, serial port                                                                                                  |
 
 ## The sense–think–act loop
 
@@ -79,14 +79,14 @@ On a real robot we would write it the same way – only `sense()` would read the
 
 ## Tools and languages
 
-| Tool / framework | Language | Notes |
-| --- | --- | --- |
-| **Arduino** | C/C++ (Arduino dialect) | cheap microcontroller, education, hobby |
-| **Raspberry Pi** | Python (among others) | a full Linux computer, camera, network |
-| **MicroPython** | Python | Python on microcontrollers (e.g. ESP32, Raspberry Pi Pico) |
-| **ROS / ROS 2** (Robot Operating System) | C++, Python | the standard robotics framework in research and industry |
-| **LEGO / educational robots** | block-based, Python | for beginners |
-| **industrial robots** | vendor-specific languages (e.g. KUKA KRL, ABB RAPID), PLC | production lines |
+| Tool / framework                         | Language                                                  | Notes                                                      |
+| ---------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------- |
+| **Arduino**                              | C/C++ (Arduino dialect)                                   | cheap microcontroller, education, hobby                    |
+| **Raspberry Pi**                         | Python (among others)                                     | a full Linux computer, camera, network                     |
+| **MicroPython**                          | Python                                                    | Python on microcontrollers (e.g. ESP32, Raspberry Pi Pico) |
+| **ROS / ROS 2** (Robot Operating System) | C++, Python                                               | the standard robotics framework in research and industry   |
+| **LEGO / educational robots**            | block-based, Python                                       | for beginners                                              |
+| **industrial robots**                    | vendor-specific languages (e.g. KUKA KRL, ABB RAPID), PLC | production lines                                           |
 
 A MicroPython program blinks an LED like this (it would run on real hardware; here it is just an illustration):
 

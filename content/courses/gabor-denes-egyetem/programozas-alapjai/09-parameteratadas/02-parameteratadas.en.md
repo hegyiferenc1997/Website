@@ -39,8 +39,8 @@ increment(&a);
 
 In Python every variable is a **reference to an object**. On a call the parameter refers to **the same object** as the argument. The consequence depends on whether the object is **mutable**.
 
-| Immutable | Mutable |
-| --- | --- |
+| Immutable                                      | Mutable                                              |
+| ---------------------------------------------- | ---------------------------------------------------- |
 | `int`, `float`, `bool`, `str`, `tuple`, `None` | `list`, `dict`, `set`, instances of your own classes |
 
 ### Immutable object: behaves like pass by value

@@ -12,7 +12,7 @@ minutes: 15
 
 ## CSV – vesszővel elválasztott értékek
 
-A **CSV** (*Comma-Separated Values*) egyszerű szöveges táblázat: soronként egy rekord, a mezőket elválasztó jel (vessző vagy pontosvessző) választja el. Excel is meg tudja nyitni.
+A **CSV** (_Comma-Separated Values_) egyszerű szöveges táblázat: soronként egy rekord, a mezőket elválasztó jel (vessző vagy pontosvessző) választja el. Excel is meg tudja nyitni.
 
 ```text
 nev,neptun,pont
@@ -58,16 +58,16 @@ Miért ne `split(",")`-tel? Mert a mezőkben is lehet vessző vagy idézőjel (p
 
 ## JSON – strukturált adatok
 
-A **JSON** (*JavaScript Object Notation*) egymásba ágyazott adatokat (objektumok, listák) ír le olvasható szövegként. A webes API-k és a konfigurációs fájlok szabványos formátuma.
+A **JSON** (_JavaScript Object Notation_) egymásba ágyazott adatokat (objektumok, listák) ír le olvasható szövegként. A webes API-k és a konfigurációs fájlok szabványos formátuma.
 
-| JSON | Python |
-| --- | --- |
-| objektum `{}` | `dict` |
-| tömb `[]` | `list` |
-| szöveg `"..."` | `str` |
-| szám | `int`, `float` |
+| JSON            | Python          |
+| --------------- | --------------- |
+| objektum `{}`   | `dict`          |
+| tömb `[]`       | `list`          |
+| szöveg `"..."`  | `str`           |
+| szám            | `int`, `float`  |
 | `true`, `false` | `True`, `False` |
-| `null` | `None` |
+| `null`          | `None`          |
 
 ### JSON írása és olvasása
 
@@ -104,12 +104,12 @@ print(json.dumps(adat))        # Python objektumból szöveg
 
 ## CSV vagy JSON?
 
-| Szempont | CSV | JSON |
-| --- | --- | --- |
-| szerkezet | lapos táblázat | egymásba ágyazott |
-| típusok | minden szöveg | szám, logikai, null, lista, objektum |
-| megnyitható | Excel, táblázatkezelők | szövegszerkesztő, böngésző |
-| tipikus használat | adatexport, mérési adatok | API-k, beállítások, mentett állapot |
+| Szempont          | CSV                       | JSON                                 |
+| ----------------- | ------------------------- | ------------------------------------ |
+| szerkezet         | lapos táblázat            | egymásba ágyazott                    |
+| típusok           | minden szöveg             | szám, logikai, null, lista, objektum |
+| megnyitható       | Excel, táblázatkezelők    | szövegszerkesztő, böngésző           |
+| tipikus használat | adatexport, mérési adatok | API-k, beállítások, mentett állapot  |
 
 ## Összefoglalás
 

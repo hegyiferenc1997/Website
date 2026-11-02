@@ -75,19 +75,19 @@ Read it **from the bottom up**:
 
 ## The most common exceptions
 
-| Exception | When it occurs | Example |
-| --- | --- | --- |
-| `SyntaxError` | grammar error | `if x > 1` (no `:`) |
-| `IndentationError` | wrong indentation | an unindented block |
-| `NameError` | unknown name | a mistyped variable name |
-| `TypeError` | operation on the wrong type | `"5" + 3` |
-| `ValueError` | right type, wrong value | `int("abc")` |
-| `ZeroDivisionError` | division by zero | `10 / 0` |
-| `IndexError` | index out of range | `[1, 2][5]` |
-| `KeyError` | missing dictionary key | `{"a": 1}["b"]` |
-| `AttributeError` | missing attribute/method | `"text".push("x")` |
-| `FileNotFoundError` | missing file | `open("missing.txt")` |
-| `RecursionError` | too deep recursion | recursion without a base case |
+| Exception           | When it occurs              | Example                       |
+| ------------------- | --------------------------- | ----------------------------- |
+| `SyntaxError`       | grammar error               | `if x > 1` (no `:`)           |
+| `IndentationError`  | wrong indentation           | an unindented block           |
+| `NameError`         | unknown name                | a mistyped variable name      |
+| `TypeError`         | operation on the wrong type | `"5" + 3`                     |
+| `ValueError`        | right type, wrong value     | `int("abc")`                  |
+| `ZeroDivisionError` | division by zero            | `10 / 0`                      |
+| `IndexError`        | index out of range          | `[1, 2][5]`                   |
+| `KeyError`          | missing dictionary key      | `{"a": 1}["b"]`               |
+| `AttributeError`    | missing attribute/method    | `"text".push("x")`            |
+| `FileNotFoundError` | missing file                | `open("missing.txt")`         |
+| `RecursionError`    | too deep recursion          | recursion without a base case |
 
 ```python run
 # Try it: we catch each exception and print its type.

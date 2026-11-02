@@ -10,5 +10,8 @@ export type CodeRole = (typeof CODE_ROLES)[number];
 /** A ```nyelv szerep fejléc szétbontása: { nyelv, szerep }. */
 export function parseCodeInfo(info: string | undefined): { lang: string; role: CodeRole | null } {
   const [lang = "", role = ""] = (info ?? "").trim().toLowerCase().split(/\s+/);
-  return { lang, role: (CODE_ROLES as readonly string[]).includes(role) ? (role as CodeRole) : null };
+  return {
+    lang,
+    role: (CODE_ROLES as readonly string[]).includes(role) ? (role as CodeRole) : null,
+  };
 }

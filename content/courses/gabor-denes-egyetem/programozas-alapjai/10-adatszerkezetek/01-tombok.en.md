@@ -49,15 +49,15 @@ print(numbers[1])
 
 ## Basic operations and their cost
 
-| Operation | Python | Cost |
-| --- | --- | --- |
-| access by index | `t[i]` | O(1) |
-| modify by index | `t[i] = x` | O(1) |
-| append to the end | `t.append(x)` | O(1) on average |
-| insert at the start / middle | `t.insert(i, x)` | O(n) – the other elements must shift |
-| delete from the end | `t.pop()` | O(1) |
-| delete from the start / middle | `t.pop(i)`, `del t[i]` | O(n) |
-| search by value | `x in t`, `t.index(x)` | O(n) |
+| Operation                      | Python                 | Cost                                 |
+| ------------------------------ | ---------------------- | ------------------------------------ |
+| access by index                | `t[i]`                 | O(1)                                 |
+| modify by index                | `t[i] = x`             | O(1)                                 |
+| append to the end              | `t.append(x)`          | O(1) on average                      |
+| insert at the start / middle   | `t.insert(i, x)`       | O(n) – the other elements must shift |
+| delete from the end            | `t.pop()`              | O(1)                                 |
+| delete from the start / middle | `t.pop(i)`, `del t[i]` | O(n)                                 |
+| search by value                | `x in t`, `t.index(x)` | O(n)                                 |
 
 ```python run
 t = [10, 20, 30]

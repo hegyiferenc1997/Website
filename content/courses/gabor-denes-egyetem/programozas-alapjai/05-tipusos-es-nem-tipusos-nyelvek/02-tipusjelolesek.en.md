@@ -40,13 +40,13 @@ print(average([5, 4, 4]))
 print(lookup({"Anna": "123"}, "Bela"))
 ```
 
-| Annotation | Meaning |
-| --- | --- |
-| `list[int]` | list of integers |
+| Annotation         | Meaning                                      |
+| ------------------ | -------------------------------------------- |
+| `list[int]`        | list of integers                             |
 | `dict[str, float]` | dictionary with string keys and float values |
-| `tuple[int, int]` | an ordered pair of two integers |
-| `set[str]` | set of strings |
-| `int \| None` | an integer or None |
+| `tuple[int, int]`  | an ordered pair of two integers              |
+| `set[str]`         | set of strings                               |
+| `int \| None`      | an integer or None                           |
 
 ## Python doesn't check at run time
 

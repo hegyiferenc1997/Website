@@ -19,11 +19,11 @@ Az **adatfolyam (stream)** adatok sorozata, amelyet sorban olvasunk vagy írunk 
 
 Minden program három áramlást kap az operációs rendszertől:
 
-| Áramlás | Python | Alapból | Mire való |
-| --- | --- | --- | --- |
-| szabványos bemenet | `sys.stdin` | billentyűzet | adatok beolvasása (`input()`) |
-| szabványos kimenet | `sys.stdout` | képernyő | eredmények (`print()`) |
-| szabványos hibakimenet | `sys.stderr` | képernyő | hibaüzenetek, figyelmeztetések |
+| Áramlás                | Python       | Alapból      | Mire való                      |
+| ---------------------- | ------------ | ------------ | ------------------------------ |
+| szabványos bemenet     | `sys.stdin`  | billentyűzet | adatok beolvasása (`input()`)  |
+| szabványos kimenet     | `sys.stdout` | képernyő     | eredmények (`print()`)         |
+| szabványos hibakimenet | `sys.stderr` | képernyő     | hibaüzenetek, figyelmeztetések |
 
 ```python run
 import sys

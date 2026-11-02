@@ -15,7 +15,7 @@ minutes: 15
 
 - **Modul:** egy `.py` fájl, amelyet importálni lehet.
 - **Csomag:** modulok mappája.
-- **Standard könyvtár:** a Pythonnal együtt települő modulok – „elemekkel együtt szállítva” (*batteries included*).
+- **Standard könyvtár:** a Pythonnal együtt települő modulok – „elemekkel együtt szállítva” (_batteries included_).
 
 ```python run
 import math                      # egész modul importálása

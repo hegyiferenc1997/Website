@@ -36,13 +36,13 @@ else:
 
 Az **adatstruktúra** az adatok tárolásának és elérésének a módja. Ugyanazt az adatot többféleképpen is tárolhatjuk, és a választás befolyásolja, milyen gyorsan tudunk vele dolgozni.
 
-| Adatstruktúra | Hasonlat | Mire jó? |
-| --- | --- | --- |
-| lista / tömb | számozott fiókok sora | sorrendben tárolt elemek, index szerinti elérés |
-| halmaz | zsák, amiben minden tárgy egyszer szerepel | „benne van-e?” gyors eldöntése, ismétlődések kiszűrése |
-| szótár (map) | telefonkönyv: név → szám | érték keresése kulcs alapján |
-| verem | tányérkupac | az utoljára betett elem jön ki először |
-| sor | sorban állás a pénztárnál | az elsőként érkező kerül sorra először |
+| Adatstruktúra | Hasonlat                                   | Mire jó?                                               |
+| ------------- | ------------------------------------------ | ------------------------------------------------------ |
+| lista / tömb  | számozott fiókok sora                      | sorrendben tárolt elemek, index szerinti elérés        |
+| halmaz        | zsák, amiben minden tárgy egyszer szerepel | „benne van-e?” gyors eldöntése, ismétlődések kiszűrése |
+| szótár (map)  | telefonkönyv: név → szám                   | érték keresése kulcs alapján                           |
+| verem         | tányérkupac                                | az utoljára betett elem jön ki először                 |
+| sor           | sorban állás a pénztárnál                  | az elsőként érkező kerül sorra először                 |
 
 ```python run
 # Ugyanaz az adat háromféle szerkezetben.
@@ -55,7 +55,7 @@ print(4 in kulonbozo_jegyek)   # benne van-e a 4?
 print(telefonkonyv["Anna"])    # Anna telefonszáma
 ```
 
-> **Niklaus Wirth** híres könyvének címe: *Algoritmusok + Adatstruktúrák = Programok*. A két fogalom elválaszthatatlan: a jó adatstruktúra egyszerűbbé és gyorsabbá teszi az algoritmust.
+> **Niklaus Wirth** híres könyvének címe: _Algoritmusok + Adatstruktúrák = Programok_. A két fogalom elválaszthatatlan: a jó adatstruktúra egyszerűbbé és gyorsabbá teszi az algoritmust.
 
 ## Hatékonyság: mennyi lépés?
 
@@ -63,12 +63,12 @@ Ugyanarra a feladatra több algoritmus is létezhet, és nem mindegy, melyik men
 
 Ezt a növekedési ütemet az ún. **nagy O jelöléssel** írjuk le:
 
-| Jelölés | Név | Példa |
-| --- | --- | --- |
-| O(1) | konstans | lista elemének elérése index alapján |
-| O(log n) | logaritmikus | bináris keresés rendezett listában |
-| O(n) | lineáris | elem keresése rendezetlen listában |
-| O(n²) | négyzetes | buborékrendezés |
+| Jelölés  | Név          | Példa                                |
+| -------- | ------------ | ------------------------------------ |
+| O(1)     | konstans     | lista elemének elérése index alapján |
+| O(log n) | logaritmikus | bináris keresés rendezett listában   |
+| O(n)     | lineáris     | elem keresése rendezetlen listában   |
+| O(n²)    | négyzetes    | buborékrendezés                      |
 
 ```python run
 # Lineáris keresés: végigmegyünk az elemeken, és számoljuk a lépéseket.

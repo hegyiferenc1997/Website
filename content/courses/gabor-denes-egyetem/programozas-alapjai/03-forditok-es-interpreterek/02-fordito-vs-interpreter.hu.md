@@ -37,11 +37,11 @@ Példák: a klasszikus BASIC, shell szkriptek, JavaScript (eredetileg).
 
 A legtöbb modern nyelv a kettő keverékét használja: a forráskódot egy köztes, gépfüggetlen **bájtkódra** fordítja, amit egy **virtuális gép (VM)** futtat.
 
-| Nyelv | Bájtkód | Virtuális gép |
-| --- | --- | --- |
-| Java | `.class` | JVM (Java Virtual Machine) |
-| C# | CIL | .NET CLR |
-| Python | `.pyc` | CPython virtuális gép |
+| Nyelv  | Bájtkód  | Virtuális gép              |
+| ------ | -------- | -------------------------- |
+| Java   | `.class` | JVM (Java Virtual Machine) |
+| C#     | CIL      | .NET CLR                   |
+| Python | `.pyc`   | CPython virtuális gép      |
 
 ## JIT – futás közbeni fordítás
 
@@ -67,11 +67,11 @@ Az importált modulok bájtkódja a `__pycache__` mappába kerül (`.pyc` fájlo
 
 ## Összefoglalás
 
-| Szempont | Fordító | Interpreter |
-| --- | --- | --- |
-| mikor fordít | előre, egyben | futás közben, soronként |
-| futási sebesség | gyors | lassabb |
-| hibák felfedezése | sok már fordításkor | futáskor |
-| hordozhatóság | platformonként újrafordítás | ahol van értelmező |
+| Szempont          | Fordító                     | Interpreter             |
+| ----------------- | --------------------------- | ----------------------- |
+| mikor fordít      | előre, egyben               | futás közben, soronként |
+| futási sebesség   | gyors                       | lassabb                 |
+| hibák felfedezése | sok már fordításkor         | futáskor                |
+| hordozhatóság     | platformonként újrafordítás | ahol van értelmező      |
 
 A Python bájtkódra fordít, és azt egy virtuális gép futtatja.

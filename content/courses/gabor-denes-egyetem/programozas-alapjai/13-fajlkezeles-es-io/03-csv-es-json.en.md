@@ -12,7 +12,7 @@ minutes: 15
 
 ## CSV – comma-separated values
 
-**CSV** (*Comma-Separated Values*) is a simple text table: one record per line, with fields separated by a delimiter (comma or semicolon). Excel can open it.
+**CSV** (_Comma-Separated Values_) is a simple text table: one record per line, with fields separated by a delimiter (comma or semicolon). Excel can open it.
 
 ```text
 name,student_id,score
@@ -58,16 +58,16 @@ Why not `split(",")`? Because fields can contain commas or quotes (e.g. `"Szabo,
 
 ## JSON – structured data
 
-**JSON** (*JavaScript Object Notation*) describes nested data (objects, lists) as readable text. It is the standard format of web APIs and configuration files.
+**JSON** (_JavaScript Object Notation_) describes nested data (objects, lists) as readable text. It is the standard format of web APIs and configuration files.
 
-| JSON | Python |
-| --- | --- |
-| object `{}` | `dict` |
-| array `[]` | `list` |
-| string `"..."` | `str` |
-| number | `int`, `float` |
+| JSON            | Python          |
+| --------------- | --------------- |
+| object `{}`     | `dict`          |
+| array `[]`      | `list`          |
+| string `"..."`  | `str`           |
+| number          | `int`, `float`  |
 | `true`, `false` | `True`, `False` |
-| `null` | `None` |
+| `null`          | `None`          |
 
 ### Writing and reading JSON
 
@@ -104,12 +104,12 @@ print(json.dumps(data))        # text from a Python object
 
 ## CSV or JSON?
 
-| Aspect | CSV | JSON |
-| --- | --- | --- |
-| structure | flat table | nested |
-| types | everything is text | number, boolean, null, list, object |
-| opened with | Excel, spreadsheets | text editor, browser |
-| typical use | data export, measurements | APIs, settings, saved state |
+| Aspect      | CSV                       | JSON                                |
+| ----------- | ------------------------- | ----------------------------------- |
+| structure   | flat table                | nested                              |
+| types       | everything is text        | number, boolean, null, list, object |
+| opened with | Excel, spreadsheets       | text editor, browser                |
+| typical use | data export, measurements | APIs, settings, saved state         |
 
 ## Summary
 

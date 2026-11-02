@@ -118,15 +118,15 @@ print(d, d.popleft(), d.pop())
 
 ## Tömb vagy láncolt lista?
 
-| Művelet | Tömb (Python list) | Láncolt lista |
-| --- | --- | --- |
-| i. elem elérése | **O(1)** | O(n) – végig kell lépkedni |
-| beszúrás / törlés az elején | O(n) | **O(1)** |
-| beszúrás / törlés ismert csomópont után | O(n) | **O(1)** |
-| hozzáfűzés a végére | átlagosan O(1) | O(n) (O(1), ha tároljuk a végét is) |
-| keresés érték szerint | O(n) | O(n) |
-| memória | tömör | elemenként plusz mutató(k) |
-| gyorsítótár-barát | igen (egymás utáni cellák) | kevésbé |
+| Művelet                                 | Tömb (Python list)         | Láncolt lista                       |
+| --------------------------------------- | -------------------------- | ----------------------------------- |
+| i. elem elérése                         | **O(1)**                   | O(n) – végig kell lépkedni          |
+| beszúrás / törlés az elején             | O(n)                       | **O(1)**                            |
+| beszúrás / törlés ismert csomópont után | O(n)                       | **O(1)**                            |
+| hozzáfűzés a végére                     | átlagosan O(1)             | O(n) (O(1), ha tároljuk a végét is) |
+| keresés érték szerint                   | O(n)                       | O(n)                                |
+| memória                                 | tömör                      | elemenként plusz mutató(k)          |
+| gyorsítótár-barát                       | igen (egymás utáni cellák) | kevésbé                             |
 
 > **A gyakorlatban** a legtöbb feladatra a dinamikus tömb (Python `list`) a jobb választás. Láncolt listát akkor érdemes használni, ha sokat szúrunk be vagy törlünk a lista elején vagy közepén, és ritkán kell index szerint elérni az elemeket. A láncolt lista ezen felül sok más adatszerkezet (verem, sor, fa, gráf) alapja.
 

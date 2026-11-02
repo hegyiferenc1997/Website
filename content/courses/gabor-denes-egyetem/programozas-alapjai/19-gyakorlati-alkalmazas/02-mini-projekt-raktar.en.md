@@ -21,13 +21,13 @@ You need to keep track of a small shop's stock. The project ties together almost
 
 ## Plan
 
-| Element | Implementation | Why? |
-| --- | --- | --- |
-| product | `@dataclass Product`, `value` property (`@property`) | little code, automatic `__init__` and `==` |
-| inventory | `Inventory` class with a `dict[SKU, Product]` inside | fast lookup by SKU |
-| errors | `class StockError(Exception)` | the caller handles a single exception type |
-| saving | `json` + `dataclasses.asdict`, `pathlib.Path` | a human-readable format |
-| loading | `@classmethod load(file)` | an "alternative constructor" |
+| Element   | Implementation                                       | Why?                                       |
+| --------- | ---------------------------------------------------- | ------------------------------------------ |
+| product   | `@dataclass Product`, `value` property (`@property`) | little code, automatic `__init__` and `==` |
+| inventory | `Inventory` class with a `dict[SKU, Product]` inside | fast lookup by SKU                         |
+| errors    | `class StockError(Exception)`                        | the caller handles a single exception type |
+| saving    | `json` + `dataclasses.asdict`, `pathlib.Path`        | a human-readable format                    |
+| loading   | `@classmethod load(file)`                            | an "alternative constructor"               |
 
 ## Step by step
 

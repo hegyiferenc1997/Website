@@ -99,12 +99,12 @@ print(volume(**data))          # volume(a=1, b=5, c=10)
 
 ## Summary
 
-| Notation | Meaning |
-| --- | --- |
-| `def f(a, b)` | positional (or keyword) parameters |
-| `def f(a, b=0)` | default value |
-| `def f(*args)` | any number of positional → tuple |
-| `def f(**kwargs)` | any number of keyword → dictionary |
-| `def f(*, x)` | keyword-only parameter |
-| `def f(x, /)` | positional-only parameter |
-| `f(*list)`, `f(**dict)` | unpacking in a call |
+| Notation                | Meaning                            |
+| ----------------------- | ---------------------------------- |
+| `def f(a, b)`           | positional (or keyword) parameters |
+| `def f(a, b=0)`         | default value                      |
+| `def f(*args)`          | any number of positional → tuple   |
+| `def f(**kwargs)`       | any number of keyword → dictionary |
+| `def f(*, x)`           | keyword-only parameter             |
+| `def f(x, /)`           | positional-only parameter          |
+| `f(*list)`, `f(**dict)` | unpacking in a call                |

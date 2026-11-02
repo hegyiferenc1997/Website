@@ -75,19 +75,19 @@ Olvasd **alulról felfelé**:
 
 ## A leggyakoribb kivételek
 
-| Kivétel | Mikor keletkezik | Példa |
-| --- | --- | --- |
-| `SyntaxError` | nyelvtani hiba | `if x > 1` (nincs `:`) |
-| `IndentationError` | rossz behúzás | behúzatlan blokk |
-| `NameError` | nem létező név | elgépelt változónév |
-| `TypeError` | rossz típusú művelet | `"5" + 3` |
-| `ValueError` | jó típus, rossz érték | `int("abc")` |
-| `ZeroDivisionError` | nullával osztás | `10 / 0` |
-| `IndexError` | index a tartományon kívül | `[1, 2][5]` |
-| `KeyError` | nem létező szótárkulcs | `{"a": 1}["b"]` |
-| `AttributeError` | nem létező attribútum/metódus | `"szöveg".push("x")` |
-| `FileNotFoundError` | nem létező fájl | `open("nincs.txt")` |
-| `RecursionError` | túl mély rekurzió | alapeset nélküli rekurzió |
+| Kivétel             | Mikor keletkezik              | Példa                     |
+| ------------------- | ----------------------------- | ------------------------- |
+| `SyntaxError`       | nyelvtani hiba                | `if x > 1` (nincs `:`)    |
+| `IndentationError`  | rossz behúzás                 | behúzatlan blokk          |
+| `NameError`         | nem létező név                | elgépelt változónév       |
+| `TypeError`         | rossz típusú művelet          | `"5" + 3`                 |
+| `ValueError`        | jó típus, rossz érték         | `int("abc")`              |
+| `ZeroDivisionError` | nullával osztás               | `10 / 0`                  |
+| `IndexError`        | index a tartományon kívül     | `[1, 2][5]`               |
+| `KeyError`          | nem létező szótárkulcs        | `{"a": 1}["b"]`           |
+| `AttributeError`    | nem létező attribútum/metódus | `"szöveg".push("x")`      |
+| `FileNotFoundError` | nem létező fájl               | `open("nincs.txt")`       |
+| `RecursionError`    | túl mély rekurzió             | alapeset nélküli rekurzió |
 
 ```python run
 # Kipróbálhatod: mindegyik kivételt elkapjuk és kiírjuk a típusát.

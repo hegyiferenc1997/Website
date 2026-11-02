@@ -13,7 +13,7 @@ Készíts programot, amely egy szövegről (vagy szövegfájlról) statisztikát
 
 1. `szavak(szoveg)`: a szöveg szavai **kisbetűvel**, írásjelek nélkül.
 2. `mondatok_szama(szoveg)`: a `.`, `!`, `?` jellel lezárt, nem üres mondatok száma.
-3. `leggyakoribb(szoveg, n=3)`: az *n* leggyakoribb **tartalmas** szó (a töltelékszavak – *a, az, és, egy…* – nélkül), `(szó, darab)` párokban, azonos gyakoriságnál ábécérendben.
+3. `leggyakoribb(szoveg, n=3)`: az _n_ leggyakoribb **tartalmas** szó (a töltelékszavak – _a, az, és, egy…_ – nélkül), `(szó, darab)` párokban, azonos gyakoriságnál ábécérendben.
 4. `statisztika(szoveg)`: szótár a szavak számával, az egyedi szavak számával, a mondatok számával, az átlagos szóhosszal (üres szövegre 0.0) és a leggyakoribb szavakkal.
 5. `export_csv(szoveg, fajl)`: a teljes szógyakoriság CSV-be (`szo;db` fejléccel, csökkenő sorrendben).
 6. `elemez_fajl(utvonal)`: szövegfájl elemzése; hiányzó fájlnál érthető `FileNotFoundError`.

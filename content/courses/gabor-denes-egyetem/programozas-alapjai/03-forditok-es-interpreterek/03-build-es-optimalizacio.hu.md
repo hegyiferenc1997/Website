@@ -22,14 +22,14 @@ Egy valódi program sok forrásfájlból, külső könyvtárakból és erőforr�
 
 Kézzel ezt minden módosítás után megcsinálni lassú és hibalehetőségekkel teli, ezért **build rendszereket** használunk.
 
-| Eszköz | Nyelv / terület | Leíró fájl |
-| --- | --- | --- |
-| Make | C, C++ (klasszikus) | `Makefile` |
-| CMake | C, C++ (platformfüggetlen) | `CMakeLists.txt` |
-| Maven, Gradle | Java, Kotlin | `pom.xml`, `build.gradle` |
-| MSBuild / dotnet | C# | `.csproj` |
-| pip, uv, Poetry | Python | `pyproject.toml`, `requirements.txt` |
-| npm, pnpm | JavaScript, TypeScript | `package.json` |
+| Eszköz           | Nyelv / terület            | Leíró fájl                           |
+| ---------------- | -------------------------- | ------------------------------------ |
+| Make             | C, C++ (klasszikus)        | `Makefile`                           |
+| CMake            | C, C++ (platformfüggetlen) | `CMakeLists.txt`                     |
+| Maven, Gradle    | Java, Kotlin               | `pom.xml`, `build.gradle`            |
+| MSBuild / dotnet | C#                         | `.csproj`                            |
+| pip, uv, Poetry  | Python                     | `pyproject.toml`, `requirements.txt` |
+| npm, pnpm        | JavaScript, TypeScript     | `package.json`                       |
 
 Egy egyszerű `Makefile` részlet:
 

@@ -12,15 +12,15 @@ minutes: 12
 
 ## Criteria for comparison
 
-| Criterion | Question | Example |
-| --- | --- | --- |
-| **Performance** | How fast does it run, how much memory does it use? | C, C++, Rust ≫ Java, C#, Go > Python, Ruby |
-| **Development speed** | How quickly is a working program finished? | Python, Ruby ≫ C, C++ |
-| **Safety, reliability** | How many errors does the compiler catch before running? | Rust, statically typed languages |
-| **Readability, learnability** | How easy is it to understand and learn? | Python stands out |
-| **Ecosystem** | Are there ready-made libraries, frameworks, tools? | Python (data, AI), JavaScript (web), Java (enterprise) |
-| **Portability** | Which platforms does it run on? | Java/JVM, Python, JavaScript (browser) |
-| **Community, job market** | Is there help, documentation, jobs? | Python, JavaScript, Java, C# |
+| Criterion                     | Question                                                | Example                                                |
+| ----------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
+| **Performance**               | How fast does it run, how much memory does it use?      | C, C++, Rust ≫ Java, C#, Go > Python, Ruby             |
+| **Development speed**         | How quickly is a working program finished?              | Python, Ruby ≫ C, C++                                  |
+| **Safety, reliability**       | How many errors does the compiler catch before running? | Rust, statically typed languages                       |
+| **Readability, learnability** | How easy is it to understand and learn?                 | Python stands out                                      |
+| **Ecosystem**                 | Are there ready-made libraries, frameworks, tools?      | Python (data, AI), JavaScript (web), Java (enterprise) |
+| **Portability**               | Which platforms does it run on?                         | Java/JVM, Python, JavaScript (browser)                 |
+| **Community, job market**     | Is there help, documentation, jobs?                     | Python, JavaScript, Java, C#                           |
 
 ## The big trade-off: run time vs. development time
 
@@ -55,18 +55,18 @@ print(f"Python loop: {python_time:.4f} s, built-in sum(): {c_time:.4f} s")
 
 ## Which language for what?
 
-| Task | Good choice | Why |
-| --- | --- | --- |
-| data analysis, machine learning | **Python** | NumPy, pandas, scikit-learn, PyTorch |
-| website (client side) | **JavaScript / TypeScript** | the only thing that runs natively in the browser |
-| web backend | Python, Java, C#, JavaScript, Go, Ruby | all have mature frameworks |
-| Android app | Kotlin, Java | the platform's official languages |
-| iOS app | Swift | Apple's official language |
-| game | C# (Unity), C++ (Unreal) | the game engines' languages |
-| microcontroller, embedded system | **C**, C++, (MicroPython) | little memory, direct hardware access |
-| operating system, driver | C, C++, Rust | performance, closeness to hardware |
-| automation, sysadmin scripts | Python, Bash, PowerShell | quick to write |
-| enterprise system | Java, C# | stability, type safety, support |
+| Task                             | Good choice                            | Why                                              |
+| -------------------------------- | -------------------------------------- | ------------------------------------------------ |
+| data analysis, machine learning  | **Python**                             | NumPy, pandas, scikit-learn, PyTorch             |
+| website (client side)            | **JavaScript / TypeScript**            | the only thing that runs natively in the browser |
+| web backend                      | Python, Java, C#, JavaScript, Go, Ruby | all have mature frameworks                       |
+| Android app                      | Kotlin, Java                           | the platform's official languages                |
+| iOS app                          | Swift                                  | Apple's official language                        |
+| game                             | C# (Unity), C++ (Unreal)               | the game engines' languages                      |
+| microcontroller, embedded system | **C**, C++, (MicroPython)              | little memory, direct hardware access            |
+| operating system, driver         | C, C++, Rust                           | performance, closeness to hardware               |
+| automation, sysadmin scripts     | Python, Bash, PowerShell               | quick to write                                   |
+| enterprise system                | Java, C#                               | stability, type safety, support                  |
 
 ## Decision steps
 

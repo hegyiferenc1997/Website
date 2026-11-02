@@ -14,19 +14,19 @@ minutes: 15
 
 A **subprogram** is a named piece of code solving a well-defined task that can be **called** from anywhere in the program. Its advantages:
 
-- **Reuse:** write it once, use it many times (DRY – *Don't Repeat Yourself*).
+- **Reuse:** write it once, use it many times (DRY – _Don't Repeat Yourself_).
 - **Clarity:** the big task is split into small parts with descriptive names.
 - **Testability:** every part can be tried separately.
-- **Abstraction:** the caller only needs to know *what* it does, not *how*.
+- **Abstraction:** the caller only needs to know _what_ it does, not _how_.
 
 ## Function and procedure
 
-| | Function | Procedure |
-| --- | --- | --- |
-| what it does | computes a value and **returns** it | **performs** something (prints, modifies, saves) |
-| return value | yes | no |
-| where it is called | in an expression: `y = square(3)` | as a statement: `greet("Anna")` |
-| in other languages | Pascal `function`, C `int f()` | Pascal `procedure`, C `void f()` |
+|                    | Function                            | Procedure                                        |
+| ------------------ | ----------------------------------- | ------------------------------------------------ |
+| what it does       | computes a value and **returns** it | **performs** something (prints, modifies, saves) |
+| return value       | yes                                 | no                                               |
+| where it is called | in an expression: `y = square(3)`   | as a statement: `greet("Anna")`                  |
+| in other languages | Pascal `function`, C `int f()`      | Pascal `procedure`, C `void f()`                 |
 
 In Python every subprogram is made with `def`. A "procedure" is just a function that returns nothing – in fact it still returns a value: `None`.
 

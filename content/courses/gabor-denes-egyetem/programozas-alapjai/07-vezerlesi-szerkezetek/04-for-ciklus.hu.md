@@ -33,10 +33,10 @@ for i in range(10, 0, -3):  # visszafelé: 10, 7, 4, 1
 print()
 ```
 
-| Hívás | Értékek |
-| --- | --- |
-| `range(n)` | 0, 1, …, n−1 |
-| `range(a, b)` | a, a+1, …, b−1 |
+| Hívás                | Értékek                        |
+| -------------------- | ------------------------------ |
+| `range(n)`           | 0, 1, …, n−1                   |
+| `range(a, b)`        | a, a+1, …, b−1                 |
 | `range(a, b, lepes)` | a, a+lepes, … (b-ig, b nélkül) |
 
 ## Bejáró ciklus (for-each)
@@ -97,9 +97,9 @@ Ez lényegében egy tömörebben leírt `while` ciklus. A Python `for i in range
 
 ## while vagy for?
 
-| Használj `for`-t, ha … | Használj `while`-t, ha … |
-| --- | --- |
-| ismert az ismétlések száma | nem tudod előre, hányszor kell |
+| Használj `for`-t, ha …            | Használj `while`-t, ha …             |
+| --------------------------------- | ------------------------------------ |
+| ismert az ismétlések száma        | nem tudod előre, hányszor kell       |
 | egy gyűjtemény elemein mész végig | egy feltétel teljesüléséig ismételsz |
 
 > **Ne módosítsd** azt a listát, amin éppen végigmész (ne törölj belőle, ne adj hozzá) – ez kiszámíthatatlan eredményt ad. Inkább készíts új listát.

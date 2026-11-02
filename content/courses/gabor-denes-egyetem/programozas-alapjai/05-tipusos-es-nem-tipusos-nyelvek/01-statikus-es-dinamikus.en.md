@@ -85,10 +85,10 @@ JavaScript is **weakly** typed:
 
 ## Summary table
 
-| | Strong | Weak |
-| --- | --- | --- |
-| **Static** | Java, C#, Rust, Go | C, C++ (many implicit conversions, pointers) |
-| **Dynamic** | Python, Ruby | JavaScript, PHP |
+|             | Strong             | Weak                                         |
+| ----------- | ------------------ | -------------------------------------------- |
+| **Static**  | Java, C#, Rust, Go | C, C++ (many implicit conversions, pointers) |
+| **Dynamic** | Python, Ruby       | JavaScript, PHP                              |
 
 ## "Untyped" languages
 

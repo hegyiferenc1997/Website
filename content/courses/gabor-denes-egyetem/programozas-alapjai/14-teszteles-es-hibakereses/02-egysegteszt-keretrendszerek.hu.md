@@ -59,15 +59,15 @@ unittest.TextTestRunner(stream=sys.stdout, verbosity=2).run(csomag)
 
 A leggyakoribb ellenőrző metódusok:
 
-| Metódus | Ellenőrzés |
-| --- | --- |
-| `assertEqual(a, b)` | `a == b` |
-| `assertNotEqual(a, b)` | `a != b` |
-| `assertTrue(x)`, `assertFalse(x)` | igaz / hamis |
-| `assertIsNone(x)` | `x is None` |
-| `assertIn(a, b)` | `a in b` |
-| `assertAlmostEqual(a, b)` | valós számok közelítő egyenlősége |
-| `assertRaises(Kivetel)` | a blokk kivételt dob |
+| Metódus                           | Ellenőrzés                        |
+| --------------------------------- | --------------------------------- |
+| `assertEqual(a, b)`               | `a == b`                          |
+| `assertNotEqual(a, b)`            | `a != b`                          |
+| `assertTrue(x)`, `assertFalse(x)` | igaz / hamis                      |
+| `assertIsNone(x)`                 | `x is None`                       |
+| `assertIn(a, b)`                  | `a in b`                          |
+| `assertAlmostEqual(a, b)`         | valós számok közelítő egyenlősége |
+| `assertRaises(Kivetel)`           | a blokk kivételt dob              |
 
 Az előkészítő kód a `setUp` metódusba kerül, ami **minden** teszt előtt lefut:
 
@@ -170,13 +170,13 @@ A 100% lefedettség sem jelenti azt, hogy nincs hiba – csak azt, hogy minden s
 
 ## Keretrendszerek más nyelvekben
 
-| Nyelv | Keretrendszer |
-| --- | --- |
-| Java | JUnit |
-| C# | NUnit, xUnit, MSTest |
-| JavaScript / TypeScript | Jest, Vitest |
-| C++ | GoogleTest, Catch2 |
-| Ruby | RSpec, Minitest |
+| Nyelv                   | Keretrendszer        |
+| ----------------------- | -------------------- |
+| Java                    | JUnit                |
+| C#                      | NUnit, xUnit, MSTest |
+| JavaScript / TypeScript | Jest, Vitest         |
+| C++                     | GoogleTest, Catch2   |
+| Ruby                    | RSpec, Minitest      |
 
 > Ez a weboldal is így működik: a `pnpm test` parancs a **Vitest** keretrendszerrel futtatja a teszteket – köztük azt is, amely a tananyag összes Python példáját és megoldását lefuttatja.
 

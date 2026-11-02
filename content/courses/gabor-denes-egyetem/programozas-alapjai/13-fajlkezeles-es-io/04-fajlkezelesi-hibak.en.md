@@ -13,15 +13,15 @@ minutes: 15
 
 ## Typical file errors
 
-| Exception | When |
-| --- | --- |
-| `FileNotFoundError` | the file opened for reading doesn't exist, or the folder doesn't exist |
-| `PermissionError` | no permission (read-only, system file, locked by another program) |
-| `IsADirectoryError` | trying to open a folder instead of a file |
-| `FileExistsError` | opening an existing file with mode `"x"` |
-| `UnicodeDecodeError` | the file isn't in the given encoding |
-| `ValueError` | the content is invalid (e.g. text instead of a number on a line) |
-| `json.JSONDecodeError` | invalid JSON (a subclass of `ValueError`) |
+| Exception              | When                                                                   |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `FileNotFoundError`    | the file opened for reading doesn't exist, or the folder doesn't exist |
+| `PermissionError`      | no permission (read-only, system file, locked by another program)      |
+| `IsADirectoryError`    | trying to open a folder instead of a file                              |
+| `FileExistsError`      | opening an existing file with mode `"x"`                               |
+| `UnicodeDecodeError`   | the file isn't in the given encoding                                   |
+| `ValueError`           | the content is invalid (e.g. text instead of a number on a line)       |
+| `json.JSONDecodeError` | invalid JSON (a subclass of `ValueError`)                              |
 
 All of them (except content errors) are subclasses of **`OSError`**.
 
@@ -97,14 +97,14 @@ print(file.exists(), file.name, file.suffix, file.stem)
 print([p.name for p in folder.glob("*.txt")])   # listing files by pattern
 ```
 
-| Operation | `pathlib` |
-| --- | --- |
-| does it exist | `p.exists()`, `p.is_file()`, `p.is_dir()` |
-| create a folder | `p.mkdir(parents=True, exist_ok=True)` |
-| file name, extension | `p.name`, `p.suffix`, `p.stem` |
-| parent folder | `p.parent` |
-| delete | `p.unlink(missing_ok=True)` |
-| listing | `p.iterdir()`, `p.glob("*.csv")` |
+| Operation            | `pathlib`                                 |
+| -------------------- | ----------------------------------------- |
+| does it exist        | `p.exists()`, `p.is_file()`, `p.is_dir()` |
+| create a folder      | `p.mkdir(parents=True, exist_ok=True)`    |
+| file name, extension | `p.name`, `p.suffix`, `p.stem`            |
+| parent folder        | `p.parent`                                |
+| delete               | `p.unlink(missing_ok=True)`               |
+| listing              | `p.iterdir()`, `p.glob("*.csv")`          |
 
 ## Safe writing
 

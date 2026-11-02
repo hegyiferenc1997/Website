@@ -6,7 +6,7 @@ minutes: 14
 
 ## Amit ebben a leckében megtanulsz
 
-- mi a **futtatókörnyezet** (*runtime*), és mit ad a programnak,
+- mi a **futtatókörnyezet** (_runtime_), és mit ad a programnak,
 - hogyan fut egy program **natívan**, **virtuális gépen**, **böngészőben**,
 - mi a **konténer** (Docker) és a **felhő** szerepe,
 - hogyan éri el a program a környezetét (**környezeti változók**, platform).
@@ -52,15 +52,15 @@ dis.dis(duplaz)
 
 ## Böngésző és Node.js
 
-- A **böngésző** JavaScript-motort tartalmaz (Chrome: V8, Firefox: SpiderMonkey), amely a weboldal kódját JIT-tel futtatja – biztonsági okból elzárt környezetben (*sandbox*): nem fér hozzá szabadon a gép fájljaihoz.
-- A **WebAssembly** (Wasm) segítségével más nyelvek (C, C++, Rust, sőt a Python is – pl. *Pyodide*) is futhatnak a böngészőben. Később ezen az oldalon is így futnak majd a Python-feladatok.
+- A **böngésző** JavaScript-motort tartalmaz (Chrome: V8, Firefox: SpiderMonkey), amely a weboldal kódját JIT-tel futtatja – biztonsági okból elzárt környezetben (_sandbox_): nem fér hozzá szabadon a gép fájljaihoz.
+- A **WebAssembly** (Wasm) segítségével más nyelvek (C, C++, Rust, sőt a Python is – pl. _Pyodide_) is futhatnak a böngészőben. Később ezen az oldalon is így futnak majd a Python-feladatok.
 - A **Node.js** a V8 motort a böngészőn kívül, szerveren futtatja.
 
 ## Konténerek (Docker)
 
 „Az én gépemen működik!” – a klasszikus probléma: a fejlesztő gépén minden megy, a szerveren nem, mert más a Python-verzió vagy hiányzik egy könyvtár.
 
-A **konténer** a programot **a teljes futtatókörnyezetével együtt** csomagolja (rendszerkönyvtárak, interpreter, függőségek). A **Docker** a legelterjedtebb eszköz erre. A konténer könnyebb, mint egy teljes virtuális gép, mert az operációs rendszer magját (*kernel*) megosztja a gazdagéppel.
+A **konténer** a programot **a teljes futtatókörnyezetével együtt** csomagolja (rendszerkönyvtárak, interpreter, függőségek). A **Docker** a legelterjedtebb eszköz erre. A konténer könnyebb, mint egy teljes virtuális gép, mert az operációs rendszer magját (_kernel_) megosztja a gazdagéppel.
 
 ```text
 # Dockerfile – egy Python program konténerbe csomagolása
@@ -103,13 +103,13 @@ print("Új mód:", os.environ["ALKALMAZAS_MOD"])
 
 ## Összefoglalás
 
-| Környezet | Példa | Hordozható? | Sebesség |
-| --- | --- | --- | --- |
-| natív gépi kód | C, C++, Go, Rust | platformonként fordítani kell | leggyorsabb |
-| virtuális gép (JIT) | Java/JVM, C#/.NET | igen | gyors |
-| interpreter | CPython, Ruby | igen | lassabb |
-| böngésző | JavaScript, WebAssembly | igen (minden böngészőben) | gyors (JIT) |
-| konténer | Docker | igen, a környezettel együtt | natívhoz közeli |
+| Környezet           | Példa                   | Hordozható?                   | Sebesség        |
+| ------------------- | ----------------------- | ----------------------------- | --------------- |
+| natív gépi kód      | C, C++, Go, Rust        | platformonként fordítani kell | leggyorsabb     |
+| virtuális gép (JIT) | Java/JVM, C#/.NET       | igen                          | gyors           |
+| interpreter         | CPython, Ruby           | igen                          | lassabb         |
+| böngésző            | JavaScript, WebAssembly | igen (minden böngészőben)     | gyors (JIT)     |
+| konténer            | Docker                  | igen, a környezettel együtt   | natívhoz közeli |
 
 - A futtatókörnyezet adja mindazt, ami a kódon kívül kell a futáshoz.
 - A **konténer** megoldja az „én gépemen működik” problémát.

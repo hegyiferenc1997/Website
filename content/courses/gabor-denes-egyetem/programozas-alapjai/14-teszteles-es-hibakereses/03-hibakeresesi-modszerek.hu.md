@@ -67,20 +67,20 @@ A **debugger** (hibakereső) lehetővé teszi, hogy a programot **megállítsd**
 
 Alapfogalmak:
 
-| Fogalom | Jelentés |
-| --- | --- |
-| **töréspont** (breakpoint) | ennél a sornál megáll a program |
-| **Step Over** (F10) | végrehajtja az aktuális sort, a függvényhívásba nem lép be |
-| **Step Into** (F11) | belép a meghívott függvénybe |
-| **Step Out** (Shift+F11) | befejezi az aktuális függvényt, és visszatér a hívóhoz |
-| **Continue** (F5) | fut a következő töréspontig |
-| **Watch / Variables** | a változók aktuális értékei |
-| **Call Stack** | a hívási verem: melyik függvény hívta melyiket |
+| Fogalom                    | Jelentés                                                   |
+| -------------------------- | ---------------------------------------------------------- |
+| **töréspont** (breakpoint) | ennél a sornál megáll a program                            |
+| **Step Over** (F10)        | végrehajtja az aktuális sort, a függvényhívásba nem lép be |
+| **Step Into** (F11)        | belép a meghívott függvénybe                               |
+| **Step Out** (Shift+F11)   | befejezi az aktuális függvényt, és visszatér a hívóhoz     |
+| **Continue** (F5)          | fut a következő töréspontig                                |
+| **Watch / Variables**      | a változók aktuális értékei                                |
+| **Call Stack**             | a hívási verem: melyik függvény hívta melyiket             |
 
 **VS Code-ban:**
 
 1. Kattints a sor száma mellé balra – megjelenik egy piros pötty (töréspont).
-2. Nyomd meg az **F5**-öt, és válaszd a *Python Debugger* lehetőséget.
+2. Nyomd meg az **F5**-öt, és válaszd a _Python Debugger_ lehetőséget.
 3. A program megáll a törésponton; bal oldalt látod a változókat, fent a léptető gombokat.
 
 **Kódból** is megállíthatod a programot a beépített `breakpoint()` hívással – ez elindítja a Python parancssori hibakeresőjét (`pdb`):
@@ -94,7 +94,7 @@ def fizetendo(ar, darab, kedvezmeny):
 
 ## 4. Gumikacsa-módszer
 
-Magyarázd el a kódot **sorról sorra** valakinek – akár egy gumikacsának az asztalodon. Miközben hangosan elmondod, mit *kellene* csinálnia egy sornak, gyakran rájössz, hogy valójában mást csinál. Meglepően hatékony!
+Magyarázd el a kódot **sorról sorra** valakinek – akár egy gumikacsának az asztalodon. Miközben hangosan elmondod, mit _kellene_ csinálnia egy sornak, gyakran rájössz, hogy valójában mást csinál. Meglepően hatékony!
 
 ## 5. Felezéses keresés
 
@@ -102,14 +102,14 @@ Ha nem tudod, hol romlik el az adat, **felezd meg** a kódot: írasd ki az ért�
 
 ## Gyakori hibák, amiket érdemes először ellenőrizni
 
-| Tünet | Gyakori ok |
-| --- | --- |
-| eggyel több/kevesebb elem | `range(n)` vs. `range(n + 1)`, `<` vs. `<=` |
-| a függvény `None`-t ad | lemaradt a `return` |
-| a lista „magától” megváltozik | két név ugyanarra a listára mutat (`b = a`) |
-| a feltétel sosem teljesül | szöveg és szám összehasonlítása (`"5" == 5`) |
-| végtelen ciklus | a ciklusváltozó nem változik |
-| `UnboundLocalError` | a függvényben értéket adsz egy globális névnek |
+| Tünet                         | Gyakori ok                                     |
+| ----------------------------- | ---------------------------------------------- |
+| eggyel több/kevesebb elem     | `range(n)` vs. `range(n + 1)`, `<` vs. `<=`    |
+| a függvény `None`-t ad        | lemaradt a `return`                            |
+| a lista „magától” megváltozik | két név ugyanarra a listára mutat (`b = a`)    |
+| a feltétel sosem teljesül     | szöveg és szám összehasonlítása (`"5" == 5`)   |
+| végtelen ciklus               | a ciklusváltozó nem változik                   |
+| `UnboundLocalError`           | a függvényben értéket adsz egy globális névnek |
 
 ## Összefoglalás
 

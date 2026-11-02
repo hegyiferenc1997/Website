@@ -22,14 +22,14 @@ A data type defines:
 
 ## Python's basic types
 
-| Type | Meaning | Literal examples |
-| --- | --- | --- |
-| `int` | integer | `42`, `-7`, `0`, `1_000_000`, `0b1010`, `0xFF` |
-| `float` | real (floating-point) number | `3.14`, `-0.5`, `2.0`, `1e6`, `2.5e-3` |
-| `bool` | boolean | `True`, `False` |
-| `str` | text (string) | `"apple"`, `'pear'`, `"""multi-line"""` |
-| `NoneType` | "no value" | `None` |
-| `complex` | complex number | `3 + 4j` |
+| Type       | Meaning                      | Literal examples                               |
+| ---------- | ---------------------------- | ---------------------------------------------- |
+| `int`      | integer                      | `42`, `-7`, `0`, `1_000_000`, `0b1010`, `0xFF` |
+| `float`    | real (floating-point) number | `3.14`, `-0.5`, `2.0`, `1e6`, `2.5e-3`         |
+| `bool`     | boolean                      | `True`, `False`                                |
+| `str`      | text (string)                | `"apple"`, `'pear'`, `"""multi-line"""`        |
+| `NoneType` | "no value"                   | `None`                                         |
+| `complex`  | complex number               | `3 + 4j`                                       |
 
 ```python run
 # type() tells you the type of a value.
@@ -65,15 +65,15 @@ multi-line string.""")
 
 In statically typed languages (C, Java, C#) primitive types have a **fixed size**:
 
-| Java / C# type | Size | Range |
-| --- | --- | --- |
-| `byte` | 1 byte | −128 … 127 (in Java) |
-| `int` | 4 bytes | about −2.1 billion … 2.1 billion |
-| `long` | 8 bytes | about ±9.2 · 10¹⁸ |
-| `float` | 4 bytes | about 7 significant digits |
-| `double` | 8 bytes | about 15–16 significant digits |
-| `char` | 2 bytes | one Unicode character |
-| `boolean` / `bool` | 1 byte (usually) | true, false |
+| Java / C# type     | Size             | Range                            |
+| ------------------ | ---------------- | -------------------------------- |
+| `byte`             | 1 byte           | −128 … 127 (in Java)             |
+| `int`              | 4 bytes          | about −2.1 billion … 2.1 billion |
+| `long`             | 8 bytes          | about ±9.2 · 10¹⁸                |
+| `float`            | 4 bytes          | about 7 significant digits       |
+| `double`           | 8 bytes          | about 15–16 significant digits   |
+| `char`             | 2 bytes          | one Unicode character            |
+| `boolean` / `bool` | 1 byte (usually) | true, false                      |
 
 If an `int` exceeds its range, **overflow** happens: 2,147,483,647 + 1 suddenly becomes negative. In Python `int` has **unlimited** size (only memory limits it), so this doesn't happen:
 

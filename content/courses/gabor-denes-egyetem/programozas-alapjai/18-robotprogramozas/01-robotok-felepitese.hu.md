@@ -7,7 +7,7 @@ minutes: 14
 ## Amit ebben a leckében megtanulsz
 
 - milyen **részekből** áll egy robot,
-- mi az **érzékel–gondolkodik–cselekszik** (*sense–think–act*) ciklus,
+- mi az **érzékel–gondolkodik–cselekszik** (_sense–think–act_) ciklus,
 - milyen eszközökkel és nyelveken programozzák a robotokat,
 - miért különleges a robotprogramozás (valós idő, zajos adatok, biztonság).
 
@@ -17,13 +17,13 @@ A robot olyan gép, amely **érzékeli** a környezetét, a beérkező adatok al
 
 ## A robot részei
 
-| Rész | Feladata | Példák |
-| --- | --- | --- |
-| **Érzékelők** (szenzorok) | adatot gyűjtenek a környezetről és a robot saját állapotáról | távolságmérő (ultrahang, lézer/LiDAR), kamera, fény- és vonalérzékelő, ütközésérzékelő, gyorsulásmérő, giroszkóp, kerékjeladó (enkóder) |
-| **Vezérlő** | az „agy”: futtatja a programot | mikrovezérlő (Arduino), egylapos számítógép (Raspberry Pi), ipari PLC |
-| **Beavatkozók** (aktuátorok) | a döntést fizikai hatássá alakítják | egyenáramú motor, szervomotor, léptetőmotor, megfogó, LED, hangszóró |
-| **Energiaellátás** | áramot ad | akkumulátor, tápegység |
-| **Kommunikáció** | kapcsolat más eszközökkel | Wi-Fi, Bluetooth, soros port |
+| Rész                         | Feladata                                                     | Példák                                                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Érzékelők** (szenzorok)    | adatot gyűjtenek a környezetről és a robot saját állapotáról | távolságmérő (ultrahang, lézer/LiDAR), kamera, fény- és vonalérzékelő, ütközésérzékelő, gyorsulásmérő, giroszkóp, kerékjeladó (enkóder) |
+| **Vezérlő**                  | az „agy”: futtatja a programot                               | mikrovezérlő (Arduino), egylapos számítógép (Raspberry Pi), ipari PLC                                                                   |
+| **Beavatkozók** (aktuátorok) | a döntést fizikai hatássá alakítják                          | egyenáramú motor, szervomotor, léptetőmotor, megfogó, LED, hangszóró                                                                    |
+| **Energiaellátás**           | áramot ad                                                    | akkumulátor, tápegység                                                                                                                  |
+| **Kommunikáció**             | kapcsolat más eszközökkel                                    | Wi-Fi, Bluetooth, soros port                                                                                                            |
 
 ## Az érzékel–gondolkodik–cselekszik ciklus
 
@@ -79,14 +79,14 @@ Ugyanezt egy valódi roboton is így írnánk – csak az `erzekel()` a szenzort
 
 ## Eszközök és nyelvek
 
-| Eszköz / keretrendszer | Nyelv | Jellemző |
-| --- | --- | --- |
-| **Arduino** | C/C++ (Arduino-dialektus) | olcsó mikrovezérlő, oktatás, hobbi |
-| **Raspberry Pi** | Python (is) | teljes Linuxos számítógép, kamera, hálózat |
-| **MicroPython** | Python | Python mikrovezérlőkön (pl. ESP32, Raspberry Pi Pico) |
-| **ROS / ROS 2** (Robot Operating System) | C++, Python | a kutatás és ipar szabványos robotikai keretrendszere |
-| **LEGO / oktatási robotok** | blokkalapú, Python | kezdőknek |
-| **ipari robotok** | gyártóspecifikus nyelvek (pl. KUKA KRL, ABB RAPID), PLC | gyártósorok |
+| Eszköz / keretrendszer                   | Nyelv                                                   | Jellemző                                              |
+| ---------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------- |
+| **Arduino**                              | C/C++ (Arduino-dialektus)                               | olcsó mikrovezérlő, oktatás, hobbi                    |
+| **Raspberry Pi**                         | Python (is)                                             | teljes Linuxos számítógép, kamera, hálózat            |
+| **MicroPython**                          | Python                                                  | Python mikrovezérlőkön (pl. ESP32, Raspberry Pi Pico) |
+| **ROS / ROS 2** (Robot Operating System) | C++, Python                                             | a kutatás és ipar szabványos robotikai keretrendszere |
+| **LEGO / oktatási robotok**              | blokkalapú, Python                                      | kezdőknek                                             |
+| **ipari robotok**                        | gyártóspecifikus nyelvek (pl. KUKA KRL, ABB RAPID), PLC | gyártósorok                                           |
 
 Egy MicroPython-program így villogtat egy LED-et (valós hardveren futna, itt csak szemléltetés):
 

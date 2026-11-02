@@ -99,12 +99,12 @@ print(terfogat(**adatok))          # terfogat(a=1, b=5, c=10)
 
 ## Összefoglalás
 
-| Jelölés | Jelentés |
-| --- | --- |
-| `def f(a, b)` | pozicionális (vagy kulcsszavas) paraméterek |
-| `def f(a, b=0)` | alapértelmezett érték |
-| `def f(*args)` | tetszőleges számú pozicionális → tuple |
-| `def f(**kwargs)` | tetszőleges számú kulcsszavas → szótár |
-| `def f(*, x)` | csak kulcsszavas paraméter |
-| `def f(x, /)` | csak pozicionális paraméter |
-| `f(*lista)`, `f(**szotar)` | kicsomagolás híváskor |
+| Jelölés                    | Jelentés                                    |
+| -------------------------- | ------------------------------------------- |
+| `def f(a, b)`              | pozicionális (vagy kulcsszavas) paraméterek |
+| `def f(a, b=0)`            | alapértelmezett érték                       |
+| `def f(*args)`             | tetszőleges számú pozicionális → tuple      |
+| `def f(**kwargs)`          | tetszőleges számú kulcsszavas → szótár      |
+| `def f(*, x)`              | csak kulcsszavas paraméter                  |
+| `def f(x, /)`              | csak pozicionális paraméter                 |
+| `f(*lista)`, `f(**szotar)` | kicsomagolás híváskor                       |

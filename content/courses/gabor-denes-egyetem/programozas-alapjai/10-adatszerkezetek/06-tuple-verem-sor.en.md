@@ -93,25 +93,25 @@ print(list(queue))
 
 ## Which data structure to choose?
 
-| Question / need | Choice |
-| --- | --- |
-| order matters, access and modify by index | **list** |
-| fixed, related values that don't change | **tuple** |
-| only "is it in there?" matters; removing duplicates | **set** |
-| looking up values by key | **dictionary (map)** |
-| always need the most recently added element | **stack** (list `append`/`pop`) |
-| process in order of arrival | **queue** (`deque`) |
-| many insertions/deletions at the front or middle | **linked list** / `deque` |
+| Question / need                                     | Choice                          |
+| --------------------------------------------------- | ------------------------------- |
+| order matters, access and modify by index           | **list**                        |
+| fixed, related values that don't change             | **tuple**                       |
+| only "is it in there?" matters; removing duplicates | **set**                         |
+| looking up values by key                            | **dictionary (map)**            |
+| always need the most recently added element         | **stack** (list `append`/`pop`) |
+| process in order of arrival                         | **queue** (`deque`)             |
+| many insertions/deletions at the front or middle    | **linked list** / `deque`       |
 
 ## Cost of operations – summary
 
-| | list | tuple | set | dict | deque |
-| --- | --- | --- | --- | --- | --- |
-| access by index | O(1) | O(1) | – | – | O(n) |
-| search (`in`) | O(n) | O(n) | **O(1)** | **O(1)** (key) | O(n) |
-| insert at the end | O(1)* | – | O(1)* | O(1)* | O(1) |
-| insert at the front | O(n) | – | – | – | **O(1)** |
-| mutable | yes | no | yes | yes | yes |
+|                     | list  | tuple | set      | dict           | deque    |
+| ------------------- | ----- | ----- | -------- | -------------- | -------- |
+| access by index     | O(1)  | O(1)  | –        | –              | O(n)     |
+| search (`in`)       | O(n)  | O(n)  | **O(1)** | **O(1)** (key) | O(n)     |
+| insert at the end   | O(1)* | –     | O(1)*    | O(1)*          | O(1)     |
+| insert at the front | O(n)  | –     | –        | –              | **O(1)** |
+| mutable             | yes   | no    | yes      | yes            | yes      |
 
 \* on average
 

@@ -15,13 +15,13 @@ minutes: 18
 
 A **map** (also associative array, dictionary) stores **key–value pairs**. A value is accessed not by index but by **key** – like a phone book where we look up a name and get the number.
 
-| Language | Map type |
-| --- | --- |
-| Python | `dict` |
-| Java | `HashMap`, `TreeMap` |
-| C# | `Dictionary<K, V>` |
-| C++ | `std::map`, `std::unordered_map` |
-| JavaScript | `Map`, objects |
+| Language   | Map type                         |
+| ---------- | -------------------------------- |
+| Python     | `dict`                           |
+| Java       | `HashMap`, `TreeMap`             |
+| C#         | `Dictionary<K, V>`               |
+| C++        | `std::map`, `std::unordered_map` |
+| JavaScript | `Map`, objects                   |
 
 Keys are **unique** and immutable (strings, numbers, tuples); values can be anything. The Python dictionary uses a hash table, so access is **O(1)** on average, and it preserves insertion order (since Python 3.7).
 

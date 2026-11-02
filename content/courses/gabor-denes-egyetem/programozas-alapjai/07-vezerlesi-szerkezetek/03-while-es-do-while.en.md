@@ -91,12 +91,12 @@ print("Thanks:", number)
 
 ## Comparison
 
-| | Pre-test (while) | Post-test (do-while) |
-| --- | --- | --- |
-| condition checked | at the start of an iteration | at the end of an iteration |
-| minimum runs | 0 | 1 |
-| typical use | unknown number of repetitions | input validation, menus |
-| in Python | `while condition:` | `while True:` … `if not condition: break` |
+|                   | Pre-test (while)              | Post-test (do-while)                      |
+| ----------------- | ----------------------------- | ----------------------------------------- |
+| condition checked | at the start of an iteration  | at the end of an iteration                |
+| minimum runs      | 0                             | 1                                         |
+| typical use       | unknown number of repetitions | input validation, menus                   |
+| in Python         | `while condition:`            | `while True:` … `if not condition: break` |
 
 ## Summary
 

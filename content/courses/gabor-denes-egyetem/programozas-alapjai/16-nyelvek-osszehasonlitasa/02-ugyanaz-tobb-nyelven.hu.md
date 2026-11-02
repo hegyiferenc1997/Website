@@ -101,15 +101,15 @@ printf("%d\n", osszeg);
 ```javascript
 let osszeg = 0;
 for (let i = 1; i <= 10; i++) {
-  if (i % 2 === 0) osszeg += i;   // === szigorú egyenlőség
+  if (i % 2 === 0) osszeg += i; // === szigorú egyenlőség
 }
 console.log(osszeg);
 ```
 
-| | Python | Java / C# / C / JS | Ruby |
-| --- | --- | --- | --- |
-| blokk jelölése | behúzás + `:` | `{ }` | `do … end` |
-| utasítás vége | sorvége | `;` (JS-ben opcionális) | sorvége |
+|                  | Python                  | Java / C# / C / JS              | Ruby           |
+| ---------------- | ----------------------- | ------------------------------- | -------------- |
+| blokk jelölése   | behúzás + `:`           | `{ }`                           | `do … end`     |
+| utasítás vége    | sorvége                 | `;` (JS-ben opcionális)         | sorvége        |
 | számlálós ciklus | `for i in range(1, 11)` | `for (int i = 1; i <= 10; i++)` | `(1..10).each` |
 
 A **funkcionális stílus** is mindenhol elérhető:
@@ -133,7 +133,10 @@ osszeg = (1..10).select(&:even?).sum
 ```
 
 ```javascript
-const osszeg = [...Array(10).keys()].map(i => i + 1).filter(i => i % 2 === 0).reduce((a, b) => a + b, 0);
+const osszeg = [...Array(10).keys()]
+  .map((i) => i + 1)
+  .filter((i) => i % 2 === 0)
+  .reduce((a, b) => a + b, 0);
 ```
 
 ## 3. Függvény: a legnagyobb elem megkeresése

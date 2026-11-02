@@ -83,7 +83,12 @@ const escapeHtml = (s: string) =>
 
 // A szerepek felirata a kódblokk fejlécében, nyelvenként.
 const ROLE_LABELS: Record<string, Record<CodeRole, string>> = {
-  hu: { run: "futtatható példa", starter: "kiinduló kód", solution: "megoldás", test: "ellenőrzés" },
+  hu: {
+    run: "futtatható példa",
+    starter: "kiinduló kód",
+    solution: "megoldás",
+    test: "ellenőrzés",
+  },
   en: { run: "runnable example", starter: "starter code", solution: "solution", test: "check" },
 };
 

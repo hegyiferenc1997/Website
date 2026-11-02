@@ -23,14 +23,14 @@ A defect can lurk in code for years if that line never runs (e.g. only on a leap
 
 ## Where do bugs come from?
 
-| Source | Example |
-| --- | --- |
-| misunderstood requirement | "the average" – arithmetic or weighted? |
-| logic error | `<` instead of `<=` |
-| unhandled boundary case | empty list, 0, a very large number |
-| wrong assumption about input | the user types text instead of a number |
-| environment difference | another OS, encoding, time zone |
-| side effect of a change | a fix breaks another feature (regression) |
+| Source                       | Example                                   |
+| ---------------------------- | ----------------------------------------- |
+| misunderstood requirement    | "the average" – arithmetic or weighted?   |
+| logic error                  | `<` instead of `<=`                       |
+| unhandled boundary case      | empty list, 0, a very large number        |
+| wrong assumption about input | the user types text instead of a number   |
+| environment difference       | another OS, encoding, time zone           |
+| side effect of a change      | a fix breaks another feature (regression) |
 
 > A famous example: the **Ariane 5** rocket exploded on its first flight in 1996 because a 64-bit float was converted to a 16-bit integer, which overflowed. The code came from the earlier, slower Ariane 4, where this value never got that large.
 

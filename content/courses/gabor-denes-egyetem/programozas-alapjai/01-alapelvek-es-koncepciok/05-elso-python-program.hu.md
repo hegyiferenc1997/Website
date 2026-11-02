@@ -26,7 +26,7 @@ A szöveget (string) idézőjelek közé kell tenni: `"így"` vagy `'így'`. Id�
 
 ## Megjegyzések
 
-A `#` jel utáni rész a sor végéig **megjegyzés**: a gép figyelmen kívül hagyja, az embernek szól. Írd le benne, *miért* csinálsz valamit.
+A `#` jel utáni rész a sor végéig **megjegyzés**: a gép figyelmen kívül hagyja, az embernek szól. Írd le benne, _miért_ csinálsz valamit.
 
 ```python run
 # Ez a program kiszámolja egy kör területét.

@@ -8,13 +8,13 @@ minutes: 8
 
 A **programming paradigm** is a style of thinking: which concepts we use to describe a program and how we organise the code. The same task can be solved in several paradigms.
 
-| Paradigm | Core idea | Typical languages |
-| --- | --- | --- |
-| imperative | step by step we say **how** the state should change | C, Pascal, Python |
-| procedural | imperative code split into **procedures / functions** | C, Python |
-| object-oriented | data and the operations on it live together in **objects** | Java, C#, Python, Ruby |
-| functional | the program is a **composition of functions**, without side effects | Haskell, F#, partly Python |
-| declarative | we describe **what** we want, not how | SQL, HTML, Prolog |
+| Paradigm        | Core idea                                                           | Typical languages          |
+| --------------- | ------------------------------------------------------------------- | -------------------------- |
+| imperative      | step by step we say **how** the state should change                 | C, Pascal, Python          |
+| procedural      | imperative code split into **procedures / functions**               | C, Python                  |
+| object-oriented | data and the operations on it live together in **objects**          | Java, C#, Python, Ruby     |
+| functional      | the program is a **composition of functions**, without side effects | Haskell, F#, partly Python |
+| declarative     | we describe **what** we want, not how                               | SQL, HTML, Prolog          |
 
 ## The same task in two ways
 

@@ -53,7 +53,7 @@ print(score)
 
 ## 3. Don't silently swallow errors
 
-An empty `except: pass` can cause hours of debugging. If the error really can be ignored, at least write a comment saying *why*.
+An empty `except: pass` can cause hours of debugging. If the error really can be ignored, at least write a comment saying _why_.
 
 ```python run
 import contextlib
@@ -67,8 +67,8 @@ print("Done.")
 
 ## 4. EAFP or LBYL?
 
-- **LBYL** – *Look Before You Leap*: check first, then act.
-- **EAFP** – *Easier to Ask Forgiveness than Permission*: try it, and handle the exception if it fails.
+- **LBYL** – _Look Before You Leap_: check first, then act.
+- **EAFP** – _Easier to Ask Forgiveness than Permission_: try it, and handle the exception if it fails.
 
 ```python run
 prices = {"apple": 300}
@@ -142,13 +142,13 @@ print(discounted_price(10_000, 15))
 
 ## Common anti-patterns
 
-| Anti-pattern | Why it's bad | Instead |
-| --- | --- | --- |
-| `except: pass` | swallows every error | a specific exception, logging |
-| a huge `try` block | catches other things by accident | only the risky line inside |
-| returning `-1` / `None` as an "error code" | the caller forgets to check | `raise` |
-| exceptions for normal control flow (e.g. stopping a loop) | slow, hard to read | `if`, `break` |
-| `raise ValueError()` without a message | it's unclear what's wrong | a descriptive message |
+| Anti-pattern                                              | Why it's bad                     | Instead                       |
+| --------------------------------------------------------- | -------------------------------- | ----------------------------- |
+| `except: pass`                                            | swallows every error             | a specific exception, logging |
+| a huge `try` block                                        | catches other things by accident | only the risky line inside    |
+| returning `-1` / `None` as an "error code"                | the caller forgets to check      | `raise`                       |
+| exceptions for normal control flow (e.g. stopping a loop) | slow, hard to read               | `if`, `break`                 |
+| `raise ValueError()` without a message                    | it's unclear what's wrong        | a descriptive message         |
 
 ## Summary
 

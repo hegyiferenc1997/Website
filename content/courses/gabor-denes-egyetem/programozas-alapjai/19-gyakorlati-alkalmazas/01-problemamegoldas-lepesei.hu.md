@@ -38,12 +38,12 @@ Ezek a lépések nem szigorúan egymás után jönnek: a tesztelés közben gyak
 
 ### 2. Tervezés – részfeladatok
 
-| Részfeladat | Függvény | Bemenet → kimenet |
-| --- | --- | --- |
-| adat ellenőrzése | `ellenoriz(targy)` | tárgy → hiba esetén `ValueError` |
-| súlyozott átlag | `sulyozott_atlag(targyak)` | lista → `float` (üres listára 0.0) |
-| teljesített kredit | `teljesitett_kredit(targyak)` | lista → `int` |
-| rendezett lista | `rangsor(targyak)` | lista → új, rendezett lista |
+| Részfeladat        | Függvény                      | Bemenet → kimenet                  |
+| ------------------ | ----------------------------- | ---------------------------------- |
+| adat ellenőrzése   | `ellenoriz(targy)`            | tárgy → hiba esetén `ValueError`   |
+| súlyozott átlag    | `sulyozott_atlag(targyak)`    | lista → `float` (üres listára 0.0) |
+| teljesített kredit | `teljesitett_kredit(targyak)` | lista → `int`                      |
+| rendezett lista    | `rangsor(targyak)`            | lista → új, rendezett lista        |
 
 **Adatszerkezet:** egy tárgy legyen egy `dataclass` (név, kredit, jegy) – olvashatóbb, mint egy tuple.
 

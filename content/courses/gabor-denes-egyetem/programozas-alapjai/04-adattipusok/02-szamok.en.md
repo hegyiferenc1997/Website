@@ -12,15 +12,15 @@ minutes: 15
 
 ## Arithmetic operations
 
-| Operator | Meaning | Example | Result |
-| --- | --- | --- | --- |
-| `+` | addition | `7 + 2` | `9` |
-| `-` | subtraction | `7 - 2` | `5` |
-| `*` | multiplication | `7 * 2` | `14` |
-| `/` | division (always float) | `7 / 2` | `3.5` |
-| `//` | floor division (rounds down) | `7 // 2` | `3` |
-| `%` | remainder (modulo) | `7 % 2` | `1` |
-| `**` | exponentiation | `7 ** 2` | `49` |
+| Operator | Meaning                      | Example  | Result |
+| -------- | ---------------------------- | -------- | ------ |
+| `+`      | addition                     | `7 + 2`  | `9`    |
+| `-`      | subtraction                  | `7 - 2`  | `5`    |
+| `*`      | multiplication               | `7 * 2`  | `14`   |
+| `/`      | division (always float)      | `7 / 2`  | `3.5`  |
+| `//`     | floor division (rounds down) | `7 // 2` | `3`    |
+| `%`      | remainder (modulo)           | `7 % 2`  | `1`    |
+| `**`     | exponentiation               | `7 ** 2` | `49`   |
 
 ```python run
 print(7 / 2)     # 3.5   – / always gives a float

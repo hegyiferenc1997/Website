@@ -8,13 +8,13 @@ minutes: 8
 
 A **programozási paradigma** egy szemléletmód: milyen fogalmakkal írjuk le a programot, és hogyan szervezzük meg a kódot. Ugyanazt a feladatot többféle paradigmában is meg lehet oldani.
 
-| Paradigma | Alapgondolat | Jellemző nyelvek |
-| --- | --- | --- |
-| imperatív | lépésenként megmondjuk, **hogyan** változzon az állapot | C, Pascal, Python |
-| procedurális | az imperatív kódot **eljárásokra / függvényekre** bontjuk | C, Python |
-| objektumorientált | az adatok és a rajtuk végzett műveletek **objektumokba** kerülnek | Java, C#, Python, Ruby |
-| funkcionális | a program **függvények kompozíciója**, mellékhatások nélkül | Haskell, F#, részben Python |
-| deklaratív | azt írjuk le, **mit** szeretnénk, nem azt, hogyan | SQL, HTML, Prolog |
+| Paradigma         | Alapgondolat                                                      | Jellemző nyelvek            |
+| ----------------- | ----------------------------------------------------------------- | --------------------------- |
+| imperatív         | lépésenként megmondjuk, **hogyan** változzon az állapot           | C, Pascal, Python           |
+| procedurális      | az imperatív kódot **eljárásokra / függvényekre** bontjuk         | C, Python                   |
+| objektumorientált | az adatok és a rajtuk végzett műveletek **objektumokba** kerülnek | Java, C#, Python, Ruby      |
+| funkcionális      | a program **függvények kompozíciója**, mellékhatások nélkül       | Haskell, F#, részben Python |
+| deklaratív        | azt írjuk le, **mit** szeretnénk, nem azt, hogyan                 | SQL, HTML, Prolog           |
 
 ## Ugyanaz a feladat kétféleképpen
 

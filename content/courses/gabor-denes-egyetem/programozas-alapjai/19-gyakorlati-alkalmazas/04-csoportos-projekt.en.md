@@ -12,15 +12,15 @@ minutes: 20
 
 ## Project phases
 
-| Phase | What to do | Result |
-| --- | --- | --- |
+| Phase             | What to do                                    | Result                              |
+| ----------------- | --------------------------------------------- | ----------------------------------- |
 | 1. Idea and goals | pick a topic, decide what the program will do | a one-paragraph project description |
-| 2. Specification | requirements, inputs–outputs, constraints | requirements specification |
-| 3. Design | modules, data structures, task assignment | design + task list |
-| 4. Implementation | coding in small steps, regular check-ins | a working program |
-| 5. Testing | unit tests, trying it out, bug fixing | test report |
-| 6. Documentation | README, developer and user documentation | finished documentation |
-| 7. Presentation | short demo, who did what | presentation |
+| 2. Specification  | requirements, inputs–outputs, constraints     | requirements specification          |
+| 3. Design         | modules, data structures, task assignment     | design + task list                  |
+| 4. Implementation | coding in small steps, regular check-ins      | a working program                   |
+| 5. Testing        | unit tests, trying it out, bug fixing         | test report                         |
+| 6. Documentation  | README, developer and user documentation      | finished documentation              |
+| 7. Presentation   | short demo, who did what                      | presentation                        |
 
 > **Don't leave documentation to the end**: the specification and the design are done at the start, and the rest is written alongside development.
 
@@ -33,7 +33,7 @@ In a small team everyone codes, but it's worth assigning responsibilities:
 - **Test lead:** organises the tests and the test report.
 - **Documentation lead:** keeps the documentation consistent (everyone writes the content for their own part).
 
-Split the work into **small, unambiguous** tasks ("write `read_csv()` with tests", not "data handling"). A simple table or a Kanban board (e.g. GitHub Projects, Trello: *To do – In progress – Done*) helps a lot.
+Split the work into **small, unambiguous** tasks ("write `read_csv()` with tests", not "data handling"). A simple table or a Kanban board (e.g. GitHub Projects, Trello: _To do – In progress – Done_) helps a lot.
 
 Fix **the boundaries between modules** in advance: which functions there will be, with which parameters and return values. Then everyone can work in parallel.
 
@@ -61,14 +61,14 @@ Rules that save you headaches:
 
 ## The parts of the documentation
 
-| Document | Audience | Contents |
-| --- | --- | --- |
-| **Requirements specification** | client, team | what the program does: features, inputs–outputs, constraints, acceptance criteria |
-| **README.md** | anyone who opens the repository | short description, installation, running, example, authors |
-| **Developer documentation** | whoever develops the code further | structure (modules), data structures, key algorithms, function descriptions (from docstrings) |
-| **User documentation** | whoever uses the program | step-by-step guide, screenshots, what error messages mean |
-| **Test report** | team, instructor | test cases: input, expected and actual result, pass/fail |
-| **Project log** | team, instructor | who did what and when; short summaries of meetings |
+| Document                       | Audience                          | Contents                                                                                      |
+| ------------------------------ | --------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Requirements specification** | client, team                      | what the program does: features, inputs–outputs, constraints, acceptance criteria             |
+| **README.md**                  | anyone who opens the repository   | short description, installation, running, example, authors                                    |
+| **Developer documentation**    | whoever develops the code further | structure (modules), data structures, key algorithms, function descriptions (from docstrings) |
+| **User documentation**         | whoever uses the program          | step-by-step guide, screenshots, what error messages mean                                     |
+| **Test report**                | team, instructor                  | test cases: input, expected and actual result, pass/fail                                      |
+| **Project log**                | team, instructor                  | who did what and when; short summaries of meetings                                            |
 
 ### README template
 
@@ -102,11 +102,11 @@ python main.py data.csv
 
 ### Sample test report
 
-| # | Test case | Input | Expected result | Actual result | Pass |
-| --- | --- | --- | --- | --- | --- |
-| 1 | average with normal data | `[4, 5, 3]` | `4.0` | `4.0` | ✔ |
-| 2 | average of an empty list | `[]` | `0.0`, no error | `ZeroDivisionError` | ✘ → fixed |
-| 3 | missing file | `missing.csv` | clear error message | "File not found" | ✔ |
+| #   | Test case                | Input         | Expected result     | Actual result       | Pass      |
+| --- | ------------------------ | ------------- | ------------------- | ------------------- | --------- |
+| 1   | average with normal data | `[4, 5, 3]`   | `4.0`               | `4.0`               | ✔         |
+| 2   | average of an empty list | `[]`          | `0.0`, no error     | `ZeroDivisionError` | ✘ → fixed |
+| 3   | missing file             | `missing.csv` | clear error message | "File not found"    | ✔         |
 
 ### Developer documentation from docstrings
 

@@ -22,14 +22,14 @@ An expression consists of **operands** (values, variables) and **operators** (`+
 
 Their result is always a `bool` (`True` or `False`).
 
-| Operator | Meaning | Example |
-| --- | --- | --- |
-| `==` | equal | `5 == 5` → `True` |
-| `!=` | not equal | `5 != 3` → `True` |
-| `<`, `>` | less, greater | `3 < 5` → `True` |
-| `<=`, `>=` | less or equal, greater or equal | `5 >= 5` → `True` |
-| `in` | containment | `"a" in "apple"` → `True` |
-| `is` | same object? | `x is None` |
+| Operator   | Meaning                         | Example                   |
+| ---------- | ------------------------------- | ------------------------- |
+| `==`       | equal                           | `5 == 5` → `True`         |
+| `!=`       | not equal                       | `5 != 3` → `True`         |
+| `<`, `>`   | less, greater                   | `3 < 5` → `True`          |
+| `<=`, `>=` | less or equal, greater or equal | `5 >= 5` → `True`         |
+| `in`       | containment                     | `"a" in "apple"` → `True` |
+| `is`       | same object?                    | `x is None`               |
 
 ```python run
 age = 19
@@ -42,20 +42,20 @@ print("apple" == "Apple")   # False – case matters
 
 ## Logical operators
 
-| Operator | Meaning | True if … |
-| --- | --- | --- |
-| `and` | and | both sides are true |
-| `or` | or | at least one is true |
-| `not` | not | the operand is false |
+| Operator | Meaning | True if …            |
+| -------- | ------- | -------------------- |
+| `and`    | and     | both sides are true  |
+| `or`     | or      | at least one is true |
+| `not`    | not     | the operand is false |
 
 Truth table:
 
-| A | B | A and B | A or B | not A |
-| --- | --- | --- | --- | --- |
-| True | True | True | True | False |
-| True | False | False | True | False |
-| False | True | False | True | True |
-| False | False | False | False | True |
+| A     | B     | A and B | A or B | not A |
+| ----- | ----- | ------- | ------ | ----- |
+| True  | True  | True    | True   | False |
+| True  | False | False   | True   | False |
+| False | True  | False   | True   | True  |
+| False | False | False   | False  | True  |
 
 ```python run
 age = 20
@@ -98,17 +98,17 @@ print(shown)   # Anonymous
 
 From strongest to weakest (higher rows bind tighter):
 
-| Level | Operators |
-| --- | --- |
-| 1. | `()` parentheses |
-| 2. | `**` |
-| 3. | `-x` (sign) |
-| 4. | `*`, `/`, `//`, `%` |
-| 5. | `+`, `-` |
-| 6. | `<`, `<=`, `>`, `>=`, `==`, `!=`, `in`, `is` |
-| 7. | `not` |
-| 8. | `and` |
-| 9. | `or` |
+| Level | Operators                                    |
+| ----- | -------------------------------------------- |
+| 1.    | `()` parentheses                             |
+| 2.    | `**`                                         |
+| 3.    | `-x` (sign)                                  |
+| 4.    | `*`, `/`, `//`, `%`                          |
+| 5.    | `+`, `-`                                     |
+| 6.    | `<`, `<=`, `>`, `>=`, `==`, `!=`, `in`, `is` |
+| 7.    | `not`                                        |
+| 8.    | `and`                                        |
+| 9.    | `or`                                         |
 
 ```python run
 print(2 + 3 * 4 > 10 and not False)   # (2 + 12 > 10) and True → True

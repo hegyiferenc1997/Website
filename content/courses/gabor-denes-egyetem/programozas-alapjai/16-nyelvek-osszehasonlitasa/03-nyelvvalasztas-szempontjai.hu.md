@@ -12,15 +12,15 @@ minutes: 12
 
 ## Az összehasonlítás szempontjai
 
-| Szempont | Kérdés | Példa |
-| --- | --- | --- |
-| **Teljesítmény** | Milyen gyorsan fut, mennyi memóriát használ? | C, C++, Rust ≫ Java, C#, Go > Python, Ruby |
-| **Fejlesztési sebesség** | Milyen gyorsan készül el a működő program? | Python, Ruby ≫ C, C++ |
-| **Biztonság, megbízhatóság** | Hány hibát szűr ki a fordító futtatás előtt? | Rust, statikus típusos nyelvek |
-| **Olvashatóság, tanulhatóság** | Mennyire könnyű megérteni és megtanulni? | Python kiemelkedő |
-| **Ökoszisztéma** | Vannak-e kész könyvtárak, keretrendszerek, eszközök? | Python (adat, MI), JavaScript (web), Java (vállalati) |
-| **Hordozhatóság** | Mely platformokon fut? | Java/JVM, Python, JavaScript (böngésző) |
-| **Közösség, munkaerőpiac** | Van-e segítség, dokumentáció, álláslehetőség? | Python, JavaScript, Java, C# |
+| Szempont                       | Kérdés                                               | Példa                                                 |
+| ------------------------------ | ---------------------------------------------------- | ----------------------------------------------------- |
+| **Teljesítmény**               | Milyen gyorsan fut, mennyi memóriát használ?         | C, C++, Rust ≫ Java, C#, Go > Python, Ruby            |
+| **Fejlesztési sebesség**       | Milyen gyorsan készül el a működő program?           | Python, Ruby ≫ C, C++                                 |
+| **Biztonság, megbízhatóság**   | Hány hibát szűr ki a fordító futtatás előtt?         | Rust, statikus típusos nyelvek                        |
+| **Olvashatóság, tanulhatóság** | Mennyire könnyű megérteni és megtanulni?             | Python kiemelkedő                                     |
+| **Ökoszisztéma**               | Vannak-e kész könyvtárak, keretrendszerek, eszközök? | Python (adat, MI), JavaScript (web), Java (vállalati) |
+| **Hordozhatóság**              | Mely platformokon fut?                               | Java/JVM, Python, JavaScript (böngésző)               |
+| **Közösség, munkaerőpiac**     | Van-e segítség, dokumentáció, álláslehetőség?        | Python, JavaScript, Java, C#                          |
 
 ## A nagy kompromisszum: futási idő vs. fejlesztési idő
 
@@ -55,18 +55,18 @@ print(f"Python ciklus: {python_ido:.4f} s, beépített sum(): {c_ido:.4f} s")
 
 ## Melyik nyelvet mire?
 
-| Feladat | Jó választás | Miért |
-| --- | --- | --- |
-| adatelemzés, gépi tanulás | **Python** | NumPy, pandas, scikit-learn, PyTorch |
-| weboldal (kliens oldal) | **JavaScript / TypeScript** | csak ez fut natívan a böngészőben |
-| web-backend | Python, Java, C#, JavaScript, Go, Ruby | mindegyikhez van érett keretrendszer |
-| Android-alkalmazás | Kotlin, Java | a platform hivatalos nyelvei |
-| iOS-alkalmazás | Swift | az Apple hivatalos nyelve |
-| játék | C# (Unity), C++ (Unreal) | a játékmotorok nyelvei |
-| mikrovezérlő, beágyazott rendszer | **C**, C++, (MicroPython) | kevés memória, közvetlen hardverelérés |
-| operációs rendszer, driver | C, C++, Rust | teljesítmény, hardverközeliség |
-| automatizálás, rendszergazdai szkriptek | Python, Bash, PowerShell | gyorsan megírható |
-| nagyvállalati rendszer | Java, C# | stabilitás, típusbiztonság, támogatás |
+| Feladat                                 | Jó választás                           | Miért                                  |
+| --------------------------------------- | -------------------------------------- | -------------------------------------- |
+| adatelemzés, gépi tanulás               | **Python**                             | NumPy, pandas, scikit-learn, PyTorch   |
+| weboldal (kliens oldal)                 | **JavaScript / TypeScript**            | csak ez fut natívan a böngészőben      |
+| web-backend                             | Python, Java, C#, JavaScript, Go, Ruby | mindegyikhez van érett keretrendszer   |
+| Android-alkalmazás                      | Kotlin, Java                           | a platform hivatalos nyelvei           |
+| iOS-alkalmazás                          | Swift                                  | az Apple hivatalos nyelve              |
+| játék                                   | C# (Unity), C++ (Unreal)               | a játékmotorok nyelvei                 |
+| mikrovezérlő, beágyazott rendszer       | **C**, C++, (MicroPython)              | kevés memória, közvetlen hardverelérés |
+| operációs rendszer, driver              | C, C++, Rust                           | teljesítmény, hardverközeliség         |
+| automatizálás, rendszergazdai szkriptek | Python, Bash, PowerShell               | gyorsan megírható                      |
+| nagyvállalati rendszer                  | Java, C#                               | stabilitás, típusbiztonság, támogatás  |
 
 ## Döntési lépések
 

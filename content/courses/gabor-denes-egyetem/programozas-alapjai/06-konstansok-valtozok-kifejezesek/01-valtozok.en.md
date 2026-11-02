@@ -49,12 +49,12 @@ print(result)   # NameError: name 'result' is not defined
 - cannot be a reserved word (`if`, `for`, `class`, `True`, `None` …),
 - case matters: `name` and `Name` are two different variables.
 
-| Name | Valid? |
-| --- | --- |
-| `average`, `max_score`, `_internal`, `x2` | ✅ |
-| `2x` | ❌ starts with a digit |
-| `max-score` | ❌ hyphen (would be read as subtraction) |
-| `class` | ❌ reserved word |
+| Name                                      | Valid?                                   |
+| ----------------------------------------- | ---------------------------------------- |
+| `average`, `max_score`, `_internal`, `x2` | ✅                                       |
+| `2x`                                      | ❌ starts with a digit                   |
+| `max-score`                               | ❌ hyphen (would be read as subtraction) |
+| `class`                                   | ❌ reserved word                         |
 
 **Conventions (PEP 8 style guide):**
 

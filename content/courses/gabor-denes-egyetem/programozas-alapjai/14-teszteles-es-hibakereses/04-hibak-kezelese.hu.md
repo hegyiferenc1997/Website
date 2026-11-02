@@ -23,14 +23,14 @@ Egy hiba évekig lappanghat a kódban, ha az a sor sosem fut le (pl. csak szök�
 
 ## Honnan jönnek a hibák?
 
-| Forrás | Példa |
-| --- | --- |
-| félreértett követelmény | „az átlag” – számtani vagy súlyozott? |
-| logikai hiba | `<` helyett `<=` |
-| nem kezelt határeset | üres lista, 0, nagyon nagy szám |
-| hibás feltételezés a bemenetről | a felhasználó szöveget ír szám helyett |
-| környezeti különbség | más operációs rendszer, kódolás, időzóna |
-| módosítás mellékhatása | egy javítás elront egy másik funkciót (regresszió) |
+| Forrás                          | Példa                                              |
+| ------------------------------- | -------------------------------------------------- |
+| félreértett követelmény         | „az átlag” – számtani vagy súlyozott?              |
+| logikai hiba                    | `<` helyett `<=`                                   |
+| nem kezelt határeset            | üres lista, 0, nagyon nagy szám                    |
+| hibás feltételezés a bemenetről | a felhasználó szöveget ír szám helyett             |
+| környezeti különbség            | más operációs rendszer, kódolás, időzóna           |
+| módosítás mellékhatása          | egy javítás elront egy másik funkciót (regresszió) |
 
 > Híres példa: az **Ariane 5** rakéta 1996-ban az első útján felrobbant, mert egy 64 bites valós számot 16 bites egésszé alakítottak, ami túlcsordult. A kód a korábbi, lassabb Ariane 4-ből származott, ahol ez az érték sosem lett ekkora.
 

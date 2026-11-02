@@ -40,13 +40,13 @@ print(atlag([5, 4, 4]))
 print(keres({"Anna": "123"}, "Béla"))
 ```
 
-| Jelölés | Jelentés |
-| --- | --- |
-| `list[int]` | egészek listája |
+| Jelölés            | Jelentés                                     |
+| ------------------ | -------------------------------------------- |
+| `list[int]`        | egészek listája                              |
 | `dict[str, float]` | szótár szöveg kulcsokkal és valós értékekkel |
-| `tuple[int, int]` | két egészből álló rendezett pár |
-| `set[str]` | szövegek halmaza |
-| `int \| None` | egész vagy None |
+| `tuple[int, int]`  | két egészből álló rendezett pár              |
+| `set[str]`         | szövegek halmaza                             |
+| `int \| None`      | egész vagy None                              |
 
 ## A Python nem ellenőriz futáskor
 

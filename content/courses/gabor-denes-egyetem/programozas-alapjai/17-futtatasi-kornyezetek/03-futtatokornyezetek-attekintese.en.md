@@ -52,15 +52,15 @@ dis.dis(double)
 
 ## Browser and Node.js
 
-- The **browser** contains a JavaScript engine (Chrome: V8, Firefox: SpiderMonkey) that runs the web page's code with JIT – in an isolated environment (*sandbox*) for security: it cannot freely access the machine's files.
-- With **WebAssembly** (Wasm), other languages (C, C++, Rust, even Python – e.g. *Pyodide*) can run in the browser too. That's how Python exercises will later run on this site.
+- The **browser** contains a JavaScript engine (Chrome: V8, Firefox: SpiderMonkey) that runs the web page's code with JIT – in an isolated environment (_sandbox_) for security: it cannot freely access the machine's files.
+- With **WebAssembly** (Wasm), other languages (C, C++, Rust, even Python – e.g. _Pyodide_) can run in the browser too. That's how Python exercises will later run on this site.
 - **Node.js** runs the V8 engine outside the browser, on the server.
 
 ## Containers (Docker)
 
 "It works on my machine!" – the classic problem: everything works on the developer's machine but not on the server, because the Python version differs or a library is missing.
 
-A **container** packages the program **together with its whole runtime environment** (system libraries, interpreter, dependencies). **Docker** is the most widespread tool for this. A container is lighter than a full virtual machine because it shares the operating system's core (*kernel*) with the host.
+A **container** packages the program **together with its whole runtime environment** (system libraries, interpreter, dependencies). **Docker** is the most widespread tool for this. A container is lighter than a full virtual machine because it shares the operating system's core (_kernel_) with the host.
 
 ```text
 # Dockerfile – packaging a Python program into a container
@@ -103,13 +103,13 @@ print("New mode:", os.environ["APP_MODE"])
 
 ## Summary
 
-| Environment | Example | Portable? | Speed |
-| --- | --- | --- | --- |
-| native machine code | C, C++, Go, Rust | must compile per platform | fastest |
-| virtual machine (JIT) | Java/JVM, C#/.NET | yes | fast |
-| interpreter | CPython, Ruby | yes | slower |
-| browser | JavaScript, WebAssembly | yes (in every browser) | fast (JIT) |
-| container | Docker | yes, with its environment | close to native |
+| Environment           | Example                 | Portable?                 | Speed           |
+| --------------------- | ----------------------- | ------------------------- | --------------- |
+| native machine code   | C, C++, Go, Rust        | must compile per platform | fastest         |
+| virtual machine (JIT) | Java/JVM, C#/.NET       | yes                       | fast            |
+| interpreter           | CPython, Ruby           | yes                       | slower          |
+| browser               | JavaScript, WebAssembly | yes (in every browser)    | fast (JIT)      |
+| container             | Docker                  | yes, with its environment | close to native |
 
 - The runtime provides everything needed to run apart from the code.
 - **Containers** solve the "works on my machine" problem.

@@ -64,13 +64,13 @@ print(python ^ java)    # symmetric difference: those learning exactly one
 print({"Csilla"} <= python)   # is it a subset
 ```
 
-| Operation | Symbol | Method |
-| --- | --- | --- |
-| union | `a \| b` | `a.union(b)` |
-| intersection | `a & b` | `a.intersection(b)` |
-| difference | `a - b` | `a.difference(b)` |
-| symmetric difference | `a ^ b` | `a.symmetric_difference(b)` |
-| subset | `a <= b` | `a.issubset(b)` |
+| Operation            | Symbol   | Method                      |
+| -------------------- | -------- | --------------------------- |
+| union                | `a \| b` | `a.union(b)`                |
+| intersection         | `a & b`  | `a.intersection(b)`         |
+| difference           | `a - b`  | `a.difference(b)`           |
+| symmetric difference | `a ^ b`  | `a.symmetric_difference(b)` |
+| subset               | `a <= b` | `a.issubset(b)`             |
 
 ## Why is it fast? – Hashing
 

@@ -53,11 +53,11 @@ print(ast.dump(ast.parse(kod).body[0]))
 
 ## Fordítási és futási idő
 
-| | Fordítási idő (compile time) | Futási idő (run time) |
-| --- | --- | --- |
-| mikor? | a program elindítása előtt | a program futása közben |
+|              | Fordítási idő (compile time)                       | Futási idő (run time)                         |
+| ------------ | -------------------------------------------------- | --------------------------------------------- |
+| mikor?       | a program elindítása előtt                         | a program futása közben                       |
 | tipikus hiba | szintaktikai hiba, típushiba (statikus nyelvekben) | nullával osztás, nem létező fájl, rossz index |
-| példa | hiányzó pontosvessző C-ben | `ZeroDivisionError` Pythonban |
+| példa        | hiányzó pontosvessző C-ben                         | `ZeroDivisionError` Pythonban                 |
 
 ```python
 # Ez futási idejű hiba: szintaktikailag helyes, csak futáskor derül ki a gond.

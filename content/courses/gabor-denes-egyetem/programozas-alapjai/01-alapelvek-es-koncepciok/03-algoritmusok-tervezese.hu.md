@@ -57,13 +57,13 @@ print(atlag([4, 5, 3, 4]))   # 4.0
 
 A **folyamatábra** rajzos leírás. A szabványos jelek:
 
-| Jel | Jelentés |
-| --- | --- |
-| ovális | START / STOP |
+| Jel            | Jelentés                                 |
+| -------------- | ---------------------------------------- |
+| ovális         | START / STOP                             |
 | paralelogramma | bemenet vagy kimenet (beolvasás, kiírás) |
-| téglalap | művelet, értékadás |
-| rombusz | döntés (feltétel, igen/nem ág) |
-| nyíl | a végrehajtás iránya |
+| téglalap       | művelet, értékadás                       |
+| rombusz        | döntés (feltétel, igen/nem ág)           |
+| nyíl           | a végrehajtás iránya                     |
 
 Egy egyszerű folyamatábra szöveges vázlata (páros vagy páratlan szám):
 
@@ -97,7 +97,7 @@ A 3. lépés tovább bontva: összegzés, osztás a darabszámmal, kerekítés k
 
 ## Absztrakció
 
-Az **absztrakció** azt jelenti, hogy elrejtjük a részleteket, és csak a lényeggel foglalkozunk. Amikor a `print()`-et használod, nem kell tudnod, hogyan rajzolja ki a betűket a képernyő – elég tudni, *mit* csinál. A jó program is ilyen rétegekből épül fel.
+Az **absztrakció** azt jelenti, hogy elrejtjük a részleteket, és csak a lényeggel foglalkozunk. Amikor a `print()`-et használod, nem kell tudnod, hogyan rajzolja ki a betűket a képernyő – elég tudni, _mit_ csinál. A jó program is ilyen rétegekből épül fel.
 
 ## Összefoglalás
 

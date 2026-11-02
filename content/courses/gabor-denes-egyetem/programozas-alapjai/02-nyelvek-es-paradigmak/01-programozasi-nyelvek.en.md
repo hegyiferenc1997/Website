@@ -14,12 +14,12 @@ minutes: 12
 
 A processor only understands **machine code**: binary instruction codes. This is nearly impossible for people to read, so ever "higher" level languages were created.
 
-| Level | Example | Characteristics |
-| --- | --- | --- |
-| machine code | `10110000 01100001` | executed directly by the processor, processor-specific |
-| assembly | `MOV AL, 61h` | readable abbreviations of machine instructions, still processor-specific |
-| low-level high-level language | C | portable but close to the hardware (manual memory management) |
-| high-level language | Python, Java, C# | easy for people to read, hides machine details |
+| Level                         | Example             | Characteristics                                                          |
+| ----------------------------- | ------------------- | ------------------------------------------------------------------------ |
+| machine code                  | `10110000 01100001` | executed directly by the processor, processor-specific                   |
+| assembly                      | `MOV AL, 61h`       | readable abbreviations of machine instructions, still processor-specific |
+| low-level high-level language | C                   | portable but close to the hardware (manual memory management)            |
+| high-level language           | Python, Java, C#    | easy for people to read, hides machine details                           |
 
 The higher the level, the less code it takes to express an idea and the easier it is to move to another machine. In exchange, execution is usually somewhat slower and you have less direct control over the hardware.
 
@@ -45,8 +45,8 @@ print(a + b)
 
 ## Syntax and semantics
 
-- **Syntax** is the *grammar* of the language: the form statements must take (where a colon, parenthesis or indentation goes). The computer reports syntax errors before running (`SyntaxError`).
-- **Semantics** is the *meaning*: what a syntactically correct statement does. With a semantic error the program runs, it just doesn't do what you wanted.
+- **Syntax** is the _grammar_ of the language: the form statements must take (where a colon, parenthesis or indentation goes). The computer reports syntax errors before running (`SyntaxError`).
+- **Semantics** is the _meaning_: what a syntactically correct statement does. With a semantic error the program runs, it just doesn't do what you wanted.
 
 ```python run
 # Syntactically correct but semantically wrong: a bad formula for the average.

@@ -25,12 +25,12 @@ Minél később derül ki egy hiba, annál drágább kijavítani: a fejlesztés 
 
 ## A tesztelés szintjei
 
-| Szint | Mit tesztel | Példa |
-| --- | --- | --- |
-| **egységteszt** (unit) | egy függvényt, osztályt elszigetelten | `atlag([4, 5]) == 4.5` |
-| **integrációs teszt** | több egység együttműködését | a függvény helyesen olvas az adatbázisból |
-| **rendszerteszt** | a teljes alkalmazást | a weboldalon végig lehet menni a regisztráción |
-| **elfogadási teszt** | megfelel-e a megrendelő igényeinek | a felhasználó jóváhagyja a funkciót |
+| Szint                  | Mit tesztel                           | Példa                                          |
+| ---------------------- | ------------------------------------- | ---------------------------------------------- |
+| **egységteszt** (unit) | egy függvényt, osztályt elszigetelten | `atlag([4, 5]) == 4.5`                         |
+| **integrációs teszt**  | több egység együttműködését           | a függvény helyesen olvas az adatbázisból      |
+| **rendszerteszt**      | a teljes alkalmazást                  | a weboldalon végig lehet menni a regisztráción |
+| **elfogadási teszt**   | megfelel-e a megrendelő igényeinek    | a felhasználó jóváhagyja a funkciót            |
 
 Ebben a témakörben főleg **egységtesztekkel** foglalkozunk: ezeket a programozó írja, gyorsak, és sokat futtatjuk őket.
 
@@ -49,13 +49,13 @@ Egy teszteset: **bemenet + elvárt kimenet**. Három csoportba érdemes gondolko
 
 Példa: `jegy(pont)` a tárgy skálája szerint (50 → 2, 63 → 3, 76 → 4, 89 → 5).
 
-| Csoport | Bemenet | Elvárt |
-| --- | --- | --- |
-| normál | 70 | 3 |
-| határ | 49, 50 | 1, 2 |
-| határ | 88, 89 | 4, 5 |
-| határ | 0, 100 | 1, 5 |
-| hibás | −1, 101 | `ValueError` |
+| Csoport | Bemenet | Elvárt       |
+| ------- | ------- | ------------ |
+| normál  | 70      | 3            |
+| határ   | 49, 50  | 1, 2         |
+| határ   | 88, 89  | 4, 5         |
+| határ   | 0, 100  | 1, 5         |
+| hibás   | −1, 101 | `ValueError` |
 
 > **A hibák nagy része a határoknál van** („off-by-one”: `>` vagy `>=`?). Mindig teszteld a határ mindkét oldalát!
 
@@ -96,7 +96,7 @@ Ha egy `assert` hamis, `AssertionError` keletkezik – a teszt **elbukik**, és 
 
 ## Tesztvezérelt fejlesztés (TDD)
 
-A **TDD** (*Test-Driven Development*) módszernél előbb a tesztet írjuk meg, csak utána a kódot:
+A **TDD** (_Test-Driven Development_) módszernél előbb a tesztet írjuk meg, csak utána a kódot:
 
 1. 🔴 **Piros:** írj egy tesztet, ami még elbukik (mert nincs kód).
 2. 🟢 **Zöld:** írd meg a legegyszerűbb kódot, amitől a teszt átmegy.

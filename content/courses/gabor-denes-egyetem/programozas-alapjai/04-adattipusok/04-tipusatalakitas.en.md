@@ -29,12 +29,12 @@ print("Age: " + 20)   # TypeError: can only concatenate str (not "int") to str
 
 ## Explicit (manual) conversion
 
-| Function | Converts to | Examples |
-| --- | --- | --- |
-| `int(x)` | integer | `int("42")` → `42`, `int(3.99)` → `3` (truncates!) |
-| `float(x)` | float | `float("3.5")` → `3.5`, `float(2)` → `2.0` |
-| `str(x)` | string | `str(20)` → `"20"`, `str(3.5)` → `"3.5"` |
-| `bool(x)` | boolean | `bool(0)` → `False`, `bool("a")` → `True` |
+| Function   | Converts to | Examples                                           |
+| ---------- | ----------- | -------------------------------------------------- |
+| `int(x)`   | integer     | `int("42")` → `42`, `int(3.99)` → `3` (truncates!) |
+| `float(x)` | float       | `float("3.5")` → `3.5`, `float(2)` → `2.0`         |
+| `str(x)`   | string      | `str(20)` → `"20"`, `str(3.5)` → `"3.5"`           |
+| `bool(x)`  | boolean     | `bool(0)` → `False`, `bool("a")` → `True`          |
 
 ```python run
 age = 20

@@ -107,7 +107,7 @@ for alakzat in [Teglalap(3, 4), Kor(1)]:
 
 ### 4. Absztrakció
 
-A felhasználónak csak azt kell tudnia, *mit* csinál egy objektum (`terulet()`), nem azt, hogyan számolja ki.
+A felhasználónak csak azt kell tudnia, _mit_ csinál egy objektum (`terulet()`), nem azt, hogyan számolja ki.
 
 ## Mikor jó az OOP?
 

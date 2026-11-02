@@ -41,13 +41,13 @@ print("A kódrészletek színezve jelennek meg.")
 A ` ```python ` után írt második szó a blokk szerepét adja meg. Az oldalon a fejlécben is megjelenik
 (pl. „Python · futtatható példa”), a HTML-ben pedig `data-role` attribútumként – erre épül majd a futtató.
 
-| Jelölés | Jelentés |
-| --- | --- |
-| ` ```python run ` | önállóan futtatható példa |
-| ` ```python starter ` | egy feladat kiinduló kódja |
+| Jelölés                | Jelentés                                                                                           |
+| ---------------------- | -------------------------------------------------------------------------------------------------- |
+| ` ```python run `      | önállóan futtatható példa                                                                          |
+| ` ```python starter `  | egy feladat kiinduló kódja                                                                         |
 | ` ```python solution ` | a feladat megoldása (egy `<details><summary>Megoldás</summary>` blokkban, üres sorokkal körülvéve) |
-| ` ```python test ` | `assert`-ekkel ellenőrzés, a közvetlenül előtte lévő megoldás után fut |
-| ` ```python ` | csak megjelenített kód (pl. szándékosan hibás vagy hardvert igénylő példa) |
+| ` ```python test `     | `assert`-ekkel ellenőrzés, a közvetlenül előtte lévő megoldás után fut                             |
+| ` ```python `          | csak megjelenített kód (pl. szándékosan hibás vagy hardvert igénylő példa)                         |
 
 Szabályok, hogy a blokkok tényleg fussanak:
 

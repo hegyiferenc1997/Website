@@ -36,7 +36,7 @@ print("Operációs rendszer:", platform.system() or "ismeretlen")
 
 ## Interaktív mód (REPL)
 
-Ha a terminálba csak annyit írsz, hogy `python`, elindul az **interaktív értelmező** (REPL: *Read–Eval–Print Loop* – beolvas, kiértékel, kiír, ismétel). A `>>>` jel után írt kifejezés eredményét azonnal kiírja:
+Ha a terminálba csak annyit írsz, hogy `python`, elindul az **interaktív értelmező** (REPL: _Read–Eval–Print Loop_ – beolvas, kiértékel, kiír, ismétel). A `>>>` jel után írt kifejezés eredményét azonnal kiírja:
 
 ```text
 >>> 2 + 3
@@ -102,13 +102,13 @@ else:
 
 ## Fejlesztőkörnyezetek
 
-| Környezet | Mire jó |
-| --- | --- |
-| **IDLE** | a Pythonnal együtt települ, egyszerű szerkesztő + REPL – kezdésnek elég |
-| **VS Code** + Python bővítmény | ingyenes, népszerű; kódkiegészítés, hibakereső, terminál, Git egy helyen |
-| **PyCharm** | kifejezetten Pythonra készült teljes IDE (a Community kiadás ingyenes) |
-| **Jupyter Notebook / JupyterLab** | cellákra bontott „jegyzetfüzet”: kód, eredmény, grafikon és szöveg együtt – adatelemzéshez ideális |
-| **Online** (pl. Google Colab, Replit) | telepítés nélkül, böngészőben – bárhonnan elérhető |
+| Környezet                             | Mire jó                                                                                            |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **IDLE**                              | a Pythonnal együtt települ, egyszerű szerkesztő + REPL – kezdésnek elég                            |
+| **VS Code** + Python bővítmény        | ingyenes, népszerű; kódkiegészítés, hibakereső, terminál, Git egy helyen                           |
+| **PyCharm**                           | kifejezetten Pythonra készült teljes IDE (a Community kiadás ingyenes)                             |
+| **Jupyter Notebook / JupyterLab**     | cellákra bontott „jegyzetfüzet”: kód, eredmény, grafikon és szöveg együtt – adatelemzéshez ideális |
+| **Online** (pl. Google Colab, Replit) | telepítés nélkül, böngészőben – bárhonnan elérhető                                                 |
 
 A VS Code-ban a jobb felső sarok ▶ gombjával vagy a terminálban (`python fajl.py`) futtathatsz, az **F5**-tel pedig hibakeresővel indíthatod a programot.
 

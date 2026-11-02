@@ -49,7 +49,10 @@ function collect(): Snippet[] {
             if (block.role === "solution") lastSolution = block.code;
             if (block.role === "test") {
               if (!lastSolution) throw new Error(`Ellenőrzés megoldás nélkül: ${where}`);
-              snippets.push({ where: `${where} (megoldás + ellenőrzés)`, code: lastSolution + "\n" + block.code });
+              snippets.push({
+                where: `${where} (megoldás + ellenőrzés)`,
+                code: lastSolution + "\n" + block.code,
+              });
             }
           }
         }

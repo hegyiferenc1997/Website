@@ -48,14 +48,14 @@ with open("notes.txt", encoding="utf-8") as f:
 
 ## Open modes
 
-| Mode | Meaning | If it doesn't exist | If it exists |
-| --- | --- | --- | --- |
-| `"r"` | read (default) | `FileNotFoundError` | reads it |
-| `"w"` | write | creates it | **empties** it (overwrites)! |
-| `"a"` | append to the end | creates it | writes at the end |
-| `"x"` | exclusive creation | creates it | `FileExistsError` |
-| `"r+"` | read and write | `FileNotFoundError` | reads/writes it |
-| `"b"` (e.g. `"rb"`, `"wb"`) | binary mode (images, zip) | | |
+| Mode                        | Meaning                   | If it doesn't exist | If it exists                 |
+| --------------------------- | ------------------------- | ------------------- | ---------------------------- |
+| `"r"`                       | read (default)            | `FileNotFoundError` | reads it                     |
+| `"w"`                       | write                     | creates it          | **empties** it (overwrites)! |
+| `"a"`                       | append to the end         | creates it          | writes at the end            |
+| `"x"`                       | exclusive creation        | creates it          | `FileExistsError`            |
+| `"r+"`                      | read and write            | `FileNotFoundError` | reads/writes it              |
+| `"b"` (e.g. `"rb"`, `"wb"`) | binary mode (images, zip) |                     |                              |
 
 ```python run
 with open("log.txt", "w", encoding="utf-8") as f:

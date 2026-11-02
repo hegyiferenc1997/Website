@@ -13,7 +13,7 @@ minutes: 18
 
 ## Comments
 
-Text after `#` is a **comment**: it's for developers and ignored by the program. A good comment explains the **why**, not the *what*.
+Text after `#` is a **comment**: it's for developers and ignored by the program. A good comment explains the **why**, not the _what_.
 
 ```python run
 price = 10_000
@@ -150,12 +150,12 @@ test_*.py    – tests
 
 ## Documentation standards in other languages
 
-| Language | Format | Tool |
-| --- | --- | --- |
-| Java | `/** ... */` Javadoc, `@param`, `@return` | javadoc |
-| C# | `/// <summary>` XML comments | DocFX |
-| JavaScript / TypeScript | `/** ... */` JSDoc / TSDoc | TypeDoc |
-| C / C++ | `/** ... */`, `@brief` | Doxygen |
+| Language                | Format                                    | Tool    |
+| ----------------------- | ----------------------------------------- | ------- |
+| Java                    | `/** ... */` Javadoc, `@param`, `@return` | javadoc |
+| C#                      | `/// <summary>` XML comments              | DocFX   |
+| JavaScript / TypeScript | `/** ... */` JSDoc / TSDoc                | TypeDoc |
+| C / C++                 | `/** ... */`, `@brief`                    | Doxygen |
 
 ```java
 /**

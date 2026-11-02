@@ -39,8 +39,8 @@ novel(&a);
 
 Pythonban minden változó egy **objektumra mutató hivatkozás**. Híváskor a paraméter **ugyanarra az objektumra** fog mutatni, mint az argumentum. Hogy ennek mi a következménye, az attól függ, **módosítható-e** az objektum.
 
-| Megváltoztathatatlan (immutable) | Megváltoztatható (mutable) |
-| --- | --- |
+| Megváltoztathatatlan (immutable)               | Megváltoztatható (mutable)                       |
+| ---------------------------------------------- | ------------------------------------------------ |
 | `int`, `float`, `bool`, `str`, `tuple`, `None` | `list`, `dict`, `set`, saját osztályok példányai |
 
 ### Megváltoztathatatlan objektum: úgy viselkedik, mint az érték szerinti

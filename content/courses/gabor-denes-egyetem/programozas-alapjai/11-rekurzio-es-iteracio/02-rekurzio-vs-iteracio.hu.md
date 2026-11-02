@@ -115,12 +115,12 @@ Ez a gondolat – részproblémák eredményeinek tárolása – a **dinamikus p
 
 ## Mikor melyiket?
 
-| Szempont | Rekurzió | Iteráció |
-| --- | --- | --- |
+| Szempont     | Rekurzió                                                                               | Iteráció                                     |
+| ------------ | -------------------------------------------------------------------------------------- | -------------------------------------------- |
 | olvashatóság | természetes rekurzív szerkezetű feladatoknál (fák, oszd meg és uralkodj) nagyon tiszta | egyszerű sorozatoknál, számlálásnál tisztább |
-| memória | minden hívás veremkeretet foglal | állandó memória |
-| sebesség | a hívások költsége miatt általában lassabb | általában gyorsabb |
-| korlát | rekurziós mélység (Pythonban kb. 1000) | nincs |
+| memória      | minden hívás veremkeretet foglal                                                       | állandó memória                              |
+| sebesség     | a hívások költsége miatt általában lassabb                                             | általában gyorsabb                           |
+| korlát       | rekurziós mélység (Pythonban kb. 1000)                                                 | nincs                                        |
 
 **Ökölszabály:**
 

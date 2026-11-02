@@ -48,12 +48,12 @@ The on-off controller stops at 23 cm (7 cm too far), while the proportional cont
 
 A line-following robot has light sensors underneath that watch a dark line drawn on the floor. With two sensors the simple rule is:
 
-| Left sensor | Right sensor | Action |
-| --- | --- | --- |
-| line | line | straight |
-| line | none | turn left |
-| none | line | turn right |
-| none | none | stop / search for the line |
+| Left sensor | Right sensor | Action                     |
+| ----------- | ------------ | -------------------------- |
+| line        | line         | straight                   |
+| line        | none         | turn left                  |
+| none        | line         | turn right                 |
+| none        | none         | stop / search for the line |
 
 ```python run
 def line_follower(left: bool, right: bool) -> str:

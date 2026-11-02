@@ -16,18 +16,18 @@ Minden nyelv kompromisszum: az egyik a **gyors futást**, a másik a **gyors fej
 
 ## A nyelvek egy pillantásra
 
-| Nyelv | Típusosság | Futtatás | Fő paradigma | Tipikus terület |
-| --- | --- | --- | --- | --- |
-| **Python** | dinamikus, erős | interpretált (bájtkód) | többparadigmás | adatelemzés, MI, szkriptek, web-backend, oktatás |
-| **Java** | statikus, erős | bájtkód + JVM (JIT) | objektumorientált | nagyvállalati rendszerek, Android, backend |
-| **C#** | statikus, erős | bájtkód + .NET CLR (JIT) | objektumorientált | Windows-alkalmazások, játékok (Unity), web (ASP.NET) |
-| **Ruby** | dinamikus, erős | interpretált | tisztán objektumorientált | webfejlesztés (Ruby on Rails), szkriptek |
-| **C** | statikus, gyenge | gépi kódra fordított | imperatív, procedurális | operációs rendszerek, beágyazott rendszerek, mikrovezérlők |
-| **C++** | statikus | gépi kódra fordított | többparadigmás | játékmotorok, nagy teljesítményű szoftverek, robotika |
-| **JavaScript** | dinamikus, gyenge | böngészőben/Node.js-ben, JIT | többparadigmás | weboldalak, webalkalmazások |
-| **TypeScript** | statikus (opcionális) | JavaScriptre fordított | többparadigmás | nagyobb webes projektek |
-| **Go** | statikus, erős | gépi kódra fordított | imperatív, konkurens | felhőszolgáltatások, hálózati szerverek |
-| **Rust** | statikus, erős | gépi kódra fordított | többparadigmás | biztonságkritikus, nagy teljesítményű rendszerek |
+| Nyelv          | Típusosság            | Futtatás                     | Fő paradigma              | Tipikus terület                                            |
+| -------------- | --------------------- | ---------------------------- | ------------------------- | ---------------------------------------------------------- |
+| **Python**     | dinamikus, erős       | interpretált (bájtkód)       | többparadigmás            | adatelemzés, MI, szkriptek, web-backend, oktatás           |
+| **Java**       | statikus, erős        | bájtkód + JVM (JIT)          | objektumorientált         | nagyvállalati rendszerek, Android, backend                 |
+| **C#**         | statikus, erős        | bájtkód + .NET CLR (JIT)     | objektumorientált         | Windows-alkalmazások, játékok (Unity), web (ASP.NET)       |
+| **Ruby**       | dinamikus, erős       | interpretált                 | tisztán objektumorientált | webfejlesztés (Ruby on Rails), szkriptek                   |
+| **C**          | statikus, gyenge      | gépi kódra fordított         | imperatív, procedurális   | operációs rendszerek, beágyazott rendszerek, mikrovezérlők |
+| **C++**        | statikus              | gépi kódra fordított         | többparadigmás            | játékmotorok, nagy teljesítményű szoftverek, robotika      |
+| **JavaScript** | dinamikus, gyenge     | böngészőben/Node.js-ben, JIT | többparadigmás            | weboldalak, webalkalmazások                                |
+| **TypeScript** | statikus (opcionális) | JavaScriptre fordított       | többparadigmás            | nagyobb webes projektek                                    |
+| **Go**         | statikus, erős        | gépi kódra fordított         | imperatív, konkurens      | felhőszolgáltatások, hálózati szerverek                    |
+| **Rust**       | statikus, erős        | gépi kódra fordított         | többparadigmás            | biztonságkritikus, nagy teljesítményű rendszerek           |
 
 ## Python
 
@@ -50,7 +50,7 @@ Minden nyelv kompromisszum: az egyik a **gyors futást**, a másik a **gyors fej
 
 - **Előny:** a programozó kényelmére tervezték – nagyon kifejező, „természetes” szintaxis. A Ruby on Rails keretrendszer felgyorsította a webfejlesztést.
 - **Hátrány:** lassabb, és a népszerűsége csökken; kisebb a közössége, mint a Pythonnak.
-- **Érdekesség:** *minden* objektum, még a szám is: `5.times { puts "Szia" }`.
+- **Érdekesség:** _minden_ objektum, még a szám is: `5.times { puts "Szia" }`.
 
 ## C és C++
 
@@ -64,8 +64,8 @@ Minden nyelv kompromisszum: az egyik a **gyors futást**, a másik a **gyors fej
 
 ## Go és Rust
 
-- **Go:** egyszerű, gyorsan fordul, beépített támogatás a párhuzamos futtatáshoz (*goroutine*). A Docker és a Kubernetes is Go-ban készült.
-- **Rust:** C-szintű sebesség **memóriabiztonsággal** – a fordító a futtatás előtt kiszűri a memóriahibák nagy részét (*ownership* rendszer). Cserébe meredekebb a tanulási görbe.
+- **Go:** egyszerű, gyorsan fordul, beépített támogatás a párhuzamos futtatáshoz (_goroutine_). A Docker és a Kubernetes is Go-ban készült.
+- **Rust:** C-szintű sebesség **memóriabiztonsággal** – a fordító a futtatás előtt kiszűri a memóriahibák nagy részét (_ownership_ rendszer). Cserébe meredekebb a tanulási görbe.
 
 ## Népszerűség
 

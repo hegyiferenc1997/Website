@@ -118,15 +118,15 @@ print(d, d.popleft(), d.pop())
 
 ## Array or linked list?
 
-| Operation | Array (Python list) | Linked list |
-| --- | --- | --- |
-| access element i | **O(1)** | O(n) – must step through |
-| insert / delete at the front | O(n) | **O(1)** |
-| insert / delete after a known node | O(n) | **O(1)** |
-| append to the end | O(1) on average | O(n) (O(1) if we also store the tail) |
-| search by value | O(n) | O(n) |
-| memory | compact | extra pointer(s) per element |
-| cache-friendly | yes (consecutive cells) | less |
+| Operation                          | Array (Python list)     | Linked list                           |
+| ---------------------------------- | ----------------------- | ------------------------------------- |
+| access element i                   | **O(1)**                | O(n) – must step through              |
+| insert / delete at the front       | O(n)                    | **O(1)**                              |
+| insert / delete after a known node | O(n)                    | **O(1)**                              |
+| append to the end                  | O(1) on average         | O(n) (O(1) if we also store the tail) |
+| search by value                    | O(n)                    | O(n)                                  |
+| memory                             | compact                 | extra pointer(s) per element          |
+| cache-friendly                     | yes (consecutive cells) | less                                  |
 
 > **In practice** a dynamic array (Python `list`) is the better choice for most tasks. A linked list is worth it when you insert or delete a lot at the start or middle and rarely need access by index. Linked lists are also the basis of many other data structures (stacks, queues, trees, graphs).
 

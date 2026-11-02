@@ -37,11 +37,11 @@ Examples: classic BASIC, shell scripts, JavaScript (originally).
 
 Most modern languages mix the two: the source is compiled into an intermediate, machine-independent **bytecode**, which a **virtual machine (VM)** runs.
 
-| Language | Bytecode | Virtual machine |
-| --- | --- | --- |
-| Java | `.class` | JVM (Java Virtual Machine) |
-| C# | CIL | .NET CLR |
-| Python | `.pyc` | CPython virtual machine |
+| Language | Bytecode | Virtual machine            |
+| -------- | -------- | -------------------------- |
+| Java     | `.class` | JVM (Java Virtual Machine) |
+| C#       | CIL      | .NET CLR                   |
+| Python   | `.pyc`   | CPython virtual machine    |
 
 ## JIT – compiling at run time
 
@@ -67,11 +67,11 @@ The bytecode of imported modules is saved in the `__pycache__` folder (`.pyc` fi
 
 ## Summary
 
-| Aspect | Compiler | Interpreter |
-| --- | --- | --- |
-| when it translates | in advance, all at once | while running, line by line |
-| execution speed | fast | slower |
-| finding errors | many at compile time | at run time |
-| portability | recompile per platform | wherever there is an interpreter |
+| Aspect             | Compiler                | Interpreter                      |
+| ------------------ | ----------------------- | -------------------------------- |
+| when it translates | in advance, all at once | while running, line by line      |
+| execution speed    | fast                    | slower                           |
+| finding errors     | many at compile time    | at run time                      |
+| portability        | recompile per platform  | wherever there is an interpreter |
 
 Python compiles to bytecode, which a virtual machine runs.

@@ -67,7 +67,7 @@ def masodik_legnagyobb(lista):
 <details>
 <summary>Tipp</summary>
 
-Mi történik a `[5, 5, 3]` listával? A második legnagyobb *különböző* elem a 3.
+Mi történik a `[5, 5, 3]` listával? A második legnagyobb _különböző_ elem a 3.
 
 </details>
 

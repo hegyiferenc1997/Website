@@ -29,12 +29,12 @@ print("Életkor: " + 20)   # TypeError: can only concatenate str (not "int") to 
 
 ## Explicit (kézi) konverzió
 
-| Függvény | Mivé alakít | Példák |
-| --- | --- | --- |
-| `int(x)` | egész szám | `int("42")` → `42`, `int(3.99)` → `3` (levágja a törtrészt!) |
-| `float(x)` | valós szám | `float("3.5")` → `3.5`, `float(2)` → `2.0` |
-| `str(x)` | szöveg | `str(20)` → `"20"`, `str(3.5)` → `"3.5"` |
-| `bool(x)` | logikai érték | `bool(0)` → `False`, `bool("a")` → `True` |
+| Függvény   | Mivé alakít   | Példák                                                       |
+| ---------- | ------------- | ------------------------------------------------------------ |
+| `int(x)`   | egész szám    | `int("42")` → `42`, `int(3.99)` → `3` (levágja a törtrészt!) |
+| `float(x)` | valós szám    | `float("3.5")` → `3.5`, `float(2)` → `2.0`                   |
+| `str(x)`   | szöveg        | `str(20)` → `"20"`, `str(3.5)` → `"3.5"`                     |
+| `bool(x)`  | logikai érték | `bool(0)` → `False`, `bool("a")` → `True`                    |
 
 ```python run
 eletkor = 20

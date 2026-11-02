@@ -54,17 +54,17 @@ print("a" < "b")           # True – alphabetical comparison (by character code
 
 ## Useful methods
 
-| Method | What it does | Example → result |
-| --- | --- | --- |
-| `upper()`, `lower()` | upper / lower case | `"Apple".upper()` → `"APPLE"` |
-| `strip()` | removes spaces from the ends | `"  hi  ".strip()` → `"hi"` |
-| `split(sep)` | splits into a list | `"a,b,c".split(",")` → `["a", "b", "c"]` |
-| `join(list)` | joins a list | `"-".join(["a", "b"])` → `"a-b"` |
-| `replace(a, b)` | replaces | `"apple".replace("p", "b")` → `"abble"` |
-| `find(x)` | index of first occurrence (−1 if none) | `"apple".find("l")` → `3` |
-| `count(x)` | number of occurrences | `"banana".count("a")` → `3` |
-| `startswith(x)`, `endswith(x)` | starts / ends with | `"img.png".endswith(".png")` → `True` |
-| `isdigit()` | only digits? | `"2026".isdigit()` → `True` |
+| Method                         | What it does                           | Example → result                         |
+| ------------------------------ | -------------------------------------- | ---------------------------------------- |
+| `upper()`, `lower()`           | upper / lower case                     | `"Apple".upper()` → `"APPLE"`            |
+| `strip()`                      | removes spaces from the ends           | `"  hi  ".strip()` → `"hi"`              |
+| `split(sep)`                   | splits into a list                     | `"a,b,c".split(",")` → `["a", "b", "c"]` |
+| `join(list)`                   | joins a list                           | `"-".join(["a", "b"])` → `"a-b"`         |
+| `replace(a, b)`                | replaces                               | `"apple".replace("p", "b")` → `"abble"`  |
+| `find(x)`                      | index of first occurrence (−1 if none) | `"apple".find("l")` → `3`                |
+| `count(x)`                     | number of occurrences                  | `"banana".count("a")` → `3`              |
+| `startswith(x)`, `endswith(x)` | starts / ends with                     | `"img.png".endswith(".png")` → `True`    |
+| `isdigit()`                    | only digits?                           | `"2026".isdigit()` → `True`              |
 
 ```python run
 sentence = "  Python is a good first language.  "
@@ -93,12 +93,12 @@ print(f"{name=}")                              # for debugging: prints the name 
 
 ## Special characters
 
-| Notation | Meaning |
-| --- | --- |
-| `\n` | new line |
-| `\t` | tab |
-| `\\` | a single `\` |
-| `\"` | a quote inside the string |
+| Notation | Meaning                   |
+| -------- | ------------------------- |
+| `\n`     | new line                  |
+| `\t`     | tab                       |
+| `\\`     | a single `\`              |
+| `\"`     | a quote inside the string |
 
 ```python run
 print("First line\nSecond line")

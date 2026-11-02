@@ -57,13 +57,13 @@ print(average([4, 5, 3, 4]))   # 4.0
 
 A **flowchart** is a drawn description. The standard symbols:
 
-| Symbol | Meaning |
-| --- | --- |
-| oval | START / STOP |
+| Symbol        | Meaning                             |
+| ------------- | ----------------------------------- |
+| oval          | START / STOP                        |
 | parallelogram | input or output (reading, printing) |
-| rectangle | operation, assignment |
-| diamond | decision (condition, yes/no branch) |
-| arrow | direction of execution |
+| rectangle     | operation, assignment               |
+| diamond       | decision (condition, yes/no branch) |
+| arrow         | direction of execution              |
 
 A text sketch of a simple flowchart (even or odd number):
 
@@ -97,7 +97,7 @@ Step 3 refined: summing, dividing by the count, rounding to two decimals. Each s
 
 ## Abstraction
 
-**Abstraction** means hiding the details and dealing only with what matters. When you use `print()`, you don't need to know how the screen draws the letters – it is enough to know *what* it does. Good programs are built from such layers too.
+**Abstraction** means hiding the details and dealing only with what matters. When you use `print()`, you don't need to know how the screen draws the letters – it is enough to know _what_ it does. Good programs are built from such layers too.
 
 ## Summary
 

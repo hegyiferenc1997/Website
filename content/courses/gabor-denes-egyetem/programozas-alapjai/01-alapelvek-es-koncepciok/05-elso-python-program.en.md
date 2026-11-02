@@ -26,7 +26,7 @@ Text (a string) must be put in quotes: `"like this"` or `'like this'`. Without q
 
 ## Comments
 
-Everything after a `#` to the end of the line is a **comment**: the computer ignores it, it is for humans. Use it to explain *why* you do something.
+Everything after a `#` to the end of the line is a **comment**: the computer ignores it, it is for humans. Use it to explain _why_ you do something.
 
 ```python run
 # This program computes the area of a circle.

@@ -59,15 +59,15 @@ unittest.TextTestRunner(stream=sys.stdout, verbosity=2).run(suite)
 
 The most common assertion methods:
 
-| Method | Checks |
-| --- | --- |
-| `assertEqual(a, b)` | `a == b` |
-| `assertNotEqual(a, b)` | `a != b` |
-| `assertTrue(x)`, `assertFalse(x)` | true / false |
-| `assertIsNone(x)` | `x is None` |
-| `assertIn(a, b)` | `a in b` |
-| `assertAlmostEqual(a, b)` | approximate equality of floats |
-| `assertRaises(Exception)` | the block raises an exception |
+| Method                            | Checks                         |
+| --------------------------------- | ------------------------------ |
+| `assertEqual(a, b)`               | `a == b`                       |
+| `assertNotEqual(a, b)`            | `a != b`                       |
+| `assertTrue(x)`, `assertFalse(x)` | true / false                   |
+| `assertIsNone(x)`                 | `x is None`                    |
+| `assertIn(a, b)`                  | `a in b`                       |
+| `assertAlmostEqual(a, b)`         | approximate equality of floats |
+| `assertRaises(Exception)`         | the block raises an exception  |
 
 Preparation code goes into the `setUp` method, which runs before **every** test:
 
@@ -170,13 +170,13 @@ Even 100% coverage doesn't mean there are no bugs – only that every line ran a
 
 ## Frameworks in other languages
 
-| Language | Framework |
-| --- | --- |
-| Java | JUnit |
-| C# | NUnit, xUnit, MSTest |
-| JavaScript / TypeScript | Jest, Vitest |
-| C++ | GoogleTest, Catch2 |
-| Ruby | RSpec, Minitest |
+| Language                | Framework            |
+| ----------------------- | -------------------- |
+| Java                    | JUnit                |
+| C#                      | NUnit, xUnit, MSTest |
+| JavaScript / TypeScript | Jest, Vitest         |
+| C++                     | GoogleTest, Catch2   |
+| Ruby                    | RSpec, Minitest      |
 
 > This website works the same way: `pnpm test` runs the tests with the **Vitest** framework – including one that runs every Python example and solution in this course.
 

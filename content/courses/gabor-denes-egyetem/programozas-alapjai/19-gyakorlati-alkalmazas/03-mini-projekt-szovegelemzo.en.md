@@ -13,7 +13,7 @@ Write a program that produces statistics about a text (or a text file). This pro
 
 1. `words(text)`: the words of the text **in lower case**, without punctuation.
 2. `sentence_count(text)`: the number of non-empty sentences ended by `.`, `!` or `?`.
-3. `most_common(text, n=3)`: the *n* most frequent **meaningful** words (without stopwords – *a, the, and, is…*), as `(word, count)` pairs, alphabetical for equal counts.
+3. `most_common(text, n=3)`: the _n_ most frequent **meaningful** words (without stopwords – _a, the, and, is…_), as `(word, count)` pairs, alphabetical for equal counts.
 4. `statistics(text)`: a dictionary with the number of words, the number of unique words, the number of sentences, the average word length (0.0 for empty text) and the most common words.
 5. `export_csv(text, file)`: the full word frequency to CSV (with a `word;count` header, in descending order).
 6. `analyse_file(path)`: analyse a text file; a clear `FileNotFoundError` for a missing file.

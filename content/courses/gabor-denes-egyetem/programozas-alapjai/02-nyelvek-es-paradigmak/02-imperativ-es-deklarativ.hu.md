@@ -28,7 +28,7 @@ A **procedurális** programozás az imperatív stílus rendezett formája: a kó
 
 ## Deklaratív: mit?
 
-A **deklaratív** programozásban azt írjuk le, *mit* szeretnénk megkapni, a „hogyan”-t a nyelvre vagy a rendszerre bízzuk.
+A **deklaratív** programozásban azt írjuk le, _mit_ szeretnénk megkapni, a „hogyan”-t a nyelvre vagy a rendszerre bízzuk.
 
 ```sql
 -- SQL: nem mondjuk meg, hogyan keressen, csak azt, mit kérünk.
@@ -46,13 +46,13 @@ print(felnottek)
 
 ## Összehasonlítás
 
-| Szempont | Imperatív | Deklaratív |
-| --- | --- | --- |
-| mit írunk le | a lépéseket | a kívánt eredményt |
-| állapot | változók folyamatos módosítása | lehetőleg nincs módosítható állapot |
-| példák | C, Pascal, Python ciklusokkal | SQL, HTML, Prolog, Python comprehension |
-| előny | teljes kontroll, könnyű követni lépésenként | rövidebb, kevesebb hibalehetőség |
-| hátrány | hosszabb, könnyebb elrontani az állapotot | a „motorháztető alatti” működés rejtve marad |
+| Szempont     | Imperatív                                   | Deklaratív                                   |
+| ------------ | ------------------------------------------- | -------------------------------------------- |
+| mit írunk le | a lépéseket                                 | a kívánt eredményt                           |
+| állapot      | változók folyamatos módosítása              | lehetőleg nincs módosítható állapot          |
+| példák       | C, Pascal, Python ciklusokkal               | SQL, HTML, Prolog, Python comprehension      |
+| előny        | teljes kontroll, könnyű követni lépésenként | rövidebb, kevesebb hibalehetőség             |
+| hátrány      | hosszabb, könnyebb elrontani az állapotot   | a „motorháztető alatti” működés rejtve marad |
 
 ## Mellékhatás
 

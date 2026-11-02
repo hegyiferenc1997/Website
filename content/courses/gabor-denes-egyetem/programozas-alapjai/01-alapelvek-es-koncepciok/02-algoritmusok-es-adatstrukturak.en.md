@@ -36,13 +36,13 @@ else:
 
 A **data structure** is a way of storing and accessing data. The same data can be stored in several ways, and the choice affects how quickly we can work with it.
 
-| Data structure | Analogy | Good for |
-| --- | --- | --- |
-| list / array | a row of numbered drawers | ordered items, access by index |
-| set | a bag where every item appears once | fast "is it in there?", removing duplicates |
-| dictionary (map) | a phone book: name → number | looking up a value by key |
-| stack | a pile of plates | the last item put in comes out first |
-| queue | a checkout line | the first to arrive is served first |
+| Data structure   | Analogy                             | Good for                                    |
+| ---------------- | ----------------------------------- | ------------------------------------------- |
+| list / array     | a row of numbered drawers           | ordered items, access by index              |
+| set              | a bag where every item appears once | fast "is it in there?", removing duplicates |
+| dictionary (map) | a phone book: name → number         | looking up a value by key                   |
+| stack            | a pile of plates                    | the last item put in comes out first        |
+| queue            | a checkout line                     | the first to arrive is served first         |
 
 ```python run
 # The same kind of data in three structures.
@@ -55,7 +55,7 @@ print(4 in distinct_grades)    # is 4 in it?
 print(phone_book["Anna"])      # Anna's phone number
 ```
 
-> **Niklaus Wirth**'s famous book is titled *Algorithms + Data Structures = Programs*. The two ideas are inseparable: a good data structure makes the algorithm simpler and faster.
+> **Niklaus Wirth**'s famous book is titled _Algorithms + Data Structures = Programs_. The two ideas are inseparable: a good data structure makes the algorithm simpler and faster.
 
 ## Efficiency: how many steps?
 
@@ -63,12 +63,12 @@ There can be several algorithms for the same task, and the number of steps they 
 
 This growth rate is described with **big O notation**:
 
-| Notation | Name | Example |
-| --- | --- | --- |
-| O(1) | constant | accessing a list element by index |
-| O(log n) | logarithmic | binary search in a sorted list |
-| O(n) | linear | searching an unsorted list |
-| O(n²) | quadratic | bubble sort |
+| Notation | Name        | Example                           |
+| -------- | ----------- | --------------------------------- |
+| O(1)     | constant    | accessing a list element by index |
+| O(log n) | logarithmic | binary search in a sorted list    |
+| O(n)     | linear      | searching an unsorted list        |
+| O(n²)    | quadratic   | bubble sort                       |
 
 ```python run
 # Linear search: go through the elements and count the steps.

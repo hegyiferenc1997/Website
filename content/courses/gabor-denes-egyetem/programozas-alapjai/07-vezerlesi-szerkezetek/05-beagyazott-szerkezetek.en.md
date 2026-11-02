@@ -120,7 +120,7 @@ print(find(matrix, 5))    # None
 
 ## Structured programming and goto
 
-In old languages the `goto` statement could jump anywhere in the program, producing unreadable "spaghetti code". Since **structured programming** (Dijkstra, 1968: *"Go To Statement Considered Harmful"*) we only use sequence, selection and iteration, with `break`/`continue`/`return` as controlled additions. Python has no `goto`.
+In old languages the `goto` statement could jump anywhere in the program, producing unreadable "spaghetti code". Since **structured programming** (Dijkstra, 1968: _"Go To Statement Considered Harmful"_) we only use sequence, selection and iteration, with `break`/`continue`/`return` as controlled additions. Python has no `goto`.
 
 ## Summary
 

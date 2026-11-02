@@ -53,11 +53,11 @@ print(ast.dump(ast.parse(code).body[0]))
 
 ## Compile time and run time
 
-| | Compile time | Run time |
-| --- | --- | --- |
-| when? | before the program starts | while the program runs |
+|               | Compile time                                   | Run time                                  |
+| ------------- | ---------------------------------------------- | ----------------------------------------- |
+| when?         | before the program starts                      | while the program runs                    |
 | typical error | syntax error, type error (in static languages) | division by zero, missing file, bad index |
-| example | missing semicolon in C | `ZeroDivisionError` in Python |
+| example       | missing semicolon in C                         | `ZeroDivisionError` in Python             |
 
 ```python
 # This is a run-time error: syntactically fine, the problem only shows when it runs.

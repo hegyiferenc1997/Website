@@ -33,10 +33,10 @@ for i in range(10, 0, -3):  # backwards: 10, 7, 4, 1
 print()
 ```
 
-| Call | Values |
-| --- | --- |
-| `range(n)` | 0, 1, …, n−1 |
-| `range(a, b)` | a, a+1, …, b−1 |
+| Call                | Values                              |
+| ------------------- | ----------------------------------- |
+| `range(n)`          | 0, 1, …, n−1                        |
+| `range(a, b)`       | a, a+1, …, b−1                      |
 | `range(a, b, step)` | a, a+step, … (up to b, excluding b) |
 
 ## Iterating loop (for-each)
@@ -97,9 +97,9 @@ This is essentially a compactly written `while` loop. Python's `for i in range(5
 
 ## while or for?
 
-| Use `for` if … | Use `while` if … |
-| --- | --- |
-| the number of repetitions is known | you don't know in advance how many |
+| Use `for` if …                              | Use `while` if …                   |
+| ------------------------------------------- | ---------------------------------- |
+| the number of repetitions is known          | you don't know in advance how many |
 | you go through the elements of a collection | you repeat until a condition holds |
 
 > **Don't modify** the list you are iterating over (don't remove or add elements) – the result is unpredictable. Build a new list instead.

@@ -147,7 +147,7 @@ print("Minden ellenőrzés sikeres!")
 
 ### 4. feladat: Tervezés (papíron)
 
-Bontsd lépésekre a következő feladatot, és írd le pszeudokóddal: *„Egy bolt 10 000 Ft feletti vásárlásnál 10% kedvezményt ad. Számold ki a fizetendő összeget.”*
+Bontsd lépésekre a következő feladatot, és írd le pszeudokóddal: _„Egy bolt 10 000 Ft feletti vásárlásnál 10% kedvezményt ad. Számold ki a fizetendő összeget.”_
 
 <details>
 <summary>Egy lehetséges megoldás</summary>

@@ -13,7 +13,7 @@ minutes: 18
 
 ## Komment
 
-A `#` utáni szöveg **komment**: a fejlesztőnek szól, a program figyelmen kívül hagyja. A jó komment a **miértet** magyarázza, nem a *mit*-et.
+A `#` utáni szöveg **komment**: a fejlesztőnek szól, a program figyelmen kívül hagyja. A jó komment a **miértet** magyarázza, nem a _mit_-et.
 
 ```python run
 ar = 10_000
@@ -150,12 +150,12 @@ teszt_*.py   – tesztek
 
 ## Dokumentációs szabványok más nyelvekben
 
-| Nyelv | Formátum | Eszköz |
-| --- | --- | --- |
-| Java | `/** ... */` Javadoc, `@param`, `@return` | javadoc |
-| C# | `/// <summary>` XML-kommentek | DocFX |
-| JavaScript / TypeScript | `/** ... */` JSDoc / TSDoc | TypeDoc |
-| C / C++ | `/** ... */`, `@brief` | Doxygen |
+| Nyelv                   | Formátum                                  | Eszköz  |
+| ----------------------- | ----------------------------------------- | ------- |
+| Java                    | `/** ... */` Javadoc, `@param`, `@return` | javadoc |
+| C#                      | `/// <summary>` XML-kommentek             | DocFX   |
+| JavaScript / TypeScript | `/** ... */` JSDoc / TSDoc                | TypeDoc |
+| C / C++                 | `/** ... */`, `@brief`                    | Doxygen |
 
 ```java
 /**

@@ -92,15 +92,15 @@ print("Bejárt mezők száma:", len(robot.ut))
 
 ## Állapotgépek
 
-A robot viselkedése gyakran **állapotokra** bontható: „halad”, „fordul”, „töltőhöz megy”, „tölt”. Minden állapotban más a teendő, és meghatározott **események** (szenzorjelek) váltják ki az **átmeneteket**. Ezt nevezzük **véges állapotgépnek** (*finite state machine*).
+A robot viselkedése gyakran **állapotokra** bontható: „halad”, „fordul”, „töltőhöz megy”, „tölt”. Minden állapotban más a teendő, és meghatározott **események** (szenzorjelek) váltják ki az **átmeneteket**. Ezt nevezzük **véges állapotgépnek** (_finite state machine_).
 
-| Állapot | Esemény | Új állapot |
-| --- | --- | --- |
-| HALAD | akadály előtte | FORDUL |
-| HALAD | akku ≤ 15% | TÖLTŐHÖZ MEGY |
-| FORDUL | elfordult | HALAD |
-| TÖLTŐHÖZ MEGY | töltőállomáson van | TÖLT |
-| TÖLT | akku ≥ 50% | HALAD |
+| Állapot       | Esemény            | Új állapot    |
+| ------------- | ------------------ | ------------- |
+| HALAD         | akadály előtte     | FORDUL        |
+| HALAD         | akku ≤ 15%         | TÖLTŐHÖZ MEGY |
+| FORDUL        | elfordult          | HALAD         |
+| TÖLTŐHÖZ MEGY | töltőállomáson van | TÖLT          |
+| TÖLT          | akku ≥ 50%         | HALAD         |
 
 ```python run
 # Robotporszívó állapotgépe: minden állapotban más a viselkedés,
@@ -150,8 +150,8 @@ Az állapotgép előnye, hogy **áttekinthető** (rajzolható), **könnyen bőv�
 
 A valódi szenzorok néha **hibás értéket** adnak (visszaverődés, zavar). Ha a robot egyetlen hibás mérésre reagálna, rángatózna vagy feleslegesen megállna. Megoldás: több egymás utáni mérést együtt nézünk.
 
-- **Mozgó átlag:** az utolsó *n* mérés átlaga – simít, de a nagy hibák elhúzzák.
-- **Mozgó medián:** az utolsó *n* mérés mediánja – a kiugró értékeket teljesen kiszűri.
+- **Mozgó átlag:** az utolsó _n_ mérés átlaga – simít, de a nagy hibák elhúzzák.
+- **Mozgó medián:** az utolsó _n_ mérés mediánja – a kiugró értékeket teljesen kiszűri.
 
 ```python run
 import statistics

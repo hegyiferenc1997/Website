@@ -38,12 +38,12 @@ These steps don't follow each other strictly: while testing you often find that 
 
 ### 2. Plan – subtasks
 
-| Subtask | Function | Input → output |
-| --- | --- | --- |
-| validate data | `validate(course)` | course → `ValueError` on error |
-| weighted average | `weighted_average(courses)` | list → `float` (0.0 for an empty list) |
-| completed credits | `completed_credits(courses)` | list → `int` |
-| sorted list | `ranking(courses)` | list → new, sorted list |
+| Subtask           | Function                     | Input → output                         |
+| ----------------- | ---------------------------- | -------------------------------------- |
+| validate data     | `validate(course)`           | course → `ValueError` on error         |
+| weighted average  | `weighted_average(courses)`  | list → `float` (0.0 for an empty list) |
+| completed credits | `completed_credits(courses)` | list → `int`                           |
+| sorted list       | `ranking(courses)`           | list → new, sorted list                |
 
 **Data structure:** a course is a `dataclass` (name, credits, grade) – more readable than a tuple.
 

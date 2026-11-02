@@ -8,15 +8,15 @@ minutes: 25
 
 The **basic algorithm patterns** (in Hungarian curricula: "programozási tételek") are proven templates that solve most tasks. Once you recognise which pattern fits, the solution practically writes itself. For each one we give the template and Python's built-in shortcut.
 
-| Pattern | Question | Result |
-| --- | --- | --- |
-| summation | what is the sum of the elements? | one value |
-| counting | how many elements satisfy the condition? | a number |
-| maximum selection | which is the largest? | element / index |
-| decision | is there an element satisfying the condition? | true / false |
-| selection | where is the (surely existing) element? | index |
-| linear search | is it there, and if so, where? | index or "none" |
-| filtering | which ones satisfy the condition? | new list |
+| Pattern           | Question                                      | Result          |
+| ----------------- | --------------------------------------------- | --------------- |
+| summation         | what is the sum of the elements?              | one value       |
+| counting          | how many elements satisfy the condition?      | a number        |
+| maximum selection | which is the largest?                         | element / index |
+| decision          | is there an element satisfying the condition? | true / false    |
+| selection         | where is the (surely existing) element?       | index           |
+| linear search     | is it there, and if so, where?                | index or "none" |
+| filtering         | which ones satisfy the condition?             | new list        |
 
 ## 1. Summation
 
@@ -65,7 +65,7 @@ print(i, scores[i])                   # 2 92
 print(max(scores), scores.index(max(scores)))
 ```
 
-> If you chose `0` as the initial *value*, it would fail for negative numbers. That's why we start from the **first element**.
+> If you chose `0` as the initial _value_, it would fail for negative numbers. That's why we start from the **first element**.
 
 ## 4. Decision
 
@@ -130,7 +130,7 @@ print([x for x in numbers if x % 2 == 0])   # with a list comprehension
 
 ## Combining patterns
 
-Real tasks combine patterns. For example: *"What is the average of the grades 4 or better?"* = filtering + summation + counting.
+Real tasks combine patterns. For example: _"What is the average of the grades 4 or better?"_ = filtering + summation + counting.
 
 ```python run
 grades = [5, 3, 4, 5, 2, 4]

@@ -101,11 +101,11 @@ print(DAYS.get(9, "invalid"))
 
 ## Which one when?
 
-| Situation | Recommended |
-| --- | --- |
+| Situation                                     | Recommended             |
+| --------------------------------------------- | ----------------------- |
 | comparing one value with many specific values | `match` or a dictionary |
-| ranges, complex conditions | `if-elif-else` |
-| deciding by the shape of a data structure | `match` |
+| ranges, complex conditions                    | `if-elif-else`          |
+| deciding by the shape of a data structure     | `match`                 |
 
 ## Summary
 

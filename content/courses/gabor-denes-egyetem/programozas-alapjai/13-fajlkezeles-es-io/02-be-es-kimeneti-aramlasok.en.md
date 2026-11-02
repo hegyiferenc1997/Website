@@ -19,11 +19,11 @@ A **stream** is a sequence of data read or written in order – we don't need to
 
 Every program gets three streams from the operating system:
 
-| Stream | Python | By default | Purpose |
-| --- | --- | --- | --- |
-| standard input | `sys.stdin` | keyboard | reading data (`input()`) |
-| standard output | `sys.stdout` | screen | results (`print()`) |
-| standard error | `sys.stderr` | screen | error messages, warnings |
+| Stream          | Python       | By default | Purpose                  |
+| --------------- | ------------ | ---------- | ------------------------ |
+| standard input  | `sys.stdin`  | keyboard   | reading data (`input()`) |
+| standard output | `sys.stdout` | screen     | results (`print()`)      |
+| standard error  | `sys.stderr` | screen     | error messages, warnings |
 
 ```python run
 import sys

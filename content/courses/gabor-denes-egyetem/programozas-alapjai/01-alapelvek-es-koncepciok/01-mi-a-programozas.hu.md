@@ -56,11 +56,11 @@ A gép a sorokat **fentről lefelé, egymás után** hajtja végre. Ez a **szekv
 
 ## A program részei általában
 
-| Rész | Jelentés | Példa |
-| --- | --- | --- |
-| Bemenet (input) | adat, amit a program kap | a felhasználó beír egy számot |
-| Feldolgozás | a számítás, döntések | összeadás, összehasonlítás |
-| Kimenet (output) | az eredmény | kiírás a képernyőre, fájlba mentés |
+| Rész             | Jelentés                 | Példa                              |
+| ---------------- | ------------------------ | ---------------------------------- |
+| Bemenet (input)  | adat, amit a program kap | a felhasználó beír egy számot      |
+| Feldolgozás      | a számítás, döntések     | összeadás, összehasonlítás         |
+| Kimenet (output) | az eredmény              | kiírás a képernyőre, fájlba mentés |
 
 ```python run
 # Bemenet → feldolgozás → kimenet egy kis példán.

@@ -101,16 +101,16 @@ printf("%d\n", total);
 ```javascript
 let total = 0;
 for (let i = 1; i <= 10; i++) {
-  if (i % 2 === 0) total += i;   // === strict equality
+  if (i % 2 === 0) total += i; // === strict equality
 }
 console.log(total);
 ```
 
-| | Python | Java / C# / C / JS | Ruby |
-| --- | --- | --- | --- |
-| block marking | indentation + `:` | `{ }` | `do … end` |
-| end of statement | end of line | `;` (optional in JS) | end of line |
-| counting loop | `for i in range(1, 11)` | `for (int i = 1; i <= 10; i++)` | `(1..10).each` |
+|                  | Python                  | Java / C# / C / JS              | Ruby           |
+| ---------------- | ----------------------- | ------------------------------- | -------------- |
+| block marking    | indentation + `:`       | `{ }`                           | `do … end`     |
+| end of statement | end of line             | `;` (optional in JS)            | end of line    |
+| counting loop    | `for i in range(1, 11)` | `for (int i = 1; i <= 10; i++)` | `(1..10).each` |
 
 The **functional style** is available everywhere too:
 
@@ -133,7 +133,10 @@ total = (1..10).select(&:even?).sum
 ```
 
 ```javascript
-const total = [...Array(10).keys()].map(i => i + 1).filter(i => i % 2 === 0).reduce((a, b) => a + b, 0);
+const total = [...Array(10).keys()]
+  .map((i) => i + 1)
+  .filter((i) => i % 2 === 0)
+  .reduce((a, b) => a + b, 0);
 ```
 
 ## 3. Function: finding the largest element

@@ -24,19 +24,19 @@ print(empty, numbers, mixed, letters, ten, sep="\n")
 
 ## The most important methods
 
-| Method | What it does |
-| --- | --- |
-| `append(x)` | appends x to the end |
-| `extend(list)` | appends the elements of another list |
-| `insert(i, x)` | inserts x at position i |
-| `remove(x)` | removes the first element equal to x (ValueError if none) |
-| `pop(i)` | removes and returns element i (the last by default) |
-| `index(x)` | index of the first x |
-| `count(x)` | number of occurrences of x |
-| `sort()` | sorts in place |
-| `reverse()` | reverses in place |
-| `clear()` | empties the list |
-| `copy()` | shallow copy |
+| Method         | What it does                                              |
+| -------------- | --------------------------------------------------------- |
+| `append(x)`    | appends x to the end                                      |
+| `extend(list)` | appends the elements of another list                      |
+| `insert(i, x)` | inserts x at position i                                   |
+| `remove(x)`    | removes the first element equal to x (ValueError if none) |
+| `pop(i)`       | removes and returns element i (the last by default)       |
+| `index(x)`     | index of the first x                                      |
+| `count(x)`     | number of occurrences of x                                |
+| `sort()`       | sorts in place                                            |
+| `reverse()`    | reverses in place                                         |
+| `clear()`      | empties the list                                          |
+| `copy()`       | shallow copy                                              |
 
 ```python run
 shopping = ["milk", "bread"]

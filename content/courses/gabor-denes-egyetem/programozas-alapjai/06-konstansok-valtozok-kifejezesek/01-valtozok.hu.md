@@ -49,12 +49,12 @@ print(eredmeny)   # NameError: name 'eredmeny' is not defined
 - nem lehet foglalt szó (`if`, `for`, `class`, `True`, `None` …),
 - a kis- és nagybetű számít: `nev` és `Nev` két különböző változó.
 
-| Név | Helyes? |
-| --- | --- |
-| `atlag`, `max_pont`, `_belso`, `x2` | ✅ |
-| `2x` | ❌ számmal kezdődik |
-| `max-pont` | ❌ kötőjel (kivonásnak értelmezné) |
-| `class` | ❌ foglalt szó |
+| Név                                 | Helyes?                            |
+| ----------------------------------- | ---------------------------------- |
+| `atlag`, `max_pont`, `_belso`, `x2` | ✅                                 |
+| `2x`                                | ❌ számmal kezdődik                |
+| `max-pont`                          | ❌ kötőjel (kivonásnak értelmezné) |
+| `class`                             | ❌ foglalt szó                     |
 
 **Szokások (PEP 8 stílusirányelv):**
 

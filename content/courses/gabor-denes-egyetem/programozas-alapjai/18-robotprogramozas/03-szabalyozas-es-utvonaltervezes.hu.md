@@ -48,12 +48,12 @@ A be-ki szabályozó 23 cm-nél áll meg (7 cm-rel túlment), az arányos szabá
 
 A vonalkövető robot alján fényérzékelők vannak, amelyek a padlón húzott sötét vonalat figyelik. Két érzékelővel az egyszerű szabály:
 
-| Bal érzékelő | Jobb érzékelő | Teendő |
-| --- | --- | --- |
-| vonal | vonal | egyenesen |
-| vonal | nincs | balra kanyarodik |
-| nincs | vonal | jobbra kanyarodik |
-| nincs | nincs | megáll / keresi a vonalat |
+| Bal érzékelő | Jobb érzékelő | Teendő                    |
+| ------------ | ------------- | ------------------------- |
+| vonal        | vonal         | egyenesen                 |
+| vonal        | nincs         | balra kanyarodik          |
+| nincs        | vonal         | jobbra kanyarodik         |
+| nincs        | nincs         | megáll / keresi a vonalat |
 
 ```python run
 def vonalkoveto(bal: bool, jobb: bool) -> str:
@@ -73,7 +73,7 @@ for bal, jobb in [(True, True), (True, False), (True, True), (False, True), (Fal
 
 ## Útvonaltervezés: legrövidebb út a térképen
 
-Ha a robot ismeri a térképet, előre megtervezheti a legrövidebb utat. Rácsos térképen erre a **szélességi keresés** (*Breadth-First Search*, BFS) a legegyszerűbb módszer: a startból kiindulva először az 1 lépésre lévő mezőket nézi meg, aztán a 2 lépésre lévőket, és így tovább – ezért az első alkalom, amikor eléri a célt, biztosan a legrövidebb úton történik. A még megvizsgálandó mezőket egy **sorban** (*queue*, `deque`) tartja.
+Ha a robot ismeri a térképet, előre megtervezheti a legrövidebb utat. Rácsos térképen erre a **szélességi keresés** (_Breadth-First Search_, BFS) a legegyszerűbb módszer: a startból kiindulva először az 1 lépésre lévő mezőket nézi meg, aztán a 2 lépésre lévőket, és így tovább – ezért az első alkalom, amikor eléri a célt, biztosan a legrövidebb úton történik. A még megvizsgálandó mezőket egy **sorban** (_queue_, `deque`) tartja.
 
 ```python run
 from collections import deque

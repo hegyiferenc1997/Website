@@ -17,18 +17,18 @@ Good code is **correct**, **readable**, **simple**, **testable** and **easy to c
 
 ## PEP 8 – Python's style guide
 
-| Rule | Example |
-| --- | --- |
-| indentation: 4 spaces (not tabs) | `····return x` |
-| line length: at most 79–99 characters | break long expressions inside parentheses |
-| variables, functions: `snake_case` | `student_count`, `compute_average()` |
-| classes: `PascalCase` | `class BankAccount:` |
-| constants: `UPPER_CASE` | `MAX_SCORE = 100` |
-| spaces around operators | `x = a + b`, not `x=a+b` |
-| no spaces inside parentheses | `f(x)`, not `f( x )` |
-| two blank lines between functions / classes | |
-| imports at the top of the file, grouped | standard → third-party → own |
-| use `is` with `None` | `if x is None:` |
+| Rule                                        | Example                                   |
+| ------------------------------------------- | ----------------------------------------- |
+| indentation: 4 spaces (not tabs)            | `····return x`                            |
+| line length: at most 79–99 characters       | break long expressions inside parentheses |
+| variables, functions: `snake_case`          | `student_count`, `compute_average()`      |
+| classes: `PascalCase`                       | `class BankAccount:`                      |
+| constants: `UPPER_CASE`                     | `MAX_SCORE = 100`                         |
+| spaces around operators                     | `x = a + b`, not `x=a+b`                  |
+| no spaces inside parentheses                | `f(x)`, not `f( x )`                      |
+| two blank lines between functions / classes |                                           |
+| imports at the top of the file, grouped     | standard → third-party → own              |
+| use `is` with `None`                        | `if x is None:`                           |
 
 ## Descriptive names
 
@@ -74,7 +74,7 @@ for name, grades in [("Anna", anna), ("Bela", bela)]:
 
 ## KISS – keep it simple
 
-*Keep It Simple, Stupid*: the simplest working solution is the best. "Clever" tricks are hard to read and fix.
+_Keep It Simple, Stupid_: the simplest working solution is the best. "Clever" tricks are hard to read and fix.
 
 ```python run
 number = 7
@@ -90,7 +90,7 @@ else:
 print("even" if number % 2 == 0 else "odd")
 ```
 
-A related principle is **YAGNI** (*You Aren't Gonna Need It*): don't write a feature that "might be needed some day".
+A related principle is **YAGNI** (_You Aren't Gonna Need It_): don't write a feature that "might be needed some day".
 
 ## One function – one job
 
@@ -149,12 +149,12 @@ print(shipping_fee_bad(25_000, "HU"), shipping_fee(25_000, "HU"), shipping_fee(5
 
 ## Automatic tools
 
-| Tool | What it does |
-| --- | --- |
-| **Ruff**, Flake8, Pylint | *linter*: finds style issues and suspicious code (unused variables, unreachable code) |
-| **Black**, Ruff format | *formatter*: automatically brings code into a uniform format |
-| **mypy** | type checking based on type hints |
-| **pytest + coverage** | tests and coverage |
+| Tool                     | What it does                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------- |
+| **Ruff**, Flake8, Pylint | _linter_: finds style issues and suspicious code (unused variables, unreachable code) |
+| **Black**, Ruff format   | _formatter_: automatically brings code into a uniform format                          |
+| **mypy**                 | type checking based on type hints                                                     |
+| **pytest + coverage**    | tests and coverage                                                                    |
 
 ```bash
 pip install ruff

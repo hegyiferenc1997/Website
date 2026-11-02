@@ -120,7 +120,7 @@ print(hol_van(matrix, 5))    # None
 
 ## Strukturált programozás és a goto
 
-Régi nyelvekben a `goto` utasítással a program bármely pontjára lehetett ugrani, ami átláthatatlan „spagettikódot” eredményezett. A **strukturált programozás** (Dijkstra, 1968: *„Go To Statement Considered Harmful”*) óta csak szekvenciát, elágazást és ciklust használunk, a `break`/`continue`/`return` pedig ezek ellenőrzött kiegészítői. Pythonban nincs `goto`.
+Régi nyelvekben a `goto` utasítással a program bármely pontjára lehetett ugrani, ami átláthatatlan „spagettikódot” eredményezett. A **strukturált programozás** (Dijkstra, 1968: _„Go To Statement Considered Harmful”_) óta csak szekvenciát, elágazást és ciklust használunk, a `break`/`continue`/`return` pedig ezek ellenőrzött kiegészítői. Pythonban nincs `goto`.
 
 ## Összefoglalás
 
