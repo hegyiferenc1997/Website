@@ -8,6 +8,9 @@ import { EmptyState, LinkCardBody, PageHeader, SectionTitle } from "@/components
 import { Link } from "@/i18n/navigation";
 import { CourseCardProgress, SemesterSection } from "@/features/progress/components";
 import { courseLessons } from "@/features/courses/lessons";
+import { formatDateUntil } from "@/features/account/format";
+import { BuyButton } from "@/features/payments/BuyButton";
+import { getUniversityAccess } from "@/features/payments/access";
 
 // Az oldal bemenete: az URL paraméterei (nyelv, egyetem azonosító).
 type Props = PageProps<"/[locale]/universities/[university]">;
@@ -40,10 +43,13 @@ export default async function UniversityPage({ params }: Props) {
 // A tényleges tartalom: az egyetem adatai és a tárgyak félévenként csoportosítva.
 async function UniversityContent({ params }: Pick<Props, "params">) {
   const { university: slug } = await params;
-  const [university, locale, t] = await Promise.all([
+  // A felhasználó megvásárolt félévei is kellenek (a vásárlás gombokhoz), ezért ez a rész kérésenként készül.
+  const [university, locale, t, tPay, access] = await Promise.all([
     getUniversity(slug),
     getLocale(),
     getTranslations("UniversityPage"),
+    getTranslations("Payments"),
+    getUniversityAccess(slug),
   ]);
   // Ismeretlen egyetem → 404 oldal.
   if (!university) notFound();
@@ -118,6 +124,27 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
     </ul>
   );
 
+  // A félév fejlécének jobb széle: vásárlás gomb (vagy aktív címke); ha a félévben még nincs kész
+  // tananyag, csak egy „hamarosan” jelzés, mert nincs mit megvenni.
+  const semesterAction = (semester: number, g: Group) => {
+    const all = [...g.common, ...[...g.specs.values()].flatMap((x) => x.list)];
+    if (!all.some((c) => c.isActive)) {
+      return (
+        <span className="whitespace-nowrap font-mono text-xs text-muted">{tPay("comingSoon")}</span>
+      );
+    }
+    const until = access.passes.get(semester);
+    return (
+      <BuyButton
+        university={university.slug}
+        semester={semester}
+        semesterTitle={semester === 0 ? t("noSemester") : t("semester", { semester })}
+        signedIn={access.user !== null}
+        activeUntil={until ? formatDateUntil(until, locale) : null}
+      />
+    );
+  };
+
   return (
     <div className="grid gap-10">
       <PageHeader
@@ -157,6 +184,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
                 semester={semester ?? 0}
                 title={semester === null ? t("noSemester") : t("semester", { semester })}
                 credits={semesterCredits(group)}
+                action={semesterAction(semester ?? 0, group)}
                 courses={[...group.common, ...[...group.specs.values()].flatMap((g) => g.list)].map(
                   (c) => ({
                     slug: c.slug,

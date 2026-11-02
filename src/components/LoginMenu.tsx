@@ -7,6 +7,7 @@ import { authClient } from "@/features/auth/client";
 import { PasswordField } from "@/features/auth/PasswordField";
 import { isPasswordValid, type SocialProviders } from "@/features/auth/shared";
 import type { SessionUser } from "@/features/auth/server";
+import { OPEN_LOGIN_EVENT } from "@/features/auth/open-login";
 import { useOneTimeParam } from "@/features/auth/url-param";
 import { disconnectAccount, flushProgress } from "@/features/progress/store";
 import { flushActivity } from "@/features/account/ActivityTracker";
@@ -94,6 +95,17 @@ export function LoginMenu({
     setError(null);
     setNotice(null);
   }
+
+  // Más helyről is megnyitható (pl. a vásárlás ablak „Jelentkezz be” gombjával): ilyenkor a belépés nézet nyílik.
+  useEffect(() => {
+    function onOpen() {
+      setReturnHandled(true);
+      setMode("login");
+      setOpenState(true);
+    }
+    window.addEventListener(OPEN_LOGIN_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_LOGIN_EVENT, onOpen);
+  }, []);
 
   // Bezárás Esc-re vagy a panelen kívüli kattintásra; nyitáskor az első mezőre ugrik.
   useEffect(() => {

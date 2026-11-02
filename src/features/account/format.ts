@@ -18,3 +18,9 @@ export function formatDate(date: Date, locale: string) {
     date,
   );
 }
+
+/** Dátum „-ig” rag elé (pl. „2027. május 1-ig”): a magyar dátum végi pont ilyenkor elmarad. */
+export function formatDateUntil(date: Date, locale: string) {
+  const text = formatDate(date, locale);
+  return locale === "hu" ? text.replace(/\.$/, "") : text;
+}

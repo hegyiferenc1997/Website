@@ -134,7 +134,10 @@
     "specializationLabel": "Specializáció",
     "type": "Jelleg",
     "minutes": "{minutes} perc",
-    "start": "Tananyag indítása"
+    "start": "Tananyag indítása",
+    "lockedTitle": "A tananyag zárolt",
+    "lockedText": "A témakörök és leckék címei szabadon böngészhetők. A leckék megnyitásához vásárold meg a(z) {semester} hozzáférést – ez a félév összes tárgyát feloldja.",
+    "accessUntil": "Hozzáférésed aktív: {date}-ig"
   },
   "NotFound": {
     "title": "Az oldal nem található",
@@ -159,7 +162,8 @@
     "lockedHint": "Zárolva: előbb végezd el az előző leckéket",
     "lockedTitle": "Ez a lecke még zárolva van",
     "lockedText": "A tananyag sorban halad: egy lecke akkor nyílik meg, ha az összes előzőnek teljesítetted a feladatát.",
-    "goToOpen": "Ugrás az aktuális leckéhez"
+    "goToOpen": "Ugrás az aktuális leckéhez",
+    "paywallHint": "Zárolva: vásárold meg a félévet a megnyitáshoz"
   },
   "Search": {
     "open": "Keresés",
@@ -202,7 +206,9 @@
     "minutes": "kb. {minutes} perc",
     "finished": "Elérted a tárgy utolsó leckéjét.",
     "backToCourse": "Vissza a tárgyhoz",
-    "lessonNav": "Leckék közötti lapozás"
+    "lessonNav": "Leckék közötti lapozás",
+    "lockedTitle": "Ez a lecke zárolt",
+    "lockedText": "A lecke a(z) {semester} része. A megnyitásához vásárold meg a félévet – ez a félév összes tárgyát feloldja."
   },
   "Python": {
     "run": "Futtatás",
@@ -246,11 +252,11 @@
   },
   "MyCoursesPage": {
     "title": "Tananyagaim",
-    "intro": "A megvásárolt tananyagaid: a jelenleg aktívak és a korábbi, már lejárt vásárlások.",
+    "intro": "A megvásárolt féléveid: a jelenleg aktívak és a korábbi, már lejárt vásárlások.",
     "loading": "Betöltés…",
     "signedOut": "A tananyagaid megtekintéséhez jelentkezz be a jobb felső sarokban.",
-    "activeTitle": "Jelenleg aktív tananyagok",
-    "expiredTitle": "Korábbi, lejárt tananyagok",
+    "activeTitle": "Jelenleg aktív félévek",
+    "expiredTitle": "Korábbi, lejárt félévek",
     "course": "Tananyag",
     "purchasedAt": "Vásárlás dátuma",
     "remaining": "Aktív eddig",
@@ -259,10 +265,59 @@
     "remainingDays": "{days, plural, one {# nap} other {# nap}}",
     "remainingHours": "{hours, plural, =0 {kevesebb mint 1 óra} other {# óra}}",
     "expired": "Lejárt",
-    "activeEmpty": "Jelenleg nincs aktív tananyagod.",
-    "expiredEmpty": "Még nincs lejárt tananyagod.",
-    "noPayments": "A vásárlás még nem érhető el az oldalon; amint elindul, itt jelennek meg a tananyagaid.",
+    "activeEmpty": "Jelenleg nincs aktív féléved.",
+    "expiredEmpty": "Még nincs lejárt féléved.",
+    "noPayments": "Vásárolni az egyetem oldalán, a félévek melletti „Megvásárlás” gombbal tudsz.",
     "demoButton": "Példa vásárlások hozzáadása (csak fejlesztéshez)",
     "unknownCourse": "Ismeretlen tananyag"
+  },
+  "Payments": {
+    "buy": "Megvásárlás",
+    "fromPrice": "{price}-tól",
+    "activeUntil": "Aktív: {date}-ig",
+    "extend": "Hosszabbítás",
+    "comingSoon": "Hamarosan",
+    "dialogEyebrow": "félév feloldása",
+    "dialogTitle": "{semester} – teljes hozzáférés",
+    "dialogText": "A félév összes elérhető tárgyának minden leckéje, futtatható példákkal és ellenőrzött gyakorlófeladatokkal. Válaszd ki, mennyi időre kéred.",
+    "extendNote": "Már van aktív hozzáférésed {date}-ig; az új időszak ennek a végétől számít, így egy nap sem vész el.",
+    "close": "Bezárás",
+    "bestValue": "Legjobb ár",
+    "days": "{days} nap",
+    "perDay": "≈ {price} / nap",
+    "choose": "Ezt választom",
+    "redirecting": "Átirányítás…",
+    "signInToBuy": "Jelentkezz be",
+    "mockNote": "Próba-fizetés: valódi terhelés nem történik, az árak ideiglenesek.",
+    "plans": {
+      "week": {
+        "name": "Heti",
+        "tagline": "Gyors segítség vészhelyzetre, pl. egy zh vagy vizsga előtt."
+      },
+      "month": {
+        "name": "Havi",
+        "tagline": "Egy hónap nyugodt tanulás, egy témakör alapos begyakorlására."
+      },
+      "semester": {
+        "name": "Féléves",
+        "tagline": "Az egész félévre, az első órától a vizsgaidőszak végéig."
+      }
+    }
+  },
+  "Checkout": {
+    "title": "Fizetés",
+    "intro": "Ellenőrizd a rendelésed, majd hagyd jóvá a fizetést.",
+    "loading": "Betöltés…",
+    "mockBanner": "Próba-fizetés: ez egy fejlesztői fizetési oldal, valódi terhelés nem történik. Később itt a bankkártyás fizetés lesz.",
+    "university": "Egyetem",
+    "semester": "Félév",
+    "plan": "Csomag",
+    "validUntil": "Hozzáférés eddig",
+    "total": "Fizetendő",
+    "pay": "Fizetés (próba) · {price}",
+    "cancel": "Mégse",
+    "signedOut": "A vásárláshoz jelentkezz be a jobb felső sarokban.",
+    "invalid": "Hibás vagy hiányos rendelés. Indítsd újra a vásárlást az egyetem oldalán.",
+    "unavailable": "A próba-fizetés ki van kapcsolva."
   }
 }

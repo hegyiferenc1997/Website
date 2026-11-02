@@ -43,6 +43,13 @@
       "when": 1793633269409,
       "tag": "0005_profile_purchases",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793636549733,
+      "tag": "0006_semester_purchases",
+      "breakpoints": true
     }
   ]
 }

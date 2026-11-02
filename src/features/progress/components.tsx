@@ -67,11 +67,14 @@ export function SemesterSection({
   title,
   credits,
   courses,
+  action,
   children,
 }: {
   university: string;
   semester: number;
   title: string;
+  /** A fejléc jobb szélén álló elem (pl. a félév „Megvásárlás” gombja). */
+  action?: ReactNode;
   /** A félév hivatalos kreditösszege (közös tárgyak + egy specializáció). */
   credits: number;
   courses: SemesterCourse[];
@@ -100,28 +103,32 @@ export function SemesterSection({
 
   return (
     <section className="rounded-lg border border-line bg-surface">
-      <button
-        type="button"
-        onClick={toggle}
-        aria-expanded={open}
-        aria-controls={panelId}
-        className="grid w-full gap-3 rounded-lg px-5 py-4 text-left transition-colors hover:bg-surface-hover sm:grid-cols-[1fr_minmax(0,16rem)] sm:items-center sm:gap-6"
-      >
-        <span className="flex items-baseline gap-3">
-          <span
-            aria-hidden="true"
-            data-semester-chevron={`${university}:${semester}`}
-            className={"font-mono text-accent transition-transform " + (open ? "rotate-90" : "")}
-          >
-            ›
+      {/* Fejléc: a lenyitó gomb és mellette (nem benne, mert gombban nem lehet gomb) a vásárlás. */}
+      <div className="flex flex-wrap items-center rounded-lg transition-colors hover:bg-surface-hover sm:flex-nowrap">
+        <button
+          type="button"
+          onClick={toggle}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="grid min-w-0 flex-1 basis-full gap-3 rounded-lg px-5 py-4 text-left sm:basis-auto sm:grid-cols-[1fr_minmax(0,16rem)] sm:items-center sm:gap-6"
+        >
+          <span className="flex items-baseline gap-3">
+            <span
+              aria-hidden="true"
+              data-semester-chevron={`${university}:${semester}`}
+              className={"font-mono text-accent transition-transform " + (open ? "rotate-90" : "")}
+            >
+              ›
+            </span>
+            <span className="font-mono text-base font-bold text-highlight">{title}</span>
+            <span className="text-sm text-muted">
+              {t("courseCount", { count: courses.length })} · {t("credits", { credits })}
+            </span>
           </span>
-          <span className="font-mono text-base font-bold text-highlight">{title}</span>
-          <span className="text-sm text-muted">
-            {t("courseCount", { count: courses.length })} · {t("credits", { credits })}
-          </span>
-        </span>
-        <ProgressBar ratio={ratio} label={t("semesterProgress", { title })} />
-      </button>
+          <ProgressBar ratio={ratio} label={t("semesterProgress", { title })} />
+        </button>
+        {action && <div className="shrink-0 px-5 pb-4 sm:py-4 sm:pl-0">{action}</div>}
+      </div>
       {/* A „hidden” attribútum helyett osztály, hogy a ProgressScript stílusa felülírhassa. */}
       <div
         id={panelId}
@@ -370,15 +377,18 @@ function useHandOverGate(ready: boolean) {
   }, [ready]);
 }
 
-// Egy tárgy leckéi a zároláshoz: a tárgy és a leckék sorrendben ("témakör/lecke").
-type GateProps = { university: string; course: string; lessons: string[] };
+/**
+ * Egy tárgy leckéi a zároláshoz: a tárgy és a leckék sorrendben ("témakör/lecke").
+ * paid = false: a félév nincs megvásárolva, ezért minden lecke zárolt (a szerver dönti el, így nem villan).
+ */
+type GateProps = { university: string; course: string; lessons: string[]; paid?: boolean };
 
 /** A zárolás állapota az index. leckére, és a hozzá tartozó HTML attribútumok. */
-function useGate({ university, course, lessons }: GateProps, index: number) {
+function useGate({ university, course, lessons, paid = true }: GateProps, index: number) {
   const progress = useProgress();
   useHandOverGate(progress !== null);
   const key = courseKey(university, course);
-  const locked = isLessonLocked(progress, key, lessons, index);
+  const locked = !paid || isLessonLocked(progress, key, lessons, index);
   return {
     progress,
     key,
@@ -420,7 +430,7 @@ export function GatedLessonLink({
       {...attrs}
       aria-current={current ? "page" : undefined}
       aria-disabled={locked || undefined}
-      data-tooltip={locked ? t("lockedHint") : undefined}
+      data-tooltip={locked ? t(gate.paid === false ? "paywallHint" : "lockedHint") : undefined}
       onClick={(e) => {
         if (locked) e.preventDefault();
       }}

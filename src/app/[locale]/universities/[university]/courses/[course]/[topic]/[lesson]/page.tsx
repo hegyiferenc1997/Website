@@ -17,6 +17,10 @@ import { lessonKey } from "@/features/progress/data";
 import { GateScript } from "@/features/progress/gate-script";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
 import { Link } from "@/i18n/navigation";
+import { courseSemester } from "@/features/courses/semester";
+import { getUniversityAccess } from "@/features/payments/access";
+import { BuyButton } from "@/features/payments/BuyButton";
+import { LockedNotice } from "@/features/payments/LockedNotice";
 
 // Az oldal bemenete: az URL paraméterei (nyelv, egyetem, tárgy, témakör, lecke).
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]/[topic]/[lesson]">;
@@ -67,15 +71,22 @@ export default async function LessonPage({ params }: Props) {
 // A lecke tartalma: adatok betöltése, Markdown → HTML, majd az oldal felépítése.
 async function LessonContent({ params }: Pick<Props, "params">) {
   const p = await params;
-  const [data, locale, t] = await Promise.all([
+  // A hozzáférés (megvásárolt félévek) is kell, ezért ez a rész kérésenként készül.
+  const [data, locale, t, tUni, access] = await Promise.all([
     getLesson(p.university, p.course, p.topic, p.lesson),
     getLocale(),
     getTranslations("LessonPage"),
+    getTranslations("UniversityPage"),
+    getUniversityAccess(p.university),
   ]);
   // Ismeretlen lecke → 404 oldal.
   if (!data) notFound();
   const { course, topic, lesson, number, prev, next } = data;
-  const segments = await renderLessonBody(localize(lesson.body, locale), locale);
+  // Meg van-e véve a tárgy féléve. Ha nincs, a lecke szövege el sem készül és nem is kerül a böngészőbe.
+  const semester = courseSemester(course.programCourses);
+  const semesterTitle = semester === 0 ? tUni("noSemester") : tUni("semester", { semester });
+  const paid = access.passes.has(semester);
+  const segments = paid ? await renderLessonBody(localize(lesson.body, locale), locale) : [];
 
   const university = course.university.slug;
   // Hányadik témakörben vagyunk (1-től számolva).
@@ -91,7 +102,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   };
   // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben, és hányadik ez közülük.
   const allLessons = courseLessons(course);
-  const gate = { university, course: course.slug, lessons: allLessons };
+  const gate = { university, course: course.slug, lessons: allLessons, paid };
   const thisKey = lessonKey(topic.slug, lesson.slug);
   const index = allLessons.indexOf(thisKey);
   const lessonRef: LessonRef = { university, course: course.slug, lesson: thisKey };
@@ -150,7 +161,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12">
       {/* A zárolás még a kirajzolás előtt érvényesül (frissítéskor sem villan fel a zárolt tartalom). */}
-      <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />
+      {paid && <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />}
       <aside className="hidden lg:sticky lg:top-24 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
         {outline}
       </aside>
@@ -196,40 +207,62 @@ async function LessonContent({ params }: Pick<Props, "params">) {
           <div className="pt-4">{outline}</div>
         </details>
 
-        {/* Zárolt lecke (az előzők még nincsenek kész): a tartalom helyett üzenet látszik. */}
-        <LessonGate gate={gate} index={index}>
-          <LessonBody segments={segments} lessonRef={lessonRef} next={nextLesson} />
-
-          {/* Alul: kész-állapot (vagy „Kész” gomb) és lapozás az előző / következő leckére */}
-          <footer className="grid gap-6 border-t border-line pt-6">
-            <div>
-              {lesson.hasExercise ? (
-                <LessonExerciseStatus {...lessonRef} />
-              ) : (
-                <LessonDoneButton {...lessonRef} />
-              )}
-            </div>
-            <LessonPager
-              gate={gate}
-              index={index}
-              prev={
-                prev && {
-                  href: href(prev.topic.slug, prev.lesson.slug),
-                  title: localize(prev.lesson.title, locale),
-                }
-              }
-              next={nextLesson}
-              courseHref={courseHref}
-              labels={{
-                nav: t("lessonNav"),
-                prev: t("prev"),
-                next: t("next"),
-                finished: t("finished"),
-                back: t("backToCourse"),
-              }}
+        {/* Meg nem vásárolt félév: a lecke helyett a zárolás üzenete, vásárlás gombbal. */}
+        {!paid && (
+          <LockedNotice
+            title={t("lockedTitle")}
+            text={t("lockedText", { semester: semesterTitle })}
+          >
+            <BuyButton
+              university={university}
+              semester={semester}
+              semesterTitle={semesterTitle}
+              signedIn={access.user !== null}
+              activeUntil={null}
+              size="large"
             />
-          </footer>
-        </LessonGate>
+            <Link href={courseHref} className="font-mono text-sm text-muted hover:text-accent">
+              ← {t("backToCourse")}
+            </Link>
+          </LockedNotice>
+        )}
+
+        {/* Zárolt lecke (az előzők még nincsenek kész): a tartalom helyett üzenet látszik. */}
+        {paid && (
+          <LessonGate gate={gate} index={index}>
+            <LessonBody segments={segments} lessonRef={lessonRef} next={nextLesson} />
+
+            {/* Alul: kész-állapot (vagy „Kész” gomb) és lapozás az előző / következő leckére */}
+            <footer className="grid gap-6 border-t border-line pt-6">
+              <div>
+                {lesson.hasExercise ? (
+                  <LessonExerciseStatus {...lessonRef} />
+                ) : (
+                  <LessonDoneButton {...lessonRef} />
+                )}
+              </div>
+              <LessonPager
+                gate={gate}
+                index={index}
+                prev={
+                  prev && {
+                    href: href(prev.topic.slug, prev.lesson.slug),
+                    title: localize(prev.lesson.title, locale),
+                  }
+                }
+                next={nextLesson}
+                courseHref={courseHref}
+                labels={{
+                  nav: t("lessonNav"),
+                  prev: t("prev"),
+                  next: t("next"),
+                  finished: t("finished"),
+                  back: t("backToCourse"),
+                }}
+              />
+            </footer>
+          </LessonGate>
+        )}
       </article>
     </div>
   );
