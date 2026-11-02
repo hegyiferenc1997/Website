@@ -110,3 +110,125 @@ The practice exercises on this site are built the same way: the "check" block is
 - Levels: **unit → integration → system → acceptance**.
 - Test case = input + expected output; always think of **normal, boundary and invalid** cases.
 - TDD: red → green → refactor.
+
+## Lesson exercise: Write tests that catch the bugs
+
+Now the tables are turned: you don't write the function but its **tests**. `discount(age)` returns the ticket discount in percent:
+
+| Age       | Discount         |
+| --------- | ---------------- |
+| 0–5       | 100              |
+| 6–17      | 50               |
+| 18–64     | 0                |
+| 65 and up | 50               |
+| negative  | `ValueError`     |
+
+Write the `test_discount()` function with `assert` lines so that **besides the normal cases** it also checks the **boundary cases** (5, 6, 17, 18, 64, 65) and invalid input.
+
+The check works like this: first it runs your tests with the correct function (they must pass), then with deliberately broken versions ("mutants") – for these your tests **must fail**. If a broken version slips through, your tests are not thorough enough.
+
+```python starter required
+def discount(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative.")
+    if age < 6:
+        return 100
+    if age < 18:
+        return 50
+    if age < 65:
+        return 0
+    return 50
+
+
+def test_discount():
+    # assert discount(...) == ...
+    # testing ValueError: try: discount(-1) ... except ValueError: ...
+    pass
+
+
+test_discount()
+print("The tests ran.")
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def discount(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative.")
+    if age < 6:
+        return 100
+    if age < 18:
+        return 50
+    if age < 65:
+        return 0
+    return 50
+
+
+def test_discount():
+    # normal cases
+    assert discount(3) == 100
+    assert discount(10) == 50
+    assert discount(30) == 0
+    assert discount(80) == 50
+    # boundary cases
+    assert discount(0) == 100
+    assert discount(5) == 100
+    assert discount(6) == 50
+    assert discount(17) == 50
+    assert discount(18) == 0
+    assert discount(64) == 0
+    assert discount(65) == 50
+    # invalid input
+    try:
+        discount(-1)
+        assert False, "ValueError expected"
+    except ValueError:
+        pass
+
+
+test_discount()
+print("The tests ran.")
+```
+
+</details>
+
+```python test
+correct = discount
+test_discount()   # must pass with the correct function
+
+def m1(age):
+    if age < 0: raise ValueError
+    return 100 if age <= 6 else 50 if age < 18 else 0 if age < 65 else 50
+
+def m2(age):
+    if age < 0: raise ValueError
+    return 100 if age < 6 else 50 if age <= 18 else 0 if age < 65 else 50
+
+def m3(age):
+    if age < 0: raise ValueError
+    return 100 if age < 6 else 50 if age < 18 else 0 if age <= 65 else 50
+
+def m4(age):
+    return 100 if age < 6 else 50 if age < 18 else 0 if age < 65 else 50
+
+def m5(age):
+    if age < 0: raise ValueError
+    return 100 if age < 6 else 50 if age < 18 else 0 if age < 65 else 0
+
+mutants = [(m1, "6-year-olds also get 100%"), (m2, "18-year-olds also get 50%"),
+           (m3, "65-year-olds get no discount"), (m4, "no ValueError for a negative age"),
+           (m5, "pensioners get no discount")]
+for mutant, description in mutants:
+    discount = mutant
+    try:
+        test_discount()
+        caught = False
+    except AssertionError:
+        caught = True
+    except Exception:
+        caught = True
+    discount = correct
+    assert caught, f"Your tests did not notice this bug: {description}."
+```

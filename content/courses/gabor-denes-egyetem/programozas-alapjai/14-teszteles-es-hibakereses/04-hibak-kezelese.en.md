@@ -84,3 +84,67 @@ print(round(credit_average([5, 4, 3], [8, 5, 3]), 2))
 - Error → defect in the code → failure at run time.
 - Bugs are tracked in an issue tracker; a good report is reproducible.
 - Prevention: tests, code review, static analysis, defensive programming, CI.
+
+## Lesson exercise: Fix the reported bug
+
+A bug report has arrived in the team's issue tracker:
+
+> **Title:** `format_duration()` returns wrong text for whole hours and 0 minutes
+>
+> **Steps:** `format_duration(60)`, `format_duration(0)`, `format_duration(-5)`
+>
+> **Expected:** `"1 h"`, `"0 min"`, and `ValueError` for a negative value
+>
+> **Actual:** `"1 h 0 min"`, `""` (empty text), `"55 min"`
+>
+> **Severity:** medium – strange labels appear in the user interface
+
+Fix the function so that it gives the expected behaviour described in the report, and the other cases (e.g. `format_duration(125)` → `"2 h 5 min"`, `format_duration(59)` → `"59 min"`) don't break.
+
+```python starter required
+def format_duration(minutes):
+    hours = minutes // 60
+    rest = minutes % 60
+    if hours > 0:
+        return f"{hours} h {rest} min"
+    return f"{rest} min" if rest else ""
+
+
+for m in [125, 60, 0, 59]:
+    print(m, "→", repr(format_duration(m)))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def format_duration(minutes):
+    if minutes < 0:
+        raise ValueError("A duration cannot be negative.")
+    hours, rest = divmod(minutes, 60)
+    parts = []
+    if hours > 0:
+        parts.append(f"{hours} h")
+    if rest > 0 or hours == 0:
+        parts.append(f"{rest} min")
+    return " ".join(parts)
+
+
+for m in [125, 60, 0, 59]:
+    print(m, "→", repr(format_duration(m)))
+```
+
+</details>
+
+```python test
+assert format_duration(60) == "1 h", "60 minutes → \"1 h\" (point 1 of the bug report)"
+assert format_duration(0) == "0 min", "0 minutes → \"0 min\" (point 2 of the bug report)"
+try:
+    format_duration(-5)
+    assert False, "A negative value must raise ValueError (point 3 of the bug report)."
+except ValueError:
+    pass
+assert format_duration(125) == "2 h 5 min", "125 minutes → \"2 h 5 min\" – this must not break!"
+assert format_duration(59) == "59 min", "59 minutes → \"59 min\""
+assert format_duration(180) == "3 h", "180 minutes → \"3 h\""
+```

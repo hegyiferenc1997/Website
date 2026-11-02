@@ -218,3 +218,117 @@ assert result.testsRun >= 3, "At least 3 test methods are needed"
 assert result.wasSuccessful()
 print("All checks passed!")
 ```
+
+## Summary exercise: Roman numerals – code and tests together
+
+The summary exercise of the topic: write the function **and** its tests, as in test-driven development.
+
+1. `roman(n)`: converts an integer between 1 and 3999 into a Roman numeral (e.g. 1994 → `"MCMXCIV"`). For other values `ValueError`.
+2. `test_roman()`: tests `roman` with `assert`s – normal cases, the "subtractive" forms (4, 9, 40, 90, 400, 900), the boundaries (1, 3999) and invalid input (0, 4000).
+
+The check verifies your function for all 3999 values and also runs your tests against broken versions – they must catch them.
+
+Tip: a list of value pairs in descending order – `[(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), …]` – and a loop that always subtracts the largest value that still fits.
+
+```python starter required
+def roman(n):
+    pass
+
+
+def test_roman():
+    pass
+
+
+test_roman()
+print(roman(1994))   # MCMXCIV
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+VALUES = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"),
+          (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+
+
+def roman(n):
+    if not isinstance(n, int) or not 1 <= n <= 3999:
+        raise ValueError("Only integers between 1 and 3999 can be written.")
+    result = ""
+    for value, symbol in VALUES:
+        while n >= value:
+            result += symbol
+            n -= value
+    return result
+
+
+def test_roman():
+    assert roman(1) == "I"
+    assert roman(3) == "III"
+    assert roman(4) == "IV"
+    assert roman(9) == "IX"
+    assert roman(14) == "XIV"
+    assert roman(40) == "XL"
+    assert roman(90) == "XC"
+    assert roman(400) == "CD"
+    assert roman(900) == "CM"
+    assert roman(1994) == "MCMXCIV"
+    assert roman(3999) == "MMMCMXCIX"
+    for bad in [0, 4000, -1]:
+        try:
+            roman(bad)
+            assert False, f"{bad}: ValueError expected"
+        except ValueError:
+            pass
+
+
+test_roman()
+print(roman(1994))   # MCMXCIV
+```
+
+</details>
+
+```python test
+def reference(n):
+    values = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"),
+              (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+    s = ""
+    for v, sym in values:
+        while n >= v:
+            s, n = s + sym, n - v
+    return s
+
+for n in range(1, 4000):
+    assert roman(n) == reference(n), f"roman({n}) should be {reference(n)}."
+for bad in [0, 4000]:
+    try:
+        roman(bad)
+        assert False, f"roman({bad}) must raise ValueError."
+    except ValueError:
+        pass
+
+test_roman()
+correct = roman
+def m_no_subtractive(n):
+    if not 1 <= n <= 3999: raise ValueError
+    s = ""
+    for v, sym in [(1000, "M"), (500, "D"), (100, "C"), (50, "L"), (10, "X"), (5, "V"), (1, "I")]:
+        while n >= v:
+            s, n = s + sym, n - v
+    return s
+def m_no_validation(n):
+    return reference(n)
+def m_wrong_900(n):
+    return reference(n).replace("CM", "DCD")
+for mutant, description in [(m_no_subtractive, "4 → IIII (no subtractive forms)"),
+                            (m_no_validation, "no ValueError for 0 and 4000"),
+                            (m_wrong_900, "900 is written wrongly")]:
+    roman = mutant
+    try:
+        test_roman()
+        caught = False
+    except Exception:
+        caught = True
+    roman = correct
+    assert caught, f"Your tests did not notice this bug: {description}."
+```

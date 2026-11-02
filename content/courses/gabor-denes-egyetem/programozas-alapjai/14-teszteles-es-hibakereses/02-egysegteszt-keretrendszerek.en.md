@@ -186,3 +186,94 @@ Even 100% coverage doesn't mean there are no bugs – only that every line ran a
 - **unittest:** `TestCase` class, `test_` methods, `assertEqual`, `assertRaises`, `setUp`.
 - **pytest:** plain functions with ordinary `assert`, `pytest.raises`, parameterisation.
 - **doctest:** examples in docstrings; **coverage:** measuring coverage.
+
+## Lesson exercise: Unit tests with the unittest framework
+
+Write a `unittest` test class for the lesson's `average(numbers)` function! The `TestAverage(unittest.TestCase)` class must have **at least three** methods starting with `test_`:
+
+- an integer case (`assertEqual`),
+- one where the average is not an integer (e.g. `assertAlmostEqual`),
+- one that checks that an empty list raises `ValueError` (`with self.assertRaises(ValueError):`).
+
+The check runs your test class with the correct function (every test must pass), then with broken versions – for those at least one test must fail.
+
+```python starter required
+import sys
+import unittest
+
+
+def average(numbers):
+    if not numbers:
+        raise ValueError("An empty list has no average.")
+    return sum(numbers) / len(numbers)
+
+
+class TestAverage(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(True)   # replace it with real tests!
+
+
+# Run the tests – the result appears in the output
+runner = unittest.TextTestRunner(stream=sys.stdout, verbosity=2)
+runner.run(unittest.TestLoader().loadTestsFromTestCase(TestAverage))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import sys
+import unittest
+
+
+def average(numbers):
+    if not numbers:
+        raise ValueError("An empty list has no average.")
+    return sum(numbers) / len(numbers)
+
+
+class TestAverage(unittest.TestCase):
+    def test_integer_average(self):
+        self.assertEqual(average([2, 4, 6]), 4)
+
+    def test_fractional_average(self):
+        self.assertAlmostEqual(average([1, 2]), 1.5)
+
+    def test_single_element(self):
+        self.assertEqual(average([7]), 7)
+
+    def test_empty_list(self):
+        with self.assertRaises(ValueError):
+            average([])
+
+
+# Run the tests – the result appears in the output
+runner = unittest.TextTestRunner(stream=sys.stdout, verbosity=2)
+runner.run(unittest.TestLoader().loadTestsFromTestCase(TestAverage))
+```
+
+</details>
+
+```python test
+import io, unittest
+
+def run_tests():
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestAverage)
+    return unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(suite)
+
+result = run_tests()
+assert result.testsRun >= 3, f"At least three test_ methods are needed (now there are {result.testsRun})."
+assert result.wasSuccessful(), "With the correct function every test must pass."
+
+correct = average
+mutants = [
+    (lambda s: 0 if not s else sum(s) / len(s), "returns 0 for an empty list instead of an error"),
+    (lambda s: sum(s) // len(s), "uses integer division (1 instead of 1.5)"),
+    (lambda s: sum(s) / (len(s) + 1), "divides by the wrong number"),
+]
+for mutant, description in mutants:
+    average = mutant
+    caught = not run_tests().wasSuccessful()
+    average = correct
+    assert caught, f"Your tests did not notice this bug: {description}."
+```

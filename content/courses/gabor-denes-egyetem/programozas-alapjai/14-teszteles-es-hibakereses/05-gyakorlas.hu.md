@@ -218,3 +218,117 @@ assert eredmeny.testsRun >= 3, "Legalább 3 tesztmetódus kell"
 assert eredmeny.wasSuccessful()
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Római számok – kód és teszt együtt
+
+A témakör összefoglaló feladata: írd meg a függvényt **és** a tesztjeit is, ahogy a tesztvezérelt fejlesztésnél.
+
+1. `romai(n)`: egy 1 és 3999 közötti egész számot római számmá alakít (pl. 1994 → `"MCMXCIV"`). Más értékre `ValueError`.
+2. `teszt_romai()`: `assert`-ekkel teszteli a `romai` függvényt – normál eseteket, a „kivonásos” alakokat (4, 9, 40, 90, 400, 900), a határokat (1, 3999) és a hibás bemenetet (0, 4000).
+
+Az ellenőrzés a függvényedet mind a 3999 értékre leellenőrzi, a tesztjeidet pedig hibás változatokkal is lefuttatja – ezeket el kell kapniuk.
+
+Tipp: egy értékpár-lista csökkenő sorrendben – `[(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), …]` – és egy ciklus, amely mindig a legnagyobb még beleférő értéket vonja le.
+
+```python starter required
+def romai(n):
+    pass
+
+
+def teszt_romai():
+    pass
+
+
+teszt_romai()
+print(romai(1994))   # MCMXCIV
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+ERTEKEK = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"),
+           (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+
+
+def romai(n):
+    if not isinstance(n, int) or not 1 <= n <= 3999:
+        raise ValueError("Csak 1 és 3999 közötti egész szám írható fel.")
+    eredmeny = ""
+    for ertek, jel in ERTEKEK:
+        while n >= ertek:
+            eredmeny += jel
+            n -= ertek
+    return eredmeny
+
+
+def teszt_romai():
+    assert romai(1) == "I"
+    assert romai(3) == "III"
+    assert romai(4) == "IV"
+    assert romai(9) == "IX"
+    assert romai(14) == "XIV"
+    assert romai(40) == "XL"
+    assert romai(90) == "XC"
+    assert romai(400) == "CD"
+    assert romai(900) == "CM"
+    assert romai(1994) == "MCMXCIV"
+    assert romai(3999) == "MMMCMXCIX"
+    for rossz in [0, 4000, -1]:
+        try:
+            romai(rossz)
+            assert False, f"{rossz}: ValueError kellett volna"
+        except ValueError:
+            pass
+
+
+teszt_romai()
+print(romai(1994))   # MCMXCIV
+```
+
+</details>
+
+```python test
+def referencia(n):
+    ertekek = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"),
+               (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+    s = ""
+    for e, j in ertekek:
+        while n >= e:
+            s, n = s + j, n - e
+    return s
+
+for n in range(1, 4000):
+    assert romai(n) == referencia(n), f"romai({n}) eredménye {referencia(n)} kellene legyen."
+for rossz in [0, 4000]:
+    try:
+        romai(rossz)
+        assert False, f"romai({rossz}) esetén ValueError kell."
+    except ValueError:
+        pass
+
+teszt_romai()
+helyes = romai
+def m_nincs_kivonas(n):
+    if not 1 <= n <= 3999: raise ValueError
+    s = ""
+    for e, j in [(1000, "M"), (500, "D"), (100, "C"), (50, "L"), (10, "X"), (5, "V"), (1, "I")]:
+        while n >= e:
+            s, n = s + j, n - e
+    return s
+def m_nincs_ellenorzes(n):
+    return referencia(n)
+def m_rossz_900(n):
+    return referencia(n).replace("CM", "DCD")
+for mutans, leiras in [(m_nincs_kivonas, "4 → IIII (nincs kivonásos alak)"),
+                       (m_nincs_ellenorzes, "0-ra és 4000-re nincs ValueError"),
+                       (m_rossz_900, "a 900 rosszul jelenik meg")]:
+    romai = mutans
+    try:
+        teszt_romai()
+        elkapta = False
+    except Exception:
+        elkapta = True
+    romai = helyes
+    assert elkapta, f"A tesztjeid nem vették észre ezt a hibát: {leiras}."
+```
