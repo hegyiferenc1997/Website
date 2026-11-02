@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Logikai kapuk és áramkörök", "en": "Logic Gates and Circuits" },
+  "description": {
+    "hu": "Logikai változók és igazságtáblák, az alapkapuk, a 16 kétváltozós függvény, a Boole-algebra azonosságai, De Morgan és dualitás, algebrai egyszerűsítés, univerzális kapuk, TTL és CMOS áramkörök.",
+    "en": "Logic variables and truth tables, basic gates, the 16 two-variable functions, Boolean algebra identities, De Morgan and duality, algebraic simplification, universal gates, TTL and CMOS circuits."
+  }
+}

@@ -64,3 +64,8 @@ Szabályok, hogy a blokkok tényleg fussanak:
 - A `test` blokk eléri a futás kimenetét a `kimenet` (angolul `output`) változóban.
 - Minden leckének van kötelező feladata; a témakör utolsó (gyakorló) leckéjéé az összefoglaló feladat.
   A leckék sorban nyílnak: a következő csak az előzőek teljesítése után.
+
+## Kvízblokkok
+
+A Python mellett ` ```quiz ` blokk is lehet kötelező feladat (` ```quiz required `) – a formátumát a
+`../digitalis-technika/README.md` írja le.

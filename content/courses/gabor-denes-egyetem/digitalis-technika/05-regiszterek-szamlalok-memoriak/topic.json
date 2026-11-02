@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Regiszterek, számlálók és memóriák", "en": "Registers, Counters and Memories" },
+  "description": {
+    "hu": "Tároló- és léptetőregiszterek, gyűrűs és Johnson-számláló, aszinkron és szinkron számlálók tervezése JK flip-floppal, félvezető memóriák (ROM, SRAM, DRAM, Flash).",
+    "en": "Storage and shift registers, ring and Johnson counters, asynchronous and synchronous counter design with JK flip-flops, semiconductor memories (ROM, SRAM, DRAM, Flash)."
+  }
+}

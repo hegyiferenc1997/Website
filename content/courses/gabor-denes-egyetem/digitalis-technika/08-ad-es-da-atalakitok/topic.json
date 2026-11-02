@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "AD és DA átalakítók", "en": "AD and DA Converters" },
+  "description": {
+    "hu": "Mintavételezés és kvantálás, Nyquist-tétel, felbontás és LSB, kvantálási hiba; flash, szukcesszív közelítéses, integráló és delta–szigma AD átalakító; súlyozott ellenállásos, R–2R, áramforrásos, delta–szigma és PWM DA átalakító; INL, DNL.",
+    "en": "Sampling and quantisation, the Nyquist theorem, resolution and LSB, quantisation error; flash, successive-approximation, integrating and delta–sigma ADCs; weighted-resistor, R–2R, current-steering, delta–sigma and PWM DACs; INL, DNL."
+  }
+}

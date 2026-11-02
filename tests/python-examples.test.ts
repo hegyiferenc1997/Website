@@ -47,7 +47,8 @@ function collect(): { cases: Case[]; problems: string[] } {
           const blocks = codeBlocks(body).filter((b) => b.lang === "python");
           let lastSolution: string | null = null;
           let requiredStarter: string | null = null;
-          let requiredCount = 0;
+          // A kötelező feladat lehet feladatlap is (```quiz required), azt a quiz.test.ts nézi.
+          let requiredCount = (body.match(/^```quiz[ \t]+required\b/gm) ?? []).length;
           for (const block of blocks) {
             if (block.role === "run") {
               cases.push({ where, code: block.code, test: null, shouldPass: true });

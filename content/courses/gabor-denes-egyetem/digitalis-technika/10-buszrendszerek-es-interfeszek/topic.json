@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Buszrendszerek és interfészek", "en": "Bus Systems and Interfaces" },
+  "description": {
+    "hu": "A busz fogalma, párhuzamos és soros átvitel, háromállapotú és nyitott drain kimenetek, arbitráció, sávszélesség; UART, SPI, I²C, CAN, USB; számítógépes buszok: PCIe, DDR memóriabusz, SATA.",
+    "en": "The concept of a bus, parallel and serial transfer, three-state and open-drain outputs, arbitration, bandwidth; UART, SPI, I²C, CAN, USB; computer buses: PCIe, DDR memory bus, SATA."
+  }
+}

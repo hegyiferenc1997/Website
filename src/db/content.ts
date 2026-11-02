@@ -31,7 +31,7 @@ export type LessonContent = {
   summary: LocalizedText | null;
   body: LocalizedText;
   minutes: number | null;
-  /** Van-e kötelező feladata (```python starter required blokk a magyar szövegben). */
+  /** Van-e kötelező feladata (```python starter required vagy ```quiz required blokk a magyar szövegben). */
   hasExercise: boolean;
 };
 

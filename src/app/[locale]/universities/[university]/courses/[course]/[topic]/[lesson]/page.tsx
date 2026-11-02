@@ -16,6 +16,7 @@ import {
 import { lessonKey } from "@/features/progress/data";
 import { GateScript } from "@/features/progress/gate-script";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
+import { Quiz } from "@/features/quiz/Quiz";
 import { Link } from "@/i18n/navigation";
 import { courseSemester } from "@/features/courses/semester";
 import { getUniversityAccess } from "@/features/payments/access";
@@ -289,6 +290,14 @@ function LessonBody({
           <div key={i} className="contents" dangerouslySetInnerHTML={{ __html: s.html }} />
         ) : s.kind === "run" ? (
           <RunnableExample key={i} code={s.code} label={s.label} codeHtml={s.codeHtml} />
+        ) : s.kind === "quiz" ? (
+          <Quiz
+            key={i}
+            questions={s.questions}
+            required={s.required}
+            lessonRef={lessonRef}
+            next={s.required ? next : null}
+          />
         ) : (
           <Exercise
             key={i}

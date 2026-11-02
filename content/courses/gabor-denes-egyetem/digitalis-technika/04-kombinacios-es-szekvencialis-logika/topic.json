@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Kombinációs és szekvenciális logika",
+    "en": "Combinational and Sequential Logic"
+  },
+  "description": {
+    "hu": "Függvénymegadás (SOP, POS, mintermek, maxtermek), Karnaugh-tábla, hazárdok, összeadók, kódátalakítók és 7 szegmenses dekóder, multiplexer, demultiplexer, dekóder, komparátor; tárolók és flip-flopok.",
+    "en": "Function forms (SOP, POS, minterms, maxterms), Karnaugh maps, hazards, adders, code converters and the 7-segment decoder, multiplexer, demultiplexer, decoder, comparator; latches and flip-flops."
+  }
+}

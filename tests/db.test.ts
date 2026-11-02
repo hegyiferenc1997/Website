@@ -46,7 +46,8 @@ describe("adatbázis", () => {
     expect(swInSem6).toHaveLength(4);
 
     const active = await db.query.courses.findMany({ where: eq(courses.isActive, true) });
-    expect(active.map((c) => c.slug)).toEqual(["programozas-alapjai"]);
+    // Aktív tárgyak: Programozási alapok (1. félév) és Digitális technika (3. félév).
+    expect(active.map((c) => c.slug).sort()).toEqual(["digitalis-technika", "programozas-alapjai"]);
   });
 });
 
