@@ -253,7 +253,7 @@
     "expiredTitle": "Earlier, expired courses",
     "course": "Course",
     "purchasedAt": "Purchased",
-    "remaining": "Active for",
+    "remaining": "Active until",
     "expiresAt": "Expired on",
     "status": "Status",
     "remainingDays": "{days, plural, one {# day} other {# days}}",

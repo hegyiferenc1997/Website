@@ -253,7 +253,7 @@
     "expiredTitle": "Korábbi, lejárt tananyagok",
     "course": "Tananyag",
     "purchasedAt": "Vásárlás dátuma",
-    "remaining": "Még aktív",
+    "remaining": "Még aktív eddig",
     "expiresAt": "Lejárat",
     "status": "Állapot",
     "remainingDays": "{days, plural, one {# nap} other {# nap}}",

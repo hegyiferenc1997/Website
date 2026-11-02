@@ -92,7 +92,11 @@ async function PurchaseTables() {
               <tr key={p.id}>
                 <td className={cellClass}>{courseCell(p)}</td>
                 <td className={`${cellClass} font-mono`}>{formatDate(p.purchasedAt, locale)}</td>
-                <td className={`${cellClass} font-mono text-accent`}>{remaining(p)}</td>
+                <td className={`${cellClass} font-mono`}>
+                  {/* Lejárat dátuma, utána zárójelben a hátralévő idő */}
+                  {formatDate(p.expiresAt, locale)}{" "}
+                  <span className="text-accent">({remaining(p)})</span>
+                </td>
               </tr>
             ))}
           </Table>
@@ -111,7 +115,8 @@ async function PurchaseTables() {
                 <td className={`${cellClass} font-mono`}>{formatDate(p.purchasedAt, locale)}</td>
                 <td className={`${cellClass} font-mono`}>{formatDate(p.expiresAt, locale)}</td>
                 <td className={cellClass}>
-                  <span className="rounded-md border border-line px-2 py-0.5 font-mono text-xs">
+                  {/* Piros „Lejárt” címke */}
+                  <span className="rounded-md border border-[var(--danger,#e5534b)] px-2 py-0.5 font-mono text-xs text-[var(--danger,#e5534b)]">
                     {t("expired")}
                   </span>
                 </td>
