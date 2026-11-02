@@ -17,6 +17,11 @@ import {
 import { courseLessons } from "@/features/courses/lessons";
 import { lessonKey } from "@/features/progress/data";
 import { GateScript } from "@/features/progress/gate-script";
+import { formatDateUntil } from "@/features/account/format";
+import { courseSemester } from "@/features/courses/semester";
+import { getUniversityAccess } from "@/features/payments/access";
+import { BuyButton } from "@/features/payments/BuyButton";
+import { LockedNotice } from "@/features/payments/LockedNotice";
 
 // Az oldal bemenete: az URL paraméterei (nyelv, egyetem, tárgy).
 type Props = PageProps<"/[locale]/universities/[university]/courses/[course]">;
@@ -51,14 +56,33 @@ export default async function CoursePage({ params }: Props) {
 // A tárgy oldal tartalma: fejléc az adatokkal, témakörök a leckékkel.
 async function CourseContent({ params }: Pick<Props, "params">) {
   const { university, course: slug } = await params;
-  const [course, locale, t, tNav] = await Promise.all([
+  // A hozzáférés (megvásárolt félévek) is kell, ezért ez a rész kérésenként készül.
+  const [course, locale, t, tNav, tUni, access] = await Promise.all([
     getCourse(university, slug),
     getLocale(),
     getTranslations("CoursePage"),
     getTranslations("Layout.nav"),
+    getTranslations("UniversityPage"),
+    getUniversityAccess(university),
   ]);
   // Ismeretlen tárgy → 404 oldal.
   if (!course) notFound();
+
+  // Melyik félévhez tartozik, és meg van-e véve. Ha nincs, a témakörök és leckék címei látszanak,
+  // de a leckék nem nyithatók meg.
+  const semester = courseSemester(course.programCourses);
+  const until = access.passes.get(semester);
+  const paid = until !== undefined;
+  const buyButton = (
+    <BuyButton
+      university={course.university.slug}
+      semester={semester}
+      semesterTitle={semester === 0 ? tUni("noSemester") : tUni("semester", { semester })}
+      signedIn={access.user !== null}
+      activeUntil={null}
+      size="large"
+    />
+  );
 
   const description = localize(course.description, locale);
   // Van-e egyáltalán lecke (különben nincs „Tananyag indítása” gomb).
@@ -71,13 +95,20 @@ async function CourseContent({ params }: Pick<Props, "params">) {
 
   // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben; a linkek folyamatos sorszámot kapnak.
   const allLessons = courseLessons(course);
-  const gate = { university: course.university.slug, course: course.slug, lessons: allLessons };
+  const gate = {
+    university: course.university.slug,
+    course: course.slug,
+    lessons: allLessons,
+    paid,
+  };
   let position = 0;
 
   return (
     <div className="grid gap-10">
       {/* A zárolt leckék jelölése még a kirajzolás előtt (nincs villanás). */}
-      <GateScript courseKey={`${course.university.slug}/${course.slug}`} lessons={allLessons} />
+      {paid && (
+        <GateScript courseKey={`${course.university.slug}/${course.slug}`} lessons={allLessons} />
+      )}
       <div className="grid gap-4">
         {/* Morzsamenü: Egyetemek / <egyetem neve> */}
         <nav aria-label={t("breadcrumb")} className="text-sm text-muted">
@@ -108,8 +139,14 @@ async function CourseContent({ params }: Pick<Props, "params">) {
           course={course.slug}
           lessons={allLessons}
         />
-        {/* „Tananyag indítása”: a sorrendben első, még ki nem pipált leckére visz */}
-        {first && (
+        {/* „Tananyag indítása”: a sorrendben első, még ki nem pipált leckére visz.
+            Megvásárolt félévnél a hozzáférés lejárata is látszik; ha nincs megvéve, lent a zárolás üzenete. */}
+        {first && paid && (
+          <p className="font-mono text-xs text-accent">
+            ✓ {t("accessUntil", { date: formatDateUntil(until, locale) })}
+          </p>
+        )}
+        {first && paid && (
           <StartCourseLink
             university={course.university.slug}
             course={course.slug}
@@ -157,6 +194,17 @@ async function CourseContent({ params }: Pick<Props, "params">) {
       <div className="grid items-start gap-6">
         <section className="grid gap-4">
           <SectionTitle>{t("topics")}</SectionTitle>
+          {/* Nincs megvásárolva: magyarázat a zárolásról, vásárlás gombbal */}
+          {first && !paid && (
+            <LockedNotice
+              title={t("lockedTitle")}
+              text={t("lockedText", {
+                semester: semester === 0 ? tUni("noSemester") : tUni("semester", { semester }),
+              })}
+            >
+              {buyButton}
+            </LockedNotice>
+          )}
           {course.topics.length === 0 ? (
             <EmptyState>{t("noTopics")}</EmptyState>
           ) : (
@@ -196,7 +244,8 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         };
                         return (
                           <li key={lesson.id} className="flex items-center gap-4 px-5 py-3">
-                            {lesson.hasExercise ? (
+                            {/* Zárolt (meg nem vásárolt) tárgynál nem pipálható kézzel */}
+                            {lesson.hasExercise || !paid ? (
                               <LessonDoneMark {...ref} />
                             ) : (
                               <LessonDoneToggle {...ref} />

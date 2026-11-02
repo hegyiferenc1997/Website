@@ -134,7 +134,10 @@
     "specializationLabel": "Specialisation",
     "type": "Type",
     "minutes": "{minutes} min",
-    "start": "Start learning"
+    "start": "Start learning",
+    "lockedTitle": "This course material is locked",
+    "lockedText": "Topic and lesson titles are free to browse. To open the lessons, buy access to {semester} – it unlocks every course in that semester.",
+    "accessUntil": "Your access is active until {date}"
   },
   "NotFound": {
     "title": "Page not found",
@@ -159,7 +162,8 @@
     "lockedHint": "Locked: finish the previous lessons first",
     "lockedTitle": "This lesson is still locked",
     "lockedText": "The course goes in order: a lesson unlocks once you have passed the exercises of all previous lessons.",
-    "goToOpen": "Go to your current lesson"
+    "goToOpen": "Go to your current lesson",
+    "paywallHint": "Locked: buy the semester to open it"
   },
   "Search": {
     "open": "Search",
@@ -202,7 +206,9 @@
     "minutes": "about {minutes} min",
     "finished": "You've reached the last lesson of this course.",
     "backToCourse": "Back to the course",
-    "lessonNav": "Lesson navigation"
+    "lessonNav": "Lesson navigation",
+    "lockedTitle": "This lesson is locked",
+    "lockedText": "This lesson is part of {semester}. Buy the semester to open it – it unlocks every course in that semester."
   },
   "Python": {
     "run": "Run",
@@ -246,11 +252,11 @@
   },
   "MyCoursesPage": {
     "title": "My courses",
-    "intro": "The course materials you have purchased: the ones active now and your earlier, expired purchases.",
+    "intro": "The semesters you have purchased: the ones active now and your earlier, expired purchases.",
     "loading": "Loading…",
     "signedOut": "Sign in at the top right to see your courses.",
-    "activeTitle": "Currently active courses",
-    "expiredTitle": "Earlier, expired courses",
+    "activeTitle": "Currently active semesters",
+    "expiredTitle": "Earlier, expired semesters",
     "course": "Course",
     "purchasedAt": "Purchased",
     "remaining": "Active until",
@@ -259,10 +265,59 @@
     "remainingDays": "{days, plural, one {# day} other {# days}}",
     "remainingHours": "{hours, plural, =0 {less than 1 hour} one {# hour} other {# hours}}",
     "expired": "Expired",
-    "activeEmpty": "You have no active courses right now.",
-    "expiredEmpty": "You have no expired courses yet.",
-    "noPayments": "Purchasing is not available on the site yet; once it launches, your courses will appear here.",
+    "activeEmpty": "You have no active semesters right now.",
+    "expiredEmpty": "You have no expired semesters yet.",
+    "noPayments": "You can buy access on a university's page, with the “Buy” button next to each semester.",
     "demoButton": "Add example purchases (development only)",
     "unknownCourse": "Unknown course"
+  },
+  "Payments": {
+    "buy": "Buy",
+    "fromPrice": "from {price}",
+    "activeUntil": "Active until {date}",
+    "extend": "Extend",
+    "comingSoon": "Coming soon",
+    "dialogEyebrow": "unlock semester",
+    "dialogTitle": "{semester} – full access",
+    "dialogText": "Every lesson of every available course in this semester, with runnable examples and auto-checked exercises. Choose how long you need it.",
+    "extendNote": "You already have access until {date}; the new period starts when that ends, so you don't lose a single day.",
+    "close": "Close",
+    "bestValue": "Best value",
+    "days": "{days} days",
+    "perDay": "≈ {price} / day",
+    "choose": "Choose this",
+    "redirecting": "Redirecting…",
+    "signInToBuy": "Sign in to buy",
+    "mockNote": "Test payment: no real charge is made, prices are placeholders.",
+    "plans": {
+      "week": {
+        "name": "Weekly",
+        "tagline": "Quick help in an emergency, e.g. right before a test or exam."
+      },
+      "month": {
+        "name": "Monthly",
+        "tagline": "A calm month of studying to master a topic properly."
+      },
+      "semester": {
+        "name": "Semester",
+        "tagline": "For the whole semester, from the first class to the end of exams."
+      }
+    }
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "intro": "Check your order, then confirm the payment.",
+    "loading": "Loading…",
+    "mockBanner": "Test payment: this is a development checkout page, no real charge is made. Card payment will be added here later.",
+    "university": "University",
+    "semester": "Semester",
+    "plan": "Plan",
+    "validUntil": "Access until",
+    "total": "Total",
+    "pay": "Pay (test) · {price}",
+    "cancel": "Cancel",
+    "signedOut": "Sign in at the top right to make a purchase.",
+    "invalid": "Invalid or incomplete order. Start the purchase again on the university page.",
+    "unavailable": "Test payments are turned off."
   }
 }

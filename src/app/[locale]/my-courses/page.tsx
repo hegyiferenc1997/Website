@@ -8,7 +8,8 @@ import { formatDate } from "@/features/account/format";
 import { getPurchases, type Purchase } from "@/features/account/purchases";
 import { getSessionUser } from "@/features/auth/server";
 import { localize } from "@/features/courses/localize";
-import { getCourseCatalog } from "@/features/courses/queries";
+import { getCourseCatalog, getUniversities } from "@/features/courses/queries";
+import { formatHuf, isPlanId } from "@/features/payments/plans";
 import { Link } from "@/i18n/navigation";
 
 // Fülcím; személyes oldal, a keresők ne vegyék fel.
@@ -35,21 +36,46 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 // A bejelentkezett felhasználó vásárlásai két táblázatban: aktívak, alatta a lejártak.
 async function PurchaseTables() {
-  const [t, locale, user] = await Promise.all([
+  const [t, tUni, tPay, locale, user] = await Promise.all([
     getTranslations("MyCoursesPage"),
+    getTranslations("UniversityPage"),
+    getTranslations("Payments"),
     getLocale(),
     getSessionUser(),
   ]);
   if (!user) return <EmptyState>{t("signedOut")}</EmptyState>;
 
   const now = new Date();
-  const [{ active, expired }, catalog] = await Promise.all([
+  const [{ active, expired }, catalog, universities] = await Promise.all([
     getAccountDb().then((db) => getPurchases(db, user.id, now)),
     getCourseCatalog(),
+    getUniversities(),
   ]);
 
-  // A tárgy neve és egyeteme a tananyag-adatbázisból (a vásárlás csak a slugokat tárolja).
+  // A vásárlás megnevezése: félév-vásárlásnál a félév és az egyetem (link az egyetem oldalára), alatta
+  // a csomag és az ár; régi, tárgyankénti vásárlásnál a tárgy neve (a vásárlás csak a slugokat tárolja).
   const courseCell = (p: Purchase) => {
+    if (p.semester !== null) {
+      const u = universities.find((u) => u.slug === p.universitySlug);
+      if (!u) return <span className="text-muted">{t("unknownCourse")}</span>;
+      return (
+        <Link
+          href={{ pathname: "/universities/[university]", params: { university: u.slug } }}
+          className="grid justify-items-center gap-0.5 hover:text-accent"
+        >
+          <span className="font-semibold">
+            {p.semester === 0 ? tUni("noSemester") : tUni("semester", { semester: p.semester })}
+          </span>
+          <span className="text-xs text-muted">{localize(u.name, locale)}</span>
+          {isPlanId(p.plan) && (
+            <span className="font-mono text-xs text-muted">
+              {tPay(`plans.${p.plan}.name`)}
+              {p.amountHuf !== null && <> · {formatHuf(p.amountHuf, locale)}</>}
+            </span>
+          )}
+        </Link>
+      );
+    }
     const c = catalog.find(
       (c) => c.slug === p.courseSlug && c.university.slug === p.universitySlug,
     );
@@ -58,7 +84,7 @@ async function PurchaseTables() {
       <Link
         href={{
           pathname: "/universities/[university]/courses/[course]",
-          params: { university: p.universitySlug, course: p.courseSlug },
+          params: { university: p.universitySlug, course: c.slug },
         }}
         className="grid justify-items-center gap-0.5 hover:text-accent"
       >

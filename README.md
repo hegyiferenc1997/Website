@@ -24,6 +24,11 @@ Postgrest indít (a regisztrált fiókokat a `pnpm dev` a `.data/` mappába ment
 E-mail + jelszóval rögtön működik. A Google és az Apple belépés beállítása lépésről lépésre:
 [docs/bejelentkezes.md](docs/bejelentkezes.md). A beállítások mintája: [.env.example](.env.example).
 
+## Fizetés
+
+Félévenkénti hozzáférés három csomaggal; egyelőre próba-fizetéssel (valódi terhelés nélkül).
+Részletek és a valódi szolgáltató bekötése: [docs/fizetes.md](docs/fizetes.md).
+
 ## Technológia
 
 | Réteg             | Eszköz                                     |

@@ -367,9 +367,10 @@ export const userActivity = pgTable("user_activity", {
 });
 
 /**
- * Megvásárolt tananyagok (tárgyanként): mikor vette meg, és meddig érvényes.
- * A tárgyat az egyetem és a tárgy slugja azonosítja (nem idegen kulcs), mert fejlesztés közben
- * a fiókok külön adatbázisban vannak, mint a tananyag. Fizetés még nincs, a sorok egyelőre kézzel kerülnek ide.
+ * Megvásárolt hozzáférések. Egyetemenként és félévenként lehet vásárolni (a semester mező), ez nyitja meg
+ * a félév összes tárgyának tananyagát; a course_slug csak a régebbi, tárgyankénti sorokban van kitöltve.
+ * A tárgyat / félévet az egyetem slugja azonosítja (nem idegen kulcs), mert fejlesztés közben
+ * a fiókok külön adatbázisban vannak, mint a tananyag.
  */
 export const coursePurchases = pgTable(
   "course_purchases",
@@ -379,7 +380,18 @@ export const coursePurchases = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     universitySlug: text("university_slug").notNull(),
-    courseSlug: text("course_slug").notNull(),
+    /** Régi, tárgyankénti vásárlásnál a tárgy; félév-vásárlásnál üres. */
+    courseSlug: text("course_slug"),
+    /** A megvásárolt félév (0 = félév nélküli tárgyak); tárgyankénti vásárlásnál üres. */
+    semester: integer("semester"),
+    /** A csomag azonosítója (week | month | semester), lásd features/payments/plans.ts. */
+    plan: text("plan"),
+    /** A kifizetett összeg forintban. */
+    amountHuf: integer("amount_huf"),
+    /** Melyik fizetési szolgáltató rögzítette („mock” = próba-fizetés, később pl. „stripe”). */
+    provider: text("provider"),
+    /** A szolgáltató saját azonosítója a fizetéshez (pl. Stripe checkout session id); ugyanazt kétszer nem rögzítjük. */
+    providerRef: text("provider_ref").unique(),
     purchasedAt: timestamp("purchased_at", { withTimezone: true }).notNull().defaultNow(),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
