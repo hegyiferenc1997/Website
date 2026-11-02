@@ -20,6 +20,10 @@ const LANGS = {
   typescript: () => import("shiki/langs/typescript.mjs"),
   json: () => import("shiki/langs/json.mjs"),
   sql: () => import("shiki/langs/sql.mjs"),
+  ruby: () => import("shiki/langs/ruby.mjs"),
+  go: () => import("shiki/langs/go.mjs"),
+  rust: () => import("shiki/langs/rust.mjs"),
+  kotlin: () => import("shiki/langs/kotlin.mjs"),
 };
 
 // Más nevek ugyanarra a nyelvre, pl. ```py → python.
@@ -34,6 +38,10 @@ const ALIASES: Record<string, keyof typeof LANGS> = {
   "c#": "csharp",
   js: "javascript",
   ts: "typescript",
+  rb: "ruby",
+  golang: "go",
+  rs: "rust",
+  kt: "kotlin",
 };
 
 /** A kódblokk fejlécében megjelenő név. */
@@ -48,7 +56,14 @@ const LABELS: Partial<Record<keyof typeof LANGS, string>> = {
   sql: "SQL",
   c: "C",
   java: "Java",
+  ruby: "Ruby",
+  go: "Go",
+  rust: "Rust",
+  kotlin: "Kotlin",
 };
+
+// Ezekhez a jelölésekhez nem írunk fejlécet (sima szöveg, kimenet).
+const NO_LABEL = new Set(["", "text", "txt", "plaintext", "output"]);
 
 // A kódkiemelő egyszer jön létre, utána újrahasznosítjuk (lassú elindítani).
 let highlighter: Promise<HighlighterCore> | undefined;
@@ -77,7 +92,7 @@ const ROLE_LABELS: Record<string, Record<CodeRole, string>> = {
 function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code, locale: string): string {
   const { lang: raw, role } = parseCodeInfo(lang);
   const name = (raw in LANGS ? raw : ALIASES[raw]) as keyof typeof LANGS | undefined;
-  const base = name ? LABELS[name] : raw;
+  const base = name ? LABELS[name] : NO_LABEL.has(raw) ? "" : raw;
   const roleLabel = role ? (ROLE_LABELS[locale] ?? ROLE_LABELS.hu)[role] : "";
   const label = [base, roleLabel].filter(Boolean).join(" · ");
   const code = name
