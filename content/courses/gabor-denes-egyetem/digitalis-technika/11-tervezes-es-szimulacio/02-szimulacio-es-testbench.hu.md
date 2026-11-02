@@ -24,7 +24,7 @@ Egy FPGA felprogramozása és a hiba megkeresése a valódi panelen lassú és n
 A **testbench** (tesztkörnyezet) egy olyan HDL-modul, amely **nem lesz hardver**: csak a szimulátorban fut, és a tesztelt áramkört (**DUT** – device under test) „körbeveszi”:
 
 ```text
- ┌───────────────────── testbench (nincsenek portjai) ──────────────────┐
+ ┌───────────────────── testbench (nincsenek portjai) ───────────────────┐
  │  órajel- és     ──>  ┌───────┐  ──>  ellenőrzés                       │
  │  gerjesztés-         │  DUT  │       (várt érték összevetése,         │
  │  generátor      ──>  └───────┘  ──>  hibaüzenet)                      │

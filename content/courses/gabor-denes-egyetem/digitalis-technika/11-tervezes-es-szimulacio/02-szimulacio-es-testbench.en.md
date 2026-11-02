@@ -24,10 +24,10 @@ Programming an FPGA and finding a bug on the real board is slow and hard: you ca
 A **testbench** is an HDL module that **will not become hardware**: it runs only in the simulator and “surrounds” the circuit under test (**DUT** – device under test):
 
 ```text
- ┌──────────────────────── testbench (no ports) ─────────────────────────┐
+ ┌──────────────────────── testbench (no ports) ──────────────────────────┐
  │  clock and      ──>  ┌───────┐  ──>  checking                          │
- │  stimulus            │  DUT  │       (compare with expected value,   │
- │  generator      ──>  └───────┘  ──>  error message)                   │
+ │  stimulus            │  DUT  │       (compare with expected value,     │
+ │  generator      ──>  └───────┘  ──>  error message)                    │
  └────────────────────────────────────────────────────────────────────────┘
 ```
 

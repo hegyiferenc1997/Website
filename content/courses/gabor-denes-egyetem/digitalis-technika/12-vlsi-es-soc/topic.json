@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "VLSI-áramkörök és SoC", "en": "VLSI Circuits and SoC" },
+  "description": {
+    "hu": "A CMOS-kapuk tranzisztoros felépítése, a chipgyártás lépései és a Moore-törvény; ASIC és FPGA, a VLSI-tervezés folyamata és a tesztelhetőség; a rendszer egy chipen (SoC): processzormagok, IP-blokkok, chipen belüli buszok, energiagazdálkodás.",
+    "en": "The transistor-level structure of CMOS gates, the steps of chip manufacturing and Moore's law; ASIC and FPGA, the VLSI design flow and testability; the system on a chip (SoC): processor cores, IP blocks, on-chip buses, power management."
+  }
+}
