@@ -25,7 +25,8 @@ export function LanguageSwitcher() {
           <span
             key={locale}
             aria-current="true"
-            title={t(locale)}
+            // Súgó-buborék: melyik nyelv az aktuális (lásd globals.css).
+            data-tooltip={t("current", { locale })}
             className="rounded bg-accent-soft px-2 py-1.5 font-bold text-accent"
           >
             {locale.toUpperCase()}
@@ -44,7 +45,8 @@ export function LanguageSwitcher() {
             })}
             hrefLang={locale}
             lang={locale}
-            title={t(locale)}
+            // Súgó-buborék: mit csinál a kattintás, pl. „Váltás angol nyelvre”.
+            data-tooltip={t(`switchTo.${locale}`)}
             className="rounded px-2 py-1.5 text-muted transition-colors hover:bg-surface-hover hover:text-fg"
           >
             {locale.toUpperCase()}

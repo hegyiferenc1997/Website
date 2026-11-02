@@ -22,7 +22,12 @@
     "language": {
       "label": "Language",
       "hu": "Magyar",
-      "en": "English"
+      "en": "English",
+      "switchTo": {
+        "hu": "Switch to Hungarian",
+        "en": "Switch to English"
+      },
+      "current": "Current language: {locale, select, hu {Hungarian} other {English}}"
     },
     "login": {
       "open": "Log in",
