@@ -6,10 +6,10 @@ import type { LocalizedText } from "./schema";
 //
 // Szerkezet:
 //   content/courses/<egyetem>/<tárgy>/
-//     01-bevezetes/                     ← témakör (a szám a sorrend, utána a slug)
+//     01-alapelvek-es-koncepciok/       ← témakör (a szám a sorrend, utána a slug)
 //       topic.json                      ← { "title": { "hu": "…", "en": "…" }, "description": {…} }
-//       01-mi-a-program.hu.md           ← lecke magyarul (kötelező)
-//       01-mi-a-program.en.md           ← lecke angolul (ha hiányzik, a magyar jelenik meg)
+//       01-mi-a-programozas.hu.md       ← lecke magyarul (kötelező)
+//       01-mi-a-programozas.en.md       ← lecke angolul (ha hiányzik, a magyar jelenik meg)
 //
 // A lecke fájl elején egy rövid fejléc áll:
 //   ---

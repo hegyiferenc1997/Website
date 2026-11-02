@@ -40,6 +40,7 @@ function collect(): Snippet[] {
     for (const topic of course.topics) {
       for (const lesson of topic.lessons) {
         for (const [lang, body] of Object.entries(lesson.body)) {
+          if (!body) continue;
           const where = `${course.course}/${topic.slug}/${lesson.slug}.${lang}`;
           let lastSolution: string | null = null;
           for (const block of codeBlocks(body)) {
