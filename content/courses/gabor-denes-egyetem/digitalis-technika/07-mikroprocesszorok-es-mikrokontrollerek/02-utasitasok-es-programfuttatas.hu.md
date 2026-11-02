@@ -24,20 +24,20 @@ Egy ugróutasítás egyszerűen **felülírja a PC-t** – így a következő le
 
 ## Utasításformátum és nyelvi szintek
 
-Egy gépi utasítás egy **műveleti kódból** (opcode – *mit* csináljon) és **operandus(ok)ból** (*mivel*) áll. A processzor csak a bináris **gépi kódot** érti; ennek ember által olvasható alakja az **assembly** (pl. `ADD R1, R2`), a magas szintű nyelveket (C, Python) fordító- vagy értelmezőprogram alakítja gépi kóddá.
+Egy gépi utasítás egy **műveleti kódból** (opcode – _mit_ csináljon) és **operandus(ok)ból** (_mivel_) áll. A processzor csak a bináris **gépi kódot** érti; ennek ember által olvasható alakja az **assembly** (pl. `ADD R1, R2`), a magas szintű nyelveket (C, Python) fordító- vagy értelmezőprogram alakítja gépi kóddá.
 
 ## Címzési módok
 
 Hol van az operandus?
 
-| címzési mód      | példa (szimbolikus) | jelentés                                         |
-| ---------------- | ------------------- | ------------------------------------------------ |
-| **közvetlen adat** (immediate) | `LOAD #5`  | az operandus **maga az utasításban** van: 5     |
-| **direkt** (abszolút) | `LOAD 200`     | a **200-as memóriacímen** lévő érték             |
-| **regiszteres**  | `ADD R1, R2`        | az operandus egy regiszterben van                |
-| **indirekt**     | `LOAD (R1)`         | R1 tartalma a **cím**, onnan olvas (mutató)      |
-| **indexelt**     | `LOAD 100(R2)`      | cím = 100 + R2 (tömbök bejárása)                 |
-| **relatív**      | `JMP +8`            | cím = PC + 8 (ugrások)                           |
+| címzési mód                    | példa (szimbolikus) | jelentés                                    |
+| ------------------------------ | ------------------- | ------------------------------------------- |
+| **közvetlen adat** (immediate) | `LOAD #5`           | az operandus **maga az utasításban** van: 5 |
+| **direkt** (abszolút)          | `LOAD 200`          | a **200-as memóriacímen** lévő érték        |
+| **regiszteres**                | `ADD R1, R2`        | az operandus egy regiszterben van           |
+| **indirekt**                   | `LOAD (R1)`         | R1 tartalma a **cím**, onnan olvas (mutató) |
+| **indexelt**                   | `LOAD 100(R2)`      | cím = 100 + R2 (tömbök bejárása)            |
+| **relatív**                    | `JMP +8`            | cím = PC + 8 (ugrások)                      |
 
 ## Az utasítások fajtái
 
@@ -69,12 +69,12 @@ Egy periféria (időzítő, gombnyomás, beérkezett soros adat) **megszakítás
 
 ## CISC és RISC
 
-|                      | **CISC** (complex instruction set)                  | **RISC** (reduced instruction set)                   |
-| -------------------- | --------------------------------------------------- | ---------------------------------------------------- |
-| utasítások           | sok, összetett, változó hosszúságú                  | kevés, egyszerű, **fix hosszúságú**                  |
-| memória-hozzáférés   | sok utasítás közvetlenül memóriával dolgozik        | csak LOAD és STORE éri el a memóriát (load/store)    |
-| végrehajtás          | több órajel / utasítás                              | jellemzően **1 utasítás / órajel** (pipeline)        |
-| példa                | x86 (Intel, AMD)                                    | ARM, RISC-V, AVR                                     |
+|                    | **CISC** (complex instruction set)           | **RISC** (reduced instruction set)                |
+| ------------------ | -------------------------------------------- | ------------------------------------------------- |
+| utasítások         | sok, összetett, változó hosszúságú           | kevés, egyszerű, **fix hosszúságú**               |
+| memória-hozzáférés | sok utasítás közvetlenül memóriával dolgozik | csak LOAD és STORE éri el a memóriát (load/store) |
+| végrehajtás        | több órajel / utasítás                       | jellemzően **1 utasítás / órajel** (pipeline)     |
+| példa              | x86 (Intel, AMD)                             | ARM, RISC-V, AVR                                  |
 
 ## Pipeline (futószalag)
 

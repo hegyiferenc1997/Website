@@ -34,11 +34,11 @@ Az állapot azt tárolja, **mennyit láttunk már** a keresett mintából:
 - **B** – „1” jött,
 - **C** – „10” jött.
 
-| állapot | x = 0     | x = 1     |
-| ------- | --------- | --------- |
-| A       | A / 0     | B / 0     |
-| B       | C / 0     | B / 0     |
-| C       | A / 0     | **B / 1** |
+| állapot | x = 0 | x = 1     |
+| ------- | ----- | --------- |
+| A       | A / 0 | B / 0     |
+| B       | C / 0 | B / 0     |
+| C       | A / 0 | **B / 1** |
 
 (A „/” után a kimenet.) A C állapotban érkező 1 teljesíti a mintát: y = 1, és mivel ez az 1 egy új minta eleje is lehet, B-be lépünk – így lesz átlapolódó.
 
@@ -65,12 +65,12 @@ A D állapotból a „01”-et már „10”-ként (C) vagy „1”-ként (B) fo
 
 ## Mealy vagy Moore?
 
-| szempont              | Mealy                                         | Moore                                   |
-| --------------------- | --------------------------------------------- | --------------------------------------- |
-| állapotok száma       | kevesebb (itt 3)                              | több (itt 4)                            |
-| reakció               | azonnal, ugyanabban az ütemben                | egy órajellel később                    |
-| kimenet               | a bemenet tüskéi, zaja **átjuthat** a kimenetre | stabil, csak órajel élen változik     |
-| időzítés              | hosszabb kombinációs út (bemenet → kimenet)   | rövidebb, könnyebb időzíteni            |
+| szempont        | Mealy                                           | Moore                             |
+| --------------- | ----------------------------------------------- | --------------------------------- |
+| állapotok száma | kevesebb (itt 3)                                | több (itt 4)                      |
+| reakció         | azonnal, ugyanabban az ütemben                  | egy órajellel később              |
+| kimenet         | a bemenet tüskéi, zaja **átjuthat** a kimenetre | stabil, csak órajel élen változik |
+| időzítés        | hosszabb kombinációs út (bemenet → kimenet)     | rövidebb, könnyebb időzíteni      |
 
 A gyakorlatban gyakran a Mealy-gép kimenetét is egy flip-floppal **regisztrálják** – így tiszta lesz, de egy ütemmel késik, mint a Moore-gép.
 

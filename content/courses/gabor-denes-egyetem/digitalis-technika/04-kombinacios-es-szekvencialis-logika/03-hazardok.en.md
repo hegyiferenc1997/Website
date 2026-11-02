@@ -39,12 +39,12 @@ F      ‾‾‾‾‾‾‾‾|__|‾‾‾‾‾‾‾‾‾‾‾‾  ← gli
 
 ## Types of hazards
 
-| type               | expected behaviour        | what happens       |
-| ------------------ | ------------------------- | ------------------ |
-| static-1           | stays 1                   | 1 → 0 → 1          |
-| static-0           | stays 0                   | 0 → 1 → 0          |
-| dynamic            | switches once (0 → 1)     | 0 → 1 → 0 → 1      |
-| functional         | several inputs change at once | the intermediate state shows |
+| type       | expected behaviour            | what happens                 |
+| ---------- | ----------------------------- | ---------------------------- |
+| static-1   | stays 1                       | 1 → 0 → 1                    |
+| static-0   | stays 0                       | 0 → 1 → 0                    |
+| dynamic    | switches once (0 → 1)         | 0 → 1 → 0 → 1                |
+| functional | several inputs change at once | the intermediate state shows |
 
 - The **static-1** hazard typically appears in **SOP** (AND–OR), the **static-0** in **POS** (OR–AND) implementations.
 - The **dynamic** hazard occurs in multi-level circuits, where a signal reaches the output via three or more paths with different delays.
@@ -56,10 +56,10 @@ A static-1 hazard may occur where **two adjacent 1 cells are covered by differen
 
 The map of F = AB + A̅C (row: A, column: BC):
 
-| A \ BC | 00 | 01 | 11 | 10 |
-| ------ | -- | -- | -- | -- |
-| 0      | 0  | 1  | 1  | 0  |
-| 1      | 0  | 0  | 1  | 1  |
+| A \ BC | 00  | 01  | 11  | 10  |
+| ------ | --- | --- | --- | --- |
+| 0      | 0   | 1   | 1   | 0   |
+| 1      | 0   | 0   | 1   | 1   |
 
 The A̅C group (1, 3) and the AB group (7, 6) touch at **cells 3 and 7** (B = C = 1), but there is no common group.
 

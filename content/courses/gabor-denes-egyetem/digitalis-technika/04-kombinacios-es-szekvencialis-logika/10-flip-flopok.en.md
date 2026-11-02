@@ -18,11 +18,11 @@ Two D latches are connected in series; the first (**master**) is transparent whi
 
 **Q<sup>+</sup> = D** (at the next active edge)
 
-| CLK   | D | Q<sup>+</sup> |
-| ----- | - | ------------- |
-| ↑     | 0 | 0             |
-| ↑     | 1 | 1             |
-| other | X | Q (hold)      |
+| CLK   | D   | Q<sup>+</sup> |
+| ----- | --- | ------------- |
+| ↑     | 0   | 0             |
+| ↑     | 1   | 1             |
+| other | X   | Q (hold)      |
 
 The D flip-flop is a **one-clock delay** (hence “D” = delay/data). It is the basic building block of modern digital design: every register, FPGA cell and processor pipeline consists of D flip-flops. Well-known IC: **7474** (two D flip-flops with PRE̅ and CLR̅ inputs).
 
@@ -30,12 +30,12 @@ The D flip-flop is a **one-clock delay** (hence “D” = delay/data). It is the
 
 The **JK** flip-flop is an improved SR with **no forbidden state**: for J = K = 1 it **toggles**. The letters J and K honour its inventor, **Jack Kilby**.
 
-| J | K | Q<sup>+</sup> | operation |
-| - | - | ------------- | --------- |
-| 0 | 0 | Q             | hold      |
-| 0 | 1 | 0             | reset     |
-| 1 | 0 | 1             | set       |
-| 1 | 1 | Q̅             | toggle    |
+| J   | K   | Q<sup>+</sup> | operation |
+| --- | --- | ------------- | --------- |
+| 0   | 0   | Q             | hold      |
+| 0   | 1   | 0             | reset     |
+| 1   | 0   | 1             | set       |
+| 1   | 1   | Q̅             | toggle    |
 
 **Q<sup>+</sup> = J·Q̅ + K̅·Q**
 
@@ -45,10 +45,10 @@ With the old level-triggered JK latch, for J = K = 1 and a long clock pulse the 
 
 The **T** (toggle) flip-flop has one control input: for T = 1 it **toggles** at every active edge, for T = 0 it **holds**.
 
-| T | Q<sup>+</sup> |
-| - | ------------- |
-| 0 | Q             |
-| 1 | Q̅             |
+| T   | Q<sup>+</sup> |
+| --- | ------------- |
+| 0   | Q             |
+| 1   | Q̅             |
 
 **Q<sup>+</sup> = T ⊕ Q**
 
@@ -58,24 +58,24 @@ It is rarely available ready-made: it is made from a JK flip-flop by wiring **J 
 
 The characteristic table tells **what the next state will be**. In design we ask the reverse: **what control is needed for a given Q → Q<sup>+</sup> transition?** That is what the **excitation table** is for (X = don't care):
 
-| Q → Q<sup>+</sup> | D | T | J | K | S | R |
-| ----------------- | - | - | - | - | - | - |
-| 0 → 0             | 0 | 0 | 0 | X | 0 | X |
-| 0 → 1             | 1 | 1 | 1 | X | 1 | 0 |
-| 1 → 0             | 0 | 1 | X | 1 | 0 | 1 |
-| 1 → 1             | 1 | 0 | X | 0 | X | 0 |
+| Q → Q<sup>+</sup> | D   | T   | J   | K   | S   | R   |
+| ----------------- | --- | --- | --- | --- | --- | --- |
+| 0 → 0             | 0   | 0   | 0   | X   | 0   | X   |
+| 0 → 1             | 1   | 1   | 1   | X   | 1   | 0   |
+| 1 → 0             | 0   | 1   | X   | 1   | 0   | 1   |
+| 1 → 1             | 1   | 0   | X   | 0   | X   | 0   |
 
 Because of the many **X**s of the JK, control logic is often simplest with JK flip-flops – we will exploit this with counters in the next topic.
 
 ## Conversions
 
-| from      | to           | wiring                        |
-| --------- | ------------ | ----------------------------- |
-| JK        | D            | J = D, K = D̅                  |
-| JK        | T            | J = K = T                     |
-| D         | T            | D = T ⊕ Q                     |
-| D         | JK           | D = J·Q̅ + K̅·Q                 |
-| SR        | D            | S = D, R = D̅                  |
+| from | to  | wiring        |
+| ---- | --- | ------------- |
+| JK   | D   | J = D, K = D̅  |
+| JK   | T   | J = K = T     |
+| D    | T   | D = T ⊕ Q     |
+| D    | JK  | D = J·Q̅ + K̅·Q |
+| SR   | D   | S = D, R = D̅  |
 
 General method: for each row of the target flip-flop's characteristic table, read the required inputs from the existing flip-flop's excitation table, then simplify with a K-map.
 

@@ -17,15 +17,15 @@ Az **alfanumerikus kódok** nemcsak számokat, hanem **betűket, írásjeleket �
 
 ## ASCII
 
-Az **ASCII** (*American Standard Code for Information Interchange*, 1963) **7 bites** kód: 2<sup>7</sup> = **128** karaktert tartalmaz.
+Az **ASCII** (_American Standard Code for Information Interchange_, 1963) **7 bites** kód: 2<sup>7</sup> = **128** karaktert tartalmaz.
 
-| Tartomány (dec) | hexa      | Tartalom                                       |
-| --------------- | --------- | ---------------------------------------------- |
+| Tartomány (dec) | hexa      | Tartalom                                        |
+| --------------- | --------- | ----------------------------------------------- |
 | 0–31, 127       | 00–1F, 7F | vezérlőkarakterek (pl. 10 = LF új sor, 13 = CR) |
-| 32              | 20        | szóköz                                         |
-| 48–57           | 30–39     | számjegyek `0`–`9`                             |
-| 65–90           | 41–5A     | nagybetűk `A`–`Z`                              |
-| 97–122          | 61–7A     | kisbetűk `a`–`z`                               |
+| 32              | 20        | szóköz                                          |
+| 48–57           | 30–39     | számjegyek `0`–`9`                              |
+| 65–90           | 41–5A     | nagybetűk `A`–`Z`                               |
+| 97–122          | 61–7A     | kisbetűk `a`–`z`                                |
 
 **Megjegyzendő értékek:** `A` = 65 = 0x41 = 100 0001, `a` = 97 = 0x61, `0` = 48 = 0x30.
 
@@ -39,7 +39,7 @@ A 8. bitet régen **paritásbitként** használták, később a „kiterjesztett
 
 ## Régebbi kódok
 
-- **EBCDIC** (*Extended Binary Coded Decimal Interchange Code*) – 8 bites, az IBM nagyszámítógépein (mainframe) használt kód; a betűi nem folytonosak, ma is él banki rendszerekben.
+- **EBCDIC** (_Extended Binary Coded Decimal Interchange Code_) – 8 bites, az IBM nagyszámítógépein (mainframe) használt kód; a betűi nem folytonosak, ma is él banki rendszerekben.
 - **Hollerith-kód** – a lyukkártyás adatfeldolgozás korai kódja (Herman Hollerith, 1890-es amerikai népszámlálás). Az IBM elődcége ebből nőtt ki.
 
 ## Unicode és UTF-8
@@ -48,12 +48,12 @@ A **Unicode** a világ összes írásrendszerét egyetlen táblába foglalja: t�
 
 A kódpontot az **UTF-8** kódolás 1–4 bájton tárolja:
 
-| Kódpont tartománya | Bájtok | Bitminta                              | Példa                 |
-| ------------------ | ------ | ------------------------------------- | --------------------- |
-| U+0000 – U+007F    | 1      | 0xxxxxxx                              | `A` → 41              |
-| U+0080 – U+07FF    | 2      | 110xxxxx 10xxxxxx                     | `é` → C3 A9           |
-| U+0800 – U+FFFF    | 3      | 1110xxxx 10xxxxxx 10xxxxxx            | `€` → E2 82 AC        |
-| U+10000 –          | 4      | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx   | 😀 → F0 9F 98 80      |
+| Kódpont tartománya | Bájtok | Bitminta                            | Példa            |
+| ------------------ | ------ | ----------------------------------- | ---------------- |
+| U+0000 – U+007F    | 1      | 0xxxxxxx                            | `A` → 41         |
+| U+0080 – U+07FF    | 2      | 110xxxxx 10xxxxxx                   | `é` → C3 A9      |
+| U+0800 – U+FFFF    | 3      | 1110xxxx 10xxxxxx 10xxxxxx          | `€` → E2 82 AC   |
+| U+10000 –          | 4      | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx | 😀 → F0 9F 98 80 |
 
 Az UTF-8 előnye, hogy **visszafelé kompatibilis** az ASCII-val, és a bájtokból mindig látszik, hol kezdődik egy karakter. Ma a weboldalak több mint 98%-a UTF-8 kódolású.
 

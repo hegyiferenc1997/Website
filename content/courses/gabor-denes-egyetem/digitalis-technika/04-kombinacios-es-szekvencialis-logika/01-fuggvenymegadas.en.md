@@ -47,16 +47,16 @@ The function is the **OR of the minterms of the rows where the output is 1**.
 
 **Example** – a three-person voting machine (majority): Y = 1 if at least two inputs are 1.
 
-| row | A B C | Y |
-| --- | ----- | - |
-| 0   | 0 0 0 | 0 |
-| 1   | 0 0 1 | 0 |
-| 2   | 0 1 0 | 0 |
-| 3   | 0 1 1 | 1 |
-| 4   | 1 0 0 | 0 |
-| 5   | 1 0 1 | 1 |
-| 6   | 1 1 0 | 1 |
-| 7   | 1 1 1 | 1 |
+| row | A B C | Y   |
+| --- | ----- | --- |
+| 0   | 0 0 0 | 0   |
+| 1   | 0 0 1 | 0   |
+| 2   | 0 1 0 | 0   |
+| 3   | 0 1 1 | 1   |
+| 4   | 1 0 0 | 0   |
+| 5   | 1 0 1 | 1   |
+| 6   | 1 1 0 | 1   |
+| 7   | 1 1 1 | 1   |
 
 **Canonical SOP:** Y = A̅BC + AB̅C + ABC̅ + ABC
 **Short notation:** Y = **Σm(3, 5, 6, 7)**

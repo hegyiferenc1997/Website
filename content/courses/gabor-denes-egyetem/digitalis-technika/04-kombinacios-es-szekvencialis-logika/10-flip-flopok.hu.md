@@ -18,11 +18,11 @@ Két D tárolót sorba kötünk; az első (**master**) a CLK = 0, a második (**
 
 **Q<sup>+</sup> = D** (a következő aktív élnél)
 
-| CLK | D | Q<sup>+</sup> |
-| --- | - | ------------- |
-| ↑   | 0 | 0             |
-| ↑   | 1 | 1             |
-| egyéb | X | Q (tart)    |
+| CLK   | D   | Q<sup>+</sup> |
+| ----- | --- | ------------- |
+| ↑     | 0   | 0             |
+| ↑     | 1   | 1             |
+| egyéb | X   | Q (tart)      |
 
 A D flip-flop **egy órajelnyi késleltetés** (ezért a „D” = delay/data). Ez a modern digitális tervezés alapeleme: minden regiszter, FPGA-cella és processzor-pipeline D flip-flopokból áll. Ismert IC: **7474** (két D flip-flop, PRE̅ és CLR̅ bemenettel).
 
@@ -30,12 +30,12 @@ A D flip-flop **egy órajelnyi késleltetés** (ezért a „D” = delay/data). 
 
 A **JK** flip-flop az SR továbbfejlesztése, amelynek **nincs tiltott állapota**: J = K = 1 esetén **átbillen** (toggle). A J és K betűt feltalálója, **Jack Kilby** tiszteletére kapta.
 
-| J | K | Q<sup>+</sup> | művelet  |
-| - | - | ------------- | -------- |
-| 0 | 0 | Q             | tart     |
-| 0 | 1 | 0             | töröl    |
-| 1 | 0 | 1             | beír     |
-| 1 | 1 | Q̅             | billen   |
+| J   | K   | Q<sup>+</sup> | művelet |
+| --- | --- | ------------- | ------- |
+| 0   | 0   | Q             | tart    |
+| 0   | 1   | 0             | töröl   |
+| 1   | 0   | 1             | beír    |
+| 1   | 1   | Q̅             | billen  |
 
 **Q<sup>+</sup> = J·Q̅ + K̅·Q**
 
@@ -45,10 +45,10 @@ A régi, szintvezérelt JK tárolónál J = K = 1 és hosszú órajel esetén a 
 
 A **T** (toggle, billenő) flip-flopnak egy vezérlő bemenete van: T = 1 esetén minden aktív élnél **átbillen**, T = 0 esetén **tart**.
 
-| T | Q<sup>+</sup> |
-| - | ------------- |
-| 0 | Q             |
-| 1 | Q̅             |
+| T   | Q<sup>+</sup> |
+| --- | ------------- |
+| 0   | Q             |
+| 1   | Q̅             |
 
 **Q<sup>+</sup> = T ⊕ Q**
 
@@ -58,24 +58,24 @@ Készen ritkán kapható: JK flip-flopból készül, **J = K = T** bekötéssel.
 
 A karakterisztikus tábla megmondja, **mi lesz** a következő állapot. Tervezéskor fordítva kérdezünk: adott **Q → Q<sup>+</sup> átmenethez milyen vezérlés kell?** Erre való a **vezérlési tábla** (X = közömbös):
 
-| Q → Q<sup>+</sup> | D | T | J | K | S | R |
-| ----------------- | - | - | - | - | - | - |
-| 0 → 0             | 0 | 0 | 0 | X | 0 | X |
-| 0 → 1             | 1 | 1 | 1 | X | 1 | 0 |
-| 1 → 0             | 0 | 1 | X | 1 | 0 | 1 |
-| 1 → 1             | 1 | 0 | X | 0 | X | 0 |
+| Q → Q<sup>+</sup> | D   | T   | J   | K   | S   | R   |
+| ----------------- | --- | --- | --- | --- | --- | --- |
+| 0 → 0             | 0   | 0   | 0   | X   | 0   | X   |
+| 0 → 1             | 1   | 1   | 1   | X   | 1   | 0   |
+| 1 → 0             | 0   | 1   | X   | 1   | 0   | 1   |
+| 1 → 1             | 1   | 0   | X   | 0   | X   | 0   |
 
 A JK sok **X**-e miatt JK flip-floppal gyakran a legegyszerűbb a vezérlő logika – ezt a következő témakörben, a számlálóknál használjuk ki.
 
 ## Átalakítások
 
-| ebből     | ezt          | bekötés                       |
-| --------- | ------------ | ----------------------------- |
-| JK        | D            | J = D, K = D̅                  |
-| JK        | T            | J = K = T                     |
-| D         | T            | D = T ⊕ Q                     |
-| D         | JK           | D = J·Q̅ + K̅·Q                 |
-| SR        | D            | S = D, R = D̅                  |
+| ebből | ezt | bekötés       |
+| ----- | --- | ------------- |
+| JK    | D   | J = D, K = D̅  |
+| JK    | T   | J = K = T     |
+| D     | T   | D = T ⊕ Q     |
+| D     | JK  | D = J·Q̅ + K̅·Q |
+| SR    | D   | S = D, R = D̅  |
 
 Általános módszer: a cél flip-flop karakterisztikus táblájának minden sorához a meglévő flip-flop vezérlési táblájából kiolvassuk a szükséges bemeneteket, majd K-táblával egyszerűsítünk.
 

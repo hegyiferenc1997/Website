@@ -18,13 +18,13 @@ Egy kaputípus **univerzális** (funkcionálisan teljes), ha belőle **bármely 
 
 ## Minden NAND-ból
 
-| Kapu | NAND-os megvalósítás | NAND-ok száma |
-| ---- | -------------------- | ------------- |
-| NEM  | A̅ = (A · A)̅ – a két bemenet összekötve | 1 |
-| ÉS   | A · B = ((A · B)̅)̅ – NAND, utána NAND-inverter | 2 |
-| VAGY | A + B = (A̅ · B̅)̅ – a bemeneteket negáljuk (De Morgan) | 3 |
-| NOR  | VAGY + inverter | 4 |
-| XOR  | N = (AB)̅, Y = ((A·N)̅ · (B·N)̅)̅ | 4 |
+| Kapu | NAND-os megvalósítás                                 | NAND-ok száma |
+| ---- | ---------------------------------------------------- | ------------- |
+| NEM  | A̅ = (A · A)̅ – a két bemenet összekötve               | 1             |
+| ÉS   | A · B = ((A · B)̅)̅ – NAND, utána NAND-inverter        | 2             |
+| VAGY | A + B = (A̅ · B̅)̅ – a bemeneteket negáljuk (De Morgan) | 3             |
+| NOR  | VAGY + inverter                                      | 4             |
+| XOR  | N = (AB)̅, Y = ((A·N)̅ · (B·N)̅)̅                        | 4             |
 
 ```text
  NEM NAND-ból:        VAGY NAND-ból:
@@ -37,13 +37,13 @@ Egy kaputípus **univerzális** (funkcionálisan teljes), ha belőle **bármely 
 
 ## Minden NOR-ból
 
-| Kapu | NOR-os megvalósítás | NOR-ok száma |
-| ---- | ------------------- | ------------ |
-| NEM  | A̅ = (A + A)̅ | 1 |
-| VAGY | A + B = ((A + B)̅)̅ | 2 |
-| ÉS   | A · B = (A̅ + B̅)̅ (De Morgan) | 3 |
-| NAND | ÉS + inverter | 4 |
-| XNOR | a NAND-os XOR duálisa | 4 |
+| Kapu | NOR-os megvalósítás         | NOR-ok száma |
+| ---- | --------------------------- | ------------ |
+| NEM  | A̅ = (A + A)̅                 | 1            |
+| VAGY | A + B = ((A + B)̅)̅           | 2            |
+| ÉS   | A · B = (A̅ + B̅)̅ (De Morgan) | 3            |
+| NAND | ÉS + inverter               | 4            |
+| XNOR | a NAND-os XOR duálisa       | 4            |
 
 ## Homogenizálás: ÉS–VAGY → NAND–NAND
 

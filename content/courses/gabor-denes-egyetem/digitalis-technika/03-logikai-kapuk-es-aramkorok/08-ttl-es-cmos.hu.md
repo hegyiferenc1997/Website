@@ -15,14 +15,14 @@ minutes: 25
 
 A kapuk belsejében **tranzisztorok** kapcsolnak. Az, hogy milyen tranzisztorból és hogyan épül fel a kapu, határozza meg a **logikai családot**: feszültségszinteket, sebességet, fogyasztást.
 
-| Jellemző              | TTL (74LS)                  | CMOS (74HC / 4000)                    |
-| --------------------- | --------------------------- | ------------------------------------- |
-| tranzisztor           | bipoláris (BJT)             | komplementer MOSFET (n és p csatornás) |
-| tápfeszültség         | 5 V ± 5%                    | 74HC: 2–6 V, 4000: 3–18 V              |
-| nyugalmi fogyasztás   | jelentős (mA/kapu)          | szinte nulla (nA–µA)                   |
-| bemenet               | áramot vesz fel             | szigetelt kapu, nagy bemeneti ellenállás |
-| késleltetés (tipikus) | ~10 ns                      | 74HC: ~8–10 ns, 4000: 50–100 ns        |
-| érzékenység           | robusztus                   | sztatikus feltöltődésre érzékeny       |
+| Jellemző              | TTL (74LS)         | CMOS (74HC / 4000)                       |
+| --------------------- | ------------------ | ---------------------------------------- |
+| tranzisztor           | bipoláris (BJT)    | komplementer MOSFET (n és p csatornás)   |
+| tápfeszültség         | 5 V ± 5%           | 74HC: 2–6 V, 4000: 3–18 V                |
+| nyugalmi fogyasztás   | jelentős (mA/kapu) | szinte nulla (nA–µA)                     |
+| bemenet               | áramot vesz fel    | szigetelt kapu, nagy bemeneti ellenállás |
+| késleltetés (tipikus) | ~10 ns             | 74HC: ~8–10 ns, 4000: 50–100 ns          |
+| érzékenység           | robusztus          | sztatikus feltöltődésre érzékeny         |
 
 Ma szinte minden integrált áramkör (processzor, memória, FPGA) **CMOS** technológiájú. A TTL elsősorban oktatásban és régi berendezésekben él; a **74HCT** sorozat CMOS, de TTL-kompatibilis bemeneti szintekkel.
 
@@ -36,13 +36,13 @@ Két tranzisztor egymás fölött: az egyik a kimenetet a tápra, a másik a fö
 
 Csak a lehúzó tranzisztor van meg: a kimenet vagy **0-ra húz**, vagy „lebeg”. Egy külső **felhúzó ellenállás** (pull-up) adja az 1-es szintet. Előnyei:
 
-- több kimenet **összeköthető** (**huzalozott ÉS**, *wired-AND*): ha bármelyik 0-t húz, a vonal 0,
+- több kimenet **összeköthető** (**huzalozott ÉS**, _wired-AND_): ha bármelyik 0-t húz, a vonal 0,
 - a felhúzó ellenállás **más tápfeszültségre** köthető → egyszerű **szintillesztés**,
 - így működik az **I²C busz** (10. témakör) is.
 
 ### Háromállapotú (tri-state) kimenet
 
-A 0 és 1 mellett van egy harmadik, **nagy impedanciás** (Z, „lekapcsolt”) állapot, amelyet egy engedélyező (*Enable*, OE) bemenet vezérel. Így több eszköz osztozhat egy **buszon**: mindig csak az egyik hajtja, a többi Z állapotban van.
+A 0 és 1 mellett van egy harmadik, **nagy impedanciás** (Z, „lekapcsolt”) állapot, amelyet egy engedélyező (_Enable_, OE) bemenet vezérel. Így több eszköz osztozhat egy **buszon**: mindig csak az egyik hajtja, a többi Z állapotban van.
 
 ## Terhelési viszony (fan-out)
 
@@ -74,12 +74,12 @@ Ebből látszik, miért csökkentették a processzorok tápfeszültségét 5 V-r
 
 ## Családok illesztése
 
-| Irány | Probléma | Megoldás |
-| ----- | -------- | -------- |
+| Irány            | Probléma                                                                  | Megoldás                                                                                      |
+| ---------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | TTL → CMOS (5 V) | a TTL V<sub>OH</sub> (min. 2,4 V) kevés a CMOS V<sub>IH</sub>-hoz (3,5 V) | felhúzó ellenállás, nyitott kollektoros puffer, tranzisztoros illesztő vagy **74HCT** bemenet |
-| CMOS → TTL | a régi 4000-es CMOS nem tud elég áramot adni | CMOS puffer IC |
-| 3,3 V → 5 V | a 3,3 V-os jel kevés lehet az 5 V-os CMOS-nak | szintillesztő (pl. **TXS0108E**, kétirányú) |
-| 5 V → 3,3 V | az 5 V **tönkreteheti** a 3,3 V-os bemenetet | 5 V-tűrő puffer (pl. **SN74LVC245A**), feszültségosztó |
+| CMOS → TTL       | a régi 4000-es CMOS nem tud elég áramot adni                              | CMOS puffer IC                                                                                |
+| 3,3 V → 5 V      | a 3,3 V-os jel kevés lehet az 5 V-os CMOS-nak                             | szintillesztő (pl. **TXS0108E**, kétirányú)                                                   |
+| 5 V → 3,3 V      | az 5 V **tönkreteheti** a 3,3 V-os bemenetet                              | 5 V-tűrő puffer (pl. **SN74LVC245A**), feszültségosztó                                        |
 
 > Arduino (5 V) és Raspberry Pi (3,3 V) összekötésekor ez mindennapos feladat!
 

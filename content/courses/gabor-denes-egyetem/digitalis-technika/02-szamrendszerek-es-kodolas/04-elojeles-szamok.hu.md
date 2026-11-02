@@ -8,7 +8,7 @@ minutes: 25
 
 - a negatív számok háromféle ábrázolását: **előjeles abszolút érték**, **egyes komplemens**, **kettes komplemens**,
 - hogyan végez a gép **kivonást összeadással**,
-- az *n* bites **ábrázolási tartományt**,
+- az _n_ bites **ábrázolási tartományt**,
 - hogyan ismered fel az **előjeles túlcsordulást**.
 
 ## 1. Előjeles abszolút érték
@@ -49,12 +49,12 @@ Itt is két nulla van (0000 0000 és 1111 1111), ezért ma ritkán használják 
 
 ## Ábrázolási tartomány
 
-| Ábrázolás                  | *n* biten                                  | 8 biten         |
-| -------------------------- | ------------------------------------------ | --------------- |
-| előjel nélküli             | 0 … 2<sup>n</sup> − 1                     | 0 … 255         |
-| előjeles abszolút érték    | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127   |
-| egyes komplemens           | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127   |
-| **kettes komplemens**      | **−2<sup>n−1</sup> … 2<sup>n−1</sup> − 1** | **−128 … 127** |
+| Ábrázolás               | _n_ biten                                    | 8 biten        |
+| ----------------------- | -------------------------------------------- | -------------- |
+| előjel nélküli          | 0 … 2<sup>n</sup> − 1                        | 0 … 255        |
+| előjeles abszolút érték | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127     |
+| egyes komplemens        | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127     |
+| **kettes komplemens**   | **−2<sup>n−1</sup> … 2<sup>n−1</sup> − 1**   | **−128 … 127** |
 
 ## Kivonás összeadással
 
@@ -104,7 +104,7 @@ print(kettes_komplemens(7 - 12))
 ## Összefoglalás
 
 - Kettes komplemens = biteket negálni + 1; a legfelső bit súlya −2<sup>n−1</sup>.
-- *n* biten: −2<sup>n−1</sup> … 2<sup>n−1</sup> − 1 (8 biten −128 … 127).
+- _n_ biten: −2<sup>n−1</sup> … 2<sup>n−1</sup> − 1 (8 biten −128 … 127).
 - Kivonás: A − B = A + (−B), a kilépő átvitelt eldobjuk.
 - Túlcsordulás: két azonos előjelű szám összege ellentétes előjelű.
 

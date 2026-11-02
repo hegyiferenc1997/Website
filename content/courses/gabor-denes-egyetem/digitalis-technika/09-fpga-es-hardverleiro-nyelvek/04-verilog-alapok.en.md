@@ -7,7 +7,7 @@ minutes: 40
 ## What you will learn
 
 - the structure of a Verilog **module** (ports, **wire** and **reg**),
-- describing **combinational** logic with **assign** and **always @(*)**,
+- describing **combinational** logic with **assign** and **always @(\*)**,
 - **sequential** logic with **always @(posedge clk)**,
 - the difference between **blocking** (`=`) and **non-blocking** (`<=`) assignment,
 - the Verilog code of a **counter** and a **state machine**.
@@ -45,7 +45,7 @@ assign S = A ^ B ^ Cin;       // sum bit of a full adder
 assign M = S ? D1 : D0;       // 2:1 multiplexer with the conditional operator
 ```
 
-**always @(*)** – a combinational block in which `if` and `case` can be used. The `*` means: it runs whenever any signal it reads changes.
+**always @(\*)** – a combinational block in which `if` and `case` can be used. The `*` means: it runs whenever any signal it reads changes.
 
 ```verilog
 // 4:1 multiplexer
@@ -129,14 +129,14 @@ endmodule
 
 ## VHDL and Verilog side by side
 
-| concept            | VHDL                              | Verilog                          |
-| ------------------ | --------------------------------- | -------------------------------- |
-| unit               | entity + architecture             | module                           |
-| ports              | `in`, `out`, `inout`              | `input`, `output`, `inout`       |
-| bus                | `std_logic_vector(7 downto 0)`    | `[7:0]`                          |
-| combinational      | `Y <= A and B;`                   | `assign Y = A & B;`              |
-| clock edge         | `if rising_edge(clk) then`        | `always @(posedge clk)`          |
-| comment            | `--`                              | `//`                             |
+| concept       | VHDL                           | Verilog                    |
+| ------------- | ------------------------------ | -------------------------- |
+| unit          | entity + architecture          | module                     |
+| ports         | `in`, `out`, `inout`           | `input`, `output`, `inout` |
+| bus           | `std_logic_vector(7 downto 0)` | `[7:0]`                    |
+| combinational | `Y <= A and B;`                | `assign Y = A & B;`        |
+| clock edge    | `if rising_edge(clk) then`     | `always @(posedge clk)`    |
+| comment       | `--`                           | `//`                       |
 
 ## Summary
 

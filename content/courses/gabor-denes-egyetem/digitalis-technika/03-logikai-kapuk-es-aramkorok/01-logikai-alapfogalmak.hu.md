@@ -15,58 +15,58 @@ minutes: 15
 
 A **logikai változó** olyan mennyiség, amelynek csak **két értéke** lehet. Ugyanazt a két értéket sokféleképpen nevezik:
 
-| 1         | 0       |
-| --------- | ------- |
-| igaz      | hamis   |
-| igen      | nem     |
-| be        | ki      |
+| 1         | 0            |
+| --------- | ------------ |
+| igaz      | hamis        |
+| igen      | nem          |
+| be        | ki           |
 | magas (H) | alacsony (L) |
-| ponált    | negált  |
+| ponált    | negált       |
 
 A változókat általában **nagybetűvel** jelöljük (A, B, C …). Egy változó **ponált** alakja maga a változó (A), **negált** alakja az ellentéte (A̅, más jelöléssel A', ¬A, !A).
 
 ## Három alapművelet a hétköznapokban
 
-- **ÉS:** *Ha esik az eső ÉS hideg van → kabátot veszek.* Csak akkor igaz, ha mindkét feltétel igaz.
-- **VAGY:** *Ha van jegyem VAGY bérletem → felszállhatok.* Akkor igaz, ha legalább az egyik igaz.
-- **NEM:** *Ha NEM zöld a lámpa → megállok.* Az ellentétére fordítja a feltételt.
+- **ÉS:** _Ha esik az eső ÉS hideg van → kabátot veszek._ Csak akkor igaz, ha mindkét feltétel igaz.
+- **VAGY:** _Ha van jegyem VAGY bérletem → felszállhatok._ Akkor igaz, ha legalább az egyik igaz.
+- **NEM:** _Ha NEM zöld a lámpa → megállok._ Az ellentétére fordítja a feltételt.
 
 ## Szövegből logikai kifejezés
 
-**Feladat:** *A riasztó megszólal, ha az ajtó nyitva van, és nem adták meg a nyitókódot.*
+**Feladat:** _A riasztó megszólal, ha az ajtó nyitva van, és nem adták meg a nyitókódot._
 
 1. **Változók kijelölése:**
    A = az ajtó nyitva van, K = a kódot megadták, R = a riasztó megszólal.
 2. **Logikai kifejezés:** R = A ÉS NEM K, vagyis **R = A · K̅**.
 3. **Igazságtábla:** minden bemeneti kombinációra kiszámoljuk a kimenetet.
 
-| A | K | R |
-| - | - | - |
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | **1** |
-| 1 | 1 | 0 |
+| A   | K   | R     |
+| --- | --- | ----- |
+| 0   | 0   | 0     |
+| 0   | 1   | 0     |
+| 1   | 0   | **1** |
+| 1   | 1   | 0     |
 
 ## Az igazságtábla
 
 Az **igazságtábla** (igazságtáblázat) egy logikai függvény **teljes leírása**: minden lehetséges bemeneti kombinációhoz megadja a kimenet értékét.
 
-- *n* bemenet esetén **2<sup>n</sup> sor** van (2 → 4, 3 → 8, 4 → 16).
+- _n_ bemenet esetén **2<sup>n</sup> sor** van (2 → 4, 3 → 8, 4 → 16).
 - A sorokat a bemenetek **bináris számlálási sorrendjében** írjuk (000, 001, 010, …), így egyik kombináció sem marad ki.
 - A sor sorszáma (tízesben) a bemeneti kombináció bináris értéke – erre épül a **minterm-jelölés** (4. témakör).
 
-**Három bemenetű példa:** *A gép csak akkor indul (Y), ha a védőajtó zárva van (Z), és vagy a jobb (J), vagy a bal (B) kezes indítógombot nyomják.* → **Y = Z · (J + B)**
+**Három bemenetű példa:** _A gép csak akkor indul (Y), ha a védőajtó zárva van (Z), és vagy a jobb (J), vagy a bal (B) kezes indítógombot nyomják._ → **Y = Z · (J + B)**
 
-| Z | J | B | Y |
-| - | - | - | - |
-| 0 | 0 | 0 | 0 |
-| 0 | 0 | 1 | 0 |
-| 0 | 1 | 0 | 0 |
-| 0 | 1 | 1 | 0 |
-| 1 | 0 | 0 | 0 |
-| 1 | 0 | 1 | 1 |
-| 1 | 1 | 0 | 1 |
-| 1 | 1 | 1 | 1 |
+| Z   | J   | B   | Y   |
+| --- | --- | --- | --- |
+| 0   | 0   | 0   | 0   |
+| 0   | 0   | 1   | 0   |
+| 0   | 1   | 0   | 0   |
+| 0   | 1   | 1   | 0   |
+| 1   | 0   | 0   | 0   |
+| 1   | 0   | 1   | 1   |
+| 1   | 1   | 0   | 1   |
+| 1   | 1   | 1   | 1   |
 
 ```python run
 # Igazságtábla generálása: Y = Z ÉS (J VAGY B)
@@ -84,7 +84,7 @@ for z, j, b in product((0, 1), repeat=3):   # 000, 001, ... 111 sorrendben
 
 - A logikai változónak két értéke van (0/1); ponált: A, negált: A̅.
 - Szöveges feladat: változók kijelölése → kifejezés → igazságtábla.
-- *n* bemenet → 2<sup>n</sup> sor, bináris sorrendben.
+- _n_ bemenet → 2<sup>n</sup> sor, bináris sorrendben.
 
 ## A lecke feladata
 

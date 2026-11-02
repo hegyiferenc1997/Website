@@ -40,11 +40,11 @@ In a **state diagram** circles are states and arrows are transitions; on the arr
 
 The same as a **state table**:
 
-| present   | x = 0 | x = 1 |
-| --------- | ----- | ----- |
-| S0        | S0    | S1    |
-| S1        | S1    | S2    |
-| S2        | S2    | S0    |
+| present | x = 0 | x = 1 |
+| ------- | ----- | ----- |
+| S0      | S0    | S1    |
+| S1      | S1    | S2    |
+| S2      | S2    | S0    |
 
 Starting from S0 with inputs 1, 1, 0, 1, 1: S0 → S1 → S2 → S2 → S0 → **S1**.
 
@@ -69,13 +69,13 @@ k flip-flops can encode at most 2<sup>k</sup> states, so N states need **at leas
 
 Two models are distinguished by the inputs of the output logic:
 
-|                         | **Moore machine**                                | **Mealy machine**                                   |
-| ----------------------- | ------------------------------------------------ | --------------------------------------------------- |
-| the output depends on   | **only the state**                               | the state **and the inputs**                        |
-| notation on the diagram | written in the state circle: S1 / 1              | written on the arrow: x = 1 / y = 1                 |
-| output changes          | only at a clock edge (state change) – stable     | may change immediately with the input               |
-| number of states        | usually more                                     | usually fewer                                       |
-| reaction time           | reacts one clock later                           | reacts in the same cycle                            |
+|                         | **Moore machine**                            | **Mealy machine**                     |
+| ----------------------- | -------------------------------------------- | ------------------------------------- |
+| the output depends on   | **only the state**                           | the state **and the inputs**          |
+| notation on the diagram | written in the state circle: S1 / 1          | written on the arrow: x = 1 / y = 1   |
+| output changes          | only at a clock edge (state change) – stable | may change immediately with the input |
+| number of states        | usually more                                 | usually fewer                         |
+| reaction time           | reacts one clock later                       | reacts in the same cycle              |
 
 Both are equally capable – every Mealy machine can be converted into a Moore machine and vice versa – the choice depends on the task.
 

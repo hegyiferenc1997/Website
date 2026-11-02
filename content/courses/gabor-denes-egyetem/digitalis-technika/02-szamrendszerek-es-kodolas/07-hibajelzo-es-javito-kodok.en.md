@@ -44,20 +44,20 @@ The **Hamming distance** of two codewords of equal length is the number of posit
 
 The **minimum Hamming distance** (d<sub>min</sub>) of a code is the smallest distance between its codewords. From it:
 
-| d<sub>min</sub> | Detects             | Corrects           | Example                            |
-| --------------- | ------------------- | ------------------ | ---------------------------------- |
-| 1               | –                   | –                  | every bit combination is valid     |
-| 2               | 1 bit               | –                  | parity bit                         |
-| 3               | 2 bits              | 1 bit              | Hamming(7,4)                       |
-| *d*             | *d* − 1 bits        | ⌊(*d* − 1) / 2⌋ bits | –                                |
+| d<sub>min</sub> | Detects      | Corrects             | Example                        |
+| --------------- | ------------ | -------------------- | ------------------------------ |
+| 1               | –            | –                    | every bit combination is valid |
+| 2               | 1 bit        | –                    | parity bit                     |
+| 3               | 2 bits       | 1 bit                | Hamming(7,4)                   |
+| _d_             | _d_ − 1 bits | ⌊(_d_ − 1) / 2⌋ bits | –                              |
 
 ## The Hamming(7,4) code
 
 For 4 data bits (d<sub>1</sub>…d<sub>4</sub>) we add 3 parity bits (p<sub>1</sub>, p<sub>2</sub>, p<sub>4</sub>); the parity bits go to positions that are **powers of 2**:
 
-| position | 1              | 2              | 3              | 4              | 5              | 6              | 7              |
-| -------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- |
-| bit      | p<sub>1</sub>  | p<sub>2</sub>  | d<sub>1</sub>  | p<sub>4</sub>  | d<sub>2</sub>  | d<sub>3</sub>  | d<sub>4</sub>  |
+| position | 1             | 2             | 3             | 4             | 5             | 6             | 7             |
+| -------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| bit      | p<sub>1</sub> | p<sub>2</sub> | d<sub>1</sub> | p<sub>4</sub> | d<sub>2</sub> | d<sub>3</sub> | d<sub>4</sub> |
 
 Each parity bit checks (with even parity) the positions whose index has its bit set:
 
@@ -82,11 +82,11 @@ An extended version of the Hamming code (SECDED) protects the **ECC memory** of 
 
 In modulo-2 arithmetic there is no carry: addition and subtraction are both **XOR**.
 
-**Steps** (generator of *k*+1 bits → *k*-bit CRC):
+**Steps** (generator of _k_+1 bits → _k_-bit CRC):
 
-1. Append *k* zeros to the data.
+1. Append _k_ zeros to the data.
 2. Do modulo-2 division: wherever the remainder starts with 1, write the generator below and XOR.
-3. The last *k* bits are the CRC.
+3. The last _k_ bits are the CRC.
 
 **Example:** data = 1101011011, generator = 10011 (x<sup>4</sup> + x + 1) → append 4 zeros.
 
@@ -108,12 +108,12 @@ In modulo-2 arithmetic there is no carry: addition and subtraction are both **XO
 
 The message sent: 1101011011 **1110**. Dividing it by 10011 the receiver gets remainder 0.
 
-| CRC type  | Length   | Common use                             |
-| --------- | -------- | -------------------------------------- |
-| CRC-8     | 8 bits   | simple protocols (e.g. SMBus)          |
-| CRC-16    | 16 bits  | industrial serial links (e.g. Modbus, USB) |
-| CRC-32    | 32 bits  | Ethernet, ZIP, PNG files               |
-| CRC-64    | 64 bits  | systems needing high data integrity    |
+| CRC type | Length  | Common use                                 |
+| -------- | ------- | ------------------------------------------ |
+| CRC-8    | 8 bits  | simple protocols (e.g. SMBus)              |
+| CRC-16   | 16 bits | industrial serial links (e.g. Modbus, USB) |
+| CRC-32   | 32 bits | Ethernet, ZIP, PNG files                   |
+| CRC-64   | 64 bits | systems needing high data integrity        |
 
 ```python run
 # CRC by modulo-2 division (XOR)

@@ -37,12 +37,12 @@ With 8N1 one byte takes **10 bits** → 9600 baud = **960 bytes/s**. The transmi
 
 **SPI** is **synchronous**, **full duplex**, with **one master – several slaves**, for short distances (within a board).
 
-| wire           | meaning                                     |
-| -------------- | ------------------------------------------- |
-| **SCLK**       | clock – provided by the master              |
-| **MOSI**       | master out, slave in – data to the slave    |
-| **MISO**       | master in, slave out – data to the master   |
-| **CS̅** (SS̅)    | chip select – active low, **one per slave** |
+| wire        | meaning                                     |
+| ----------- | ------------------------------------------- |
+| **SCLK**    | clock – provided by the master              |
+| **MOSI**    | master out, slave in – data to the slave    |
+| **MISO**    | master in, slave out – data to the master   |
+| **CS̅** (SS̅) | chip select – active low, **one per slave** |
 
 - At every clock one bit goes in both directions **at once**: the shift registers (topic 5) of the two devices form a ring.
 - Four modes (**CPOL**, **CPHA**: the idle level of the clock and the sampling edge) – set according to the datasheet.
@@ -71,22 +71,22 @@ With 8N1 one byte takes **10 bits** → 9600 baud = **960 bytes/s**. The transmi
 
 **USB** (universal serial bus) is the standard for computer peripherals: a **differential** data pair (D+, D−), a **host–device** structure (the host controls everything), power over the cable, **plug and play** (the device introduces itself and the host loads the driver).
 
-| version      | speed                    |
-| ------------ | ------------------------ |
-| USB 1.1      | 12 Mbit/s (Full Speed)   |
-| USB 2.0      | 480 Mbit/s (High Speed)  |
-| USB 3.x      | 5–20 Gbit/s              |
-| USB4         | 40–80 Gbit/s             |
+| version | speed                   |
+| ------- | ----------------------- |
+| USB 1.1 | 12 Mbit/s (Full Speed)  |
+| USB 2.0 | 480 Mbit/s (High Speed) |
+| USB 3.x | 5–20 Gbit/s             |
+| USB4    | 40–80 Gbit/s            |
 
 ## Which one should I choose?
 
-| aspect               | UART          | SPI            | I²C             | CAN               |
-| -------------------- | ------------- | -------------- | --------------- | ----------------- |
-| wires (+ ground)     | 2 (TX, RX)    | 3 + 1 per slave | 2              | 2 (differential)  |
-| clock                | none          | yes            | yes             | none (bit timing) |
-| devices              | 2 (point-to-point) | 1 master, several slaves | many (addressing) | many (message ID) |
-| speed                | ~ 1 Mbit/s    | tens of Mbit/s | 0.1–1 Mbit/s    | 1 Mbit/s (FD: more) |
-| distance             | short (long with RS-485) | within a board | within a board | up to 1 km  |
+| aspect           | UART                     | SPI                      | I²C               | CAN                 |
+| ---------------- | ------------------------ | ------------------------ | ----------------- | ------------------- |
+| wires (+ ground) | 2 (TX, RX)               | 3 + 1 per slave          | 2                 | 2 (differential)    |
+| clock            | none                     | yes                      | yes               | none (bit timing)   |
+| devices          | 2 (point-to-point)       | 1 master, several slaves | many (addressing) | many (message ID)   |
+| speed            | ~ 1 Mbit/s               | tens of Mbit/s           | 0.1–1 Mbit/s      | 1 Mbit/s (FD: more) |
+| distance         | short (long with RS-485) | within a board           | within a board    | up to 1 km          |
 
 ```python run
 # A UART frame (8N1, LSB first) and computing even parity

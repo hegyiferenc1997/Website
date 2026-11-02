@@ -18,13 +18,13 @@ A gate type is **universal** (functionally complete) if **any logic function** c
 
 ## Everything from NAND
 
-| Gate | NAND implementation | NAND count |
-| ---- | ------------------- | ---------- |
-| NOT  | A̅ = (A · A)̅ – the two inputs tied together | 1 |
-| AND  | A · B = ((A · B)̅)̅ – NAND followed by a NAND inverter | 2 |
-| OR   | A + B = (A̅ · B̅)̅ – invert the inputs (De Morgan) | 3 |
-| NOR  | OR + inverter | 4 |
-| XOR  | N = (AB)̅, Y = ((A·N)̅ · (B·N)̅)̅ | 4 |
+| Gate | NAND implementation                                  | NAND count |
+| ---- | ---------------------------------------------------- | ---------- |
+| NOT  | A̅ = (A · A)̅ – the two inputs tied together           | 1          |
+| AND  | A · B = ((A · B)̅)̅ – NAND followed by a NAND inverter | 2          |
+| OR   | A + B = (A̅ · B̅)̅ – invert the inputs (De Morgan)      | 3          |
+| NOR  | OR + inverter                                        | 4          |
+| XOR  | N = (AB)̅, Y = ((A·N)̅ · (B·N)̅)̅                        | 4          |
 
 ```text
  NOT from NAND:       OR from NAND:
@@ -37,13 +37,13 @@ A gate type is **universal** (functionally complete) if **any logic function** c
 
 ## Everything from NOR
 
-| Gate | NOR implementation | NOR count |
-| ---- | ------------------ | --------- |
-| NOT  | A̅ = (A + A)̅ | 1 |
-| OR   | A + B = ((A + B)̅)̅ | 2 |
-| AND  | A · B = (A̅ + B̅)̅ (De Morgan) | 3 |
-| NAND | AND + inverter | 4 |
-| XNOR | the dual of the NAND-based XOR | 4 |
+| Gate | NOR implementation             | NOR count |
+| ---- | ------------------------------ | --------- |
+| NOT  | A̅ = (A + A)̅                    | 1         |
+| OR   | A + B = ((A + B)̅)̅              | 2         |
+| AND  | A · B = (A̅ + B̅)̅ (De Morgan)    | 3         |
+| NAND | AND + inverter                 | 4         |
+| XNOR | the dual of the NAND-based XOR | 4         |
 
 ## Conversion: AND–OR → NAND–NAND
 

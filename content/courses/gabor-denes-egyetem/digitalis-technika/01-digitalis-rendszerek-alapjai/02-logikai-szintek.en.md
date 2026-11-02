@@ -17,20 +17,20 @@ In a real circuit "0" and "1" are not exact voltages but **ranges**. Between the
 
 The **threshold voltage** (V<sub>T</sub>) is the level at which the gate's output switches from one state to the other. Its exact value differs by circuit and technology, so the **datasheet** is always the reference.
 
-| Symbol           | Name                | Meaning                                                        |
-| ---------------- | ------------------- | -------------------------------------------------------------- |
-| V<sub>OH</sub>   | Output High Voltage | the output is **not lower** than this when driving 1 (guaranteed min.) |
-| V<sub>OL</sub>   | Output Low Voltage  | the output is **not higher** than this when driving 0 (guaranteed max.) |
-| V<sub>IH</sub>   | Input High Voltage  | an input at or **above** this is surely 1                        |
-| V<sub>IL</sub>   | Input Low Voltage   | an input at or **below** this is surely 0                        |
+| Symbol         | Name                | Meaning                                                                 |
+| -------------- | ------------------- | ----------------------------------------------------------------------- |
+| V<sub>OH</sub> | Output High Voltage | the output is **not lower** than this when driving 1 (guaranteed min.)  |
+| V<sub>OL</sub> | Output Low Voltage  | the output is **not higher** than this when driving 0 (guaranteed max.) |
+| V<sub>IH</sub> | Input High Voltage  | an input at or **above** this is surely 1                               |
+| V<sub>IL</sub> | Input Low Voltage   | an input at or **below** this is surely 0                               |
 
 ## Typical values
 
-| Family             | V<sub>CC</sub> | V<sub>IL</sub> (max) | V<sub>IH</sub> (min) | V<sub>OL</sub> (max) | V<sub>OH</sub> (min) |
-| ------------------ | -------------- | -------------------- | -------------------- | -------------------- | -------------------- |
-| TTL (74LS)         | 5 V            | 0.8 V                | 2.0 V                | 0.4 V                | 2.4 V                |
-| CMOS (74HC, 5 V)   | 5 V            | 1.5 V                | 3.5 V                | 0.1 V                | 4.4 V                |
-| LVCMOS (3.3 V)     | 3.3 V          | 0.8 V                | 2.0 V                | 0.4 V                | 2.4 V                |
+| Family           | V<sub>CC</sub> | V<sub>IL</sub> (max) | V<sub>IH</sub> (min) | V<sub>OL</sub> (max) | V<sub>OH</sub> (min) |
+| ---------------- | -------------- | -------------------- | -------------------- | -------------------- | -------------------- |
+| TTL (74LS)       | 5 V            | 0.8 V                | 2.0 V                | 0.4 V                | 2.4 V                |
+| CMOS (74HC, 5 V) | 5 V            | 1.5 V                | 3.5 V                | 0.1 V                | 4.4 V                |
+| LVCMOS (3.3 V)   | 3.3 V          | 0.8 V                | 2.0 V                | 0.4 V                | 2.4 V                |
 
 ## Noise margin
 

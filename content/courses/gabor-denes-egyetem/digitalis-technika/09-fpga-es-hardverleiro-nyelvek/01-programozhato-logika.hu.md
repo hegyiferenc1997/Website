@@ -21,12 +21,12 @@ A **programozható logikai eszköz** (PLD) egy olyan IC, amelynek belső kapcsol
 
 A 4. témakörből tudjuk, hogy bármely függvény felírható **SOP alakban** (ÉS-tagok VAGY-kapcsolata). Az egyszerű PLD-k pontosan ezt valósítják meg egy **ÉS-mátrixszal** és egy **VAGY-mátrixszal**:
 
-| eszköz     | ÉS-mátrix        | VAGY-mátrix      | megjegyzés                                     |
-| ---------- | ---------------- | ---------------- | ---------------------------------------------- |
-| **PROM**   | fix (teljes dekóder: minden minterm) | **programozható** | igazságtábla tárolása                |
-| **PLA**    | **programozható** | **programozható** | legrugalmasabb, de lassabb, drágább         |
-| **PAL**    | **programozható** | fix              | gyors, olcsó; egyszer programozható           |
-| **GAL**    | programozható    | fix              | a PAL **törölhető, újraírható** (EEPROM) változata, kimeneti makrocellával (benne flip-flop) |
+| eszköz   | ÉS-mátrix                            | VAGY-mátrix       | megjegyzés                                                                                   |
+| -------- | ------------------------------------ | ----------------- | -------------------------------------------------------------------------------------------- |
+| **PROM** | fix (teljes dekóder: minden minterm) | **programozható** | igazságtábla tárolása                                                                        |
+| **PLA**  | **programozható**                    | **programozható** | legrugalmasabb, de lassabb, drágább                                                          |
+| **PAL**  | **programozható**                    | fix               | gyors, olcsó; egyszer programozható                                                          |
+| **GAL**  | programozható                        | fix               | a PAL **törölhető, újraírható** (EEPROM) változata, kimeneti makrocellával (benne flip-flop) |
 
 ## CPLD
 
@@ -55,13 +55,13 @@ Egy **k bemenetű LUT** egy **2<sup>k</sup> bites kis memória** és egy **multi
 
 ## ASIC vagy FPGA?
 
-|                         | **ASIC** (alkalmazásspecifikus IC)          | **FPGA**                                     |
-| ----------------------- | ------------------------------------------- | -------------------------------------------- |
-| egyszeri költség (NRE)  | nagyon magas (maszkok: akár millió dollár)  | nincs                                        |
-| darabár                 | nagy sorozatban **olcsó**                   | drágább                                      |
-| sebesség, fogyasztás    | **legjobb**                                 | rosszabb (a programozható kapcsolók miatt)   |
-| módosítás               | lehetetlen (új gyártás)                     | **bármikor**, akár a terepen is              |
-| fejlesztési idő         | hónapok–évek                                | napok–hetek                                  |
+|                        | **ASIC** (alkalmazásspecifikus IC)         | **FPGA**                                   |
+| ---------------------- | ------------------------------------------ | ------------------------------------------ |
+| egyszeri költség (NRE) | nagyon magas (maszkok: akár millió dollár) | nincs                                      |
+| darabár                | nagy sorozatban **olcsó**                  | drágább                                    |
+| sebesség, fogyasztás   | **legjobb**                                | rosszabb (a programozható kapcsolók miatt) |
+| módosítás              | lehetetlen (új gyártás)                    | **bármikor**, akár a terepen is            |
+| fejlesztési idő        | hónapok–évek                               | napok–hetek                                |
 
 Ezért az FPGA ideális **prototípushoz**, kis és közepes sorozathoz, és ahol később frissíteni kell a hardvert (távközlés, mérőműszerek, AI-gyorsítók). Az ASIC-ot gyakran először FPGA-n próbálják ki.
 

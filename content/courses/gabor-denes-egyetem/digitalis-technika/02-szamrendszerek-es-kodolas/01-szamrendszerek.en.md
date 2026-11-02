@@ -16,9 +16,9 @@ The weights of the Indus Valley civilisation (2500–1700 BC) already followed a
 
 ## Positional notation
 
-A number system is a set of rules for writing numbers using a given **base** (*b*, radix). In a positional system the value of each digit depends on its **position**: the place values are powers of the base.
+A number system is a set of rules for writing numbers using a given **base** (_b_, radix). In a positional system the value of each digit depends on its **position**: the place values are powers of the base.
 
-The value of a base-*b* number:
+The value of a base-_b_ number:
 
 N = a<sub>n</sub>·b<sup>n</sup> + … + a<sub>1</sub>·b<sup>1</sup> + a<sub>0</sub>·b<sup>0</sup> + a<sub>−1</sub>·b<sup>−1</sup> + …
 
@@ -26,12 +26,12 @@ N = a<sub>n</sub>·b<sup>n</sup> + … + a<sub>1</sub>·b<sup>1</sup> + a<sub>0<
 
 ## The four important systems
 
-| System          | Base | Digits              | Notation                   | Use                                |
-| --------------- | ---- | ------------------- | -------------------------- | ---------------------------------- |
-| decimal         | 10   | 0–9                 | 472, 472<sub>10</sub>      | everyday life                      |
-| binary          | 2    | 0, 1                | 1011<sub>2</sub>, `0b1011` | the computer's internal language   |
-| octal           | 8    | 0–7                 | 157<sub>8</sub>, `0o157`   | old machines, Unix permissions     |
-| hexadecimal     | 16   | 0–9, A–F            | 2F<sub>16</sub>, `0x2F`    | memory addresses, colours, bytes   |
+| System      | Base | Digits   | Notation                   | Use                              |
+| ----------- | ---- | -------- | -------------------------- | -------------------------------- |
+| decimal     | 10   | 0–9      | 472, 472<sub>10</sub>      | everyday life                    |
+| binary      | 2    | 0, 1     | 1011<sub>2</sub>, `0b1011` | the computer's internal language |
+| octal       | 8    | 0–7      | 157<sub>8</sub>, `0o157`   | old machines, Unix permissions   |
+| hexadecimal | 16   | 0–9, A–F | 2F<sub>16</sub>, `0x2F`    | memory addresses, colours, bytes |
 
 In hexadecimal A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.
 
@@ -40,10 +40,10 @@ In hexadecimal A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.
 ## Powers of two – worth memorising
 
 | 2<sup>n</sup> | 2<sup>0</sup> | 2<sup>1</sup> | 2<sup>2</sup> | 2<sup>3</sup> | 2<sup>4</sup> | 2<sup>5</sup> | 2<sup>6</sup> | 2<sup>7</sup> | 2<sup>8</sup> | 2<sup>10</sup> | 2<sup>16</sup> |
-| ------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---- | ------ |
-| value         | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128 | 256 | 1024 | 65 536 |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------- | -------------- |
+| value         | 1             | 2             | 4             | 8             | 16            | 32            | 64            | 128           | 256           | 1024           | 65 536         |
 
-A **bit** (*binary digit*) is one binary digit; 8 bits = 1 **byte**; 4 bits = 1 **nibble** (= one hexadecimal digit). With *n* bits **2<sup>n</sup>** different values can be represented (0 … 2<sup>n</sup> − 1).
+A **bit** (_binary digit_) is one binary digit; 8 bits = 1 **byte**; 4 bits = 1 **nibble** (= one hexadecimal digit). With _n_ bits **2<sup>n</sup>** different values can be represented (0 … 2<sup>n</sup> − 1).
 
 ## Converting to decimal: sum of place values
 
@@ -73,7 +73,7 @@ print(to_decimal("1011", 2), to_decimal("157", 8), to_decimal("1A3", 16))
 
 - In a positional system a digit's value = digit × base<sup>position</sup>.
 - Binary (2), octal (8), hexadecimal (16) – hex digits are 0–9 and A–F.
-- *n* bits represent 2<sup>n</sup> different values.
+- _n_ bits represent 2<sup>n</sup> different values.
 - To convert to decimal, add up the weighted place values.
 
 ## Lesson exercise

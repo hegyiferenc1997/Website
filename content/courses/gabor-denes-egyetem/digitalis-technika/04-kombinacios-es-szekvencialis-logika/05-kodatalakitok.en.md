@@ -58,30 +58,30 @@ Each segment needs a **current-limiting resistor**.
 
 Input: one BCD digit (A B C D, A the most significant). Output: seven segments (common cathode, so 1 = lit).
 
-| digit | A B C D | a | b | c | d | e | f | g |
-| ----- | ------- | - | - | - | - | - | - | - |
-| 0     | 0 0 0 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
-| 1     | 0 0 0 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 |
-| 2     | 0 0 1 0 | 1 | 1 | 0 | 1 | 1 | 0 | 1 |
-| 3     | 0 0 1 1 | 1 | 1 | 1 | 1 | 0 | 0 | 1 |
-| 4     | 0 1 0 0 | 0 | 1 | 1 | 0 | 0 | 1 | 1 |
-| 5     | 0 1 0 1 | 1 | 0 | 1 | 1 | 0 | 1 | 1 |
-| 6     | 0 1 1 0 | 1 | 0 | 1 | 1 | 1 | 1 | 1 |
-| 7     | 0 1 1 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| 8     | 1 0 0 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| 9     | 1 0 0 1 | 1 | 1 | 1 | 1 | 0 | 1 | 1 |
-| 10–15 | 1010…1111 | X | X | X | X | X | X | X |
+| digit | A B C D   | a   | b   | c   | d   | e   | f   | g   |
+| ----- | --------- | --- | --- | --- | --- | --- | --- | --- |
+| 0     | 0 0 0 0   | 1   | 1   | 1   | 1   | 1   | 1   | 0   |
+| 1     | 0 0 0 1   | 0   | 1   | 1   | 0   | 0   | 0   | 0   |
+| 2     | 0 0 1 0   | 1   | 1   | 0   | 1   | 1   | 0   | 1   |
+| 3     | 0 0 1 1   | 1   | 1   | 1   | 1   | 0   | 0   | 1   |
+| 4     | 0 1 0 0   | 0   | 1   | 1   | 0   | 0   | 1   | 1   |
+| 5     | 0 1 0 1   | 1   | 0   | 1   | 1   | 0   | 1   | 1   |
+| 6     | 0 1 1 0   | 1   | 0   | 1   | 1   | 1   | 1   | 1   |
+| 7     | 0 1 1 1   | 1   | 1   | 1   | 0   | 0   | 0   | 0   |
+| 8     | 1 0 0 0   | 1   | 1   | 1   | 1   | 1   | 1   | 1   |
+| 9     | 1 0 0 1   | 1   | 1   | 1   | 1   | 0   | 1   | 1   |
+| 10–15 | 1010…1111 | X   | X   | X   | X   | X   | X   | X   |
 
 Codes **10–15** never occur in BCD → they are **don't-care** entries, which simplify the K-maps a lot.
 
 **Example – segment “e”:** e = Σm(0, 2, 6, 8) + d(10…15)
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | 1  | 0  | 0  | 1  |
-| 01      | 0  | 0  | 0  | 1  |
-| 11      | X  | X  | X  | X  |
-| 10      | 1  | 0  | X  | X  |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | 1   | 0   | 0   | 1   |
+| 01      | 0   | 0   | 0   | 1   |
+| 11      | X   | X   | X   | X   |
+| 10      | 1   | 0   | X   | X   |
 
 - The four corners (0, 2, 8, 10 – 10 is a don't care) → **B̅D̅**
 - The CD = 10 column (2, 6, 14, 10) → **CD̅**
@@ -90,27 +90,27 @@ Codes **10–15** never occur in BCD → they are **don't-care** entries, which 
 
 The simplified forms of all seven segments:
 
-| segment | simplified function         |
-| ------- | --------------------------- |
-| a       | A + C + BD + B̅D̅             |
-| b       | B̅ + C̅D̅ + CD                 |
-| c       | B + C̅ + D                   |
-| d       | A + B̅D̅ + B̅C + BC̅D + CD̅      |
-| e       | B̅D̅ + CD̅                     |
-| f       | A + C̅D̅ + BC̅ + BD̅            |
-| g       | A + BC̅ + B̅C + CD̅            |
+| segment | simplified function    |
+| ------- | ---------------------- |
+| a       | A + C + BD + B̅D̅        |
+| b       | B̅ + C̅D̅ + CD            |
+| c       | B + C̅ + D              |
+| d       | A + B̅D̅ + B̅C + BC̅D + CD̅ |
+| e       | B̅D̅ + CD̅                |
+| f       | A + C̅D̅ + BC̅ + BD̅       |
+| g       | A + BC̅ + B̅C + CD̅       |
 
 For a common-anode display the same signals must be output **inverted**.
 
 ## Ready-made driver ICs
 
-| IC                  | feature                                                                       |
-| ------------------- | ----------------------------------------------------------------------------- |
-| **CD4511** (CMOS)   | BCD → 7-segment, active-high outputs → for **common-cathode** displays, with built-in latch |
-| **74LS47 / 7447** (TTL) | active-low, open-collector outputs → for **common-anode** displays        |
-| **74LS48 / 7448** (TTL) | active-high version of the 7447 → for common-cathode displays            |
-| **MAX7219 / MAX7221** | serial (SPI-like) control, 8 digits multiplexed, with current regulation    |
-| **CD4543**          | also usable for LCDs (with a phase input)                                     |
+| IC                      | feature                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| **CD4511** (CMOS)       | BCD → 7-segment, active-high outputs → for **common-cathode** displays, with built-in latch |
+| **74LS47 / 7447** (TTL) | active-low, open-collector outputs → for **common-anode** displays                          |
+| **74LS48 / 7448** (TTL) | active-high version of the 7447 → for common-cathode displays                               |
+| **MAX7219 / MAX7221**   | serial (SPI-like) control, 8 digits multiplexed, with current regulation                    |
+| **CD4543**              | also usable for LCDs (with a phase input)                                                   |
 
 An **LCD** must not be driven with DC voltage (it gets damaged), so AC (square-wave) drive is needed – e.g. CD4056B, ICM7211, the I²C PCF85176. **Nixie tubes** have 10 separate cathodes and need about 170 V (e.g. SN74141).
 

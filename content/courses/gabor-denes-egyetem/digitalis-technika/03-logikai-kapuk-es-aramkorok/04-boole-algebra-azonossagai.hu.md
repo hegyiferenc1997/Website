@@ -24,18 +24,18 @@ Ezek biztosítják, hogy az algebrai átalakítások érvényesek legyenek – v
 
 Az azonosságok **párban** állnak: a jobb oldali a bal oldali **duálisa** (+ ↔ ·, 0 ↔ 1 csere; lásd a következő leckét).
 
-| # | Törvény                         | VAGY alak                      | ÉS alak                          |
-| - | ------------------------------- | ------------------------------ | -------------------------------- |
-| 1 | identitás (egységelem)          | A + 0 = A                      | A · 1 = A                        |
-| 2 | null / dominancia               | A + 1 = 1                      | A · 0 = 0                        |
-| 3 | idempotencia                    | A + A = A                      | A · A = A                        |
-| 4 | komplementer                    | A + A̅ = 1                      | A · A̅ = 0                        |
-| 5 | kettős negáció                  | A̿ = A                          |                                  |
-| 6 | kommutativitás (felcserélhetőség) | A + B = B + A                | A · B = B · A                    |
-| 7 | asszociativitás (csoportosíthatóság) | A + (B + C) = (A + B) + C | A · (B · C) = (A · B) · C        |
-| 8 | disztributivitás (szétosztás)    | A + B·C = (A + B)·(A + C)     | A · (B + C) = A·B + A·C          |
-| 9 | abszorpció (elnyelés)           | A + A·B = A                    | A · (A + B) = A                  |
-| 10 | elosztott abszorpció           | A + A̅·B = A + B                | A · (A̅ + B) = A · B              |
+| #   | Törvény                              | VAGY alak                 | ÉS alak                   |
+| --- | ------------------------------------ | ------------------------- | ------------------------- |
+| 1   | identitás (egységelem)               | A + 0 = A                 | A · 1 = A                 |
+| 2   | null / dominancia                    | A + 1 = 1                 | A · 0 = 0                 |
+| 3   | idempotencia                         | A + A = A                 | A · A = A                 |
+| 4   | komplementer                         | A + A̅ = 1                 | A · A̅ = 0                 |
+| 5   | kettős negáció                       | A̿ = A                     |                           |
+| 6   | kommutativitás (felcserélhetőség)    | A + B = B + A             | A · B = B · A             |
+| 7   | asszociativitás (csoportosíthatóság) | A + (B + C) = (A + B) + C | A · (B · C) = (A · B) · C |
+| 8   | disztributivitás (szétosztás)        | A + B·C = (A + B)·(A + C) | A · (B + C) = A·B + A·C   |
+| 9   | abszorpció (elnyelés)                | A + A·B = A               | A · (A + B) = A           |
+| 10  | elosztott abszorpció                 | A + A̅·B = A + B           | A · (A̅ + B) = A · B       |
 
 > **Figyelem:** a 8. sor bal oldala (A + B·C = (A + B)·(A + C)) a közönséges algebrában **nem** igaz, a Boole-algebrában viszont igen! Ugyanígy A + A = A (és nem 2A).
 
@@ -45,31 +45,31 @@ Egy azonosság akkor igaz, ha a két oldal igazságtáblája **minden sorban** m
 
 **Abszorpció: A + A·B = A**
 
-| A | B | A·B | A + A·B |
-| - | - | --- | ------- |
-| 0 | 0 | 0   | 0       |
-| 0 | 1 | 0   | 0       |
-| 1 | 0 | 0   | 1       |
-| 1 | 1 | 1   | 1       |
+| A   | B   | A·B | A + A·B |
+| --- | --- | --- | ------- |
+| 0   | 0   | 0   | 0       |
+| 0   | 1   | 0   | 0       |
+| 1   | 0   | 0   | 1       |
+| 1   | 1   | 1   | 1       |
 
 Az utolsó oszlop pontosan A. ✓
 
 **Elosztott abszorpció: A + A̅·B = A + B**
 
-| A | B | A̅·B | A + A̅·B | A + B |
-| - | - | --- | ------- | ----- |
-| 0 | 0 | 0   | 0       | 0     |
-| 0 | 1 | 1   | 1       | 1     |
-| 1 | 0 | 0   | 1       | 1     |
-| 1 | 1 | 0   | 1       | 1     |
+| A   | B   | A̅·B | A + A̅·B | A + B |
+| --- | --- | --- | ------- | ----- |
+| 0   | 0   | 0   | 0       | 0     |
+| 0   | 1   | 1   | 1       | 1     |
+| 1   | 0   | 0   | 1       | 1     |
+| 1   | 1   | 0   | 1       | 1     |
 
 ## Bizonyítás algebrailag
 
 **A + A·B = A:**
-A + A·B = A·1 + A·B *(identitás)* = A·(1 + B) *(kiemelés, disztributivitás)* = A·1 *(dominancia: 1 + B = 1)* = **A**
+A + A·B = A·1 + A·B _(identitás)_ = A·(1 + B) _(kiemelés, disztributivitás)_ = A·1 _(dominancia: 1 + B = 1)_ = **A**
 
 **A + A̅·B = A + B:**
-A + A̅·B = (A + A̅)·(A + B) *(disztributivitás VAGY alakja)* = 1·(A + B) *(komplementer)* = **A + B**
+A + A̅·B = (A + A̅)·(A + B) _(disztributivitás VAGY alakja)_ = 1·(A + B) _(komplementer)_ = **A + B**
 
 **(A + B)·(A + B̅) = A:**
 = A·A + A·B̅ + B·A + B·B̅ = A + A·B̅ + A·B + 0 = A·(1 + B̅ + B) = **A**

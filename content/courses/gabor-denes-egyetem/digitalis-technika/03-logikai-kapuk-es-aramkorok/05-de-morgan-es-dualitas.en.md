@@ -20,17 +20,17 @@ The two key transformation rules of **Augustus De Morgan** (1806–1871):
 
 **Proof with a truth table:**
 
-| A | B | (A + B)̅ | A̅ · B̅ | (A · B)̅ | A̅ + B̅ |
-| - | - | ------- | ----- | ------- | ----- |
-| 0 | 0 | 1       | 1     | 1       | 1     |
-| 0 | 1 | 0       | 0     | 1       | 1     |
-| 1 | 0 | 0       | 0     | 1       | 1     |
-| 1 | 1 | 0       | 0     | 0       | 0     |
+| A   | B   | (A + B)̅ | A̅ · B̅ | (A · B)̅ | A̅ + B̅ |
+| --- | --- | ------- | ----- | ------- | ----- |
+| 0   | 0   | 1       | 1     | 1       | 1     |
+| 0   | 1   | 0       | 0     | 1       | 1     |
+| 1   | 0   | 0       | 0     | 1       | 1     |
+| 1   | 1   | 0       | 0     | 0       | 0     |
 
-**General form, *n* variables:**
+**General form, _n_ variables:**
 (A<sub>1</sub> + A<sub>2</sub> + … + A<sub>n</sub>)̅ = A̅<sub>1</sub> · A̅<sub>2</sub> · … · A̅<sub>n</sub>, and (A<sub>1</sub> · A<sub>2</sub> · … · A<sub>n</sub>)̅ = A̅<sub>1</sub> + A̅<sub>2</sub> + … + A̅<sub>n</sub>
 
-**Rule of thumb:** *"Break the line and change the sign!"* Cut the long overline at the operator, and replace · with + (and vice versa).
+**Rule of thumb:** _"Break the line and change the sign!"_ Cut the long overline at the operator, and replace · with + (and vice versa).
 
 **With gates:** a NOR gate = an AND gate with inverted inputs, a NAND gate = an OR gate with inverted inputs. This is the basis of **NAND and NOR conversion** (two lessons later).
 
@@ -43,12 +43,12 @@ From every valid identity of Boolean algebra we **automatically get another vali
 - **swap the · and + operations**, and
 - **swap the constants 0 and 1** (variables and negations stay as they are).
 
-| Identity               | Its dual                 |
-| ---------------------- | ------------------------ |
-| A + 0 = A              | A · 1 = A                |
-| A · A = A              | A + A = A                |
-| A · (A + B) = A        | A + A · B = A            |
-| A + B·C = (A + B)(A + C) | A · (B + C) = AB + AC  |
+| Identity                 | Its dual              |
+| ------------------------ | --------------------- |
+| A + 0 = A                | A · 1 = A             |
+| A · A = A                | A + A = A             |
+| A · (A + B) = A          | A + A · B = A         |
+| A + B·C = (A + B)(A + C) | A · (B + C) = AB + AC |
 
 So it is enough to remember one half of each identity.
 

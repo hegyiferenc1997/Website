@@ -15,12 +15,12 @@ A kettes számrendszerbeli műveletek ugyanúgy működnek, mint a tízesben –
 
 ## Összeadás
 
-| A | B | összeg | átvitel |
-| - | - | ------ | ------- |
-| 0 | 0 | 0      | 0       |
-| 0 | 1 | 1      | 0       |
-| 1 | 0 | 1      | 0       |
-| 1 | 1 | 0      | **1**   |
+| A   | B   | összeg | átvitel |
+| --- | --- | ------ | ------- |
+| 0   | 0   | 0      | 0       |
+| 0   | 1   | 1      | 0       |
+| 1   | 0   | 1      | 0       |
+| 1   | 1   | 0      | **1**   |
 
 Vagyis 1 + 1 = 10<sub>2</sub>: leírjuk a 0-t, és 1-et viszünk tovább. Három egyes összege: 1 + 1 + 1 = 11<sub>2</sub> (leírunk 1-et, viszünk 1-et).
 
@@ -36,12 +36,12 @@ Vagyis 1 + 1 = 10<sub>2</sub>: leírjuk a 0-t, és 1-et viszünk tovább. Három
 
 ## Kivonás
 
-| A | B | különbség | áthozat |
-| - | - | --------- | ------- |
-| 0 | 0 | 0         | 0       |
-| 1 | 0 | 1         | 0       |
-| 1 | 1 | 0         | 0       |
-| 0 | 1 | 1         | **1**   |
+| A   | B   | különbség | áthozat |
+| --- | --- | --------- | ------- |
+| 0   | 0   | 0         | 0       |
+| 1   | 0   | 1         | 0       |
+| 1   | 1   | 0         | 0       |
+| 0   | 1   | 1         | **1**   |
 
 0 − 1-nél „kölcsönkérünk” a következő helyiértékről (az ott 2-t ér): 10<sub>2</sub> − 1 = 1, és a következő helyen eggyel többet vonunk le.
 
@@ -77,7 +77,7 @@ Az osztás az írásbeli osztás mintáját követi: minden lépésben eldöntj�
 
 ## Túlcsordulás előjel nélküli számoknál
 
-Ha az eredmény nem fér el a rendelkezésre álló biteken, **túlcsordulás** (*overflow*) történik. Előjel nélküli összeadásnál ezt a **legfelső helyiértékből kilépő átvitel** jelzi: 4 biten 1011 + 0110 = 1 0001 → a 4 bites eredmény 0001 (1), ami hibás, az 5. bit (carry) jelzi a túlcsordulást.
+Ha az eredmény nem fér el a rendelkezésre álló biteken, **túlcsordulás** (_overflow_) történik. Előjel nélküli összeadásnál ezt a **legfelső helyiértékből kilépő átvitel** jelzi: 4 biten 1011 + 0110 = 1 0001 → a 4 bites eredmény 0001 (1), ami hibás, az 5. bit (carry) jelzi a túlcsordulást.
 
 ```python run
 # Bináris műveletek Pythonban, 4 bites korlátozással

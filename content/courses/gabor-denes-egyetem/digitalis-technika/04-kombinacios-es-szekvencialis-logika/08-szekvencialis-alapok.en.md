@@ -30,12 +30,12 @@ The outputs of the storage elements are **fed back** to the combinational part. 
 
 ## Synchronous and asynchronous circuits
 
-|                        | **asynchronous**                                | **synchronous**                                    |
-| ---------------------- | ----------------------------------------------- | -------------------------------------------------- |
-| when the state changes | any time an input changes                       | **only on the clock** (its active edge)            |
-| speed                  | limited only by gate delays – fast              | set by the clock frequency                         |
-| design                 | hard: **races**, hazards, unstable states       | simpler, easy to automate                          |
-| use                    | in a few critical details                       | **almost every** digital system today              |
+|                        | **asynchronous**                          | **synchronous**                         |
+| ---------------------- | ----------------------------------------- | --------------------------------------- |
+| when the state changes | any time an input changes                 | **only on the clock** (its active edge) |
+| speed                  | limited only by gate delays – fast        | set by the clock frequency              |
+| design                 | hard: **races**, hazards, unstable states | simpler, easy to automate               |
+| use                    | in a few critical details                 | **almost every** digital system today   |
 
 A **race** occurs when several state variables should change at once during a state change, but because of different delays they change in a different order – so the circuit may end up in a wrong state. In a synchronous circuit the clock period is chosen so that every signal settles before the next edge.
 

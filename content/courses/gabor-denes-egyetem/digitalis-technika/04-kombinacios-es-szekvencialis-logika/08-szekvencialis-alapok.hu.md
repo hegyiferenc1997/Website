@@ -30,12 +30,12 @@ A tárolók kimenete **visszacsatolódik** a kombinációs részre. Szinte minde
 
 ## Szinkron és aszinkron hálózat
 
-|                        | **aszinkron**                                   | **szinkron**                                       |
-| ---------------------- | ----------------------------------------------- | -------------------------------------------------- |
-| mikor változik állapot | bármikor, amikor egy bemenet változik           | **csak az órajel** (aktív éle) hatására            |
-| sebesség               | csak a kapuk késleltetése korlátozza – gyors    | az órajel frekvenciája határozza meg               |
-| tervezés               | nehéz: **versenyhelyzet** (race), hazárdok, instabil állapotok | egyszerűbb, jól automatizálható           |
-| használat              | néhány kritikus részletben                      | **szinte minden** mai digitális rendszer           |
+|                        | **aszinkron**                                                  | **szinkron**                             |
+| ---------------------- | -------------------------------------------------------------- | ---------------------------------------- |
+| mikor változik állapot | bármikor, amikor egy bemenet változik                          | **csak az órajel** (aktív éle) hatására  |
+| sebesség               | csak a kapuk késleltetése korlátozza – gyors                   | az órajel frekvenciája határozza meg     |
+| tervezés               | nehéz: **versenyhelyzet** (race), hazárdok, instabil állapotok | egyszerűbb, jól automatizálható          |
+| használat              | néhány kritikus részletben                                     | **szinte minden** mai digitális rendszer |
 
 **Versenyhelyzet** akkor lép fel, ha egy állapotváltáskor több állapotváltozónak kellene egyszerre változnia, de a különböző késleltetések miatt eltérő sorrendben változnak – a hálózat így rossz állapotba kerülhet. Szinkron hálózatban az órajel periódusát úgy választjuk meg, hogy minden jel beálljon a következő él előtt.
 

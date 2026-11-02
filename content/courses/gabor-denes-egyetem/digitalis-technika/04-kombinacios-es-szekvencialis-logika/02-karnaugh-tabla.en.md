@@ -22,19 +22,19 @@ Row and column headers follow **Gray-code** order: **00, 01, 11, 10**. So two ne
 
 **Three-variable map** (row: A, column: BC) – each cell holds its minterm number:
 
-| A \ BC | 00 | 01 | 11 | 10 |
-| ------ | -- | -- | -- | -- |
-| 0      | 0  | 1  | 3  | 2  |
-| 1      | 4  | 5  | 7  | 6  |
+| A \ BC | 00  | 01  | 11  | 10  |
+| ------ | --- | --- | --- | --- |
+| 0      | 0   | 1   | 3   | 2   |
+| 1      | 4   | 5   | 7   | 6   |
 
 **Four-variable map** (row: AB, column: CD):
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | 0  | 1  | 3  | 2  |
-| 01      | 4  | 5  | 7  | 6  |
-| 11      | 12 | 13 | 15 | 14 |
-| 10      | 8  | 9  | 11 | 10 |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | 0   | 1   | 3   | 2   |
+| 01      | 4   | 5   | 7   | 6   |
+| 11      | 12  | 13  | 15  | 14  |
+| 10      | 8   | 9   | 11  | 10  |
 
 Notice that the 3rd and 4th columns (and rows) are “swapped” compared with binary order – that is the Gray code.
 
@@ -53,12 +53,12 @@ Notice that the 3rd and 4th columns (and rows) are “swapped” compared with b
 
 F = Σm(0, 2, 5, 7, 8, 10, 13, 15)
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | 1  | 0  | 0  | 1  |
-| 01      | 0  | 1  | 1  | 0  |
-| 11      | 0  | 1  | 1  | 0  |
-| 10      | 1  | 0  | 0  | 1  |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | 1   | 0   | 0   | 1   |
+| 01      | 0   | 1   | 1   | 0   |
+| 11      | 0   | 1   | 1   | 0   |
+| 10      | 1   | 0   | 0   | 1   |
 
 - The **four corners** (0, 2, 8, 10): B = 0 and D = 0 in each → **B̅·D̅**.
 - The **central four** (5, 7, 13, 15): B = 1 and D = 1 → **B·D**.
@@ -71,12 +71,12 @@ A **don't care** (**X** or **d**) row is one whose output **does not matter** �
 
 F = Σm(1, 3, 7, 11, 15) + d(0, 2, 5)
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | X  | 1  | 1  | X  |
-| 01      | 0  | X  | 1  | 0  |
-| 11      | 0  | 0  | 1  | 0  |
-| 10      | 0  | 0  | 1  | 0  |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | X   | 1   | 1   | X   |
+| 01      | 0   | X   | 1   | 0   |
+| 11      | 0   | 0   | 1   | 0   |
+| 10      | 0   | 0   | 1   | 0   |
 
 - The **CD = 11 column** (3, 7, 15, 11) → **C·D**.
 - The remaining 1 (cell 1) is covered with help from the Xs: the quad 1, 3, 5, 7 (5 is a don't care) → **A̅·D**. (The quad 0, 1, 3, 2 → A̅·B̅ is just as good.)

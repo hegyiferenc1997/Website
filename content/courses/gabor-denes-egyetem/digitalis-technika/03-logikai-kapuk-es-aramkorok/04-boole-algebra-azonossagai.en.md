@@ -24,18 +24,18 @@ These guarantee that algebraic manipulations are valid – so we can transform l
 
 The identities come **in pairs**: the right one is the **dual** of the left one (swap + ↔ ·, 0 ↔ 1; see the next lesson).
 
-| # | Law                             | OR form                        | AND form                         |
-| - | ------------------------------- | ------------------------------ | -------------------------------- |
-| 1 | identity                        | A + 0 = A                      | A · 1 = A                        |
-| 2 | null / domination               | A + 1 = 1                      | A · 0 = 0                        |
-| 3 | idempotent                      | A + A = A                      | A · A = A                        |
-| 4 | complement                      | A + A̅ = 1                      | A · A̅ = 0                        |
-| 5 | double negation                 | A̿ = A                          |                                  |
-| 6 | commutative                     | A + B = B + A                  | A · B = B · A                    |
-| 7 | associative                     | A + (B + C) = (A + B) + C      | A · (B · C) = (A · B) · C        |
-| 8 | distributive                    | A + B·C = (A + B)·(A + C)      | A · (B + C) = A·B + A·C          |
-| 9 | absorption                      | A + A·B = A                    | A · (A + B) = A                  |
-| 10 | redundancy (extended absorption) | A + A̅·B = A + B             | A · (A̅ + B) = A · B              |
+| #   | Law                              | OR form                   | AND form                  |
+| --- | -------------------------------- | ------------------------- | ------------------------- |
+| 1   | identity                         | A + 0 = A                 | A · 1 = A                 |
+| 2   | null / domination                | A + 1 = 1                 | A · 0 = 0                 |
+| 3   | idempotent                       | A + A = A                 | A · A = A                 |
+| 4   | complement                       | A + A̅ = 1                 | A · A̅ = 0                 |
+| 5   | double negation                  | A̿ = A                     |                           |
+| 6   | commutative                      | A + B = B + A             | A · B = B · A             |
+| 7   | associative                      | A + (B + C) = (A + B) + C | A · (B · C) = (A · B) · C |
+| 8   | distributive                     | A + B·C = (A + B)·(A + C) | A · (B + C) = A·B + A·C   |
+| 9   | absorption                       | A + A·B = A               | A · (A + B) = A           |
+| 10  | redundancy (extended absorption) | A + A̅·B = A + B           | A · (A̅ + B) = A · B       |
 
 > **Careful:** the left side of row 8 (A + B·C = (A + B)·(A + C)) is **not** true in ordinary algebra, but it is in Boolean algebra! Likewise A + A = A (and not 2A).
 
@@ -45,31 +45,31 @@ An identity is true if the truth tables of both sides agree **in every row**.
 
 **Absorption: A + A·B = A**
 
-| A | B | A·B | A + A·B |
-| - | - | --- | ------- |
-| 0 | 0 | 0   | 0       |
-| 0 | 1 | 0   | 0       |
-| 1 | 0 | 0   | 1       |
-| 1 | 1 | 1   | 1       |
+| A   | B   | A·B | A + A·B |
+| --- | --- | --- | ------- |
+| 0   | 0   | 0   | 0       |
+| 0   | 1   | 0   | 0       |
+| 1   | 0   | 0   | 1       |
+| 1   | 1   | 1   | 1       |
 
 The last column is exactly A. ✓
 
 **Redundancy: A + A̅·B = A + B**
 
-| A | B | A̅·B | A + A̅·B | A + B |
-| - | - | --- | ------- | ----- |
-| 0 | 0 | 0   | 0       | 0     |
-| 0 | 1 | 1   | 1       | 1     |
-| 1 | 0 | 0   | 1       | 1     |
-| 1 | 1 | 0   | 1       | 1     |
+| A   | B   | A̅·B | A + A̅·B | A + B |
+| --- | --- | --- | ------- | ----- |
+| 0   | 0   | 0   | 0       | 0     |
+| 0   | 1   | 1   | 1       | 1     |
+| 1   | 0   | 0   | 1       | 1     |
+| 1   | 1   | 0   | 1       | 1     |
 
 ## Algebraic proof
 
 **A + A·B = A:**
-A + A·B = A·1 + A·B *(identity)* = A·(1 + B) *(factoring, distributivity)* = A·1 *(domination: 1 + B = 1)* = **A**
+A + A·B = A·1 + A·B _(identity)_ = A·(1 + B) _(factoring, distributivity)_ = A·1 _(domination: 1 + B = 1)_ = **A**
 
 **A + A̅·B = A + B:**
-A + A̅·B = (A + A̅)·(A + B) *(OR form of distributivity)* = 1·(A + B) *(complement)* = **A + B**
+A + A̅·B = (A + A̅)·(A + B) _(OR form of distributivity)_ = 1·(A + B) _(complement)_ = **A + B**
 
 **(A + B)·(A + B̅) = A:**
 = A·A + A·B̅ + B·A + B·B̅ = A + A·B̅ + A·B + 0 = A·(1 + B̅ + B) = **A**

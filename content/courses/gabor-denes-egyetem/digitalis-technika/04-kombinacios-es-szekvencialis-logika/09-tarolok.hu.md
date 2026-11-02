@@ -31,12 +31,12 @@ Q̅  = NOR(S, Q)      ← a másik kapu bemenete S és az első kapu kimenete
 
 Q a jelenlegi, Q<sup>+</sup> a következő állapot:
 
-| S | R | Q<sup>+</sup> | művelet   |
-| - | - | ------------- | --------- |
-| 0 | 0 | Q             | tárol     |
-| 0 | 1 | 0             | töröl     |
-| 1 | 0 | 1             | beír      |
-| 1 | 1 | –             | tiltott   |
+| S   | R   | Q<sup>+</sup> | művelet |
+| --- | --- | ------------- | ------- |
+| 0   | 0   | Q             | tárol   |
+| 0   | 1   | 0             | töröl   |
+| 1   | 0   | 1             | beír    |
+| 1   | 1   | –             | tiltott |
 
 A **karakterisztikus egyenlet** (a tiltott sort közömbösnek véve): **Q<sup>+</sup> = S + R̅·Q**, az **S·R = 0** feltétellel.
 
@@ -59,11 +59,11 @@ Egy **E** (enable) bemenettel kiegészítve az S és R csak akkor hat, ha E = 1;
 
 A **D tároló** (D latch) megszünteti a tiltott állapotot: egyetlen **D** (data) bemenete van, és S = D, R = D̅. Így:
 
-| E | D | Q<sup>+</sup> |
-| - | - | ------------- |
-| 0 | X | Q (tart)      |
-| 1 | 0 | 0             |
-| 1 | 1 | 1             |
+| E   | D   | Q<sup>+</sup> |
+| --- | --- | ------------- |
+| 0   | X   | Q (tart)      |
+| 1   | 0   | 0             |
+| 1   | 1   | 1             |
 
 **Q<sup>+</sup> = E·D + E̅·Q** – amíg E = 1, a kimenet **átlátszóan követi** D-t; amikor E 0-ra vált, megjegyzi az utolsó értéket. (Ismert IC: **74373** – 8 bites D tároló, buszrendszerekben címtárolásra.)
 

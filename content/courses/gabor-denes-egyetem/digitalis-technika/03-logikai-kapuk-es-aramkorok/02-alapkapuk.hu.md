@@ -15,26 +15,26 @@ A **logikai kapu** egy logikai műveletet megvalósító áramkör. A kapukból 
 
 ## A hét alapkapu
 
-| Kapu      | Művelet neve          | Kifejezés         | Mikor 1 a kimenet?                 | IEC jel | IC (4 kapu) |
-| --------- | --------------------- | ----------------- | ---------------------------------- | ------- | ----------- |
-| **NEM**   | negáció, inverter     | Y = A̅             | ha A = 0                           | `1` + kör | 7404 (6 db) |
-| **ÉS**    | konjunkció            | Y = A · B         | ha **minden** bemenet 1            | `&`     | 7408        |
-| **VAGY**  | diszjunkció           | Y = A + B         | ha **legalább egy** bemenet 1      | `≥1`    | 7432        |
-| **NAND**  | Sheffer-függvény      | Y = (A · B)̅       | ha **nem mind** 1                  | `&` + kör | 7400      |
-| **NOR**   | Pierce-függvény       | Y = (A + B)̅       | ha **mind** 0                      | `≥1` + kör | 7402     |
-| **XOR**   | kizáró VAGY, antivalencia | Y = A ⊕ B     | ha a bemenetek **különböznek**     | `=1`    | 7486        |
-| **XNOR**  | ekvivalencia          | Y = (A ⊕ B)̅ = A ⊙ B | ha a bemenetek **egyeznek**      | `=1` + kör | 74266    |
+| Kapu     | Művelet neve              | Kifejezés           | Mikor 1 a kimenet?             | IEC jel    | IC (4 kapu) |
+| -------- | ------------------------- | ------------------- | ------------------------------ | ---------- | ----------- |
+| **NEM**  | negáció, inverter         | Y = A̅               | ha A = 0                       | `1` + kör  | 7404 (6 db) |
+| **ÉS**   | konjunkció                | Y = A · B           | ha **minden** bemenet 1        | `&`        | 7408        |
+| **VAGY** | diszjunkció               | Y = A + B           | ha **legalább egy** bemenet 1  | `≥1`       | 7432        |
+| **NAND** | Sheffer-függvény          | Y = (A · B)̅         | ha **nem mind** 1              | `&` + kör  | 7400        |
+| **NOR**  | Pierce-függvény           | Y = (A + B)̅         | ha **mind** 0                  | `≥1` + kör | 7402        |
+| **XOR**  | kizáró VAGY, antivalencia | Y = A ⊕ B           | ha a bemenetek **különböznek** | `=1`       | 7486        |
+| **XNOR** | ekvivalencia              | Y = (A ⊕ B)̅ = A ⊙ B | ha a bemenetek **egyeznek**    | `=1` + kör | 74266       |
 
 A kimeneten rajzolt **kis kör** mindig **negálást** jelent.
 
 ### Igazságtáblák egyben
 
-| A | B | ÉS | VAGY | NAND | NOR | XOR | XNOR |
-| - | - | -- | ---- | ---- | --- | --- | ---- |
-| 0 | 0 | 0  | 0    | 1    | 1   | 0   | 1    |
-| 0 | 1 | 0  | 1    | 1    | 0   | 1   | 0    |
-| 1 | 0 | 0  | 1    | 1    | 0   | 1   | 0    |
-| 1 | 1 | 1  | 1    | 0    | 0   | 0   | 1    |
+| A   | B   | ÉS  | VAGY | NAND | NOR | XOR | XNOR |
+| --- | --- | --- | ---- | ---- | --- | --- | ---- |
+| 0   | 0   | 0   | 0    | 1    | 1   | 0   | 1    |
+| 0   | 1   | 0   | 1    | 1    | 0   | 1   | 0    |
+| 1   | 0   | 0   | 1    | 1    | 0   | 1   | 0    |
+| 1   | 1   | 1   | 1    | 0    | 0   | 0   | 1    |
 
 ### Rajzjelek
 
@@ -54,25 +54,25 @@ A kimeneten rajzolt **kis kör** mindig **negálást** jelent.
 
 ## Jelölések
 
-| Művelet | Jelölések                          |
-| ------- | ---------------------------------- |
-| NEM     | A̅, A', ¬A, !A, ~A                  |
-| ÉS      | A · B, AB, A ∧ B, A & B, A * B     |
-| VAGY    | A + B, A ∨ B, A \| B               |
-| XOR     | A ⊕ B, A ^ B                       |
-| XNOR    | A ⊙ B, (A ⊕ B)̅                     |
+| Művelet | Jelölések                      |
+| ------- | ------------------------------ |
+| NEM     | A̅, A', ¬A, !A, ~A              |
+| ÉS      | A · B, AB, A ∧ B, A & B, A * B |
+| VAGY    | A + B, A ∨ B, A \| B           |
+| XOR     | A ⊕ B, A ^ B                   |
+| XNOR    | A ⊙ B, (A ⊕ B)̅                 |
 
 Programozásban: C/Java/Python bitművelet `&`, `|`, `^`, `~`; logikai művelet `&&`, `||`, `!` (Pythonban `and`, `or`, `not`).
 
 ## Több bemenetű kapuk
 
-- **ÉS:** csak akkor 1, ha *minden* bemenet 1. **VAGY:** 1, ha *bármelyik* 1.
+- **ÉS:** csak akkor 1, ha _minden_ bemenet 1. **VAGY:** 1, ha _bármelyik_ 1.
 - **NAND / NOR:** a több bemenetű ÉS / VAGY negáltja.
 - **XOR:** több bemenetnél akkor 1, ha **páratlan sok** bemenet 1 – ezért ez a **paritásgenerátor** (2. témakör).
 
 ## XOR – a „vezérelhető inverter”
 
-A ⊕ 0 = A, A ⊕ 1 = A̅. Az egyik bemenettel tehát eldönthetjük, hogy a másikat átengedjük vagy negáljuk. Ezt használja a kivonó áramkör (4. témakör), a titkosítás (*one-time pad*), és a Gray-kód átalakító.
+A ⊕ 0 = A, A ⊕ 1 = A̅. Az egyik bemenettel tehát eldönthetjük, hogy a másikat átengedjük vagy negáljuk. Ezt használja a kivonó áramkör (4. témakör), a titkosítás (_one-time pad_), és a Gray-kód átalakító.
 
 ```python run
 # Az alapkapuk mint Python függvények (bitműveletekkel)

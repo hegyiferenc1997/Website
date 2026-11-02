@@ -35,12 +35,12 @@ N bits → **N steps** (N clocks).
 
 **Example** (4 bits, DAC step 1 V, V<sub>in</sub> = 11.3 V):
 
-| step  | trial | DAC   | V<sub>in</sub> ≥ DAC? | result   |
-| ----- | ----- | ----- | --------------------- | -------- |
-| 1     | 1000  | 8 V   | yes                   | 1xxx     |
-| 2     | 1100  | 12 V  | no                    | 10xx     |
-| 3     | 1010  | 10 V  | yes                   | 101x     |
-| 4     | 1011  | 11 V  | yes                   | **1011** |
+| step | trial | DAC  | V<sub>in</sub> ≥ DAC? | result   |
+| ---- | ----- | ---- | --------------------- | -------- |
+| 1    | 1000  | 8 V  | yes                   | 1xxx     |
+| 2    | 1100  | 12 V | no                    | 10xx     |
+| 3    | 1010  | 10 V | yes                   | 101x     |
+| 4    | 1011  | 11 V | yes                   | **1011** |
 
 - **Medium speed** (kHz–MS/s), **8–18 bits**, low power → the built-in ADC of **microcontrollers** is almost always a SAR.
 
@@ -64,12 +64,12 @@ The **modulator** compares the input at a very high rate (**oversampling**) with
 
 ## Comparison
 
-| type         | speed             | resolution    | typical use                             |
-| ------------ | ----------------- | ------------- | --------------------------------------- |
-| **flash**    | fastest (GS/s)    | 6–8 bits      | video, oscilloscope, radar              |
-| **SAR**      | medium (MS/s)     | 8–18 bits     | microcontrollers, data acquisition      |
-| **ΔΣ**       | low–medium        | 16–24 bits    | audio, precision measurement            |
-| **dual-slope** | slow (Hz)       | 12–20 bits    | multimeter, panel meter                 |
+| type           | speed          | resolution | typical use                        |
+| -------------- | -------------- | ---------- | ---------------------------------- |
+| **flash**      | fastest (GS/s) | 6–8 bits   | video, oscilloscope, radar         |
+| **SAR**        | medium (MS/s)  | 8–18 bits  | microcontrollers, data acquisition |
+| **ΔΣ**         | low–medium     | 16–24 bits | audio, precision measurement       |
+| **dual-slope** | slow (Hz)      | 12–20 bits | multimeter, panel meter            |
 
 ```python run
 # Simulating a successive-approximation ADC: halving search bit by bit

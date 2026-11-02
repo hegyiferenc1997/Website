@@ -30,13 +30,13 @@ Fordítva: 1 Mi (2<sup>20</sup>) szóhoz **20** címvezeték kell.
 
 Tartalmukat tápfeszültség nélkül is megőrzik (**nem felejtő**, non-volatile).
 
-| típus          | írás                                   | megjegyzés                                   |
-| -------------- | -------------------------------------- | -------------------------------------------- |
-| **maszk-ROM**  | gyártáskor, maszkkal                   | nagy sorozatban olcsó, nem módosítható       |
-| **PROM**       | egyszer, a felhasználó égeti be        | olvadóbiztosítékos cellák (OTP)              |
-| **EPROM**      | elektromosan; **UV fénnyel** törölhető | kvarcablakos tok                             |
-| **EEPROM**     | elektromosan írható és törölhető, **bájtonként** | kis kapacitás, beállítások tárolására |
-| **Flash**      | elektromosan, **blokkonként** törölhető | nagy kapacitás, olcsó: SSD, pendrive, mikrovezérlő programja |
+| típus         | írás                                             | megjegyzés                                                   |
+| ------------- | ------------------------------------------------ | ------------------------------------------------------------ |
+| **maszk-ROM** | gyártáskor, maszkkal                             | nagy sorozatban olcsó, nem módosítható                       |
+| **PROM**      | egyszer, a felhasználó égeti be                  | olvadóbiztosítékos cellák (OTP)                              |
+| **EPROM**     | elektromosan; **UV fénnyel** törölhető           | kvarcablakos tok                                             |
+| **EEPROM**    | elektromosan írható és törölhető, **bájtonként** | kis kapacitás, beállítások tárolására                        |
+| **Flash**     | elektromosan, **blokkonként** törölhető          | nagy kapacitás, olcsó: SSD, pendrive, mikrovezérlő programja |
 
 A Flash két fajtája: **NOR Flash** (közvetlenül címezhető, a program onnan futtatható) és **NAND Flash** (sűrűbb, olcsóbb, blokkos elérés – SSD, memóriakártya). A Flash cellák írási/törlési ciklusainak száma korlátos (10<sup>3</sup>–10<sup>5</sup>), ezért a vezérlő **kopáskiegyenlítést** végez.
 
@@ -62,12 +62,12 @@ Egy bitet egy **kondenzátor töltése** tárol, cellánként **1 tranzisztor + 
 
 ## Memória-hierarchia
 
-| szint                    | technológia | méret (nagyságrend) | elérési idő |
-| ------------------------ | ----------- | ------------------- | ----------- |
-| regiszterek              | flip-flop   | ~1 KiB              | < 1 ns      |
-| cache (L1–L3)            | SRAM        | KiB–MiB             | 1–20 ns     |
-| operatív memória         | DRAM        | GiB                 | ~60–100 ns  |
-| háttértár (SSD)          | NAND Flash  | TB                  | ~100 µs     |
+| szint            | technológia | méret (nagyságrend) | elérési idő |
+| ---------------- | ----------- | ------------------- | ----------- |
+| regiszterek      | flip-flop   | ~1 KiB              | < 1 ns      |
+| cache (L1–L3)    | SRAM        | KiB–MiB             | 1–20 ns     |
+| operatív memória | DRAM        | GiB                 | ~60–100 ns  |
+| háttértár (SSD)  | NAND Flash  | TB                  | ~100 µs     |
 
 Minél közelebb van a processzorhoz, annál gyorsabb, kisebb és drágább bitenként.
 

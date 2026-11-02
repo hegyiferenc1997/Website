@@ -58,30 +58,30 @@ Minden szegmens elé **áramkorlátozó ellenállás** kell.
 
 Bemenet: egy BCD számjegy (A B C D, A a legnagyobb helyiérték). Kimenet: hét szegmens (közös katódos, tehát 1 = világít).
 
-| szám | A B C D | a | b | c | d | e | f | g |
-| ---- | ------- | - | - | - | - | - | - | - |
-| 0    | 0 0 0 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
-| 1    | 0 0 0 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 |
-| 2    | 0 0 1 0 | 1 | 1 | 0 | 1 | 1 | 0 | 1 |
-| 3    | 0 0 1 1 | 1 | 1 | 1 | 1 | 0 | 0 | 1 |
-| 4    | 0 1 0 0 | 0 | 1 | 1 | 0 | 0 | 1 | 1 |
-| 5    | 0 1 0 1 | 1 | 0 | 1 | 1 | 0 | 1 | 1 |
-| 6    | 0 1 1 0 | 1 | 0 | 1 | 1 | 1 | 1 | 1 |
-| 7    | 0 1 1 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| 8    | 1 0 0 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| 9    | 1 0 0 1 | 1 | 1 | 1 | 1 | 0 | 1 | 1 |
-| 10–15 | 1010…1111 | X | X | X | X | X | X | X |
+| szám  | A B C D   | a   | b   | c   | d   | e   | f   | g   |
+| ----- | --------- | --- | --- | --- | --- | --- | --- | --- |
+| 0     | 0 0 0 0   | 1   | 1   | 1   | 1   | 1   | 1   | 0   |
+| 1     | 0 0 0 1   | 0   | 1   | 1   | 0   | 0   | 0   | 0   |
+| 2     | 0 0 1 0   | 1   | 1   | 0   | 1   | 1   | 0   | 1   |
+| 3     | 0 0 1 1   | 1   | 1   | 1   | 1   | 0   | 0   | 1   |
+| 4     | 0 1 0 0   | 0   | 1   | 1   | 0   | 0   | 1   | 1   |
+| 5     | 0 1 0 1   | 1   | 0   | 1   | 1   | 0   | 1   | 1   |
+| 6     | 0 1 1 0   | 1   | 0   | 1   | 1   | 1   | 1   | 1   |
+| 7     | 0 1 1 1   | 1   | 1   | 1   | 0   | 0   | 0   | 0   |
+| 8     | 1 0 0 0   | 1   | 1   | 1   | 1   | 1   | 1   | 1   |
+| 9     | 1 0 0 1   | 1   | 1   | 1   | 1   | 0   | 1   | 1   |
+| 10–15 | 1010…1111 | X   | X   | X   | X   | X   | X   | X   |
 
 A **10–15** kódok BCD-ben nem fordulnak elő → **közömbös** bejegyzések, amelyek nagyban egyszerűsítik a K-táblákat.
 
 **Példa – az „e” szegmens:** e = Σm(0, 2, 6, 8) + d(10…15)
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | 1  | 0  | 0  | 1  |
-| 01      | 0  | 0  | 0  | 1  |
-| 11      | X  | X  | X  | X  |
-| 10      | 1  | 0  | X  | X  |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | 1   | 0   | 0   | 1   |
+| 01      | 0   | 0   | 0   | 1   |
+| 11      | X   | X   | X   | X   |
+| 10      | 1   | 0   | X   | X   |
 
 - A négy sarok (0, 2, 8, 10 – a 10 közömbös) → **B̅D̅**
 - A CD = 10 oszlop (2, 6, 14, 10) → **CD̅**
@@ -90,27 +90,27 @@ A **10–15** kódok BCD-ben nem fordulnak elő → **közömbös** bejegyzések
 
 Mind a hét szegmens egyszerűsített alakja:
 
-| szegmens | egyszerűsített függvény     |
-| -------- | --------------------------- |
-| a        | A + C + BD + B̅D̅             |
-| b        | B̅ + C̅D̅ + CD                 |
-| c        | B + C̅ + D                   |
-| d        | A + B̅D̅ + B̅C + BC̅D + CD̅      |
-| e        | B̅D̅ + CD̅                     |
-| f        | A + C̅D̅ + BC̅ + BD̅            |
-| g        | A + BC̅ + B̅C + CD̅            |
+| szegmens | egyszerűsített függvény |
+| -------- | ----------------------- |
+| a        | A + C + BD + B̅D̅         |
+| b        | B̅ + C̅D̅ + CD             |
+| c        | B + C̅ + D               |
+| d        | A + B̅D̅ + B̅C + BC̅D + CD̅  |
+| e        | B̅D̅ + CD̅                 |
+| f        | A + C̅D̅ + BC̅ + BD̅        |
+| g        | A + BC̅ + B̅C + CD̅        |
 
 Közös anódos kijelzőnél ugyanezeket **negálva** kell kiadni.
 
 ## Kész meghajtó IC-k
 
-| IC                  | jellemző                                                                      |
-| ------------------- | ----------------------------------------------------------------------------- |
-| **CD4511** (CMOS)   | BCD → 7 szegmens, aktív magas kimenet → **közös katódos** kijelzőhöz, beépített tárolóval |
-| **74LS47 / 7447** (TTL) | aktív alacsony, nyitott kollektoros kimenet → **közös anódos** kijelzőhöz |
-| **74LS48 / 7448** (TTL) | a 7447 aktív magas változata → közös katódos kijelzőhöz                  |
-| **MAX7219 / MAX7221** | soros (SPI-szerű) vezérlés, 8 számjegy multiplexelve, áramszabályozással   |
-| **CD4543**          | LCD-hez is használható (fázisbemenettel)                                      |
+| IC                      | jellemző                                                                                  |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| **CD4511** (CMOS)       | BCD → 7 szegmens, aktív magas kimenet → **közös katódos** kijelzőhöz, beépített tárolóval |
+| **74LS47 / 7447** (TTL) | aktív alacsony, nyitott kollektoros kimenet → **közös anódos** kijelzőhöz                 |
+| **74LS48 / 7448** (TTL) | a 7447 aktív magas változata → közös katódos kijelzőhöz                                   |
+| **MAX7219 / MAX7221**   | soros (SPI-szerű) vezérlés, 8 számjegy multiplexelve, áramszabályozással                  |
+| **CD4543**              | LCD-hez is használható (fázisbemenettel)                                                  |
 
 Az **LCD** kijelzőt nem szabad egyenfeszültséggel meghajtani (tönkremegy), ezért váltakozó (négyszögjeles) meghajtás kell – pl. CD4056B, ICM7211, I²C-s PCF85176. A **Nixie-csövek** 10 külön katódosak és kb. 170 V kell nekik (pl. SN74141).
 

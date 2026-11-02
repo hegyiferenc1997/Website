@@ -14,13 +14,13 @@ minutes: 25
 ## Number and code
 
 - **Binary number:** the value of a number written in base two (e.g. 59 = 111011).
-- **Binary code:** bits that stand for *some information* by agreement (e.g. 59 in BCD is 0101 1001, a letter in ASCII, a colour in RGB).
+- **Binary code:** bits that stand for _some information_ by agreement (e.g. 59 in BCD is 0101 1001, a letter in ASCII, a colour in RGB).
 
 **Encoding** turns elements of one symbol set into another by a rule; the reverse is **decoding**.
 
 ## Weighted codes: BCD (8421)
 
-**BCD** (*Binary Coded Decimal*) encodes a decimal number **digit by digit** in 4 bits. The bit weights are 8-4-2-1.
+**BCD** (_Binary Coded Decimal_) encodes a decimal number **digit by digit** in 4 bits. The bit weights are 8-4-2-1.
 
 | decimal | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    |
 | ------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -67,7 +67,7 @@ Named after **Frank Gray**, who used it in 1947 and patented it. The point: **tw
 | 6   | 0110 | 0101 | 14  | 1110 | 1001 |
 | 7   | 0111 | 0100 | 15  | 1111 | 1000 |
 
-The name "reflected" comes from how the table is built: the *n*-bit code is the (*n*−1)-bit code followed by the same list in reverse order, with 0 prefixed to the first half and 1 to the second.
+The name "reflected" comes from how the table is built: the _n_-bit code is the (*n*−1)-bit code followed by the same list in reverse order, with 0 prefixed to the first half and 1 to the second.
 
 **Why does it matter?** When several bits change at once (e.g. 0111 → 1000: all four!), in reality they do not switch at exactly the same instant, and a **false value** (hazard) may briefly appear. In Gray code only one bit changes at a time, so this cannot happen. That is why it is used in **rotary encoders**, **A/D converters**, pointers of asynchronous FIFOs – and the rows and columns of a **Karnaugh map** are in Gray order too (topic 4).
 
@@ -100,7 +100,7 @@ In hardware both converters are made of **XOR gates** (3 of them for 4 bits). Th
 
 ## Lesson exercise: Gray code converters
 
-Write both converter functions for integers! `bin_to_gray(n)` returns the Gray code of the binary number *n* (as an integer), and `gray_to_bin(g)` does the reverse. You may use the `^` (XOR) and `>>` (right shift) operators.
+Write both converter functions for integers! `bin_to_gray(n)` returns the Gray code of the binary number _n_ (as an integer), and `gray_to_bin(g)` does the reverse. You may use the `^` (XOR) and `>>` (right shift) operators.
 
 ```python starter required
 def bin_to_gray(n):

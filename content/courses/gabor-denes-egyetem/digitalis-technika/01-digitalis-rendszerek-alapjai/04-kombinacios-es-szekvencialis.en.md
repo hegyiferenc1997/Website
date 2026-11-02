@@ -15,9 +15,9 @@ minutes: 15
 Digital circuits fall into two main groups:
 
 1. **Combinational circuit** – the output depends **only on the present values of the inputs**. It has no memory: the same input always gives the same output.
-   *Examples:* adder, decoder, multiplexer, code converter, 7-segment display driver.
+   _Examples:_ adder, decoder, multiplexer, code converter, 7-segment display driver.
 2. **Sequential circuit** – the output depends on the inputs **and on the previous state**. It has **memory** (state).
-   *Examples:* flip-flop, register, counter, state machine, processor.
+   _Examples:_ flip-flop, register, counter, state machine, processor.
 
 ```text
  combinational: inputs ──► [ logic ] ──► outputs
@@ -35,21 +35,21 @@ Digital circuits fall into two main groups:
 
 A modern processor contains billions of transistors. It can only be designed by stacking levels and hiding the details of the level below at each level.
 
-| Level                        | Building block                  | Where you learn it      |
-| ---------------------------- | ------------------------------- | ----------------------- |
-| physics, devices             | transistor (MOSFET)             | topic 12 (VLSI)          |
-| gates                        | NOT, AND, OR, NAND …            | topic 3                  |
-| combinational modules        | adder, MUX, decoder             | topic 4                  |
-| storage, registers           | flip-flop, counter, memory      | topics 4–5               |
-| control                      | state machine                   | topic 6                  |
-| microarchitecture            | ALU, register file, control unit | topic 7                 |
-| system                       | processor, bus, peripherals     | topics 7, 10, 12         |
+| Level                 | Building block                   | Where you learn it |
+| --------------------- | -------------------------------- | ------------------ |
+| physics, devices      | transistor (MOSFET)              | topic 12 (VLSI)    |
+| gates                 | NOT, AND, OR, NAND …             | topic 3            |
+| combinational modules | adder, MUX, decoder              | topic 4            |
+| storage, registers    | flip-flop, counter, memory       | topics 4–5         |
+| control               | state machine                    | topic 6            |
+| microarchitecture     | ALU, register file, control unit | topic 7            |
+| system                | processor, bus, peripherals      | topics 7, 10, 12   |
 
 Design goes **top-down** (from specification to gates); understanding often goes **bottom-up**. Today most work below gate level is done by **synthesis tools**: the engineer describes behaviour in a hardware description language (VHDL, Verilog – topic 9).
 
 ## Map of the course
 
-1. Fundamentals of digital systems *(this topic)*
+1. Fundamentals of digital systems _(this topic)_
 2. Number systems and coding – representing numbers with bits
 3. Logic gates and Boolean algebra – the building blocks of logic
 4. Combinational and sequential logic – design from truth table to circuit

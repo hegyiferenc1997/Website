@@ -15,9 +15,9 @@ minutes: 15
 A digitális áramkörök két fő csoportra oszthatók:
 
 1. **Kombinációs hálózat** – a kimenet **csak a bemenetek pillanatnyi értékétől** függ. Nincs memóriája: ugyanarra a bemenetre mindig ugyanazt adja.
-   *Példák:* összeadó, dekóder, multiplexer, kódátalakító, 7 szegmenses kijelző meghajtója.
+   _Példák:_ összeadó, dekóder, multiplexer, kódátalakító, 7 szegmenses kijelző meghajtója.
 2. **Szekvenciális (sorrendi) hálózat** – a kimenet a bemenetektől **és az előző állapottól** is függ. Van **memóriája** (állapota).
-   *Példák:* tároló (flip-flop), regiszter, számláló, állapotgép, processzor.
+   _Példák:_ tároló (flip-flop), regiszter, számláló, állapotgép, processzor.
 
 ```text
  kombinációs:   bemenetek ──► [ logika ] ──► kimenetek
@@ -35,21 +35,21 @@ A digitális áramkörök két fő csoportra oszthatók:
 
 Egy modern processzorban több milliárd tranzisztor van. Ezt csak úgy lehet megtervezni, ha szinteket építünk egymásra, és minden szinten elrejtjük az alatta lévő részleteket.
 
-| Szint                        | Építőelem                       | Ahol tanulod            |
-| ---------------------------- | ------------------------------- | ----------------------- |
-| fizika, eszközök             | tranzisztor (MOSFET)            | 12. témakör (VLSI)       |
-| kapuk                        | NEM, ÉS, VAGY, NAND …           | 3. témakör               |
-| kombinációs modulok          | összeadó, MUX, dekóder          | 4. témakör               |
-| tárolók, regiszterek         | flip-flop, számláló, memória     | 4–5. témakör             |
-| vezérlés                     | állapotgép                      | 6. témakör               |
-| mikroarchitektúra            | ALU, regiszterbank, vezérlőegység | 7. témakör             |
-| rendszer                     | processzor, busz, perifériák     | 7., 10., 12. témakör     |
+| Szint                | Építőelem                         | Ahol tanulod         |
+| -------------------- | --------------------------------- | -------------------- |
+| fizika, eszközök     | tranzisztor (MOSFET)              | 12. témakör (VLSI)   |
+| kapuk                | NEM, ÉS, VAGY, NAND …             | 3. témakör           |
+| kombinációs modulok  | összeadó, MUX, dekóder            | 4. témakör           |
+| tárolók, regiszterek | flip-flop, számláló, memória      | 4–5. témakör         |
+| vezérlés             | állapotgép                        | 6. témakör           |
+| mikroarchitektúra    | ALU, regiszterbank, vezérlőegység | 7. témakör           |
+| rendszer             | processzor, busz, perifériák      | 7., 10., 12. témakör |
 
 A tervezés **fentről lefelé** (specifikációból kapukig), a megértés gyakran **lentről felfelé** halad. Ma a kapuszint alatti munkát nagyrészt **szintézisprogramok** végzik: a mérnök hardverleíró nyelven (VHDL, Verilog – 9. témakör) írja le a viselkedést.
 
 ## A tárgy térképe
 
-1. Digitális rendszerek alapjai *(ez a témakör)*
+1. Digitális rendszerek alapjai _(ez a témakör)_
 2. Számrendszerek és kódolás – hogyan ábrázoljuk a számokat bitekkel
 3. Logikai kapuk és Boole-algebra – a logika építőkockái
 4. Kombinációs és szekvenciális logika – tervezés igazságtáblától kapcsolásig

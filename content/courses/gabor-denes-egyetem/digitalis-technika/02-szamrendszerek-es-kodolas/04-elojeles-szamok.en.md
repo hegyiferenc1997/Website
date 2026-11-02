@@ -8,7 +8,7 @@ minutes: 25
 
 - three ways to represent negative numbers: **sign-magnitude**, **ones' complement**, **two's complement**,
 - how a computer **subtracts by adding**,
-- the **range** of *n*-bit numbers,
+- the **range** of _n_-bit numbers,
 - how to recognise **signed overflow**.
 
 ## 1. Sign-magnitude
@@ -49,12 +49,12 @@ There are two zeros here too (0000 0000 and 1111 1111), so it is rarely used tod
 
 ## Range
 
-| Representation             | in *n* bits                                | in 8 bits       |
-| -------------------------- | ------------------------------------------ | --------------- |
-| unsigned                   | 0 … 2<sup>n</sup> − 1                     | 0 … 255         |
-| sign-magnitude             | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127   |
-| ones' complement           | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127   |
-| **two's complement**       | **−2<sup>n−1</sup> … 2<sup>n−1</sup> − 1** | **−128 … 127** |
+| Representation       | in _n_ bits                                  | in 8 bits      |
+| -------------------- | -------------------------------------------- | -------------- |
+| unsigned             | 0 … 2<sup>n</sup> − 1                        | 0 … 255        |
+| sign-magnitude       | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127     |
+| ones' complement     | −(2<sup>n−1</sup> − 1) … 2<sup>n−1</sup> − 1 | −127 … 127     |
+| **two's complement** | **−2<sup>n−1</sup> … 2<sup>n−1</sup> − 1**   | **−128 … 127** |
 
 ## Subtraction by addition
 
@@ -104,7 +104,7 @@ print(twos_complement(7 - 12))
 ## Summary
 
 - Two's complement = invert the bits + 1; the top bit weighs −2<sup>n−1</sup>.
-- In *n* bits: −2<sup>n−1</sup> … 2<sup>n−1</sup> − 1 (in 8 bits −128 … 127).
+- In _n_ bits: −2<sup>n−1</sup> … 2<sup>n−1</sup> − 1 (in 8 bits −128 … 127).
 - Subtraction: A − B = A + (−B), discard the carry out.
 - Overflow: the sum of two same-sign numbers has the opposite sign.
 

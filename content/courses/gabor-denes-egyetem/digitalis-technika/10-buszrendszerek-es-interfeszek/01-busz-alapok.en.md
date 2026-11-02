@@ -52,11 +52,11 @@ Example: 32-bit bus, 100 MHz, one transfer per clock → 3.2 Gbit/s = **400 MB/s
 
 ## Duplex modes
 
-| mode             | meaning                                          | example                   |
-| ---------------- | ------------------------------------------------ | ------------------------- |
-| **simplex**      | one direction only                               | radio broadcast           |
-| **half duplex**  | both directions, but **alternately**             | I²C, RS-485, walkie-talkie |
-| **full duplex**  | both directions **at the same time**             | UART (TX and RX), SPI, Ethernet |
+| mode            | meaning                              | example                         |
+| --------------- | ------------------------------------ | ------------------------------- |
+| **simplex**     | one direction only                   | radio broadcast                 |
+| **half duplex** | both directions, but **alternately** | I²C, RS-485, walkie-talkie      |
+| **full duplex** | both directions **at the same time** | UART (TX and RX), SPI, Ethernet |
 
 ## Differential signalling
 

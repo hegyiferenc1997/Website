@@ -17,12 +17,12 @@ For an n-bit input code a **binary decoder** activates **exactly one of 2<sup>n<
 
 ### 2→4 decoder
 
-| A1 A0 | Y0 | Y1 | Y2 | Y3 |
-| ----- | -- | -- | -- | -- |
-| 0 0   | 1  | 0  | 0  | 0  |
-| 0 1   | 0  | 1  | 0  | 0  |
-| 1 0   | 0  | 0  | 1  | 0  |
-| 1 1   | 0  | 0  | 0  | 1  |
+| A1 A0 | Y0  | Y1  | Y2  | Y3  |
+| ----- | --- | --- | --- | --- |
+| 0 0   | 1   | 0   | 0   | 0   |
+| 0 1   | 0   | 1   | 0   | 0   |
+| 1 0   | 0   | 0   | 1   | 0   |
+| 1 1   | 0   | 0   | 0   | 1   |
 
 Y0 = A̅1·A̅0, **Y1 = A̅1·A0**, Y2 = A1·A̅0, Y3 = A1·A0 – every output is **one minterm**.
 
@@ -49,13 +49,13 @@ If several inputs are active at once, the **priority encoder** outputs the numbe
 
 4→2 priority encoder (D3 is the strongest):
 
-| D3 D2 D1 D0 | Y1 Y0 | V |
-| ----------- | ----- | - |
-| 0 0 0 0     | X X   | 0 |
-| 0 0 0 1     | 0 0   | 1 |
-| 0 0 1 X     | 0 1   | 1 |
-| 0 1 X X     | 1 0   | 1 |
-| 1 X X X     | 1 1   | 1 |
+| D3 D2 D1 D0 | Y1 Y0 | V   |
+| ----------- | ----- | --- |
+| 0 0 0 0     | X X   | 0   |
+| 0 0 0 1     | 0 0   | 1   |
+| 0 0 1 X     | 0 1   | 1   |
+| 0 1 X X     | 1 0   | 1   |
+| 1 X X X     | 1 1   | 1   |
 
 **Y1 = D3 + D2**, **Y0 = D3 + D̅2·D1**, **V = D3 + D2 + D1 + D0**
 
@@ -67,12 +67,12 @@ A **magnitude comparator** compares two numbers and has three outputs: **A > B**
 
 ### One-bit comparator
 
-| A | B | G (A>B) | E (A=B) | L (A<B) |
-| - | - | ------- | ------- | ------- |
-| 0 | 0 | 0       | 1       | 0       |
-| 0 | 1 | 0       | 0       | 1       |
-| 1 | 0 | 1       | 0       | 0       |
-| 1 | 1 | 0       | 1       | 0       |
+| A   | B   | G (A>B) | E (A=B) | L (A<B) |
+| --- | --- | ------- | ------- | ------- |
+| 0   | 0   | 0       | 1       | 0       |
+| 0   | 1   | 0       | 0       | 1       |
+| 1   | 0   | 1       | 0       | 0       |
+| 1   | 1   | 0       | 1       | 0       |
 
 **G = A·B̅**, **E = A ⊙ B** (XNOR), **L = A̅·B**
 

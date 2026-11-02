@@ -47,16 +47,16 @@ The output logic is then trivial: **red lamp = D**, **green lamp = D̅** – the
 
 For a D flip-flop the **next state** must be applied to the input: D<sup>+</sup> (the notation D(N+1) is also common).
 
-| D | P | Z | D<sup>+</sup> | explanation                        |
-| - | - | - | ------------- | ---------------------------------- |
-| 0 | 0 | 0 | 0             | green, no button → stays           |
-| 0 | 0 | 1 | 0             | green, Green button → stays        |
-| 0 | 1 | 0 | 1             | green, **Red button → red**        |
-| 0 | 1 | 1 | 0             | both buttons → stays               |
-| 1 | 0 | 0 | 1             | red, no button → stays             |
-| 1 | 0 | 1 | 0             | red, **Green button → green**      |
-| 1 | 1 | 0 | 1             | red, Red button → stays            |
-| 1 | 1 | 1 | 1             | both buttons → stays               |
+| D   | P   | Z   | D<sup>+</sup> | explanation                   |
+| --- | --- | --- | ------------- | ----------------------------- |
+| 0   | 0   | 0   | 0             | green, no button → stays      |
+| 0   | 0   | 1   | 0             | green, Green button → stays   |
+| 0   | 1   | 0   | 1             | green, **Red button → red**   |
+| 0   | 1   | 1   | 0             | both buttons → stays          |
+| 1   | 0   | 0   | 1             | red, no button → stays        |
+| 1   | 0   | 1   | 0             | red, **Green button → green** |
+| 1   | 1   | 0   | 1             | red, Red button → stays       |
+| 1   | 1   | 1   | 1             | both buttons → stays          |
 
 ## 5. Writing and simplifying the function
 
@@ -64,10 +64,10 @@ For a D flip-flop the **next state** must be applied to the input: D<sup>+</sup>
 
 **Graphical simplification** (row: D, column: PZ):
 
-| D \ PZ | 00 | 01 | 11 | 10 |
-| ------ | -- | -- | -- | -- |
-| 0      | 0  | 0  | 0  | 1  |
-| 1      | 1  | 0  | 1  | 1  |
+| D \ PZ | 00  | 01  | 11  | 10  |
+| ------ | --- | --- | --- | --- |
+| 0      | 0   | 0   | 0   | 1   |
+| 1      | 1   | 0   | 1   | 1   |
 
 - the PZ = 10 column (2, 6) → **P·Z̅**
 - cells 00 and 10 of the D = 1 row (4, 6) → **D·Z̅**

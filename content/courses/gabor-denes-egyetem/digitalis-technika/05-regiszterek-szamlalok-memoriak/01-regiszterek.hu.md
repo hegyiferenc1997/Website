@@ -30,22 +30,22 @@ A flip-flopok **láncba** vannak kötve: mindegyik D bemenete az előző Q kimen
 
 **Példa** – 4 bites regiszter, a soros bemenet a bal szélső bitbe lép, a tartalom jobbra tolódik. Kezdetben 0000, a bemenetre sorban 1, 1, 0, 1 érkezik:
 
-| él | SI | tartalom |
-| -- | -- | -------- |
-| –  | –  | 0000     |
-| 1  | 1  | 1000     |
-| 2  | 1  | 1100     |
-| 3  | 0  | 0110     |
-| 4  | 1  | 1011     |
+| él  | SI  | tartalom |
+| --- | --- | -------- |
+| –   | –   | 0000     |
+| 1   | 1   | 1000     |
+| 2   | 1   | 1100     |
+| 3   | 0   | 0110     |
+| 4   | 1   | 1011     |
 
 ### A négy működési mód
 
-| mód      | bemenet    | kimenet    | felhasználás                                  |
-| -------- | ---------- | ---------- | --------------------------------------------- |
-| **SISO** | soros      | soros      | késleltetés n órajellel                       |
+| mód      | bemenet    | kimenet    | felhasználás                                    |
+| -------- | ---------- | ---------- | ----------------------------------------------- |
+| **SISO** | soros      | soros      | késleltetés n órajellel                         |
 | **SIPO** | soros      | párhuzamos | soros → párhuzamos (pl. UART vevő, **74HC595**) |
-| **PISO** | párhuzamos | soros      | párhuzamos → soros (pl. UART adó, **74HC165**) |
-| **PIPO** | párhuzamos | párhuzamos | tárolóregiszter                               |
+| **PISO** | párhuzamos | soros      | párhuzamos → soros (pl. UART adó, **74HC165**)  |
+| **PIPO** | párhuzamos | párhuzamos | tárolóregiszter                                 |
 
 A **74HC595** népszerű az Arduino-s projektekben: három vezetékkel 8 (kaszkádosítva akár 16, 24 …) kimenetet vezérel.
 

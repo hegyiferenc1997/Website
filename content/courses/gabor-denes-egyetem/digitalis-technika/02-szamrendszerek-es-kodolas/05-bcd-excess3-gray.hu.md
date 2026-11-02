@@ -14,13 +14,13 @@ minutes: 25
 ## Szám és kód
 
 - **Bináris szám:** egy szám értékét írjuk le kettes számrendszerben (pl. 59 = 111011).
-- **Bináris kód:** bitekkel *valamilyen információt* jelölünk egy megállapodás szerint (pl. a 59 BCD-ben 0101 1001, egy betű ASCII-ban, egy szín RGB-ben).
+- **Bináris kód:** bitekkel _valamilyen információt_ jelölünk egy megállapodás szerint (pl. a 59 BCD-ben 0101 1001, egy betű ASCII-ban, egy szín RGB-ben).
 
 A **kódolás** az a folyamat, amikor egy jelhalmaz elemeit egy szabály szerint egy másik jelhalmaz elemeivé alakítjuk; a visszaalakítás a **dekódolás**.
 
 ## Súlyozott kódok: BCD (8421)
 
-A **BCD** (*Binary Coded Decimal*) a decimális számot **számjegyenként**, 4 biten kódolja. A bitek súlya 8-4-2-1.
+A **BCD** (_Binary Coded Decimal_) a decimális számot **számjegyenként**, 4 biten kódolja. A bitek súlya 8-4-2-1.
 
 | decimális | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    |
 | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -67,7 +67,7 @@ Különlegessége, hogy **önkomplementer**: a bitek negálásával a jegy **9-e
 | 6   | 0110 | 0101 | 14  | 1110 | 1001 |
 | 7   | 0111 | 0100 | 15  | 1111 | 1000 |
 
-A neve onnan ered, hogy a táblázat **tükrözéssel** építhető fel: az *n* bites kód az (*n*−1) bites kód, alatta ugyanaz fordított sorrendben, az első felük elé 0-t, a második elé 1-et írva.
+A neve onnan ered, hogy a táblázat **tükrözéssel** építhető fel: az _n_ bites kód az (*n*−1) bites kód, alatta ugyanaz fordított sorrendben, az első felük elé 0-t, a második elé 1-et írva.
 
 **Miért fontos?** Ha egyszerre több bit változik (pl. 0111 → 1000: mind a négy!), a bitek a valóságban nem pontosan egyszerre váltanak, és rövid ideig **hamis érték** (hazárd) jelenhet meg. Gray-kódban egyszerre csak egy bit vált, így ez nem fordulhat elő. Ezért használják **forgó jeladókban** (enkóder), **A/D átalakítókban**, aszinkron FIFO-k mutatóiban – és a **Karnaugh-tábla** sorai, oszlopai is Gray-sorrendben vannak (4. témakör).
 
@@ -100,7 +100,7 @@ A neve onnan ered, hogy a táblázat **tükrözéssel** építhető fel: az *n* 
 
 ## A lecke feladata: Gray-kód átalakítók
 
-Írd meg a két átalakító függvényt egész számokra! A `binarisbol_gray(n)` az *n* bináris szám Gray-kódját adja vissza (egész számként), a `graybol_binaris(g)` pedig fordítva. Használhatod a `^` (XOR) és a `>>` (jobbra tolás) műveletet.
+Írd meg a két átalakító függvényt egész számokra! A `binarisbol_gray(n)` az _n_ bináris szám Gray-kódját adja vissza (egész számként), a `graybol_binaris(g)` pedig fordítva. Használhatod a `^` (XOR) és a `>>` (jobbra tolás) műveletet.
 
 ```python starter required
 def binarisbol_gray(n):

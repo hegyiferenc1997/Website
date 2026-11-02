@@ -28,22 +28,22 @@ We often draw a digital signal as a perfect square wave that jumps from 0 to 1 *
 
 ## Pulse parameters
 
-| Parameter                | Symbol     | Meaning                                                      |
-| ------------------------ | ---------- | ------------------------------------------------------------ |
-| rise time                | t<sub>r</sub> | time to rise from **10% to 90%** of the amplitude          |
-| fall time                | t<sub>f</sub> | time to fall from **90% to 10%**                           |
-| pulse width              | t<sub>H</sub> | time spent high (measured between the 50% points)          |
-| period                   | T          | duration of one full cycle (low–high–low)                    |
-| frequency                | f          | repetitions per second: **f = 1 / T**                        |
-| duty cycle               | D          | **D = t<sub>H</sub> / T**, as a percentage                   |
+| Parameter   | Symbol        | Meaning                                           |
+| ----------- | ------------- | ------------------------------------------------- |
+| rise time   | t<sub>r</sub> | time to rise from **10% to 90%** of the amplitude |
+| fall time   | t<sub>f</sub> | time to fall from **90% to 10%**                  |
+| pulse width | t<sub>H</sub> | time spent high (measured between the 50% points) |
+| period      | T             | duration of one full cycle (low–high–low)         |
+| frequency   | f             | repetitions per second: **f = 1 / T**             |
+| duty cycle  | D             | **D = t<sub>H</sub> / T**, as a percentage        |
 
 ### Units at a glance
 
-| prefix | factor       | time example | frequency example |
-| ------ | ------------ | ------------ | ----------------- |
-| milli  | 10<sup>−3</sup> | 1 ms      | 1 kHz = 10<sup>3</sup> Hz |
-| micro  | 10<sup>−6</sup> | 1 µs      | 1 MHz = 10<sup>6</sup> Hz |
-| nano   | 10<sup>−9</sup> | 1 ns      | 1 GHz = 10<sup>9</sup> Hz |
+| prefix | factor          | time example | frequency example         |
+| ------ | --------------- | ------------ | ------------------------- |
+| milli  | 10<sup>−3</sup> | 1 ms         | 1 kHz = 10<sup>3</sup> Hz |
+| micro  | 10<sup>−6</sup> | 1 µs         | 1 MHz = 10<sup>6</sup> Hz |
+| nano   | 10<sup>−9</sup> | 1 ns         | 1 GHz = 10<sup>9</sup> Hz |
 
 **Worked examples**
 

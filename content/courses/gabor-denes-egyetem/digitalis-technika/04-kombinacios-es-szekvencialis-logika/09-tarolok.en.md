@@ -31,12 +31,12 @@ Q̅  = NOR(S, Q)      ← the other gate's inputs: S and the first gate's output
 
 Q is the present, Q<sup>+</sup> the next state:
 
-| S | R | Q<sup>+</sup> | operation |
-| - | - | ------------- | --------- |
-| 0 | 0 | Q             | hold      |
-| 0 | 1 | 0             | reset     |
-| 1 | 0 | 1             | set       |
-| 1 | 1 | –             | forbidden |
+| S   | R   | Q<sup>+</sup> | operation |
+| --- | --- | ------------- | --------- |
+| 0   | 0   | Q             | hold      |
+| 0   | 1   | 0             | reset     |
+| 1   | 0   | 1             | set       |
+| 1   | 1   | –             | forbidden |
 
 The **characteristic equation** (treating the forbidden row as don't care): **Q<sup>+</sup> = S + R̅·Q**, with the condition **S·R = 0**.
 
@@ -59,11 +59,11 @@ With an added **E** (enable) input, S and R act only when E = 1; when E = 0 the 
 
 The **D latch** eliminates the forbidden state: it has a single **D** (data) input, with S = D and R = D̅. So:
 
-| E | D | Q<sup>+</sup> |
-| - | - | ------------- |
-| 0 | X | Q (hold)      |
-| 1 | 0 | 0             |
-| 1 | 1 | 1             |
+| E   | D   | Q<sup>+</sup> |
+| --- | --- | ------------- |
+| 0   | X   | Q (hold)      |
+| 1   | 0   | 0             |
+| 1   | 1   | 1             |
 
 **Q<sup>+</sup> = E·D + E̅·Q** – while E = 1, the output **transparently follows** D; when E goes to 0, it remembers the last value. (Well-known IC: **74373** – 8-bit D latch, used for address latching in bus systems.)
 

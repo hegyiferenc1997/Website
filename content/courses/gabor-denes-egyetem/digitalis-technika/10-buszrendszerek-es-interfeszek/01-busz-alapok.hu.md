@@ -52,11 +52,11 @@ Példa: 32 bites busz, 100 MHz, órajelenként egy átvitel → 3,2 Gbit/s = **4
 
 ## Duplex módok
 
-| mód              | jelentés                                         | példa                     |
-| ---------------- | ------------------------------------------------ | ------------------------- |
-| **szimplex**     | csak egy irányba                                 | rádióadás                 |
-| **fél-duplex**   | mindkét irányba, de **felváltva**                | I²C, RS-485, adóvevő      |
-| **duplex** (full) | mindkét irányba **egyszerre**                   | UART (TX és RX), SPI, Ethernet |
+| mód               | jelentés                          | példa                          |
+| ----------------- | --------------------------------- | ------------------------------ |
+| **szimplex**      | csak egy irányba                  | rádióadás                      |
+| **fél-duplex**    | mindkét irányba, de **felváltva** | I²C, RS-485, adóvevő           |
+| **duplex** (full) | mindkét irányba **egyszerre**     | UART (TX és RX), SPI, Ethernet |
 
 ## Differenciális jelátvitel
 

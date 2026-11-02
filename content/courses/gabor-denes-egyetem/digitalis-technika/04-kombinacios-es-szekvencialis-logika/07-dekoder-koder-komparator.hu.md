@@ -17,12 +17,12 @@ A **bináris dekóder** egy n bites bemeneti kódhoz **2<sup>n</sup> kimenet kö
 
 ### 2→4 dekóder
 
-| A1 A0 | Y0 | Y1 | Y2 | Y3 |
-| ----- | -- | -- | -- | -- |
-| 0 0   | 1  | 0  | 0  | 0  |
-| 0 1   | 0  | 1  | 0  | 0  |
-| 1 0   | 0  | 0  | 1  | 0  |
-| 1 1   | 0  | 0  | 0  | 1  |
+| A1 A0 | Y0  | Y1  | Y2  | Y3  |
+| ----- | --- | --- | --- | --- |
+| 0 0   | 1   | 0   | 0   | 0   |
+| 0 1   | 0   | 1   | 0   | 0   |
+| 1 0   | 0   | 0   | 1   | 0   |
+| 1 1   | 0   | 0   | 0   | 1   |
 
 Y0 = A̅1·A̅0, **Y1 = A̅1·A0**, Y2 = A1·A̅0, Y3 = A1·A0 – minden kimenet **egy minterm**.
 
@@ -49,13 +49,13 @@ Ha egyszerre több bemenet aktív, a **prioritáskóder** a **legmagasabb priori
 
 4→2 prioritáskóder (D3 a legerősebb):
 
-| D3 D2 D1 D0 | Y1 Y0 | V |
-| ----------- | ----- | - |
-| 0 0 0 0     | X X   | 0 |
-| 0 0 0 1     | 0 0   | 1 |
-| 0 0 1 X     | 0 1   | 1 |
-| 0 1 X X     | 1 0   | 1 |
-| 1 X X X     | 1 1   | 1 |
+| D3 D2 D1 D0 | Y1 Y0 | V   |
+| ----------- | ----- | --- |
+| 0 0 0 0     | X X   | 0   |
+| 0 0 0 1     | 0 0   | 1   |
+| 0 0 1 X     | 0 1   | 1   |
+| 0 1 X X     | 1 0   | 1   |
+| 1 X X X     | 1 1   | 1   |
 
 **Y1 = D3 + D2**, **Y0 = D3 + D̅2·D1**, **V = D3 + D2 + D1 + D0**
 
@@ -67,12 +67,12 @@ A **nagyságkomparátor** két számot hasonlít össze, és három kimenete van
 
 ### Egybites komparátor
 
-| A | B | G (A>B) | E (A=B) | L (A<B) |
-| - | - | ------- | ------- | ------- |
-| 0 | 0 | 0       | 1       | 0       |
-| 0 | 1 | 0       | 0       | 1       |
-| 1 | 0 | 1       | 0       | 0       |
-| 1 | 1 | 0       | 1       | 0       |
+| A   | B   | G (A>B) | E (A=B) | L (A<B) |
+| --- | --- | ------- | ------- | ------- |
+| 0   | 0   | 0       | 1       | 0       |
+| 0   | 1   | 0       | 0       | 1       |
+| 1   | 0   | 1       | 0       | 0       |
+| 1   | 1   | 0       | 1       | 0       |
 
 **G = A·B̅**, **E = A ⊙ B** (XNOR), **L = A̅·B**
 

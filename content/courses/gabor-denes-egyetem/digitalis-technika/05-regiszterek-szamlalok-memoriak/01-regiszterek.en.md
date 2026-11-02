@@ -30,22 +30,22 @@ The flip-flops are **chained**: each D input is the previous Q output. At every 
 
 **Example** – a 4-bit register; the serial input enters the leftmost bit and the contents shift right. Initially 0000, the input receives 1, 1, 0, 1 in turn:
 
-| edge | SI | contents |
-| ---- | -- | -------- |
-| –    | –  | 0000     |
-| 1    | 1  | 1000     |
-| 2    | 1  | 1100     |
-| 3    | 0  | 0110     |
-| 4    | 1  | 1011     |
+| edge | SI  | contents |
+| ---- | --- | -------- |
+| –    | –   | 0000     |
+| 1    | 1   | 1000     |
+| 2    | 1   | 1100     |
+| 3    | 0   | 0110     |
+| 4    | 1   | 1011     |
 
 ### The four modes of operation
 
-| mode     | input      | output     | use                                           |
-| -------- | ---------- | ---------- | --------------------------------------------- |
-| **SISO** | serial     | serial     | delay by n clocks                             |
-| **SIPO** | serial     | parallel   | serial → parallel (e.g. UART receiver, **74HC595**) |
-| **PISO** | parallel   | serial     | parallel → serial (e.g. UART transmitter, **74HC165**) |
-| **PIPO** | parallel   | parallel   | storage register                              |
+| mode     | input    | output   | use                                                    |
+| -------- | -------- | -------- | ------------------------------------------------------ |
+| **SISO** | serial   | serial   | delay by n clocks                                      |
+| **SIPO** | serial   | parallel | serial → parallel (e.g. UART receiver, **74HC595**)    |
+| **PISO** | parallel | serial   | parallel → serial (e.g. UART transmitter, **74HC165**) |
+| **PIPO** | parallel | parallel | storage register                                       |
 
 The **74HC595** is popular in Arduino projects: three wires control 8 (when cascaded, 16, 24 …) outputs.
 

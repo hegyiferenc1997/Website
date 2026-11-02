@@ -15,58 +15,58 @@ minutes: 15
 
 A **logic variable** can take only **two values**. These two values have many names:
 
-| 1         | 0       |
-| --------- | ------- |
-| true      | false   |
-| yes       | no      |
-| on        | off     |
-| high (H)  | low (L) |
-| asserted  | negated |
+| 1        | 0       |
+| -------- | ------- |
+| true     | false   |
+| yes      | no      |
+| on       | off     |
+| high (H) | low (L) |
+| asserted | negated |
 
 Variables are usually written with **capital letters** (A, B, C …). The **true** form of a variable is the variable itself (A); the **complemented** form is its opposite (A̅, also written A', ¬A, !A).
 
 ## Three basic operations in everyday life
 
-- **AND:** *If it is raining AND it is cold → I wear a coat.* True only if both conditions are true.
-- **OR:** *If I have a ticket OR a pass → I can board.* True if at least one is true.
-- **NOT:** *If the light is NOT green → I stop.* Turns the condition into its opposite.
+- **AND:** _If it is raining AND it is cold → I wear a coat._ True only if both conditions are true.
+- **OR:** _If I have a ticket OR a pass → I can board._ True if at least one is true.
+- **NOT:** _If the light is NOT green → I stop._ Turns the condition into its opposite.
 
 ## From words to a logic expression
 
-**Problem:** *The alarm sounds if the door is open and the code has not been entered.*
+**Problem:** _The alarm sounds if the door is open and the code has not been entered._
 
 1. **Choose variables:**
    A = the door is open, K = the code has been entered, R = the alarm sounds.
 2. **Logic expression:** R = A AND NOT K, that is **R = A · K̅**.
 3. **Truth table:** compute the output for every input combination.
 
-| A | K | R |
-| - | - | - |
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | **1** |
-| 1 | 1 | 0 |
+| A   | K   | R     |
+| --- | --- | ----- |
+| 0   | 0   | 0     |
+| 0   | 1   | 0     |
+| 1   | 0   | **1** |
+| 1   | 1   | 0     |
 
 ## The truth table
 
 A **truth table** is a **complete description** of a logic function: it gives the output for every possible input combination.
 
-- With *n* inputs there are **2<sup>n</sup> rows** (2 → 4, 3 → 8, 4 → 16).
+- With _n_ inputs there are **2<sup>n</sup> rows** (2 → 4, 3 → 8, 4 → 16).
 - Rows are written in **binary counting order** of the inputs (000, 001, 010, …), so no combination is missed.
 - The row number (in decimal) is the binary value of the input combination – the basis of **minterm notation** (topic 4).
 
-**Three-input example:** *The machine starts (Y) only if the guard door is closed (Z) and either the right (J) or the left (B) start button is pressed.* → **Y = Z · (J + B)**
+**Three-input example:** _The machine starts (Y) only if the guard door is closed (Z) and either the right (J) or the left (B) start button is pressed._ → **Y = Z · (J + B)**
 
-| Z | J | B | Y |
-| - | - | - | - |
-| 0 | 0 | 0 | 0 |
-| 0 | 0 | 1 | 0 |
-| 0 | 1 | 0 | 0 |
-| 0 | 1 | 1 | 0 |
-| 1 | 0 | 0 | 0 |
-| 1 | 0 | 1 | 1 |
-| 1 | 1 | 0 | 1 |
-| 1 | 1 | 1 | 1 |
+| Z   | J   | B   | Y   |
+| --- | --- | --- | --- |
+| 0   | 0   | 0   | 0   |
+| 0   | 0   | 1   | 0   |
+| 0   | 1   | 0   | 0   |
+| 0   | 1   | 1   | 0   |
+| 1   | 0   | 0   | 0   |
+| 1   | 0   | 1   | 1   |
+| 1   | 1   | 0   | 1   |
+| 1   | 1   | 1   | 1   |
 
 ```python run
 # Generating a truth table: Y = Z AND (J OR B)
@@ -84,7 +84,7 @@ for z, j, b in product((0, 1), repeat=3):   # in the order 000, 001, ... 111
 
 - A logic variable has two values (0/1); true form: A, complemented: A̅.
 - Word problem: choose variables → expression → truth table.
-- *n* inputs → 2<sup>n</sup> rows, in binary order.
+- _n_ inputs → 2<sup>n</sup> rows, in binary order.
 
 ## Lesson exercise
 

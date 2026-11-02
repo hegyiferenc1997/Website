@@ -29,13 +29,13 @@ The old **PCI** bus was **parallel**, **shared** (all cards shared the same 32-b
   - PCIe 1.0–2.0: **8b/10b** – 8 data bits carried on 10 bits → 80 % efficiency;
   - from PCIe 3.0: **128b/130b** → ≈ 98.5 % efficiency.
 
-| version  | rate per lane (GT/s) | coding    | payload on ×1         | on ×16        |
-| -------- | -------------------- | --------- | --------------------- | ------------- |
-| PCIe 1.0 | 2.5                  | 8b/10b    | 250 MB/s              | 4 GB/s        |
-| PCIe 2.0 | 5                    | 8b/10b    | 500 MB/s              | 8 GB/s        |
-| PCIe 3.0 | 8                    | 128b/130b | ≈ 985 MB/s            | ≈ 15.8 GB/s   |
-| PCIe 4.0 | 16                   | 128b/130b | ≈ 1.97 GB/s           | ≈ 31.5 GB/s   |
-| PCIe 5.0 | 32                   | 128b/130b | ≈ 3.94 GB/s           | ≈ 63 GB/s     |
+| version  | rate per lane (GT/s) | coding    | payload on ×1 | on ×16      |
+| -------- | -------------------- | --------- | ------------- | ----------- |
+| PCIe 1.0 | 2.5                  | 8b/10b    | 250 MB/s      | 4 GB/s      |
+| PCIe 2.0 | 5                    | 8b/10b    | 500 MB/s      | 8 GB/s      |
+| PCIe 3.0 | 8                    | 128b/130b | ≈ 985 MB/s    | ≈ 15.8 GB/s |
+| PCIe 4.0 | 16                   | 128b/130b | ≈ 1.97 GB/s   | ≈ 31.5 GB/s |
+| PCIe 5.0 | 32                   | 128b/130b | ≈ 3.94 GB/s   | ≈ 63 GB/s   |
 
 (per direction; GT/s = gigatransfers per second, the bits on the line including coding)
 

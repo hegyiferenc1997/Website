@@ -16,12 +16,12 @@ minutes: 30
 
 It adds two one-bit numbers: its outputs are the **sum** (S) and the **carry** (C).
 
-| A | B | S | C |
-| - | - | - | - |
-| 0 | 0 | 0 | 0 |
-| 0 | 1 | 1 | 0 |
-| 1 | 0 | 1 | 0 |
-| 1 | 1 | 0 | 1 |
+| A   | B   | S   | C   |
+| --- | --- | --- | --- |
+| 0   | 0   | 0   | 0   |
+| 0   | 1   | 1   | 0   |
+| 1   | 0   | 1   | 0   |
+| 1   | 1   | 0   | 1   |
 
 **S = A ⊕ B**, **C = A · B** – one XOR and one AND gate.
 
@@ -31,16 +31,16 @@ It is called “half” because it **cannot accept an incoming carry**, so it ca
 
 It adds three bits: A, B and the incoming carry **C<sub>in</sub>**. Outputs: S and C<sub>out</sub>.
 
-| A | B | C<sub>in</sub> | S | C<sub>out</sub> |
-| - | - | -------------- | - | --------------- |
-| 0 | 0 | 0              | 0 | 0               |
-| 0 | 0 | 1              | 1 | 0               |
-| 0 | 1 | 0              | 1 | 0               |
-| 0 | 1 | 1              | 0 | 1               |
-| 1 | 0 | 0              | 1 | 0               |
-| 1 | 0 | 1              | 0 | 1               |
-| 1 | 1 | 0              | 0 | 1               |
-| 1 | 1 | 1              | 1 | 1               |
+| A   | B   | C<sub>in</sub> | S   | C<sub>out</sub> |
+| --- | --- | -------------- | --- | --------------- |
+| 0   | 0   | 0              | 0   | 0               |
+| 0   | 0   | 1              | 1   | 0               |
+| 0   | 1   | 0              | 1   | 0               |
+| 0   | 1   | 1              | 0   | 1               |
+| 1   | 0   | 0              | 1   | 0               |
+| 1   | 0   | 1              | 0   | 1               |
+| 1   | 1   | 0              | 0   | 1               |
+| 1   | 1   | 1              | 1   | 1               |
 
 - **S = A ⊕ B ⊕ C<sub>in</sub>** – the sum is 1 if an odd number of inputs are 1.
 - **C<sub>out</sub> = A·B + C<sub>in</sub>·(A ⊕ B)** – or, simplified with a K-map, the **majority function**: C<sub>out</sub> = AB + AC<sub>in</sub> + BC<sub>in</sub>.
@@ -67,8 +67,8 @@ carry:     1 1 1 0
 
 Two auxiliary signals are formed for each stage:
 
-- **G<sub>i</sub> = A<sub>i</sub> · B<sub>i</sub>** – **generate**: this stage *produces* a carry in any case;
-- **P<sub>i</sub> = A<sub>i</sub> ⊕ B<sub>i</sub>** – **propagate**: this stage *passes on* the incoming carry.
+- **G<sub>i</sub> = A<sub>i</sub> · B<sub>i</sub>** – **generate**: this stage _produces_ a carry in any case;
+- **P<sub>i</sub> = A<sub>i</sub> ⊕ B<sub>i</sub>** – **propagate**: this stage _passes on_ the incoming carry.
 
 Then C<sub>i+1</sub> = G<sub>i</sub> + P<sub>i</sub>·C<sub>i</sub>, and by expanding it every carry can be computed **directly** from the inputs:
 

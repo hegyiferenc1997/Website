@@ -19,16 +19,16 @@ minutes: 35
 
 ## Typical peripherals
 
-| peripheral           | task                                                                           |
-| -------------------- | ------------------------------------------------------------------------------ |
-| **GPIO** (general-purpose I/O) | per-pin direction (in/out), internal **pull-up** resistor, open drain |
-| **timer/counter**    | time measurement, periodic interrupts, counting external pulses (the counters of topic 5) |
-| **PWM**              | pulse-width modulation: LED brightness, motor speed, “analog” output           |
-| **ADC**              | analog-to-digital converter (topic 8): measuring sensor voltages               |
-| **UART, SPI, I²C, CAN, USB** | serial communication (topic 10)                                        |
-| **watchdog** timer   | if the program “hangs” and does not reset it in time, it **restarts** the system |
-| **interrupt controller** | prioritised handling of peripheral events                                  |
-| **sleep modes**      | µA consumption in battery devices, wake-up by interrupt                        |
+| peripheral                     | task                                                                                      |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| **GPIO** (general-purpose I/O) | per-pin direction (in/out), internal **pull-up** resistor, open drain                     |
+| **timer/counter**              | time measurement, periodic interrupts, counting external pulses (the counters of topic 5) |
+| **PWM**                        | pulse-width modulation: LED brightness, motor speed, “analog” output                      |
+| **ADC**                        | analog-to-digital converter (topic 8): measuring sensor voltages                          |
+| **UART, SPI, I²C, CAN, USB**   | serial communication (topic 10)                                                           |
+| **watchdog** timer             | if the program “hangs” and does not reset it in time, it **restarts** the system          |
+| **interrupt controller**       | prioritised handling of peripheral events                                                 |
+| **sleep modes**                | µA consumption in battery devices, wake-up by interrupt                                   |
 
 **PWM:** the output is high for a fraction D of each period. The average voltage is **U<sub>avg</sub> = D · U<sub>supply</sub>** – e.g. 5 V and 25 % duty cycle → **1.25 V**. An RC filter turns it into a true analog signal (topic 8).
 
@@ -36,24 +36,24 @@ minutes: 35
 
 Peripherals are controlled by bits of **registers** (e.g. the direction of a port's 8 pins is one 8-bit register). A bit must be modified so that the others **do not change** – that is what bitwise operations and **masks** are for:
 
-| operation         | expression                  | example (n = 3)                       |
-| ----------------- | --------------------------- | ------------------------------------- |
-| **set** a bit (1) | `reg = reg OR (1 << n)`     | 0000 0001 OR 0000 1000 = **0000 1001** |
+| operation           | expression                   | example (n = 3)                         |
+| ------------------- | ---------------------------- | --------------------------------------- |
+| **set** a bit (1)   | `reg = reg OR (1 << n)`      | 0000 0001 OR 0000 1000 = **0000 1001**  |
 | **clear** a bit (0) | `reg = reg AND NOT (1 << n)` | 1011 1111 AND 1111 0111 = **1011 0111** |
-| **toggle** a bit  | `reg = reg XOR (1 << n)`    | 0000 1001 XOR 0000 1000 = 0000 0001   |
-| **test** a bit    | `(reg AND (1 << n)) ≠ 0`    | “is it on?”                           |
+| **toggle** a bit    | `reg = reg XOR (1 << n)`     | 0000 1001 XOR 0000 1000 = 0000 0001     |
+| **test** a bit      | `(reg AND (1 << n)) ≠ 0`     | “is it on?”                             |
 
 These rest on the identities of topic 3: X + 1 = 1, X · 0 = 0, X ⊕ 1 = X̅, and next to 0 / 1 the other bits stay unchanged.
 
 ## Well-known families
 
-| family                     | feature                                                                |
-| -------------------------- | ---------------------------------------------------------------------- |
+| family                             | feature                                                          |
+| ---------------------------------- | ---------------------------------------------------------------- |
 | **AVR** (ATmega328P – Arduino Uno) | 8-bit RISC, Harvard; 16 MHz, 32 KB Flash, 2 KB SRAM, 1 KB EEPROM |
-| **PIC** (Microchip)        | 8–32-bit, widespread in industrial applications                        |
-| **ARM Cortex-M** (e.g. STM32) | 32-bit, wide range from M0 to M7, industrial and automotive         |
-| **ESP32** (Espressif)      | 32-bit, dual-core, **Wi-Fi and Bluetooth** built in – IoT              |
-| **RP2040** (Raspberry Pi Pico) | dual-core Cortex-M0+, programmable I/O (PIO)                       |
+| **PIC** (Microchip)                | 8–32-bit, widespread in industrial applications                  |
+| **ARM Cortex-M** (e.g. STM32)      | 32-bit, wide range from M0 to M7, industrial and automotive      |
+| **ESP32** (Espressif)              | 32-bit, dual-core, **Wi-Fi and Bluetooth** built in – IoT        |
+| **RP2040** (Raspberry Pi Pico)     | dual-core Cortex-M0+, programmable I/O (PIO)                     |
 
 ## Level shifting
 
@@ -63,11 +63,11 @@ A signal is interpreted correctly only if the driver's **output** levels are wit
 
 Typical values:
 
-| family                | V<sub>IH</sub> (min) | V<sub>IL</sub> (max) | V<sub>OH</sub> (min) | V<sub>OL</sub> (max) |
-| --------------------- | -------------------- | -------------------- | -------------------- | -------------------- |
-| TTL (5 V)             | 2.0 V                | 0.8 V                | 2.4 V                | 0.4 V                |
-| CMOS (5 V)            | 3.5 V (0.7 · V<sub>CC</sub>) | 1.5 V        | ≈ 4.9 V              | ≈ 0.1 V              |
-| LVCMOS (3.3 V)        | 2.0 V                | 0.8 V                | ≈ 2.4–3.3 V          | 0.4 V                |
+| family         | V<sub>IH</sub> (min)         | V<sub>IL</sub> (max) | V<sub>OH</sub> (min) | V<sub>OL</sub> (max) |
+| -------------- | ---------------------------- | -------------------- | -------------------- | -------------------- |
+| TTL (5 V)      | 2.0 V                        | 0.8 V                | 2.4 V                | 0.4 V                |
+| CMOS (5 V)     | 3.5 V (0.7 · V<sub>CC</sub>) | 1.5 V                | ≈ 4.9 V              | ≈ 0.1 V              |
+| LVCMOS (3.3 V) | 2.0 V                        | 0.8 V                | ≈ 2.4–3.3 V          | 0.4 V                |
 
 Consequences:
 

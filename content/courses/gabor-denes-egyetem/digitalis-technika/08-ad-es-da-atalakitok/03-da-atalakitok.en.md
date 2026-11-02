@@ -33,7 +33,7 @@ Only **two** resistor values (R and 2R) are needed. At every node of the ladder 
 
 **Example:** 8 bits, V<sub>ref</sub> = 5.12 V, D = 100 → V<sub>out</sub> = 5.12 · 100 / 256 = **2.00 V** (one step is 20 mV).
 
-- Accurate, scales well, easy to make in an **integrated circuit** (the *ratio* of the resistors matters, not their absolute value) → the most common DAC structure.
+- Accurate, scales well, easy to make in an **integrated circuit** (the _ratio_ of the resistors matters, not their absolute value) → the most common DAC structure.
 
 ## Current-steering DAC
 
@@ -54,17 +54,17 @@ A microcontroller's **PWM** output (topic 7) with an **RC low-pass filter** is a
 
 ## Converter specifications
 
-| parameter                 | meaning                                                                        |
-| ------------------------- | ------------------------------------------------------------------------------ |
-| **resolution**            | how many bits, i.e. how many discrete levels it distinguishes (2<sup>N</sup>)   |
-| **sample rate**           | how many conversions per second (S/s)                                           |
-| **settling time** (DAC)   | how long after a code change the output settles within ±½ LSB                   |
-| **offset error**          | deviation from zero of the output for code 0                                    |
-| **gain error**            | deviation of the full-scale slope                                               |
-| **DNL** (differential non-linearity) | deviation of **consecutive steps** from the ideal 1 LSB              |
-| **INL** (integral non-linearity) | the **largest deviation** of the real transfer curve from the ideal line |
-| **monotonicity**          | for increasing codes the output **never decreases** (DAC); guaranteed if DNL > −1 LSB |
-| **missing code** (ADC)    | a code that appears for no input at all (DNL ≤ −1 LSB)                          |
+| parameter                            | meaning                                                                               |
+| ------------------------------------ | ------------------------------------------------------------------------------------- |
+| **resolution**                       | how many bits, i.e. how many discrete levels it distinguishes (2<sup>N</sup>)         |
+| **sample rate**                      | how many conversions per second (S/s)                                                 |
+| **settling time** (DAC)              | how long after a code change the output settles within ±½ LSB                         |
+| **offset error**                     | deviation from zero of the output for code 0                                          |
+| **gain error**                       | deviation of the full-scale slope                                                     |
+| **DNL** (differential non-linearity) | deviation of **consecutive steps** from the ideal 1 LSB                               |
+| **INL** (integral non-linearity)     | the **largest deviation** of the real transfer curve from the ideal line              |
+| **monotonicity**                     | for increasing codes the output **never decreases** (DAC); guaranteed if DNL > −1 LSB |
+| **missing code** (ADC)               | a code that appears for no input at all (DNL ≤ −1 LSB)                                |
 
 So resolution is not the same as **accuracy**: a 16-bit converter with poor INL can be less accurate than a good 12-bit one.
 

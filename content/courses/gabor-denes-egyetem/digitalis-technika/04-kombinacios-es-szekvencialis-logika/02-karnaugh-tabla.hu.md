@@ -22,19 +22,19 @@ A sorok és oszlopok fejlécei **Gray-kód** sorrendben követik egymást: **00,
 
 **Háromváltozós tábla** (sor: A, oszlop: BC) – a cellákban a minterm sorszáma:
 
-| A \ BC | 00 | 01 | 11 | 10 |
-| ------ | -- | -- | -- | -- |
-| 0      | 0  | 1  | 3  | 2  |
-| 1      | 4  | 5  | 7  | 6  |
+| A \ BC | 00  | 01  | 11  | 10  |
+| ------ | --- | --- | --- | --- |
+| 0      | 0   | 1   | 3   | 2   |
+| 1      | 4   | 5   | 7   | 6   |
 
 **Négyváltozós tábla** (sor: AB, oszlop: CD):
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | 0  | 1  | 3  | 2  |
-| 01      | 4  | 5  | 7  | 6  |
-| 11      | 12 | 13 | 15 | 14 |
-| 10      | 8  | 9  | 11 | 10 |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | 0   | 1   | 3   | 2   |
+| 01      | 4   | 5   | 7   | 6   |
+| 11      | 12  | 13  | 15  | 14  |
+| 10      | 8   | 9   | 11  | 10  |
 
 Figyeld meg: a 3. és 4. oszlop (és sor) „fel van cserélve” a bináris sorrendhez képest – ez a Gray-kód.
 
@@ -53,12 +53,12 @@ Figyeld meg: a 3. és 4. oszlop (és sor) „fel van cserélve” a bináris sor
 
 F = Σm(0, 2, 5, 7, 8, 10, 13, 15)
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | 1  | 0  | 0  | 1  |
-| 01      | 0  | 1  | 1  | 0  |
-| 11      | 0  | 1  | 1  | 0  |
-| 10      | 1  | 0  | 0  | 1  |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | 1   | 0   | 0   | 1   |
+| 01      | 0   | 1   | 1   | 0   |
+| 11      | 0   | 1   | 1   | 0   |
+| 10      | 1   | 0   | 0   | 1   |
 
 - A **négy sarok** (0, 2, 8, 10): mindegyikben B = 0 és D = 0 → **B̅·D̅**.
 - A **középső négyes** (5, 7, 13, 15): B = 1 és D = 1 → **B·D**.
@@ -71,12 +71,12 @@ Közömbös (don't care, **X** vagy **d**) az a sor, amelynek kimenete **nem sz�
 
 F = Σm(1, 3, 7, 11, 15) + d(0, 2, 5)
 
-| AB \ CD | 00 | 01 | 11 | 10 |
-| ------- | -- | -- | -- | -- |
-| 00      | X  | 1  | 1  | X  |
-| 01      | 0  | X  | 1  | 0  |
-| 11      | 0  | 0  | 1  | 0  |
-| 10      | 0  | 0  | 1  | 0  |
+| AB \ CD | 00  | 01  | 11  | 10  |
+| ------- | --- | --- | --- | --- |
+| 00      | X   | 1   | 1   | X   |
+| 01      | 0   | X   | 1   | 0   |
+| 11      | 0   | 0   | 1   | 0   |
+| 10      | 0   | 0   | 1   | 0   |
 
 - A **CD = 11 oszlop** (3, 7, 15, 11) → **C·D**.
 - A maradék 1-es (1) lefedésére az X-ek segítenek: az 1, 3, 5, 7 négyes (az 5 közömbös) → **A̅·D**. (Ugyanilyen jó a 0, 1, 3, 2 négyes is → A̅·B̅.)

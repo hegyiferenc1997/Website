@@ -15,14 +15,14 @@ minutes: 25
 
 Inside the gates **transistors** switch. Which transistors are used and how the gate is built defines the **logic family**: voltage levels, speed, power consumption.
 
-| Property              | TTL (74LS)                  | CMOS (74HC / 4000)                    |
-| --------------------- | --------------------------- | ------------------------------------- |
-| transistor            | bipolar (BJT)               | complementary MOSFET (n and p channel) |
-| supply voltage        | 5 V ± 5%                    | 74HC: 2–6 V, 4000: 3–18 V              |
-| static consumption    | significant (mA/gate)       | almost zero (nA–µA)                    |
-| input                 | draws current               | insulated gate, high input resistance  |
-| delay (typical)       | ~10 ns                      | 74HC: ~8–10 ns, 4000: 50–100 ns        |
-| sensitivity           | robust                      | sensitive to static discharge          |
+| Property           | TTL (74LS)            | CMOS (74HC / 4000)                     |
+| ------------------ | --------------------- | -------------------------------------- |
+| transistor         | bipolar (BJT)         | complementary MOSFET (n and p channel) |
+| supply voltage     | 5 V ± 5%              | 74HC: 2–6 V, 4000: 3–18 V              |
+| static consumption | significant (mA/gate) | almost zero (nA–µA)                    |
+| input              | draws current         | insulated gate, high input resistance  |
+| delay (typical)    | ~10 ns                | 74HC: ~8–10 ns, 4000: 50–100 ns        |
+| sensitivity        | robust                | sensitive to static discharge          |
 
 Today almost every integrated circuit (processor, memory, FPGA) is **CMOS**. TTL lives on mainly in education and old equipment; the **74HCT** series is CMOS but with TTL-compatible input levels.
 
@@ -42,7 +42,7 @@ Only the pull-down transistor is present: the output either **pulls to 0** or "f
 
 ### Tri-state output
 
-Besides 0 and 1 there is a third, **high-impedance** state (Z, "disconnected"), controlled by an enable input (*Enable*, OE). This lets several devices share a **bus**: only one drives it at a time, the others are in Z state.
+Besides 0 and 1 there is a third, **high-impedance** state (Z, "disconnected"), controlled by an enable input (_Enable_, OE). This lets several devices share a **bus**: only one drives it at a time, the others are in Z state.
 
 ## Fan-out
 
@@ -74,12 +74,12 @@ This shows why processor supply voltages went down from 5 V to ~1 V: power is pr
 
 ## Interfacing families
 
-| Direction | Problem | Solution |
-| --------- | ------- | -------- |
+| Direction        | Problem                                                                    | Solution                                                                       |
+| ---------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | TTL → CMOS (5 V) | TTL V<sub>OH</sub> (min. 2.4 V) is too low for CMOS V<sub>IH</sub> (3.5 V) | pull-up resistor, open-collector buffer, transistor stage or a **74HCT** input |
-| CMOS → TTL | old 4000-series CMOS cannot supply enough current | CMOS buffer IC |
-| 3.3 V → 5 V | a 3.3 V signal may be too low for 5 V CMOS | level shifter (e.g. **TXS0108E**, bidirectional) |
-| 5 V → 3.3 V | 5 V can **damage** a 3.3 V input | 5 V-tolerant buffer (e.g. **SN74LVC245A**), voltage divider |
+| CMOS → TTL       | old 4000-series CMOS cannot supply enough current                          | CMOS buffer IC                                                                 |
+| 3.3 V → 5 V      | a 3.3 V signal may be too low for 5 V CMOS                                 | level shifter (e.g. **TXS0108E**, bidirectional)                               |
+| 5 V → 3.3 V      | 5 V can **damage** a 3.3 V input                                           | 5 V-tolerant buffer (e.g. **SN74LVC245A**), voltage divider                    |
 
 > When connecting an Arduino (5 V) and a Raspberry Pi (3.3 V) this is an everyday task!
 

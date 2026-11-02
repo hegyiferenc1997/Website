@@ -28,22 +28,22 @@ A digitális jelet gyakran tökéletes négyszögként rajzoljuk, amely **azonna
 
 ## Az impulzus jellemzői
 
-| Jellemző                              | Jele       | Jelentés                                                     |
-| ------------------------------------- | ---------- | ------------------------------------------------------------ |
-| felfutási idő (*rise time*)           | t<sub>r</sub> | amíg a jel az amplitúdó **10%-áról 90%-ára** emelkedik       |
-| lefutási idő (*fall time*)            | t<sub>f</sub> | amíg a jel **90%-ról 10%-ra** csökken                         |
-| impulzusszélesség                     | t<sub>H</sub> | a magas szinten töltött idő (az 50%-os pontok között mérve)   |
-| periódusidő (*tempus*)                | T          | egy teljes ciklus (alacsony–magas–alacsony) ideje             |
-| frekvencia                            | f          | ismétlődések száma másodpercenként: **f = 1 / T**             |
-| kitöltési tényező (*duty cycle*)      | D          | **D = t<sub>H</sub> / T**, százalékban                        |
+| Jellemző                         | Jele          | Jelentés                                                    |
+| -------------------------------- | ------------- | ----------------------------------------------------------- |
+| felfutási idő (_rise time_)      | t<sub>r</sub> | amíg a jel az amplitúdó **10%-áról 90%-ára** emelkedik      |
+| lefutási idő (_fall time_)       | t<sub>f</sub> | amíg a jel **90%-ról 10%-ra** csökken                       |
+| impulzusszélesség                | t<sub>H</sub> | a magas szinten töltött idő (az 50%-os pontok között mérve) |
+| periódusidő (_tempus_)           | T             | egy teljes ciklus (alacsony–magas–alacsony) ideje           |
+| frekvencia                       | f             | ismétlődések száma másodpercenként: **f = 1 / T**           |
+| kitöltési tényező (_duty cycle_) | D             | **D = t<sub>H</sub> / T**, százalékban                      |
 
 ### Mértékegységek gyorsan
 
-| előtag | szorzó       | idő példa | frekvencia példa |
-| ------ | ------------ | --------- | ---------------- |
-| milli  | 10<sup>−3</sup> | 1 ms   | 1 kHz = 10<sup>3</sup> Hz |
-| mikro  | 10<sup>−6</sup> | 1 µs   | 1 MHz = 10<sup>6</sup> Hz |
-| nano   | 10<sup>−9</sup> | 1 ns   | 1 GHz = 10<sup>9</sup> Hz |
+| előtag | szorzó          | idő példa | frekvencia példa          |
+| ------ | --------------- | --------- | ------------------------- |
+| milli  | 10<sup>−3</sup> | 1 ms      | 1 kHz = 10<sup>3</sup> Hz |
+| mikro  | 10<sup>−6</sup> | 1 µs      | 1 MHz = 10<sup>6</sup> Hz |
+| nano   | 10<sup>−9</sup> | 1 ns      | 1 GHz = 10<sup>9</sup> Hz |
 
 **Kidolgozott példák**
 
@@ -66,13 +66,13 @@ print(f"kitöltési tényező = {t_magas / T2 * 100:.0f} %")
 
 ## Jelterjedési késleltetés
 
-Minden kapunak van **jelterjedési késleltetése** (t<sub>pd</sub>, *propagation delay*): a bemenet változása után ennyi idő múlva jelenik meg a kimeneten a változás. Két értéke van: t<sub>PLH</sub> (kimenet 0→1) és t<sub>PHL</sub> (kimenet 1→0); a kettő átlaga a t<sub>pd</sub>.
+Minden kapunak van **jelterjedési késleltetése** (t<sub>pd</sub>, _propagation delay_): a bemenet változása után ennyi idő múlva jelenik meg a kimeneten a változás. Két értéke van: t<sub>PLH</sub> (kimenet 0→1) és t<sub>PHL</sub> (kimenet 1→0); a kettő átlaga a t<sub>pd</sub>.
 
 Egymás után kötött kapuknál a késleltetések **összeadódnak**: ha egy jel 4 darab, egyenként 8 ns-os kapun halad át, a teljes késleltetés **32 ns**. A leghosszabb utat **kritikus útnak** nevezzük: ez korlátozza, milyen gyorsan működhet az áramkör. Az eltérő hosszúságú utak okozzák a **hazárdokat** is (4. témakör).
 
 ## Az órajel
 
-Az **órajel** (*clock*, CLK) egy szabályos, általában 50%-os kitöltésű négyszögjel, amely a **szinkron** áramkörök ütemét adja: a tárolók csak az órajel egy meghatározott pillanatában (általában a **felfutó élén**) veszik át az új értéket. Egy 3 GHz-es processzor órajelének periódusideje kb. **0,33 ns** – ennyi idő alatt a fény is csak ~10 cm-t tesz meg!
+Az **órajel** (_clock_, CLK) egy szabályos, általában 50%-os kitöltésű négyszögjel, amely a **szinkron** áramkörök ütemét adja: a tárolók csak az órajel egy meghatározott pillanatában (általában a **felfutó élén**) veszik át az új értéket. Egy 3 GHz-es processzor órajelének periódusideje kb. **0,33 ns** – ennyi idő alatt a fény is csak ~10 cm-t tesz meg!
 
 Az órajel periódusa nem lehet rövidebb a kritikus út késleltetésénél, különben a tárolók még a régi, „félkész” értéket vennék át.
 

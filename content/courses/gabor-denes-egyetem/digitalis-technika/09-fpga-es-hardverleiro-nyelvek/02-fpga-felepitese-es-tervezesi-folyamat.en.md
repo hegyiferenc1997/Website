@@ -71,13 +71,13 @@ Both tools also offer a graphical pin planner and report an error if a port is n
 
 ## FPGA or microcontroller?
 
-|                     | **FPGA**                                         | **microcontroller**                           |
-| ------------------- | ------------------------------------------------ | --------------------------------------------- |
-| operation           | **hardware parallelism** – everything runs at once | software, instruction by instruction, in sequence |
-| “programming”       | describing hardware (HDL)                        | writing a program (C, Python, assembly)       |
-| flexibility         | fully custom logic, custom interfaces            | fixed peripherals                             |
-| timing              | ns-accurate, deterministic                       | µs, less predictable because of interrupts    |
-| power, price, complexity | higher                                      | lower, cheaper, simpler                       |
+|                          | **FPGA**                                           | **microcontroller**                               |
+| ------------------------ | -------------------------------------------------- | ------------------------------------------------- |
+| operation                | **hardware parallelism** – everything runs at once | software, instruction by instruction, in sequence |
+| “programming”            | describing hardware (HDL)                          | writing a program (C, Python, assembly)           |
+| flexibility              | fully custom logic, custom interfaces              | fixed peripherals                                 |
+| timing                   | ns-accurate, deterministic                         | µs, less predictable because of interrupts        |
+| power, price, complexity | higher                                             | lower, cheaper, simpler                           |
 
 They are often used **together**: the FPGA does the fast, parallel signal processing, the processor the control and communication.
 

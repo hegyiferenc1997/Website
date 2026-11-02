@@ -69,13 +69,13 @@ k darab flip-floppal legfeljebb 2<sup>k</sup> állapot kódolható, tehát N ál
 
 A kimeneti logika bemenete szerint két modellt különböztetünk meg:
 
-|                         | **Moore-gép**                                    | **Mealy-gép**                                       |
-| ----------------------- | ------------------------------------------------ | --------------------------------------------------- |
-| a kimenet függ          | **csak az állapottól**                           | az állapottól **és a bemenetektől**                 |
-| jelölés a gráfon        | az állapot körébe írjuk: S1 / 1                  | a nyílra írjuk: x = 1 / y = 1                       |
-| kimenet változása       | csak órajel élen (állapotváltáskor) – stabil     | a bemenettel azonnal változhat                      |
-| állapotok száma         | általában több                                   | általában kevesebb                                  |
-| reakcióidő              | egy órajellel később reagál                      | ugyanabban az ütemben reagál                        |
+|                   | **Moore-gép**                                | **Mealy-gép**                       |
+| ----------------- | -------------------------------------------- | ----------------------------------- |
+| a kimenet függ    | **csak az állapottól**                       | az állapottól **és a bemenetektől** |
+| jelölés a gráfon  | az állapot körébe írjuk: S1 / 1              | a nyílra írjuk: x = 1 / y = 1       |
+| kimenet változása | csak órajel élen (állapotváltáskor) – stabil | a bemenettel azonnal változhat      |
+| állapotok száma   | általában több                               | általában kevesebb                  |
+| reakcióidő        | egy órajellel később reagál                  | ugyanabban az ütemben reagál        |
 
 Mindkettő ugyanazt tudja – minden Mealy-gép átalakítható Moore-géppé és fordítva –, a választás a feladattól függ.
 

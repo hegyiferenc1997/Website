@@ -15,12 +15,12 @@ Binary arithmetic works just like decimal – we only have two digits.
 
 ## Addition
 
-| A | B | sum | carry |
-| - | - | --- | ----- |
-| 0 | 0 | 0   | 0     |
-| 0 | 1 | 1   | 0     |
-| 1 | 0 | 1   | 0     |
-| 1 | 1 | 0   | **1** |
+| A   | B   | sum | carry |
+| --- | --- | --- | ----- |
+| 0   | 0   | 0   | 0     |
+| 0   | 1   | 1   | 0     |
+| 1   | 0   | 1   | 0     |
+| 1   | 1   | 0   | **1** |
 
 So 1 + 1 = 10<sub>2</sub>: write 0 and carry 1. The sum of three ones: 1 + 1 + 1 = 11<sub>2</sub> (write 1, carry 1).
 
@@ -36,12 +36,12 @@ So 1 + 1 = 10<sub>2</sub>: write 0 and carry 1. The sum of three ones: 1 + 1 + 1
 
 ## Subtraction
 
-| A | B | difference | borrow |
-| - | - | ---------- | ------ |
-| 0 | 0 | 0          | 0      |
-| 1 | 0 | 1          | 0      |
-| 1 | 1 | 0          | 0      |
-| 0 | 1 | 1          | **1**  |
+| A   | B   | difference | borrow |
+| --- | --- | ---------- | ------ |
+| 0   | 0   | 0          | 0      |
+| 1   | 0   | 1          | 0      |
+| 1   | 1   | 0          | 0      |
+| 0   | 1   | 1          | **1**  |
 
 For 0 − 1 we "borrow" from the next place (worth 2 there): 10<sub>2</sub> − 1 = 1, and at the next place we subtract one more.
 

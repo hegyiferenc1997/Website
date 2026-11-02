@@ -21,12 +21,12 @@ We look at a signal along two axes:
 
 ## The four kinds of signal
 
-| Signal                 | Time         | Amplitude    | Example                                        |
-| ---------------------- | ------------ | ------------ | ---------------------------------------------- |
-| analog (continuous)    | continuous   | continuous   | microphone voltage, thermometer                |
-| discrete-time          | discrete     | continuous   | temperature read hourly (with decimals)        |
-| discrete-amplitude     | continuous   | discrete     | stepped signal, e.g. positions of a switch     |
-| **digital**            | **discrete** | **discrete** | a computer's bits, the samples of an audio file |
+| Signal              | Time         | Amplitude    | Example                                         |
+| ------------------- | ------------ | ------------ | ----------------------------------------------- |
+| analog (continuous) | continuous   | continuous   | microphone voltage, thermometer                 |
+| discrete-time       | discrete     | continuous   | temperature read hourly (with decimals)         |
+| discrete-amplitude  | continuous   | discrete     | stepped signal, e.g. positions of a switch      |
+| **digital**         | **discrete** | **discrete** | a computer's bits, the samples of an audio file |
 
 - **Analog** information: the value can vary continuously among infinitely many values (volume, temperature).
 - **Digital** information: the signal can take only a **finite number of levels** – in the binary system just two: **0** and **1** (LOW and HIGH).

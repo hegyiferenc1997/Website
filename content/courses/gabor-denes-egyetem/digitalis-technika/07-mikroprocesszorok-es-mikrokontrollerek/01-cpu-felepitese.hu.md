@@ -27,12 +27,12 @@ A processzor nem más, mint **kombinációs hálózatok** (összeadó, multiplex
 
 ## Neumann- és Harvard-architektúra
 
-|                       | **Neumann**                                       | **Harvard**                                         |
-| --------------------- | ------------------------------------------------- | --------------------------------------------------- |
-| memória               | **közös** a programnak és az adatnak              | **külön** programmemória és adatmemória             |
-| busz                  | egy busz → egyszerre vagy utasítást, vagy adatot olvas | külön buszok → egyszerre olvashat utasítást és adatot |
-| jellemző              | egyszerűbb, rugalmasabb; szűk keresztmetszet: „Neumann-palacknyak” | gyorsabb                    |
-| példa                 | klasszikus PC-k memóriamodellje                    | mikrokontrollerek (AVR, PIC), DSP-k                 |
+|          | **Neumann**                                                        | **Harvard**                                           |
+| -------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
+| memória  | **közös** a programnak és az adatnak                               | **külön** programmemória és adatmemória               |
+| busz     | egy busz → egyszerre vagy utasítást, vagy adatot olvas             | külön buszok → egyszerre olvashat utasítást és adatot |
+| jellemző | egyszerűbb, rugalmasabb; szűk keresztmetszet: „Neumann-palacknyak” | gyorsabb                                              |
+| példa    | klasszikus PC-k memóriamodellje                                    | mikrokontrollerek (AVR, PIC), DSP-k                   |
 
 A mai PC-processzorok **módosított Harvard**-architektúrájúak: kívül közös memória, de belül külön utasítás- és adat-gyorsítótár (L1I, L1D).
 
@@ -44,14 +44,14 @@ Kombinációs hálózat, amely két operanduson végez műveletet: **összeadás
 
 ### Regiszterek
 
-| regiszter                                | szerepe                                                          |
-| ---------------------------------------- | ---------------------------------------------------------------- |
-| **PC** (program counter, utasításszámláló) | a **következő végrehajtandó utasítás címe**                   |
-| **IR** (instruction register)            | az éppen végrehajtott utasítás                                   |
-| **akkumulátor** / általános regiszterek  | operandusok és részeredmények                                    |
-| **SP** (stack pointer, veremmutató)      | a verem tetejének címe                                           |
-| **állapotregiszter** (flags, PSW)        | az utolsó ALU-művelet jellemzői                                  |
-| **MAR / MDR**                            | memóriacím- és memóriaadat-regiszter (a busz felé)               |
+| regiszter                                  | szerepe                                            |
+| ------------------------------------------ | -------------------------------------------------- |
+| **PC** (program counter, utasításszámláló) | a **következő végrehajtandó utasítás címe**        |
+| **IR** (instruction register)              | az éppen végrehajtott utasítás                     |
+| **akkumulátor** / általános regiszterek    | operandusok és részeredmények                      |
+| **SP** (stack pointer, veremmutató)        | a verem tetejének címe                             |
+| **állapotregiszter** (flags, PSW)          | az utolsó ALU-művelet jellemzői                    |
+| **MAR / MDR**                              | memóriacím- és memóriaadat-regiszter (a busz felé) |
 
 ### Vezérlőegység (CU)
 
@@ -67,12 +67,12 @@ A közös buszra csak **háromállapotú** (tri-state) kimenetek köthetők, hog
 
 ## Állapotjelzők (flag-ek)
 
-| jelző | neve        | mikor 1                                                    |
-| ----- | ----------- | ---------------------------------------------------------- |
-| **Z** | zero        | az eredmény **nulla**                                      |
-| **C** | carry       | **átvitel** keletkezett a legfelső bitből (előjel nélküli túlcsordulás) |
-| **N** | negative    | az eredmény **legfelső bitje 1** (előjelesen negatív)      |
-| **V** | overflow    | **előjeles túlcsordulás** (V = C<sub>n</sub> ⊕ C<sub>n−1</sub>) |
+| jelző | neve     | mikor 1                                                                 |
+| ----- | -------- | ----------------------------------------------------------------------- |
+| **Z** | zero     | az eredmény **nulla**                                                   |
+| **C** | carry    | **átvitel** keletkezett a legfelső bitből (előjel nélküli túlcsordulás) |
+| **N** | negative | az eredmény **legfelső bitje 1** (előjelesen negatív)                   |
+| **V** | overflow | **előjeles túlcsordulás** (V = C<sub>n</sub> ⊕ C<sub>n−1</sub>)         |
 
 A feltételes ugróutasítások (pl. „ugorj, ha nulla”) ezeket vizsgálják – így valósulnak meg az `if` és a ciklusok.
 

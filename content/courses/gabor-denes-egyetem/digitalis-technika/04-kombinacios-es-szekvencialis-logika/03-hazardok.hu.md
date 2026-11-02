@@ -39,12 +39,12 @@ F      ‾‾‾‾‾‾‾‾|__|‾‾‾‾‾‾‾‾‾‾‾‾  ← tü
 
 ## A hazárdok fajtái
 
-| fajta              | elvárt viselkedés         | ami történik       |
-| ------------------ | ------------------------- | ------------------ |
-| statikus 1-es      | marad 1                   | 1 → 0 → 1          |
-| statikus 0-s       | marad 0                   | 0 → 1 → 0          |
-| dinamikus          | egyszer vált (0 → 1)      | 0 → 1 → 0 → 1      |
-| funkcionális       | egyszerre több bemenet vált | a köztes állapot látszik |
+| fajta         | elvárt viselkedés           | ami történik             |
+| ------------- | --------------------------- | ------------------------ |
+| statikus 1-es | marad 1                     | 1 → 0 → 1                |
+| statikus 0-s  | marad 0                     | 0 → 1 → 0                |
+| dinamikus     | egyszer vált (0 → 1)        | 0 → 1 → 0 → 1            |
+| funkcionális  | egyszerre több bemenet vált | a köztes állapot látszik |
 
 - A **statikus 1-es** hazárd tipikusan **SOP** (ÉS–VAGY), a **statikus 0-s** **POS** (VAGY–ÉS) megvalósításban jelenik meg.
 - A **dinamikus** hazárd többszintű hálózatban jön elő, ahol egy jel három vagy több úton, eltérő késéssel ér a kimenetre.
@@ -56,10 +56,10 @@ Statikus 1-es hazárd ott lehet, ahol **két szomszédos 1-es cellát különbö
 
 Az F = AB + A̅C táblája (sor: A, oszlop: BC):
 
-| A \ BC | 00 | 01 | 11 | 10 |
-| ------ | -- | -- | -- | -- |
-| 0      | 0  | 1  | 1  | 0  |
-| 1      | 0  | 0  | 1  | 1  |
+| A \ BC | 00  | 01  | 11  | 10  |
+| ------ | --- | --- | --- | --- |
+| 0      | 0   | 1   | 1   | 0   |
+| 1      | 0   | 0   | 1   | 1   |
 
 Az A̅C csoport (1, 3) és az AB csoport (7, 6) a **3 és 7 cellánál** ér össze (B = C = 1), de közös csoport nincs.
 

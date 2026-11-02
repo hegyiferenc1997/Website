@@ -35,12 +35,12 @@ N bit → **N lépés** (N órajel).
 
 **Példa** (4 bit, a DAC lépése 1 V, V<sub>in</sub> = 11,3 V):
 
-| lépés | próba | DAC   | V<sub>in</sub> ≥ DAC? | eredmény |
-| ----- | ----- | ----- | --------------------- | -------- |
-| 1     | 1000  | 8 V   | igen                  | 1xxx     |
-| 2     | 1100  | 12 V  | nem                   | 10xx     |
-| 3     | 1010  | 10 V  | igen                  | 101x     |
-| 4     | 1011  | 11 V  | igen                  | **1011** |
+| lépés | próba | DAC  | V<sub>in</sub> ≥ DAC? | eredmény |
+| ----- | ----- | ---- | --------------------- | -------- |
+| 1     | 1000  | 8 V  | igen                  | 1xxx     |
+| 2     | 1100  | 12 V | nem                   | 10xx     |
+| 3     | 1010  | 10 V | igen                  | 101x     |
+| 4     | 1011  | 11 V | igen                  | **1011** |
 
 - **Közepes sebesség** (kHz–MS/s), **8–18 bit**, kis fogyasztás → a **mikrokontrollerek** beépített ADC-je szinte mindig SAR.
 
@@ -64,12 +64,12 @@ A **modulátor** a bemenetet nagyon nagy frekvencián (**túlmintavételezés**)
 
 ## Összehasonlítás
 
-| típus        | sebesség          | felbontás     | tipikus felhasználás                    |
-| ------------ | ----------------- | ------------- | --------------------------------------- |
-| **flash**    | leggyorsabb (GS/s) | 6–8 bit      | videó, oszcilloszkóp, radar             |
-| **SAR**      | közepes (MS/s)    | 8–18 bit      | mikrokontrollerek, adatgyűjtés          |
-| **ΔΣ**       | kis–közepes       | 16–24 bit     | hang, precíziós mérés                   |
-| **dual-slope** | lassú (Hz)      | 12–20 bit     | multiméter, panelmérő                   |
+| típus          | sebesség           | felbontás | tipikus felhasználás           |
+| -------------- | ------------------ | --------- | ------------------------------ |
+| **flash**      | leggyorsabb (GS/s) | 6–8 bit   | videó, oszcilloszkóp, radar    |
+| **SAR**        | közepes (MS/s)     | 8–18 bit  | mikrokontrollerek, adatgyűjtés |
+| **ΔΣ**         | kis–közepes        | 16–24 bit | hang, precíziós mérés          |
+| **dual-slope** | lassú (Hz)         | 12–20 bit | multiméter, panelmérő          |
 
 ```python run
 # Szukcesszív közelítéses ADC szimulációja: felező keresés bitenként

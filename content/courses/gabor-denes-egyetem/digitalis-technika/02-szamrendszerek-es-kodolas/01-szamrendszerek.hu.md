@@ -16,9 +16,9 @@ Már az Indus-völgyi civilizáció (Kr. e. 2500–1700) súlyai is **kettes ren
 
 ## Helyiértékes ábrázolás
 
-A számrendszer olyan szabályrendszer, amellyel számokat írunk le egy adott **alap** (*b*, radix) szerint. Helyiértékes rendszerben minden számjegy értéke a **pozíciójától** függ: a helyiértékek az alap hatványai.
+A számrendszer olyan szabályrendszer, amellyel számokat írunk le egy adott **alap** (_b_, radix) szerint. Helyiértékes rendszerben minden számjegy értéke a **pozíciójától** függ: a helyiértékek az alap hatványai.
 
-Egy *b* alapú szám értéke:
+Egy _b_ alapú szám értéke:
 
 N = a<sub>n</sub>·b<sup>n</sup> + … + a<sub>1</sub>·b<sup>1</sup> + a<sub>0</sub>·b<sup>0</sup> + a<sub>−1</sub>·b<sup>−1</sup> + …
 
@@ -26,12 +26,12 @@ N = a<sub>n</sub>·b<sup>n</sup> + … + a<sub>1</sub>·b<sup>1</sup> + a<sub>0<
 
 ## A négy fontos számrendszer
 
-| Rendszer        | Alap | Számjegyek          | Jelölés                    | Használat                          |
-| --------------- | ---- | ------------------- | -------------------------- | ---------------------------------- |
-| decimális       | 10   | 0–9                 | 472, 472<sub>10</sub>      | mindennapok                        |
-| bináris         | 2    | 0, 1                | 1011<sub>2</sub>, `0b1011` | a számítógép belső nyelve          |
-| oktális         | 8    | 0–7                 | 157<sub>8</sub>, `0o157`   | régi gépek, Unix jogosultságok     |
-| hexadecimális   | 16   | 0–9, A–F            | 2F<sub>16</sub>, `0x2F`    | memóriacímek, színek, bájtok       |
+| Rendszer      | Alap | Számjegyek | Jelölés                    | Használat                      |
+| ------------- | ---- | ---------- | -------------------------- | ------------------------------ |
+| decimális     | 10   | 0–9        | 472, 472<sub>10</sub>      | mindennapok                    |
+| bináris       | 2    | 0, 1       | 1011<sub>2</sub>, `0b1011` | a számítógép belső nyelve      |
+| oktális       | 8    | 0–7        | 157<sub>8</sub>, `0o157`   | régi gépek, Unix jogosultságok |
+| hexadecimális | 16   | 0–9, A–F   | 2F<sub>16</sub>, `0x2F`    | memóriacímek, színek, bájtok   |
 
 A hexadecimális rendszerben A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.
 
@@ -40,10 +40,10 @@ A hexadecimális rendszerben A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.
 ## A kettő hatványai – érdemes fejből tudni
 
 | 2<sup>n</sup> | 2<sup>0</sup> | 2<sup>1</sup> | 2<sup>2</sup> | 2<sup>3</sup> | 2<sup>4</sup> | 2<sup>5</sup> | 2<sup>6</sup> | 2<sup>7</sup> | 2<sup>8</sup> | 2<sup>10</sup> | 2<sup>16</sup> |
-| ------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---- | ------ |
-| érték         | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128 | 256 | 1024 | 65 536 |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------- | -------------- |
+| érték         | 1             | 2             | 4             | 8             | 16            | 32            | 64            | 128           | 256           | 1024           | 65 536         |
 
-Egy **bit** (*binary digit*) egy bináris számjegy; 8 bit = 1 **bájt**; 4 bit = 1 **nibble** (= egy hexadecimális jegy). *n* biten **2<sup>n</sup>** különböző érték ábrázolható (0 … 2<sup>n</sup> − 1).
+Egy **bit** (_binary digit_) egy bináris számjegy; 8 bit = 1 **bájt**; 4 bit = 1 **nibble** (= egy hexadecimális jegy). _n_ biten **2<sup>n</sup>** különböző érték ábrázolható (0 … 2<sup>n</sup> − 1).
 
 ## Átváltás tízesre: helyiértékek összege
 
@@ -73,7 +73,7 @@ print(tizesre("1011", 2), tizesre("157", 8), tizesre("1A3", 16))
 
 - Helyiértékes rendszerben a jegy értéke = jegy × alap<sup>pozíció</sup>.
 - Bináris (2), oktális (8), hexadecimális (16) – a hexa jegyei 0–9 és A–F.
-- *n* bit 2<sup>n</sup> különböző értéket ábrázol.
+- _n_ bit 2<sup>n</sup> különböző értéket ábrázol.
 - Tízesre váltás: a helyiértékek súlyozott összege.
 
 ## A lecke feladata

@@ -16,11 +16,11 @@ minutes: 30
 
 For implementation the states (A, B, C …) must be replaced by **binary codes**. The choice affects the number of flip-flops and the complexity of the logic.
 
-| encoding    | 4 states (S0…S3)         | flip-flops for N states  | feature                                     |
-| ----------- | ------------------------ | ------------------------ | ------------------------------------------- |
-| **binary**  | 00, 01, 10, 11           | ⌈log₂ N⌉                 | the fewest flip-flops                       |
-| **Gray**    | 00, 01, 11, 10           | ⌈log₂ N⌉                 | **1 bit** changes between consecutive states |
-| **one-hot** | 0001, 0010, 0100, 1000   | **N**                    | always **exactly one** flip-flop is 1       |
+| encoding    | 4 states (S0…S3)       | flip-flops for N states | feature                                      |
+| ----------- | ---------------------- | ----------------------- | -------------------------------------------- |
+| **binary**  | 00, 01, 10, 11         | ⌈log₂ N⌉                | the fewest flip-flops                        |
+| **Gray**    | 00, 01, 11, 10         | ⌈log₂ N⌉                | **1 bit** changes between consecutive states |
+| **one-hot** | 0001, 0010, 0100, 1000 | **N**                   | always **exactly one** flip-flop is 1        |
 
 - **Binary:** few flip-flops – where flip-flops are expensive (discrete ICs, ASIC).
 - **Gray:** if the machine mostly steps in order (counter-like), fewer bits change at once → lower power, fewer hazards on decoded outputs.
@@ -37,12 +37,12 @@ Equivalent states can be **merged** – the machine's behaviour does not change 
 
 **Example** (Moore machine):
 
-| state / output    | x = 0 | x = 1 |
-| ----------------- | ----- | ----- |
-| S0 / 0            | S1    | S2    |
-| S1 / 0            | S0    | S3    |
-| S2 / 0            | S0    | S3    |
-| S3 / 1            | S3    | S0    |
+| state / output | x = 0 | x = 1 |
+| -------------- | ----- | ----- |
+| S0 / 0         | S1    | S2    |
+| S1 / 0         | S0    | S3    |
+| S2 / 0         | S0    | S3    |
+| S3 / 1         | S3    | S0    |
 
 S1 and S2 have the same output (0) and go to the same places (x = 0 → S0, x = 1 → S3) → **S1 ≡ S2**, they can be merged. The machine will have 3 states instead of 4 – the number of flip-flops does not decrease here (both need 2), but the logic gets simpler.
 

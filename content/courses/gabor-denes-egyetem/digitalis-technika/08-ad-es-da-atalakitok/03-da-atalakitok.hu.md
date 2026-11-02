@@ -33,7 +33,7 @@ Csak **kétféle** értékű ellenállás (R és 2R) kell. A létra minden csom�
 
 **Példa:** 8 bit, V<sub>ref</sub> = 5,12 V, D = 100 → V<sub>ki</sub> = 5,12 · 100 / 256 = **2,00 V** (egy lépés 20 mV).
 
-- Pontos, jól skálázható, **integrált áramkörben** könnyen gyártható (az ellenállások *aránya* számít, nem az abszolút értéke) → a legelterjedtebb DAC-szerkezet.
+- Pontos, jól skálázható, **integrált áramkörben** könnyen gyártható (az ellenállások _aránya_ számít, nem az abszolút értéke) → a legelterjedtebb DAC-szerkezet.
 
 ## Súlyozott áramforrásos DAC
 
@@ -54,17 +54,17 @@ A mikrokontroller **PWM** kimenete (7. témakör) egy **RC aluláteresztő szűr
 
 ## Az átalakítók jellemzői
 
-| jellemző                  | jelentése                                                                      |
-| ------------------------- | ------------------------------------------------------------------------------ |
-| **felbontás**             | hány bit, azaz hány diszkrét szintet különböztet meg (2<sup>N</sup>)            |
-| **mintavételi sebesség**  | hány átalakítás másodpercenként (S/s)                                           |
-| **beállási idő** (DAC)    | a kód változása után mennyi idő alatt áll be a kimenet ±½ LSB-n belül           |
-| **ofszethiba**            | a 0 kódhoz tartozó kimenet eltérése a nullától                                  |
-| **erősítéshiba**          | a teljes skála meredekségének eltérése                                          |
-| **DNL** (differenciális nemlinearitás) | az **egymás utáni lépések** eltérése az ideális 1 LSB-től               |
-| **INL** (integrális nemlinearitás) | a valós átviteli görbe **legnagyobb eltérése** az ideális egyenestől        |
-| **monotonitás**           | növekvő kódra a kimenet **soha nem csökken** (DAC); DNL > −1 LSB esetén biztosított |
-| **hiányzó kód** (ADC)     | olyan kód, amely semmilyen bemenetre nem jelenik meg (DNL ≤ −1 LSB)             |
+| jellemző                               | jelentése                                                                           |
+| -------------------------------------- | ----------------------------------------------------------------------------------- |
+| **felbontás**                          | hány bit, azaz hány diszkrét szintet különböztet meg (2<sup>N</sup>)                |
+| **mintavételi sebesség**               | hány átalakítás másodpercenként (S/s)                                               |
+| **beállási idő** (DAC)                 | a kód változása után mennyi idő alatt áll be a kimenet ±½ LSB-n belül               |
+| **ofszethiba**                         | a 0 kódhoz tartozó kimenet eltérése a nullától                                      |
+| **erősítéshiba**                       | a teljes skála meredekségének eltérése                                              |
+| **DNL** (differenciális nemlinearitás) | az **egymás utáni lépések** eltérése az ideális 1 LSB-től                           |
+| **INL** (integrális nemlinearitás)     | a valós átviteli görbe **legnagyobb eltérése** az ideális egyenestől                |
+| **monotonitás**                        | növekvő kódra a kimenet **soha nem csökken** (DAC); DNL > −1 LSB esetén biztosított |
+| **hiányzó kód** (ADC)                  | olyan kód, amely semmilyen bemenetre nem jelenik meg (DNL ≤ −1 LSB)                 |
 
 A felbontás tehát nem azonos a **pontossággal**: egy 16 bites, de rossz INL-ű átalakító lehet pontatlanabb, mint egy jó 12 bites.
 

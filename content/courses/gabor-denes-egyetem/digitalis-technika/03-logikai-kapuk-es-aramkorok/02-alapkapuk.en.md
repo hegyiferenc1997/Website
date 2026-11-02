@@ -15,26 +15,26 @@ A **logic gate** is a circuit that implements a logic operation. Every digital s
 
 ## The seven basic gates
 
-| Gate      | Operation name        | Expression        | When is the output 1?              | IEC symbol | IC (4 gates) |
-| --------- | --------------------- | ----------------- | ---------------------------------- | ---------- | ------------ |
-| **NOT**   | negation, inverter    | Y = A̅             | if A = 0                           | `1` + bubble | 7404 (6 pcs) |
-| **AND**   | conjunction           | Y = A · B         | if **all** inputs are 1            | `&`        | 7408         |
-| **OR**    | disjunction           | Y = A + B         | if **at least one** input is 1     | `≥1`       | 7432         |
-| **NAND**  | Sheffer stroke        | Y = (A · B)̅       | if **not all** are 1               | `&` + bubble | 7400       |
-| **NOR**   | Peirce arrow          | Y = (A + B)̅       | if **all** are 0                   | `≥1` + bubble | 7402      |
-| **XOR**   | exclusive OR          | Y = A ⊕ B         | if the inputs **differ**           | `=1`       | 7486         |
-| **XNOR**  | equivalence           | Y = (A ⊕ B)̅ = A ⊙ B | if the inputs are **equal**      | `=1` + bubble | 74266     |
+| Gate     | Operation name     | Expression          | When is the output 1?          | IEC symbol    | IC (4 gates) |
+| -------- | ------------------ | ------------------- | ------------------------------ | ------------- | ------------ |
+| **NOT**  | negation, inverter | Y = A̅               | if A = 0                       | `1` + bubble  | 7404 (6 pcs) |
+| **AND**  | conjunction        | Y = A · B           | if **all** inputs are 1        | `&`           | 7408         |
+| **OR**   | disjunction        | Y = A + B           | if **at least one** input is 1 | `≥1`          | 7432         |
+| **NAND** | Sheffer stroke     | Y = (A · B)̅         | if **not all** are 1           | `&` + bubble  | 7400         |
+| **NOR**  | Peirce arrow       | Y = (A + B)̅         | if **all** are 0               | `≥1` + bubble | 7402         |
+| **XOR**  | exclusive OR       | Y = A ⊕ B           | if the inputs **differ**       | `=1`          | 7486         |
+| **XNOR** | equivalence        | Y = (A ⊕ B)̅ = A ⊙ B | if the inputs are **equal**    | `=1` + bubble | 74266        |
 
 The small **bubble** drawn at an output always means **negation**.
 
 ### All truth tables together
 
-| A | B | AND | OR | NAND | NOR | XOR | XNOR |
-| - | - | --- | -- | ---- | --- | --- | ---- |
-| 0 | 0 | 0   | 0  | 1    | 1   | 0   | 1    |
-| 0 | 1 | 0   | 1  | 1    | 0   | 1   | 0    |
-| 1 | 0 | 0   | 1  | 1    | 0   | 1   | 0    |
-| 1 | 1 | 1   | 1  | 0    | 0   | 0   | 1    |
+| A   | B   | AND | OR  | NAND | NOR | XOR | XNOR |
+| --- | --- | --- | --- | ---- | --- | --- | ---- |
+| 0   | 0   | 0   | 0   | 1    | 1   | 0   | 1    |
+| 0   | 1   | 0   | 1   | 1    | 0   | 1   | 0    |
+| 1   | 0   | 0   | 1   | 1    | 0   | 1   | 0    |
+| 1   | 1   | 1   | 1   | 0    | 0   | 0   | 1    |
 
 ### Symbols
 
@@ -54,25 +54,25 @@ The small **bubble** drawn at an output always means **negation**.
 
 ## Notations
 
-| Operation | Notations                          |
-| --------- | ---------------------------------- |
-| NOT       | A̅, A', ¬A, !A, ~A                  |
-| AND       | A · B, AB, A ∧ B, A & B, A * B     |
-| OR        | A + B, A ∨ B, A \| B               |
-| XOR       | A ⊕ B, A ^ B                       |
-| XNOR      | A ⊙ B, (A ⊕ B)̅                     |
+| Operation | Notations                      |
+| --------- | ------------------------------ |
+| NOT       | A̅, A', ¬A, !A, ~A              |
+| AND       | A · B, AB, A ∧ B, A & B, A * B |
+| OR        | A + B, A ∨ B, A \| B           |
+| XOR       | A ⊕ B, A ^ B                   |
+| XNOR      | A ⊙ B, (A ⊕ B)̅                 |
 
 In programming: bitwise operators `&`, `|`, `^`, `~` in C/Java/Python; logical operators `&&`, `||`, `!` (in Python `and`, `or`, `not`).
 
 ## Multi-input gates
 
-- **AND:** 1 only if *all* inputs are 1. **OR:** 1 if *any* is 1.
+- **AND:** 1 only if _all_ inputs are 1. **OR:** 1 if _any_ is 1.
 - **NAND / NOR:** the negation of multi-input AND / OR.
 - **XOR:** with several inputs it is 1 if an **odd number** of inputs are 1 – that is the **parity generator** (topic 2).
 
 ## XOR – the "controlled inverter"
 
-A ⊕ 0 = A, A ⊕ 1 = A̅. So one input decides whether the other is passed through or inverted. This is used by the subtractor circuit (topic 4), encryption (*one-time pad*) and the Gray code converter.
+A ⊕ 0 = A, A ⊕ 1 = A̅. So one input decides whether the other is passed through or inverted. This is used by the subtractor circuit (topic 4), encryption (_one-time pad_) and the Gray code converter.
 
 ```python run
 # The basic gates as Python functions (with bitwise operators)

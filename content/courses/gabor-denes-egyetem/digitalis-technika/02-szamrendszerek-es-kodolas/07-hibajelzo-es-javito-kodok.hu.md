@@ -44,20 +44,20 @@ Két azonos hosszú kódszó **Hamming-távolsága** azon pozíciók száma, aho
 
 Egy kód **minimális Hamming-távolsága** (d<sub>min</sub>) a kódszavai közti legkisebb távolság. Ebből:
 
-| d<sub>min</sub> | Hibajelzés          | Hibajavítás        | Példa                              |
-| --------------- | ------------------- | ------------------ | ---------------------------------- |
-| 1               | –                   | –                  | minden bitkombináció érvényes      |
-| 2               | 1 bit               | –                  | paritásbit                         |
-| 3               | 2 bit               | 1 bit              | Hamming(7,4)                       |
-| *d*             | *d* − 1 bit         | ⌊(*d* − 1) / 2⌋ bit | –                                 |
+| d<sub>min</sub> | Hibajelzés  | Hibajavítás         | Példa                         |
+| --------------- | ----------- | ------------------- | ----------------------------- |
+| 1               | –           | –                   | minden bitkombináció érvényes |
+| 2               | 1 bit       | –                   | paritásbit                    |
+| 3               | 2 bit       | 1 bit               | Hamming(7,4)                  |
+| _d_             | _d_ − 1 bit | ⌊(_d_ − 1) / 2⌋ bit | –                             |
 
 ## A Hamming(7,4) kód
 
 4 adatbithez (d<sub>1</sub>…d<sub>4</sub>) 3 paritásbitet (p<sub>1</sub>, p<sub>2</sub>, p<sub>4</sub>) teszünk; a paritásbitek a **2 hatványainak** megfelelő helyekre kerülnek:
 
-| pozíció | 1              | 2              | 3              | 4              | 5              | 6              | 7              |
-| ------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- |
-| bit     | p<sub>1</sub>  | p<sub>2</sub>  | d<sub>1</sub>  | p<sub>4</sub>  | d<sub>2</sub>  | d<sub>3</sub>  | d<sub>4</sub>  |
+| pozíció | 1             | 2             | 3             | 4             | 5             | 6             | 7             |
+| ------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| bit     | p<sub>1</sub> | p<sub>2</sub> | d<sub>1</sub> | p<sub>4</sub> | d<sub>2</sub> | d<sub>3</sub> | d<sub>4</sub> |
 
 Minden paritásbit azokat a pozíciókat ellenőrzi (páros paritással), amelyek sorszámában az ő bitje 1:
 
@@ -82,11 +82,11 @@ A **CRC** hibadetektáló kód: az adatból egy **generátorpolinommal** végzet
 
 A modulo-2 aritmetikában nincs átvitel: az összeadás és a kivonás is **XOR**.
 
-**Lépések** (generátor *k*+1 bites → *k* bites CRC):
+**Lépések** (generátor _k_+1 bites → _k_ bites CRC):
 
-1. Az adat végére *k* darab 0-t írunk.
+1. Az adat végére _k_ darab 0-t írunk.
 2. Modulo-2 osztást végzünk: ahol a maradék eleje 1, a generátort alá írjuk és XOR-olunk.
-3. Az utolsó *k* bit a CRC.
+3. Az utolsó _k_ bit a CRC.
 
 **Példa:** adat = 1101011011, generátor = 10011 (x<sup>4</sup> + x + 1) → 4 nullát fűzünk hozzá.
 
@@ -108,12 +108,12 @@ A modulo-2 aritmetikában nincs átvitel: az összeadás és a kivonás is **XOR
 
 Az elküldött üzenet: 1101011011 **1110**. A fogadó ezt elosztva 10011-gyel 0 maradékot kap.
 
-| CRC típus | Bithossz | Gyakori alkalmazás                     |
-| --------- | -------- | -------------------------------------- |
-| CRC-8     | 8 bit    | egyszerű protokollok (pl. SMBus)       |
+| CRC típus | Bithossz | Gyakori alkalmazás                         |
+| --------- | -------- | ------------------------------------------ |
+| CRC-8     | 8 bit    | egyszerű protokollok (pl. SMBus)           |
 | CRC-16    | 16 bit   | ipari soros kommunikáció (pl. Modbus, USB) |
-| CRC-32    | 32 bit   | Ethernet, ZIP, PNG fájlok              |
-| CRC-64    | 64 bit   | nagy adatbiztonságot igénylő rendszerek |
+| CRC-32    | 32 bit   | Ethernet, ZIP, PNG fájlok                  |
+| CRC-64    | 64 bit   | nagy adatbiztonságot igénylő rendszerek    |
 
 ```python run
 # CRC számolása modulo-2 osztással (XOR)

@@ -21,12 +21,12 @@ A **programmable logic device** (PLD) is an IC whose internal connections are **
 
 From topic 4 we know that any function can be written in **SOP form** (an OR of AND terms). Simple PLDs implement exactly this with an **AND matrix** and an **OR matrix**:
 
-| device     | AND matrix       | OR matrix        | note                                           |
-| ---------- | ---------------- | ---------------- | ---------------------------------------------- |
-| **PROM**   | fixed (full decoder: every minterm) | **programmable** | storing a truth table              |
-| **PLA**    | **programmable** | **programmable** | most flexible, but slower, more expensive      |
-| **PAL**    | **programmable** | fixed            | fast, cheap; one-time programmable             |
-| **GAL**    | programmable     | fixed            | an **erasable, rewritable** (EEPROM) version of the PAL, with an output macrocell (containing a flip-flop) |
+| device   | AND matrix                          | OR matrix        | note                                                                                                       |
+| -------- | ----------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| **PROM** | fixed (full decoder: every minterm) | **programmable** | storing a truth table                                                                                      |
+| **PLA**  | **programmable**                    | **programmable** | most flexible, but slower, more expensive                                                                  |
+| **PAL**  | **programmable**                    | fixed            | fast, cheap; one-time programmable                                                                         |
+| **GAL**  | programmable                        | fixed            | an **erasable, rewritable** (EEPROM) version of the PAL, with an output macrocell (containing a flip-flop) |
 
 ## CPLD
 
@@ -55,13 +55,13 @@ A **k-input LUT** is a **small 2<sup>k</sup>-bit memory** and a **multiplexer**:
 
 ## ASIC or FPGA?
 
-|                         | **ASIC** (application-specific IC)          | **FPGA**                                     |
-| ----------------------- | ------------------------------------------- | -------------------------------------------- |
-| one-time cost (NRE)     | very high (masks: up to millions of dollars) | none                                        |
-| unit price              | **cheap** in large volumes                  | more expensive                               |
-| speed, power            | **best**                                    | worse (because of the programmable switches) |
-| modification            | impossible (new manufacture)                | **any time**, even in the field              |
-| development time        | months–years                                | days–weeks                                   |
+|                     | **ASIC** (application-specific IC)           | **FPGA**                                     |
+| ------------------- | -------------------------------------------- | -------------------------------------------- |
+| one-time cost (NRE) | very high (masks: up to millions of dollars) | none                                         |
+| unit price          | **cheap** in large volumes                   | more expensive                               |
+| speed, power        | **best**                                     | worse (because of the programmable switches) |
+| modification        | impossible (new manufacture)                 | **any time**, even in the field              |
+| development time    | months–years                                 | days–weeks                                   |
 
 That is why the FPGA is ideal for **prototypes**, small and medium volumes, and wherever the hardware must be updated later (telecommunications, instruments, AI accelerators). ASICs are often tried out on an FPGA first.
 

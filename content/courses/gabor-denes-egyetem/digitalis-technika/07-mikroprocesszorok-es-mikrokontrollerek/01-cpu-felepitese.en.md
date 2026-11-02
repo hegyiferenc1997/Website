@@ -27,12 +27,12 @@ A processor is nothing but a collection of **combinational circuits** (adder, mu
 
 ## Von Neumann and Harvard architectures
 
-|                       | **von Neumann**                                   | **Harvard**                                         |
-| --------------------- | ------------------------------------------------- | --------------------------------------------------- |
-| memory                | **shared** by program and data                    | **separate** program memory and data memory         |
-| bus                   | one bus → reads either an instruction or data at a time | separate buses → can read an instruction and data at once |
-| feature               | simpler, more flexible; bottleneck: the “von Neumann bottleneck” | faster                       |
-| example               | the memory model of classic PCs                   | microcontrollers (AVR, PIC), DSPs                   |
+|         | **von Neumann**                                                  | **Harvard**                                               |
+| ------- | ---------------------------------------------------------------- | --------------------------------------------------------- |
+| memory  | **shared** by program and data                                   | **separate** program memory and data memory               |
+| bus     | one bus → reads either an instruction or data at a time          | separate buses → can read an instruction and data at once |
+| feature | simpler, more flexible; bottleneck: the “von Neumann bottleneck” | faster                                                    |
+| example | the memory model of classic PCs                                  | microcontrollers (AVR, PIC), DSPs                         |
 
 Today's PC processors use a **modified Harvard** architecture: shared memory outside, but separate instruction and data caches inside (L1I, L1D).
 
@@ -44,14 +44,14 @@ A combinational circuit that performs an operation on two operands: **addition, 
 
 ### Registers
 
-| register                                 | role                                                             |
-| ---------------------------------------- | ---------------------------------------------------------------- |
-| **PC** (program counter)                 | the **address of the next instruction** to execute               |
-| **IR** (instruction register)            | the instruction being executed                                   |
-| **accumulator** / general registers      | operands and intermediate results                                |
-| **SP** (stack pointer)                   | the address of the top of the stack                              |
-| **status register** (flags, PSW)         | properties of the last ALU operation                             |
-| **MAR / MDR**                            | memory address and memory data registers (towards the bus)       |
+| register                            | role                                                       |
+| ----------------------------------- | ---------------------------------------------------------- |
+| **PC** (program counter)            | the **address of the next instruction** to execute         |
+| **IR** (instruction register)       | the instruction being executed                             |
+| **accumulator** / general registers | operands and intermediate results                          |
+| **SP** (stack pointer)              | the address of the top of the stack                        |
+| **status register** (flags, PSW)    | properties of the last ALU operation                       |
+| **MAR / MDR**                       | memory address and memory data registers (towards the bus) |
 
 ### Control unit (CU)
 
@@ -67,12 +67,12 @@ Only **three-state** (tri-state) outputs may be connected to a shared bus, so th
 
 ## Status flags
 
-| flag  | name        | when 1                                                     |
-| ----- | ----------- | ---------------------------------------------------------- |
-| **Z** | zero        | the result is **zero**                                     |
-| **C** | carry       | a **carry** came out of the top bit (unsigned overflow)    |
-| **N** | negative    | the result's **top bit is 1** (negative when signed)       |
-| **V** | overflow    | **signed overflow** (V = C<sub>n</sub> ⊕ C<sub>n−1</sub>)  |
+| flag  | name     | when 1                                                    |
+| ----- | -------- | --------------------------------------------------------- |
+| **Z** | zero     | the result is **zero**                                    |
+| **C** | carry    | a **carry** came out of the top bit (unsigned overflow)   |
+| **N** | negative | the result's **top bit is 1** (negative when signed)      |
+| **V** | overflow | **signed overflow** (V = C<sub>n</sub> ⊕ C<sub>n−1</sub>) |
 
 Conditional jump instructions (e.g. “jump if zero”) test these – this is how `if` statements and loops are implemented.
 

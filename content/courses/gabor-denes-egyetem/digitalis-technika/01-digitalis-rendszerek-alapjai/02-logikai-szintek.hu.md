@@ -15,22 +15,22 @@ minutes: 15
 
 A valóságos áramkörben a „0” és az „1” nem egy-egy pontos feszültség, hanem egy-egy **tartomány**. A kettő között egy **tiltott (bizonytalan) sáv** van: ha a bemenet ide esik, nem tudni, mit „lát” a kapu.
 
-A **küszöbfeszültség** (V<sub>T</sub>, *threshold voltage*) az a szint, amelynél a kapu kimenete átbillen egyik állapotból a másikba. Pontos értéke áramkörenként és technológiánként más, ezért mindig az **adatlap** (datasheet) a mérvadó.
+A **küszöbfeszültség** (V<sub>T</sub>, _threshold voltage_) az a szint, amelynél a kapu kimenete átbillen egyik állapotból a másikba. Pontos értéke áramkörenként és technológiánként más, ezért mindig az **adatlap** (datasheet) a mérvadó.
 
-| Jelölés          | Angolul             | Jelentés                                                    |
-| ---------------- | ------------------- | ----------------------------------------------------------- |
-| V<sub>OH</sub>   | Output High Voltage | a kimenet ennél **nem kisebb**, ha 1-et ad ki (garantált min.) |
-| V<sub>OL</sub>   | Output Low Voltage  | a kimenet ennél **nem nagyobb**, ha 0-t ad ki (garantált max.) |
-| V<sub>IH</sub>   | Input High Voltage  | a bemenet ettől a feszültségtől **felfelé** biztosan 1          |
-| V<sub>IL</sub>   | Input Low Voltage   | a bemenet eddig a feszültségig **lefelé** biztosan 0            |
+| Jelölés        | Angolul             | Jelentés                                                       |
+| -------------- | ------------------- | -------------------------------------------------------------- |
+| V<sub>OH</sub> | Output High Voltage | a kimenet ennél **nem kisebb**, ha 1-et ad ki (garantált min.) |
+| V<sub>OL</sub> | Output Low Voltage  | a kimenet ennél **nem nagyobb**, ha 0-t ad ki (garantált max.) |
+| V<sub>IH</sub> | Input High Voltage  | a bemenet ettől a feszültségtől **felfelé** biztosan 1         |
+| V<sub>IL</sub> | Input Low Voltage   | a bemenet eddig a feszültségig **lefelé** biztosan 0           |
 
 ## Tipikus értékek
 
-| Család             | V<sub>CC</sub> | V<sub>IL</sub> (max) | V<sub>IH</sub> (min) | V<sub>OL</sub> (max) | V<sub>OH</sub> (min) |
-| ------------------ | -------------- | -------------------- | -------------------- | -------------------- | -------------------- |
-| TTL (74LS)         | 5 V            | 0,8 V                | 2,0 V                | 0,4 V                | 2,4 V                |
-| CMOS (74HC, 5 V)   | 5 V            | 1,5 V                | 3,5 V                | 0,1 V                | 4,4 V                |
-| LVCMOS (3,3 V)     | 3,3 V          | 0,8 V                | 2,0 V                | 0,4 V                | 2,4 V                |
+| Család           | V<sub>CC</sub> | V<sub>IL</sub> (max) | V<sub>IH</sub> (min) | V<sub>OL</sub> (max) | V<sub>OH</sub> (min) |
+| ---------------- | -------------- | -------------------- | -------------------- | -------------------- | -------------------- |
+| TTL (74LS)       | 5 V            | 0,8 V                | 2,0 V                | 0,4 V                | 2,4 V                |
+| CMOS (74HC, 5 V) | 5 V            | 1,5 V                | 3,5 V                | 0,1 V                | 4,4 V                |
+| LVCMOS (3,3 V)   | 3,3 V          | 0,8 V                | 2,0 V                | 0,4 V                | 2,4 V                |
 
 ## Zajtartalék (noise margin)
 

@@ -20,17 +20,17 @@ minutes: 25
 
 **Igazolás igazságtáblával:**
 
-| A | B | (A + B)̅ | A̅ · B̅ | (A · B)̅ | A̅ + B̅ |
-| - | - | ------- | ----- | ------- | ----- |
-| 0 | 0 | 1       | 1     | 1       | 1     |
-| 0 | 1 | 0       | 0     | 1       | 1     |
-| 1 | 0 | 0       | 0     | 1       | 1     |
-| 1 | 1 | 0       | 0     | 0       | 0     |
+| A   | B   | (A + B)̅ | A̅ · B̅ | (A · B)̅ | A̅ + B̅ |
+| --- | --- | ------- | ----- | ------- | ----- |
+| 0   | 0   | 1       | 1     | 1       | 1     |
+| 0   | 1   | 0       | 0     | 1       | 1     |
+| 1   | 0   | 0       | 0     | 1       | 1     |
+| 1   | 1   | 0       | 0     | 0       | 0     |
 
-**Általános alak, *n* változóra:**
+**Általános alak, _n_ változóra:**
 (A<sub>1</sub> + A<sub>2</sub> + … + A<sub>n</sub>)̅ = A̅<sub>1</sub> · A̅<sub>2</sub> · … · A̅<sub>n</sub>, és (A<sub>1</sub> · A<sub>2</sub> · … · A<sub>n</sub>)̅ = A̅<sub>1</sub> + A̅<sub>2</sub> + … + A̅<sub>n</sub>
 
-**Gyakorlati szabály:** *„Törd meg a vonalat, és cseréld meg a műveleti jelet!”* A hosszú felülvonást a műveleti jelnél kettévágjuk, a · helyére + kerül (és fordítva).
+**Gyakorlati szabály:** _„Törd meg a vonalat, és cseréld meg a műveleti jelet!”_ A hosszú felülvonást a műveleti jelnél kettévágjuk, a · helyére + kerül (és fordítva).
 
 **Kapukkal:** a NOR kapu = negált bemenetű ÉS kapu, a NAND kapu = negált bemenetű VAGY kapu. Ez az alapja a **NAND- és NOR-homogenizálásnak** (két lecke múlva).
 
@@ -43,12 +43,12 @@ A Boole-algebra minden érvényes azonosságából **automatikusan egy másik é
 - a **· és + műveleteket felcseréljük**, és
 - a **0 és 1 konstansokat felcseréljük** (a változókat és a negálásokat nem bántjuk).
 
-| Azonosság              | Duálisa                  |
-| ---------------------- | ------------------------ |
-| A + 0 = A              | A · 1 = A                |
-| A · A = A              | A + A = A                |
-| A · (A + B) = A        | A + A · B = A            |
-| A + B·C = (A + B)(A + C) | A · (B + C) = AB + AC  |
+| Azonosság                | Duálisa               |
+| ------------------------ | --------------------- |
+| A + 0 = A                | A · 1 = A             |
+| A · A = A                | A + A = A             |
+| A · (A + B) = A          | A + A · B = A         |
+| A + B·C = (A + B)(A + C) | A · (B + C) = AB + AC |
 
 Így elég minden azonosság egyik felét megjegyezni.
 

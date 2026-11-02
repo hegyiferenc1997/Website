@@ -47,16 +47,16 @@ A kimeneti logika ezzel triviális: **piros lámpa = D**, **zöld lámpa = D̅**
 
 A D flip-flopnál a bemenetre a **következő állapotot** kell adni: D<sup>+</sup> (a jelölés D(N+1) is szokásos).
 
-| D | P | Z | D<sup>+</sup> | magyarázat                         |
-| - | - | - | ------------- | ---------------------------------- |
-| 0 | 0 | 0 | 0             | zöld, nincs gomb → marad           |
-| 0 | 0 | 1 | 0             | zöld, Zöld gomb → marad            |
-| 0 | 1 | 0 | 1             | zöld, **Piros gomb → piros**       |
-| 0 | 1 | 1 | 0             | mindkét gomb → marad               |
-| 1 | 0 | 0 | 1             | piros, nincs gomb → marad          |
-| 1 | 0 | 1 | 0             | piros, **Zöld gomb → zöld**        |
-| 1 | 1 | 0 | 1             | piros, Piros gomb → marad          |
-| 1 | 1 | 1 | 1             | mindkét gomb → marad               |
+| D   | P   | Z   | D<sup>+</sup> | magyarázat                   |
+| --- | --- | --- | ------------- | ---------------------------- |
+| 0   | 0   | 0   | 0             | zöld, nincs gomb → marad     |
+| 0   | 0   | 1   | 0             | zöld, Zöld gomb → marad      |
+| 0   | 1   | 0   | 1             | zöld, **Piros gomb → piros** |
+| 0   | 1   | 1   | 0             | mindkét gomb → marad         |
+| 1   | 0   | 0   | 1             | piros, nincs gomb → marad    |
+| 1   | 0   | 1   | 0             | piros, **Zöld gomb → zöld**  |
+| 1   | 1   | 0   | 1             | piros, Piros gomb → marad    |
+| 1   | 1   | 1   | 1             | mindkét gomb → marad         |
 
 ## 5. A függvény felírása és egyszerűsítése
 
@@ -64,10 +64,10 @@ A D flip-flopnál a bemenetre a **következő állapotot** kell adni: D<sup>+</s
 
 **Grafikus egyszerűsítés** (sor: D, oszlop: PZ):
 
-| D \ PZ | 00 | 01 | 11 | 10 |
-| ------ | -- | -- | -- | -- |
-| 0      | 0  | 0  | 0  | 1  |
-| 1      | 1  | 0  | 1  | 1  |
+| D \ PZ | 00  | 01  | 11  | 10  |
+| ------ | --- | --- | --- | --- |
+| 0      | 0   | 0   | 0   | 1   |
+| 1      | 1   | 0   | 1   | 1   |
 
 - a PZ = 10 oszlop (2, 6) → **P·Z̅**
 - a D = 1 sor 00 és 10 cellája (4, 6) → **D·Z̅**

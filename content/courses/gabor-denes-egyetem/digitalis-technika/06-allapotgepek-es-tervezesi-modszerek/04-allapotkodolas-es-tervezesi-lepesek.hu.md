@@ -16,11 +16,11 @@ minutes: 30
 
 Az állapotokat (A, B, C …) a megvalósításhoz **bináris kódokkal** kell helyettesíteni. A választás befolyásolja a flip-flopok számát és a logika bonyolultságát.
 
-| kódolás     | 4 állapot (S0…S3)        | flip-flopok N állapothoz | jellemző                                    |
-| ----------- | ------------------------ | ------------------------ | ------------------------------------------- |
-| **bináris** | 00, 01, 10, 11           | ⌈log₂ N⌉                 | a legkevesebb flip-flop                     |
-| **Gray**    | 00, 01, 11, 10           | ⌈log₂ N⌉                 | egymást követő állapotok közt **1 bit** változik |
-| **one-hot** | 0001, 0010, 0100, 1000   | **N**                    | mindig **pontosan egy** flip-flop 1-es      |
+| kódolás     | 4 állapot (S0…S3)      | flip-flopok N állapothoz | jellemző                                         |
+| ----------- | ---------------------- | ------------------------ | ------------------------------------------------ |
+| **bináris** | 00, 01, 10, 11         | ⌈log₂ N⌉                 | a legkevesebb flip-flop                          |
+| **Gray**    | 00, 01, 11, 10         | ⌈log₂ N⌉                 | egymást követő állapotok közt **1 bit** változik |
+| **one-hot** | 0001, 0010, 0100, 1000 | **N**                    | mindig **pontosan egy** flip-flop 1-es           |
 
 - **Bináris:** kevés flip-flop – ahol a flip-flop drága (diszkrét IC-k, ASIC).
 - **Gray:** ha az állapotgép jellemzően sorban lép (számlálószerű), kevesebb bit vált egyszerre → kisebb fogyasztás, kevesebb hazárd a dekódolt kimeneteken.

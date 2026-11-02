@@ -37,12 +37,12 @@ nyugalmi  start  D0 D1 D2 D3 D4 D5 D6 D7  stop  nyugalmi
 
 Az **SPI** (serial peripheral interface) **szinkron**, **duplex**, **egy master – több slave** felépítésű, rövid távolságra (egy panelen belül).
 
-| vezeték        | jelentés                                    |
-| -------------- | ------------------------------------------- |
-| **SCLK**       | órajel – a master adja                      |
-| **MOSI**       | master out, slave in – adat a slave felé    |
-| **MISO**       | master in, slave out – adat a master felé   |
-| **CS̅** (SS̅)    | chip select – aktív alacsony, **slave-enként külön** |
+| vezeték     | jelentés                                             |
+| ----------- | ---------------------------------------------------- |
+| **SCLK**    | órajel – a master adja                               |
+| **MOSI**    | master out, slave in – adat a slave felé             |
+| **MISO**    | master in, slave out – adat a master felé            |
+| **CS̅** (SS̅) | chip select – aktív alacsony, **slave-enként külön** |
 
 - Minden órajelnél **egyszerre** megy egy bit mindkét irányba: a két eszköz léptetőregisztere (5. témakör) körbe van kötve.
 - Négy üzemmód (**CPOL**, **CPHA**: az órajel nyugalmi szintje és a mintavételezés éle) – az adatlap szerint kell beállítani.
@@ -71,22 +71,22 @@ A **CAN** (controller area network) **differenciális** két vezetéken (CAN_H, 
 
 Az **USB** (universal serial bus) a számítógépes perifériák szabványa: **differenciális** adatpár (D+, D−), **host–eszköz** felépítés (a host vezérel mindent), tápellátás a kábelen, **plug and play** (az eszköz bemutatkozik, a host betölti a meghajtót).
 
-| változat     | sebesség                 |
-| ------------ | ------------------------ |
-| USB 1.1      | 12 Mbit/s (Full Speed)   |
-| USB 2.0      | 480 Mbit/s (High Speed)  |
-| USB 3.x      | 5–20 Gbit/s              |
-| USB4         | 40–80 Gbit/s             |
+| változat | sebesség                |
+| -------- | ----------------------- |
+| USB 1.1  | 12 Mbit/s (Full Speed)  |
+| USB 2.0  | 480 Mbit/s (High Speed) |
+| USB 3.x  | 5–20 Gbit/s             |
+| USB4     | 40–80 Gbit/s            |
 
 ## Melyiket válasszam?
 
-| szempont             | UART          | SPI            | I²C             | CAN               |
-| -------------------- | ------------- | -------------- | --------------- | ----------------- |
-| vezetékek (+ föld)   | 2 (TX, RX)    | 3 + slave-enként 1 | 2           | 2 (differenciális) |
-| órajel               | nincs         | van            | van             | nincs (bitidőzítés) |
-| eszközök             | 2 (pont–pont) | 1 master, több slave | sok (címzés) | sok (üzenet-azonosító) |
-| sebesség             | ~ 1 Mbit/s    | több 10 Mbit/s | 0,1–1 Mbit/s    | 1 Mbit/s (FD: több) |
-| távolság             | rövid (RS-485-tel nagy) | panelen belül | panelen belül | akár 1 km     |
+| szempont           | UART                    | SPI                  | I²C           | CAN                    |
+| ------------------ | ----------------------- | -------------------- | ------------- | ---------------------- |
+| vezetékek (+ föld) | 2 (TX, RX)              | 3 + slave-enként 1   | 2             | 2 (differenciális)     |
+| órajel             | nincs                   | van                  | van           | nincs (bitidőzítés)    |
+| eszközök           | 2 (pont–pont)           | 1 master, több slave | sok (címzés)  | sok (üzenet-azonosító) |
+| sebesség           | ~ 1 Mbit/s              | több 10 Mbit/s       | 0,1–1 Mbit/s  | 1 Mbit/s (FD: több)    |
+| távolság           | rövid (RS-485-tel nagy) | panelen belül        | panelen belül | akár 1 km              |
 
 ```python run
 # Egy UART-keret (8N1, LSB elöl) és a páros paritás kiszámítása

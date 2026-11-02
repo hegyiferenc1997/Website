@@ -24,20 +24,20 @@ A jump instruction simply **overwrites the PC** – so the next fetch happens fr
 
 ## Instruction format and language levels
 
-A machine instruction consists of an **operation code** (opcode – *what* to do) and **operand(s)** (*with what*). The processor only understands binary **machine code**; its human-readable form is **assembly** (e.g. `ADD R1, R2`), and high-level languages (C, Python) are turned into machine code by a compiler or interpreter.
+A machine instruction consists of an **operation code** (opcode – _what_ to do) and **operand(s)** (_with what_). The processor only understands binary **machine code**; its human-readable form is **assembly** (e.g. `ADD R1, R2`), and high-level languages (C, Python) are turned into machine code by a compiler or interpreter.
 
 ## Addressing modes
 
 Where is the operand?
 
-| addressing mode  | example (symbolic)  | meaning                                          |
-| ---------------- | ------------------- | ------------------------------------------------ |
-| **immediate**    | `LOAD #5`           | the operand is **in the instruction itself**: 5  |
-| **direct** (absolute) | `LOAD 200`     | the value at **memory address 200**              |
-| **register**     | `ADD R1, R2`        | the operand is in a register                     |
-| **indirect**     | `LOAD (R1)`         | the contents of R1 are the **address** to read from (pointer) |
-| **indexed**      | `LOAD 100(R2)`      | address = 100 + R2 (walking through arrays)      |
-| **relative**     | `JMP +8`            | address = PC + 8 (jumps)                         |
+| addressing mode       | example (symbolic) | meaning                                                       |
+| --------------------- | ------------------ | ------------------------------------------------------------- |
+| **immediate**         | `LOAD #5`          | the operand is **in the instruction itself**: 5               |
+| **direct** (absolute) | `LOAD 200`         | the value at **memory address 200**                           |
+| **register**          | `ADD R1, R2`       | the operand is in a register                                  |
+| **indirect**          | `LOAD (R1)`        | the contents of R1 are the **address** to read from (pointer) |
+| **indexed**           | `LOAD 100(R2)`     | address = 100 + R2 (walking through arrays)                   |
+| **relative**          | `JMP +8`           | address = PC + 8 (jumps)                                      |
 
 ## Types of instructions
 
@@ -69,12 +69,12 @@ This way the processor does not have to keep “asking” the peripheral (**poll
 
 ## CISC and RISC
 
-|                      | **CISC** (complex instruction set)                  | **RISC** (reduced instruction set)                   |
-| -------------------- | --------------------------------------------------- | ---------------------------------------------------- |
-| instructions         | many, complex, variable length                      | few, simple, **fixed length**                        |
-| memory access        | many instructions work directly with memory         | only LOAD and STORE access memory (load/store)       |
-| execution            | several clocks / instruction                        | typically **1 instruction / clock** (pipeline)       |
-| example              | x86 (Intel, AMD)                                    | ARM, RISC-V, AVR                                     |
+|               | **CISC** (complex instruction set)          | **RISC** (reduced instruction set)             |
+| ------------- | ------------------------------------------- | ---------------------------------------------- |
+| instructions  | many, complex, variable length              | few, simple, **fixed length**                  |
+| memory access | many instructions work directly with memory | only LOAD and STORE access memory (load/store) |
+| execution     | several clocks / instruction                | typically **1 instruction / clock** (pipeline) |
+| example       | x86 (Intel, AMD)                            | ARM, RISC-V, AVR                               |
 
 ## Pipelining
 

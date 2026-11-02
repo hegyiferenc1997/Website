@@ -29,59 +29,59 @@ Minden lépés után érdemes ellenőrizni egy-két bemeneti kombinációval!
 
 ### 1. példa: F = A·B + A(B + C) + B(B + C)
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | AB + AB + AC + BB + BC | zárójelek felbontása |
-| 2 | AB + AC + B + BC | idempotencia (AB + AB = AB, BB = B) |
-| 3 | AB + AC + B | abszorpció (B + BC = B) |
-| 4 | **B + AC** | abszorpció (B + AB = B) |
+| Lépés | Kifejezés              | Azonosság                           |
+| ----- | ---------------------- | ----------------------------------- |
+| 1     | AB + AB + AC + BB + BC | zárójelek felbontása                |
+| 2     | AB + AC + B + BC       | idempotencia (AB + AB = AB, BB = B) |
+| 3     | AB + AC + B            | abszorpció (B + BC = B)             |
+| 4     | **B + AC**             | abszorpció (B + AB = B)             |
 
 ### 2. példa: F = A + A̅·C
 
 Elosztott abszorpció: X + X̅Y = X + Y → **F = A + C**.
-*Bizonyítás más úton:* A = A(C + C̅) → F = AC + AC̅ + A̅C = AC + AC̅ + AC + A̅C = A(C + C̅) + C(A + A̅) = **A + C**.
+_Bizonyítás más úton:_ A = A(C + C̅) → F = AC + AC̅ + A̅C = AC + AC̅ + AC + A̅C = A(C + C̅) + C(A + A̅) = **A + C**.
 
 ### 3. példa: F = A·B̅·C + A + A̅·B·C
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | A + A̅BC | abszorpció (A + AB̅C = A) |
-| 2 | **A + BC** | elosztott abszorpció (X + X̅Y = X + Y) |
+| Lépés | Kifejezés  | Azonosság                             |
+| ----- | ---------- | ------------------------------------- |
+| 1     | A + A̅BC    | abszorpció (A + AB̅C = A)              |
+| 2     | **A + BC** | elosztott abszorpció (X + X̅Y = X + Y) |
 
 ### 4. példa: F = A(B + C(AB + AC))
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | A(B + ABC + AC) | a belső zárójel felbontása (C·C = C) |
-| 2 | A(B + AC) | abszorpció (B + ABC = B) |
-| 3 | AB + AAC = AB + AC | felbontás, idempotencia |
-| 4 | **A(B + C)** | kiemelés |
+| Lépés | Kifejezés          | Azonosság                            |
+| ----- | ------------------ | ------------------------------------ |
+| 1     | A(B + ABC + AC)    | a belső zárójel felbontása (C·C = C) |
+| 2     | A(B + AC)          | abszorpció (B + ABC = B)             |
+| 3     | AB + AAC = AB + AC | felbontás, idempotencia              |
+| 4     | **A(B + C)**       | kiemelés                             |
 
 ### 5. példa: F = W·X·Y̅ + W·X·Y + W̅·X·Y + W·X̅·Y + W·X̅·Y̅
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | WX(Y̅ + Y) + W̅XY + WX̅(Y + Y̅) | kiemelés |
-| 2 | WX + W̅XY + WX̅ | komplementer (Y + Y̅ = 1) |
-| 3 | W(X + X̅) + W̅XY = W + W̅XY | kiemelés, komplementer |
-| 4 | **W + XY** | elosztott abszorpció |
+| Lépés | Kifejezés                   | Azonosság                |
+| ----- | --------------------------- | ------------------------ |
+| 1     | WX(Y̅ + Y) + W̅XY + WX̅(Y + Y̅) | kiemelés                 |
+| 2     | WX + W̅XY + WX̅               | komplementer (Y + Y̅ = 1) |
+| 3     | W(X + X̅) + W̅XY = W + W̅XY    | kiemelés, komplementer   |
+| 4     | **W + XY**                  | elosztott abszorpció     |
 
 ### 6. példa: F = (A + B)(A + B + D)·D̅
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | (A + B)·D̅ | abszorpció: X·(X + D) = X, ahol X = A + B |
-| 2 | **A·D̅ + B·D̅** | disztributivitás |
+| Lépés | Kifejezés     | Azonosság                                 |
+| ----- | ------------- | ----------------------------------------- |
+| 1     | (A + B)·D̅     | abszorpció: X·(X + D) = X, ahol X = A + B |
+| 2     | **A·D̅ + B·D̅** | disztributivitás                          |
 
 ### 7. példa: mintermes alak – F(A, B, C) = Σm(0, 1, 6, 7)
 
 A 0, 1, 6, 7 sorszámú sorokban 1 a kimenet: 000, 001, 110, 111.
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | A̅B̅C̅ + A̅B̅C + ABC̅ + ABC | a mintermek felírása |
-| 2 | A̅B̅(C̅ + C) + AB(C̅ + C) | kiemelés |
-| 3 | **A̅B̅ + AB** = A ⊙ B | komplementer, identitás |
+| Lépés | Kifejezés             | Azonosság               |
+| ----- | --------------------- | ----------------------- |
+| 1     | A̅B̅C̅ + A̅B̅C + ABC̅ + ABC | a mintermek felírása    |
+| 2     | A̅B̅(C̅ + C) + AB(C̅ + C) | kiemelés                |
+| 3     | **A̅B̅ + AB** = A ⊙ B   | komplementer, identitás |
 
 Az eredmény az A és B **ekvivalenciája** (XNOR) – C-től egyáltalán nem függ!
 
@@ -89,11 +89,11 @@ Az eredmény az A és B **ekvivalenciája** (XNOR) – C-től egyáltalán nem f
 
 A 2, 3, 4, 5 sorokban 0 a kimenet. Egy maxterm a sor bitjeinek **negáltjait** VAGY-olja (0 → ponált, 1 → negált): 010 → (A + B̅ + C).
 
-| Lépés | Kifejezés | Azonosság |
-| ----- | --------- | --------- |
-| 1 | (A + B̅ + C)(A + B̅ + C̅)(A̅ + B + C)(A̅ + B + C̅) | a maxtermek felírása |
-| 2 | (A + B̅)(A̅ + B) | (X + Y)(X + Y̅) = X, kétszer |
-| 3 | **A·B + A̅·B̅** = A ⊙ B | beszorzás (AA̅ = BB̅ = 0) |
+| Lépés | Kifejezés                                    | Azonosság                   |
+| ----- | -------------------------------------------- | --------------------------- |
+| 1     | (A + B̅ + C)(A + B̅ + C̅)(A̅ + B + C)(A̅ + B + C̅) | a maxtermek felírása        |
+| 2     | (A + B̅)(A̅ + B)                               | (X + Y)(X + Y̅) = X, kétszer |
+| 3     | **A·B + A̅·B̅** = A ⊙ B                        | beszorzás (AA̅ = BB̅ = 0)     |
 
 Ez ugyanaz a függvény, mint a 7. példa – hiszen a Σm(0, 1, 6, 7) és a ΠM(2, 3, 4, 5) ugyanazt az igazságtáblát írja le!
 

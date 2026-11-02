@@ -21,21 +21,21 @@ A **multiplexer** több adatbemenet közül **egyet kapcsol a kimenetre** – az
 
 ### 2:1 multiplexer
 
-| S | Y  |
-| - | -- |
-| 0 | D0 |
-| 1 | D1 |
+| S   | Y   |
+| --- | --- |
+| 0   | D0  |
+| 1   | D1  |
 
 **Y = S̅·D0 + S·D1**
 
 ### 4:1 multiplexer
 
-| S1 S0 | Y  |
-| ----- | -- |
-| 0 0   | D0 |
-| 0 1   | D1 |
-| 1 0   | D2 |
-| 1 1   | D3 |
+| S1 S0 | Y   |
+| ----- | --- |
+| 0 0   | D0  |
+| 0 1   | D1  |
+| 1 0   | D2  |
+| 1 1   | D3  |
 
 **Y = S̅1·S̅0·D0 + S̅1·S0·D1 + S1·S̅0·D2 + S1·S0·D3**
 
@@ -47,12 +47,12 @@ A **demultiplexer** fordítva működik: **egy** adatbemenetet a kiválasztó be
 
 ### 1:4 demultiplexer
 
-| S1 S0 | Y0 | Y1 | Y2 | Y3 |
-| ----- | -- | -- | -- | -- |
-| 0 0   | D  | 0  | 0  | 0  |
-| 0 1   | 0  | D  | 0  | 0  |
-| 1 0   | 0  | 0  | D  | 0  |
-| 1 1   | 0  | 0  | 0  | D  |
+| S1 S0 | Y0  | Y1  | Y2  | Y3  |
+| ----- | --- | --- | --- | --- |
+| 0 0   | D   | 0   | 0   | 0   |
+| 0 1   | 0   | D   | 0   | 0   |
+| 1 0   | 0   | 0   | D   | 0   |
+| 1 1   | 0   | 0   | 0   | D   |
 
 Y0 = D·S̅1·S̅0, Y1 = D·S̅1·S0, **Y2 = D·S1·S̅0**, Y3 = D·S1·S0
 

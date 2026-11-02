@@ -34,11 +34,11 @@ The state stores **how much of the pattern we have seen so far**:
 - **B** – “1” arrived,
 - **C** – “10” arrived.
 
-| state   | x = 0     | x = 1     |
-| ------- | --------- | --------- |
-| A       | A / 0     | B / 0     |
-| B       | C / 0     | B / 0     |
-| C       | A / 0     | **B / 1** |
+| state | x = 0 | x = 1     |
+| ----- | ----- | --------- |
+| A     | A / 0 | B / 0     |
+| B     | C / 0 | B / 0     |
+| C     | A / 0 | **B / 1** |
 
 (The output follows the “/”.) A 1 arriving in state C completes the pattern: y = 1, and since this 1 may also be the start of a new pattern, we go to B – that makes it overlapping.
 
@@ -54,23 +54,23 @@ Input 1, 0, 1, 0, 1 → output **0, 0, 1, 0, 1**.
 
 In a Moore machine the output may depend only on the state, so a separate “**found it**” state is needed:
 
-| state / output    | x = 0 | x = 1 |
-| ----------------- | ----- | ----- |
-| A / 0             | A     | B     |
-| B / 0             | C     | B     |
-| C / 0             | A     | D     |
-| **D / 1**         | C     | B     |
+| state / output | x = 0 | x = 1 |
+| -------------- | ----- | ----- |
+| A / 0          | A     | B     |
+| B / 0          | C     | B     |
+| C / 0          | A     | D     |
+| **D / 1**      | C     | B     |
 
 From state D we continue “01” as “10” (C) or as “1” (B). The output appears **one clock later**, but **cleanly, aligned to the clock**.
 
 ## Mealy or Moore?
 
-| aspect                | Mealy                                         | Moore                                   |
-| --------------------- | --------------------------------------------- | --------------------------------------- |
-| number of states      | fewer (3 here)                                | more (4 here)                           |
-| reaction              | immediately, in the same cycle                | one clock later                         |
-| output                | glitches and noise of the input **can pass** to the output | stable, changes only at a clock edge |
-| timing                | longer combinational path (input → output)    | shorter, easier to time                 |
+| aspect           | Mealy                                                      | Moore                                |
+| ---------------- | ---------------------------------------------------------- | ------------------------------------ |
+| number of states | fewer (3 here)                                             | more (4 here)                        |
+| reaction         | immediately, in the same cycle                             | one clock later                      |
+| output           | glitches and noise of the input **can pass** to the output | stable, changes only at a clock edge |
+| timing           | longer combinational path (input → output)                 | shorter, easier to time              |
 
 In practice the output of a Mealy machine is often **registered** with a flip-flop as well – this makes it clean, but delays it by one cycle, like a Moore machine.
 

@@ -41,14 +41,14 @@ Sequence: 000 → 001 → 010 → 011 → 100 → 000. Five states need 3 flip-f
 
 The JK excitation table as a reminder: 0→0: J=0, K=X; 0→1: J=1, K=X; 1→0: J=X, K=1; 1→1: J=X, K=0.
 
-| Q2 Q1 Q0 | next      | J2 K2 | J1 K1 | J0 K0 |
-| -------- | --------- | ----- | ----- | ----- |
-| 0 0 0    | 0 0 1     | 0 X   | 0 X   | 1 X   |
-| 0 0 1    | 0 1 0     | 0 X   | 1 X   | X 1   |
-| 0 1 0    | 0 1 1     | 0 X   | X 0   | 1 X   |
-| 0 1 1    | 1 0 0     | 1 X   | X 1   | X 1   |
-| 1 0 0    | 0 0 0     | X 1   | 0 X   | 0 X   |
-| 1 0 1–1 1 1 | –      | X X   | X X   | X X   |
+| Q2 Q1 Q0    | next  | J2 K2 | J1 K1 | J0 K0 |
+| ----------- | ----- | ----- | ----- | ----- |
+| 0 0 0       | 0 0 1 | 0 X   | 0 X   | 1 X   |
+| 0 0 1       | 0 1 0 | 0 X   | 1 X   | X 1   |
+| 0 1 0       | 0 1 1 | 0 X   | X 0   | 1 X   |
+| 0 1 1       | 1 0 0 | 1 X   | X 1   | X 1   |
+| 1 0 0       | 0 0 0 | X 1   | 0 X   | 0 X   |
+| 1 0 1–1 1 1 | –     | X X   | X X   | X X   |
 
 After simplifying the K-maps (with many Xs):
 

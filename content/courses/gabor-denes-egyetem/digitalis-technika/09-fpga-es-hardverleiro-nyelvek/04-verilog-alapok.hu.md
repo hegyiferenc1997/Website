@@ -7,7 +7,7 @@ minutes: 40
 ## Amit ebben a leckében megtanulsz
 
 - egy Verilog-**modul** felépítését (portok, **wire** és **reg**),
-- a **kombinációs** logika leírását **assign**-nal és **always @(*)**-gal,
+- a **kombinációs** logika leírását **assign**-nal és **always @(\*)**-gal,
 - a **sorrendi** logikát **always @(posedge clk)**-kal,
 - a **blokkoló** (`=`) és **nem blokkoló** (`<=`) értékadás különbségét,
 - egy **számláló** és egy **állapotgép** Verilog-kódját.
@@ -45,7 +45,7 @@ assign S = A ^ B ^ Cin;       // teljes összeadó összegbitje
 assign M = S ? D1 : D0;       // 2:1 multiplexer feltételes operátorral
 ```
 
-**always @(*)** – kombinációs blokk, amelyben `if` és `case` is használható. A `*` azt jelenti: minden olvasott jel változására lefut.
+**always @(\*)** – kombinációs blokk, amelyben `if` és `case` is használható. A `*` azt jelenti: minden olvasott jel változására lefut.
 
 ```verilog
 // 4:1 multiplexer
@@ -129,14 +129,14 @@ endmodule
 
 ## VHDL és Verilog egymás mellett
 
-| fogalom            | VHDL                              | Verilog                          |
-| ------------------ | --------------------------------- | -------------------------------- |
-| egység             | entity + architecture             | module                           |
-| portok             | `in`, `out`, `inout`              | `input`, `output`, `inout`       |
-| busz               | `std_logic_vector(7 downto 0)`    | `[7:0]`                          |
-| kombinációs        | `Y <= A and B;`                   | `assign Y = A & B;`              |
-| órajel éle         | `if rising_edge(clk) then`        | `always @(posedge clk)`          |
-| megjegyzés         | `--`                              | `//`                             |
+| fogalom     | VHDL                           | Verilog                    |
+| ----------- | ------------------------------ | -------------------------- |
+| egység      | entity + architecture          | module                     |
+| portok      | `in`, `out`, `inout`           | `input`, `output`, `inout` |
+| busz        | `std_logic_vector(7 downto 0)` | `[7:0]`                    |
+| kombinációs | `Y <= A and B;`                | `assign Y = A & B;`        |
+| órajel éle  | `if rising_edge(clk) then`     | `always @(posedge clk)`    |
+| megjegyzés  | `--`                           | `//`                       |
 
 ## Összefoglalás
 

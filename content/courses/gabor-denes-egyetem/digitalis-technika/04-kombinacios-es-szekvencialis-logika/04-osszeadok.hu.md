@@ -16,12 +16,12 @@ minutes: 30
 
 Két egybites számot ad össze: kimenete az **összeg** (S) és az **átvitel** (C, carry).
 
-| A | B | S | C |
-| - | - | - | - |
-| 0 | 0 | 0 | 0 |
-| 0 | 1 | 1 | 0 |
-| 1 | 0 | 1 | 0 |
-| 1 | 1 | 0 | 1 |
+| A   | B   | S   | C   |
+| --- | --- | --- | --- |
+| 0   | 0   | 0   | 0   |
+| 0   | 1   | 1   | 0   |
+| 1   | 0   | 1   | 0   |
+| 1   | 1   | 0   | 1   |
 
 **S = A ⊕ B**, **C = A · B** – egy XOR és egy ÉS kapu.
 
@@ -31,16 +31,16 @@ A neve azért „fél”, mert **nem tud bejövő átvitelt** fogadni, így csak
 
 Három bitet ad össze: A, B és a bejövő átvitel **C<sub>in</sub>**. Kimenetei: S és C<sub>out</sub>.
 
-| A | B | C<sub>in</sub> | S | C<sub>out</sub> |
-| - | - | -------------- | - | --------------- |
-| 0 | 0 | 0              | 0 | 0               |
-| 0 | 0 | 1              | 1 | 0               |
-| 0 | 1 | 0              | 1 | 0               |
-| 0 | 1 | 1              | 0 | 1               |
-| 1 | 0 | 0              | 1 | 0               |
-| 1 | 0 | 1              | 0 | 1               |
-| 1 | 1 | 0              | 0 | 1               |
-| 1 | 1 | 1              | 1 | 1               |
+| A   | B   | C<sub>in</sub> | S   | C<sub>out</sub> |
+| --- | --- | -------------- | --- | --------------- |
+| 0   | 0   | 0              | 0   | 0               |
+| 0   | 0   | 1              | 1   | 0               |
+| 0   | 1   | 0              | 1   | 0               |
+| 0   | 1   | 1              | 0   | 1               |
+| 1   | 0   | 0              | 1   | 0               |
+| 1   | 0   | 1              | 0   | 1               |
+| 1   | 1   | 0              | 0   | 1               |
+| 1   | 1   | 1              | 1   | 1               |
 
 - **S = A ⊕ B ⊕ C<sub>in</sub>** – az összeg 1, ha páratlan számú bemenet 1.
 - **C<sub>out</sub> = A·B + C<sub>in</sub>·(A ⊕ B)** – vagy K-táblával egyszerűsítve a **többségi függvény**: C<sub>out</sub> = AB + AC<sub>in</sub> + BC<sub>in</sub>.
@@ -67,8 +67,8 @@ n bites számokhoz **n darab teljes összeadót** kötünk sorba: az i. fokozat 
 
 Minden fokozatra két segédjelet képzünk:
 
-- **G<sub>i</sub> = A<sub>i</sub> · B<sub>i</sub>** – **generate**: ez a fokozat mindenképp átvitelt *állít elő*;
-- **P<sub>i</sub> = A<sub>i</sub> ⊕ B<sub>i</sub>** – **propagate**: ez a fokozat a bejövő átvitelt *továbbadja*.
+- **G<sub>i</sub> = A<sub>i</sub> · B<sub>i</sub>** – **generate**: ez a fokozat mindenképp átvitelt _állít elő_;
+- **P<sub>i</sub> = A<sub>i</sub> ⊕ B<sub>i</sub>** – **propagate**: ez a fokozat a bejövő átvitelt _továbbadja_.
 
 Ekkor C<sub>i+1</sub> = G<sub>i</sub> + P<sub>i</sub>·C<sub>i</sub>, és ezt kifejtve minden átvitel **közvetlenül** a bemenetekből számolható:
 

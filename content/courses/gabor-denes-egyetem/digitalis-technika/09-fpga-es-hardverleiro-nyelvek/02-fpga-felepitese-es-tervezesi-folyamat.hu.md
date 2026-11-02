@@ -71,13 +71,13 @@ Mindkét eszköz grafikus lábkiosztó felületet is ad, és hibát jelez, ha eg
 
 ## FPGA vagy mikrokontroller?
 
-|                     | **FPGA**                                         | **mikrokontroller**                           |
-| ------------------- | ------------------------------------------------ | --------------------------------------------- |
-| működés             | **hardveres párhuzamosság** – minden egyszerre fut | szoftver, utasításonként, sorban            |
-| „programozás”       | hardver leírása (HDL)                            | program írása (C, Python, assembly)           |
-| rugalmasság         | teljesen egyedi logika, egyedi interfészek       | fix perifériák                                |
-| időzítés            | ns pontosságú, determinisztikus                  | µs, megszakítások miatt kevésbé kiszámítható  |
-| fogyasztás, ár, bonyolultság | nagyobb                                 | kisebb, olcsóbb, egyszerűbb                   |
+|                              | **FPGA**                                           | **mikrokontroller**                          |
+| ---------------------------- | -------------------------------------------------- | -------------------------------------------- |
+| működés                      | **hardveres párhuzamosság** – minden egyszerre fut | szoftver, utasításonként, sorban             |
+| „programozás”                | hardver leírása (HDL)                              | program írása (C, Python, assembly)          |
+| rugalmasság                  | teljesen egyedi logika, egyedi interfészek         | fix perifériák                               |
+| időzítés                     | ns pontosságú, determinisztikus                    | µs, megszakítások miatt kevésbé kiszámítható |
+| fogyasztás, ár, bonyolultság | nagyobb                                            | kisebb, olcsóbb, egyszerűbb                  |
 
 Gyakran **együtt** használják: az FPGA végzi a gyors, párhuzamos jelfeldolgozást, a processzor a vezérlést és a kommunikációt.
 

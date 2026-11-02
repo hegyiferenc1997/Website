@@ -21,12 +21,12 @@ A jelet két tengely mentén vizsgáljuk:
 
 ## A négy jeltípus
 
-| Jel                    | Idő          | Amplitúdó    | Példa                                         |
-| ---------------------- | ------------ | ------------ | --------------------------------------------- |
-| analóg (folytonos)     | folytonos    | folytonos    | mikrofon feszültsége, hőmérő                  |
-| diszkrét idejű         | diszkrét     | folytonos    | óránként leolvasott hőmérséklet (tizedesekkel) |
-| diszkrét amplitúdójú   | folytonos    | diszkrét     | lépcsős jel, pl. egy kapcsoló állásai          |
-| **digitális**          | **diszkrét** | **diszkrét** | a számítógép bitjei, egy hangfájl mintái       |
+| Jel                  | Idő          | Amplitúdó    | Példa                                          |
+| -------------------- | ------------ | ------------ | ---------------------------------------------- |
+| analóg (folytonos)   | folytonos    | folytonos    | mikrofon feszültsége, hőmérő                   |
+| diszkrét idejű       | diszkrét     | folytonos    | óránként leolvasott hőmérséklet (tizedesekkel) |
+| diszkrét amplitúdójú | folytonos    | diszkrét     | lépcsős jel, pl. egy kapcsoló állásai          |
+| **digitális**        | **diszkrét** | **diszkrét** | a számítógép bitjei, egy hangfájl mintái       |
 
 - **Analóg** információ: a jel értéke folytonosan változhat, végtelen sok érték között (hangerő, hőmérséklet).
 - **Digitális** információ: a jel csak meghatározott, **véges számú szintet** vehet fel – a kettes (bináris) rendszerben kettőt: **0** és **1** (LOW és HIGH).
@@ -40,7 +40,7 @@ A jelet két tengely mentén vizsgáljuk:
 - **külső** eredetű: villámlás, más készülékek zavarása, kozmikus sugárzás,
 - **belső** eredetű: a vezetőben lévő elektronok hő okozta véletlenszerű mozgása (termikus zaj).
 
-A jel minőségének legfontosabb mérőszáma a **jel-zaj viszony** (SNR, *Signal-to-Noise Ratio*): a hasznos jel és a zaj teljesítményének aránya, decibelben megadva. **Nagyobb SNR = jobb minőség.**
+A jel minőségének legfontosabb mérőszáma a **jel-zaj viszony** (SNR, _Signal-to-Noise Ratio_): a hasznos jel és a zaj teljesítményének aránya, decibelben megadva. **Nagyobb SNR = jobb minőség.**
 
 ## Miért zajtűrő a digitális jel?
 

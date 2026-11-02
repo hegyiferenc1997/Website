@@ -12,46 +12,46 @@ minutes: 20
 
 ## Hány függvény van?
 
-Két bemenetnek 2<sup>2</sup> = 4 kombinációja van (00, 01, 10, 11). Mind a 4 sorba 0-t vagy 1-et írhatunk, így **2<sup>4</sup> = 16** különböző kimeneti oszlop – azaz 16 különböző függvény – létezik. Általában *n* változóra **2<sup>2<sup>n</sup></sup>** függvény van (3 változóra már 256).
+Két bemenetnek 2<sup>2</sup> = 4 kombinációja van (00, 01, 10, 11). Mind a 4 sorba 0-t vagy 1-et írhatunk, így **2<sup>4</sup> = 16** különböző kimeneti oszlop – azaz 16 különböző függvény – létezik. Általában _n_ változóra **2<sup>2<sup>n</sup></sup>** függvény van (3 változóra már 256).
 
 ## A teljes lista
 
 A kimeneti oszlop az AB = 00, 01, 10, 11 sorok értékeit mutatja, ebben a sorrendben.
 
-| Kimenet (00 01 10 11) | Kifejezés     | Név                                 | Példa                                                        |
-| --------------------- | ------------- | ----------------------------------- | ------------------------------------------------------------ |
-| 0 0 0 0               | 0             | **nullfüggvény**                    | mindig hamis, a bemenetektől függetlenül                     |
-| 0 0 0 1               | A · B         | **konjunkció** (ÉS)                 | *kirándulni megyek, ha süt a nap és szabadnapos vagyok*      |
-| 0 0 1 0               | A · B̅         | **inhibíció** (A, de nem B)         | *a gép indul, ha START = 1 és STOP = 0*                      |
-| 0 0 1 1               | A             | A változó (átvitel)                 | a kimenet A-t követi                                          |
-| 0 1 0 0               | A̅ · B         | **inhibíció** (B, de nem A)         | ugyanez fordított szerepekkel                                 |
-| 0 1 0 1               | B             | B változó                           | a kimenet B-t követi                                          |
-| 0 1 1 0               | A ⊕ B         | **antivalencia** (XOR)              | *vagy a piros lámpa ég, vagy a zöld, de nem mindkettő*       |
-| 0 1 1 1               | A + B         | **diszjunkció** (VAGY)              | *esik az eső vagy fúj a szél*                                 |
-| 1 0 0 0               | (A + B)̅       | **Pierce-függvény** (NOR)           | *akkor pihenek, ha se dolgozat, se ZH nincs*                 |
-| 1 0 0 1               | A ⊙ B         | **ekvivalencia** (XNOR)             | *akkor és csak akkor kapsz ötöst, ha minden feladatot megoldasz* |
-| 1 0 1 0               | B̅             | B negáltja                          | –                                                            |
-| 1 0 1 1               | A + B̅         | **implikáció** B → A                | *ha B, akkor A*                                               |
-| 1 1 0 0               | A̅             | A negáltja                          | *nem igaz, hogy hétfő van*                                    |
-| 1 1 0 1               | A̅ + B         | **implikáció** A → B                | *ha tanulsz, akkor átmész a vizsgán*                          |
-| 1 1 1 0               | (A · B)̅       | **Sheffer-függvény** (NAND)         | –                                                            |
-| 1 1 1 1               | 1             | **egységfüggvény** (tautológia)     | mindig igaz                                                   |
+| Kimenet (00 01 10 11) | Kifejezés | Név                             | Példa                                                            |
+| --------------------- | --------- | ------------------------------- | ---------------------------------------------------------------- |
+| 0 0 0 0               | 0         | **nullfüggvény**                | mindig hamis, a bemenetektől függetlenül                         |
+| 0 0 0 1               | A · B     | **konjunkció** (ÉS)             | _kirándulni megyek, ha süt a nap és szabadnapos vagyok_          |
+| 0 0 1 0               | A · B̅     | **inhibíció** (A, de nem B)     | _a gép indul, ha START = 1 és STOP = 0_                          |
+| 0 0 1 1               | A         | A változó (átvitel)             | a kimenet A-t követi                                             |
+| 0 1 0 0               | A̅ · B     | **inhibíció** (B, de nem A)     | ugyanez fordított szerepekkel                                    |
+| 0 1 0 1               | B         | B változó                       | a kimenet B-t követi                                             |
+| 0 1 1 0               | A ⊕ B     | **antivalencia** (XOR)          | _vagy a piros lámpa ég, vagy a zöld, de nem mindkettő_           |
+| 0 1 1 1               | A + B     | **diszjunkció** (VAGY)          | _esik az eső vagy fúj a szél_                                    |
+| 1 0 0 0               | (A + B)̅   | **Pierce-függvény** (NOR)       | _akkor pihenek, ha se dolgozat, se ZH nincs_                     |
+| 1 0 0 1               | A ⊙ B     | **ekvivalencia** (XNOR)         | _akkor és csak akkor kapsz ötöst, ha minden feladatot megoldasz_ |
+| 1 0 1 0               | B̅         | B negáltja                      | –                                                                |
+| 1 0 1 1               | A + B̅     | **implikáció** B → A            | _ha B, akkor A_                                                  |
+| 1 1 0 0               | A̅         | A negáltja                      | _nem igaz, hogy hétfő van_                                       |
+| 1 1 0 1               | A̅ + B     | **implikáció** A → B            | _ha tanulsz, akkor átmész a vizsgán_                             |
+| 1 1 1 0               | (A · B)̅   | **Sheffer-függvény** (NAND)     | –                                                                |
+| 1 1 1 1               | 1         | **egységfüggvény** (tautológia) | mindig igaz                                                      |
 
 ## Az implikáció
 
-Az **A → B** („ha A, akkor B”) **csak akkor hamis, ha A igaz és B hamis**: *ha tanulsz, de mégsem mész át*, akkor az ígéret megszegődött. Ha nem tanultál (A = 0), az állítás nem sérül, bármi is lett a vizsga – ezért ilyenkor igaz.
+Az **A → B** („ha A, akkor B”) **csak akkor hamis, ha A igaz és B hamis**: _ha tanulsz, de mégsem mész át_, akkor az ígéret megszegődött. Ha nem tanultál (A = 0), az állítás nem sérül, bármi is lett a vizsga – ezért ilyenkor igaz.
 
-| A | B | A → B |
-| - | - | ----- |
-| 0 | 0 | 1     |
-| 0 | 1 | 1     |
-| 1 | 0 | **0** |
-| 1 | 1 | 1     |
+| A   | B   | A → B |
+| --- | --- | ----- |
+| 0   | 0   | 1     |
+| 0   | 1   | 1     |
+| 1   | 0   | **0** |
+| 1   | 1   | 1     |
 
 Kifejezése: **A → B = A̅ + B**.
 
 A **kontraponált implikáció** ezzel egyenértékű: A → B = B̅ → A̅.
-*Ha esik az eső, nedves az utca* ⇔ *ha az utca nem nedves, akkor nem esett az eső.*
+_Ha esik az eső, nedves az utca_ ⇔ _ha az utca nem nedves, akkor nem esett az eső._
 
 ## Az inhibíció (tiltás)
 
@@ -63,7 +63,7 @@ A 16-ból 6 valójában nem függ mindkét változótól: a két konstans (0, 1)
 
 ## Összefoglalás
 
-- *n* változóra 2<sup>2<sup>n</sup></sup> függvény van; két változóra 16.
+- _n_ változóra 2<sup>2<sup>n</sup></sup> függvény van; két változóra 16.
 - Implikáció: A → B = A̅ + B, csak 1 → 0 esetén hamis.
 - Inhibíció: A · B̅, a B tiltja A-t.
 - Antivalencia = XOR, ekvivalencia = XNOR.

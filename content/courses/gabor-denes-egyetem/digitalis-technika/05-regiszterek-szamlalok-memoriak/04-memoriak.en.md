@@ -30,13 +30,13 @@ Conversely: 1 Mi (2<sup>20</sup>) words need **20** address lines.
 
 They keep their contents without power (**non-volatile**).
 
-| type           | writing                                | note                                         |
-| -------------- | -------------------------------------- | -------------------------------------------- |
-| **mask ROM**   | at manufacture, with a mask            | cheap in large series, cannot be modified    |
-| **PROM**       | once, programmed by the user           | fuse cells (OTP)                             |
-| **EPROM**      | electrically; erasable with **UV light** | package with a quartz window               |
-| **EEPROM**     | electrically writable and erasable **per byte** | small capacity, for storing settings  |
-| **Flash**      | electrically, erasable **per block**   | large capacity, cheap: SSD, USB stick, microcontroller program |
+| type         | writing                                         | note                                                           |
+| ------------ | ----------------------------------------------- | -------------------------------------------------------------- |
+| **mask ROM** | at manufacture, with a mask                     | cheap in large series, cannot be modified                      |
+| **PROM**     | once, programmed by the user                    | fuse cells (OTP)                                               |
+| **EPROM**    | electrically; erasable with **UV light**        | package with a quartz window                                   |
+| **EEPROM**   | electrically writable and erasable **per byte** | small capacity, for storing settings                           |
+| **Flash**    | electrically, erasable **per block**            | large capacity, cheap: SSD, USB stick, microcontroller program |
 
 Flash comes in two kinds: **NOR Flash** (directly addressable, programs can run from it) and **NAND Flash** (denser, cheaper, block access – SSD, memory card). Flash cells have a limited number of write/erase cycles (10<sup>3</sup>–10<sup>5</sup>), so the controller performs **wear levelling**.
 
@@ -62,12 +62,12 @@ One bit is stored by the **charge of a capacitor**, **1 transistor + 1 capacitor
 
 ## Memory hierarchy
 
-| level                    | technology  | size (order)        | access time |
-| ------------------------ | ----------- | ------------------- | ----------- |
-| registers                | flip-flop   | ~1 KiB              | < 1 ns      |
-| cache (L1–L3)            | SRAM        | KiB–MiB             | 1–20 ns     |
-| main memory              | DRAM        | GiB                 | ~60–100 ns  |
-| storage (SSD)            | NAND Flash  | TB                  | ~100 µs     |
+| level         | technology | size (order) | access time |
+| ------------- | ---------- | ------------ | ----------- |
+| registers     | flip-flop  | ~1 KiB       | < 1 ns      |
+| cache (L1–L3) | SRAM       | KiB–MiB      | 1–20 ns     |
+| main memory   | DRAM       | GiB          | ~60–100 ns  |
+| storage (SSD) | NAND Flash | TB           | ~100 µs     |
 
 The closer to the processor, the faster, smaller and more expensive per bit.
 

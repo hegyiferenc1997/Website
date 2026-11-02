@@ -17,15 +17,15 @@ minutes: 15
 
 ## ASCII
 
-**ASCII** (*American Standard Code for Information Interchange*, 1963) is a **7-bit** code: 2<sup>7</sup> = **128** characters.
+**ASCII** (_American Standard Code for Information Interchange_, 1963) is a **7-bit** code: 2<sup>7</sup> = **128** characters.
 
-| Range (dec)     | hex       | Contents                                       |
-| --------------- | --------- | ---------------------------------------------- |
-| 0–31, 127       | 00–1F, 7F | control characters (e.g. 10 = LF new line, 13 = CR) |
-| 32              | 20        | space                                          |
-| 48–57           | 30–39     | digits `0`–`9`                                 |
-| 65–90           | 41–5A     | uppercase `A`–`Z`                              |
-| 97–122          | 61–7A     | lowercase `a`–`z`                              |
+| Range (dec) | hex       | Contents                                            |
+| ----------- | --------- | --------------------------------------------------- |
+| 0–31, 127   | 00–1F, 7F | control characters (e.g. 10 = LF new line, 13 = CR) |
+| 32          | 20        | space                                               |
+| 48–57       | 30–39     | digits `0`–`9`                                      |
+| 65–90       | 41–5A     | uppercase `A`–`Z`                                   |
+| 97–122      | 61–7A     | lowercase `a`–`z`                                   |
 
 **Values to remember:** `A` = 65 = 0x41 = 100 0001, `a` = 97 = 0x61, `0` = 48 = 0x30.
 
@@ -39,7 +39,7 @@ The 8th bit used to serve as a **parity bit**; later "extended ASCII" code pages
 
 ## Older codes
 
-- **EBCDIC** (*Extended Binary Coded Decimal Interchange Code*) – an 8-bit code used on IBM mainframes; its letters are not contiguous, and it still lives on in banking systems.
+- **EBCDIC** (_Extended Binary Coded Decimal Interchange Code_) – an 8-bit code used on IBM mainframes; its letters are not contiguous, and it still lives on in banking systems.
 - **Hollerith code** – the early code of punched-card data processing (Herman Hollerith, 1890 US census). IBM's predecessor company grew out of it.
 
 ## Unicode and UTF-8
@@ -48,12 +48,12 @@ The 8th bit used to serve as a **parity bit**; later "extended ASCII" code pages
 
 **UTF-8** stores a code point in 1–4 bytes:
 
-| Code point range   | Bytes  | Bit pattern                           | Example               |
-| ------------------ | ------ | ------------------------------------- | --------------------- |
-| U+0000 – U+007F    | 1      | 0xxxxxxx                              | `A` → 41              |
-| U+0080 – U+07FF    | 2      | 110xxxxx 10xxxxxx                     | `é` → C3 A9           |
-| U+0800 – U+FFFF    | 3      | 1110xxxx 10xxxxxx 10xxxxxx            | `€` → E2 82 AC        |
-| U+10000 –          | 4      | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx   | 😀 → F0 9F 98 80      |
+| Code point range | Bytes | Bit pattern                         | Example          |
+| ---------------- | ----- | ----------------------------------- | ---------------- |
+| U+0000 – U+007F  | 1     | 0xxxxxxx                            | `A` → 41         |
+| U+0080 – U+07FF  | 2     | 110xxxxx 10xxxxxx                   | `é` → C3 A9      |
+| U+0800 – U+FFFF  | 3     | 1110xxxx 10xxxxxx 10xxxxxx          | `€` → E2 82 AC   |
+| U+10000 –        | 4     | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx | 😀 → F0 9F 98 80 |
 
 UTF-8 is **backward compatible** with ASCII, and the bytes always show where a character starts. Today more than 98% of websites use UTF-8.
 

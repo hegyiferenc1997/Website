@@ -19,16 +19,16 @@ minutes: 35
 
 ## Jellemző perifériák
 
-| periféria            | feladata                                                                       |
-| -------------------- | ------------------------------------------------------------------------------ |
+| periféria                            | feladata                                                                                 |
+| ------------------------------------ | ---------------------------------------------------------------------------------------- |
 | **GPIO** (általános célú be/kimenet) | lábanként állítható irány (be/ki), belső **felhúzó ellenállás** (pull-up), nyitott drain |
-| **időzítő/számláló** (timer) | időmérés, periodikus megszakítás, külső impulzusok számlálása (5. témakör számlálói) |
-| **PWM**              | impulzusszélesség-moduláció: LED fényerő, motorsebesség, „analóg” kimenet       |
-| **ADC**              | analóg–digitális átalakító (8. témakör): szenzorok feszültségének mérése        |
-| **UART, SPI, I²C, CAN, USB** | soros kommunikáció (10. témakör)                                        |
-| **watchdog** (őrkutya-időzítő) | ha a program „lefagy”, és nem nullázza időben, **újraindítja** a rendszert |
-| **megszakításvezérlő** | perifériák eseményeinek prioritásos kezelése                                 |
-| **alvó üzemmódok**   | elemes eszközökben µA-es fogyasztás, ébresztés megszakítással                   |
+| **időzítő/számláló** (timer)         | időmérés, periodikus megszakítás, külső impulzusok számlálása (5. témakör számlálói)     |
+| **PWM**                              | impulzusszélesség-moduláció: LED fényerő, motorsebesség, „analóg” kimenet                |
+| **ADC**                              | analóg–digitális átalakító (8. témakör): szenzorok feszültségének mérése                 |
+| **UART, SPI, I²C, CAN, USB**         | soros kommunikáció (10. témakör)                                                         |
+| **watchdog** (őrkutya-időzítő)       | ha a program „lefagy”, és nem nullázza időben, **újraindítja** a rendszert               |
+| **megszakításvezérlő**               | perifériák eseményeinek prioritásos kezelése                                             |
+| **alvó üzemmódok**                   | elemes eszközökben µA-es fogyasztás, ébresztés megszakítással                            |
 
 **PWM:** a kimenet egy periódus D-ed részében magas. Az átlagfeszültség **U<sub>átlag</sub> = D · U<sub>táp</sub>** – pl. 5 V és 25 % kitöltés → **1,25 V**. Egy RC-szűrővel valódi analóg jel lesz belőle (8. témakör).
 
@@ -36,24 +36,24 @@ minutes: 35
 
 A perifériákat **regiszterek** bitjei vezérlik (pl. egy port 8 lábának iránya egy 8 bites regiszter). Egy bitet úgy kell módosítani, hogy a többi **ne változzon** – erre valók a bitenkénti műveletek és a **maszkok**:
 
-| művelet           | kifejezés                   | példa (n = 3)                         |
-| ----------------- | --------------------------- | ------------------------------------- |
-| bit **beállítása** (1) | `reg = reg OR (1 << n)`    | 0000 0001 OR 0000 1000 = **0000 1001** |
+| művelet                | kifejezés                    | példa (n = 3)                           |
+| ---------------------- | ---------------------------- | --------------------------------------- |
+| bit **beállítása** (1) | `reg = reg OR (1 << n)`      | 0000 0001 OR 0000 1000 = **0000 1001**  |
 | bit **törlése** (0)    | `reg = reg AND NOT (1 << n)` | 1011 1111 AND 1111 0111 = **1011 0111** |
-| bit **átbillentése**   | `reg = reg XOR (1 << n)`   | 0000 1001 XOR 0000 1000 = 0000 0001   |
-| bit **vizsgálata**     | `(reg AND (1 << n)) ≠ 0`   | „be van-e kapcsolva”                  |
+| bit **átbillentése**   | `reg = reg XOR (1 << n)`     | 0000 1001 XOR 0000 1000 = 0000 0001     |
+| bit **vizsgálata**     | `(reg AND (1 << n)) ≠ 0`     | „be van-e kapcsolva”                    |
 
 Ezek a 3. témakör azonosságain alapulnak: X + 1 = 1, X · 0 = 0, X ⊕ 1 = X̅, és a 0 / 1 mellett a többi bit változatlan marad.
 
 ## Ismert családok
 
-| család                     | jellemző                                                               |
-| -------------------------- | ---------------------------------------------------------------------- |
+| család                             | jellemző                                                           |
+| ---------------------------------- | ------------------------------------------------------------------ |
 | **AVR** (ATmega328P – Arduino Uno) | 8 bites RISC, Harvard; 16 MHz, 32 KB Flash, 2 KB SRAM, 1 KB EEPROM |
-| **PIC** (Microchip)        | 8–32 bites, ipari alkalmazásokban elterjedt                             |
-| **ARM Cortex-M** (pl. STM32) | 32 bites, széles választék M0-tól M7-ig, ipari és autóipari          |
-| **ESP32** (Espressif)      | 32 bites, kétmagos, **Wi-Fi és Bluetooth** beépítve – IoT              |
-| **RP2040** (Raspberry Pi Pico) | kétmagos Cortex-M0+, programozható I/O (PIO)                      |
+| **PIC** (Microchip)                | 8–32 bites, ipari alkalmazásokban elterjedt                        |
+| **ARM Cortex-M** (pl. STM32)       | 32 bites, széles választék M0-tól M7-ig, ipari és autóipari        |
+| **ESP32** (Espressif)              | 32 bites, kétmagos, **Wi-Fi és Bluetooth** beépítve – IoT          |
+| **RP2040** (Raspberry Pi Pico)     | kétmagos Cortex-M0+, programozható I/O (PIO)                       |
 
 ## Feszültségszint-illesztés
 
@@ -63,11 +63,11 @@ Egy jel csak akkor értelmezhető helyesen, ha a meghajtó **kimeneti** szintjei
 
 Tipikus értékek:
 
-| család                | V<sub>IH</sub> (min) | V<sub>IL</sub> (max) | V<sub>OH</sub> (min) | V<sub>OL</sub> (max) |
-| --------------------- | -------------------- | -------------------- | -------------------- | -------------------- |
-| TTL (5 V)             | 2,0 V                | 0,8 V                | 2,4 V                | 0,4 V                |
-| CMOS (5 V)            | 3,5 V (0,7 · V<sub>CC</sub>) | 1,5 V        | ≈ 4,9 V              | ≈ 0,1 V              |
-| LVCMOS (3,3 V)        | 2,0 V                | 0,8 V                | ≈ 2,4–3,3 V          | 0,4 V                |
+| család         | V<sub>IH</sub> (min)         | V<sub>IL</sub> (max) | V<sub>OH</sub> (min) | V<sub>OL</sub> (max) |
+| -------------- | ---------------------------- | -------------------- | -------------------- | -------------------- |
+| TTL (5 V)      | 2,0 V                        | 0,8 V                | 2,4 V                | 0,4 V                |
+| CMOS (5 V)     | 3,5 V (0,7 · V<sub>CC</sub>) | 1,5 V                | ≈ 4,9 V              | ≈ 0,1 V              |
+| LVCMOS (3,3 V) | 2,0 V                        | 0,8 V                | ≈ 2,4–3,3 V          | 0,4 V                |
 
 Következmények:
 
