@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Dokumentálás és kódminőség", "en": "Documentation and Code Quality" },
+  "description": {
+    "hu": "Miért fontos a dokumentáció, kommentek és docstringek, dokumentációs szabványok (PEP 8, PEP 257, README), valamint kódolási gyakorlatok a kódminőség javítására.",
+    "en": "Why documentation matters, comments and docstrings, documentation standards (PEP 8, PEP 257, README), and coding practices for better code quality."
+  }
+}
