@@ -190,7 +190,8 @@ export function LoginMenu({
     }
   }
 
-  // Kijelentkezés: előbb a még el nem küldött haladás és idő mentése, utána a böngészőből törlődik.
+  // Kijelentkezés: előbb a még el nem küldött haladás és idő mentése, utána a böngészőből törlődik,
+  // végül a főoldalra visz.
   async function signOut() {
     setBusy(true);
     await Promise.all([flushProgress(), flushActivity()]);
@@ -198,6 +199,8 @@ export function LoginMenu({
     disconnectAccount();
     setBusy(false);
     setOpen(false);
+    // Mindig a főoldalra visz (a jelenlegi nyelven), és frissíti a fejlécet vendég-állapotra.
+    router.push(getPathname({ href: "/", locale }));
     router.refresh();
   }
 
