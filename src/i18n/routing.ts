@@ -25,6 +25,10 @@ export const routing = defineRouting({
       hu: "/targyak",
       en: "/courses",
     },
+    "/dashboard": {
+      hu: "/iranyitopult",
+      en: "/dashboard",
+    },
     "/profile": {
       hu: "/profil",
       en: "/profile",
