@@ -134,3 +134,94 @@ A BFS a 10. témakör **sor** adatszerkezetére és a **szótárra** épül. A v
 - A **szabályozó** a hiba alapján dönt; az **arányos (P)** szabályozó finomabb, mint a be-ki, a gyakorlatban **PID**-et használnak.
 - A **vonalkövetés** egyszerű szabálytáblával megoldható.
 - Rácsos térképen a legrövidebb utat a **szélességi keresés** (BFS) adja; nagyobb térképen az **A\*** gyorsabb.
+
+## A lecke feladata: A legrövidebb út mezőnként
+
+A gyakorló feladatban csak a lépések **számát** kerestük. Most magát az **utat** kell megadni! Írj `utvonal(palya)` függvényt, amely szélességi kereséssel megkeresi a legrövidebb utat az `S` mezőről a `C` mezőre, és visszaadja a `(sor, oszlop)` párok listáját `S`-től `C`-ig (mindkettőt beleértve).
+
+- Csak fel, le, jobbra, balra léphet; a `#` fal. A pályát körben fal veszi körül.
+- Ha nincs út, `None` legyen az eredmény.
+- Tipp: a keresés közben jegyezd fel egy szótárban, melyik mezőre honnan érkeztél (`elozo[szomszed] = mezo`), majd a célból visszafelé lépkedve rakd össze az utat.
+
+```python starter required
+from collections import deque
+
+
+def utvonal(palya):
+    # a kiinduló és a célmező megkeresése, majd szélességi keresés
+    return []
+
+
+PALYA = [
+    "#######",
+    "#S..#.#",
+    "#.#.#.#",
+    "#.#...#",
+    "#...#C#",
+    "#######",
+]
+print(utvonal(PALYA))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from collections import deque
+
+
+def utvonal(palya):
+    for s, sor in enumerate(palya):
+        for o, mezo in enumerate(sor):
+            if mezo == "S":
+                start = (s, o)
+            elif mezo == "C":
+                cel = (s, o)
+    elozo = {start: None}       # honnan érkeztünk az adott mezőre
+    sor_ = deque([start])
+    while sor_:
+        mezo = sor_.popleft()
+        if mezo == cel:
+            # Visszafelé lépkedve összerakjuk az utat
+            ut = []
+            while mezo is not None:
+                ut.append(mezo)
+                mezo = elozo[mezo]
+            return ut[::-1]
+        s, o = mezo
+        for szomszed in ((s - 1, o), (s + 1, o), (s, o - 1), (s, o + 1)):
+            if szomszed not in elozo and palya[szomszed[0]][szomszed[1]] != "#":
+                elozo[szomszed] = mezo
+                sor_.append(szomszed)
+    return None
+
+
+PALYA = [
+    "#######",
+    "#S..#.#",
+    "#.#.#.#",
+    "#.#...#",
+    "#...#C#",
+    "#######",
+]
+print(utvonal(PALYA))
+```
+
+</details>
+
+```python test
+def jo_ut(palya, ut, hossz):
+    assert isinstance(ut, list) and len(ut) == hossz, f"A legrövidebb út {hossz} mezőből áll (S és C is benne)."
+    assert palya[ut[0][0]][ut[0][1]] == "S" and palya[ut[-1][0]][ut[-1][1]] == "C", "Az út S-ből induljon és C-ben érjen véget."
+    for (s1, o1), (s2, o2) in zip(ut, ut[1:]):
+        assert abs(s1 - s2) + abs(o1 - o2) == 1, "Az út szomszédos mezőkön haladjon (csak fel, le, jobbra, balra)."
+    for s, o in ut:
+        assert palya[s][o] != "#", "Az út nem mehet át falon."
+
+PALYA = ["#######", "#S..#.#", "#.#.#.#", "#.#...#", "#...#C#", "#######"]
+jo_ut(PALYA, utvonal(PALYA), 8)
+jo_ut(["####", "#SC#", "####"], utvonal(["####", "#SC#", "####"]), 2)
+assert utvonal(["#####", "#S#C#", "#####"]) is None, "Ha nincs út, None-t adj vissza."
+NAGY = ["#########", "#S......#", "#######.#", "#C......#", "#########"]
+jo_ut(NAGY, utvonal(NAGY), 15)
+```

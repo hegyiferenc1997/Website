@@ -183,3 +183,81 @@ Látszik, hogy az átlagot a 250-es hibás mérés három lépésen át elrontja
 - A robotot érdemes **osztállyal** modellezni: érzékelő- és beavatkozó metódusok.
 - Az **állapotgép** a robotviselkedés áttekinthető leírása: állapotok + átmenetek.
 - A szenzoradatokat **szűrni** kell; kiugró értékek ellen a **medián** a legjobb.
+
+## A lecke feladata: Robot a pályán: parancsok és ütközések
+
+Írj `vegrehajt(palya, parancsok)` függvényt! A `palya` szöveglista (`#` fal, `.` szabad mező, `R` a robot kezdőhelye); a robot kezdetben **észak** (`"É"`) felé néz. A parancsok:
+
+- `E`: egy mezőt előre lép – ha fal van előtte, helyben marad, és ez **ütközésnek** számít,
+- `J`: jobbra fordul, `B`: balra fordul (irányok óramutató szerint: `"É"`, `"K"`, `"D"`, `"Ny"`),
+- ismeretlen parancsra `ValueError`.
+
+Az eredmény a `(sor, oszlop, irány, ütközések)` négyes. Az `R` mező szabad mezőnek számít.
+
+```python starter required
+IRANYOK = ["É", "K", "D", "Ny"]
+ELMOZDULAS = {"É": (-1, 0), "K": (0, 1), "D": (1, 0), "Ny": (0, -1)}
+
+
+def vegrehajt(palya, parancsok):
+    sor, oszlop, irany = 0, 0, "É"
+    for p in parancsok:
+        if p == "E":
+            ds, do = ELMOZDULAS[irany]
+            sor, oszlop = sor + ds, oszlop + do
+    return (sor, oszlop, irany, 0)
+
+
+PALYA = ["#####", "#..R#", "#.#.#", "#...#", "#####"]
+print(vegrehajt(PALYA, "BEE"))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+IRANYOK = ["É", "K", "D", "Ny"]
+ELMOZDULAS = {"É": (-1, 0), "K": (0, 1), "D": (1, 0), "Ny": (0, -1)}
+
+
+def vegrehajt(palya, parancsok):
+    # A kezdőhely megkeresése
+    for s, sor_szoveg in enumerate(palya):
+        if "R" in sor_szoveg:
+            sor, oszlop = s, sor_szoveg.index("R")
+    irany, utkozesek = "É", 0
+    for p in parancsok:
+        if p == "E":
+            ds, do = ELMOZDULAS[irany]
+            if palya[sor + ds][oszlop + do] == "#":
+                utkozesek += 1      # fal: helyben marad
+            else:
+                sor, oszlop = sor + ds, oszlop + do
+        elif p in ("J", "B"):
+            lepes = 1 if p == "J" else -1
+            irany = IRANYOK[(IRANYOK.index(irany) + lepes) % 4]
+        else:
+            raise ValueError(f"Ismeretlen parancs: {p}")
+    return (sor, oszlop, irany, utkozesek)
+
+
+PALYA = ["#####", "#..R#", "#.#.#", "#...#", "#####"]
+print(vegrehajt(PALYA, "BEE"))
+```
+
+</details>
+
+```python test
+PALYA = ["#####", "#..R#", "#.#.#", "#...#", "#####"]
+assert vegrehajt(PALYA, "") == (1, 3, "É", 0), "Parancs nélkül a kezdőhelyen, észak felé áll."
+assert vegrehajt(PALYA, "E") == (1, 3, "É", 1), "Északra fal van: ütközés, helyben marad."
+assert vegrehajt(PALYA, "BEE") == (1, 1, "Ny", 0), "Balra fordul, két lépés nyugatra."
+assert vegrehajt(PALYA, "BEEE") == (1, 1, "Ny", 1), "A harmadik lépésnél falnak ütközik."
+assert vegrehajt(PALYA, "JJEEJE") == (3, 2, "Ny", 0), "Dél felé két lépés, majd jobbra (nyugat) egy lépés."
+assert vegrehajt(PALYA, "JJJJ")[2] == "É" and vegrehajt(PALYA, "BBB")[2] == "K", "A fordulás körbeér."
+try:
+    vegrehajt(PALYA, "EX")
+    assert False, "Ismeretlen parancsra ValueError kell."
+except ValueError:
+    pass
+```

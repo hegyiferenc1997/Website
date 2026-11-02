@@ -106,3 +106,65 @@ while True:
 - The core of the program is the **sense–think–act** loop.
 - Keep the decision logic separate from the hardware – then it can be tested in simulation.
 - In robotics, Python (Raspberry Pi, MicroPython, ROS) and C/C++ (Arduino, ROS) are the most widespread.
+
+## Lesson exercise: Sense–think–act with a battery
+
+Extend the lesson's simulation: the robot now has a battery too. Write a `cycle(readings, battery=100)` function that steps through the list of distance readings (cm) and returns the list of commands issued. In each step it decides **in this order**:
+
+1. if the battery is below 15 %: `"charge"`, and the cycle ends,
+2. if the distance is below 20 cm: `"stop"`, and the cycle ends,
+3. if the distance is below 50 cm: `"slow"` – this uses 2 % battery,
+4. otherwise: `"forward"` – this uses 5 % battery.
+
+When the readings run out, the cycle ends by itself.
+
+```python starter required
+def cycle(readings, battery=100):
+    commands = []
+    for distance in readings:
+        if distance < 20:
+            commands.append("stop")
+        else:
+            commands.append("forward")
+    return commands
+
+
+print(cycle([120, 95, 70, 48, 31, 19, 12]))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def cycle(readings, battery=100):
+    commands = []
+    for distance in readings:
+        # Decide after sensing – the order matters!
+        if battery < 15:
+            commands.append("charge")
+            break
+        if distance < 20:
+            commands.append("stop")
+            break
+        if distance < 50:
+            commands.append("slow")
+            battery -= 2
+        else:
+            commands.append("forward")
+            battery -= 5
+    return commands
+
+
+print(cycle([120, 95, 70, 48, 31, 19, 12]))
+```
+
+</details>
+
+```python test
+assert cycle([120, 95, 70, 48, 31, 19, 12]) == ["forward", "forward", "forward", "slow", "slow", "stop"], "On the lesson's readings: 3× forward, 2× slow, then stop (and no command after it)."
+assert cycle([100] * 10, battery=25) == ["forward", "forward", "forward", "charge"], "With 25 % battery it drops below 15 % after 3 forward steps: charge."
+assert cycle([30, 30, 30], battery=16) == ["slow", "charge"], "Going slow uses 2 %; at 14 % it goes to charge."
+assert cycle([10], battery=10) == ["charge"], "The battery check comes first, even before an obstacle."
+assert cycle([]) == [], "No readings, no commands."
+assert cycle([60, 50, 49, 20]) == ["forward", "forward", "slow", "slow"], "The boundaries: 50 is already forward, 20 is still slow."
+```

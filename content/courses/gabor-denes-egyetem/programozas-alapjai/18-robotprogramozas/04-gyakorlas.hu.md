@@ -261,3 +261,84 @@ assert lepesszam([
 ]) == 7
 print("Minden ellenőrzés sikeres!")
 ```
+
+## Összefoglaló feladat: Robotporszívó: mit tud kitakarítani?
+
+Egy robotporszívó az `R` mezőről indul, és minden olyan szabad (`.`) mezőt kitakarít, ahová fel, le, jobbra vagy balra lépkedve el tud jutni. Írj `takarit(terkep)` függvényt, amely szótárat ad vissza:
+
+- `"tiszta"`: hány `.` mezőt takarított ki,
+- `"elerhetetlen"`: hány `.` mező maradt piszkos, mert nem lehet odajutni,
+- `"terkep"`: az új térkép (szöveglista), amelyen a kitakarított mezők helyén `o` áll; az `R`, a falak és az elérhetetlen mezők változatlanok.
+
+A bemeneti térképet ne módosítsd! A pályát körben fal veszi körül. Tipp: szélességi vagy mélységi bejárás (elárasztás) egy halmazzal a meglátogatott mezőkhöz.
+
+```python starter required
+def takarit(terkep):
+    tiszta = sum(sor.count(".") for sor in terkep)
+    return {"tiszta": tiszta, "elerhetetlen": 0, "terkep": terkep}
+
+
+TERKEP = [
+    "########",
+    "#R..#..#",
+    "#.#.#..#",
+    "#...####",
+    "########",
+]
+for sor in takarit(TERKEP)["terkep"]:
+    print(sor)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from collections import deque
+
+
+def takarit(terkep):
+    for s, sor in enumerate(terkep):
+        if "R" in sor:
+            start = (s, sor.index("R"))
+    # Elárasztás: minden elérhető mező bejárása
+    latott = {start}
+    sor_ = deque([start])
+    while sor_:
+        s, o = sor_.popleft()
+        for sz in ((s - 1, o), (s + 1, o), (s, o - 1), (s, o + 1)):
+            if sz not in latott and terkep[sz[0]][sz[1]] == ".":
+                latott.add(sz)
+                sor_.append(sz)
+    # Új térkép: a kitakarított mezők helyére o kerül
+    uj = []
+    for s, sor in enumerate(terkep):
+        uj.append("".join("o" if (s, o) in latott and m == "." else m for o, m in enumerate(sor)))
+    tiszta = len(latott) - 1          # az R mezőt nem számoljuk
+    osszes = sum(sor.count(".") for sor in terkep)
+    return {"tiszta": tiszta, "elerhetetlen": osszes - tiszta, "terkep": uj}
+
+
+TERKEP = [
+    "########",
+    "#R..#..#",
+    "#.#.#..#",
+    "#...####",
+    "########",
+]
+for sor in takarit(TERKEP)["terkep"]:
+    print(sor)
+```
+
+</details>
+
+```python test
+TERKEP = ["########", "#R..#..#", "#.#.#..#", "#...####", "########"]
+masolat = list(TERKEP)
+e = takarit(TERKEP)
+assert TERKEP == masolat, "A bemeneti térképet ne módosítsd."
+assert e["tiszta"] == 7 and e["elerhetetlen"] == 4, "7 mező érhető el, 4 a fal mögött marad."
+assert e["terkep"] == ["########", "#Roo#..#", "#o#o#..#", "#ooo####", "########"], "A kitakarított mezők helyén o álljon, a többi változatlan."
+assert takarit(["###", "#R#", "###"]) == {"tiszta": 0, "elerhetetlen": 0, "terkep": ["###", "#R#", "###"]}, "Szabad mező nélkül nincs mit takarítani."
+e = takarit(["#####", "#.#R#", "#.#.#", "#####"])
+assert e["tiszta"] == 1 and e["elerhetetlen"] == 2 and e["terkep"][2] == "#.#o#", "Csak a szomszédos (nem átlós) mezőkön lehet haladni."
+```
