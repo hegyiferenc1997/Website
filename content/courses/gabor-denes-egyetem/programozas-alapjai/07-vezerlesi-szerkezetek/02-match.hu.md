@@ -117,13 +117,13 @@ print(NAPOK.get(9, "érvénytelen"))
 
 Írj `ertelmez(parancs)` függvényt, amely egy szöveges robotparancsot a `match` utasítással értelmez. A parancsot szóközök mentén darabold (`split()`), és a kapott listára illessz mintákat:
 
-| Parancs          | Eredmény                       |
-| ---------------- | ------------------------------ |
-| `"előre 3"`      | `("mozog", 3)` – a szám egészként |
-| `"fordulj balra"`| `("fordul", "bal")`            |
-| `"fordulj jobbra"`| `("fordul", "jobb")`          |
-| `"állj"`         | `("áll", None)`                |
-| bármi más        | `("ismeretlen", parancs)`      |
+| Parancs            | Eredmény                          |
+| ------------------ | --------------------------------- |
+| `"előre 3"`        | `("mozog", 3)` – a szám egészként |
+| `"fordulj balra"`  | `("fordul", "bal")`               |
+| `"fordulj jobbra"` | `("fordul", "jobb")`              |
+| `"állj"`           | `("áll", None)`                   |
+| bármi más          | `("ismeretlen", parancs)`         |
 
 ```python starter required
 def ertelmez(parancs):

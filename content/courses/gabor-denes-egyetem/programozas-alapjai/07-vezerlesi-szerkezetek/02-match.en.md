@@ -117,13 +117,13 @@ print(DAYS.get(9, "invalid"))
 
 Write an `interpret(command)` function that interprets a text robot command with the `match` statement. Split the command on spaces (`split()`) and match patterns against the resulting list:
 
-| Command         | Result                              |
-| --------------- | ----------------------------------- |
-| `"forward 3"`   | `("move", 3)` – the number as an int |
-| `"turn left"`   | `("turn", "left")`                  |
-| `"turn right"`  | `("turn", "right")`                 |
-| `"stop"`        | `("stop", None)`                    |
-| anything else   | `("unknown", command)`              |
+| Command        | Result                               |
+| -------------- | ------------------------------------ |
+| `"forward 3"`  | `("move", 3)` – the number as an int |
+| `"turn left"`  | `("turn", "left")`                   |
+| `"turn right"` | `("turn", "right")`                  |
+| `"stop"`       | `("stop", None)`                     |
+| anything else  | `("unknown", command)`               |
 
 ```python starter required
 def interpret(command):

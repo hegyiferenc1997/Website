@@ -80,12 +80,12 @@ Python compiles to bytecode, which a virtual machine runs.
 
 Bytecode is **interpreted** by a virtual machine instruction by instruction. Write a tiny stack machine: the `run(program)` function receives a list of instructions and returns the value on top of the stack at the end.
 
-| Instruction | Meaning                                                  |
-| ----------- | -------------------------------------------------------- |
-| `PUSH n`    | puts the integer `n` on top of the stack                 |
-| `ADD`       | pops the top two values and pushes their sum             |
-| `SUB`       | pops `b`, then `a`, and pushes `a - b`                   |
-| `MUL`       | pops the top two values and pushes their product         |
+| Instruction | Meaning                                          |
+| ----------- | ------------------------------------------------ |
+| `PUSH n`    | puts the integer `n` on top of the stack         |
+| `ADD`       | pops the top two values and pushes their sum     |
+| `SUB`       | pops `b`, then `a`, and pushes `a - b`           |
+| `MUL`       | pops the top two values and pushes their product |
 
 For an unknown instruction raise `ValueError`. For example `["PUSH 2", "PUSH 3", "ADD", "PUSH 4", "MUL"]` gives 20.
 

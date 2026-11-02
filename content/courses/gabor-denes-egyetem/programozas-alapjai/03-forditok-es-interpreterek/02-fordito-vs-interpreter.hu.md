@@ -80,12 +80,12 @@ A Python bájtkódra fordít, és azt egy virtuális gép futtatja.
 
 A bájtkódot egy virtuális gép **értelmezi** utasításról utasításra. Írj egy pici veremgépet: a `futtat(program)` függvény utasítások listáját kapja, és a verem tetején lévő értéket adja vissza a végén.
 
-| Utasítás | Jelentés                                                   |
-| -------- | ---------------------------------------------------------- |
-| `PUSH n` | az `n` egész számot a verem tetejére teszi                 |
-| `ADD`    | leveszi a felső két értéket, az összegüket visszateszi     |
-| `SUB`    | leveszi `b`-t, majd `a`-t, és `a - b`-t teszi vissza       |
-| `MUL`    | leveszi a felső két értéket, a szorzatukat visszateszi     |
+| Utasítás | Jelentés                                               |
+| -------- | ------------------------------------------------------ |
+| `PUSH n` | az `n` egész számot a verem tetejére teszi             |
+| `ADD`    | leveszi a felső két értéket, az összegüket visszateszi |
+| `SUB`    | leveszi `b`-t, majd `a`-t, és `a - b`-t teszi vissza   |
+| `MUL`    | leveszi a felső két értéket, a szorzatukat visszateszi |
 
 Ismeretlen utasításnál dobj `ValueError` kivételt. Például `["PUSH 2", "PUSH 3", "ADD", "PUSH 4", "MUL"]` eredménye 20.
 

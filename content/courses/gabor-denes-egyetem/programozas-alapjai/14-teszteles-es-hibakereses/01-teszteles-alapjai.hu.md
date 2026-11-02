@@ -115,13 +115,13 @@ Ennek az oldalnak a gyakorlófeladatai is így épülnek fel: az „ellenőrzés
 
 Most fordul a kocka: nem te írod a függvényt, hanem a **tesztjeit**. A `kedvezmeny(kor)` a jegyár kedvezményét adja százalékban:
 
-| Életkor   | Kedvezmény       |
-| --------- | ---------------- |
-| 0–5       | 100              |
-| 6–17      | 50               |
-| 18–64     | 0                |
-| 65-től    | 50               |
-| negatív   | `ValueError`     |
+| Életkor | Kedvezmény   |
+| ------- | ------------ |
+| 0–5     | 100          |
+| 6–17    | 50           |
+| 18–64   | 0            |
+| 65-től  | 50           |
+| negatív | `ValueError` |
 
 Írd meg a `teszt_kedvezmeny()` függvényt `assert` sorokkal úgy, hogy a **normál esetek mellett a határeseteket** (5, 6, 17, 18, 64, 65) és a hibás bemenetet is vizsgálja.
 

@@ -122,7 +122,10 @@ print(json.dumps(data))        # text from a Python object
 Write a `csv_to_json(csv_file, json_file)` function that reads a CSV file with a `name,score` header (with the `csv` module's `DictReader`) and writes a JSON file (with the `json` module) containing the list of students in **descending order of score**, like this:
 
 ```json
-[{"name": "Cecil", "score": 92}, {"name": "Anna", "score": 87}]
+[
+  { "name": "Cecil", "score": 92 },
+  { "name": "Anna", "score": 87 }
+]
 ```
 
 - The score must be an integer in the JSON (not text).

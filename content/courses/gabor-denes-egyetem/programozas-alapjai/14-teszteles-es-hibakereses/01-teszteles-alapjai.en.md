@@ -115,13 +115,13 @@ The practice exercises on this site are built the same way: the "check" block is
 
 Now the tables are turned: you don't write the function but its **tests**. `discount(age)` returns the ticket discount in percent:
 
-| Age       | Discount         |
-| --------- | ---------------- |
-| 0–5       | 100              |
-| 6–17      | 50               |
-| 18–64     | 0                |
-| 65 and up | 50               |
-| negative  | `ValueError`     |
+| Age       | Discount     |
+| --------- | ------------ |
+| 0–5       | 100          |
+| 6–17      | 50           |
+| 18–64     | 0            |
+| 65 and up | 50           |
+| negative  | `ValueError` |
 
 Write the `test_discount()` function with `assert` lines so that **besides the normal cases** it also checks the **boundary cases** (5, 6, 17, 18, 64, 65) and invalid input.
 

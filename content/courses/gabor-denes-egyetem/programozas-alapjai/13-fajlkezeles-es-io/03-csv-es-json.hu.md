@@ -122,7 +122,10 @@ print(json.dumps(adat))        # Python objektumból szöveg
 Írj `csv_bol_json(csv_fajl, json_fajl)` függvényt, amely beolvas egy `nev,pont` fejlécű CSV fájlt (a `csv` modul `DictReader`-ével), és kiír egy JSON fájlt (a `json` modullal), amelyben a hallgatók listája szerepel **pontszám szerint csökkenő** sorrendben, így:
 
 ```json
-[{"nev": "Csilla", "pont": 92}, {"nev": "Anna", "pont": 87}]
+[
+  { "nev": "Csilla", "pont": 92 },
+  { "nev": "Anna", "pont": 87 }
+]
 ```
 
 - A pont egész szám legyen a JSON-ban (ne szöveg).
