@@ -38,22 +38,22 @@ A VirtualBox Managerben: **Új** (_New_).
 
 **Virtuális gép neve és operációs rendszere**
 
-| Mező            | Érték                                         |
-| --------------- | --------------------------------------------- |
-| Név             | `Ubuntu-OS`                                   |
-| Mappa           | hagyd az alapértelmezett gépmappát            |
-| ISO-kép         | tallózd be a letöltött `ubuntu-26.04.1-desktop-amd64.iso`-t |
-| Típus / Verzió  | a VirtualBox felismeri: **Linux / Ubuntu (64-bit)** |
+| Mező           | Érték                                                       |
+| -------------- | ----------------------------------------------------------- |
+| Név            | `Ubuntu-OS`                                                 |
+| Mappa          | hagyd az alapértelmezett gépmappát                          |
+| ISO-kép        | tallózd be a letöltött `ubuntu-26.04.1-desktop-amd64.iso`-t |
+| Típus / Verzió | a VirtualBox felismeri: **Linux / Ubuntu (64-bit)**         |
 
 Jelöld be: **Felügyelet nélküli telepítés kihagyása** (_Skip Unattended Installation_). Így te mész végig a telepítőn – ebből tanulsz a legtöbbet, és nem kapsz előre beállított (`vboxuser`) felhasználót.
 
 **Hardver**
 
-| Beállítás     | Érték                                          |
-| ------------- | ---------------------------------------------- |
-| Alapmemória   | **4096 MB** (ha 16 GB a gazda: 6144–8192 MB)    |
-| Processzorok  | **2** (ha 8+ mag van: 4)                        |
-| EFI           | maradhat kikapcsolva (Ubuntuhoz nem kötelező)  |
+| Beállítás    | Érték                                         |
+| ------------ | --------------------------------------------- |
+| Alapmemória  | **4096 MB** (ha 16 GB a gazda: 6144–8192 MB)  |
+| Processzorok | **2** (ha 8+ mag van: 4)                      |
+| EFI          | maradhat kikapcsolva (Ubuntuhoz nem kötelező) |
 
 **Virtuális merevlemez**
 

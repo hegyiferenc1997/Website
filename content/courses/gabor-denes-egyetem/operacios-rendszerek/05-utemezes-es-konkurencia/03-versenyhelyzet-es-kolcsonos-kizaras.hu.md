@@ -22,12 +22,12 @@ Két szál ugyanazt a `szamlalo` változót növeli. A `szamlalo++` a processzor
 
 Ha az ütemező rossz pillanatban vált, egy növelés **elvész**:
 
-| Idő | 1. szál               | 2. szál               | szamlalo |
-| --- | --------------------- | --------------------- | -------- |
-| 1   | betölt (R = 5)        |                       | 5        |
-| 2   |                       | betölt (R = 5)        | 5        |
-| 3   | növel, visszaír (6)   |                       | 6        |
-| 4   |                       | növel, visszaír (6)   | **6** (7 lenne a jó) |
+| Idő | 1. szál             | 2. szál             | szamlalo             |
+| --- | ------------------- | ------------------- | -------------------- |
+| 1   | betölt (R = 5)      |                     | 5                    |
+| 2   |                     | betölt (R = 5)      | 5                    |
+| 3   | növel, visszaír (6) |                     | 6                    |
+| 4   |                     | növel, visszaír (6) | **6** (7 lenne a jó) |
 
 **Versenyhelyzetről** beszélünk, ha az eredmény a szálak **végrehajtási sorrendjétől** függ. Ezek a hibák alattomosak: ritkán, véletlenszerűen jönnek elő.
 

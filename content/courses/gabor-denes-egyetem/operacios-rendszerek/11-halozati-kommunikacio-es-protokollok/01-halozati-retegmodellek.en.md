@@ -16,15 +16,15 @@ Downloading a web page involves many questions: what signal to send on the cable
 
 ## The OSI and TCP/IP models
 
-| #   | OSI layer           | TCP/IP layer        | Task                                           | Example                   |
-| --- | ------------------- | ------------------- | ---------------------------------------------- | ------------------------- |
-| 7   | application         | **application**     | the program's "language"                       | HTTP, DNS, SSH, SMTP      |
-| 6   | presentation        | ↑                   | encoding, encryption, compression              | TLS, UTF-8                |
-| 5   | session             | ↑                   | connections, sessions                          | (often in the application)|
-| 4   | **transport**       | **transport**       | end to end, ports, reliability                 | **TCP**, **UDP**          |
-| 3   | **network**         | **internet**        | addressing and routing between networks        | **IP** (IPv4, IPv6), ICMP |
-| 2   | data link           | **network access**  | frames on the local network, MAC addresses     | Ethernet, Wi-Fi           |
-| 1   | physical            | ↓                   | bits as signals (voltage, light, radio)        | cable, radio waves        |
+| #   | OSI layer     | TCP/IP layer       | Task                                       | Example                    |
+| --- | ------------- | ------------------ | ------------------------------------------ | -------------------------- |
+| 7   | application   | **application**    | the program's "language"                   | HTTP, DNS, SSH, SMTP       |
+| 6   | presentation  | ↑                  | encoding, encryption, compression          | TLS, UTF-8                 |
+| 5   | session       | ↑                  | connections, sessions                      | (often in the application) |
+| 4   | **transport** | **transport**      | end to end, ports, reliability             | **TCP**, **UDP**           |
+| 3   | **network**   | **internet**       | addressing and routing between networks    | **IP** (IPv4, IPv6), ICMP  |
+| 2   | data link     | **network access** | frames on the local network, MAC addresses | Ethernet, Wi-Fi            |
+| 1   | physical      | ↓                  | bits as signals (voltage, light, radio)    | cable, radio waves         |
 
 **OSI** (7 layers) is a theoretical reference model; the internet follows the practical **TCP/IP** (4 layers) model.
 
@@ -44,12 +44,12 @@ The TCP header holds the **ports**, the IP header the **IP addresses**, the Ethe
 
 ## Which layer runs where?
 
-| Layer                      | Where does it run?                                      |
-| -------------------------- | ------------------------------------------------------- |
-| application                | in **user mode**, in the program (browser, ssh)         |
-| transport + internet (TCP/IP) | in the **kernel** – this is the network stack        |
-| network access             | the card's **driver** (kernel) and the network card hardware |
-| physical                   | hardware                                                |
+| Layer                         | Where does it run?                                           |
+| ----------------------------- | ------------------------------------------------------------ |
+| application                   | in **user mode**, in the program (browser, ssh)              |
+| transport + internet (TCP/IP) | in the **kernel** – this is the network stack                |
+| network access                | the card's **driver** (kernel) and the network card hardware |
+| physical                      | hardware                                                     |
 
 The boundary between the program and the kernel's network stack is the **socket** – covered in the third lesson.
 

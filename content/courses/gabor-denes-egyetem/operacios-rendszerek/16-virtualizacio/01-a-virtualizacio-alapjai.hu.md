@@ -25,11 +25,11 @@ Miért jó?
 
 ## A hipervizor két típusa
 
-| | **1. típus** (_bare-metal_) | **2. típus** (_hosted_) |
-| --- | --- | --- |
-| hol fut | **közvetlenül a hardveren** | egy **gazda OS-en**, alkalmazásként |
-| példák | VMware ESXi, Microsoft **Hyper-V**, Xen, **KVM** (Linux kernel modul) | **VirtualBox**, VMware Workstation, Parallels Desktop |
-| jellemző | gyorsabb, szervereken és felhőben | egyszerű telepíteni, asztali gépen |
+|          | **1. típus** (_bare-metal_)                                           | **2. típus** (_hosted_)                               |
+| -------- | --------------------------------------------------------------------- | ----------------------------------------------------- |
+| hol fut  | **közvetlenül a hardveren**                                           | egy **gazda OS-en**, alkalmazásként                   |
+| példák   | VMware ESXi, Microsoft **Hyper-V**, Xen, **KVM** (Linux kernel modul) | **VirtualBox**, VMware Workstation, Parallels Desktop |
+| jellemző | gyorsabb, szervereken és felhőben                                     | egyszerű telepíteni, asztali gépen                    |
 
 A KVM érdekes eset: a Linux kernelt magát teszi hipervizorrá, ezért 1. típusúnak számít, bár egy teljes Linux fut alatta. Windowson a Hyper-V bekapcsolásakor maga a Windows is egy „kitüntetett” VM-be kerül a hipervizor fölé.
 

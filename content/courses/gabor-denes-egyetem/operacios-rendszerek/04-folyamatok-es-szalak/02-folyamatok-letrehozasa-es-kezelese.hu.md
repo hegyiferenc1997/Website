@@ -58,12 +58,12 @@ ps -o pid,ppid,cmd     # a shelled folyamatai: PID és a szülő PID-je
 
 A **jelzés** egy rövid értesítés, amelyet a kernel vagy egy másik folyamat küld egy folyamatnak.
 
-| Jelzés    | Szám | Jelentés                                         | Mikor?                    |
-| --------- | ---- | ------------------------------------------------ | ------------------------- |
-| `SIGINT`  | 2    | megszakítás kérése                               | **Ctrl + C** a terminálban |
-| `SIGTERM` | 15   | udvarias kérés a kilépésre (elkapható)           | `kill PID` alapértelmezése |
-| `SIGKILL` | 9    | azonnali leállítás (**nem** kapható el)          | `kill -9 PID`             |
-| `SIGSTOP` | 19   | felfüggesztés                                    | **Ctrl + Z**              |
+| Jelzés    | Szám | Jelentés                                | Mikor?                     |
+| --------- | ---- | --------------------------------------- | -------------------------- |
+| `SIGINT`  | 2    | megszakítás kérése                      | **Ctrl + C** a terminálban |
+| `SIGTERM` | 15   | udvarias kérés a kilépésre (elkapható)  | `kill PID` alapértelmezése |
+| `SIGKILL` | 9    | azonnali leállítás (**nem** kapható el) | `kill -9 PID`              |
+| `SIGSTOP` | 19   | felfüggesztés                           | **Ctrl + Z**               |
 
 ## Folyamatok figyelése
 

@@ -16,13 +16,13 @@ minutes: 25
 
 A **virtual machine** (VM) is a computer "assembled" from software: it has a processor, memory, a disk and a network card, but all of these are provided from the real machine's resources by a program called the **hypervisor**.
 
-| Term               | Meaning                                                         | In our lab                     |
-| ------------------ | --------------------------------------------------------------- | ------------------------------ |
-| **host**           | the real computer and the operating system running on it        | your laptop with Windows 11    |
-| **guest**          | the operating system running inside the virtual machine         | Ubuntu or Windows 11           |
-| **hypervisor**     | the program that runs the virtual machines                      | Oracle VirtualBox 7.2          |
-| **ISO file**       | an image of an installation disc in a single file              | `ubuntu-26.04.1-desktop-amd64.iso` |
-| **virtual disk**   | a big file on the host that the guest sees as a hard drive      | `Ubuntu-OS.vdi`                |
+| Term             | Meaning                                                    | In our lab                         |
+| ---------------- | ---------------------------------------------------------- | ---------------------------------- |
+| **host**         | the real computer and the operating system running on it   | your laptop with Windows 11        |
+| **guest**        | the operating system running inside the virtual machine    | Ubuntu or Windows 11               |
+| **hypervisor**   | the program that runs the virtual machines                 | Oracle VirtualBox 7.2              |
+| **ISO file**     | an image of an installation disc in a single file          | `ubuntu-26.04.1-desktop-amd64.iso` |
+| **virtual disk** | a big file on the host that the guest sees as a hard drive | `Ubuntu-OS.vdi`                    |
 
 Advantages for a student:
 
@@ -34,12 +34,12 @@ Advantages for a student:
 
 ## What does your host need?
 
-| Resource      | Minimum (one VM at a time)  | Recommended                      |
-| ------------- | --------------------------- | -------------------------------- |
-| processor     | 64-bit, 4 cores, **VT-x / AMD-V** | 6–8 cores                  |
-| memory (RAM)  | 8 GB                        | **16 GB** or more                |
-| free disk     | 60 GB                       | **150 GB on an SSD**             |
-| system        | Windows 10/11, macOS, Linux | Windows 11 64-bit                |
+| Resource     | Minimum (one VM at a time)        | Recommended          |
+| ------------ | --------------------------------- | -------------------- |
+| processor    | 64-bit, 4 cores, **VT-x / AMD-V** | 6–8 cores            |
+| memory (RAM) | 8 GB                              | **16 GB** or more    |
+| free disk    | 60 GB                             | **150 GB on an SSD** |
+| system       | Windows 10/11, macOS, Linux       | Windows 11 64-bit    |
 
 Rule of thumb: give the guest **at most half of the RAM and the CPU cores**, otherwise the host slows down.
 

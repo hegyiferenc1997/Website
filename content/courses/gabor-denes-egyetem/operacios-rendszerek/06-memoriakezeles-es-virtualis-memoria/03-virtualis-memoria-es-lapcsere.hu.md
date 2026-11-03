@@ -32,11 +32,11 @@ A laphiba **drága**: egy lemezművelet ezerszer–milliószor lassabb egy memó
 
 Példa hivatkozási sorozat, **3 kerettel**: `7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2`
 
-| Algoritmus   | Melyik lapot cseréli?                                      | Laphibák a példában |
-| ------------ | ---------------------------------------------------------- | ------------------- |
-| **FIFO**     | a **legrégebben betöltöttet**                              | 10                  |
-| **LRU**      | a **legrégebben használtat** (_Least Recently Used_)       | 9                   |
-| **optimális** (OPT) | azt, amelyikre **a legkésőbb** lesz szükség        | 7                   |
+| Algoritmus          | Melyik lapot cseréli?                                | Laphibák a példában |
+| ------------------- | ---------------------------------------------------- | ------------------- |
+| **FIFO**            | a **legrégebben betöltöttet**                        | 10                  |
+| **LRU**             | a **legrégebben használtat** (_Least Recently Used_) | 9                   |
+| **optimális** (OPT) | azt, amelyikre **a legkésőbb** lesz szükség          | 7                   |
 
 Az **optimális** algoritmus a legjobb, de a jövőt nem ismerjük, ezért csak **összehasonlítási alap**. Az **LRU** jól közelíti, a valódi rendszerek ennek olcsó közelítéseit használják (pl. **óra** / _second chance_ algoritmus a „használt” bittel).
 

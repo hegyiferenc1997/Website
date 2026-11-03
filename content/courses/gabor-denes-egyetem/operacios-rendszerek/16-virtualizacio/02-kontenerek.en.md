@@ -14,12 +14,12 @@ minutes: 25
 
 A virtual machine runs a **complete operating system** with its own kernel. A **container**, in contrast, is only an **isolated group of processes** on the host kernel: it sees its own file system, network and process list, but the kernel is **shared**.
 
-| | **Virtual machine** | **Container** |
-| --- | --- | --- |
-| kernel | its own | the host's, shared |
-| start-up | ten seconds to minutes | typically under a second |
-| size | several GB (full OS) | a few MB to a few hundred MB |
-| isolation | strong (hardware boundary) | weaker (shared kernel) |
+|               | **Virtual machine**              | **Container**                                                    |
+| ------------- | -------------------------------- | ---------------------------------------------------------------- |
+| kernel        | its own                          | the host's, shared                                               |
+| start-up      | ten seconds to minutes           | typically under a second                                         |
+| size          | several GB (full OS)             | a few MB to a few hundred MB                                     |
+| isolation     | strong (hardware boundary)       | weaker (shared kernel)                                           |
 | OS it can run | anything (even Windows on Linux) | one built on the same kernel (Linux container on a Linux kernel) |
 
 That is why on Windows and macOS Docker Desktop starts a small **Linux virtual machine** in the background (WSL 2 on Windows), and the Linux containers run inside it.

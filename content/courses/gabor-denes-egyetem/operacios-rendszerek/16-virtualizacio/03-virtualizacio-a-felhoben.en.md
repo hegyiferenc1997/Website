@@ -16,11 +16,11 @@ The **cloud** is computing capacity running in huge data centres that can be **r
 
 ## The three service models
 
-| Model | What do you get? | What do you manage? | Example |
-| --- | --- | --- | --- |
-| **IaaS** (_Infrastructure as a Service_) | virtual machine, disk, network | the OS, updates, the application | AWS EC2, Azure Virtual Machines |
-| **PaaS** (_Platform as a Service_) | a ready runtime environment | only the application's code | Heroku, Google App Engine, Azure App Service |
-| **SaaS** (_Software as a Service_) | a finished application in the browser | only your own data | Gmail, Microsoft 365, Neptun |
+| Model                                    | What do you get?                      | What do you manage?              | Example                                      |
+| ---------------------------------------- | ------------------------------------- | -------------------------------- | -------------------------------------------- |
+| **IaaS** (_Infrastructure as a Service_) | virtual machine, disk, network        | the OS, updates, the application | AWS EC2, Azure Virtual Machines              |
+| **PaaS** (_Platform as a Service_)       | a ready runtime environment           | only the application's code      | Heroku, Google App Engine, Azure App Service |
+| **SaaS** (_Software as a Service_)       | a finished application in the browser | only your own data               | Gmail, Microsoft 365, Neptun                 |
 
 The further down the table you go, the less you have to operate, but the less you can customise the system. This website will have a cloud version too: its database will be PostgreSQL running in the cloud (PaaS).
 

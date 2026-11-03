@@ -32,13 +32,13 @@ Nem minden API-hívás jár rendszerhívással: a `strlen` vagy a `sqrt` teljese
 
 ## A legfontosabb API-k
 
-| API                 | Hol?                     | Jellemző                                                         |
-| ------------------- | ------------------------ | ---------------------------------------------------------------- |
-| **C szabványkönyvtár** | mindenhol             | `printf`, `fopen`, `malloc` – a C nyelv része                   |
-| **POSIX**           | Linux, macOS, BSD        | IEEE-szabvány: `fork`, `open`, `pthread_create`, a shell parancsai |
-| **Win32 (Windows API)** | Windows              | `CreateProcess`, `CreateFile`, ablakkezelés; a `kernel32.dll`, `user32.dll` stb. adja |
-| **Native API**      | Windows, belső          | `ntdll.dll` – a Win32 alatti, kevéssé dokumentált réteg, közvetlenül a kernelt hívja |
-| magas szintű könyvtárak | bárhol               | Python `os`, Java `java.io`, .NET – végül ezek is a fentieket hívják |
+| API                     | Hol?              | Jellemző                                                                              |
+| ----------------------- | ----------------- | ------------------------------------------------------------------------------------- |
+| **C szabványkönyvtár**  | mindenhol         | `printf`, `fopen`, `malloc` – a C nyelv része                                         |
+| **POSIX**               | Linux, macOS, BSD | IEEE-szabvány: `fork`, `open`, `pthread_create`, a shell parancsai                    |
+| **Win32 (Windows API)** | Windows           | `CreateProcess`, `CreateFile`, ablakkezelés; a `kernel32.dll`, `user32.dll` stb. adja |
+| **Native API**          | Windows, belső    | `ntdll.dll` – a Win32 alatti, kevéssé dokumentált réteg, közvetlenül a kernelt hívja  |
+| magas szintű könyvtárak | bárhol            | Python `os`, Java `java.io`, .NET – végül ezek is a fentieket hívják                  |
 
 Linuxon a C könyvtár általában a **glibc** (Alpine Linuxon a kisebb musl). Megnézheted, mely könyvtárakat használ egy program:
 
@@ -50,11 +50,11 @@ ldd /bin/ls          # a dinamikusan betöltött könyvtárak (libc.so.6 …)
 
 Az **ABI** (_Application Binary Interface_) a **lefordított** program és a rendszer közötti megállapodás: hogyan adódnak át a paraméterek, milyen a futtatható fájl formátuma, mik a rendszerhívás-számok.
 
-| Rendszer | Futtatható formátum     | Rendszerhívások      |
-| -------- | ----------------------- | -------------------- |
-| Linux    | **ELF**                 | Linux-számozás       |
-| Windows  | **PE** (`.exe`, `.dll`) | NT kernel (ntdll)    |
-| macOS    | **Mach-O**              | XNU kernel           |
+| Rendszer | Futtatható formátum     | Rendszerhívások   |
+| -------- | ----------------------- | ----------------- |
+| Linux    | **ELF**                 | Linux-számozás    |
+| Windows  | **PE** (`.exe`, `.dll`) | NT kernel (ntdll) |
+| macOS    | **Mach-O**              | XNU kernel        |
 
 Ezért nem fut egy Linuxra fordított program Windowson: más a fájlformátum és más a kernel felülete. A **forráskód** viszont hordozható, ha szabványos API-t (pl. POSIX vagy a C szabványkönyvtár) használ – csak újra kell fordítani. Kivételek: a **WSL** Linuxot futtat Windowson (WSL 2 virtuális gépben valódi Linux kernellel), a **Wine** pedig a Win32 API-t valósítja meg Linuxon.
 

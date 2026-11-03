@@ -14,12 +14,12 @@ minutes: 15
 
 A **GUI** (_Graphical User Interface_) offers **visual elements** instead of typed commands. Its basic principle is **WIMP**: _Windows_, _Icons_, _Menus_, _Pointer_. It was developed by Xerox PARC researchers in the 1970s and made popular by the Apple Macintosh (1984) and Windows.
 
-| Aspect          | CLI                                 | GUI                                    |
-| --------------- | ----------------------------------- | -------------------------------------- |
-| learning        | harder, you must know the commands  | easier, "discoverable"                 |
-| speed           | faster in practised hands           | many clicks                            |
-| automation      | easy (scripts)                      | hard                                   |
-| resource needs  | small                               | larger (graphics, memory)              |
+| Aspect         | CLI                                | GUI                       |
+| -------------- | ---------------------------------- | ------------------------- |
+| learning       | harder, you must know the commands | easier, "discoverable"    |
+| speed          | faster in practised hands          | many clicks               |
+| automation     | easy (scripts)                     | hard                      |
+| resource needs | small                              | larger (graphics, memory) |
 
 Today's systems have both, and they **complement each other**. Touch (mobile) interfaces and voice control are also user interfaces.
 

@@ -51,7 +51,8 @@ powercfg /list                 # list the power schemes
 powercfg /setactive SCHEME_MIN # "High performance" scheme
 ```
 
-  On Linux `powerprofilesctl` (Ubuntu: Settings → Power) switches between the _power-saver_, _balanced_ and _performance_ profiles.
+On Linux `powerprofilesctl` (Ubuntu: Settings → Power) switches between the _power-saver_, _balanced_ and _performance_ profiles.
+
 - **SSD**: the biggest single speed-up for an old machine is replacing the hard disk with an SSD. The system keeps it healthy with weekly **TRIM** (`fstrim.timer` on Linux, "Optimise Drives" on Windows); an SSD does **not** need defragmenting.
 - **Updates**: kernel and driver updates often bring performance improvements as well as security fixes.
 - **In a virtual machine**: give the VM enough RAM and 2+ cores, install the **Guest Additions** and enable 3D acceleration (see topic 1).

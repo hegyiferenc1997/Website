@@ -12,14 +12,14 @@ minutes: 20
 
 ## A hat csoport
 
-| Csoport              | Mire való?                                       | POSIX (Linux, macOS)       | Win32 (Windows)                 |
-| -------------------- | ------------------------------------------------ | -------------------------- | ------------------------------- |
-| **folyamatkezelés**  | indítás, befejezés, várakozás                    | `fork`, `exec`, `exit`, `wait` | `CreateProcess`, `ExitProcess`, `WaitForSingleObject` |
-| **fájlkezelés**      | megnyitás, olvasás, írás, bezárás, törlés        | `open`, `read`, `write`, `close`, `unlink` | `CreateFile`, `ReadFile`, `WriteFile`, `CloseHandle`, `DeleteFile` |
-| **eszközkezelés**    | eszköz vezérlése, lefoglalása                    | `ioctl`, `read`, `write`   | `DeviceIoControl`               |
-| **információ**       | idő, azonosítók, rendszeradatok                  | `getpid`, `time`, `uname`  | `GetCurrentProcessId`, `GetSystemTime` |
-| **kommunikáció**     | csövek, közös memória, hálózat                   | `pipe`, `mmap`, `socket`   | `CreatePipe`, `MapViewOfFile`, `socket` |
-| **védelem**          | jogosultságok lekérdezése, beállítása            | `chmod`, `chown`, `umask`  | `SetFileSecurity`, `SetSecurityInfo` |
+| Csoport             | Mire való?                                | POSIX (Linux, macOS)                       | Win32 (Windows)                                                    |
+| ------------------- | ----------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------ |
+| **folyamatkezelés** | indítás, befejezés, várakozás             | `fork`, `exec`, `exit`, `wait`             | `CreateProcess`, `ExitProcess`, `WaitForSingleObject`              |
+| **fájlkezelés**     | megnyitás, olvasás, írás, bezárás, törlés | `open`, `read`, `write`, `close`, `unlink` | `CreateFile`, `ReadFile`, `WriteFile`, `CloseHandle`, `DeleteFile` |
+| **eszközkezelés**   | eszköz vezérlése, lefoglalása             | `ioctl`, `read`, `write`                   | `DeviceIoControl`                                                  |
+| **információ**      | idő, azonosítók, rendszeradatok           | `getpid`, `time`, `uname`                  | `GetCurrentProcessId`, `GetSystemTime`                             |
+| **kommunikáció**    | csövek, közös memória, hálózat            | `pipe`, `mmap`, `socket`                   | `CreatePipe`, `MapViewOfFile`, `socket`                            |
+| **védelem**         | jogosultságok lekérdezése, beállítása     | `chmod`, `chown`, `umask`                  | `SetFileSecurity`, `SetSecurityInfo`                               |
 
 Egy mai Linux kernel **több mint 300** rendszerhívást ismer, de a programok túlnyomó része pár tucatot használ.
 
@@ -29,11 +29,11 @@ UNIX-on egy megnyitott fájlt egy kis **egész szám**, a **fájlleíró** azono
 
 Minden folyamat **három** megnyitott fájlleíróval indul:
 
-| Szám | Neve       | Alapból hova mutat?           |
-| ---- | ---------- | ----------------------------- |
+| Szám | Neve       | Alapból hova mutat?               |
+| ---- | ---------- | --------------------------------- |
 | 0    | **stdin**  | billentyűzet (szabványos bemenet) |
-| 1    | **stdout** | terminál (szabványos kimenet) |
-| 2    | **stderr** | terminál (hibakimenet)        |
+| 1    | **stdout** | terminál (szabványos kimenet)     |
+| 2    | **stderr** | terminál (hibakimenet)            |
 
 Ezért kapja egy újonnan megnyitott fájl jellemzően a **3**-as leírót. A shell átirányításai is ezeket cserélik ki:
 

@@ -38,22 +38,22 @@ ls -l jegyzet.sh
 └ fájltípus: - = fájl, d = könyvtár, l = szimbolikus link
 ```
 
-| Jog   | Fájlnál                  | Könyvtárnál                                 |
-| ----- | ------------------------ | ------------------------------------------- |
-| **r** | olvashatod               | listázhatod a tartalmát                     |
-| **w** | módosíthatod             | létrehozhatsz, törölhetsz benne fájlt       |
-| **x** | futtathatod              | **beléphetsz** (`cd`)                       |
+| Jog   | Fájlnál      | Könyvtárnál                           |
+| ----- | ------------ | ------------------------------------- |
+| **r** | olvashatod   | listázhatod a tartalmát               |
+| **w** | módosíthatod | létrehozhatsz, törölhetsz benne fájlt |
+| **x** | futtathatod  | **beléphetsz** (`cd`)                 |
 
 ## chmod oktálisan
 
 Minden jog egy **szám**: **r = 4**, **w = 2**, **x = 1**. Szereplőnként összeadjuk, és a három számjegyet egymás mellé írjuk (tulajdonos, csoport, mások):
 
-| Jogok        | Számolás                         | Kód     |
-| ------------ | -------------------------------- | ------- |
-| `rwxr-x---`  | (4+2+1) (4+0+1) (0+0+0)          | **750** |
-| `rw-r--r--`  | (4+2) (4) (4)                    | **644** |
-| `rwxr-xr-x`  | 7 5 5                            | **755** |
-| `rw-------`  | 6 0 0                            | **600** |
+| Jogok       | Számolás                | Kód     |
+| ----------- | ----------------------- | ------- |
+| `rwxr-x---` | (4+2+1) (4+0+1) (0+0+0) | **750** |
+| `rw-r--r--` | (4+2) (4) (4)           | **644** |
+| `rwxr-xr-x` | 7 5 5                   | **755** |
+| `rw-------` | 6 0 0                   | **600** |
 
 ```bash
 chmod 644 jegyzet.txt     # szokásos fájl: én írom, mindenki olvassa

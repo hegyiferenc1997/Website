@@ -14,12 +14,12 @@ minutes: 15
 
 A **GUI** (_Graphical User Interface_) a parancsok begépelése helyett **vizuális elemeket** ad. Alapelve a **WIMP**: _Windows_ (ablakok), _Icons_ (ikonok), _Menus_ (menük), _Pointer_ (egérmutató). A Xerox PARC kutatói dolgozták ki az 1970-es években; az Apple Macintosh (1984) és a Windows tette népszerűvé.
 
-| Szempont        | CLI                                 | GUI                                    |
-| --------------- | ----------------------------------- | -------------------------------------- |
-| tanulás         | nehezebb, parancsokat kell tudni    | könnyebb, „felfedezhető”               |
-| sebesség        | gyakorlott kézben gyorsabb           | sok kattintás                          |
-| automatizálás   | könnyű (szkriptek)                  | nehéz                                  |
-| erőforrásigény  | kicsi                               | nagyobb (grafika, memória)             |
+| Szempont       | CLI                              | GUI                        |
+| -------------- | -------------------------------- | -------------------------- |
+| tanulás        | nehezebb, parancsokat kell tudni | könnyebb, „felfedezhető”   |
+| sebesség       | gyakorlott kézben gyorsabb       | sok kattintás              |
+| automatizálás  | könnyű (szkriptek)               | nehéz                      |
+| erőforrásigény | kicsi                            | nagyobb (grafika, memória) |
 
 A mai rendszerekben mindkettő megvan, és **kiegészítik egymást**. Az érintőképernyős (mobil) felület és a hangvezérlés is felhasználói interfész.
 

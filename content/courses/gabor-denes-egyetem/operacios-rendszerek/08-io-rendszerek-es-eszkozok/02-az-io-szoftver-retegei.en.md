@@ -50,11 +50,11 @@ On Windows: **Device Manager** (Win + X → Device Manager) – a yellow exclama
 
 ## Blocking, non-blocking, asynchronous
 
-| Kind            | What does the call do?                                          | Example                             |
-| --------------- | --------------------------------------------------------------- | ----------------------------------- |
-| **blocking**    | the process **waits** (waiting state) until the I/O is done     | `input()` in Python, `read()`       |
-| **non-blocking**| **returns immediately** with whatever is available (even nothing) | network socket in non-blocking mode |
-| **asynchronous**| starts the I/O, returns immediately and **notifies later**      | `async`/`await`, io_uring, Windows IOCP |
+| Kind             | What does the call do?                                            | Example                                 |
+| ---------------- | ----------------------------------------------------------------- | --------------------------------------- |
+| **blocking**     | the process **waits** (waiting state) until the I/O is done       | `input()` in Python, `read()`           |
+| **non-blocking** | **returns immediately** with whatever is available (even nothing) | network socket in non-blocking mode     |
+| **asynchronous** | starts the I/O, returns immediately and **notifies later**        | `async`/`await`, io_uring, Windows IOCP |
 
 Blocking is the simplest to program; a busy web server, however, serves thousands of connections on a single thread with asynchronous I/O.
 

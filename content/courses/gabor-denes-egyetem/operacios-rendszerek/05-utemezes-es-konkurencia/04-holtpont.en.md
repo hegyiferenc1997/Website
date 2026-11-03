@@ -55,12 +55,12 @@ Five philosophers sit at a round table with five forks between them. Eating need
 
 ## Handling strategies
 
-| Strategy              | Idea                                                                       |
-| --------------------- | -------------------------------------------------------------------------- |
-| **prevention**        | make one of the four conditions impossible, e.g. take locks in a **fixed order** (no cycle) |
-| **avoidance**         | on every request check whether we stay in a **safe** state (banker's algorithm) |
-| **detection and recovery** | let it happen, periodically look for cycles, and kill or roll back a process |
-| **ostrich algorithm** | ignore it – it is rare and handling is expensive. Most desktop OSes do this; the user restarts the program. |
+| Strategy                   | Idea                                                                                                        |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **prevention**             | make one of the four conditions impossible, e.g. take locks in a **fixed order** (no cycle)                 |
+| **avoidance**              | on every request check whether we stay in a **safe** state (banker's algorithm)                             |
+| **detection and recovery** | let it happen, periodically look for cycles, and kill or roll back a process                                |
+| **ostrich algorithm**      | ignore it – it is rare and handling is expensive. Most desktop OSes do this; the user restarts the program. |
 
 ### The banker's algorithm in brief
 
@@ -68,11 +68,11 @@ A state is **safe** if there is an order in which every process can get its **de
 
 Example: 12 units of a resource (e.g. 12 tape drives).
 
-| Process  | Maximum | Holds now   | May still need |
-| -------- | ------- | ----------- | -------------- |
-| P0       | 10      | 5           | 5              |
-| P1       | 4       | 2           | 2              |
-| P2       | 9       | 2           | 7              |
+| Process | Maximum | Holds now | May still need |
+| ------- | ------- | --------- | -------------- |
+| P0      | 10      | 5         | 5              |
+| P1      | 4       | 2         | 2              |
+| P2      | 9       | 2         | 7              |
 
 Free: 12 − (5 + 2 + 2) = **3**.
 

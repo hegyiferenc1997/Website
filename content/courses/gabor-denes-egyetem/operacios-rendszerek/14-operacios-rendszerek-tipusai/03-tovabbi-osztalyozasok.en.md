@@ -12,15 +12,15 @@ minutes: 20
 
 ## Classification criteria
 
-| Criterion               | Types                                                | Example                             |
-| ----------------------- | ---------------------------------------------------- | ----------------------------------- |
-| number of users         | **single-user** / **multi-user**                     | MS-DOS / Linux, Windows             |
-| tasks running at once   | **single-tasking** / **multitasking**                | MS-DOS / every modern OS            |
-| mode of processing      | **batch** / **interactive (time-sharing)** / **real-time** | nightly payroll / desktop / airbag |
-| processors              | single-processor / **multiprocessor** (SMP)          | old PC / today's multi-core machines |
-| place of use            | desktop, server, mobile, embedded                    | see the previous lessons            |
-| kernel structure        | monolithic, microkernel, hybrid                      | Linux, QNX, Windows                 |
-| source code             | **open** / **closed**                                | Linux, FreeBSD / Windows, iOS       |
+| Criterion             | Types                                                      | Example                              |
+| --------------------- | ---------------------------------------------------------- | ------------------------------------ |
+| number of users       | **single-user** / **multi-user**                           | MS-DOS / Linux, Windows              |
+| tasks running at once | **single-tasking** / **multitasking**                      | MS-DOS / every modern OS             |
+| mode of processing    | **batch** / **interactive (time-sharing)** / **real-time** | nightly payroll / desktop / airbag   |
+| processors            | single-processor / **multiprocessor** (SMP)                | old PC / today's multi-core machines |
+| place of use          | desktop, server, mobile, embedded                          | see the previous lessons             |
+| kernel structure      | monolithic, microkernel, hybrid                            | Linux, QNX, Windows                  |
+| source code           | **open** / **closed**                                      | Linux, FreeBSD / Windows, iOS        |
 
 Note: "multi-user" does not only mean that several people sit at the machine at once – it also means the OS **separates** users (own files, permissions, processes). Windows 11 and Ubuntu on a laptop are multi-user systems too.
 
@@ -38,11 +38,11 @@ Note: "multi-user" does not only mean that several people sit at the machine at 
 
 Examples of licences:
 
-| Licence      | Type                | Essence                                                        | Example         |
-| ------------ | ------------------- | -------------------------------------------------------------- | --------------- |
-| **GPL**      | "copyleft"          | modified versions must also be released under GPL with source  | Linux kernel    |
-| **BSD**, **MIT** | permissive      | usable for almost anything, even in closed products            | FreeBSD (macOS partly builds on it) |
-| **Apache 2.0** | permissive + patent clause |                                                       | most of Android |
+| Licence          | Type                       | Essence                                                       | Example                             |
+| ---------------- | -------------------------- | ------------------------------------------------------------- | ----------------------------------- |
+| **GPL**          | "copyleft"                 | modified versions must also be released under GPL with source | Linux kernel                        |
+| **BSD**, **MIT** | permissive                 | usable for almost anything, even in closed products           | FreeBSD (macOS partly builds on it) |
+| **Apache 2.0**   | permissive + patent clause |                                                               | most of Android                     |
 
 ## Summary
 

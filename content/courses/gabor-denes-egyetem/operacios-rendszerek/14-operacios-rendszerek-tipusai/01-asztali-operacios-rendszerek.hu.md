@@ -29,12 +29,12 @@ minutes: 20
 
 A **disztribúció** a kernel + alapprogramok + csomagkezelő + grafikus felület + beállítások összeválogatott csomagja.
 
-| Család      | Disztribúciók                    | Csomagkezelő | Kinek ajánlott?                     |
-| ----------- | -------------------------------- | ------------ | ----------------------------------- |
-| Debian      | **Ubuntu**, Debian, Linux Mint   | `apt` (.deb) | kezdőknek, asztalra, szerverre      |
-| Red Hat     | Fedora, RHEL, Rocky, AlmaLinux   | `dnf` (.rpm) | vállalati szerverek, fejlesztők     |
-| Arch        | Arch Linux, Manjaro              | `pacman`     | haladóknak, akik mindent maguk állítanak |
-| SUSE        | openSUSE, SLES                   | `zypper`     | vállalati környezet                 |
+| Család  | Disztribúciók                  | Csomagkezelő | Kinek ajánlott?                          |
+| ------- | ------------------------------ | ------------ | ---------------------------------------- |
+| Debian  | **Ubuntu**, Debian, Linux Mint | `apt` (.deb) | kezdőknek, asztalra, szerverre           |
+| Red Hat | Fedora, RHEL, Rocky, AlmaLinux | `dnf` (.rpm) | vállalati szerverek, fejlesztők          |
+| Arch    | Arch Linux, Manjaro            | `pacman`     | haladóknak, akik mindent maguk állítanak |
+| SUSE    | openSUSE, SLES                 | `zypper`     | vállalati környezet                      |
 
 ## macOS
 

@@ -16,13 +16,13 @@ minutes: 25
 
 A **virtuális gép** (VM, _virtual machine_) egy szoftverrel „összerakott” számítógép: van processzora, memóriája, lemeze és hálózati kártyája, csak mindezt egy program, a **hipervizor** biztosítja a valódi gép erőforrásaiból.
 
-| Fogalom              | Jelentés                                                     | Nálunk                         |
-| -------------------- | ------------------------------------------------------------ | ------------------------------ |
-| **gazda** (host)     | a valódi számítógép és a rajta futó operációs rendszer       | a laptopod Windows 11-gyel     |
-| **vendég** (guest)   | a virtuális gépben futó operációs rendszer                   | Ubuntu, illetve Windows 11     |
-| **hipervizor**       | a program, amely a virtuális gépeket futtatja                | Oracle VirtualBox 7.2          |
-| **ISO-fájl**         | egy telepítőlemez képe egyetlen fájlban                      | `ubuntu-26.04.1-desktop-amd64.iso` |
-| **virtuális lemez**  | egy nagy fájl a gazdán, amelyet a vendég merevlemeznek lát   | `Ubuntu-OS.vdi`                |
+| Fogalom             | Jelentés                                                   | Nálunk                             |
+| ------------------- | ---------------------------------------------------------- | ---------------------------------- |
+| **gazda** (host)    | a valódi számítógép és a rajta futó operációs rendszer     | a laptopod Windows 11-gyel         |
+| **vendég** (guest)  | a virtuális gépben futó operációs rendszer                 | Ubuntu, illetve Windows 11         |
+| **hipervizor**      | a program, amely a virtuális gépeket futtatja              | Oracle VirtualBox 7.2              |
+| **ISO-fájl**        | egy telepítőlemez képe egyetlen fájlban                    | `ubuntu-26.04.1-desktop-amd64.iso` |
+| **virtuális lemez** | egy nagy fájl a gazdán, amelyet a vendég merevlemeznek lát | `Ubuntu-OS.vdi`                    |
 
 Előnyök egy egyetemistának:
 
@@ -34,12 +34,12 @@ A **VirtualBox** ingyenes, nyílt forráskódú (GPLv3), Windowson, macOS-en és
 
 ## Mit tudjon a gazdagéped?
 
-| Erőforrás     | Minimum (egy VM egyszerre)  | Ajánlott                         |
-| ------------- | --------------------------- | -------------------------------- |
-| processzor    | 64 bites, 4 mag, **VT-x / AMD-V** | 6–8 mag                    |
-| memória (RAM) | 8 GB                        | **16 GB** vagy több              |
-| szabad lemez  | 60 GB                       | **150 GB SSD-n**                 |
-| rendszer      | Windows 10/11, macOS, Linux | Windows 11 64 bites              |
+| Erőforrás     | Minimum (egy VM egyszerre)        | Ajánlott            |
+| ------------- | --------------------------------- | ------------------- |
+| processzor    | 64 bites, 4 mag, **VT-x / AMD-V** | 6–8 mag             |
+| memória (RAM) | 8 GB                              | **16 GB** vagy több |
+| szabad lemez  | 60 GB                             | **150 GB SSD-n**    |
+| rendszer      | Windows 10/11, macOS, Linux       | Windows 11 64 bites |
 
 Ökölszabály: a vendég **legfeljebb a RAM és a processzormagok felét** kapja meg, különben a gazda belassul.
 

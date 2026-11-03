@@ -12,24 +12,24 @@ minutes: 20
 
 ## A CIA-hármas
 
-| Cél                                  | Jelentés                                         | Ha sérül…                          |
-| ------------------------------------ | ------------------------------------------------ | ---------------------------------- |
-| **bizalmasság** (_Confidentiality_)  | az adatot csak az láthatja, akinek szabad        | kiszivárognak a jelszavak          |
-| **sértetlenség** (_Integrity_)       | az adatot csak az módosíthatja, akinek szabad    | valaki átírja a jegyeidet          |
-| **rendelkezésre állás** (_Availability_) | a rendszer elérhető, amikor kell             | túlterheléses (DoS) támadás leállítja a Neptunt |
+| Cél                                      | Jelentés                                      | Ha sérül…                                       |
+| ---------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
+| **bizalmasság** (_Confidentiality_)      | az adatot csak az láthatja, akinek szabad     | kiszivárognak a jelszavak                       |
+| **sértetlenség** (_Integrity_)           | az adatot csak az módosíthatja, akinek szabad | valaki átírja a jegyeidet                       |
+| **rendelkezésre állás** (_Availability_) | a rendszer elérhető, amikor kell              | túlterheléses (DoS) támadás leállítja a Neptunt |
 
 Ehhez jön a **hitelesítés** (ki vagy?) és az **engedélyezés** (mit tehetsz?): előbb az OS megállapítja, hogy tényleg te vagy-e, aztán azt, hogy hozzáférhetsz-e egy fájlhoz.
 
 ## Fenyegetések és kártevők
 
-| Kártevő                | Mit csinál?                                                          |
-| ---------------------- | -------------------------------------------------------------------- |
-| **vírus**              | más programokba ágyazza magát, azok futtatásakor terjed             |
-| **féreg** (_worm_)     | önállóan, a hálózaton terjed (pl. biztonsági résen át)               |
-| **trójai**             | hasznos programnak álcázza magát                                     |
-| **zsarolóvírus** (_ransomware_) | titkosítja a fájljaidat, és váltságdíjat kér                |
-| **kémprogram**, **billentyűzetfigyelő** | adatokat, jelszavakat lop                           |
-| **rootkit**            | mélyen (akár a kernelben) elrejti magát és más kártevőket           |
+| Kártevő                                 | Mit csinál?                                               |
+| --------------------------------------- | --------------------------------------------------------- |
+| **vírus**                               | más programokba ágyazza magát, azok futtatásakor terjed   |
+| **féreg** (_worm_)                      | önállóan, a hálózaton terjed (pl. biztonsági résen át)    |
+| **trójai**                              | hasznos programnak álcázza magát                          |
+| **zsarolóvírus** (_ransomware_)         | titkosítja a fájljaidat, és váltságdíjat kér              |
+| **kémprogram**, **billentyűzetfigyelő** | adatokat, jelszavakat lop                                 |
+| **rootkit**                             | mélyen (akár a kernelben) elrejti magát és más kártevőket |
 
 A leggyakoribb belépési pont ma nem a technika, hanem az **ember**: az **adathalászat** (_phishing_) hamis e-mailekkel, oldalakkal csal ki jelszavakat. A másik nagy kapu a **frissítetlen** szoftver ismert biztonsági rései.
 

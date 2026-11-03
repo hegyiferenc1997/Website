@@ -29,21 +29,21 @@ A `127.0.0.1` (IPv6-ban `::1`) a **visszacsatolási** cím (_localhost_): mindig
 
 A `192.168.1.25/24` jelölésben a **/24** azt mondja, hogy az első 24 bit a **hálózat**, a maradék 8 bit a **gép** azonosítója (maszk: `255.255.255.0`). A gépeknek kiosztható címek száma: 2⁸ − 2 = **254** (a csupa 0 a hálózat címe, a csupa 1 a szórási cím).
 
-| Előtag | Maszk             | Gépbitek | Kiosztható címek |
-| ------ | ----------------- | -------- | ---------------- |
-| /24    | 255.255.255.0     | 8        | 254              |
-| /25    | 255.255.255.128   | 7        | 126              |
-| /26    | 255.255.255.192   | 6        | 62               |
-| /16    | 255.255.0.0       | 16       | 65 534           |
+| Előtag | Maszk           | Gépbitek | Kiosztható címek |
+| ------ | --------------- | -------- | ---------------- |
+| /24    | 255.255.255.0   | 8        | 254              |
+| /25    | 255.255.255.128 | 7        | 126              |
+| /26    | 255.255.255.192 | 6        | 62               |
+| /16    | 255.255.0.0     | 16       | 65 534           |
 
 ## TCP és UDP
 
-| Szempont          | **TCP**                                              | **UDP**                                  |
-| ----------------- | ---------------------------------------------------- | ---------------------------------------- |
-| kapcsolat         | **kapcsolatorientált** (háromutas kézfogás: SYN, SYN-ACK, ACK) | **kapcsolat nélküli**        |
-| megbízhatóság     | elveszett csomagot újraküld, sorrendet tart         | nincs garancia                           |
-| sebesség, rezsi   | lassabb, nagyobb fejléc                              | gyors, kis fejléc                        |
-| tipikus használat | web (HTTP/1–2), e-mail, SSH, fájlátvitel             | DNS, videóhívás, online játék, élő közvetítés |
+| Szempont          | **TCP**                                                        | **UDP**                                       |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| kapcsolat         | **kapcsolatorientált** (háromutas kézfogás: SYN, SYN-ACK, ACK) | **kapcsolat nélküli**                         |
+| megbízhatóság     | elveszett csomagot újraküld, sorrendet tart                    | nincs garancia                                |
+| sebesség, rezsi   | lassabb, nagyobb fejléc                                        | gyors, kis fejléc                             |
+| tipikus használat | web (HTTP/1–2), e-mail, SSH, fájlátvitel                       | DNS, videóhívás, online játék, élő közvetítés |
 
 Videóhívásnál jobb egy pillanatra elveszíteni egy képkockát, mint megvárni az újraküldését – ezért UDP.
 
@@ -51,13 +51,13 @@ Videóhívásnál jobb egy pillanatra elveszíteni egy képkockát, mint megvár
 
 Egy gépen sok program kommunikál egyszerre. A **port** (16 bites szám, **0–65535**) mondja meg, melyik programnak szól a csomag. Egy kapcsolatot öt adat azonosít: protokoll, forrás IP, forrás port, cél IP, cél port.
 
-| Port  | Protokoll | Szolgáltatás              |
-| ----- | --------- | ------------------------- |
-| 22    | TCP       | **SSH** (távoli parancssor) |
-| 53    | UDP/TCP   | **DNS**                   |
-| 80    | TCP       | **HTTP**                  |
-| 443   | TCP (UDP: HTTP/3) | **HTTPS**         |
-| 3389  | TCP       | Windows Távoli asztal     |
+| Port | Protokoll         | Szolgáltatás                |
+| ---- | ----------------- | --------------------------- |
+| 22   | TCP               | **SSH** (távoli parancssor) |
+| 53   | UDP/TCP           | **DNS**                     |
+| 80   | TCP               | **HTTP**                    |
+| 443  | TCP (UDP: HTTP/3) | **HTTPS**                   |
+| 3389 | TCP               | Windows Távoli asztal       |
 
 Az 1024 alatti („jól ismert”) portokon Linuxon csak a **root** indíthat szervert.
 

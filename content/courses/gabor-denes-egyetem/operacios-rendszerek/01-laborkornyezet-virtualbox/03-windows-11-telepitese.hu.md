@@ -12,13 +12,13 @@ minutes: 40
 
 ## A Windows 11 követelményei
 
-| Követelmény     | Minimum                    | A VirtualBoxban                          |
-| --------------- | -------------------------- | ---------------------------------------- |
-| processzor      | 64 bites, 2 mag, 1 GHz     | **2** (inkább 4) virtuális processzor     |
-| memória         | 4 GB                       | **4096 MB** (ajánlott 8192 MB)            |
-| tárhely         | 64 GB                      | **80 GB** dinamikus VDI                   |
-| firmware        | **UEFI**, **Secure Boot**  | _EFI engedélyezése_ + _Secure Boot_       |
-| biztonsági chip | **TPM 2.0**                | virtuális (emulált) **TPM v2.0**          |
+| Követelmény     | Minimum                   | A VirtualBoxban                       |
+| --------------- | ------------------------- | ------------------------------------- |
+| processzor      | 64 bites, 2 mag, 1 GHz    | **2** (inkább 4) virtuális processzor |
+| memória         | 4 GB                      | **4096 MB** (ajánlott 8192 MB)        |
+| tárhely         | 64 GB                     | **80 GB** dinamikus VDI               |
+| firmware        | **UEFI**, **Secure Boot** | _EFI engedélyezése_ + _Secure Boot_   |
+| biztonsági chip | **TPM 2.0**               | virtuális (emulált) **TPM v2.0**      |
 
 - **UEFI** a régi BIOS utódja, a gép indítását végző firmware.
 - **Secure Boot** (biztonságos rendszerindítás): csak digitálisan aláírt rendszerbetöltő indulhat el – így egy kártevő nem épülhet be az indítás elé.
@@ -42,11 +42,11 @@ A VirtualBox 7 óta mindhármat **szoftveresen biztosítja** – ezért nincs sz
 
 VirtualBox Manager → **Új**:
 
-| Mező           | Érték                                                |
-| -------------- | ---------------------------------------------------- |
-| Név            | `Windows11`                                          |
-| ISO-kép        | a letöltött `Win11_…_Hungarian_x64.iso`              |
-| Típus / Verzió | **Microsoft Windows / Windows 11 (64-bit)**          |
+| Mező           | Érték                                       |
+| -------------- | ------------------------------------------- |
+| Név            | `Windows11`                                 |
+| ISO-kép        | a letöltött `Win11_…_Hungarian_x64.iso`     |
+| Típus / Verzió | **Microsoft Windows / Windows 11 (64-bit)** |
 
 Jelöld be a **Felügyelet nélküli telepítés kihagyása** opciót (lásd lent a tippet).
 

@@ -19,13 +19,13 @@ minutes: 20
 
 ### A memóriahierarchia
 
-| Szint             | Tipikus méret | Elérési idő      |
-| ----------------- | ------------- | ---------------- |
-| regiszterek       | < 1 KB        | < 1 ns           |
-| gyorsítótár (cache L1–L3) | 1–64 MB | 1–10 ns       |
-| főmemória (RAM)   | 8–64 GB       | ~100 ns          |
-| SSD               | 0,5–4 TB      | ~0,1 ms (100 000 ns) |
-| HDD               | 1–20 TB       | ~10 ms           |
+| Szint                     | Tipikus méret | Elérési idő          |
+| ------------------------- | ------------- | -------------------- |
+| regiszterek               | < 1 KB        | < 1 ns               |
+| gyorsítótár (cache L1–L3) | 1–64 MB       | 1–10 ns              |
+| főmemória (RAM)           | 8–64 GB       | ~100 ns              |
+| SSD                       | 0,5–4 TB      | ~0,1 ms (100 000 ns) |
+| HDD                       | 1–20 TB       | ~10 ms               |
 
 Minél lejjebb megyünk, annál nagyobb és olcsóbb, de **lassabb** a tár. Az OS egyik fő feladata, hogy a gyakran használt adatok a gyorsabb szinten legyenek.
 
@@ -33,11 +33,11 @@ Minél lejjebb megyünk, annál nagyobb és olcsóbb, de **lassabb** a tár. Az 
 
 A **megszakítás** egy jelzés a processzornak, hogy valami figyelmet igényel. A CPU ilyenkor **félbehagyja** az aktuális munkát, elmenti az állapotát, és lefuttatja a megfelelő **megszakításkezelőt** (az OS része), majd folytatja ott, ahol abbahagyta.
 
-| Fajta                     | Ki váltja ki?                 | Példa                                    |
-| ------------------------- | ----------------------------- | ---------------------------------------- |
-| **hardveres** megszakítás | egy eszköz                    | lenyomtál egy billentyűt, megjött egy hálózati csomag, lejárt az időzítő |
-| **kivétel** (_exception_) | a futó utasítás hibája        | nullával osztás, érvénytelen memóriacím  |
-| **szoftveres** megszakítás (_trap_) | szándékosan a program | rendszerhívás (pl. fájlt akar olvasni)   |
+| Fajta                               | Ki váltja ki?          | Példa                                                                    |
+| ----------------------------------- | ---------------------- | ------------------------------------------------------------------------ |
+| **hardveres** megszakítás           | egy eszköz             | lenyomtál egy billentyűt, megjött egy hálózati csomag, lejárt az időzítő |
+| **kivétel** (_exception_)           | a futó utasítás hibája | nullával osztás, érvénytelen memóriacím                                  |
+| **szoftveres** megszakítás (_trap_) | szándékosan a program  | rendszerhívás (pl. fájlt akar olvasni)                                   |
 
 Az **időzítő** (_timer_) megszakítás különösen fontos: rendszeresen visszaadja a vezérlést az OS-nek, így egy végtelen ciklusban ragadt program sem tudja „elvenni” a gépet.
 

@@ -14,13 +14,13 @@ minutes: 20
 
 A processzor egy **módbittel** jelzi, milyen jogokkal fut az éppen végrehajtott kód:
 
-| Szempont                 | **Kernel mód** (felügyelői, _supervisor_) | **Felhasználói mód** (_user mode_)       |
-| ------------------------ | ----------------------------------------- | ---------------------------------------- |
-| ki fut így?              | a kernel, az illesztőprogramok            | minden alkalmazás, a shell, a böngésző   |
-| hardver elérése          | közvetlenül                               | **csak** rendszerhíváson át              |
-| privilegizált utasítások | engedélyezettek                           | **tiltottak** (kivételt váltanak ki)     |
-| memória                  | mindent elér                              | csak a saját címterét                    |
-| hiba hatása              | az egész rendszer leállhat (kernel panic, BSOD) | csak a program áll le               |
+| Szempont                 | **Kernel mód** (felügyelői, _supervisor_)       | **Felhasználói mód** (_user mode_)     |
+| ------------------------ | ----------------------------------------------- | -------------------------------------- |
+| ki fut így?              | a kernel, az illesztőprogramok                  | minden alkalmazás, a shell, a böngésző |
+| hardver elérése          | közvetlenül                                     | **csak** rendszerhíváson át            |
+| privilegizált utasítások | engedélyezettek                                 | **tiltottak** (kivételt váltanak ki)   |
+| memória                  | mindent elér                                    | csak a saját címterét                  |
+| hiba hatása              | az egész rendszer leállhat (kernel panic, BSOD) | csak a program áll le                  |
 
 **Privilegizált utasítások** például: megszakítások tiltása, az időzítő beállítása, a laptábla címének betöltése, I/O portok elérése, a gép leállítása. Ha egy felhasználói program ilyet próbál, a CPU **kivételt** vált ki, és a kernel leállítja a programot.
 

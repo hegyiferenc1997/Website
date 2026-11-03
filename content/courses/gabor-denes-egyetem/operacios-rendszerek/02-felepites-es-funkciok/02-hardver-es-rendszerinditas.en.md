@@ -19,13 +19,13 @@ minutes: 20
 
 ### The memory hierarchy
 
-| Level             | Typical size  | Access time      |
-| ----------------- | ------------- | ---------------- |
-| registers         | < 1 KB        | < 1 ns           |
-| cache (L1–L3)     | 1–64 MB       | 1–10 ns          |
-| main memory (RAM) | 8–64 GB       | ~100 ns          |
-| SSD               | 0.5–4 TB      | ~0.1 ms (100,000 ns) |
-| HDD               | 1–20 TB       | ~10 ms           |
+| Level             | Typical size | Access time          |
+| ----------------- | ------------ | -------------------- |
+| registers         | < 1 KB       | < 1 ns               |
+| cache (L1–L3)     | 1–64 MB      | 1–10 ns              |
+| main memory (RAM) | 8–64 GB      | ~100 ns              |
+| SSD               | 0.5–4 TB     | ~0.1 ms (100,000 ns) |
+| HDD               | 1–20 TB      | ~10 ms               |
 
 The lower we go, the bigger and cheaper but **slower** the storage. One of the OS's main tasks is to keep frequently used data on the faster levels.
 
@@ -33,11 +33,11 @@ The lower we go, the bigger and cheaper but **slower** the storage. One of the O
 
 An **interrupt** is a signal to the processor that something needs attention. The CPU then **suspends** its current work, saves its state, runs the appropriate **interrupt handler** (part of the OS), and then continues where it left off.
 
-| Kind                      | Who triggers it?              | Example                                  |
-| ------------------------- | ----------------------------- | ---------------------------------------- |
-| **hardware** interrupt    | a device                      | you pressed a key, a network packet arrived, the timer expired |
-| **exception**             | an error in the running instruction | division by zero, invalid memory address |
-| **software** interrupt (_trap_) | deliberately by the program | system call (e.g. it wants to read a file) |
+| Kind                            | Who triggers it?                    | Example                                                        |
+| ------------------------------- | ----------------------------------- | -------------------------------------------------------------- |
+| **hardware** interrupt          | a device                            | you pressed a key, a network packet arrived, the timer expired |
+| **exception**                   | an error in the running instruction | division by zero, invalid memory address                       |
+| **software** interrupt (_trap_) | deliberately by the program         | system call (e.g. it wants to read a file)                     |
 
 The **timer** interrupt is especially important: it regularly gives control back to the OS, so even a program stuck in an infinite loop cannot "take" the machine.
 

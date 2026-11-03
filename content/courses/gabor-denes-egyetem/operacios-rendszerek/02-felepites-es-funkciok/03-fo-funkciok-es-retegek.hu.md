@@ -12,15 +12,15 @@ minutes: 20
 
 ## A fő funkciók
 
-| Alrendszer               | Feladata                                                              | Hol látod?                          |
-| ------------------------ | --------------------------------------------------------------------- | ----------------------------------- |
-| **folyamatkezelés**      | programok indítása, leállítása, ütemezése, kommunikációja             | Feladatkezelő, `ps`, `top`          |
-| **memóriakezelés**       | memória kiosztása, visszavétele, védelme, virtuális memória           | „memóriahasználat 63%”              |
-| **fájlkezelés**          | fájlok, mappák, jogosultságok, fájlrendszerek                         | Fájlkezelő, `ls`, `cd`              |
-| **I/O- és eszközkezelés**| illesztőprogramok, pufferelés, nyomtatósor                            | Eszközkezelő, `lsusb`               |
-| **hálózatkezelés**       | protokollok (TCP/IP), hálózati interfészek                            | Wi-Fi ikon, `ip addr`               |
-| **védelem és biztonság** | felhasználók, jogosultságok, hitelesítés, naplózás                   | bejelentkezés, UAC, `sudo`          |
-| **felhasználói felület** | parancssor és grafikus felület                                        | asztal, terminál                    |
+| Alrendszer                | Feladata                                                    | Hol látod?                 |
+| ------------------------- | ----------------------------------------------------------- | -------------------------- |
+| **folyamatkezelés**       | programok indítása, leállítása, ütemezése, kommunikációja   | Feladatkezelő, `ps`, `top` |
+| **memóriakezelés**        | memória kiosztása, visszavétele, védelme, virtuális memória | „memóriahasználat 63%”     |
+| **fájlkezelés**           | fájlok, mappák, jogosultságok, fájlrendszerek               | Fájlkezelő, `ls`, `cd`     |
+| **I/O- és eszközkezelés** | illesztőprogramok, pufferelés, nyomtatósor                  | Eszközkezelő, `lsusb`      |
+| **hálózatkezelés**        | protokollok (TCP/IP), hálózati interfészek                  | Wi-Fi ikon, `ip addr`      |
+| **védelem és biztonság**  | felhasználók, jogosultságok, hitelesítés, naplózás          | bejelentkezés, UAC, `sudo` |
+| **felhasználói felület**  | parancssor és grafikus felület                              | asztal, terminál           |
 
 A tárgy következő témakörei ezeket veszik sorra – ez a lecke a „térkép”.
 

@@ -38,22 +38,22 @@ In the VirtualBox Manager: **New**.
 
 **Virtual machine name and operating system**
 
-| Field           | Value                                         |
-| --------------- | --------------------------------------------- |
-| Name            | `Ubuntu-OS`                                   |
-| Folder          | keep the default machine folder               |
-| ISO Image       | browse to the downloaded `ubuntu-26.04.1-desktop-amd64.iso` |
-| Type / Version  | VirtualBox detects it: **Linux / Ubuntu (64-bit)** |
+| Field          | Value                                                       |
+| -------------- | ----------------------------------------------------------- |
+| Name           | `Ubuntu-OS`                                                 |
+| Folder         | keep the default machine folder                             |
+| ISO Image      | browse to the downloaded `ubuntu-26.04.1-desktop-amd64.iso` |
+| Type / Version | VirtualBox detects it: **Linux / Ubuntu (64-bit)**          |
 
 Tick **Skip Unattended Installation**. This way you go through the installer yourself – you learn the most from it, and you do not get a preconfigured (`vboxuser`) user.
 
 **Hardware**
 
-| Setting       | Value                                          |
-| ------------- | ---------------------------------------------- |
-| Base Memory   | **4096 MB** (if the host has 16 GB: 6144–8192 MB) |
-| Processors    | **2** (with 8+ cores: 4)                       |
-| EFI           | can stay off (not required for Ubuntu)         |
+| Setting     | Value                                             |
+| ----------- | ------------------------------------------------- |
+| Base Memory | **4096 MB** (if the host has 16 GB: 6144–8192 MB) |
+| Processors  | **2** (with 8+ cores: 4)                          |
+| EFI         | can stay off (not required for Ubuntu)            |
 
 **Virtual hard disk**
 

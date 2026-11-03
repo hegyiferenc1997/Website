@@ -12,15 +12,15 @@ minutes: 20
 
 ## Osztályozási szempontok
 
-| Szempont                | Típusok                                              | Példa                               |
-| ----------------------- | ---------------------------------------------------- | ----------------------------------- |
-| felhasználók száma      | **egyfelhasználós** / **többfelhasználós**           | MS-DOS / Linux, Windows             |
-| egyszerre futó feladatok | **egyfeladatos** / **többfeladatos**                | MS-DOS / minden mai OS              |
-| feldolgozás módja       | **kötegelt** / **interaktív (időosztásos)** / **valós idejű** | bérszámfejtés éjjel / asztal / légzsák |
-| processzorok            | egyprocesszoros / **többprocesszoros** (SMP)         | régi PC / mai többmagos gépek       |
-| felhasználás helye      | asztali, szerver, mobil, beágyazott                  | lásd az előző leckéket              |
-| kernel felépítése       | monolitikus, mikrokernel, hibrid                     | Linux, QNX, Windows                 |
-| forráskód               | **nyílt** / **zárt**                                 | Linux, FreeBSD / Windows, iOS       |
+| Szempont                 | Típusok                                                       | Példa                                  |
+| ------------------------ | ------------------------------------------------------------- | -------------------------------------- |
+| felhasználók száma       | **egyfelhasználós** / **többfelhasználós**                    | MS-DOS / Linux, Windows                |
+| egyszerre futó feladatok | **egyfeladatos** / **többfeladatos**                          | MS-DOS / minden mai OS                 |
+| feldolgozás módja        | **kötegelt** / **interaktív (időosztásos)** / **valós idejű** | bérszámfejtés éjjel / asztal / légzsák |
+| processzorok             | egyprocesszoros / **többprocesszoros** (SMP)                  | régi PC / mai többmagos gépek          |
+| felhasználás helye       | asztali, szerver, mobil, beágyazott                           | lásd az előző leckéket                 |
+| kernel felépítése        | monolitikus, mikrokernel, hibrid                              | Linux, QNX, Windows                    |
+| forráskód                | **nyílt** / **zárt**                                          | Linux, FreeBSD / Windows, iOS          |
 
 Figyelem: a „többfelhasználós” nem csak azt jelenti, hogy egyszerre többen ülnek a gépnél – azt is, hogy az OS **elkülöníti** a felhasználókat (saját fájlok, jogok, folyamatok). A Windows 11 és az Ubuntu laptopon is többfelhasználós rendszer.
 
@@ -38,11 +38,11 @@ Figyelem: a „többfelhasználós” nem csak azt jelenti, hogy egyszerre több
 
 Licencek példái:
 
-| Licenc       | Típus               | Lényeg                                                         | Példa           |
-| ------------ | ------------------- | -------------------------------------------------------------- | --------------- |
-| **GPL**      | „copyleft”          | a módosított változatot is GPL alatt kell kiadni forráskóddal | Linux kernel    |
-| **BSD**, **MIT** | megengedő       | szinte bármire felhasználható, zárt termékbe is                | FreeBSD (a macOS részben erre épül) |
-| **Apache 2.0** | megengedő + szabadalmi záradék |                                                   | Android nagy része |
+| Licenc           | Típus                          | Lényeg                                                        | Példa                               |
+| ---------------- | ------------------------------ | ------------------------------------------------------------- | ----------------------------------- |
+| **GPL**          | „copyleft”                     | a módosított változatot is GPL alatt kell kiadni forráskóddal | Linux kernel                        |
+| **BSD**, **MIT** | megengedő                      | szinte bármire felhasználható, zárt termékbe is               | FreeBSD (a macOS részben erre épül) |
+| **Apache 2.0**   | megengedő + szabadalmi záradék |                                                               | Android nagy része                  |
 
 ## Összefoglalás
 

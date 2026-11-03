@@ -14,11 +14,11 @@ minutes: 25
 
 Egy szerver hónapokig, évekig fut leállás nélkül, sok felhasználót szolgál ki egyszerre, és jellemzően **nincs** rajta grafikus felület – távolról, SSH-n vagy webes felületen kezelik.
 
-| Rendszer                  | Hol erős?                                                        |
-| ------------------------- | ---------------------------------------------------------------- |
-| **Linux** (Ubuntu Server, RHEL, Debian) | webszerverek, felhő, konténerek – a felhőben futó gépek döntő többsége |
-| **Windows Server**        | vállalati hálózatok: Active Directory, fájlmegosztás, Exchange, .NET-alkalmazások |
-| **FreeBSD**               | hálózati eszközök, tűzfalak, streaming (pl. a Netflix tartalomszerverei) |
+| Rendszer                                | Hol erős?                                                                         |
+| --------------------------------------- | --------------------------------------------------------------------------------- |
+| **Linux** (Ubuntu Server, RHEL, Debian) | webszerverek, felhő, konténerek – a felhőben futó gépek döntő többsége            |
+| **Windows Server**                      | vállalati hálózatok: Active Directory, fájlmegosztás, Exchange, .NET-alkalmazások |
+| **FreeBSD**                             | hálózati eszközök, tűzfalak, streaming (pl. a Netflix tartalomszerverei)          |
 
 Szerverekre jellemző: **hosszú támogatás** (LTS), stabilitás a legújabb funkciók helyett, távoli felügyelet, automatizálás (szkriptek, Ansible).
 
@@ -40,10 +40,10 @@ Mobil sajátosságok: **energiatakarékosság** (a háttérfolyamatokat az OS ag
 
 A **valós idejű** OS-nél (RTOS) nem az átlagos sebesség a lényeg, hanem a **kiszámíthatóság**: egy feladatnak **határidőre** le kell futnia.
 
-| Fajta                   | Ha lekési a határidőt…                     | Példa                                    |
-| ----------------------- | ------------------------------------------ | ---------------------------------------- |
-| **kemény** valós idő    | **katasztrófa** – az eredmény értéktelen vagy veszélyes | légzsák, ABS, szívritmus-szabályozó, repülésvezérlés |
-| **lágy** valós idő      | romlik a minőség, de nem végzetes          | videólejátszás, online játék, VoIP       |
+| Fajta                | Ha lekési a határidőt…                                  | Példa                                                |
+| -------------------- | ------------------------------------------------------- | ---------------------------------------------------- |
+| **kemény** valós idő | **katasztrófa** – az eredmény értéktelen vagy veszélyes | légzsák, ABS, szívritmus-szabályozó, repülésvezérlés |
+| **lágy** valós idő   | romlik a minőség, de nem végzetes                       | videólejátszás, online játék, VoIP                   |
 
 Eszközeik: **prioritásos, preemptív** ütemezés, garantált legrosszabb válaszidő, **prioritásöröklés** (hogy egy alacsony prioritású, zárat tartó feladat ne tartsa fel a magasat – a Mars Pathfinder 1997-es hibája pont ez volt). Az általános célú Linux a **PREEMPT_RT** kiegészítéssel (2024 óta a fő kernel része) lágy, sőt sok esetben kemény valós idejű feladatokra is alkalmas.
 

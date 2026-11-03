@@ -40,15 +40,15 @@ Ha a kernel **végzetes hibát** talál, **kernel panic**-kal leáll (Windowson 
 
 Ezek **nem valódi** fájlok a lemezen: a kernel menet közben állítja elő a tartalmukat, ha olvasod őket – ablak a kernel belsejébe.
 
-| Útvonal                       | Mit mutat?                                       |
-| ----------------------------- | ------------------------------------------------ |
-| `/proc/cpuinfo`               | a processzor(ok) adatai                          |
-| `/proc/meminfo`               | a memória részletes állapota                     |
-| `/proc/<PID>/`                | egy folyamat adatai (status, maps, fd …)         |
-| `/proc/version`               | a kernel verziója és fordítási adatai            |
-| `/proc/sys/`                  | **állítható** kernelparaméterek (`sysctl`)       |
-| `/sys/class/net/`             | a hálózati interfészek                           |
-| `/sys/block/`                 | a blokkos eszközök (lemezek)                     |
+| Útvonal           | Mit mutat?                                 |
+| ----------------- | ------------------------------------------ |
+| `/proc/cpuinfo`   | a processzor(ok) adatai                    |
+| `/proc/meminfo`   | a memória részletes állapota               |
+| `/proc/<PID>/`    | egy folyamat adatai (status, maps, fd …)   |
+| `/proc/version`   | a kernel verziója és fordítási adatai      |
+| `/proc/sys/`      | **állítható** kernelparaméterek (`sysctl`) |
+| `/sys/class/net/` | a hálózati interfészek                     |
+| `/sys/block/`     | a blokkos eszközök (lemezek)               |
 
 ```bash
 cat /proc/version

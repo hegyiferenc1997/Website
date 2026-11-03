@@ -55,12 +55,12 @@ Ha minden erőforrásból **egy** példány van, a gráfban lévő **kör** = ho
 
 ## Kezelési stratégiák
 
-| Stratégia             | Ötlet                                                                      |
-| --------------------- | -------------------------------------------------------------------------- |
-| **megelőzés**         | a négy feltétel közül egyet lehetetlenné teszünk, pl. **rögzített sorrendben** foglaljuk a zárakat (nincs kör) |
-| **elkerülés**         | minden kérésnél ellenőrizzük, hogy **biztonságos** állapotban maradunk-e (bankár-algoritmus) |
-| **észlelés és feloldás** | engedjük kialakulni, időnként keresünk kört, és egy folyamatot leállítunk vagy visszaléptetünk |
-| **strucc-algoritmus** | nem foglalkozunk vele – ritka, és a kezelés drága. A legtöbb asztali OS így tesz, a felhasználó újraindítja a programot. |
+| Stratégia                | Ötlet                                                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| **megelőzés**            | a négy feltétel közül egyet lehetetlenné teszünk, pl. **rögzített sorrendben** foglaljuk a zárakat (nincs kör)           |
+| **elkerülés**            | minden kérésnél ellenőrizzük, hogy **biztonságos** állapotban maradunk-e (bankár-algoritmus)                             |
+| **észlelés és feloldás** | engedjük kialakulni, időnként keresünk kört, és egy folyamatot leállítunk vagy visszaléptetünk                           |
+| **strucc-algoritmus**    | nem foglalkozunk vele – ritka, és a kezelés drága. A legtöbb asztali OS így tesz, a felhasználó újraindítja a programot. |
 
 ### A bankár-algoritmus röviden
 

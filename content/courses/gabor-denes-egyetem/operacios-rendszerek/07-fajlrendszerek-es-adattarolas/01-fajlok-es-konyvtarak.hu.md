@@ -16,14 +16,14 @@ A **fájl** az OS által kezelt, **névvel ellátott** adatsorozat a háttértá
 
 Fontos **attribútumok** (metaadatok):
 
-| Attribútum      | Példa                                   |
-| --------------- | --------------------------------------- |
-| név             | `jegyzet.txt`                           |
-| méret           | 2 345 bájt                              |
-| típus           | szöveg, kép, futtatható                 |
-| tulajdonos      | `anna`                                  |
-| jogosultságok   | ki olvashatja, írhatja, futtathatja     |
-| időbélyegek     | létrehozás, utolsó módosítás, hozzáférés |
+| Attribútum    | Példa                                    |
+| ------------- | ---------------------------------------- |
+| név           | `jegyzet.txt`                            |
+| méret         | 2 345 bájt                               |
+| típus         | szöveg, kép, futtatható                  |
+| tulajdonos    | `anna`                                   |
+| jogosultságok | ki olvashatja, írhatja, futtathatja      |
+| időbélyegek   | létrehozás, utolsó módosítás, hozzáférés |
 
 ```bash
 stat jegyzet.txt     # a fájl összes metaadata
@@ -55,17 +55,17 @@ Linuxon **egyetlen fa** van, minden meghajtó ennek egy ágába kerül (**csatol
 
 ## A Linux könyvtárszerkezete (FHS)
 
-| Mappa        | Mi van benne?                                              |
-| ------------ | ---------------------------------------------------------- |
-| `/bin`, `/usr/bin` | a felhasználói programok (`ls`, `cp`, `python3`)     |
-| `/etc`       | rendszerszintű **beállítófájlok** (szöveg)                 |
-| `/home`      | a felhasználók saját mappái                                |
-| `/root`      | a rendszergazda (root) saját mappája                       |
-| `/var`       | változó adatok: **naplók** (`/var/log`), gyorsítótárak     |
-| `/tmp`       | ideiglenes fájlok (újraindításkor törlődhetnek)            |
-| `/dev`       | **eszközfájlok** (`/dev/sda` = az első lemez)              |
-| `/proc`, `/sys` | a kernel által menet közben generált „virtuális” fájlok |
-| `/boot`      | a kernel és a rendszerbetöltő fájljai                      |
+| Mappa              | Mi van benne?                                           |
+| ------------------ | ------------------------------------------------------- |
+| `/bin`, `/usr/bin` | a felhasználói programok (`ls`, `cp`, `python3`)        |
+| `/etc`             | rendszerszintű **beállítófájlok** (szöveg)              |
+| `/home`            | a felhasználók saját mappái                             |
+| `/root`            | a rendszergazda (root) saját mappája                    |
+| `/var`             | változó adatok: **naplók** (`/var/log`), gyorsítótárak  |
+| `/tmp`             | ideiglenes fájlok (újraindításkor törlődhetnek)         |
+| `/dev`             | **eszközfájlok** (`/dev/sda` = az első lemez)           |
+| `/proc`, `/sys`    | a kernel által menet közben generált „virtuális” fájlok |
+| `/boot`            | a kernel és a rendszerbetöltő fájljai                   |
 
 A UNIX-filozófia szerint **„minden fájl”**: a lemez, a terminál, sőt a futó folyamatok adatai is fájlként érhetők el.
 

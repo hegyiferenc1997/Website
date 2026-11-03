@@ -14,12 +14,12 @@ minutes: 25
 
 A virtuális gép **teljes operációs rendszert** futtat, saját kernellel. A **konténer** ezzel szemben csak egy **elszigetelt folyamatcsoport** a gazda kernelén: saját fájlrendszert, hálózatot és folyamatlistát lát, de a kernel **közös**.
 
-| | **Virtuális gép** | **Konténer** |
-| --- | --- | --- |
-| kernel | saját | a gazdáé, közös |
-| indulás | tíz másodperc – perc | jellemzően egy másodperc alatt |
-| méret | több GB (teljes OS) | néhány MB – néhány száz MB |
-| elszigetelés | erős (hardveres határ) | gyengébb (közös kernel) |
+|               | **Virtuális gép**          | **Konténer**                                             |
+| ------------- | -------------------------- | -------------------------------------------------------- |
+| kernel        | saját                      | a gazdáé, közös                                          |
+| indulás       | tíz másodperc – perc       | jellemzően egy másodperc alatt                           |
+| méret         | több GB (teljes OS)        | néhány MB – néhány száz MB                               |
+| elszigetelés  | erős (hardveres határ)     | gyengébb (közös kernel)                                  |
 | futtatható OS | bármi (Windows Linuxon is) | ugyanazon kernelre épülő (Linux-konténer Linux kernelen) |
 
 Ezért Windowson és macOS-en a Docker Desktop egy kis **Linux virtuális gépet** (Windowson a WSL 2-t) indít a háttérben, és abban futnak a Linux-konténerek.

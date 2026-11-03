@@ -44,11 +44,11 @@ A single-core machine can do concurrent but not truly parallel execution; an 8-c
 
 ## Cooperative and preemptive multitasking
 
-| Aspect           | Cooperative                                  | Preemptive                                       |
-| ---------------- | -------------------------------------------- | ------------------------------------------------ |
-| who switches?    | the program gives up the CPU **voluntarily** | the **OS** takes it away (timer interrupt)       |
-| danger           | a frozen program stops **the whole machine** | a frozen program only freezes itself             |
-| examples         | Windows 3.1, (classic) Mac OS 9              | Windows NT and later, Linux, macOS, Android      |
+| Aspect        | Cooperative                                  | Preemptive                                  |
+| ------------- | -------------------------------------------- | ------------------------------------------- |
+| who switches? | the program gives up the CPU **voluntarily** | the **OS** takes it away (timer interrupt)  |
+| danger        | a frozen program stops **the whole machine** | a frozen program only freezes itself        |
+| examples      | Windows 3.1, (classic) Mac OS 9              | Windows NT and later, Linux, macOS, Android |
 
 The cooperative principle still lives **inside programs**: tasks of the JavaScript event loop or Python `asyncio` voluntarily give up control at `await`.
 

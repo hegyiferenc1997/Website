@@ -14,14 +14,14 @@ minutes: 20
 
 A **rendszerprogramok** (_system utilities_) az OS-szel együtt érkező, de **nem a kernelben** futó programok. Kényelmes felületet adnak a kernel szolgáltatásaihoz.
 
-| Csoport              | Linux példa                | Windows példa                     |
-| -------------------- | -------------------------- | --------------------------------- |
-| fájlkezelés          | `ls`, `cp`, Fájlok         | Intéző, `robocopy`                |
-| állapot-információ   | `top`, `df`, `free`        | Feladatkezelő, Erőforrás-figyelő  |
-| szövegszerkesztés    | `nano`, `vim`              | Jegyzettömb                       |
-| programfejlesztés    | `gcc`, `python3`, `make`   | Visual Studio, `py`               |
-| csomagkezelés        | `apt`, `snap`              | `winget`, Microsoft Store         |
-| kommunikáció         | `ssh`, `curl`              | Távoli asztal, `curl`             |
+| Csoport            | Linux példa              | Windows példa                    |
+| ------------------ | ------------------------ | -------------------------------- |
+| fájlkezelés        | `ls`, `cp`, Fájlok       | Intéző, `robocopy`               |
+| állapot-információ | `top`, `df`, `free`      | Feladatkezelő, Erőforrás-figyelő |
+| szövegszerkesztés  | `nano`, `vim`            | Jegyzettömb                      |
+| programfejlesztés  | `gcc`, `python3`, `make` | Visual Studio, `py`              |
+| csomagkezelés      | `apt`, `snap`            | `winget`, Microsoft Store        |
+| kommunikáció       | `ssh`, `curl`            | Távoli asztal, `curl`            |
 
 ## Szolgáltatások (démonok)
 

@@ -14,11 +14,11 @@ minutes: 30
 
 All three processes arrive at **0 ms**, in this order:
 
-| Process  | CPU burst |
-| -------- | --------- |
-| P1       | 9 ms      |
-| P2       | 3 ms      |
-| P3       | 3 ms      |
+| Process | CPU burst |
+| ------- | --------- |
+| P1      | 9 ms      |
+| P2      | 3 ms      |
+| P3      | 3 ms      |
 
 ## FCFS – first come, first served
 

@@ -60,12 +60,12 @@ Movement: (183 − 53) + (183 − 14) = 130 + 169 = **299 cylinders**.
 
 The **C-SCAN** / **C-LOOK** variants serve in one direction only and jump back to the start at the end – this gives more uniform waiting times.
 
-| Algorithm  | Movement in the example | Starvation? |
-| ---------- | ----------------------- | ----------- |
-| FCFS       | 640                     | no          |
-| SSTF       | 236                     | possible    |
-| SCAN (up)  | 331                     | no          |
-| LOOK (up)  | 299                     | no          |
+| Algorithm | Movement in the example | Starvation? |
+| --------- | ----------------------- | ----------- |
+| FCFS      | 640                     | no          |
+| SSTF      | 236                     | possible    |
+| SCAN (up) | 331                     | no          |
+| LOOK (up) | 299                     | no          |
 
 ## SSDs and modern Linux
 

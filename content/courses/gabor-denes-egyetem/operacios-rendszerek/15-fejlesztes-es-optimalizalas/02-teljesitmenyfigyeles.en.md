@@ -12,12 +12,12 @@ minutes: 25
 
 ## The four main resources
 
-| Resource    | Important metrics                                       | When is it a problem?                               |
-| ----------- | ------------------------------------------------------- | --------------------------------------------------- |
-| **CPU**     | utilisation (%), user / system time, I/O wait (`wa`)    | constantly ~100%, many processes in the ready queue |
-| **memory**  | used, free, **cache**, **swap** usage, page faults      | swap keeps growing, the machine thrashes            |
-| **disk**    | read/write throughput, **IOPS**, wait time, utilisation (%) | constantly 100% utilisation, long waits         |
-| **network** | bandwidth (Mbit/s), packet loss, latency                | the line is full, many retransmissions               |
+| Resource    | Important metrics                                           | When is it a problem?                               |
+| ----------- | ----------------------------------------------------------- | --------------------------------------------------- |
+| **CPU**     | utilisation (%), user / system time, I/O wait (`wa`)        | constantly ~100%, many processes in the ready queue |
+| **memory**  | used, free, **cache**, **swap** usage, page faults          | swap keeps growing, the machine thrashes            |
+| **disk**    | read/write throughput, **IOPS**, wait time, utilisation (%) | constantly 100% utilisation, long waits             |
+| **network** | bandwidth (Mbit/s), packet loss, latency                    | the line is full, many retransmissions              |
 
 The **bottleneck** is the resource that fills up first – the system is only as fast as its slowest link. There is no point buying a new processor if the disk is the problem.
 

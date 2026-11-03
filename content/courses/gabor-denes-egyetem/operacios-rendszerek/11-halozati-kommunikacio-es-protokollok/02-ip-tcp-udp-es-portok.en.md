@@ -29,21 +29,21 @@ Your home router lets all machines out through a single public address using **N
 
 In `192.168.1.25/24` the **/24** says that the first 24 bits are the **network** and the remaining 8 bits identify the **host** (mask: `255.255.255.0`). The number of assignable host addresses: 2⁸ − 2 = **254** (all zeros is the network address, all ones the broadcast address).
 
-| Prefix | Mask              | Host bits | Assignable addresses |
-| ------ | ----------------- | --------- | -------------------- |
-| /24    | 255.255.255.0     | 8         | 254                  |
-| /25    | 255.255.255.128   | 7         | 126                  |
-| /26    | 255.255.255.192   | 6         | 62                   |
-| /16    | 255.255.0.0       | 16        | 65,534               |
+| Prefix | Mask            | Host bits | Assignable addresses |
+| ------ | --------------- | --------- | -------------------- |
+| /24    | 255.255.255.0   | 8         | 254                  |
+| /25    | 255.255.255.128 | 7         | 126                  |
+| /26    | 255.255.255.192 | 6         | 62                   |
+| /16    | 255.255.0.0     | 16        | 65,534               |
 
 ## TCP and UDP
 
-| Aspect            | **TCP**                                              | **UDP**                                  |
-| ----------------- | ---------------------------------------------------- | ---------------------------------------- |
-| connection        | **connection-oriented** (three-way handshake: SYN, SYN-ACK, ACK) | **connectionless**           |
-| reliability       | resends lost packets, keeps order                    | no guarantee                             |
-| speed, overhead   | slower, larger header                                | fast, small header                       |
-| typical use       | web (HTTP/1–2), e-mail, SSH, file transfer           | DNS, video calls, online games, live streams |
+| Aspect          | **TCP**                                                          | **UDP**                                      |
+| --------------- | ---------------------------------------------------------------- | -------------------------------------------- |
+| connection      | **connection-oriented** (three-way handshake: SYN, SYN-ACK, ACK) | **connectionless**                           |
+| reliability     | resends lost packets, keeps order                                | no guarantee                                 |
+| speed, overhead | slower, larger header                                            | fast, small header                           |
+| typical use     | web (HTTP/1–2), e-mail, SSH, file transfer                       | DNS, video calls, online games, live streams |
 
 In a video call it is better to lose a frame for a moment than to wait for it to be resent – hence UDP.
 
@@ -51,13 +51,13 @@ In a video call it is better to lose a frame for a moment than to wait for it to
 
 Many programs communicate on a machine at once. The **port** (a 16-bit number, **0–65535**) tells which program the packet is for. A connection is identified by five values: protocol, source IP, source port, destination IP, destination port.
 
-| Port  | Protocol  | Service                   |
-| ----- | --------- | ------------------------- |
-| 22    | TCP       | **SSH** (remote shell)    |
-| 53    | UDP/TCP   | **DNS**                   |
-| 80    | TCP       | **HTTP**                  |
-| 443   | TCP (UDP: HTTP/3) | **HTTPS**         |
-| 3389  | TCP       | Windows Remote Desktop    |
+| Port | Protocol          | Service                |
+| ---- | ----------------- | ---------------------- |
+| 22   | TCP               | **SSH** (remote shell) |
+| 53   | UDP/TCP           | **DNS**                |
+| 80   | TCP               | **HTTP**               |
+| 443  | TCP (UDP: HTTP/3) | **HTTPS**              |
+| 3389 | TCP               | Windows Remote Desktop |
 
 On Linux only **root** may start a server on ports below 1024 ("well-known" ports).
 

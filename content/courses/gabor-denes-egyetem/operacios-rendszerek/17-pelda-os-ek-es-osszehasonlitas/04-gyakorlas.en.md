@@ -7,18 +7,18 @@ kind: practice
 
 ## Command dictionary: the same task on two systems
 
-| Task | Linux (bash) | Windows (PowerShell) |
-| --- | --- | --- |
-| list files | `ls -l` | `Get-ChildItem` (`dir`) |
-| change directory | `cd /tmp` | `cd C:\Temp` |
-| file contents | `cat a.txt` | `Get-Content a.txt` (`type`) |
-| copy / delete | `cp`, `rm` | `Copy-Item`, `Remove-Item` |
-| processes | `ps aux`, `top` | `Get-Process`, Task Manager |
-| stop a process | `kill 1234` | `Stop-Process -Id 1234` |
-| network addresses | `ip a` | `ipconfig` |
-| services | `systemctl status ssh` | `Get-Service` |
-| install software | `sudo apt install git` | `winget install Git.Git` |
-| administrator rights | `sudo …` | "Run as administrator" (UAC) |
+| Task                 | Linux (bash)           | Windows (PowerShell)         |
+| -------------------- | ---------------------- | ---------------------------- |
+| list files           | `ls -l`                | `Get-ChildItem` (`dir`)      |
+| change directory     | `cd /tmp`              | `cd C:\Temp`                 |
+| file contents        | `cat a.txt`            | `Get-Content a.txt` (`type`) |
+| copy / delete        | `cp`, `rm`             | `Copy-Item`, `Remove-Item`   |
+| processes            | `ps aux`, `top`        | `Get-Process`, Task Manager  |
+| stop a process       | `kill 1234`            | `Stop-Process -Id 1234`      |
+| network addresses    | `ip a`                 | `ipconfig`                   |
+| services             | `systemctl status ssh` | `Get-Service`                |
+| install software     | `sudo apt install git` | `winget install Git.Git`     |
+| administrator rights | `sudo …`               | "Run as administrator" (UAC) |
 
 A small Python program that looks things up in the same dictionary – run it and extend it with your own rows:
 

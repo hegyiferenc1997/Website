@@ -7,18 +7,18 @@ kind: practice
 
 ## Parancsszótár: ugyanaz a feladat két rendszeren
 
-| Feladat | Linux (bash) | Windows (PowerShell) |
-| --- | --- | --- |
-| fájlok listázása | `ls -l` | `Get-ChildItem` (`dir`) |
-| könyvtárváltás | `cd /tmp` | `cd C:\Temp` |
-| fájl tartalma | `cat a.txt` | `Get-Content a.txt` (`type`) |
-| másolás / törlés | `cp`, `rm` | `Copy-Item`, `Remove-Item` |
-| folyamatok | `ps aux`, `top` | `Get-Process`, Feladatkezelő |
-| folyamat leállítása | `kill 1234` | `Stop-Process -Id 1234` |
-| hálózati címek | `ip a` | `ipconfig` |
-| szolgáltatások | `systemctl status ssh` | `Get-Service` |
-| szoftvertelepítés | `sudo apt install git` | `winget install Git.Git` |
-| rendszergazdai jog | `sudo …` | „Futtatás rendszergazdaként” (UAC) |
+| Feladat             | Linux (bash)           | Windows (PowerShell)               |
+| ------------------- | ---------------------- | ---------------------------------- |
+| fájlok listázása    | `ls -l`                | `Get-ChildItem` (`dir`)            |
+| könyvtárváltás      | `cd /tmp`              | `cd C:\Temp`                       |
+| fájl tartalma       | `cat a.txt`            | `Get-Content a.txt` (`type`)       |
+| másolás / törlés    | `cp`, `rm`             | `Copy-Item`, `Remove-Item`         |
+| folyamatok          | `ps aux`, `top`        | `Get-Process`, Feladatkezelő       |
+| folyamat leállítása | `kill 1234`            | `Stop-Process -Id 1234`            |
+| hálózati címek      | `ip a`                 | `ipconfig`                         |
+| szolgáltatások      | `systemctl status ssh` | `Get-Service`                      |
+| szoftvertelepítés   | `sudo apt install git` | `winget install Git.Git`           |
+| rendszergazdai jog  | `sudo …`               | „Futtatás rendszergazdaként” (UAC) |
 
 Egy kis Python-program, amely ugyanezt a szótárt kérdezi ki tőled – futtasd, és bővítsd ki a saját soraiddal:
 

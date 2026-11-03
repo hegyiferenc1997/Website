@@ -18,12 +18,12 @@ A **szál** a végrehajtás legkisebb egysége, amelyet az OS ütemezni tud. Egy
 
 ## Mit osztanak meg a szálak?
 
-| Közös (a folyamaté)                     | Saját (szálanként)                    |
-| --------------------------------------- | ------------------------------------- |
-| kód (text)                              | programszámláló (PC)                  |
-| globális adatok, kupac                  | regiszterek                           |
-| megnyitott fájlok, hálózati kapcsolatok | **verem** (stack)                     |
-| címtér, jogosultságok                   | állapot (fut, kész, várakozik)        |
+| Közös (a folyamaté)                     | Saját (szálanként)             |
+| --------------------------------------- | ------------------------------ |
+| kód (text)                              | programszámláló (PC)           |
+| globális adatok, kupac                  | regiszterek                    |
+| megnyitott fájlok, hálózati kapcsolatok | **verem** (stack)              |
+| címtér, jogosultságok                   | állapot (fut, kész, várakozik) |
 
 Előnyök a külön folyamatokkal szemben:
 
@@ -40,11 +40,11 @@ Hátrány: mivel a memória közös, ha két szál egyszerre ír ugyanoda, **ver
 
 ## Szálmodellek
 
-| Modell        | Leírás                                                 | Példa                         |
-| ------------- | ------------------------------------------------------ | ----------------------------- |
-| **sok-az-egyhez** (N:1) | sok felhasználói szál egyetlen kernelszálon | régi „green thread” könyvtárak |
-| **egy-az-egyhez** (1:1) | minden felhasználói szálhoz egy kernelszál   | Linux (pthreads), Windows      |
-| **sok-a-sokhoz** (N:M)  | sok felhasználói szál kevesebb kernelszálon  | Go gorutinok, Java virtuális szálak |
+| Modell                  | Leírás                                      | Példa                               |
+| ----------------------- | ------------------------------------------- | ----------------------------------- |
+| **sok-az-egyhez** (N:1) | sok felhasználói szál egyetlen kernelszálon | régi „green thread” könyvtárak      |
+| **egy-az-egyhez** (1:1) | minden felhasználói szálhoz egy kernelszál  | Linux (pthreads), Windows           |
+| **sok-a-sokhoz** (N:M)  | sok felhasználói szál kevesebb kernelszálon | Go gorutinok, Java virtuális szálak |
 
 ## Szálak a gyakorlatban
 

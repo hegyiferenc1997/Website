@@ -22,12 +22,12 @@ Two threads increment the same `counter` variable. At the processor level `count
 
 If the scheduler switches at a bad moment, an increment is **lost**:
 
-| Time | Thread 1              | Thread 2              | counter  |
-| ---- | --------------------- | --------------------- | -------- |
-| 1    | load (R = 5)          |                       | 5        |
-| 2    |                       | load (R = 5)          | 5        |
-| 3    | add, store (6)        |                       | 6        |
-| 4    |                       | add, store (6)        | **6** (7 would be correct) |
+| Time | Thread 1       | Thread 2       | counter                    |
+| ---- | -------------- | -------------- | -------------------------- |
+| 1    | load (R = 5)   |                | 5                          |
+| 2    |                | load (R = 5)   | 5                          |
+| 3    | add, store (6) |                | 6                          |
+| 4    |                | add, store (6) | **6** (7 would be correct) |
 
 We speak of a **race condition** when the result depends on the **order of execution** of the threads. These bugs are sneaky: they show up rarely and randomly.
 

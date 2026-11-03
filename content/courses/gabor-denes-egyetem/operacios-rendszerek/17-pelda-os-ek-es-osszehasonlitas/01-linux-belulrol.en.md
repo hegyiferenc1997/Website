@@ -41,15 +41,15 @@ Demand paging with 4 KiB pages (topic 6). Linux **overcommits**: it promises pro
 
 A single root tree (`/`) without drive letters; further disks are attached by **mounting**. Default file system: **ext4** (**Btrfs** on Fedora). "Everything is a file": devices too (`/dev/sda`).
 
-| Directory | What is in it? |
-| --- | --- |
-| `/etc` | system-wide settings (text files) |
-| `/home/<name>` | users' own files |
-| `/usr/bin`, `/usr/lib` | programs and libraries |
-| `/var/log` | log files |
-| `/proc`, `/sys` | the kernel's live data as files (virtual file systems) |
-| `/dev` | device files |
-| `/tmp` | temporary files |
+| Directory              | What is in it?                                         |
+| ---------------------- | ------------------------------------------------------ |
+| `/etc`                 | system-wide settings (text files)                      |
+| `/home/<name>`         | users' own files                                       |
+| `/usr/bin`, `/usr/lib` | programs and libraries                                 |
+| `/var/log`             | log files                                              |
+| `/proc`, `/sys`        | the kernel's live data as files (virtual file systems) |
+| `/dev`                 | device files                                           |
+| `/tmp`                 | temporary files                                        |
 
 ## Security
 

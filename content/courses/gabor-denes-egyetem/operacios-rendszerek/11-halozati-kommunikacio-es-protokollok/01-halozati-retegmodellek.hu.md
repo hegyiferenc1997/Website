@@ -16,15 +16,15 @@ Egy weboldal letöltésekor rengeteg kérdést kell megoldani: milyen jelet kül
 
 ## Az OSI és a TCP/IP modell
 
-| #   | OSI réteg           | TCP/IP réteg        | Feladata                                       | Példa                     |
-| --- | ------------------- | ------------------- | ---------------------------------------------- | ------------------------- |
-| 7   | alkalmazási         | **alkalmazási**     | a program „nyelve”                             | HTTP, DNS, SSH, SMTP      |
-| 6   | megjelenítési       | ↑                   | kódolás, titkosítás, tömörítés                 | TLS, UTF-8                |
-| 5   | viszony             | ↑                   | kapcsolatok, munkamenetek                      | (gyakran az alkalmazásban)|
-| 4   | **szállítási**      | **szállítási**      | végponttól végpontig, portok, megbízhatóság    | **TCP**, **UDP**          |
-| 3   | **hálózati**        | **internet**        | címzés és útvonalválasztás hálózatok között    | **IP** (IPv4, IPv6), ICMP |
-| 2   | adatkapcsolati      | **hálózati hozzáférés** | keretek a helyi hálózaton, MAC-címek       | Ethernet, Wi-Fi           |
-| 1   | fizikai             | ↓                   | bitek jelként (feszültség, fény, rádió)        | kábel, rádióhullám        |
+| #   | OSI réteg      | TCP/IP réteg            | Feladata                                    | Példa                      |
+| --- | -------------- | ----------------------- | ------------------------------------------- | -------------------------- |
+| 7   | alkalmazási    | **alkalmazási**         | a program „nyelve”                          | HTTP, DNS, SSH, SMTP       |
+| 6   | megjelenítési  | ↑                       | kódolás, titkosítás, tömörítés              | TLS, UTF-8                 |
+| 5   | viszony        | ↑                       | kapcsolatok, munkamenetek                   | (gyakran az alkalmazásban) |
+| 4   | **szállítási** | **szállítási**          | végponttól végpontig, portok, megbízhatóság | **TCP**, **UDP**           |
+| 3   | **hálózati**   | **internet**            | címzés és útvonalválasztás hálózatok között | **IP** (IPv4, IPv6), ICMP  |
+| 2   | adatkapcsolati | **hálózati hozzáférés** | keretek a helyi hálózaton, MAC-címek        | Ethernet, Wi-Fi            |
+| 1   | fizikai        | ↓                       | bitek jelként (feszültség, fény, rádió)     | kábel, rádióhullám         |
 
 Az **OSI** (7 réteg) elméleti referenciamodell; az internet a gyakorlatias **TCP/IP** (4 réteg) modellt követi.
 
@@ -44,12 +44,12 @@ A TCP-fejlécben vannak a **portok**, az IP-fejlécben az **IP-címek**, az Ethe
 
 ## Melyik réteg hol fut?
 
-| Réteg                      | Hol fut?                                                |
-| -------------------------- | ------------------------------------------------------- |
-| alkalmazási                | **felhasználói módban**, a programban (böngésző, ssh)  |
-| szállítási + internet (TCP/IP) | a **kernelben** – ez a hálózati verem (_network stack_) |
-| hálózati hozzáférés        | a kártya **illesztőprogramja** (kernel) és a hálózati kártya hardvere |
-| fizikai                    | hardver                                                  |
+| Réteg                          | Hol fut?                                                              |
+| ------------------------------ | --------------------------------------------------------------------- |
+| alkalmazási                    | **felhasználói módban**, a programban (böngésző, ssh)                 |
+| szállítási + internet (TCP/IP) | a **kernelben** – ez a hálózati verem (_network stack_)               |
+| hálózati hozzáférés            | a kártya **illesztőprogramja** (kernel) és a hálózati kártya hardvere |
+| fizikai                        | hardver                                                               |
 
 A program és a kernel hálózati verme között a **socket** a határ – erről a harmadik leckében lesz szó.
 

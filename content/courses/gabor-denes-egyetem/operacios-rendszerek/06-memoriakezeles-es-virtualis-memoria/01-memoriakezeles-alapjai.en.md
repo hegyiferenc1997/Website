@@ -40,11 +40,11 @@ Example: base = 30,000, limit = 12,000.
 
 If every process gets memory **in one piece**, **holes** (free segments) appear after releases. For a new request a hole has to be chosen:
 
-| Strategy        | Which hole does it choose?             |
-| --------------- | -------------------------------------- |
-| **first fit**   | the **first** one that is big enough   |
-| **best fit**    | the **smallest** one that is still big enough |
-| **worst fit**   | the **largest** one                    |
+| Strategy      | Which hole does it choose?                    |
+| ------------- | --------------------------------------------- |
+| **first fit** | the **first** one that is big enough          |
+| **best fit**  | the **smallest** one that is still big enough |
+| **worst fit** | the **largest** one                           |
 
 Example: the free holes in order are **100, 500, 200, 300, 600 KB**, the request is **212 KB**.
 

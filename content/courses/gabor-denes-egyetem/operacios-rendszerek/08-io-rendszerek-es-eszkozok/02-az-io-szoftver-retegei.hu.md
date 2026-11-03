@@ -50,11 +50,11 @@ Windowson: **Eszközkezelő** (Win + X → Eszközkezelő) – a sárga felkiál
 
 ## Blokkoló, nem blokkoló, aszinkron
 
-| Fajta           | Mit csinál a hívás?                                             | Példa                               |
-| --------------- | --------------------------------------------------------------- | ----------------------------------- |
-| **blokkoló**    | a folyamat **vár** (várakozó állapot), amíg az I/O kész         | `input()` Pythonban, `read()`       |
-| **nem blokkoló**| **azonnal visszatér** azzal, ami éppen elérhető (akár semmivel) | hálózati socket nem blokkoló módban |
-| **aszinkron**   | elindítja az I/O-t, azonnal visszatér, és **később értesít**    | `async`/`await`, io_uring, Windows IOCP |
+| Fajta            | Mit csinál a hívás?                                             | Példa                                   |
+| ---------------- | --------------------------------------------------------------- | --------------------------------------- |
+| **blokkoló**     | a folyamat **vár** (várakozó állapot), amíg az I/O kész         | `input()` Pythonban, `read()`           |
+| **nem blokkoló** | **azonnal visszatér** azzal, ami éppen elérhető (akár semmivel) | hálózati socket nem blokkoló módban     |
+| **aszinkron**    | elindítja az I/O-t, azonnal visszatér, és **később értesít**    | `async`/`await`, io_uring, Windows IOCP |
 
 A blokkoló a legegyszerűbb programozni; egy nagy forgalmú webszerver viszont aszinkron I/O-val szolgál ki egyetlen szálon több ezer kapcsolatot.
 

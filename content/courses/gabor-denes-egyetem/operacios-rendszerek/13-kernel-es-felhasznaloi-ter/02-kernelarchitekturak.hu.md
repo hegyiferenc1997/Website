@@ -60,12 +60,12 @@ A **hibrid** kernel mikrokernel-szerű, moduláris felépítésű, de a teljesí
 
 ## Összevetés
 
-| Szempont        | Monolitikus   | Mikrokernel    | Hibrid                  |
-| --------------- | ------------- | -------------- | ----------------------- |
-| sebesség        | **nagy**      | kisebb         | nagy                    |
-| megbízhatóság   | egy driverhiba mindent megállít | **nagy** | közepes      |
-| kernel mérete   | nagy          | **kicsi**      | nagy                    |
-| példa           | Linux, FreeBSD | MINIX 3, QNX, seL4 | Windows NT, macOS XNU |
+| Szempont      | Monolitikus                     | Mikrokernel        | Hibrid                |
+| ------------- | ------------------------------- | ------------------ | --------------------- |
+| sebesség      | **nagy**                        | kisebb             | nagy                  |
+| megbízhatóság | egy driverhiba mindent megállít | **nagy**           | közepes               |
+| kernel mérete | nagy                            | **kicsi**          | nagy                  |
+| példa         | Linux, FreeBSD                  | MINIX 3, QNX, seL4 | Windows NT, macOS XNU |
 
 ## Összefoglalás
 

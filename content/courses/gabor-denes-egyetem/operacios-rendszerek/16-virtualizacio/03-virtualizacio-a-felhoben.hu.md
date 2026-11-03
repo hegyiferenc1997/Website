@@ -16,11 +16,11 @@ A **felhő** (_cloud_) óriási adatközpontokban futó, interneten keresztül, 
 
 ## A három szolgáltatási modell
 
-| Modell | Mit kapsz? | Mit kezelsz te? | Példa |
-| --- | --- | --- | --- |
-| **IaaS** (_Infrastructure as a Service_) | virtuális gép, lemez, hálózat | az OS-t, a frissítéseket, az alkalmazást | AWS EC2, Azure Virtual Machines |
-| **PaaS** (_Platform as a Service_) | kész futtatókörnyezet | csak az alkalmazás kódját | Heroku, Google App Engine, Azure App Service |
-| **SaaS** (_Software as a Service_) | kész alkalmazás böngészőben | csak a saját adataidat | Gmail, Microsoft 365, Neptun |
+| Modell                                   | Mit kapsz?                    | Mit kezelsz te?                          | Példa                                        |
+| ---------------------------------------- | ----------------------------- | ---------------------------------------- | -------------------------------------------- |
+| **IaaS** (_Infrastructure as a Service_) | virtuális gép, lemez, hálózat | az OS-t, a frissítéseket, az alkalmazást | AWS EC2, Azure Virtual Machines              |
+| **PaaS** (_Platform as a Service_)       | kész futtatókörnyezet         | csak az alkalmazás kódját                | Heroku, Google App Engine, Azure App Service |
+| **SaaS** (_Software as a Service_)       | kész alkalmazás böngészőben   | csak a saját adataidat                   | Gmail, Microsoft 365, Neptun                 |
 
 Minél lejjebb haladsz a táblázatban, annál kevesebbet kell üzemeltetned, de annál kevésbé szabhatod testre a rendszert. Ennek a weboldalnak is van felhős változata: az adatbázis egy felhőben futó PostgreSQL (PaaS) lesz.
 

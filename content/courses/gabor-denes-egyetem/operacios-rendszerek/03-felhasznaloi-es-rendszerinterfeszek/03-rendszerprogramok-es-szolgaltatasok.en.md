@@ -14,14 +14,14 @@ minutes: 20
 
 **System programs** (_system utilities_) come with the OS but do **not run in the kernel**. They provide a convenient interface to the kernel's services.
 
-| Group                | Linux example              | Windows example                   |
-| -------------------- | -------------------------- | --------------------------------- |
-| file management      | `ls`, `cp`, Files          | Explorer, `robocopy`              |
-| status information   | `top`, `df`, `free`        | Task Manager, Resource Monitor    |
-| text editing         | `nano`, `vim`              | Notepad                           |
-| program development  | `gcc`, `python3`, `make`   | Visual Studio, `py`               |
-| package management   | `apt`, `snap`              | `winget`, Microsoft Store         |
-| communication        | `ssh`, `curl`              | Remote Desktop, `curl`            |
+| Group               | Linux example            | Windows example                |
+| ------------------- | ------------------------ | ------------------------------ |
+| file management     | `ls`, `cp`, Files        | Explorer, `robocopy`           |
+| status information  | `top`, `df`, `free`      | Task Manager, Resource Monitor |
+| text editing        | `nano`, `vim`            | Notepad                        |
+| program development | `gcc`, `python3`, `make` | Visual Studio, `py`            |
+| package management  | `apt`, `snap`            | `winget`, Microsoft Store      |
+| communication       | `ssh`, `curl`            | Remote Desktop, `curl`         |
 
 ## Services (daemons)
 

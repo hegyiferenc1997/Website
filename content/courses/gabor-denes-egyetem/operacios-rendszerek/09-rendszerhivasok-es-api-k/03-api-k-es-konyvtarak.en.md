@@ -32,13 +32,13 @@ Not every API call involves a system call: `strlen` or `sqrt` run entirely in us
 
 ## The most important APIs
 
-| API                 | Where?                   | Characteristic                                                   |
-| ------------------- | ------------------------ | ---------------------------------------------------------------- |
-| **C standard library** | everywhere            | `printf`, `fopen`, `malloc` – part of the C language             |
-| **POSIX**           | Linux, macOS, BSD        | an IEEE standard: `fork`, `open`, `pthread_create`, shell commands |
-| **Win32 (Windows API)** | Windows              | `CreateProcess`, `CreateFile`, window management; provided by `kernel32.dll`, `user32.dll` etc. |
-| **Native API**      | Windows, internal        | `ntdll.dll` – the little-documented layer below Win32 that calls the kernel directly |
-| high-level libraries | anywhere                | Python `os`, Java `java.io`, .NET – in the end these call the above too |
+| API                     | Where?            | Characteristic                                                                                  |
+| ----------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
+| **C standard library**  | everywhere        | `printf`, `fopen`, `malloc` – part of the C language                                            |
+| **POSIX**               | Linux, macOS, BSD | an IEEE standard: `fork`, `open`, `pthread_create`, shell commands                              |
+| **Win32 (Windows API)** | Windows           | `CreateProcess`, `CreateFile`, window management; provided by `kernel32.dll`, `user32.dll` etc. |
+| **Native API**          | Windows, internal | `ntdll.dll` – the little-documented layer below Win32 that calls the kernel directly            |
+| high-level libraries    | anywhere          | Python `os`, Java `java.io`, .NET – in the end these call the above too                         |
 
 On Linux the C library is usually **glibc** (on Alpine Linux the smaller musl). You can check which libraries a program uses:
 
@@ -50,11 +50,11 @@ ldd /bin/ls          # dynamically loaded libraries (libc.so.6 …)
 
 The **ABI** (_Application Binary Interface_) is the agreement between a **compiled** program and the system: how parameters are passed, the format of the executable file, the system call numbers.
 
-| System   | Executable format       | System calls         |
-| -------- | ----------------------- | -------------------- |
-| Linux    | **ELF**                 | Linux numbering      |
-| Windows  | **PE** (`.exe`, `.dll`) | NT kernel (ntdll)    |
-| macOS    | **Mach-O**              | XNU kernel           |
+| System  | Executable format       | System calls      |
+| ------- | ----------------------- | ----------------- |
+| Linux   | **ELF**                 | Linux numbering   |
+| Windows | **PE** (`.exe`, `.dll`) | NT kernel (ntdll) |
+| macOS   | **Mach-O**              | XNU kernel        |
 
 That is why a program compiled for Linux does not run on Windows: the file format and the kernel interface are different. **Source code**, however, is portable if it uses a standard API (e.g. POSIX or the C standard library) – it only has to be recompiled. Exceptions: **WSL** runs Linux on Windows (WSL 2 with a real Linux kernel in a virtual machine), and **Wine** implements the Win32 API on Linux.
 

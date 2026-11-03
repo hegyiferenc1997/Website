@@ -12,11 +12,11 @@ minutes: 20
 
 ## Eszközfajták
 
-| Fajta                 | Jellemző                                         | Példa                          |
-| --------------------- | ------------------------------------------------ | ------------------------------ |
-| **blokkos** eszköz    | rögzített méretű blokkokban, tetszőleges sorrendben olvasható | SSD, HDD, pendrive |
-| **karakteres** eszköz | bájtfolyam, csak sorban                          | billentyűzet, egér, soros port |
-| **hálózati** eszköz   | csomagokat küld és fogad                         | Ethernet, Wi-Fi                |
+| Fajta                 | Jellemző                                                      | Példa                          |
+| --------------------- | ------------------------------------------------------------- | ------------------------------ |
+| **blokkos** eszköz    | rögzített méretű blokkokban, tetszőleges sorrendben olvasható | SSD, HDD, pendrive             |
+| **karakteres** eszköz | bájtfolyam, csak sorban                                       | billentyűzet, egér, soros port |
+| **hálózati** eszköz   | csomagokat küld és fogad                                      | Ethernet, Wi-Fi                |
 
 Sebességben óriási a különbség: egy billentyűzet ~10 bájt/s-ot ad, egy NVMe SSD 7 GB/s-ot – az OS-nek mindkettőt jól kell kezelnie.
 

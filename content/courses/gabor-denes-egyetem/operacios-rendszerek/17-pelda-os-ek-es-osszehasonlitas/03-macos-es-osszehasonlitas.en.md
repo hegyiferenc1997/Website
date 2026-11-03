@@ -25,21 +25,21 @@ We do not install macOS in VirtualBox: its licence only allows it to run on Appl
 
 ## The big comparison
 
-| | **Linux (Ubuntu)** | **Windows 11** | **macOS** |
-| --- | --- | --- | --- |
-| kernel | monolithic, with modules | hybrid (NT) | hybrid (XNU: Mach + BSD) |
-| licence | open (GPLv2) | closed | closed (the Darwin base is open) |
-| first process | `systemd` (PID 1) | System (PID 4), `smss.exe` | `launchd` (PID 1) |
-| process creation | `fork()` + `exec()` | `CreateProcess` | `fork()` + `exec()`, `posix_spawn` |
-| scheduler | EEVDF, nice −20…19 | 32 priority levels, boosts | priorities + QoS classes, P/E cores |
-| memory | overcommit + OOM killer, swap | commit limit, `pagefile.sys`, compression | compression, dynamic swap |
-| file system | ext4 (Btrfs) | NTFS | APFS |
-| path | `/home/anna/doc.txt` | `C:\Users\Anna\doc.txt` | `/Users/anna/doc.txt` |
-| letter case | case-sensitive | not | not by default |
-| permissions | `rwx` + AppArmor/SELinux | ACLs + UAC | `rwx` + ACLs + SIP, sandbox |
-| settings | text files (`/etc`) | registry | `.plist` files |
-| package manager | `apt`, Snap, Flatpak | `winget`, Microsoft Store | App Store, Homebrew |
-| typical use | servers, cloud, development, embedded | office and home desktop, gaming | creative work, Apple development |
+|                  | **Linux (Ubuntu)**                    | **Windows 11**                            | **macOS**                           |
+| ---------------- | ------------------------------------- | ----------------------------------------- | ----------------------------------- |
+| kernel           | monolithic, with modules              | hybrid (NT)                               | hybrid (XNU: Mach + BSD)            |
+| licence          | open (GPLv2)                          | closed                                    | closed (the Darwin base is open)    |
+| first process    | `systemd` (PID 1)                     | System (PID 4), `smss.exe`                | `launchd` (PID 1)                   |
+| process creation | `fork()` + `exec()`                   | `CreateProcess`                           | `fork()` + `exec()`, `posix_spawn`  |
+| scheduler        | EEVDF, nice −20…19                    | 32 priority levels, boosts                | priorities + QoS classes, P/E cores |
+| memory           | overcommit + OOM killer, swap         | commit limit, `pagefile.sys`, compression | compression, dynamic swap           |
+| file system      | ext4 (Btrfs)                          | NTFS                                      | APFS                                |
+| path             | `/home/anna/doc.txt`                  | `C:\Users\Anna\doc.txt`                   | `/Users/anna/doc.txt`               |
+| letter case      | case-sensitive                        | not                                       | not by default                      |
+| permissions      | `rwx` + AppArmor/SELinux              | ACLs + UAC                                | `rwx` + ACLs + SIP, sandbox         |
+| settings         | text files (`/etc`)                   | registry                                  | `.plist` files                      |
+| package manager  | `apt`, Snap, Flatpak                  | `winget`, Microsoft Store                 | App Store, Homebrew                 |
+| typical use      | servers, cloud, development, embedded | office and home desktop, gaming           | creative work, Apple development    |
 
 ## Which one when?
 

@@ -44,11 +44,11 @@ Egy egymagos gép tud konkurens, de nem tud valódi párhuzamos végrehajtást; 
 
 ## Kooperatív és preemptív multitasking
 
-| Szempont         | Kooperatív                                   | Preemptív                                        |
-| ---------------- | -------------------------------------------- | ------------------------------------------------ |
-| ki vált?         | a program **önként** adja át a CPU-t         | az **OS** veszi el (időzítő megszakítás)         |
-| veszély          | egy lefagyott program **az egész gépet** megállítja | egy lefagyott program csak magát fagyasztja le |
-| példák           | Windows 3.1, Mac OS 9 (klasszikus)          | Windows NT-től, Linux, macOS, Android            |
+| Szempont | Kooperatív                                          | Preemptív                                      |
+| -------- | --------------------------------------------------- | ---------------------------------------------- |
+| ki vált? | a program **önként** adja át a CPU-t                | az **OS** veszi el (időzítő megszakítás)       |
+| veszély  | egy lefagyott program **az egész gépet** megállítja | egy lefagyott program csak magát fagyasztja le |
+| példák   | Windows 3.1, Mac OS 9 (klasszikus)                  | Windows NT-től, Linux, macOS, Android          |
 
 A kooperatív elv ma is él **programon belül**: a JavaScript eseményhurok vagy a Python `asyncio` feladatai `await`-nél önként adják át a vezérlést.
 

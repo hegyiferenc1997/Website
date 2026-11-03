@@ -22,11 +22,11 @@ The file system has to keep track of:
 
 ## Allocation methods
 
-| Method         | How?                                                       | Advantage                 | Drawback                        |
-| -------------- | ---------------------------------------------------------- | ------------------------- | ------------------------------- |
-| **contiguous** | the file is in consecutive blocks (start + length)         | fast reading              | external fragmentation, hard to grow |
-| **linked**     | every block tells which one comes next                     | no external fragmentation | slow random access              |
-| **indexed**    | an **index block** lists all the blocks of the file        | fast random access        | the index takes space           |
+| Method         | How?                                                | Advantage                 | Drawback                             |
+| -------------- | --------------------------------------------------- | ------------------------- | ------------------------------------ |
+| **contiguous** | the file is in consecutive blocks (start + length)  | fast reading              | external fragmentation, hard to grow |
+| **linked**     | every block tells which one comes next              | no external fragmentation | slow random access                   |
+| **indexed**    | an **index block** lists all the blocks of the file | fast random access        | the index takes space                |
 
 CDs/DVDs (ISO 9660) use contiguous allocation – files do not change there.
 
@@ -65,14 +65,14 @@ What happens if the power goes out while a file is being written? The file syste
 
 ## Today's file systems
 
-| File system  | Where?                       | Max. file size  | Journaling | Note                             |
-| ------------ | ---------------------------- | --------------- | -------- | ---------------------------------- |
-| **FAT32**    | old USB sticks, UEFI partition | **4 GB**      | no       | readable everywhere                |
-| **exFAT**    | USB stick, SD card           | practically unlimited | no | successor of FAT32 for big files   |
-| **NTFS**     | Windows                      | 16 TB+          | yes      | ACL, encryption, compression       |
-| **ext4**     | Linux (Ubuntu default)       | 16 TB           | yes      | extents, reliable                  |
-| **Btrfs**, **ZFS** | Linux servers          | huge            | copy-on-write (CoW) | snapshots, checksums    |
-| **APFS**     | macOS, iOS                   | huge            | CoW      | snapshots, encryption              |
+| File system        | Where?                         | Max. file size        | Journaling          | Note                             |
+| ------------------ | ------------------------------ | --------------------- | ------------------- | -------------------------------- |
+| **FAT32**          | old USB sticks, UEFI partition | **4 GB**              | no                  | readable everywhere              |
+| **exFAT**          | USB stick, SD card             | practically unlimited | no                  | successor of FAT32 for big files |
+| **NTFS**           | Windows                        | 16 TB+                | yes                 | ACL, encryption, compression     |
+| **ext4**           | Linux (Ubuntu default)         | 16 TB                 | yes                 | extents, reliable                |
+| **Btrfs**, **ZFS** | Linux servers                  | huge                  | copy-on-write (CoW) | snapshots, checksums             |
+| **APFS**           | macOS, iOS                     | huge                  | CoW                 | snapshots, encryption            |
 
 ## Summary
 

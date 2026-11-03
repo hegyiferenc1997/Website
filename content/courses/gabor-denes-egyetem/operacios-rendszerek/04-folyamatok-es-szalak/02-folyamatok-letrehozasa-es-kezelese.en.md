@@ -58,12 +58,12 @@ ps -o pid,ppid,cmd     # your shell's processes: PID and parent PID
 
 A **signal** is a short notification sent to a process by the kernel or another process.
 
-| Signal    | No.  | Meaning                                          | When?                     |
-| --------- | ---- | ------------------------------------------------ | ------------------------- |
-| `SIGINT`  | 2    | interrupt request                                | **Ctrl + C** in the terminal |
-| `SIGTERM` | 15   | polite request to exit (can be caught)           | default of `kill PID`     |
-| `SIGKILL` | 9    | immediate stop (**cannot** be caught)            | `kill -9 PID`             |
-| `SIGSTOP` | 19   | suspend                                          | **Ctrl + Z**              |
+| Signal    | No. | Meaning                                | When?                        |
+| --------- | --- | -------------------------------------- | ---------------------------- |
+| `SIGINT`  | 2   | interrupt request                      | **Ctrl + C** in the terminal |
+| `SIGTERM` | 15  | polite request to exit (can be caught) | default of `kill PID`        |
+| `SIGKILL` | 9   | immediate stop (**cannot** be caught)  | `kill -9 PID`                |
+| `SIGSTOP` | 19  | suspend                                | **Ctrl + Z**                 |
 
 ## Monitoring processes
 

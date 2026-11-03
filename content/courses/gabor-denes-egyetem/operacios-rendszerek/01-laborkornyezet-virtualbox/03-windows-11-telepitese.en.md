@@ -12,13 +12,13 @@ minutes: 40
 
 ## Windows 11 requirements
 
-| Requirement     | Minimum                    | In VirtualBox                             |
-| --------------- | -------------------------- | ----------------------------------------- |
-| processor       | 64-bit, 2 cores, 1 GHz     | **2** (better 4) virtual processors       |
-| memory          | 4 GB                       | **4096 MB** (8192 MB recommended)         |
-| storage         | 64 GB                      | **80 GB** dynamic VDI                     |
-| firmware        | **UEFI**, **Secure Boot**  | _Enable EFI_ + _Secure Boot_              |
-| security chip   | **TPM 2.0**                | virtual (emulated) **TPM v2.0**           |
+| Requirement   | Minimum                   | In VirtualBox                       |
+| ------------- | ------------------------- | ----------------------------------- |
+| processor     | 64-bit, 2 cores, 1 GHz    | **2** (better 4) virtual processors |
+| memory        | 4 GB                      | **4096 MB** (8192 MB recommended)   |
+| storage       | 64 GB                     | **80 GB** dynamic VDI               |
+| firmware      | **UEFI**, **Secure Boot** | _Enable EFI_ + _Secure Boot_        |
+| security chip | **TPM 2.0**               | virtual (emulated) **TPM v2.0**     |
 
 - **UEFI** is the successor of the old BIOS, the firmware that starts the machine.
 - **Secure Boot**: only a digitally signed boot loader may start – so malware cannot insert itself before the system boots.
@@ -42,11 +42,11 @@ Since VirtualBox 7 all three are **provided in software** – so you need no tri
 
 VirtualBox Manager → **New**:
 
-| Field          | Value                                                |
-| -------------- | ---------------------------------------------------- |
-| Name           | `Windows11`                                          |
-| ISO Image      | the downloaded `Win11_…_x64.iso`                     |
-| Type / Version | **Microsoft Windows / Windows 11 (64-bit)**          |
+| Field          | Value                                       |
+| -------------- | ------------------------------------------- |
+| Name           | `Windows11`                                 |
+| ISO Image      | the downloaded `Win11_…_x64.iso`            |
+| Type / Version | **Microsoft Windows / Windows 11 (64-bit)** |
 
 Tick **Skip Unattended Installation** (see the tip below).
 

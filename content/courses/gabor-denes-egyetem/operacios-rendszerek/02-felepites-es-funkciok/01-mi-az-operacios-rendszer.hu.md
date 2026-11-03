@@ -42,15 +42,15 @@ Az OS legfontosabb, mindig a memóriában lévő része a **kernel** (mag). A t�
 
 ## Rövid történet
 
-| Korszak    | Jellemző                                                                 | Példa                    |
-| ---------- | ------------------------------------------------------------------------ | ------------------------ |
-| 1940–50-es | nincs OS, a programot kapcsolókkal, lyukkártyával töltik be              | ENIAC                    |
-| 1950–60-as | **kötegelt** (batch) feldolgozás: a feladatok sorban futnak              | IBM 7094, FMS            |
-| 1960-as    | **multiprogramozás** és **időosztás**: több program, több terminál      | IBM OS/360, CTSS, MULTICS|
-| 1970-es    | a **UNIX** (C nyelven írva, hordozható)                                  | UNIX, később BSD         |
-| 1980-as    | személyi számítógépek, grafikus felület                                 | MS-DOS, Mac OS, Windows  |
-| 1990-es    | nyílt forráskód, hálózat, 32 bit                                          | **Linux** (1991), Windows NT |
-| 2000-től   | mobil, virtualizáció, felhő, többmagos processzorok                     | Android, iOS, Windows 11, macOS |
+| Korszak    | Jellemző                                                           | Példa                           |
+| ---------- | ------------------------------------------------------------------ | ------------------------------- |
+| 1940–50-es | nincs OS, a programot kapcsolókkal, lyukkártyával töltik be        | ENIAC                           |
+| 1950–60-as | **kötegelt** (batch) feldolgozás: a feladatok sorban futnak        | IBM 7094, FMS                   |
+| 1960-as    | **multiprogramozás** és **időosztás**: több program, több terminál | IBM OS/360, CTSS, MULTICS       |
+| 1970-es    | a **UNIX** (C nyelven írva, hordozható)                            | UNIX, később BSD                |
+| 1980-as    | személyi számítógépek, grafikus felület                            | MS-DOS, Mac OS, Windows         |
+| 1990-es    | nyílt forráskód, hálózat, 32 bit                                   | **Linux** (1991), Windows NT    |
+| 2000-től   | mobil, virtualizáció, felhő, többmagos processzorok                | Android, iOS, Windows 11, macOS |
 
 A mai Linux és macOS a UNIX szellemi örököse; a Windows a Windows NT vonalból származik.
 

@@ -12,12 +12,12 @@ minutes: 25
 
 ## A négy fő erőforrás
 
-| Erőforrás   | Fontos mérőszámok                                       | Mikor gond?                                         |
-| ----------- | ------------------------------------------------------- | --------------------------------------------------- |
-| **CPU**     | kihasználtság (%), felhasználói / rendszer idő, I/O-várakozás (`wa`) | tartósan ~100%, sok folyamat a kész sorban |
-| **memória** | használt, szabad, **gyorsítótár**, **swap** használat, laphibák | a swap folyamatosan nő, a gép vergődik     |
+| Erőforrás   | Fontos mérőszámok                                                    | Mikor gond?                                 |
+| ----------- | -------------------------------------------------------------------- | ------------------------------------------- |
+| **CPU**     | kihasználtság (%), felhasználói / rendszer idő, I/O-várakozás (`wa`) | tartósan ~100%, sok folyamat a kész sorban  |
+| **memória** | használt, szabad, **gyorsítótár**, **swap** használat, laphibák      | a swap folyamatosan nő, a gép vergődik      |
 | **lemez**   | olvasási/írási sebesség, **IOPS**, várakozási idő, kihasználtság (%) | tartósan 100% kihasználtság, nagy várakozás |
-| **hálózat** | sávszélesség (Mbit/s), csomagvesztés, késleltetés       | a vonal tele, sok újraküldés                         |
+| **hálózat** | sávszélesség (Mbit/s), csomagvesztés, késleltetés                    | a vonal tele, sok újraküldés                |
 
 A **szűk keresztmetszet** az az erőforrás, amelyik először telik be – a rendszer csak olyan gyors, mint a leglassabb láncszeme. Felesleges új processzort venni, ha a lemez a gond.
 

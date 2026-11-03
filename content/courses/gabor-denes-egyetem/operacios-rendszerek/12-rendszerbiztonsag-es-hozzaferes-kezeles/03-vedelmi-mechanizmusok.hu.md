@@ -41,11 +41,11 @@ A **víruskereső** ismert kártevő-**minták** (szignatúrák) és gyanús **v
 
 Ha ellopják a laptopodat, a jelszavas bejelentkezés nem véd: a lemezt kiszerelve **bárki elolvashatja**. A **teljes lemeztitkosítás** ezt megakadályozza.
 
-| Rendszer | Eszköz        | Megjegyzés                                                     |
-| -------- | ------------- | -------------------------------------------------------------- |
-| Windows  | **BitLocker** (Pro, Education) / eszköztitkosítás (Home) | a kulcsot a **TPM** őrzi; a helyreállítási kulcsot mentsd el! |
-| Linux    | **LUKS**      | az Ubuntu telepítője felkínálja („Speciális funkciók → titkosítás”) |
-| macOS    | **FileVault** | bekapcsolás: Rendszerbeállítások → Adatvédelem és biztonság    |
+| Rendszer | Eszköz                                                   | Megjegyzés                                                          |
+| -------- | -------------------------------------------------------- | ------------------------------------------------------------------- |
+| Windows  | **BitLocker** (Pro, Education) / eszköztitkosítás (Home) | a kulcsot a **TPM** őrzi; a helyreállítási kulcsot mentsd el!       |
+| Linux    | **LUKS**                                                 | az Ubuntu telepítője felkínálja („Speciális funkciók → titkosítás”) |
+| macOS    | **FileVault**                                            | bekapcsolás: Rendszerbeállítások → Adatvédelem és biztonság         |
 
 ## Beépített védelmek a kernelben és a hardverben
 

@@ -40,11 +40,11 @@ Példa: bázis = 30 000, határ = 12 000.
 
 Ha minden folyamat **egy darabban** kap memóriát, a felszabadulások után **lyukak** (szabad szakaszok) keletkeznek. Új kérésnél választani kell egy lyukat:
 
-| Stratégia       | Melyik lyukat választja?               |
-| --------------- | -------------------------------------- |
-| **first fit**   | az **első**, amelyik elég nagy          |
-| **best fit**    | a **legkisebb**, amelyik még elég nagy  |
-| **worst fit**   | a **legnagyobbat**                     |
+| Stratégia     | Melyik lyukat választja?               |
+| ------------- | -------------------------------------- |
+| **first fit** | az **első**, amelyik elég nagy         |
+| **best fit**  | a **legkisebb**, amelyik még elég nagy |
+| **worst fit** | a **legnagyobbat**                     |
 
 Példa: a szabad lyukak sorban **100, 500, 200, 300, 600 KB**, a kérés **212 KB**.
 

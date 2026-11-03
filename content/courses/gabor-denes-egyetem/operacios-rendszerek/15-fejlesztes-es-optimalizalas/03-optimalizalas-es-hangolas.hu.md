@@ -51,7 +51,8 @@ powercfg /list                 # az energiasémák listája
 powercfg /setactive SCHEME_MIN # „Nagy teljesítmény” séma
 ```
 
-  Linuxon a `powerprofilesctl` (Ubuntu: Beállítások → Energia) vált a _power-saver_, _balanced_ és _performance_ profil között.
+Linuxon a `powerprofilesctl` (Ubuntu: Beállítások → Energia) vált a _power-saver_, _balanced_ és _performance_ profil között.
+
 - **SSD**: a legnagyobb egyszeri gyorsulás egy régi gépen a merevlemez → SSD csere. A rendszer heti **TRIM**-mel (`fstrim.timer` Linuxon, „Meghajtók optimalizálása” Windowson) tartja jó állapotban; SSD-t **nem kell** töredezettségmentesíteni.
 - **Frissítések**: a kernel- és illesztőprogram-frissítések gyakran hoznak teljesítményjavítást és biztonsági javításokat is.
 - **Virtuális gépben**: adj elég RAM-ot és 2+ magot a VM-nek, telepítsd a **vendégkiegészítőket**, és kapcsold be a 3D gyorsítást (lásd az 1. témakört).

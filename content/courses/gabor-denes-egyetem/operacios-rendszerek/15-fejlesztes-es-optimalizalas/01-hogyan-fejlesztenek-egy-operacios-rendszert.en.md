@@ -28,10 +28,10 @@ The **stable** branch maintainers keep fixing released versions for months, and 
 
 ## The release cadence of Windows and Ubuntu
 
-| System    | Rhythm                                                                 |
-| --------- | ---------------------------------------------------------------------- |
+| System      | Rhythm                                                                                                                                                                                       |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Windows** | one larger feature update a year (e.g. 24H2, 25H2), monthly security fixes: **"Patch Tuesday"** on the **second Tuesday** of every month; early testing in the **Windows Insider** programme |
-| **Ubuntu**  | **April and October**: a new release (YY.MM, e.g. 26.04); an **LTS** **every two years** (April of even years); interim releases are supported for 9 months |
+| **Ubuntu**  | **April and October**: a new release (YY.MM, e.g. 26.04); an **LTS** **every two years** (April of even years); interim releases are supported for 9 months                                  |
 
 ## Programming languages
 

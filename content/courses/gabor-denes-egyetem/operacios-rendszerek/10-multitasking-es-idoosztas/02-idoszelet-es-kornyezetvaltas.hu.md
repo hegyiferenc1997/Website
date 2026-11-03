@@ -39,10 +39,10 @@ Példa: q = 10 ms, s = 1 ms → hatékonyság 10 / 11 ≈ **91%**, rezsi ≈ **9
 
 A válaszidőre is hat: ha **n** folyamat váltakozik, egy folyamat két futása között legfeljebb **(n − 1) · q** idő telik el (a váltásokat elhanyagolva). 5 folyamatnál és 20 ms-os kvantumnál ez 4 · 20 = **80 ms** – még nem zavaró.
 
-| Kvantum       | Hatás                                                         |
-| ------------- | ------------------------------------------------------------- |
+| Kvantum       | Hatás                                                          |
+| ------------- | -------------------------------------------------------------- |
 | **túl kicsi** | sok váltás, nagy rezsi, a CPU „csak váltogat”                  |
-| **túl nagy**  | lassú reagálás, a rendszer FCFS-szerűvé válik                 |
+| **túl nagy**  | lassú reagálás, a rendszer FCFS-szerűvé válik                  |
 | **jó**        | a CPU-löketek ~80%-a belefér egy kvantumba; tipikusan 1–100 ms |
 
 ## Nézd meg a gyakorlatban

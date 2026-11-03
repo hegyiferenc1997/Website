@@ -14,13 +14,13 @@ minutes: 20
 
 The processor uses a **mode bit** to signal with which rights the currently executing code runs:
 
-| Aspect                   | **Kernel mode** (supervisor)              | **User mode**                            |
-| ------------------------ | ----------------------------------------- | ---------------------------------------- |
-| who runs this way?       | the kernel, device drivers                | every application, the shell, the browser |
-| hardware access          | directly                                  | **only** via system calls                |
-| privileged instructions  | allowed                                   | **forbidden** (raise an exception)       |
-| memory                   | reaches everything                        | only its own address space               |
-| effect of a bug          | the whole system may stop (kernel panic, BSOD) | only the program stops              |
+| Aspect                  | **Kernel mode** (supervisor)                   | **User mode**                             |
+| ----------------------- | ---------------------------------------------- | ----------------------------------------- |
+| who runs this way?      | the kernel, device drivers                     | every application, the shell, the browser |
+| hardware access         | directly                                       | **only** via system calls                 |
+| privileged instructions | allowed                                        | **forbidden** (raise an exception)        |
+| memory                  | reaches everything                             | only its own address space                |
+| effect of a bug         | the whole system may stop (kernel panic, BSOD) | only the program stops                    |
 
 **Privileged instructions** include: disabling interrupts, setting the timer, loading the page table address, accessing I/O ports, halting the machine. If a user program tries one, the CPU raises an **exception** and the kernel stops the program.
 

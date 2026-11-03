@@ -41,15 +41,15 @@ Igény szerinti lapozás, laponként 4 KiB (6. témakör). A Linux **túlfoglal*
 
 Egyetlen gyökérfa (`/`), meghajtóbetűjelek nélkül; a további lemezek **csatolással** (_mount_) kerülnek bele. Alapértelmezett fájlrendszer: **ext4** (Fedorán **Btrfs**). „Minden fájl”: az eszközök is (`/dev/sda`).
 
-| Könyvtár | Mi van benne? |
-| --- | --- |
-| `/etc` | rendszerszintű beállítások (szöveges fájlok) |
-| `/home/<név>` | a felhasználók saját fájljai |
-| `/usr/bin`, `/usr/lib` | programok és könyvtárak |
-| `/var/log` | naplófájlok |
-| `/proc`, `/sys` | a kernel élő adatai fájlként (virtuális fájlrendszerek) |
-| `/dev` | eszközfájlok |
-| `/tmp` | ideiglenes fájlok |
+| Könyvtár               | Mi van benne?                                           |
+| ---------------------- | ------------------------------------------------------- |
+| `/etc`                 | rendszerszintű beállítások (szöveges fájlok)            |
+| `/home/<név>`          | a felhasználók saját fájljai                            |
+| `/usr/bin`, `/usr/lib` | programok és könyvtárak                                 |
+| `/var/log`             | naplófájlok                                             |
+| `/proc`, `/sys`        | a kernel élő adatai fájlként (virtuális fájlrendszerek) |
+| `/dev`                 | eszközfájlok                                            |
+| `/tmp`                 | ideiglenes fájlok                                       |
 
 ## Biztonság
 

@@ -22,11 +22,11 @@ A fájlrendszernek nyilván kell tartania:
 
 ## Foglalási módszerek
 
-| Módszer        | Hogyan?                                                    | Előny                     | Hátrány                         |
-| -------------- | ---------------------------------------------------------- | ------------------------- | ------------------------------- |
-| **folytonos**  | a fájl egymás utáni blokkokban van (kezdet + hossz)        | gyors olvasás             | külső töredezettség, nehéz bővíteni |
-| **láncolt**    | minden blokk megmondja, melyik a következő                 | nincs külső töredezettség | lassú a véletlen elérés         |
-| **indexelt**   | egy **indexblokk** sorolja fel a fájl összes blokkját      | gyors véletlen elérés     | az index helyet foglal          |
+| Módszer       | Hogyan?                                               | Előny                     | Hátrány                             |
+| ------------- | ----------------------------------------------------- | ------------------------- | ----------------------------------- |
+| **folytonos** | a fájl egymás utáni blokkokban van (kezdet + hossz)   | gyors olvasás             | külső töredezettség, nehéz bővíteni |
+| **láncolt**   | minden blokk megmondja, melyik a következő            | nincs külső töredezettség | lassú a véletlen elérés             |
+| **indexelt**  | egy **indexblokk** sorolja fel a fájl összes blokkját | gyors véletlen elérés     | az index helyet foglal              |
 
 A CD/DVD-k (ISO 9660) folytonos foglalást használnak – ott a fájlok nem változnak.
 
@@ -65,14 +65,14 @@ Mi történik, ha egy fájl írása közben elmegy az áram? A fájlrendszer **i
 
 ## Mai fájlrendszerek
 
-| Fájlrendszer | Hol?                         | Max. fájlméret  | Naplózás | Megjegyzés                         |
-| ------------ | ---------------------------- | --------------- | -------- | ---------------------------------- |
-| **FAT32**    | régi pendrive-ok, UEFI-partíció | **4 GB**     | nincs    | mindenhol olvasható                |
-| **exFAT**    | pendrive, SD-kártya          | gyakorlatilag korlátlan | nincs | FAT32 utódja nagy fájlokhoz   |
-| **NTFS**     | Windows                      | 16 TB+          | van      | ACL, titkosítás, tömörítés         |
-| **ext4**     | Linux (Ubuntu alapértelmezés)| 16 TB           | van      | extentek, megbízható               |
-| **Btrfs**, **ZFS** | Linux szerverek       | óriási          | másolás íráskor (CoW) | pillanatképek, ellenőrzőösszegek |
-| **APFS**     | macOS, iOS                   | óriási          | CoW      | pillanatképek, titkosítás          |
+| Fájlrendszer       | Hol?                            | Max. fájlméret          | Naplózás              | Megjegyzés                       |
+| ------------------ | ------------------------------- | ----------------------- | --------------------- | -------------------------------- |
+| **FAT32**          | régi pendrive-ok, UEFI-partíció | **4 GB**                | nincs                 | mindenhol olvasható              |
+| **exFAT**          | pendrive, SD-kártya             | gyakorlatilag korlátlan | nincs                 | FAT32 utódja nagy fájlokhoz      |
+| **NTFS**           | Windows                         | 16 TB+                  | van                   | ACL, titkosítás, tömörítés       |
+| **ext4**           | Linux (Ubuntu alapértelmezés)   | 16 TB                   | van                   | extentek, megbízható             |
+| **Btrfs**, **ZFS** | Linux szerverek                 | óriási                  | másolás íráskor (CoW) | pillanatképek, ellenőrzőösszegek |
+| **APFS**           | macOS, iOS                      | óriási                  | CoW                   | pillanatképek, titkosítás        |
 
 ## Összefoglalás
 

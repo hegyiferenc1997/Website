@@ -18,12 +18,12 @@ A **thread** is the smallest unit of execution the OS can schedule. A process ha
 
 ## What do threads share?
 
-| Shared (belongs to the process)         | Private (per thread)                  |
-| --------------------------------------- | ------------------------------------- |
-| code (text)                             | program counter (PC)                  |
-| global data, heap                       | registers                             |
-| open files, network connections         | **stack**                             |
-| address space, permissions              | state (running, ready, waiting)       |
+| Shared (belongs to the process) | Private (per thread)            |
+| ------------------------------- | ------------------------------- |
+| code (text)                     | program counter (PC)            |
+| global data, heap               | registers                       |
+| open files, network connections | **stack**                       |
+| address space, permissions      | state (running, ready, waiting) |
 
 Advantages over separate processes:
 
@@ -40,11 +40,11 @@ Drawback: since memory is shared, if two threads write to the same place at the 
 
 ## Threading models
 
-| Model         | Description                                            | Example                       |
-| ------------- | ------------------------------------------------------ | ----------------------------- |
-| **many-to-one** (N:1) | many user threads on a single kernel thread    | old "green thread" libraries  |
-| **one-to-one** (1:1)  | one kernel thread for every user thread        | Linux (pthreads), Windows     |
-| **many-to-many** (N:M)| many user threads on fewer kernel threads      | Go goroutines, Java virtual threads |
+| Model                  | Description                                 | Example                             |
+| ---------------------- | ------------------------------------------- | ----------------------------------- |
+| **many-to-one** (N:1)  | many user threads on a single kernel thread | old "green thread" libraries        |
+| **one-to-one** (1:1)   | one kernel thread for every user thread     | Linux (pthreads), Windows           |
+| **many-to-many** (N:M) | many user threads on fewer kernel threads   | Go goroutines, Java virtual threads |
 
 ## Threads in practice
 

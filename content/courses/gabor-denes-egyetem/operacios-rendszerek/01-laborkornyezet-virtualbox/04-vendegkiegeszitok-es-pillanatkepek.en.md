@@ -59,10 +59,10 @@ sudo reboot
 
 In the guest the folder appears here:
 
-| Guest       | Where do you see it?                       |
-| ----------- | ------------------------------------------ |
-| Ubuntu      | `/media/sf_OS-lab`                         |
-| Windows 11  | as a network drive, e.g. `Z:` (`\\VBOXSVR\OS-lab`) |
+| Guest      | Where do you see it?                               |
+| ---------- | -------------------------------------------------- |
+| Ubuntu     | `/media/sf_OS-lab`                                 |
+| Windows 11 | as a network drive, e.g. `Z:` (`\\VBOXSVR\OS-lab`) |
 
 ## Snapshots
 
@@ -76,12 +76,12 @@ Good habit: take a snapshot **before every bigger experiment** (e.g. before tryi
 
 ## Network modes
 
-| Mode                   | What does it do?                                                  | When is it good?            |
-| ---------------------- | ----------------------------------------------------------------- | --------------------------- |
-| **NAT** (default)      | the guest reaches the internet, invisible from outside            | almost always               |
-| **Bridged**            | the guest gets its own IP address on the local network, like a real machine | testing a server from another machine |
-| **Host-only**          | only the host and the guests see each other, no internet          | isolated tests              |
-| **Internal network**   | only guests among themselves                                      | networking lab exercises     |
+| Mode                 | What does it do?                                                            | When is it good?                      |
+| -------------------- | --------------------------------------------------------------------------- | ------------------------------------- |
+| **NAT** (default)    | the guest reaches the internet, invisible from outside                      | almost always                         |
+| **Bridged**          | the guest gets its own IP address on the local network, like a real machine | testing a server from another machine |
+| **Host-only**        | only the host and the guests see each other, no internet                    | isolated tests                        |
+| **Internal network** | only guests among themselves                                                | networking lab exercises              |
 
 ## Shutting down the machine
 
@@ -91,15 +91,15 @@ Good habit: take a snapshot **before every bigger experiment** (e.g. before tryi
 
 ## Common errors and fixes
 
-| Error                                                      | Fix                                                                      |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------ |
-| _VT-x is not available_ / _AMD-V is disabled_              | enable virtualization in BIOS/UEFI (lesson 1)                            |
-| very slow, green turtle                                    | Hyper-V: `bcdedit /set hypervisorlaunchtype off`, reboot                  |
-| black screen with a Windows guest                          | Display: controller **VBoxSVGA**, 3D acceleration off, 128 MB video memory |
-| UEFI Shell at boot                                         | no ISO attached, or _Press any key_ was missed → **Machine → Reset**      |
-| "This PC can't run Windows 11"                             | TPM 2.0, EFI, Secure Boot, 4 GB RAM (lesson 3)                            |
-| the shared folder does not open on Ubuntu                  | `sudo usermod -aG vboxsf $USER`, then reboot                              |
-| the host ran out of space                                  | delete old snapshots, or move the machine folder to a bigger drive        |
+| Error                                         | Fix                                                                        |
+| --------------------------------------------- | -------------------------------------------------------------------------- |
+| _VT-x is not available_ / _AMD-V is disabled_ | enable virtualization in BIOS/UEFI (lesson 1)                              |
+| very slow, green turtle                       | Hyper-V: `bcdedit /set hypervisorlaunchtype off`, reboot                   |
+| black screen with a Windows guest             | Display: controller **VBoxSVGA**, 3D acceleration off, 128 MB video memory |
+| UEFI Shell at boot                            | no ISO attached, or _Press any key_ was missed → **Machine → Reset**       |
+| "This PC can't run Windows 11"                | TPM 2.0, EFI, Secure Boot, 4 GB RAM (lesson 3)                             |
+| the shared folder does not open on Ubuntu     | `sudo usermod -aG vboxsf $USER`, then reboot                               |
+| the host ran out of space                     | delete old snapshots, or move the machine folder to a bigger drive         |
 
 ## Summary
 

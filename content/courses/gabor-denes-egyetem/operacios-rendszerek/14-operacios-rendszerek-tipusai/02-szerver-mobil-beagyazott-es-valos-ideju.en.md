@@ -14,11 +14,11 @@ minutes: 25
 
 A server runs for months or years without stopping, serves many users at once, and typically has **no** graphical interface – it is managed remotely, over SSH or a web interface.
 
-| System                    | Where is it strong?                                              |
-| ------------------------- | ---------------------------------------------------------------- |
-| **Linux** (Ubuntu Server, RHEL, Debian) | web servers, cloud, containers – the vast majority of machines in the cloud |
-| **Windows Server**        | enterprise networks: Active Directory, file sharing, Exchange, .NET applications |
-| **FreeBSD**               | network devices, firewalls, streaming (e.g. Netflix's content servers) |
+| System                                  | Where is it strong?                                                              |
+| --------------------------------------- | -------------------------------------------------------------------------------- |
+| **Linux** (Ubuntu Server, RHEL, Debian) | web servers, cloud, containers – the vast majority of machines in the cloud      |
+| **Windows Server**                      | enterprise networks: Active Directory, file sharing, Exchange, .NET applications |
+| **FreeBSD**                             | network devices, firewalls, streaming (e.g. Netflix's content servers)           |
 
 Typical of servers: **long support** (LTS), stability rather than the newest features, remote management, automation (scripts, Ansible).
 
@@ -40,10 +40,10 @@ An **embedded** system is part of a larger device and does **one job**: washing 
 
 With a **real-time** OS (RTOS) the point is not average speed but **predictability**: a task must finish **by its deadline**.
 
-| Kind                    | If it misses the deadline…                 | Example                                  |
-| ----------------------- | ------------------------------------------ | ---------------------------------------- |
-| **hard** real time      | **disaster** – the result is worthless or dangerous | airbag, ABS, pacemaker, flight control |
-| **soft** real time      | quality degrades, but not fatally          | video playback, online games, VoIP       |
+| Kind               | If it misses the deadline…                          | Example                                |
+| ------------------ | --------------------------------------------------- | -------------------------------------- |
+| **hard** real time | **disaster** – the result is worthless or dangerous | airbag, ABS, pacemaker, flight control |
+| **soft** real time | quality degrades, but not fatally                   | video playback, online games, VoIP     |
 
 Their tools: **priority-based, preemptive** scheduling, a guaranteed worst-case response time, **priority inheritance** (so a low-priority task holding a lock does not hold up a high-priority one – exactly the bug of the 1997 Mars Pathfinder). General-purpose Linux with **PREEMPT_RT** (part of the mainline kernel since 2024) is suitable for soft and, in many cases, even hard real-time tasks.
 

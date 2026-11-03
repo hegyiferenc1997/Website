@@ -56,14 +56,14 @@ ss -tlnp | grep 5000                       # miközben a szerver fut: LISTEN ál
 
 Ha két folyamat **ugyanazon a gépen** fut, a hálózatnál gyorsabb, egyszerűbb eszközök is vannak:
 
-| Módszer                    | Leírás                                                          | Példa                              |
-| -------------------------- | --------------------------------------------------------------- | ---------------------------------- |
-| **cső** (_pipe_)           | egyirányú bájtfolyam szülő és gyerek között                     | `ls \| wc -l` a shellben           |
-| **nevesített cső** (FIFO)  | csőnek neve van a fájlrendszerben, bárki megnyithatja          | `mkfifo cso`                       |
-| **UNIX-socket**            | socket, de fájlútvonallal, hálózat nélkül                       | `/run/docker.sock`                 |
-| **közös memória**          | ugyanaz a memórialap mindkét folyamat címterében – a leggyorsabb, de szinkronizálni kell (szemafor!) | `mmap`, `shm_open` |
-| **üzenetsor**              | a kernel tárolja az üzeneteket, sorrendben adja át              | POSIX `mq_open`                    |
-| **jelzések**               | rövid értesítés (szám), adatot nem visz                         | `kill -TERM`                       |
+| Módszer                   | Leírás                                                                                               | Példa                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------ |
+| **cső** (_pipe_)          | egyirányú bájtfolyam szülő és gyerek között                                                          | `ls \| wc -l` a shellben |
+| **nevesített cső** (FIFO) | csőnek neve van a fájlrendszerben, bárki megnyithatja                                                | `mkfifo cso`             |
+| **UNIX-socket**           | socket, de fájlútvonallal, hálózat nélkül                                                            | `/run/docker.sock`       |
+| **közös memória**         | ugyanaz a memórialap mindkét folyamat címterében – a leggyorsabb, de szinkronizálni kell (szemafor!) | `mmap`, `shm_open`       |
+| **üzenetsor**             | a kernel tárolja az üzeneteket, sorrendben adja át                                                   | POSIX `mq_open`          |
+| **jelzések**              | rövid értesítés (szám), adatot nem visz                                                              | `kill -TERM`             |
 
 Windowson is megvannak a megfelelőik: _anonymous_ és _named pipe_, közös memória (`CreateFileMapping`), és a Windows-üzenetek az ablakok között.
 

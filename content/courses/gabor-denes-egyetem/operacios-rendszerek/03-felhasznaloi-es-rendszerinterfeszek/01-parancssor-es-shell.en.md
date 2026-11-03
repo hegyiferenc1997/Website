@@ -52,16 +52,16 @@ The UNIX philosophy: **small programs that do one thing well** and can be connec
 
 ## The same in PowerShell
 
-| Task                | Bash               | PowerShell (short alias)         |
-| ------------------- | ------------------ | -------------------------------- |
-| where am I          | `pwd`              | `Get-Location` (`pwd`)           |
-| listing             | `ls -la`           | `Get-ChildItem -Force` (`ls`, `dir`) |
-| change folder       | `cd folder`        | `Set-Location folder` (`cd`)     |
-| file contents       | `cat a.txt`        | `Get-Content a.txt` (`cat`)      |
-| copy                | `cp a b`           | `Copy-Item a b` (`cp`)           |
-| delete              | `rm a`             | `Remove-Item a` (`rm`, `del`)    |
-| search in text      | `grep word`        | `Select-String word`             |
-| help                | `man ls`           | `Get-Help Get-ChildItem`         |
+| Task           | Bash        | PowerShell (short alias)             |
+| -------------- | ----------- | ------------------------------------ |
+| where am I     | `pwd`       | `Get-Location` (`pwd`)               |
+| listing        | `ls -la`    | `Get-ChildItem -Force` (`ls`, `dir`) |
+| change folder  | `cd folder` | `Set-Location folder` (`cd`)         |
+| file contents  | `cat a.txt` | `Get-Content a.txt` (`cat`)          |
+| copy           | `cp a b`    | `Copy-Item a b` (`cp`)               |
+| delete         | `rm a`      | `Remove-Item a` (`rm`, `del`)        |
+| search in text | `grep word` | `Select-String word`                 |
+| help           | `man ls`    | `Get-Help Get-ChildItem`             |
 
 PowerShell commands (_cmdlets_) have a **Verb-Noun** form (`Get-Process`, `Stop-Service`), and they pass **objects**, not text, through the pipe:
 

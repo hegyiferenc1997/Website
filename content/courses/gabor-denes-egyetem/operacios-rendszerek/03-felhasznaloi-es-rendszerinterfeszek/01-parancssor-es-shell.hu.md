@@ -52,16 +52,16 @@ A UNIX-filozófia: **kis programok, amelyek egy dolgot csinálnak jól**, és cs
 
 ## Ugyanez PowerShellben
 
-| Feladat             | Bash               | PowerShell (rövid alias)         |
-| ------------------- | ------------------ | -------------------------------- |
-| hol vagyok          | `pwd`              | `Get-Location` (`pwd`)           |
-| listázás            | `ls -la`           | `Get-ChildItem -Force` (`ls`, `dir`) |
-| mappaváltás         | `cd mappa`         | `Set-Location mappa` (`cd`)      |
-| fájl tartalma       | `cat a.txt`        | `Get-Content a.txt` (`cat`)      |
-| másolás             | `cp a b`           | `Copy-Item a b` (`cp`)           |
-| törlés              | `rm a`             | `Remove-Item a` (`rm`, `del`)    |
-| keresés szövegben   | `grep szó`         | `Select-String szó`              |
-| súgó                | `man ls`           | `Get-Help Get-ChildItem`         |
+| Feladat           | Bash        | PowerShell (rövid alias)             |
+| ----------------- | ----------- | ------------------------------------ |
+| hol vagyok        | `pwd`       | `Get-Location` (`pwd`)               |
+| listázás          | `ls -la`    | `Get-ChildItem -Force` (`ls`, `dir`) |
+| mappaváltás       | `cd mappa`  | `Set-Location mappa` (`cd`)          |
+| fájl tartalma     | `cat a.txt` | `Get-Content a.txt` (`cat`)          |
+| másolás           | `cp a b`    | `Copy-Item a b` (`cp`)               |
+| törlés            | `rm a`      | `Remove-Item a` (`rm`, `del`)        |
+| keresés szövegben | `grep szó`  | `Select-String szó`                  |
+| súgó              | `man ls`    | `Get-Help Get-ChildItem`             |
 
 A PowerShell parancsai (_cmdlet_) **Ige-Főnév** alakúak (`Get-Process`, `Stop-Service`), és a csövön nem szöveget, hanem **objektumokat** adnak tovább:
 

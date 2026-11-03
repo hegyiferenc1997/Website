@@ -12,15 +12,15 @@ minutes: 20
 
 ## The main functions
 
-| Subsystem                | Task                                                                  | Where do you see it?                |
-| ------------------------ | --------------------------------------------------------------------- | ----------------------------------- |
-| **process management**   | starting, stopping, scheduling and connecting programs                | Task Manager, `ps`, `top`           |
-| **memory management**    | allocating, reclaiming and protecting memory, virtual memory          | "memory usage 63%"                  |
-| **file management**      | files, folders, permissions, file systems                             | File Explorer, `ls`, `cd`           |
-| **I/O and device management** | drivers, buffering, print queue                                  | Device Manager, `lsusb`             |
-| **network management**   | protocols (TCP/IP), network interfaces                                | Wi-Fi icon, `ip addr`               |
-| **protection and security** | users, permissions, authentication, logging                        | login, UAC, `sudo`                  |
-| **user interface**       | command line and graphical interface                                  | desktop, terminal                   |
+| Subsystem                     | Task                                                         | Where do you see it?      |
+| ----------------------------- | ------------------------------------------------------------ | ------------------------- |
+| **process management**        | starting, stopping, scheduling and connecting programs       | Task Manager, `ps`, `top` |
+| **memory management**         | allocating, reclaiming and protecting memory, virtual memory | "memory usage 63%"        |
+| **file management**           | files, folders, permissions, file systems                    | File Explorer, `ls`, `cd` |
+| **I/O and device management** | drivers, buffering, print queue                              | Device Manager, `lsusb`   |
+| **network management**        | protocols (TCP/IP), network interfaces                       | Wi-Fi icon, `ip addr`     |
+| **protection and security**   | users, permissions, authentication, logging                  | login, UAC, `sudo`        |
+| **user interface**            | command line and graphical interface                         | desktop, terminal         |
 
 The following topics of the course go through these one by one – this lesson is the "map".
 

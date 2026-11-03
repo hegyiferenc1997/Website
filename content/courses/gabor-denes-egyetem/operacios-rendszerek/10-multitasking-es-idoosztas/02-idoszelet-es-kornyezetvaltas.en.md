@@ -39,11 +39,11 @@ Example: q = 10 ms, s = 1 ms → efficiency 10 / 11 ≈ **91%**, overhead ≈ **
 
 It also affects response time: if **n** processes alternate, at most **(n − 1) · q** time passes between two runs of a process (ignoring the switches). With 5 processes and a 20 ms quantum that is 4 · 20 = **80 ms** – not yet disturbing.
 
-| Quantum       | Effect                                                        |
-| ------------- | ------------------------------------------------------------- |
-| **too small** | many switches, large overhead, the CPU "only switches"        |
-| **too large** | slow reactions, the system becomes FCFS-like                  |
-| **good**      | ~80% of CPU bursts fit into one quantum; typically 1–100 ms   |
+| Quantum       | Effect                                                      |
+| ------------- | ----------------------------------------------------------- |
+| **too small** | many switches, large overhead, the CPU "only switches"      |
+| **too large** | slow reactions, the system becomes FCFS-like                |
+| **good**      | ~80% of CPU bursts fit into one quantum; typically 1–100 ms |
 
 ## See it in practice
 

@@ -40,13 +40,13 @@ Amíg egy folyamat I/O-ra vár, a processzor **másnak** dolgozhat – ezt teszi
 
 ## Mérőszámok
 
-| Mérőszám                             | Jelentés                                                   | Cél   |
-| ------------------------------------ | ---------------------------------------------------------- | ----- |
-| **CPU-kihasználtság**                | az idő hány százalékában dolgozik a CPU                   | max.  |
-| **átbocsátóképesség** (_throughput_) | időegység alatt befejezett folyamatok száma               | max.  |
-| **körülfordulási idő** (_turnaround_)| a beérkezéstől a befejeződésig eltelt idő                  | min.  |
-| **várakozási idő** (_waiting_)       | a kész sorban töltött idő összesen                         | min.  |
-| **válaszidő** (_response_)           | a beérkezéstől az **első** futásig eltelt idő              | min.  |
+| Mérőszám                              | Jelentés                                      | Cél  |
+| ------------------------------------- | --------------------------------------------- | ---- |
+| **CPU-kihasználtság**                 | az idő hány százalékában dolgozik a CPU       | max. |
+| **átbocsátóképesség** (_throughput_)  | időegység alatt befejezett folyamatok száma   | max. |
+| **körülfordulási idő** (_turnaround_) | a beérkezéstől a befejeződésig eltelt idő     | min. |
+| **várakozási idő** (_waiting_)        | a kész sorban töltött idő összesen            | min. |
+| **válaszidő** (_response_)            | a beérkezéstől az **első** futásig eltelt idő | min. |
 
 Két hasznos képlet (ha a folyamat nem végez I/O-t):
 

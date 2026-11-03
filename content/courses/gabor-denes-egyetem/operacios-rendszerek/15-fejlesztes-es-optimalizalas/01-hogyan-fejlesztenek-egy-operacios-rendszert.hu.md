@@ -28,10 +28,10 @@ A kész verziókat a **stabil** ág karbantartói még hónapokig, az évente ki
 
 ## A Windows és az Ubuntu kiadási rendje
 
-| Rendszer  | Ritmus                                                                 |
-| --------- | ---------------------------------------------------------------------- |
+| Rendszer    | Ritmus                                                                                                                                                                                          |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Windows** | évente egy nagyobb funkciófrissítés (pl. 24H2, 25H2), havonta biztonsági javítások: a **„Patch Tuesday”** minden hónap **második keddjén**; előzetes tesztelés a **Windows Insider** programban |
-| **Ubuntu**  | **április és október**: új kiadás (ÉÉ.HH, pl. 26.04); **kétévente** (páros év április) **LTS**; a köztes kiadások 9 hónapig támogatottak |
+| **Ubuntu**  | **április és október**: új kiadás (ÉÉ.HH, pl. 26.04); **kétévente** (páros év április) **LTS**; a köztes kiadások 9 hónapig támogatottak                                                        |
 
 ## Programnyelvek
 

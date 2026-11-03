@@ -12,13 +12,13 @@ minutes: 25
 
 ## HDD és SSD
 
-| Szempont           | HDD (merevlemez)                         | SSD (félvezető)                       |
-| ------------------ | ---------------------------------------- | ------------------------------------- |
-| működés            | forgó mágneses lemezek, mozgó fej        | flash memóriacellák, nincs mozgó rész |
-| véletlen elérés    | ~10 ms (a fejnek oda kell mozognia)      | ~0,1 ms vagy kevesebb                 |
-| sebesség (soros)   | 100–250 MB/s                             | 500 MB/s (SATA) – 7000+ MB/s (NVMe)   |
-| ár / TB            | olcsó                                    | drágább                               |
-| tipikus használat  | archívum, nagy adattár                   | rendszerlemez, laptop                 |
+| Szempont          | HDD (merevlemez)                    | SSD (félvezető)                       |
+| ----------------- | ----------------------------------- | ------------------------------------- |
+| működés           | forgó mágneses lemezek, mozgó fej   | flash memóriacellák, nincs mozgó rész |
+| véletlen elérés   | ~10 ms (a fejnek oda kell mozognia) | ~0,1 ms vagy kevesebb                 |
+| sebesség (soros)  | 100–250 MB/s                        | 500 MB/s (SATA) – 7000+ MB/s (NVMe)   |
+| ár / TB           | olcsó                               | drágább                               |
+| tipikus használat | archívum, nagy adattár              | rendszerlemez, laptop                 |
 
 Az SSD celláit csak **blokkonként törölve** lehet újraírni, és korlátozott számú írást bírnak. Az SSD vezérlője ezért elosztja az írásokat (_wear leveling_), az OS pedig a **TRIM** paranccsal jelzi, mely blokkok szabadultak fel. HDD-n régen kellett **töredezettségmentesíteni**; SSD-n erre nincs szükség (és felesleges kopást okoz).
 
@@ -26,11 +26,11 @@ Az SSD celláit csak **blokkonként törölve** lehet újraírni, és korlátozo
 
 A lemezt **partíciókra** oszthatjuk; mindegyik saját fájlrendszert kaphat (pl. Windows + Linux egy gépen). A partíciók listáját a **partíciós tábla** tárolja:
 
-| Szempont               | MBR (régi)                         | GPT (új, UEFI-vel)               |
-| ---------------------- | ---------------------------------- | -------------------------------- |
-| max. lemezméret        | **2 TB**                           | gyakorlatilag korlátlan          |
-| partíciók száma        | **4** elsődleges (vagy 3 + kiterjesztett) | Windowson **128**        |
-| tartalék másolat       | nincs                              | van (a lemez végén)              |
+| Szempont         | MBR (régi)                                | GPT (új, UEFI-vel)      |
+| ---------------- | ----------------------------------------- | ----------------------- |
+| max. lemezméret  | **2 TB**                                  | gyakorlatilag korlátlan |
+| partíciók száma  | **4** elsődleges (vagy 3 + kiterjesztett) | Windowson **128**       |
+| tartalék másolat | nincs                                     | van (a lemez végén)     |
 
 A Windows 11 és a modern Ubuntu-telepítés **GPT**-t használ, külön kis **EFI rendszerpartícióval** (FAT32), amelyen a rendszerbetöltők vannak.
 
@@ -59,12 +59,12 @@ A grafikus felület a pendrive-okat magától csatolja a `/media/<felhasználó>
 
 A **RAID** (_Redundant Array of Independent Disks_) több lemezt kezel egy egységként, gyorsaságért és/vagy biztonságért. **n** darab, egyenként **C** kapacitású lemezzel:
 
-| Szint      | Működés                                          | Hasznos kapacitás | Hány lemez hibáját bírja? |
-| ---------- | ------------------------------------------------ | ----------------- | ------------------------- |
-| **RAID 0** | csíkozás: az adat felváltva kerül a lemezekre    | n · C             | **0** (bármelyik hibájánál minden elvész) |
-| **RAID 1** | tükrözés: minden lemezen ugyanaz                 | C                 | n − 1                     |
-| **RAID 5** | csíkozás + elosztott paritás                     | (n − 1) · C       | 1                         |
-| **RAID 10**| tükrözött párok csíkozva                         | n · C / 2         | páronként 1               |
+| Szint       | Működés                                       | Hasznos kapacitás | Hány lemez hibáját bírja?                 |
+| ----------- | --------------------------------------------- | ----------------- | ----------------------------------------- |
+| **RAID 0**  | csíkozás: az adat felváltva kerül a lemezekre | n · C             | **0** (bármelyik hibájánál minden elvész) |
+| **RAID 1**  | tükrözés: minden lemezen ugyanaz              | C                 | n − 1                                     |
+| **RAID 5**  | csíkozás + elosztott paritás                  | (n − 1) · C       | 1                                         |
+| **RAID 10** | tükrözött párok csíkozva                      | n · C / 2         | páronként 1                               |
 
 Példa: 4 db 2 TB-os lemez RAID 5-ben → (4 − 1) · 2 = **6 TB** hasznos hely.
 

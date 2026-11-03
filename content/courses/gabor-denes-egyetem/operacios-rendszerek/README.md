@@ -11,8 +11,7 @@ A szerkezet a tantárgyleírás 16 témakörét követi, egy plusz **laborkörny
   virtuális gépre építenek.
 - `02-felepites-es-funkciok` … `17-pelda-os-ek-es-osszehasonlitas`: a tantárgyleírás 16 témaköre.
 
-Minden témakör végén egy `gyakorlas` lecke van ellenőrző kérdésekkel és összefoglaló feladatlappal; a
-17. témakör gyakorló leckéje a tárgy záró összefoglalója. A mappák, a `topic.json` és a lecke fájlok
+Minden témakör végén egy `gyakorlas` lecke van ellenőrző kérdésekkel és összefoglaló feladatlappal; a 17. témakör gyakorló leckéje a tárgy záró összefoglalója. A mappák, a `topic.json` és a lecke fájlok
 felépítése ugyanaz, mint a Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
 
 ## Kötelező feladat: kvíz

@@ -59,10 +59,10 @@ sudo reboot
 
 A vendégben a mappa itt jelenik meg:
 
-| Vendég      | Hol látod?                                 |
-| ----------- | ------------------------------------------ |
-| Ubuntu      | `/media/sf_OS-labor`                       |
-| Windows 11  | hálózati meghajtóként, pl. `Z:` (`\\VBOXSVR\OS-labor`) |
+| Vendég     | Hol látod?                                             |
+| ---------- | ------------------------------------------------------ |
+| Ubuntu     | `/media/sf_OS-labor`                                   |
+| Windows 11 | hálózati meghajtóként, pl. `Z:` (`\\VBOXSVR\OS-labor`) |
 
 ## Pillanatképek
 
@@ -76,12 +76,12 @@ Jó szokás: **minden nagyobb kísérlet előtt** készíts pillanatképet (pl. 
 
 ## Hálózati módok
 
-| Mód                    | Mit tud?                                                         | Mikor jó?                   |
-| ---------------------- | ---------------------------------------------------------------- | --------------------------- |
-| **NAT** (alapértelmezett) | a vendég eléri az internetet, kívülről nem látható          | szinte mindig               |
-| **Híd** (_Bridged_)    | a vendég saját IP-címet kap a helyi hálózaton, mint egy valódi gép | szerver kipróbálása más gépről |
-| **Csak gazda** (_Host-only_) | csak a gazda és a vendégek látják egymást, internet nincs  | elszigetelt tesztek         |
-| **Belső hálózat**      | csak a vendégek egymás között                                    | hálózati laborgyakorlatok    |
+| Mód                          | Mit tud?                                                           | Mikor jó?                      |
+| ---------------------------- | ------------------------------------------------------------------ | ------------------------------ |
+| **NAT** (alapértelmezett)    | a vendég eléri az internetet, kívülről nem látható                 | szinte mindig                  |
+| **Híd** (_Bridged_)          | a vendég saját IP-címet kap a helyi hálózaton, mint egy valódi gép | szerver kipróbálása más gépről |
+| **Csak gazda** (_Host-only_) | csak a gazda és a vendégek látják egymást, internet nincs          | elszigetelt tesztek            |
+| **Belső hálózat**            | csak a vendégek egymás között                                      | hálózati laborgyakorlatok      |
 
 ## A gép leállítása
 
@@ -91,15 +91,15 @@ Jó szokás: **minden nagyobb kísérlet előtt** készíts pillanatképet (pl. 
 
 ## Gyakori hibák és megoldásuk
 
-| Hiba                                                       | Megoldás                                                                 |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------ |
-| _VT-x is not available_ / _AMD-V is disabled_              | BIOS/UEFI-ben kapcsold be a virtualizációt (1. lecke)                     |
-| nagyon lassú, zöld teknős                                  | Hyper-V: `bcdedit /set hypervisorlaunchtype off`, újraindítás              |
-| fekete képernyő Windows vendégnél                          | Kijelző: vezérlő **VBoxSVGA**, 3D gyorsítás ki, 128 MB videomemória        |
-| UEFI Shell indításkor                                      | nincs ISO csatolva, vagy lemaradt a _Press any key_ → **Gép → Újraindítás** |
-| „Nem futtatható a Windows 11”                              | TPM 2.0, EFI, Secure Boot, 4 GB RAM (3. lecke)                            |
-| a megosztott mappa nem nyílik meg Ubuntun                  | `sudo usermod -aG vboxsf $USER`, majd újraindítás                         |
-| elfogyott a hely a gazdán                                  | töröld a régi pillanatképeket, vagy tedd a gépmappát nagyobb meghajtóra   |
+| Hiba                                          | Megoldás                                                                    |
+| --------------------------------------------- | --------------------------------------------------------------------------- |
+| _VT-x is not available_ / _AMD-V is disabled_ | BIOS/UEFI-ben kapcsold be a virtualizációt (1. lecke)                       |
+| nagyon lassú, zöld teknős                     | Hyper-V: `bcdedit /set hypervisorlaunchtype off`, újraindítás               |
+| fekete képernyő Windows vendégnél             | Kijelző: vezérlő **VBoxSVGA**, 3D gyorsítás ki, 128 MB videomemória         |
+| UEFI Shell indításkor                         | nincs ISO csatolva, vagy lemaradt a _Press any key_ → **Gép → Újraindítás** |
+| „Nem futtatható a Windows 11”                 | TPM 2.0, EFI, Secure Boot, 4 GB RAM (3. lecke)                              |
+| a megosztott mappa nem nyílik meg Ubuntun     | `sudo usermod -aG vboxsf $USER`, majd újraindítás                           |
+| elfogyott a hely a gazdán                     | töröld a régi pillanatképeket, vagy tedd a gépmappát nagyobb meghajtóra     |
 
 ## Összefoglalás
 

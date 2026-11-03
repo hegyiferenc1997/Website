@@ -39,14 +39,14 @@ low addr  └──────────────────────�
 
 The **PCB** (_Process Control Block_) is the kernel data structure in which the OS **records everything** about a process:
 
-| Field                | Example                                   |
-| -------------------- | ----------------------------------------- |
-| identifiers          | PID, parent's PID (PPID), user            |
-| state                | running, ready, waiting                   |
-| registers            | program counter, stack pointer …          |
-| scheduling data      | priority, CPU time used so far            |
-| memory               | location of the page table, address space limits |
-| resources            | open files, network connections           |
+| Field           | Example                                          |
+| --------------- | ------------------------------------------------ |
+| identifiers     | PID, parent's PID (PPID), user                   |
+| state           | running, ready, waiting                          |
+| registers       | program counter, stack pointer …                 |
+| scheduling data | priority, CPU time used so far                   |
+| memory          | location of the page table, address space limits |
+| resources       | open files, network connections                  |
 
 On Linux the PCB is called `task_struct`. A process's data is also visible in the `/proc/<PID>/` folder:
 

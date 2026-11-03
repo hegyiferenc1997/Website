@@ -41,11 +41,11 @@ An **antivirus** searches based on known malware **patterns** (signatures) and s
 
 If your laptop is stolen, the password login does not protect you: with the disk removed, **anyone can read it**. **Full disk encryption** prevents this.
 
-| System   | Tool          | Note                                                           |
-| -------- | ------------- | -------------------------------------------------------------- |
-| Windows  | **BitLocker** (Pro, Education) / device encryption (Home) | the **TPM** guards the key; save the recovery key! |
-| Linux    | **LUKS**      | the Ubuntu installer offers it ("Advanced features → encryption") |
-| macOS    | **FileVault** | turn on: System Settings → Privacy & Security                  |
+| System  | Tool                                                      | Note                                                              |
+| ------- | --------------------------------------------------------- | ----------------------------------------------------------------- |
+| Windows | **BitLocker** (Pro, Education) / device encryption (Home) | the **TPM** guards the key; save the recovery key!                |
+| Linux   | **LUKS**                                                  | the Ubuntu installer offers it ("Advanced features → encryption") |
+| macOS   | **FileVault**                                             | turn on: System Settings → Privacy & Security                     |
 
 ## Built-in protections in the kernel and hardware
 

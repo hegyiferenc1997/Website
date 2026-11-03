@@ -25,11 +25,11 @@ Why is it useful?
 
 ## The two types of hypervisor
 
-| | **Type 1** (_bare-metal_) | **Type 2** (_hosted_) |
-| --- | --- | --- |
-| where it runs | **directly on the hardware** | on a **host OS**, as an application |
-| examples | VMware ESXi, Microsoft **Hyper-V**, Xen, **KVM** (Linux kernel module) | **VirtualBox**, VMware Workstation, Parallels Desktop |
-| typical use | faster, on servers and in the cloud | easy to install, on desktops |
+|               | **Type 1** (_bare-metal_)                                              | **Type 2** (_hosted_)                                 |
+| ------------- | ---------------------------------------------------------------------- | ----------------------------------------------------- |
+| where it runs | **directly on the hardware**                                           | on a **host OS**, as an application                   |
+| examples      | VMware ESXi, Microsoft **Hyper-V**, Xen, **KVM** (Linux kernel module) | **VirtualBox**, VMware Workstation, Parallels Desktop |
+| typical use   | faster, on servers and in the cloud                                    | easy to install, on desktops                          |
 
 KVM is an interesting case: it turns the Linux kernel itself into a hypervisor, so it counts as type 1 even though a full Linux runs beneath it. On Windows, when Hyper-V is enabled, Windows itself is moved into a "privileged" VM above the hypervisor.
 

@@ -42,15 +42,15 @@ The most important part of the OS, always in memory, is the **kernel**. The rest
 
 ## A short history
 
-| Era        | Characteristic                                                           | Example                  |
-| ---------- | ------------------------------------------------------------------------ | ------------------------ |
-| 1940s–50s  | no OS, the program is loaded with switches and punched cards             | ENIAC                    |
-| 1950s–60s  | **batch** processing: jobs run one after another                         | IBM 7094, FMS            |
-| 1960s      | **multiprogramming** and **time-sharing**: many programs, many terminals | IBM OS/360, CTSS, MULTICS|
-| 1970s      | **UNIX** (written in C, portable)                                        | UNIX, later BSD          |
-| 1980s      | personal computers, graphical interface                                  | MS-DOS, Mac OS, Windows  |
-| 1990s      | open source, networking, 32 bits                                         | **Linux** (1991), Windows NT |
-| 2000s–     | mobile, virtualization, cloud, multi-core processors                     | Android, iOS, Windows 11, macOS |
+| Era       | Characteristic                                                           | Example                         |
+| --------- | ------------------------------------------------------------------------ | ------------------------------- |
+| 1940s–50s | no OS, the program is loaded with switches and punched cards             | ENIAC                           |
+| 1950s–60s | **batch** processing: jobs run one after another                         | IBM 7094, FMS                   |
+| 1960s     | **multiprogramming** and **time-sharing**: many programs, many terminals | IBM OS/360, CTSS, MULTICS       |
+| 1970s     | **UNIX** (written in C, portable)                                        | UNIX, later BSD                 |
+| 1980s     | personal computers, graphical interface                                  | MS-DOS, Mac OS, Windows         |
+| 1990s     | open source, networking, 32 bits                                         | **Linux** (1991), Windows NT    |
+| 2000s–    | mobile, virtualization, cloud, multi-core processors                     | Android, iOS, Windows 11, macOS |
 
 Today's Linux and macOS are the intellectual heirs of UNIX; Windows comes from the Windows NT line.
 

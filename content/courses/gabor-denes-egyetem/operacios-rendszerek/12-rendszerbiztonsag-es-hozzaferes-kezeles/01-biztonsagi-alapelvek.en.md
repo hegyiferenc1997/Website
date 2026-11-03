@@ -12,24 +12,24 @@ minutes: 20
 
 ## The CIA triad
 
-| Goal                                 | Meaning                                          | If it is violated…                 |
-| ------------------------------------ | ------------------------------------------------ | ---------------------------------- |
-| **Confidentiality**                  | only those allowed can see the data              | passwords leak                     |
-| **Integrity**                        | only those allowed can change the data           | someone rewrites your grades       |
-| **Availability**                     | the system is reachable when needed              | a denial-of-service (DoS) attack takes down the student portal |
+| Goal                | Meaning                                | If it is violated…                                             |
+| ------------------- | -------------------------------------- | -------------------------------------------------------------- |
+| **Confidentiality** | only those allowed can see the data    | passwords leak                                                 |
+| **Integrity**       | only those allowed can change the data | someone rewrites your grades                                   |
+| **Availability**    | the system is reachable when needed    | a denial-of-service (DoS) attack takes down the student portal |
 
 Add to this **authentication** (who are you?) and **authorisation** (what may you do?): the OS first establishes that it is really you, then whether you may access a file.
 
 ## Threats and malware
 
-| Malware                | What does it do?                                                     |
-| ---------------------- | -------------------------------------------------------------------- |
-| **virus**              | embeds itself into other programs and spreads when they run          |
-| **worm**               | spreads on its own over the network (e.g. through a vulnerability)   |
-| **trojan**             | disguises itself as a useful program                                 |
-| **ransomware**         | encrypts your files and demands a ransom                             |
-| **spyware**, **keylogger** | steals data and passwords                                        |
-| **rootkit**            | hides itself (and other malware) deep down, even in the kernel       |
+| Malware                    | What does it do?                                                   |
+| -------------------------- | ------------------------------------------------------------------ |
+| **virus**                  | embeds itself into other programs and spreads when they run        |
+| **worm**                   | spreads on its own over the network (e.g. through a vulnerability) |
+| **trojan**                 | disguises itself as a useful program                               |
+| **ransomware**             | encrypts your files and demands a ransom                           |
+| **spyware**, **keylogger** | steals data and passwords                                          |
+| **rootkit**                | hides itself (and other malware) deep down, even in the kernel     |
 
 The most common entry point today is not technology but **people**: **phishing** tricks users out of passwords with fake e-mails and sites. The other big gate is known vulnerabilities in **unpatched** software.
 

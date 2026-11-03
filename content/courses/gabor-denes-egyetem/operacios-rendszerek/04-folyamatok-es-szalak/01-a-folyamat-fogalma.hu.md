@@ -39,14 +39,14 @@ alacsony  └──────────────────────�
 
 A **PCB** (_Process Control Block_) az a kernelbeli adatszerkezet, amelyben az OS **mindent nyilvántart** egy folyamatról:
 
-| Mező                 | Példa                                     |
-| -------------------- | ----------------------------------------- |
-| azonosítók           | PID, a szülő PID-je (PPID), felhasználó   |
-| állapot              | futó, futásra kész, várakozó              |
-| regiszterek          | programszámláló, veremmutató …            |
-| ütemezési adatok     | prioritás, eddig felhasznált CPU-idő      |
-| memória              | a laptábla helye, a címtér határai        |
-| erőforrások          | megnyitott fájlok, hálózati kapcsolatok   |
+| Mező             | Példa                                   |
+| ---------------- | --------------------------------------- |
+| azonosítók       | PID, a szülő PID-je (PPID), felhasználó |
+| állapot          | futó, futásra kész, várakozó            |
+| regiszterek      | programszámláló, veremmutató …          |
+| ütemezési adatok | prioritás, eddig felhasznált CPU-idő    |
+| memória          | a laptábla helye, a címtér határai      |
+| erőforrások      | megnyitott fájlok, hálózati kapcsolatok |
 
 Linuxon a PCB neve `task_struct`. Egy folyamat adatai a `/proc/<PID>/` mappában is látszanak:
 

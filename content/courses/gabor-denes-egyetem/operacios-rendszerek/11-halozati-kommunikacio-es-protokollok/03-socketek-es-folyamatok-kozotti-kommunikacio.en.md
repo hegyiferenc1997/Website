@@ -56,14 +56,14 @@ ss -tlnp | grep 5000                       # while the server runs: LISTEN state
 
 If two processes run **on the same machine**, there are faster, simpler tools than the network:
 
-| Method                     | Description                                                     | Example                            |
-| -------------------------- | --------------------------------------------------------------- | ---------------------------------- |
-| **pipe**                   | one-way byte stream between parent and child                    | `ls \| wc -l` in the shell         |
-| **named pipe** (FIFO)      | the pipe has a name in the file system, anyone can open it      | `mkfifo pipe`                      |
-| **UNIX socket**            | a socket, but with a file path, without networking              | `/run/docker.sock`                 |
-| **shared memory**          | the same memory page in both processes' address spaces – the fastest, but must be synchronised (semaphore!) | `mmap`, `shm_open` |
-| **message queue**          | the kernel stores the messages and delivers them in order       | POSIX `mq_open`                    |
-| **signals**                | a short notification (a number), carries no data                | `kill -TERM`                       |
+| Method                | Description                                                                                                 | Example                    |
+| --------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------- |
+| **pipe**              | one-way byte stream between parent and child                                                                | `ls \| wc -l` in the shell |
+| **named pipe** (FIFO) | the pipe has a name in the file system, anyone can open it                                                  | `mkfifo pipe`              |
+| **UNIX socket**       | a socket, but with a file path, without networking                                                          | `/run/docker.sock`         |
+| **shared memory**     | the same memory page in both processes' address spaces – the fastest, but must be synchronised (semaphore!) | `mmap`, `shm_open`         |
+| **message queue**     | the kernel stores the messages and delivers them in order                                                   | POSIX `mq_open`            |
+| **signals**           | a short notification (a number), carries no data                                                            | `kill -TERM`               |
 
 Windows has their equivalents too: anonymous and named pipes, shared memory (`CreateFileMapping`), and Windows messages between windows.
 

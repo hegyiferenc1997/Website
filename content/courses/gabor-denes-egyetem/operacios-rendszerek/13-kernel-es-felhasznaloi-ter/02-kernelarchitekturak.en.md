@@ -60,12 +60,12 @@ In 1992 **Andrew S. Tanenbaum** (the author of MINIX) wrote on Usenet: "Linux is
 
 ## Comparison
 
-| Aspect          | Monolithic    | Microkernel    | Hybrid                  |
-| --------------- | ------------- | -------------- | ----------------------- |
-| speed           | **high**      | lower          | high                    |
-| reliability     | one driver bug stops everything | **high** | medium        |
-| kernel size     | large         | **small**      | large                   |
-| example         | Linux, FreeBSD | MINIX 3, QNX, seL4 | Windows NT, macOS XNU |
+| Aspect      | Monolithic                      | Microkernel        | Hybrid                |
+| ----------- | ------------------------------- | ------------------ | --------------------- |
+| speed       | **high**                        | lower              | high                  |
+| reliability | one driver bug stops everything | **high**           | medium                |
+| kernel size | large                           | **small**          | large                 |
+| example     | Linux, FreeBSD                  | MINIX 3, QNX, seL4 | Windows NT, macOS XNU |
 
 ## Summary
 

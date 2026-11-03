@@ -25,21 +25,21 @@ A macOS-t nem telepítjük VirtualBoxba: a licence csak Apple hardveren engedi f
 
 ## A nagy összehasonlítás
 
-| | **Linux (Ubuntu)** | **Windows 11** | **macOS** |
-| --- | --- | --- | --- |
-| kernel | monolitikus, modulokkal | hibrid (NT) | hibrid (XNU: Mach + BSD) |
-| licenc | nyílt (GPLv2) | zárt | zárt (a Darwin alap nyílt) |
-| 1. folyamat | `systemd` (PID 1) | System (PID 4), `smss.exe` | `launchd` (PID 1) |
-| folyamat létrehozása | `fork()` + `exec()` | `CreateProcess` | `fork()` + `exec()`, `posix_spawn` |
-| ütemező | EEVDF, nice −20…19 | 32 prioritási szint, boost | prioritás + QoS-osztályok, P/E magok |
-| memória | túlfoglalás + OOM killer, swap | commit limit, `pagefile.sys`, tömörítés | tömörítés, dinamikus swap |
-| fájlrendszer | ext4 (Btrfs) | NTFS | APFS |
-| útvonal | `/home/anna/doc.txt` | `C:\Users\Anna\doc.txt` | `/Users/anna/doc.txt` |
-| kis- és nagybetű | megkülönbözteti | nem | alapból nem |
-| jogosultságok | `rwx` + AppArmor/SELinux | ACL + UAC | `rwx` + ACL + SIP, sandbox |
-| beállítások | szöveges fájlok (`/etc`) | beállításjegyzék (registry) | `.plist` fájlok |
-| csomagkezelő | `apt`, Snap, Flatpak | `winget`, Microsoft Store | App Store, Homebrew |
-| tipikus terep | szerver, felhő, fejlesztés, beágyazott | irodai és otthoni asztal, játék | kreatív munka, Apple-fejlesztés |
+|                      | **Linux (Ubuntu)**                     | **Windows 11**                          | **macOS**                            |
+| -------------------- | -------------------------------------- | --------------------------------------- | ------------------------------------ |
+| kernel               | monolitikus, modulokkal                | hibrid (NT)                             | hibrid (XNU: Mach + BSD)             |
+| licenc               | nyílt (GPLv2)                          | zárt                                    | zárt (a Darwin alap nyílt)           |
+| 1. folyamat          | `systemd` (PID 1)                      | System (PID 4), `smss.exe`              | `launchd` (PID 1)                    |
+| folyamat létrehozása | `fork()` + `exec()`                    | `CreateProcess`                         | `fork()` + `exec()`, `posix_spawn`   |
+| ütemező              | EEVDF, nice −20…19                     | 32 prioritási szint, boost              | prioritás + QoS-osztályok, P/E magok |
+| memória              | túlfoglalás + OOM killer, swap         | commit limit, `pagefile.sys`, tömörítés | tömörítés, dinamikus swap            |
+| fájlrendszer         | ext4 (Btrfs)                           | NTFS                                    | APFS                                 |
+| útvonal              | `/home/anna/doc.txt`                   | `C:\Users\Anna\doc.txt`                 | `/Users/anna/doc.txt`                |
+| kis- és nagybetű     | megkülönbözteti                        | nem                                     | alapból nem                          |
+| jogosultságok        | `rwx` + AppArmor/SELinux               | ACL + UAC                               | `rwx` + ACL + SIP, sandbox           |
+| beállítások          | szöveges fájlok (`/etc`)               | beállításjegyzék (registry)             | `.plist` fájlok                      |
+| csomagkezelő         | `apt`, Snap, Flatpak                   | `winget`, Microsoft Store               | App Store, Homebrew                  |
+| tipikus terep        | szerver, felhő, fejlesztés, beágyazott | irodai és otthoni asztal, játék         | kreatív munka, Apple-fejlesztés      |
 
 ## Melyiket mikor?
 

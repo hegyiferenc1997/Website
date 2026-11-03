@@ -12,14 +12,14 @@ minutes: 20
 
 ## The six categories
 
-| Category             | What for?                                        | POSIX (Linux, macOS)       | Win32 (Windows)                 |
-| -------------------- | ------------------------------------------------ | -------------------------- | ------------------------------- |
-| **process control**  | start, terminate, wait                           | `fork`, `exec`, `exit`, `wait` | `CreateProcess`, `ExitProcess`, `WaitForSingleObject` |
-| **file management**  | open, read, write, close, delete                 | `open`, `read`, `write`, `close`, `unlink` | `CreateFile`, `ReadFile`, `WriteFile`, `CloseHandle`, `DeleteFile` |
-| **device management**| controlling, reserving a device                  | `ioctl`, `read`, `write`   | `DeviceIoControl`               |
-| **information**      | time, identifiers, system data                   | `getpid`, `time`, `uname`  | `GetCurrentProcessId`, `GetSystemTime` |
-| **communication**    | pipes, shared memory, network                    | `pipe`, `mmap`, `socket`   | `CreatePipe`, `MapViewOfFile`, `socket` |
-| **protection**       | querying and setting permissions                 | `chmod`, `chown`, `umask`  | `SetFileSecurity`, `SetSecurityInfo` |
+| Category              | What for?                        | POSIX (Linux, macOS)                       | Win32 (Windows)                                                    |
+| --------------------- | -------------------------------- | ------------------------------------------ | ------------------------------------------------------------------ |
+| **process control**   | start, terminate, wait           | `fork`, `exec`, `exit`, `wait`             | `CreateProcess`, `ExitProcess`, `WaitForSingleObject`              |
+| **file management**   | open, read, write, close, delete | `open`, `read`, `write`, `close`, `unlink` | `CreateFile`, `ReadFile`, `WriteFile`, `CloseHandle`, `DeleteFile` |
+| **device management** | controlling, reserving a device  | `ioctl`, `read`, `write`                   | `DeviceIoControl`                                                  |
+| **information**       | time, identifiers, system data   | `getpid`, `time`, `uname`                  | `GetCurrentProcessId`, `GetSystemTime`                             |
+| **communication**     | pipes, shared memory, network    | `pipe`, `mmap`, `socket`                   | `CreatePipe`, `MapViewOfFile`, `socket`                            |
+| **protection**        | querying and setting permissions | `chmod`, `chown`, `umask`                  | `SetFileSecurity`, `SetSecurityInfo`                               |
 
 A current Linux kernel knows **more than 300** system calls, but the vast majority of programs use a few dozen.
 
@@ -29,11 +29,11 @@ On UNIX an open file is identified by a small **integer**, the **file descriptor
 
 Every process starts with **three** open file descriptors:
 
-| No.  | Name       | Where does it point by default? |
-| ---- | ---------- | ------------------------------- |
-| 0    | **stdin**  | keyboard (standard input)       |
-| 1    | **stdout** | terminal (standard output)      |
-| 2    | **stderr** | terminal (error output)         |
+| No. | Name       | Where does it point by default? |
+| --- | ---------- | ------------------------------- |
+| 0   | **stdin**  | keyboard (standard input)       |
+| 1   | **stdout** | terminal (standard output)      |
+| 2   | **stderr** | terminal (error output)         |
 
 That is why a newly opened file typically gets descriptor **3**. The shell's redirections also replace these:
 

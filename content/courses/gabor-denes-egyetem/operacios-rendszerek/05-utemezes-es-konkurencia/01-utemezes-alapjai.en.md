@@ -40,13 +40,13 @@ While a process waits for I/O, the processor can work for **someone else** – t
 
 ## Metrics
 
-| Metric                               | Meaning                                                    | Goal  |
-| ------------------------------------ | ---------------------------------------------------------- | ----- |
-| **CPU utilisation**                  | what percentage of the time the CPU is working             | max.  |
-| **throughput**                       | number of processes finished per time unit                 | max.  |
-| **turnaround time**                  | time from arrival to completion                            | min.  |
-| **waiting time**                     | total time spent in the ready queue                        | min.  |
-| **response time**                    | time from arrival to the **first** run                     | min.  |
+| Metric              | Meaning                                        | Goal |
+| ------------------- | ---------------------------------------------- | ---- |
+| **CPU utilisation** | what percentage of the time the CPU is working | max. |
+| **throughput**      | number of processes finished per time unit     | max. |
+| **turnaround time** | time from arrival to completion                | min. |
+| **waiting time**    | total time spent in the ready queue            | min. |
+| **response time**   | time from arrival to the **first** run         | min. |
 
 Two useful formulas (if the process does no I/O):
 

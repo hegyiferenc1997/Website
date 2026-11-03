@@ -40,15 +40,15 @@ If the kernel hits a **fatal error**, it stops with a **kernel panic** (the Wind
 
 These are **not real** files on disk: the kernel generates their contents on the fly when you read them – a window into the kernel.
 
-| Path                          | What does it show?                               |
-| ----------------------------- | ------------------------------------------------ |
-| `/proc/cpuinfo`               | data of the processor(s)                         |
-| `/proc/meminfo`               | the detailed state of memory                     |
-| `/proc/<PID>/`                | data of a process (status, maps, fd …)           |
-| `/proc/version`               | the kernel version and build data                |
-| `/proc/sys/`                  | **tunable** kernel parameters (`sysctl`)         |
-| `/sys/class/net/`             | network interfaces                               |
-| `/sys/block/`                 | block devices (disks)                            |
+| Path              | What does it show?                       |
+| ----------------- | ---------------------------------------- |
+| `/proc/cpuinfo`   | data of the processor(s)                 |
+| `/proc/meminfo`   | the detailed state of memory             |
+| `/proc/<PID>/`    | data of a process (status, maps, fd …)   |
+| `/proc/version`   | the kernel version and build data        |
+| `/proc/sys/`      | **tunable** kernel parameters (`sysctl`) |
+| `/sys/class/net/` | network interfaces                       |
+| `/sys/block/`     | block devices (disks)                    |
 
 ```bash
 cat /proc/version

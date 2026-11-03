@@ -38,22 +38,22 @@ ls -l notes.sh
 └ file type: - = file, d = directory, l = symbolic link
 ```
 
-| Perm. | On a file                | On a directory                              |
-| ----- | ------------------------ | ------------------------------------------- |
-| **r** | you may read it          | you may list its contents                   |
-| **w** | you may modify it        | you may create and delete files in it       |
-| **x** | you may execute it       | you may **enter** it (`cd`)                 |
+| Perm. | On a file          | On a directory                        |
+| ----- | ------------------ | ------------------------------------- |
+| **r** | you may read it    | you may list its contents             |
+| **w** | you may modify it  | you may create and delete files in it |
+| **x** | you may execute it | you may **enter** it (`cd`)           |
 
 ## chmod in octal
 
 Each permission is a **number**: **r = 4**, **w = 2**, **x = 1**. We add them per actor and write the three digits side by side (owner, group, others):
 
-| Permissions  | Calculation                      | Code    |
-| ------------ | -------------------------------- | ------- |
-| `rwxr-x---`  | (4+2+1) (4+0+1) (0+0+0)          | **750** |
-| `rw-r--r--`  | (4+2) (4) (4)                    | **644** |
-| `rwxr-xr-x`  | 7 5 5                            | **755** |
-| `rw-------`  | 6 0 0                            | **600** |
+| Permissions | Calculation             | Code    |
+| ----------- | ----------------------- | ------- |
+| `rwxr-x---` | (4+2+1) (4+0+1) (0+0+0) | **750** |
+| `rw-r--r--` | (4+2) (4) (4)           | **644** |
+| `rwxr-xr-x` | 7 5 5                   | **755** |
+| `rw-------` | 6 0 0                   | **600** |
 
 ```bash
 chmod 644 notes.txt       # usual file: I write it, everyone reads it

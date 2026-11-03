@@ -29,12 +29,12 @@ minutes: 20
 
 A **distribution** is a curated package of kernel + basic programs + package manager + graphical interface + settings.
 
-| Family      | Distributions                    | Package manager | Recommended for?                 |
-| ----------- | -------------------------------- | --------------- | -------------------------------- |
-| Debian      | **Ubuntu**, Debian, Linux Mint   | `apt` (.deb)    | beginners, desktop, server       |
-| Red Hat     | Fedora, RHEL, Rocky, AlmaLinux   | `dnf` (.rpm)    | enterprise servers, developers   |
-| Arch        | Arch Linux, Manjaro              | `pacman`        | advanced users who configure everything themselves |
-| SUSE        | openSUSE, SLES                   | `zypper`        | enterprise environments          |
+| Family  | Distributions                  | Package manager | Recommended for?                                   |
+| ------- | ------------------------------ | --------------- | -------------------------------------------------- |
+| Debian  | **Ubuntu**, Debian, Linux Mint | `apt` (.deb)    | beginners, desktop, server                         |
+| Red Hat | Fedora, RHEL, Rocky, AlmaLinux | `dnf` (.rpm)    | enterprise servers, developers                     |
+| Arch    | Arch Linux, Manjaro            | `pacman`        | advanced users who configure everything themselves |
+| SUSE    | openSUSE, SLES                 | `zypper`        | enterprise environments                            |
 
 ## macOS
 

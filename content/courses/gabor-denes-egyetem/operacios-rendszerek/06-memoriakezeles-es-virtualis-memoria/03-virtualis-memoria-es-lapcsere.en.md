@@ -32,11 +32,11 @@ A page fault is **expensive**: a disk operation is a thousand to a million times
 
 Example reference string with **3 frames**: `7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2`
 
-| Algorithm    | Which page does it replace?                                | Page faults in the example |
-| ------------ | ---------------------------------------------------------- | -------------------------- |
-| **FIFO**     | the one **loaded earliest**                                | 10                         |
-| **LRU**      | the one **used least recently** (_Least Recently Used_)    | 9                          |
-| **optimal** (OPT) | the one that will be needed **latest**                | 7                          |
+| Algorithm         | Which page does it replace?                             | Page faults in the example |
+| ----------------- | ------------------------------------------------------- | -------------------------- |
+| **FIFO**          | the one **loaded earliest**                             | 10                         |
+| **LRU**           | the one **used least recently** (_Least Recently Used_) | 9                          |
+| **optimal** (OPT) | the one that will be needed **latest**                  | 7                          |
 
 The **optimal** algorithm is the best, but we do not know the future, so it is only a **baseline for comparison**. **LRU** approximates it well; real systems use cheap approximations of it (e.g. the **clock** / _second chance_ algorithm with the "referenced" bit).
 

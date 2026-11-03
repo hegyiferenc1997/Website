@@ -12,11 +12,11 @@ minutes: 20
 
 ## Device types
 
-| Type                  | Characteristic                                   | Example                        |
-| --------------------- | ------------------------------------------------ | ------------------------------ |
-| **block** device      | readable in fixed-size blocks, in any order      | SSD, HDD, USB stick            |
-| **character** device  | byte stream, sequential only                     | keyboard, mouse, serial port   |
-| **network** device    | sends and receives packets                       | Ethernet, Wi-Fi                |
+| Type                 | Characteristic                              | Example                      |
+| -------------------- | ------------------------------------------- | ---------------------------- |
+| **block** device     | readable in fixed-size blocks, in any order | SSD, HDD, USB stick          |
+| **character** device | byte stream, sequential only                | keyboard, mouse, serial port |
+| **network** device   | sends and receives packets                  | Ethernet, Wi-Fi              |
 
 The difference in speed is enormous: a keyboard delivers ~10 bytes/s, an NVMe SSD 7 GB/s – the OS has to handle both well.
 
