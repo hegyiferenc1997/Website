@@ -74,6 +74,7 @@ export const semesters: CurriculumCourse[][] = [
       name: "Innováció- és projektmenedzsment",
       en: "Innovation and Project Management",
       credits: 5,
+      active: true,
     },
     { name: "Numerikus analízis", en: "Numerical Analysis", credits: 5 },
     { name: "Mérés- és irányítástechnika", en: "Measurement and Control Engineering", credits: 4 },

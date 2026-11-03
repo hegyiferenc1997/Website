@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Technológiai trendek és fejlesztések",
+    "en": "Technology Trends and Developments"
+  },
+  "description": {
+    "hu": "Jelenlegi technológiai trendek (mesterséges intelligencia, felhő, IoT, kiberbiztonság), jövőbeli trendek és előrejelzésük (Gartner-féle hype-ciklus, S-görbe), innovatív technológiák alkalmazása (Rogers-féle diffúzió, szakadék, technológiai érettségi szintek – TRL).",
+    "en": "Current technology trends (artificial intelligence, cloud, IoT, cybersecurity), future trends and forecasting them (Gartner hype cycle, S-curve), applying innovative technologies (Rogers' diffusion of innovations, the chasm, technology readiness levels – TRL)."
+  }
+}

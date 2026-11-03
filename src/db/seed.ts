@@ -15,7 +15,8 @@ import * as gde from "./data/gde-mernokinformatikus";
 /**
  * Kezdő adat: a Gábor Dénes Egyetem Mérnökinformatikus BSc szakja mind a 7 félévvel,
  * a tárgyakkal, kreditekkel és az 5–6. félév két specializációjával.
- * Aktív tárgyak: Programozási alapok (1. félév) és Digitális technika (3. félév), a többi helykitöltő.
+ * Aktív tárgyak: Programozási alapok (1. félév), Digitális technika és Innováció- és projektmenedzsment
+ * (3. félév), a többi helykitöltő.
  * A témakörök és leckék a content/courses mappából jönnek (lásd content.ts).
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */

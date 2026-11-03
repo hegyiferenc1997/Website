@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Projekt végrehajtás és ellenőrzés, határidő és költségvetés kezelése",
+    "en": "Project Execution and Control, Managing Deadlines and the Budget"
+  },
+  "description": {
+    "hu": "A projekt kivitelezésének lépései (munkaengedélyezés, státuszmegbeszélés, RAG-státuszjelentés, problémanapló, integrált változáskezelés), a határidők menedzsmentje (PERT hárompontos becslés, puffer, ütemterv-tömörítés: crashing és fast-tracking), a költségvetés és a megszerzett érték módszere (PV, EV, AC, CPI, SPI, EAC).",
+    "en": "The steps of project execution (work authorisation, status meetings, RAG status reports, issue log, integrated change control), managing deadlines (PERT three-point estimate, buffers, schedule compression: crashing and fast-tracking), the budget and earned value management (PV, EV, AC, CPI, SPI, EAC)."
+  }
+}

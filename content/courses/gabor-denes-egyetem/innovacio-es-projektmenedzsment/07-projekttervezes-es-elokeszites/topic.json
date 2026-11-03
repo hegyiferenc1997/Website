@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Projekttervezés és előkészítés",
+    "en": "Project Planning and Preparation"
+  },
+  "description": {
+    "hu": "Projekttervezési módszerek és eszközök (munkalebontási struktúra, tevékenységlista, függőségek, Gantt-diagram), hálótervezés és a kritikus út módszere (CPM, tartalékidő), a projekt előkészítési lépései (üzleti eset, megvalósíthatósági tanulmány, projekt alapító okirat, nyitó megbeszélés).",
+    "en": "Project planning methods and tools (work breakdown structure, activity list, dependencies, Gantt chart), network planning and the critical path method (CPM, float), the steps of project preparation (business case, feasibility study, project charter, kick-off meeting)."
+  }
+}

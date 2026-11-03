@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Projektzárás és értékelés",
+    "en": "Project Closure and Evaluation"
+  },
+  "description": {
+    "hu": "A projekt lezárási folyamatai (átadás-átvétel, elfogadási teszt, átadás az üzemeltetésnek, szerződés- és adminisztratív zárás, idő előtti lezárás), a projekt értékelési módszerei (zárójelentés, tanulságok, retrospektív, a sikerkritériumok és a hasznok utólagos értékelése).",
+    "en": "Project closure processes (handover and acceptance, acceptance testing, handover to operations, contract and administrative closure, early termination), project evaluation methods (final report, lessons learned, retrospectives, evaluating success criteria and benefits afterwards)."
+  }
+}

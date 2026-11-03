@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Agilis és hagyományos projektmenedzsment módszertanok",
+    "en": "Agile and Traditional Project Management Methodologies"
+  },
+  "description": {
+    "hu": "Agilis módszertanok (az Agilis kiáltvány értékei és elvei, Scrum: szerepek, események, termékek; Kanban: WIP-korlát, átfutási idő, Little törvénye), hagyományos (vízesés) módszertanok és a V-modell, a két megközelítés összehasonlítása, a választás szempontjai és a hibrid megoldások.",
+    "en": "Agile methodologies (the values and principles of the Agile Manifesto, Scrum: accountabilities, events, artifacts; Kanban: WIP limits, lead time, Little's law), traditional (waterfall) methodologies and the V-model, comparing the two approaches, selection criteria and hybrid solutions."
+  }
+}
