@@ -341,7 +341,9 @@
     "expiredEmpty": "You have no expired semesters yet.",
     "noPayments": "You can buy access on a university's page, with the “Buy” button next to each semester.",
     "demoButton": "Add example purchases (development only)",
-    "unknownCourse": "Unknown course"
+    "unknownCourse": "Unknown course",
+    "delete": "Delete",
+    "deleteAll": "Delete all purchases (god mode)"
   },
   "Payments": {
     "buy": "Buy",

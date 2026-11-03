@@ -341,7 +341,9 @@
     "expiredEmpty": "Még nincs lejárt féléved.",
     "noPayments": "Vásárolni az egyetem oldalán, a félévek melletti „Megvásárlás” gombbal tudsz.",
     "demoButton": "Példa vásárlások hozzáadása (csak fejlesztéshez)",
-    "unknownCourse": "Ismeretlen tananyag"
+    "unknownCourse": "Ismeretlen tananyag",
+    "delete": "Törlés",
+    "deleteAll": "Összes vásárlás törlése (god mode)"
   },
   "Payments": {
     "buy": "Megvásárlás",
