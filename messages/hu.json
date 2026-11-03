@@ -90,7 +90,10 @@
       },
       "dashboard": "Irányítópult",
       "profile": "Profil",
-      "myCourses": "Tananyagaim"
+      "myCourses": "Tananyagaim",
+      "godMode": "God mode",
+      "godModeOn": "Bekapcsolva: minden lecke nyitva, zárolás és fizetés nélkül.",
+      "godModeOff": "Kikapcsolva: úgy látod az oldalt, mint egy átlagos felhasználó."
     }
   },
   "HomePage": {
@@ -138,7 +141,8 @@
     "start": "Tananyag indítása",
     "lockedTitle": "A tananyag zárolt",
     "lockedText": "A témakörök és leckék címei szabadon böngészhetők. A leckék megnyitásához vásárold meg a(z) {semester} hozzáférést – ez a félév összes tárgyát feloldja.",
-    "accessUntil": "Hozzáférésed aktív: {date}-ig"
+    "accessUntil": "Hozzáférésed aktív: {date}-ig",
+    "godModeActive": "God mode: minden lecke nyitva (admin)"
   },
   "NotFound": {
     "title": "Az oldal nem található",
@@ -337,7 +341,9 @@
     "expiredEmpty": "Még nincs lejárt féléved.",
     "noPayments": "Vásárolni az egyetem oldalán, a félévek melletti „Megvásárlás” gombbal tudsz.",
     "demoButton": "Példa vásárlások hozzáadása (csak fejlesztéshez)",
-    "unknownCourse": "Ismeretlen tananyag"
+    "unknownCourse": "Ismeretlen tananyag",
+    "delete": "Törlés",
+    "deleteAll": "Összes vásárlás törlése (god mode)"
   },
   "Payments": {
     "buy": "Megvásárlás",

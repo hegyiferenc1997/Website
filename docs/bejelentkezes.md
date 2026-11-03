@@ -81,3 +81,15 @@ HTTPS domainen. Kell hozzá Apple Developer Program tagság (<https://developer.
 | `BETTER_AUTH_URL`                          | az oldal címe, pl. `https://engineeringmaxxing.hu`      |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google belépés                                          |
 | `APPLE_CLIENT_ID`, `APPLE_CLIENT_SECRET`   | Apple belépés                                           |
+| `ADMIN_EMAILS`                             | admin fiókok e-mail címei (god mode), lásd lent         |
+
+## Admin „god mode”
+
+Az `ADMIN_EMAILS` környezeti változóban (a `.env.local` fájlban) felsorolt e-mail címek admin fiókok,
+pl. `ADMIN_EMAILS=valaki@gmail.com`. Ilyen fiókkal belépve a fiók menüben megjelenik a **God mode**
+kapcsoló: bekapcsolva minden lecke nyitva van (nincs sorrendi zárolás, és nem kell megvenni a félévet).
+
+- Az állapot fiókonként mentődik (`admin_settings` tábla), és mindig a szerver ellenőrzi.
+- E-mail cím alapján működik, így e-mail + jelszavas belépéssel is, és a Google-belépéssel is,
+  amint a Google kulcsai be vannak állítva (ugyanazzal az e-mail címmel).
+- A `.env.local` módosítása után a `pnpm dev`-et újra kell indítani.

@@ -12,6 +12,7 @@ import { useOneTimeParam } from "@/features/auth/url-param";
 import { disconnectAccount, flushProgress } from "@/features/progress/store";
 import { flushActivity } from "@/features/account/ActivityTracker";
 import { getPathname, Link } from "@/i18n/navigation";
+import { setGodModeAction } from "@/features/admin/actions";
 
 // A panel nézetei: belépés, regisztráció, elfelejtett jelszó.
 type Mode = "login" | "register" | "forgot";
@@ -55,13 +56,16 @@ function errorKey(error: { code?: string; status?: number } | null | undefined):
  * Bejelentkezés ikon a fejlécben, kattintásra lenyíló panellel: belépés, regisztráció,
  * elfelejtett jelszó, Google / Apple, bejelentkezve pedig a fiók és a kijelentkezés.
  * A user értéke: undefined = még töltődik, null = vendég.
+ * godMode: csak admin fióknál van megadva (true/false = a kapcsoló állapota); másnál nincs kapcsoló.
  */
 export function LoginMenu({
   user,
   social,
+  godMode,
 }: {
   user: SessionUser | null | undefined;
   social: SocialProviders;
+  godMode?: boolean;
 }) {
   const t = useTranslations("Layout.login");
   const locale = useLocale();
@@ -246,6 +250,15 @@ export function LoginMenu({
         }
       >
         <span className="sr-only">{user ? t("openAccount") : t("open")}</span>
+        {/* Bekapcsolt god mode jelzése a fiók gombon (csak az admin látja) */}
+        {user && godMode && (
+          <span
+            aria-hidden="true"
+            className="absolute -right-1.5 -top-1.5 rounded-full bg-highlight px-1 text-[10px] leading-4 text-bg"
+          >
+            ⚡
+          </span>
+        )}
         {user ? (
           <span aria-hidden="true" className="font-mono text-sm font-bold">
             {initial(user)}
@@ -307,6 +320,7 @@ export function LoginMenu({
                   {t("myCourses")}
                 </Link>
               </nav>
+              {godMode !== undefined && <GodModeToggle on={godMode} />}
               <p className="text-xs text-muted">{t("synced")}</p>
               <button
                 type="button"
@@ -569,6 +583,62 @@ function BookIcon() {
       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z" />
       <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" />
     </svg>
+  );
+}
+
+/**
+ * Admin kapcsoló: god mode be / ki. Bekapcsolva minden lecke nyitva van (sorrendi zárolás és fizetés nélkül).
+ * Az állapotot a szerver menti és ellenőrzi; kattintás után az oldal frissül az új állapottal.
+ */
+function GodModeToggle({ on }: { on: boolean }) {
+  const t = useTranslations("Layout.login");
+  const router = useRouter();
+  // Kattintás után azonnal az új állapotot mutatja, amíg a szerver válaszol.
+  const [pending, setPending] = useState<boolean | null>(null);
+  const checked = pending ?? on;
+
+  async function toggle() {
+    const next = !checked;
+    setPending(next);
+    try {
+      await setGodModeAction(next);
+      router.refresh();
+    } finally {
+      setPending(null);
+    }
+  }
+
+  return (
+    <div className="grid gap-1 rounded-md border border-dashed border-highlight/60 px-3 py-2.5">
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        disabled={pending !== null}
+        onClick={toggle}
+        className="flex items-center justify-between gap-3 text-left text-sm disabled:opacity-70"
+      >
+        <span className="flex items-center gap-2 font-mono font-semibold text-highlight">
+          ⚡ {t("godMode")}
+        </span>
+        {/* A kapcsoló „sínje” és gombja */}
+        <span
+          aria-hidden="true"
+          className={
+            "relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors " +
+            (checked ? "border-highlight bg-highlight" : "border-line bg-bg")
+          }
+        >
+          <span
+            className={
+              "inline-block size-3.5 rounded-full transition-transform " +
+              (checked ? "translate-x-4.5 bg-bg" : "translate-x-0.5 bg-muted")
+            }
+          />
+        </span>
+      </button>
+      <p className="text-xs text-muted">{checked ? t("godModeOn") : t("godModeOff")}</p>
+    </div>
   );
 }
 

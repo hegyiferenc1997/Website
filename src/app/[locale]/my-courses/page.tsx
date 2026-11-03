@@ -4,6 +4,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Card, EmptyState, PageHeader, SectionTitle } from "@/components/ui";
 import { getAccountDb } from "@/db";
 import { addDemoPurchasesAction } from "@/features/account/actions";
+import { deletePurchaseAction } from "@/features/admin/actions";
+import { getAdminState } from "@/features/admin/god-mode";
 import { formatDate } from "@/features/account/format";
 import { getPurchases, type Purchase } from "@/features/account/purchases";
 import { getSessionUser } from "@/features/auth/server";
@@ -44,6 +46,8 @@ async function PurchaseTables() {
     getSessionUser(),
   ]);
   if (!user) return <EmptyState>{t("signedOut")}</EmptyState>;
+  // God mode-ban (admin) a sorok törölhetők, hogy kipróbálható legyen az üres állapot.
+  const { godMode } = await getAdminState();
 
   const now = new Date();
   const [{ active, expired }, catalog, universities] = await Promise.all([
@@ -113,7 +117,10 @@ async function PurchaseTables() {
             {t("activeEmpty")} {t("noPayments")}
           </EmptyState>
         ) : (
-          <Table headers={[t("course"), t("purchasedAt"), t("remaining"), t("status")]}>
+          <Table
+            headers={[t("course"), t("purchasedAt"), t("remaining"), t("status")]}
+            withDelete={godMode}
+          >
             {active.map((p) => (
               <tr key={p.id}>
                 <td className={cellClass}>{courseCell(p)}</td>
@@ -125,6 +132,7 @@ async function PurchaseTables() {
                     {remaining(p)}
                   </span>
                 </td>
+                {godMode && <DeleteCell id={p.id} label={t("delete")} />}
               </tr>
             ))}
           </Table>
@@ -136,7 +144,10 @@ async function PurchaseTables() {
         {expired.length === 0 ? (
           <EmptyState>{t("expiredEmpty")}</EmptyState>
         ) : (
-          <Table headers={[t("course"), t("purchasedAt"), t("expiresAt"), t("status")]}>
+          <Table
+            headers={[t("course"), t("purchasedAt"), t("expiresAt"), t("status")]}
+            withDelete={godMode}
+          >
             {expired.map((p) => (
               <tr key={p.id} className="text-muted">
                 <td className={cellClass}>{courseCell(p)}</td>
@@ -148,11 +159,22 @@ async function PurchaseTables() {
                     {t("expired")}
                   </span>
                 </td>
+                {godMode && <DeleteCell id={p.id} label={t("delete")} />}
               </tr>
             ))}
           </Table>
         )}
       </section>
+
+      {/* God mode: az összes vásárlás törlése egy gombbal */}
+      {godMode && active.length + expired.length > 0 && (
+        <form action={deletePurchaseAction}>
+          <input type="hidden" name="id" value="all" />
+          <button type="submit" className={dangerButtonClass + " px-4 py-2.5 text-sm"}>
+            ⚡ {t("deleteAll")}
+          </button>
+        </form>
+      )}
 
       {/* Csak `pnpm dev` alatt: példa adatok, hogy fizetés nélkül is kipróbálhatók legyenek a táblázatok. */}
       {isDev && (
@@ -172,8 +194,37 @@ async function PurchaseTables() {
 // Egy táblázatcella stílusa (függőlegesen is középre igazítva).
 const cellClass = "px-4 py-3 align-middle";
 
-/** Keretes táblázat fejléccel, középre igazított tartalommal, egyforma széles oszlopokkal; keskeny kijelzőn vízszintesen görgethető. */
-function Table({ headers, children }: { headers: string[]; children: ReactNode }) {
+// A törlés gombok kinézete (piros keret, csak god mode-ban látszik).
+const dangerButtonClass =
+  "rounded-md border border-[var(--danger,#e5534b)] font-mono text-[var(--danger,#e5534b)] transition-colors hover:bg-[var(--danger,#e5534b)] hover:text-bg";
+
+/** God mode: egy vásárlás törlése gomb a sor végén. */
+function DeleteCell({ id, label }: { id: number; label: string }) {
+  return (
+    <td className={`${cellClass} w-24`}>
+      <form action={deletePurchaseAction}>
+        <input type="hidden" name="id" value={id} />
+        <button type="submit" className={dangerButtonClass + " px-2 py-0.5 text-xs"}>
+          {label}
+        </button>
+      </form>
+    </td>
+  );
+}
+
+/**
+ * Keretes táblázat fejléccel, középre igazított tartalommal, egyforma széles oszlopokkal; keskeny kijelzőn vízszintesen görgethető.
+ * withDelete: god mode-ban egy keskeny, fejléc nélküli oszlop a törlés gomboknak.
+ */
+function Table({
+  headers,
+  children,
+  withDelete = false,
+}: {
+  headers: string[];
+  children: ReactNode;
+  withDelete?: boolean;
+}) {
   return (
     <Card padded={false} className="overflow-x-auto">
       <table className="w-full min-w-[36rem] table-fixed text-center text-sm">
@@ -184,6 +235,7 @@ function Table({ headers, children }: { headers: string[]; children: ReactNode }
                 {h}
               </th>
             ))}
+            {withDelete && <th scope="col" className="w-24" aria-hidden="true" />}
           </tr>
         </thead>
         <tbody className="divide-y divide-line">{children}</tbody>
