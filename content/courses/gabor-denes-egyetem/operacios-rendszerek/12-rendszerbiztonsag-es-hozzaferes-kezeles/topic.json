@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Rendszerbiztonság és hozzáférés-kezelés",
+    "en": "System Security and Access Control"
+  },
+  "description": {
+    "hu": "A biztonság céljai (bizalmasság, sértetlenség, rendelkezésre állás), fenyegetések és kártevők, hitelesítés (jelszó, hash, többfaktoros azonosítás), a legkisebb jogosultság elve; Linux felhasználók, csoportok, rwx jogok és chmod oktális számolással, sudo, Windows UAC és ACL; védelmi mechanizmusok: frissítések, tűzfal, titkosítás (BitLocker, LUKS), ASLR, DEP, Secure Boot és TPM.",
+    "en": "The goals of security (confidentiality, integrity, availability), threats and malware, authentication (passwords, hashes, multi-factor), the principle of least privilege; Linux users, groups, rwx permissions and chmod with octal calculation, sudo, Windows UAC and ACLs; protection mechanisms: updates, firewall, encryption (BitLocker, LUKS), ASLR, DEP, Secure Boot and TPM."
+  }
+}

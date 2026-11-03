@@ -37,7 +37,7 @@ export const semesters: CurriculumCourse[][] = [
     { name: "Informatika alapjai", en: "Fundamentals of Computer Science", credits: 8 },
     { name: "Közgazdaságtan alapjai", en: "Principles of Economics", credits: 5 },
     { name: "Matematika", en: "Mathematics", credits: 5 },
-    { name: "Operációs rendszerek", en: "Operating Systems", credits: 4 },
+    { name: "Operációs rendszerek", en: "Operating Systems", credits: 4, active: true },
     // A korábbi „Programozás alapjai” tárgy; a régi URL megmarad.
     {
       slug: "programozas-alapjai",

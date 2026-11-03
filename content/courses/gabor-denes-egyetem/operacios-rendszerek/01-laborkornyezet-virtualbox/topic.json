@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Laborkörnyezet: VirtualBox, Ubuntu és Windows 11",
+    "en": "Lab Environment: VirtualBox, Ubuntu and Windows 11"
+  },
+  "description": {
+    "hu": "Lépésről lépésre telepítjük a VirtualBoxot, majd benne egy Ubuntu 26.04 LTS és egy Windows 11 virtuális gépet (TPM 2.0, UEFI, Secure Boot). A vendégkiegészítőkkel, pillanatképekkel és megosztott mappákkal kényelmes laborkörnyezetet kapsz, amelyben a tárgy összes parancsát kipróbálhatod.",
+    "en": "Step by step we install VirtualBox, then an Ubuntu 26.04 LTS and a Windows 11 virtual machine inside it (TPM 2.0, UEFI, Secure Boot). With Guest Additions, snapshots and shared folders you get a comfortable lab where you can try every command of the course."
+  }
+}

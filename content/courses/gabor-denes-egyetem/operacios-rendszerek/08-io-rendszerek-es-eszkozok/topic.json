@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Beviteli/kimeneti (I/O) rendszerek és eszközök",
+    "en": "Input/Output (I/O) Systems and Devices"
+  },
+  "description": {
+    "hu": "Az I/O-hardver: eszközfajták, vezérlők, portok és memóriába leképezett I/O, lekérdezés, megszakítás és DMA; az I/O-szoftver rétegei: illesztőprogramok, eszközfüggetlen réteg, pufferelés, gyorsítótár, spoololás, blokkoló és aszinkron I/O; a lemezütemezés (FCFS, SSTF, SCAN, LOOK) számolós példákkal.",
+    "en": "I/O hardware: device types, controllers, ports and memory-mapped I/O, polling, interrupts and DMA; the layers of I/O software: drivers, the device-independent layer, buffering, caching, spooling, blocking and asynchronous I/O; disk scheduling (FCFS, SSTF, SCAN, LOOK) with worked examples."
+  }
+}

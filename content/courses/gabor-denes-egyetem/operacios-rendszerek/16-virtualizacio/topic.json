@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Virtualizáció",
+    "en": "Virtualisation"
+  },
+  "description": {
+    "hu": "A virtualizáció alapjai: hipervizorok (1. és 2. típus), teljes, para- és hardveresen támogatott virtualizáció (Intel VT-x, AMD-V); konténerek: névterek, cgroups, Docker, és a különbség a virtuális gépekhez képest; virtualizáció a felhőben: IaaS, PaaS, SaaS, pillanatképek és élő migráció.",
+    "en": "Basics of virtualisation: hypervisors (type 1 and type 2), full, para- and hardware-assisted virtualisation (Intel VT-x, AMD-V); containers: namespaces, cgroups, Docker, and how they differ from virtual machines; virtualisation in the cloud: IaaS, PaaS, SaaS, snapshots and live migration."
+  }
+}

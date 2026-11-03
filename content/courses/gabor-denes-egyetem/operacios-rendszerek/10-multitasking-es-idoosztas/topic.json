@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Multitasking és időosztás",
+    "en": "Multitasking and Time-Sharing"
+  },
+  "description": {
+    "hu": "A kötegelt feldolgozástól a multiprogramozáson át az időosztásig, a kooperatív és a preemptív multitasking; az időszelet, az időzítő megszakítás és a környezetváltás költsége számolós példával; többprocesszoros és többmagos ütemezés, terheléselosztás, processzor-affinitás, a Linux (CFS, EEVDF) és a Windows ütemezője, a nice érték.",
+    "en": "From batch processing through multiprogramming to time-sharing, cooperative and preemptive multitasking; the time slice, the timer interrupt and the cost of context switching with a worked example; multiprocessor and multi-core scheduling, load balancing, processor affinity, the Linux (CFS, EEVDF) and Windows schedulers, the nice value."
+  }
+}

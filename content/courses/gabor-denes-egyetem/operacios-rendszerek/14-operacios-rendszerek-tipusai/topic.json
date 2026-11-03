@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Operációs rendszerek típusai",
+    "en": "Types of Operating Systems"
+  },
+  "description": {
+    "hu": "Az asztali rendszerek (Windows, Linux-disztribúciók, macOS) jellemzői és története; szerver-, mobil- (Android, iOS), beágyazott és valós idejű operációs rendszerek (kemény és lágy valós idő, RTOS); további osztályozások: egy- és többfelhasználós, egy- és többfeladatos, kötegelt, interaktív, hálózati, elosztott és felhőalapú rendszerek, nyílt és zárt forráskód.",
+    "en": "Characteristics and history of desktop systems (Windows, Linux distributions, macOS); server, mobile (Android, iOS), embedded and real-time operating systems (hard and soft real time, RTOS); further classifications: single- and multi-user, single- and multitasking, batch, interactive, network, distributed and cloud systems, open and closed source."
+  }
+}

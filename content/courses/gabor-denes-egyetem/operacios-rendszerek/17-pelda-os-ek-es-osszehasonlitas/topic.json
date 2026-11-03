@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Operációs rendszerek példái és összehasonlításuk",
+    "en": "Example Operating Systems and Their Comparison"
+  },
+  "description": {
+    "hu": "A tanult fogalmak három valódi rendszerben: a Linux belülről (systemd, fork/exec, EEVDF ütemező, könyvtárszerkezet, jogosultságok, csomagkezelés), a Windows belülről (NT-architektúra, HAL, prioritási szintek, lapozófájl, NTFS és ACL, beállításjegyzék, UAC), a macOS (XNU, launchd, APFS, memóriatömörítés, SIP, Gatekeeper), végül egy nagy összehasonlító táblázat és a tárgy záró gyakorlása.",
+    "en": "The concepts learned in three real systems: Linux from the inside (systemd, fork/exec, the EEVDF scheduler, directory layout, permissions, package management), Windows from the inside (NT architecture, HAL, priority levels, page file, NTFS and ACLs, the registry, UAC), macOS (XNU, launchd, APFS, memory compression, SIP, Gatekeeper), and finally a big comparison table and the course's closing practice."
+  }
+}

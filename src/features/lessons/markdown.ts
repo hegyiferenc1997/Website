@@ -29,6 +29,10 @@ const LANGS = {
   vhdl: () => import("shiki/langs/vhdl.mjs"),
   verilog: () => import("shiki/langs/verilog.mjs"),
   tcl: () => import("shiki/langs/tcl.mjs"),
+  // Windows-parancsok (PowerShell) az Operációs rendszerek tárgyhoz.
+  powershell: () => import("shiki/langs/powershell.mjs"),
+  // Konténerképek leírása (Dockerfile) a virtualizációs témakörhöz.
+  docker: () => import("shiki/langs/docker.mjs"),
 };
 
 // Más nevek ugyanarra a nyelvre, pl. ```py → python.
@@ -36,6 +40,9 @@ const ALIASES: Record<string, keyof typeof LANGS> = {
   py: "python",
   python3: "python",
   sh: "bash",
+  ps1: "powershell",
+  pwsh: "powershell",
+  dockerfile: "docker",
   shell: "bash",
   console: "bash",
   "c++": "cpp",
@@ -71,6 +78,8 @@ const LABELS: Partial<Record<keyof typeof LANGS, string>> = {
   vhdl: "VHDL",
   verilog: "Verilog",
   tcl: "Tcl",
+  powershell: "PowerShell",
+  docker: "Dockerfile",
 };
 
 // Ezekhez a jelölésekhez nem írunk fejlécet (sima szöveg, kimenet).

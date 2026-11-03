@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Kernel és felhasználói tér",
+    "en": "Kernel and User Space"
+  },
+  "description": {
+    "hu": "A kernel mód és a felhasználói mód, a védelmi gyűrűk és a privilegizált utasítások, a kernel- és a felhasználói címtér; a kernelarchitektúrák (monolitikus, mikrokernel, hibrid, exokernel) és példáik (Linux, Windows NT, macOS XNU, MINIX); a betölthető kernelmodulok, az illesztőprogramok, a /proc és a /sys, a dmesg és a kernelverziók.",
+    "en": "Kernel mode and user mode, protection rings and privileged instructions, kernel and user address space; kernel architectures (monolithic, microkernel, hybrid, exokernel) and examples (Linux, Windows NT, macOS XNU, MINIX); loadable kernel modules, drivers, /proc and /sys, dmesg and kernel versions."
+  }
+}

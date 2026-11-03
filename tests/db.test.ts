@@ -46,10 +46,11 @@ describe("adatbázis", () => {
     expect(swInSem6).toHaveLength(4);
 
     const active = await db.query.courses.findMany({ where: eq(courses.isActive, true) });
-    // Aktív tárgyak: Programozási alapok (1. félév), Digitális technika és Innováció- és projektmenedzsment (3. félév).
+    // Aktív tárgyak: Programozási alapok, Operációs rendszerek (1. félév), Digitális technika és Innováció- és projektmenedzsment (3. félév).
     expect(active.map((c) => c.slug).sort()).toEqual([
       "digitalis-technika",
       "innovacio-es-projektmenedzsment",
+      "operacios-rendszerek",
       "programozas-alapjai",
     ]);
   });

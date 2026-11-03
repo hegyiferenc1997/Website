@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Ütemezés és konkurencia",
+    "en": "Scheduling and Concurrency"
+  },
+  "description": {
+    "hu": "A processzorütemezés céljai és mérőszámai (várakozási, körülfordulási és válaszidő), az ütemezési algoritmusok (FCFS, SJF, SRTF, Round Robin, prioritásos, többszintű sorok) számolós példákkal, a versenyhelyzet, a kritikus szakasz, a mutex és a szemafor, valamint a holtpont feltételei és kezelése.",
+    "en": "Goals and metrics of CPU scheduling (waiting, turnaround and response time), scheduling algorithms (FCFS, SJF, SRTF, Round Robin, priority, multilevel queues) with worked examples, race conditions, the critical section, mutexes and semaphores, and the conditions and handling of deadlock."
+  }
+}

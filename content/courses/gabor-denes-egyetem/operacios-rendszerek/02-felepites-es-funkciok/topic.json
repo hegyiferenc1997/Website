@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Operációs rendszerek felépítése és funkciói",
+    "en": "Structure and Functions of Operating Systems"
+  },
+  "description": {
+    "hu": "Mi az operációs rendszer (erőforrás-kezelő és kiterjesztett gép), rövid története, a hardver és az OS kapcsolata (processzor, memória, megszakítások), a rendszerindítás folyamata (UEFI, rendszerbetöltő, kernel, init/systemd), valamint az OS fő feladatai és rétegei.",
+    "en": "What an operating system is (resource manager and extended machine), a short history, the relationship between hardware and the OS (processor, memory, interrupts), the boot process (UEFI, boot loader, kernel, init/systemd), and the main tasks and layers of the OS."
+  }
+}
