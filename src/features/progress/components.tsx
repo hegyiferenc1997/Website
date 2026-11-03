@@ -380,15 +380,26 @@ function useHandOverGate(ready: boolean) {
 /**
  * Egy tárgy leckéi a zároláshoz: a tárgy és a leckék sorrendben ("témakör/lecke").
  * paid = false: a félév nincs megvásárolva, ezért minden lecke zárolt (a szerver dönti el, így nem villan).
+ * unlocked = true: az admin god mode be van kapcsolva, nincs sorrendi zárolás (szintén a szerver dönti el).
  */
-type GateProps = { university: string; course: string; lessons: string[]; paid?: boolean };
+type GateProps = {
+  university: string;
+  course: string;
+  lessons: string[];
+  paid?: boolean;
+  unlocked?: boolean;
+};
 
 /** A zárolás állapota az index. leckére, és a hozzá tartozó HTML attribútumok. */
-function useGate({ university, course, lessons, paid = true }: GateProps, index: number) {
+function useGate(
+  { university, course, lessons, paid = true, unlocked = false }: GateProps,
+  index: number,
+) {
   const progress = useProgress();
   useHandOverGate(progress !== null);
   const key = courseKey(university, course);
-  const locked = !paid || isLessonLocked(progress, key, lessons, index);
+  // God mode-ban semmi sem zárolt; egyébként fizetés és sorrend szerint.
+  const locked = !unlocked && (!paid || isLessonLocked(progress, key, lessons, index));
   return {
     progress,
     key,

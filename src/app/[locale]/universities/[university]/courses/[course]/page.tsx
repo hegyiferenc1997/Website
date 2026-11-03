@@ -19,7 +19,7 @@ import { lessonKey } from "@/features/progress/data";
 import { GateScript } from "@/features/progress/gate-script";
 import { formatDateUntil } from "@/features/account/format";
 import { courseSemester } from "@/features/courses/semester";
-import { getUniversityAccess } from "@/features/payments/access";
+import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
 import { BuyButton } from "@/features/payments/BuyButton";
 import { LockedNotice } from "@/features/payments/LockedNotice";
 
@@ -71,8 +71,10 @@ async function CourseContent({ params }: Pick<Props, "params">) {
   // Melyik félévhez tartozik, és meg van-e véve. Ha nincs, a témakörök és leckék címei látszanak,
   // de a leckék nem nyithatók meg.
   const semester = courseSemester(course.programCourses);
+  // God mode-ban (admin) vásárlás nélkül is nyitva van, sorrendi zárolás nélkül.
   const until = access.passes.get(semester);
-  const paid = until !== undefined;
+  const godMode = access.godMode;
+  const paid = hasSemesterAccess(access, semester);
   const buyButton = (
     <BuyButton
       university={course.university.slug}
@@ -100,13 +102,14 @@ async function CourseContent({ params }: Pick<Props, "params">) {
     course: course.slug,
     lessons: allLessons,
     paid,
+    unlocked: godMode,
   };
   let position = 0;
 
   return (
     <div className="grid gap-10">
       {/* A zárolt leckék jelölése még a kirajzolás előtt (nincs villanás). */}
-      {paid && (
+      {paid && !godMode && (
         <GateScript courseKey={`${course.university.slug}/${course.slug}`} lessons={allLessons} />
       )}
       <div className="grid gap-4">
@@ -143,7 +146,9 @@ async function CourseContent({ params }: Pick<Props, "params">) {
             Megvásárolt félévnél a hozzáférés lejárata is látszik; ha nincs megvéve, lent a zárolás üzenete. */}
         {first && paid && (
           <p className="font-mono text-xs text-accent">
-            ✓ {t("accessUntil", { date: formatDateUntil(until, locale) })}
+            {godMode
+              ? `⚡ ${t("godModeActive")}`
+              : until && `✓ ${t("accessUntil", { date: formatDateUntil(until, locale) })}`}
           </p>
         )}
         {first && paid && (

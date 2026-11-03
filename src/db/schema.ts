@@ -416,6 +416,19 @@ export const coursePurchases = pgTable(
   (t) => [index("course_purchases_user_id").on(t.userId)],
 );
 
+/**
+ * Admin beállítások: a „god mode” kapcsoló állapota felhasználónként. Csak az ADMIN_EMAILS listában
+ * szereplő e-mail című fiókoknál számít (lásd features/admin/god-mode.ts); másnál a szerver figyelmen kívül hagyja.
+ */
+export const adminSettings = pgTable("admin_settings", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  /** Be van-e kapcsolva: minden lecke nyitva (sorrendi zárolás és fizetési fal nélkül). */
+  godMode: boolean("god_mode").notNull().default(false),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // A fióktáblák kapcsolatai.
 export const usersRelations = relations(users, ({ many, one }) => ({
   sessions: many(sessions),

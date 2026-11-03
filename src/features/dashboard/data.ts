@@ -6,7 +6,7 @@ import { getPurchases } from "@/features/account/purchases";
 import { localize } from "@/features/courses/localize";
 import { getCourse, getCourses } from "@/features/courses/queries";
 import { courseSemester } from "@/features/courses/semester";
-import { getUniversityAccess } from "@/features/payments/access";
+import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
 import {
   emptyProgress,
   lessonKey,
@@ -96,7 +96,7 @@ export async function getDashboard(db: Database, userId: string, locale: string,
           })),
         ),
         serverDone: progress.doneLessons[key] ?? [],
-        paid: access.passes.has(semester),
+        paid: hasSemesterAccess(access, semester),
       };
       // Foglalkozott-e már vele: van elvégzett leckéje, ezt nyitotta meg utoljára, vagy megvette.
       const started =

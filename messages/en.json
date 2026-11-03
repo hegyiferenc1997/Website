@@ -90,7 +90,10 @@
       },
       "dashboard": "Dashboard",
       "profile": "Profile",
-      "myCourses": "My courses"
+      "myCourses": "My courses",
+      "godMode": "God mode",
+      "godModeOn": "On: every lesson is open, with no locking and no payment.",
+      "godModeOff": "Off: you see the site like a regular user."
     }
   },
   "HomePage": {
@@ -138,7 +141,8 @@
     "start": "Start learning",
     "lockedTitle": "This course material is locked",
     "lockedText": "Topic and lesson titles are free to browse. To open the lessons, buy access to {semester} – it unlocks every course in that semester.",
-    "accessUntil": "Your access is active until {date}"
+    "accessUntil": "Your access is active until {date}",
+    "godModeActive": "God mode: every lesson is open (admin)"
   },
   "NotFound": {
     "title": "Page not found",

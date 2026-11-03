@@ -19,7 +19,7 @@ import { Exercise, RunnableExample, type LessonRef } from "@/features/python/com
 import { Quiz } from "@/features/quiz/Quiz";
 import { Link } from "@/i18n/navigation";
 import { courseSemester } from "@/features/courses/semester";
-import { getUniversityAccess } from "@/features/payments/access";
+import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
 import { BuyButton } from "@/features/payments/BuyButton";
 import { LockedNotice } from "@/features/payments/LockedNotice";
 
@@ -86,7 +86,9 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   // Meg van-e véve a tárgy féléve. Ha nincs, a lecke szövege el sem készül és nem is kerül a böngészőbe.
   const semester = courseSemester(course.programCourses);
   const semesterTitle = semester === 0 ? tUni("noSemester") : tUni("semester", { semester });
-  const paid = access.passes.has(semester);
+  // Megvette, vagy az admin god mode be van kapcsolva (ilyenkor sorrendi zárolás sincs).
+  const paid = hasSemesterAccess(access, semester);
+  const godMode = access.godMode;
   const segments = paid ? await renderLessonBody(localize(lesson.body, locale), locale) : [];
 
   const university = course.university.slug;
@@ -103,7 +105,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   };
   // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben, és hányadik ez közülük.
   const allLessons = courseLessons(course);
-  const gate = { university, course: course.slug, lessons: allLessons, paid };
+  const gate = { university, course: course.slug, lessons: allLessons, paid, unlocked: godMode };
   const thisKey = lessonKey(topic.slug, lesson.slug);
   const index = allLessons.indexOf(thisKey);
   const lessonRef: LessonRef = { university, course: course.slug, lesson: thisKey };
@@ -162,7 +164,9 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12">
       {/* A zárolás még a kirajzolás előtt érvényesül (frissítéskor sem villan fel a zárolt tartalom). */}
-      {paid && <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />}
+      {paid && !godMode && (
+        <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />
+      )}
       <aside className="hidden lg:sticky lg:top-24 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
         {outline}
       </aside>
@@ -327,7 +331,7 @@ function LessonPager({
   courseHref,
   labels,
 }: {
-  gate: { university: string; course: string; lessons: string[] };
+  gate: { university: string; course: string; lessons: string[]; unlocked?: boolean };
   index: number;
   prev: { href: LessonHref; title: string } | null;
   next: { href: LessonHref; title: string } | null;

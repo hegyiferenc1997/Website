@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { LoginMenu } from "@/components/LoginMenu";
 import { ActivityTracker } from "@/features/account/ActivityTracker";
+import { getAdminState } from "@/features/admin/god-mode";
 import { ProgressSync } from "@/features/progress/sync";
 import { configuredSocialProviders } from "./config";
 import { getSessionUser } from "./server";
@@ -18,12 +19,17 @@ export function AccountMenu() {
   );
 }
 
-// A bejelentkezett felhasználó lekérése (kérésenként), a haladás összekötése a fiókkal és az időmérés.
+// A bejelentkezett felhasználó (és admin állapota) lekérése kérésenként, a haladás összekötése a fiókkal és az időmérés.
 async function SignedInAccountMenu() {
-  const user = await getSessionUser();
+  const [user, admin] = await Promise.all([getSessionUser(), getAdminState()]);
   return (
     <>
-      <LoginMenu user={user} social={configuredSocialProviders()} />
+      {/* Admin fióknál a god mode kapcsolója is megjelenik a menüben (a szerver dönti el, ki admin). */}
+      <LoginMenu
+        user={user}
+        social={configuredSocialProviders()}
+        godMode={admin.isAdmin ? admin.godMode : undefined}
+      />
       <ProgressSync userId={user?.id ?? null} />
       <ActivityTracker userId={user?.id ?? null} />
     </>
