@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getCourse, getCourseSlugs } from "@/features/courses/queries";
 import { Card, Chip, EmptyState, SectionTitle } from "@/components/ui";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [course, locale] = await Promise.all([getCourse(university, slug), getLocale()]);
   if (!course) return {};
   return {
-    title: `${localize(course.name, locale)} – ${localize(course.university.name, locale)}`,
+    title: `${localize(course.name, locale)} – ${universityLabel(localize(course.university.name, locale), course.university.level)}`,
   };
 }
 
@@ -130,7 +131,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                 }}
                 className="text-accent hover:underline"
               >
-                {localize(course.university.name, locale)}
+                {universityLabel(localize(course.university.name, locale), course.university.level)}
               </Link>
             </li>
           </ol>

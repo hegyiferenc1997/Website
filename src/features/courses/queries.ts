@@ -103,7 +103,7 @@ export async function getCourseCatalog() {
     orderBy: asc(courses.slug),
     columns: { slug: true, name: true, code: true, credits: true, isActive: true },
     with: {
-      university: { columns: { slug: true, name: true, city: true } },
+      university: { columns: { slug: true, name: true, city: true, level: true } },
       programCourses: { columns: { recommendedSemester: true } },
     },
   });

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getUniversities, getUniversity } from "@/features/courses/queries";
 import { EmptyState, LinkCardBody, PageHeader, SectionTitle } from "@/components/ui";
@@ -21,11 +22,13 @@ export async function generateStaticParams() {
   return list.map((u) => ({ university: u.slug }));
 }
 
-// Fülcím: az egyetem neve.
+// Fülcím: az egyetem neve a képzési szinttel (pl. „Gábor Dénes Egyetem · BSc”).
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { university: slug } = await params;
   const [university, locale] = await Promise.all([getUniversity(slug), getLocale()]);
-  return university ? { title: localize(university.name, locale) } : {};
+  return university
+    ? { title: universityLabel(localize(university.name, locale), university.level) }
+    : {};
 }
 
 // Egy egyetem oldala
@@ -148,10 +151,20 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
   return (
     <div className="grid gap-10">
       <PageHeader
+        // Felirat: Egyetemek / <képzési szint>; a szint a listaoldal megfelelő szakaszára visz.
         eyebrow={
-          <Link href="/universities" className="hover:text-accent">
-            {t("eyebrow")}
-          </Link>
+          <span className="flex flex-wrap items-center gap-x-2">
+            <Link href="/universities" className="hover:text-accent">
+              {t("eyebrow")}
+            </Link>
+            <span aria-hidden="true">/</span>
+            <Link
+              href={{ pathname: "/universities", hash: university.level }}
+              className="text-accent hover:underline"
+            >
+              {t(`levelLabel.${university.level}`)}
+            </Link>
+          </span>
         }
         title={localize(university.name, locale)}
       >

@@ -1,0 +1,1 @@
+ALTER TABLE "universities" ADD COLUMN "level" "degree_level" DEFAULT 'bsc' NOT NULL;

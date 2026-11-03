@@ -21,7 +21,8 @@ import * as gde from "./data/gde-mernokinformatikus";
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
 export async function seed(db: Database) {
-  // 1. Az egyetem (beszúrás, vagy ha már van, frissítés).
+  // 1. Az egyetem (beszúrás, vagy ha már van, frissítés). Ez a BSc (alapszakos) bejegyzés; egy majdani
+  // mesterszak saját sort kap (pl. slug: "gabor-denes-egyetem-msc", level: "msc").
   const universityName = { hu: "Gábor Dénes Egyetem", en: "Gábor Dénes University" };
   const [university] = await db
     .insert(universities)
@@ -31,10 +32,11 @@ export async function seed(db: Database) {
       country: "HU",
       city: "Budapest",
       website: "https://gde.hu",
+      level: "bsc",
     })
     .onConflictDoUpdate({
       target: universities.slug,
-      set: { name: universityName, updatedAt: sql`now()` },
+      set: { name: universityName, level: "bsc", updatedAt: sql`now()` },
     })
     .returning();
 

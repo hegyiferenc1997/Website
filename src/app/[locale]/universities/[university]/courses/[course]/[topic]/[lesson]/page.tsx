@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { courseLessons } from "@/features/courses/lessons";
 import { getLesson, getLessonSlugs } from "@/features/courses/queries";
@@ -181,7 +182,10 @@ async function LessonContent({ params }: Pick<Props, "params">) {
                   href={{ pathname: "/universities/[university]", params: { university } }}
                   className="hover:text-accent"
                 >
-                  {localize(course.university.name, locale)}
+                  {universityLabel(
+                    localize(course.university.name, locale),
+                    course.university.level,
+                  )}
                 </Link>
               </li>
               <li aria-hidden="true">/</li>

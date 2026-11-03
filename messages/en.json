@@ -105,9 +105,23 @@
   },
   "UniversitiesPage": {
     "title": "Universities",
-    "intro": "Choose your university and see its courses by semester.",
+    "intro": "Choose whether you study at Bachelor's (BSc) or Master's (MSc) level, then pick your university and see its courses by semester.",
     "empty": "There are no universities in the database yet.",
-    "courseCount": "{count, plural, =0 {no courses yet} one {# course} other {# courses}}"
+    "courseCount": "{count, plural, =0 {no courses yet} one {# course} other {# courses}}",
+    "levelsNav": "Degree levels",
+    "levels": {
+      "bsc": "Bachelor's (BSc)",
+      "msc": "Master's (MSc)",
+      "phd": "Doctoral (PhD)",
+      "other": "Other programmes"
+    },
+    "levelEmpty": {
+      "bsc": "There are no Bachelor's programmes on the site yet.",
+      "msc": "There are no Master's programmes on the site yet — coming soon.",
+      "phd": "There are no doctoral programmes on the site yet.",
+      "other": "There are no other programmes on the site yet."
+    },
+    "levelCount": "{count, plural, =0 {no universities} one {# university} other {# universities}}"
   },
   "UniversityPage": {
     "eyebrow": "Universities",
@@ -118,7 +132,13 @@
     "noSemester": "No semester given",
     "credits": "{credits, plural, one {# credit} other {# credits}}",
     "specialization": "{name} specialisation",
-    "comingSoon": "coming soon"
+    "comingSoon": "coming soon",
+    "levelLabel": {
+      "bsc": "Bachelor's (BSc)",
+      "msc": "Master's (MSc)",
+      "phd": "Doctoral (PhD)",
+      "other": "Other programme"
+    }
   },
   "CoursePage": {
     "code": "Course code",
