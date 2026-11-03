@@ -3,6 +3,7 @@ import type { Database } from "@/db";
 import { budapestDay, getActivity, getDailySeconds } from "@/features/account/activity";
 import { currentWeekDays } from "./week";
 import { getPurchases } from "@/features/account/purchases";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getCourse, getCourses } from "@/features/courses/queries";
 import { courseSemester } from "@/features/courses/semester";
@@ -83,7 +84,7 @@ export async function getDashboard(db: Database, userId: string, locale: string,
       const key = `${c.university.slug}/${c.slug}`;
       const course: DashboardCourse = {
         university: c.university.slug,
-        universityName: localize(c.university.name, locale),
+        universityName: universityLabel(localize(c.university.name, locale), c.university.level),
         course: c.slug,
         name: localize(full.name, locale),
         semester,

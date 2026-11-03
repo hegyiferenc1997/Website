@@ -5,6 +5,7 @@ import { Card, EmptyState, PageHeader, SectionTitle } from "@/components/ui";
 import { getAccountDb } from "@/db";
 import { formatDateUntil } from "@/features/account/format";
 import { getSessionUser } from "@/features/auth/server";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getUniversities } from "@/features/courses/queries";
 import { DashboardCourseList } from "@/features/dashboard/CourseList";
@@ -125,8 +126,10 @@ async function DashboardContent() {
                             : tUni("semester", { semester: p.semester })}
                         </span>
                         <span className="text-xs text-muted">
-                          {u ? localize(u.name, locale) : p.universitySlug} ·{" "}
-                          {t("until", { date: formatDateUntil(p.expiresAt, locale) })}
+                          {u
+                            ? universityLabel(localize(u.name, locale), u.level)
+                            : p.universitySlug}{" "}
+                          · {t("until", { date: formatDateUntil(p.expiresAt, locale) })}
                         </span>
                       </span>
                       {/* Zöld címke a hátralévő idővel (mint a Tananyagaim oldalon) */}

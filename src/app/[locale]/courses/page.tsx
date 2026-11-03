@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { EmptyState, LinkCardBody, PageHeader, SectionTitle } from "@/components/ui";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getCourseCatalog } from "@/features/courses/queries";
 import { Link } from "@/i18n/navigation";
@@ -59,7 +60,7 @@ export default async function CoursesPage() {
                     <LinkCardBody
                       title={c.title}
                       meta={[
-                        localize(c.university.name, locale),
+                        universityLabel(localize(c.university.name, locale), c.university.level),
                         c.semester !== null ? t("semester", { semester: c.semester }) : null,
                         c.credits !== null ? t("credits", { credits: c.credits }) : null,
                       ]

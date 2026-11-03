@@ -9,6 +9,7 @@ import { getAdminState } from "@/features/admin/god-mode";
 import { formatDate } from "@/features/account/format";
 import { getPurchases, type Purchase } from "@/features/account/purchases";
 import { getSessionUser } from "@/features/auth/server";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getCourseCatalog, getUniversities } from "@/features/courses/queries";
 import { formatHuf, isPlanId } from "@/features/payments/plans";
@@ -70,7 +71,9 @@ async function PurchaseTables() {
           <span className="font-semibold">
             {p.semester === 0 ? tUni("noSemester") : tUni("semester", { semester: p.semester })}
           </span>
-          <span className="text-xs text-muted">{localize(u.name, locale)}</span>
+          <span className="text-xs text-muted">
+            {universityLabel(localize(u.name, locale), u.level)}
+          </span>
           {isPlanId(p.plan) && (
             <span className="font-mono text-xs text-muted">
               {tPay(`plans.${p.plan}.name`)}
@@ -93,7 +96,9 @@ async function PurchaseTables() {
         className="grid justify-items-center gap-0.5 hover:text-accent"
       >
         <span className="font-semibold">{localize(c.name, locale)}</span>
-        <span className="text-xs text-muted">{localize(c.university.name, locale)}</span>
+        <span className="text-xs text-muted">
+          {universityLabel(localize(c.university.name, locale), c.university.level)}
+        </span>
       </Link>
     );
   };

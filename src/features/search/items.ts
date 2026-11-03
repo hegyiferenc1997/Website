@@ -1,5 +1,6 @@
 import "server-only";
 import { getTranslations } from "next-intl/server";
+import { levelShort, universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getCourseCatalog, getUniversities } from "@/features/courses/queries";
 import type { SearchItem } from "./match";
@@ -27,9 +28,14 @@ export async function getSearchItems(locale: string): Promise<SearchItem[]> {
       kind: "university",
       key: `university:${u.slug}`,
       title: name,
-      meta: [u.city, tUni("courseCount", { count: u.courses.length })].filter(Boolean).join(" · "),
+      // A szint (BSc / MSc) is látszik, mert ugyanaz az egyetem mindkét szinten szerepelhet.
+      meta: [levelShort(u.level), u.city, tUni("courseCount", { count: u.courses.length })]
+        .filter(Boolean)
+        .join(" · "),
       // A magyar név és rövidítése (pl. GDE) más nyelven is kereshető.
-      keywords: [u.slug, acronym(name), huName, acronym(huName), u.city].filter(Boolean).join(" "),
+      keywords: [u.slug, acronym(name), huName, acronym(huName), u.city, levelShort(u.level)]
+        .filter(Boolean)
+        .join(" "),
       university: u.slug,
     };
   });
@@ -42,7 +48,7 @@ export async function getSearchItems(locale: string): Promise<SearchItem[]> {
       key: `course:${c.university.slug}/${c.slug}`,
       title: localize(c.name, locale),
       meta: [
-        uniName,
+        universityLabel(uniName, c.university.level),
         c.semester !== null ? t("semester", { semester: c.semester }) : null,
         c.credits !== null ? t("credits", { credits: c.credits }) : null,
         c.isActive ? null : t("comingSoon"),
@@ -57,6 +63,7 @@ export async function getSearchItems(locale: string): Promise<SearchItem[]> {
         c.name.hu,
         c.university.slug,
         c.university.city,
+        levelShort(c.university.level),
         c.code,
       ]
         .filter(Boolean)

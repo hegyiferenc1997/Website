@@ -105,9 +105,23 @@
   },
   "UniversitiesPage": {
     "title": "Egyetemek",
-    "intro": "Válaszd ki az egyetemedet, és nézd meg a tárgyait félévek szerint.",
+    "intro": "Válaszd ki, alapszakon (BSc) vagy mesterszakon (MSc) tanulsz, majd az egyetemedet, és nézd meg a tárgyait félévek szerint.",
     "empty": "Még nincs egyetem az adatbázisban.",
-    "courseCount": "{count, plural, =0 {még nincs tárgy} other {# tárgy}}"
+    "courseCount": "{count, plural, =0 {még nincs tárgy} other {# tárgy}}",
+    "levelsNav": "Képzési szintek",
+    "levels": {
+      "bsc": "Alapszak (BSc)",
+      "msc": "Mesterszak (MSc)",
+      "phd": "Doktori képzés (PhD)",
+      "other": "Egyéb képzés"
+    },
+    "levelEmpty": {
+      "bsc": "Alapszakos képzés még nincs az oldalon.",
+      "msc": "Mesterszakos képzés még nincs az oldalon, hamarosan érkezik.",
+      "phd": "Doktori képzés még nincs az oldalon.",
+      "other": "Egyéb képzés még nincs az oldalon."
+    },
+    "levelCount": "{count, plural, =0 {nincs egyetem} other {# egyetem}}"
   },
   "UniversityPage": {
     "eyebrow": "Egyetemek",
@@ -118,7 +132,13 @@
     "noSemester": "Félév nincs megadva",
     "credits": "{credits} kredit",
     "specialization": "{name} specializáció",
-    "comingSoon": "hamarosan"
+    "comingSoon": "hamarosan",
+    "levelLabel": {
+      "bsc": "Alapszak (BSc)",
+      "msc": "Mesterszak (MSc)",
+      "phd": "Doktori képzés (PhD)",
+      "other": "Egyéb képzés"
+    }
   },
   "CoursePage": {
     "code": "Tárgykód",

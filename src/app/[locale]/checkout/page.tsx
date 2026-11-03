@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Card, EmptyState, PageHeader } from "@/components/ui";
 import { formatDate, formatDateUntil } from "@/features/account/format";
+import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getUniversity } from "@/features/courses/queries";
 import { getUniversityAccess } from "@/features/payments/access";
@@ -77,7 +78,7 @@ async function CheckoutSummary({ searchParams }: Pick<Props, "searchParams">) {
 
   // Az összegzés sorai: felirat és érték.
   const rows: [string, string][] = [
-    [t("university"), localize(university.name, locale)],
+    [t("university"), universityLabel(localize(university.name, locale), university.level)],
     [t("semester"), semesterTitle],
     [t("plan"), `${tPay(`plans.${plan.id}.name`)} · ${tPay("days", { days: plan.days })}`],
     [t("validUntil"), formatDate(expiresAt, locale)],

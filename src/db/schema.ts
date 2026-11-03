@@ -43,11 +43,18 @@ export const resourceType = pgEnum("resource_type", [
   "past_exam",
 ]);
 
-/** Egyetemek. A slug az URL-ben szereplő azonosító (pl. gabor-denes-egyetem). */
+/**
+ * Egyetemek, képzési szintenként külön sorban: ugyanannak az egyetemnek a BSc (alapszak) és az MSc
+ * (mesterszak) képzése két bejegyzés, saját félévekkel, tárgyakkal és vásárlással.
+ * A slug az URL-ben szereplő azonosító (pl. gabor-denes-egyetem); a mesterszakos sor slugja ettől
+ * különbözik (pl. gabor-denes-egyetem-msc), a név lehet ugyanaz.
+ */
 export const universities = pgTable("universities", {
   id: serial("id").primaryKey(),
   slug: text("slug").notNull().unique(),
   name: localized("name").notNull(),
+  /** Képzési szint: ez alapján kerül az Egyetemek oldalon a BSc vagy az MSc szakaszba. */
+  level: degreeLevel("level").notNull().default("bsc"),
   country: text("country").notNull(), // ISO 3166-1 kód, pl. "HU"
   city: text("city"),
   website: text("website"),
