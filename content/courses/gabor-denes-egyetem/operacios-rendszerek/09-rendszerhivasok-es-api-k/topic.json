@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Rendszerhívások és API-k",
+    "en": "System Calls and APIs"
+  },
+  "description": {
+    "hu": "Mi a rendszerhívás, hogyan jut el a vezérlés a felhasználói programból a kernelbe (trap, rendszerhívás-szám), mennyibe kerül; a rendszerhívások csoportjai és POSIX–Win32 megfelelőik; az API, a C könyvtár, a POSIX szabvány és a Win32 API, valamint a rendszerhívások megfigyelése strace-szel.",
+    "en": "What a system call is, how control passes from a user program into the kernel (trap, system call number), what it costs; categories of system calls and their POSIX–Win32 equivalents; the API, the C library, the POSIX standard and the Win32 API, and observing system calls with strace."
+  }
+}

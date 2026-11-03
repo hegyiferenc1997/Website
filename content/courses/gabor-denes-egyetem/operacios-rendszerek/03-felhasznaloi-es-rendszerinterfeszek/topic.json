@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Felhasználói és rendszer interfészek",
+    "en": "User and System Interfaces"
+  },
+  "description": {
+    "hu": "A parancssor és a shell (Bash, PowerShell) alapparancsai, a grafikus felületek (ablakkezelő, asztali környezet, X11 és Wayland), valamint a programoknak szóló rendszerinterfészek: segédprogramok, szolgáltatások (démonok), parancsfájlok.",
+    "en": "The command line and the shell (Bash, PowerShell) basic commands, graphical interfaces (window manager, desktop environment, X11 and Wayland), and system interfaces for programs: utilities, services (daemons), scripts."
+  }
+}

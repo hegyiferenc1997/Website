@@ -239,3 +239,23 @@ describe("Innováció- és projektmenedzsment", () => {
     expect(missing).toEqual([]);
   });
 });
+
+describe("Operációs rendszerek", () => {
+  const course = loadContent().find((c) => c.course === "operacios-rendszerek");
+
+  it("van tananyaga, és minden leckének van kötelező feladata", () => {
+    // 1 laborkörnyezet-témakör (VirtualBox) + a tantárgyleírás 16 témaköre.
+    expect(course?.topics.length).toBe(17);
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("minden lecke két nyelven elérhető", () => {
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.body.en).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+});

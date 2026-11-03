@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Hálózati kommunikáció és protokollok",
+    "en": "Network Communication and Protocols"
+  },
+  "description": {
+    "hu": "Az OSI és a TCP/IP rétegmodell, a beágyazás; IP-címek (IPv4, IPv6, magáncímek, alhálózati maszk), a TCP és az UDP, a portok, a DNS és a DHCP; a socket API és a hálózati verem az OS-ben, valamint a folyamatok közötti kommunikáció (cső, közös memória, üzenetsor) és a hálózati parancsok Linuxon és Windowson.",
+    "en": "The OSI and TCP/IP layer models, encapsulation; IP addresses (IPv4, IPv6, private addresses, subnet mask), TCP and UDP, ports, DNS and DHCP; the socket API and the network stack in the OS, inter-process communication (pipe, shared memory, message queue) and network commands on Linux and Windows."
+  }
+}

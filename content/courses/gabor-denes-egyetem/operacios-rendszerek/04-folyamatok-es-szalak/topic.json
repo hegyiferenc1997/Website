@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Folyamatok és szálak",
+    "en": "Processes and Threads"
+  },
+  "description": {
+    "hu": "A program és a folyamat különbsége, a folyamat címtere, a folyamatvezérlő blokk (PCB) és az állapotmodell; folyamatok létrehozása (fork, exec, wait), a folyamatfa, a jelzések és a folyamatkezelő parancsok; a szálak, a felhasználói és kernelszintű szálak, valamint a szálmodellek.",
+    "en": "The difference between a program and a process, the process address space, the process control block (PCB) and the state model; creating processes (fork, exec, wait), the process tree, signals and process management commands; threads, user-level and kernel-level threads and threading models."
+  }
+}

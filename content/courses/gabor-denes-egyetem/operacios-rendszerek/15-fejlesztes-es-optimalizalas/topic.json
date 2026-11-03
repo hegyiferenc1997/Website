@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Operációs rendszerek fejlesztése és optimalizálása",
+    "en": "Developing and Optimising Operating Systems"
+  },
+  "description": {
+    "hu": "Hogyan fejlesztik a Linux kernelt és a Windowst (kiadási ciklusok, nyelvek: C és Rust, tesztelés, javítócsomagok); teljesítményfigyelés (CPU, memória, lemez, hálózat, terhelési átlag) Linuxon és Windowson, a szűk keresztmetszet megtalálása; optimalizálás és hangolás: indítási programok, szolgáltatások, gyorsítótár, swappiness, energiaséma, és az Amdahl-törvény számolós példákkal.",
+    "en": "How the Linux kernel and Windows are developed (release cycles, languages: C and Rust, testing, patches); performance monitoring (CPU, memory, disk, network, load average) on Linux and Windows, finding the bottleneck; optimisation and tuning: startup programs, services, caching, swappiness, power plans, and Amdahl's law with worked examples."
+  }
+}

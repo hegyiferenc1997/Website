@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Fájlrendszerek és adattárolás",
+    "en": "File Systems and Data Storage"
+  },
+  "description": {
+    "hu": "A fájl és a könyvtár fogalma, attribútumok, abszolút és relatív elérési út, a Linux könyvtárszerkezete (FHS), linkek; a fájlrendszerek belső felépítése (blokkok, folytonos, láncolt és indexelt foglalás, FAT, inode, NTFS, naplózás); háttértárak (HDD, SSD), partícionálás (MBR, GPT), csatolás, RAID és biztonsági mentés.",
+    "en": "Files and directories, attributes, absolute and relative paths, the Linux directory layout (FHS), links; the internal structure of file systems (blocks, contiguous, linked and indexed allocation, FAT, inode, NTFS, journaling); storage devices (HDD, SSD), partitioning (MBR, GPT), mounting, RAID and backups."
+  }
+}

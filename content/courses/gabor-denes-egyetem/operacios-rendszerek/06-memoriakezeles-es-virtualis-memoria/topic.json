@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Memóriakezelés és virtuális memória",
+    "en": "Memory Management and Virtual Memory"
+  },
+  "description": {
+    "hu": "Logikai és fizikai cím, az MMU, báziscím és határregiszter, folytonos memóriafoglalás és töredezettség (first, best, worst fit); a lapozás, a laptábla és a címfordítás számolós példákkal, a TLB; a virtuális memória, a laphiba, a lapcsere-algoritmusok (FIFO, LRU, optimális) és a vergődés.",
+    "en": "Logical and physical addresses, the MMU, base and limit registers, contiguous allocation and fragmentation (first, best, worst fit); paging, the page table and address translation with worked examples, the TLB; virtual memory, page faults, page replacement algorithms (FIFO, LRU, optimal) and thrashing."
+  }
+}
