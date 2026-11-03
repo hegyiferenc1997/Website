@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Projekttervezés és követelmények felmérése, projektcélkitűzések és eredménymutatók (KPI)",
+    "en": "Project Planning and Requirements Gathering, Project Objectives and Key Performance Indicators (KPI)"
+  },
+  "description": {
+    "hu": "A projekt követelményeinek felmérése (követelménytípusok, feltárási technikák, felhasználói történetek, elfogadási feltételek, MoSCoW-priorizálás, nyomonkövetési mátrix), projektcélkitűzések (SMART, OKR) és a KPI-k meghatározása (vezető és követő mutatók, KPI-kártya).",
+    "en": "Gathering project requirements (requirement types, elicitation techniques, user stories, acceptance criteria, MoSCoW prioritisation, traceability matrix), project objectives (SMART, OKR) and defining KPIs (leading and lagging indicators, the KPI card)."
+  }
+}

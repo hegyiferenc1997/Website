@@ -220,3 +220,22 @@ describe("Digitális technika", () => {
     expect(missing).toEqual([]);
   });
 });
+
+describe("Innováció- és projektmenedzsment", () => {
+  const course = loadContent().find((c) => c.course === "innovacio-es-projektmenedzsment");
+
+  it("van tananyaga, és minden leckének van kötelező feladata", () => {
+    expect(course?.topics.length).toBe(15);
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("minden lecke két nyelven elérhető", () => {
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.body.en).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+});

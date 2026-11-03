@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Projektmenedzsment szoftverek és eszközök",
+    "en": "Project Management Software and Tools"
+  },
+  "description": {
+    "hu": "A projektmenedzsment szoftverek típusai és ismert képviselői (MS Project, Jira, Trello, Asana, GitHub Projects, monday.com, ClickUp, Notion), az eszközválasztás szempontjai, a bevezetés lépései, munkafolyamatok és hibakövetés, végül egy összefoglaló projekt, amely a tárgy összes módszerét egyetlen kis szoftverprojekten alkalmazza.",
+    "en": "Types of project management software and well-known examples (MS Project, Jira, Trello, Asana, GitHub Projects, monday.com, ClickUp, Notion), tool selection criteria, the steps of introducing a tool, workflows and issue tracking, and finally a capstone project that applies every method of the course to one small software project."
+  }
+}

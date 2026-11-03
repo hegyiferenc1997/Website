@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Rizikómenedzsment és változáskezelés, projektminőség és erőforrás-menedzsment",
+    "en": "Risk and Change Management, Project Quality and Resource Management"
+  },
+  "description": {
+    "hu": "A rizikómenedzsment folyamata (kockázatazonosítás, kockázatnyilvántartás, minőségi és mennyiségi elemzés, döntési fa, válaszok veszélyekre és lehetőségekre), változáskezelés (projektváltozások, terjedelem-kúszás, konfigurációkezelés, szervezeti változás: Lewin, Kotter, ADKAR), projektminőség (QA és QC, a minőség költsége, ISO 9001, minőségügyi eszközök) és erőforrás-menedzsment (erőforrásterv, hisztogram, túlterhelés, kiegyenlítés és simítás).",
+    "en": "The risk management process (risk identification, risk register, qualitative and quantitative analysis, decision trees, responses to threats and opportunities), change management (project changes, scope creep, configuration management, organisational change: Lewin, Kotter, ADKAR), project quality (QA and QC, cost of quality, ISO 9001, quality tools) and resource management (resource plan, histogram, overallocation, levelling and smoothing)."
+  }
+}
