@@ -7,7 +7,7 @@ import { formatDateUntil } from "@/features/account/format";
 import { getSessionUser } from "@/features/auth/server";
 import { localize } from "@/features/courses/localize";
 import { getUniversities } from "@/features/courses/queries";
-import { DashboardCourseCard } from "@/features/dashboard/CourseCard";
+import { DashboardCourseList } from "@/features/dashboard/CourseList";
 import { getDashboard, type WeekDay } from "@/features/dashboard/data";
 import { Link } from "@/i18n/navigation";
 
@@ -83,9 +83,8 @@ async function DashboardContent() {
           {data.courses.length === 0 ? (
             <EmptyState>{t("coursesEmpty")}</EmptyState>
           ) : (
-            data.courses.map((c) => (
-              <DashboardCourseCard key={`${c.university}/${c.course}`} data={c} userId={user.id} />
-            ))
+            // Félévenként, oldalanként legfeljebb 3 tárgy
+            <DashboardCourseList courses={data.courses} userId={user.id} />
           )}
         </section>
 
