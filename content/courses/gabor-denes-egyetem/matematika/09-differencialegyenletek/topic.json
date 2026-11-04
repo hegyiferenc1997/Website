@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Differenciálegyenletek",
+    "en": "Differential Equations"
+  },
+  "description": {
+    "hu": "Változást leíró egyenletek: alapfogalmak és kezdetiérték-probléma, szétválasztható változójú és elsőrendű lineáris egyenletek (hűlés, radioaktív bomlás, RC-kör), másodrendű állandó együtthatós egyenletek (rezgések), és a numerikus megoldás Euler-módszerrel.",
+    "en": "Equations that describe change: basic concepts and initial value problems, separable and first-order linear equations (cooling, radioactive decay, RC circuits), second-order equations with constant coefficients (oscillations), and numerical solution with Euler's method."
+  }
+}
