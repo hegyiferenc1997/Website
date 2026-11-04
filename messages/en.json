@@ -121,7 +121,8 @@
       "phd": "There are no doctoral programmes on the site yet.",
       "other": "There are no other programmes on the site yet."
     },
-    "levelCount": "{count, plural, =0 {no universities} one {# university} other {# universities}}"
+    "levelCount": "{count, plural, =0 {no universities} one {# university} other {# universities}}",
+    "comingSoon": "coming soon"
   },
   "UniversityPage": {
     "eyebrow": "Universities",

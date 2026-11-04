@@ -11,12 +11,14 @@ import {
   universities,
 } from "./schema";
 import * as gde from "./data/gde-mernokinformatikus";
+import { placeholderUniversities } from "./data/universities";
 
 /**
  * Kezdő adat: a Gábor Dénes Egyetem Mérnökinformatikus BSc szakja mind a 7 félévvel,
  * a tárgyakkal, kreditekkel és az 5–6. félév két specializációjával.
  * Aktív tárgyak: Informatika alapjai, Matematika, Programozási alapok és Operációs rendszerek (1. félév),
  * Digitális technika és Innováció- és projektmenedzsment (3. félév), a többi helykitöltő.
+ * Mellette a többi magyar egyetem (BSc / MSc) tárgyak nélküli helykitöltőként (data/universities.ts).
  * A témakörök és leckék a content/courses mappából jönnek (lásd content.ts).
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
@@ -29,6 +31,7 @@ export async function seed(db: Database) {
     .values({
       slug: "gabor-denes-egyetem",
       name: universityName,
+      shortName: "GDE",
       country: "HU",
       city: "Budapest",
       website: "https://gde.hu",
@@ -36,7 +39,7 @@ export async function seed(db: Database) {
     })
     .onConflictDoUpdate({
       target: universities.slug,
-      set: { name: universityName, level: "bsc", updatedAt: sql`now()` },
+      set: { name: universityName, shortName: "GDE", level: "bsc", updatedAt: sql`now()` },
     })
     .returning();
 
@@ -103,8 +106,37 @@ export async function seed(db: Database) {
     }
   }
 
-  // 5. A témakörök és leckék a content mappából.
+  // 5. A többi egyetem helykitöltőként (tárgyak nélkül), szintenként külön sorban.
+  await seedPlaceholderUniversities(db);
+
+  // 6. A témakörök és leckék a content mappából.
   await seedContent(db);
+}
+
+/**
+ * A még tananyag nélküli egyetemek: csak a név, rövidítés, város és szint kerül be, tárgy nem.
+ * Az MSc bejegyzés slugja „-msc” végződést kap (lásd schema.ts, universities).
+ */
+async function seedPlaceholderUniversities(db: Database) {
+  for (const u of placeholderUniversities) {
+    for (const level of u.levels) {
+      const values = {
+        name: { hu: u.name, en: u.en },
+        shortName: u.short,
+        level,
+        country: "HU",
+        city: u.city,
+        website: u.website,
+      };
+      await db
+        .insert(universities)
+        .values({ slug: level === "bsc" ? u.slug : `${u.slug}-${level}`, ...values })
+        .onConflictDoUpdate({
+          target: universities.slug,
+          set: { ...values, updatedAt: sql`now()` },
+        });
+    }
+  }
 }
 
 /**

@@ -121,7 +121,8 @@
       "phd": "Doktori képzés még nincs az oldalon.",
       "other": "Egyéb képzés még nincs az oldalon."
     },
-    "levelCount": "{count, plural, =0 {nincs egyetem} other {# egyetem}}"
+    "levelCount": "{count, plural, =0 {nincs egyetem} other {# egyetem}}",
+    "comingSoon": "hamarosan"
   },
   "UniversityPage": {
     "eyebrow": "Egyetemek",
