@@ -909,6 +909,7 @@
   --plot-2: #7aa2f7;
   --plot-3: #e8b04b;
   --plot-4: #f0716a;
+  --plot-5: #c792ea;
 }
 
 :root[data-theme="light"] {
@@ -916,6 +917,7 @@
   --plot-2: #3b63c4;
   --plot-3: #a86a00;
   --plot-4: #c4372f;
+  --plot-5: #8a3fc4;
 }
 
 .lesson-body .plot-block {

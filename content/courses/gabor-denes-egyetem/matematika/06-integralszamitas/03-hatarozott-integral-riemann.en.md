@@ -39,7 +39,7 @@ $$
 \int_a^b f(x)\,dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(\xi_i)\,\Delta x.
 $$
 
-Every **continuous** function (in fact every bounded function with finitely many discontinuities) is integrable. The integral sign is an elongated S (*summa*), and $dx$ is the "infinitely small" version of $\Delta x$.
+Every **continuous** function (in fact every bounded function with finitely many discontinuities) is integrable. The integral sign is an elongated S (_summa_), and $dx$ is the "infinitely small" version of $\Delta x$.
 
 ## Signed area
 

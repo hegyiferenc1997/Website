@@ -17,13 +17,13 @@ A **proposition** is a statement that is either true (**T**, $1$) or false (**F*
 
 Connectives build new propositions from old ones:
 
-| Connective   | Symbol              | Reading                | When is it true?                     |
-| ------------ | ------------------- | ---------------------- | ------------------------------------ |
-| negation     | $\neg P$            | not $P$                | if $P$ is false                      |
-| conjunction  | $P \land Q$         | $P$ and $Q$            | if both are true                     |
-| disjunction  | $P \lor Q$          | $P$ or $Q$             | if at least one is true              |
-| implication  | $P \rightarrow Q$   | if $P$, then $Q$       | **except** when $P$ is true and $Q$ is false |
-| equivalence  | $P \leftrightarrow Q$ | $P$ if and only if $Q$ | if their values are equal         |
+| Connective  | Symbol                | Reading                | When is it true?                             |
+| ----------- | --------------------- | ---------------------- | -------------------------------------------- |
+| negation    | $\neg P$              | not $P$                | if $P$ is false                              |
+| conjunction | $P \land Q$           | $P$ and $Q$            | if both are true                             |
+| disjunction | $P \lor Q$            | $P$ or $Q$             | if at least one is true                      |
+| implication | $P \rightarrow Q$     | if $P$, then $Q$       | **except** when $P$ is true and $Q$ is false |
+| equivalence | $P \leftrightarrow Q$ | $P$ if and only if $Q$ | if their values are equal                    |
 
 A truth table lists every possible input. With $n$ variables there are $2^n$ rows.
 

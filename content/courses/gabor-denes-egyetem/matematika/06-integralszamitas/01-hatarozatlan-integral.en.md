@@ -29,17 +29,17 @@ $f(x)$ is the **integrand**, $dx$ indicates the variable of integration, $C$ is 
 
 ## Basic integrals
 
-| $f(x)$                     | $\int f(x)\,dx$                  |
-| -------------------------- | -------------------------------- |
-| $x^n$ ($n \neq -1$)        | $\dfrac{x^{n+1}}{n + 1} + C$     |
-| $\dfrac{1}{x}$             | $\ln \lvert x \rvert + C$        |
-| $e^x$                      | $e^x + C$                        |
-| $a^x$                      | $\dfrac{a^x}{\ln a} + C$         |
-| $\sin x$                   | $-\cos x + C$                    |
-| $\cos x$                   | $\sin x + C$                     |
-| $\dfrac{1}{\cos^2 x}$      | $\tan x + C$                     |
-| $\dfrac{1}{1 + x^2}$       | $\arctan x + C$                  |
-| $\dfrac{1}{\sqrt{1 - x^2}}$ | $\arcsin x + C$                 |
+| $f(x)$                      | $\int f(x)\,dx$              |
+| --------------------------- | ---------------------------- |
+| $x^n$ ($n \neq -1$)         | $\dfrac{x^{n+1}}{n + 1} + C$ |
+| $\dfrac{1}{x}$              | $\ln \lvert x \rvert + C$    |
+| $e^x$                       | $e^x + C$                    |
+| $a^x$                       | $\dfrac{a^x}{\ln a} + C$     |
+| $\sin x$                    | $-\cos x + C$                |
+| $\cos x$                    | $\sin x + C$                 |
+| $\dfrac{1}{\cos^2 x}$       | $\tan x + C$                 |
+| $\dfrac{1}{1 + x^2}$        | $\arctan x + C$              |
+| $\dfrac{1}{\sqrt{1 - x^2}}$ | $\arcsin x + C$              |
 
 You can check every row by differentiating! For example $\left(\ln\lvert x \rvert\right)' = \frac{1}{x}$ both for $x > 0$ and for $x < 0$.
 

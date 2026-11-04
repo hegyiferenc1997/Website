@@ -20,12 +20,12 @@ $$
 
 **Azonosságok** ($a, b > 0$, $n, m$ valós):
 
-| Azonosság                          | Példa                                  |
-| ---------------------------------- | -------------------------------------- |
-| $a^n \cdot a^m = a^{n+m}$          | $2^3 \cdot 2^4 = 2^7 = 128$            |
-| $\dfrac{a^n}{a^m} = a^{n-m}$       | $\dfrac{5^6}{5^4} = 5^2 = 25$          |
-| $(a^n)^m = a^{nm}$                 | $(3^2)^3 = 3^6 = 729$                  |
-| $(ab)^n = a^n b^n$                 | $(2x)^3 = 8x^3$                        |
+| Azonosság                                        | Példa                                        |
+| ------------------------------------------------ | -------------------------------------------- |
+| $a^n \cdot a^m = a^{n+m}$                        | $2^3 \cdot 2^4 = 2^7 = 128$                  |
+| $\dfrac{a^n}{a^m} = a^{n-m}$                     | $\dfrac{5^6}{5^4} = 5^2 = 25$                |
+| $(a^n)^m = a^{nm}$                               | $(3^2)^3 = 3^6 = 729$                        |
+| $(ab)^n = a^n b^n$                               | $(2x)^3 = 8x^3$                              |
 | $\left(\dfrac{a}{b}\right)^n = \dfrac{a^n}{b^n}$ | $\left(\dfrac{2}{3}\right)^2 = \dfrac{4}{9}$ |
 
 Gyakori hiba: $(a + b)^2 \neq a^2 + b^2$! A hatványozás a szorzásra széttagolható, az összeadásra **nem**.

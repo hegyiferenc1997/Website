@@ -14,23 +14,23 @@ minutes: 15
 
 A Matematika (B-MATEMA) **évközi jeggyel** zárul, heti 2 óra előadás, 1 óra gyakorlat és 2 óra labor. A célja, hogy megkapd azokat a matematikai alapokat, amelyekre a programozás, az adatbázisok, az algoritmusok, a mesterséges intelligencia és a kriptográfia épül.
 
-| Mi?                     | Részletek                                                                    |
-| ----------------------- | ---------------------------------------------------------------------------- |
-| 0. heti órák            | felzárkóztató anyag (algebra, függvények, halmazok, logika), max. **15 pluszpont** |
-| ZH-k (nappali)          | **3 zárthelyi**, mindegyik az előző óta vett anyagból, összesen **100 pont**     |
-| ZH-k (távoktatás)       | 2 zárthelyi, összesen 100 pont                                               |
-| Aláírás                 | a 0. héten legalább **5 pont** és a ZH-kon összesen legalább **25 pont**     |
-| Javítás                 | a szorgalmi időszak után 1–2 héttel javító ZH a teljes anyagból             |
+| Mi?               | Részletek                                                                          |
+| ----------------- | ---------------------------------------------------------------------------------- |
+| 0. heti órák      | felzárkóztató anyag (algebra, függvények, halmazok, logika), max. **15 pluszpont** |
+| ZH-k (nappali)    | **3 zárthelyi**, mindegyik az előző óta vett anyagból, összesen **100 pont**       |
+| ZH-k (távoktatás) | 2 zárthelyi, összesen 100 pont                                                     |
+| Aláírás           | a 0. héten legalább **5 pont** és a ZH-kon összesen legalább **25 pont**           |
+| Javítás           | a szorgalmi időszak után 1–2 héttel javító ZH a teljes anyagból                    |
 
 A jegy a ZH-pontok és a pluszpontok összegéből:
 
-| Pont    | Jegy             |
-| ------- | ---------------- |
-| 0–49    | elégtelen (1)    |
-| 50–62   | elégséges (2)    |
-| 63–75   | közepes (3)      |
-| 76–88   | jó (4)           |
-| 89–100  | jeles (5)        |
+| Pont   | Jegy          |
+| ------ | ------------- |
+| 0–49   | elégtelen (1) |
+| 50–62  | elégséges (2) |
+| 63–75  | közepes (3)   |
+| 76–88  | jó (4)        |
+| 89–100 | jeles (5)     |
 
 Ez a tananyag a tantárgyleírás 10 témakörét követi. Az első két témakör (és a függvények eleje) a **0. heti felzárkóztató** anyag: érdemes alaposan átvenni, mert minden későbbi témakör erre épül.
 
@@ -61,12 +61,12 @@ print(Fraction(1, 10) + Fraction(2, 10))   # 3/10
 
 Minden $a, b, c$ valós számra:
 
-| Azonosság              | Összeadás                       | Szorzás                               |
-| ---------------------- | ------------------------------- | ------------------------------------- |
-| felcserélhetőség       | $a + b = b + a$                 | $ab = ba$                             |
-| csoportosíthatóság     | $(a + b) + c = a + (b + c)$     | $(ab)c = a(bc)$                       |
-| semleges elem          | $a + 0 = a$                     | $a \cdot 1 = a$                       |
-| ellentett / reciprok   | $a + (-a) = 0$                  | $a \cdot \frac{1}{a} = 1$, ha $a \neq 0$ |
+| Azonosság            | Összeadás                   | Szorzás                                  |
+| -------------------- | --------------------------- | ---------------------------------------- |
+| felcserélhetőség     | $a + b = b + a$             | $ab = ba$                                |
+| csoportosíthatóság   | $(a + b) + c = a + (b + c)$ | $(ab)c = a(bc)$                          |
+| semleges elem        | $a + 0 = a$                 | $a \cdot 1 = a$                          |
+| ellentett / reciprok | $a + (-a) = 0$              | $a \cdot \frac{1}{a} = 1$, ha $a \neq 0$ |
 
 A kettőt a **széttagolhatóság** (disztributivitás) köti össze: $a(b + c) = ab + ac$. Erre épül a zárójelfelbontás és a kiemelés is.
 

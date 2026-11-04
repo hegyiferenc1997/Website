@@ -12,17 +12,17 @@ minutes: 25
 
 ## A deriválási táblázat
 
-| $f(x)$              | $f'(x)$                     |
-| ------------------- | --------------------------- |
-| $c$ (állandó)       | $0$                         |
-| $x^n$ ($n$ valós)   | $n x^{n-1}$                 |
-| $e^x$               | $e^x$                       |
-| $a^x$               | $a^x \ln a$                 |
-| $\ln x$             | $\dfrac{1}{x}$              |
-| $\log_a x$          | $\dfrac{1}{x \ln a}$        |
-| $\sin x$            | $\cos x$                    |
-| $\cos x$            | $-\sin x$                   |
-| $\tan x$            | $\dfrac{1}{\cos^2 x}$       |
+| $f(x)$            | $f'(x)$               |
+| ----------------- | --------------------- |
+| $c$ (állandó)     | $0$                   |
+| $x^n$ ($n$ valós) | $n x^{n-1}$           |
+| $e^x$             | $e^x$                 |
+| $a^x$             | $a^x \ln a$           |
+| $\ln x$           | $\dfrac{1}{x}$        |
+| $\log_a x$        | $\dfrac{1}{x \ln a}$  |
+| $\sin x$          | $\cos x$              |
+| $\cos x$          | $-\sin x$             |
+| $\tan x$          | $\dfrac{1}{\cos^2 x}$ |
 
 A hatványszabály gyökökre és törtekre is működik: $(\sqrt x)' = \left(x^{1/2}\right)' = \dfrac{1}{2\sqrt x}$, $\left(\dfrac{1}{x^2}\right)' = (x^{-2})' = -\dfrac{2}{x^3}$.
 

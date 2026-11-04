@@ -17,13 +17,13 @@ Az **állítás** (ítélet) olyan kijelentés, amely vagy igaz (**i**, $1$), va
 
 Állításokból műveletekkel újabb állításokat képzünk:
 
-| Művelet      | Jel                 | Kiolvasás              | Mikor igaz?                          |
-| ------------ | ------------------- | ---------------------- | ------------------------------------ |
-| negáció      | $\neg P$            | nem $P$                | ha $P$ hamis                         |
-| konjunkció   | $P \land Q$         | $P$ és $Q$             | ha mindkettő igaz                    |
-| diszjunkció  | $P \lor Q$          | $P$ vagy $Q$           | ha legalább az egyik igaz            |
-| implikáció   | $P \rightarrow Q$   | ha $P$, akkor $Q$      | **kivéve**, ha $P$ igaz és $Q$ hamis |
-| ekvivalencia | $P \leftrightarrow Q$ | $P$ pontosan akkor, ha $Q$ | ha egyforma az értékük        |
+| Művelet      | Jel                   | Kiolvasás                  | Mikor igaz?                          |
+| ------------ | --------------------- | -------------------------- | ------------------------------------ |
+| negáció      | $\neg P$              | nem $P$                    | ha $P$ hamis                         |
+| konjunkció   | $P \land Q$           | $P$ és $Q$                 | ha mindkettő igaz                    |
+| diszjunkció  | $P \lor Q$            | $P$ vagy $Q$               | ha legalább az egyik igaz            |
+| implikáció   | $P \rightarrow Q$     | ha $P$, akkor $Q$          | **kivéve**, ha $P$ igaz és $Q$ hamis |
+| ekvivalencia | $P \leftrightarrow Q$ | $P$ pontosan akkor, ha $Q$ | ha egyforma az értékük               |
 
 Az igazságtáblában minden lehetséges bemenetet felsorolunk. $n$ változóhoz $2^n$ sor tartozik.
 

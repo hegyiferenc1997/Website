@@ -77,7 +77,7 @@ $$
 
 1. Jelöld az ismeretlent (mit kérdeznek?), 2. írd fel az összefüggéseket egyenletként, 3. oldd meg, 4. **ellenőrizd a szöveg alapján**, és válaszolj mondatban.
 
-*Példa:* Egy téglalap kerülete $34$ cm, területe $60$ cm². Oldalai $a$ és $b$: $a + b = 17$, $ab = 60$. Viète szerint $a, b$ a $t^2 - 17t + 60 = 0$ gyökei: $t = 12$ és $t = 5$. Az oldalak $12$ cm és $5$ cm.
+_Példa:_ Egy téglalap kerülete $34$ cm, területe $60$ cm². Oldalai $a$ és $b$: $a + b = 17$, $ab = 60$. Viète szerint $a, b$ a $t^2 - 17t + 60 = 0$ gyökei: $t = 12$ és $t = 5$. Az oldalak $12$ cm és $5$ cm.
 
 ## Összefoglalás
 

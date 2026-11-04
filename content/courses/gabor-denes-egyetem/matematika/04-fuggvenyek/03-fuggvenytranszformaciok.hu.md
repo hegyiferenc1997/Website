@@ -14,12 +14,12 @@ minutes: 20
 
 Legyen $f$ az alapfüggvény (pl. $x^2$, $\sqrt x$, $\sin x$).
 
-| Új függvény      | Hatás a grafikonra                                                  |
-| ---------------- | ------------------------------------------------------------------- |
-| $f(x) + d$       | eltolás **függőlegesen** $d$-vel (felfelé, ha $d > 0$)              |
-| $f(x - c)$       | eltolás **vízszintesen** $c$-vel (**jobbra**, ha $c > 0$!)          |
-| $a \cdot f(x)$   | **függőleges nyújtás** $a$-szorosra ($\lvert a \rvert < 1$: zsugorítás); $a < 0$: tükrözés az $x$ tengelyre |
-| $f(b x)$         | **vízszintes zsugorítás** $b$-ed részére ($\lvert b \rvert > 1$); $b < 0$: tükrözés az $y$ tengelyre |
+| Új függvény    | Hatás a grafikonra                                                                                          |
+| -------------- | ----------------------------------------------------------------------------------------------------------- |
+| $f(x) + d$     | eltolás **függőlegesen** $d$-vel (felfelé, ha $d > 0$)                                                      |
+| $f(x - c)$     | eltolás **vízszintesen** $c$-vel (**jobbra**, ha $c > 0$!)                                                  |
+| $a \cdot f(x)$ | **függőleges nyújtás** $a$-szorosra ($\lvert a \rvert < 1$: zsugorítás); $a < 0$: tükrözés az $x$ tengelyre |
+| $f(b x)$       | **vízszintes zsugorítás** $b$-ed részére ($\lvert b \rvert > 1$); $b < 0$: tükrözés az $y$ tengelyre        |
 
 A leggyakoribb hiba: $f(x - 3)$ **jobbra** tol, nem balra. Gondolj bele: az $f(x - 3)$ ugyanazt az értéket $3$-mal később (nagyobb $x$-nél) veszi fel.
 

@@ -14,8 +14,14 @@ const W = 640;
 const H = 380;
 const PAD = 28;
 
-// A görbék színei sorban (lásd globals.css: --plot-1 … --plot-4).
-const COLORS = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)"];
+// A görbék színei sorban (lásd globals.css: --plot-1 … --plot-5).
+const COLORS = [
+  "var(--plot-1)",
+  "var(--plot-2)",
+  "var(--plot-3)",
+  "var(--plot-4)",
+  "var(--plot-5)",
+];
 
 // Szám kiírása a feliratokban: legfeljebb 4 tizedes, fölösleges nullák nélkül.
 function fmt(v: number): string {
@@ -196,7 +202,11 @@ export function Plot({ spec }: { spec: PlotSpec }) {
       }
       d += `L${sx(hi)} ${sy(0)}Z`;
       parts.push(<path key="a" d={d} fill={color} opacity={0.22} />);
-      readouts.push({ label: t("area", { a: fmt(a), b: fmt(b) }), value: fmt(integrate(f, a, b)), color });
+      readouts.push({
+        label: t("area", { a: fmt(a), b: fmt(b) }),
+        value: fmt(integrate(f, a, b)),
+        color,
+      });
     } else {
       // Téglalapok a felezőpontbeli függvényértékkel.
       const n = Math.max(1, Math.min(200, Math.round(c.n!(values))));
@@ -223,7 +233,11 @@ export function Plot({ spec }: { spec: PlotSpec }) {
         );
       }
       readouts.push({ label: t("riemann", { n }), value: fmt(total), color });
-      readouts.push({ label: t("area", { a: fmt(a), b: fmt(b) }), value: fmt(integrate(f, a, b)), color: "var(--muted)" });
+      readouts.push({
+        label: t("area", { a: fmt(a), b: fmt(b) }),
+        value: fmt(integrate(f, a, b)),
+        color: "var(--muted)",
+      });
     }
     shapes.push(
       <g key={i}>

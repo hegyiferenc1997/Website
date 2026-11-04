@@ -15,13 +15,13 @@ minutes: 25
 
 Going with the degree to infinity gives the **Taylor series**: $\sum_{k=0}^{\infty} \frac{f^{(k)}(a)}{k!}(x - a)^k$. It is a **power series**, equal to the function inside an **interval of convergence**.
 
-| Function           | Taylor series about $0$                                           | Valid             |
-| ------------------ | ----------------------------------------------------------------- | ----------------- |
-| $e^x$              | $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$                 | for every $x$     |
-| $\sin x$           | $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots$                     | for every $x$     |
-| $\cos x$           | $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots$                     | for every $x$     |
-| $\frac{1}{1 - x}$  | $1 + x + x^2 + x^3 + \dots$ (geometric series)                    | $\lvert x \rvert < 1$ |
-| $\ln(1 + x)$       | $x - \frac{x^2}{2} + \frac{x^3}{3} - \dots$                       | $-1 < x \leq 1$   |
+| Function          | Taylor series about $0$                           | Valid                 |
+| ----------------- | ------------------------------------------------- | --------------------- |
+| $e^x$             | $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$ | for every $x$         |
+| $\sin x$          | $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots$     | for every $x$         |
+| $\cos x$          | $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots$     | for every $x$         |
+| $\frac{1}{1 - x}$ | $1 + x + x^2 + x^3 + \dots$ (geometric series)    | $\lvert x \rvert < 1$ |
+| $\ln(1 + x)$      | $x - \frac{x^2}{2} + \frac{x^3}{3} - \dots$       | $-1 < x \leq 1$       |
 
 A nice consequence: putting $x = 1$ into the series of $\ln(1 + x)$ gives $\ln 2 = 1 - \frac{1}{2} + \frac{1}{3} - \dots$ (the alternating harmonic series), and the series of $e^{ix}$ gives **Euler's formula**: $e^{ix} = \cos x + i \sin x$.
 

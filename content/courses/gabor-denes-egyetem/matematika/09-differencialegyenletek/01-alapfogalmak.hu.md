@@ -43,13 +43,13 @@ A $C$ csúszkával a megoldásgörbék „családján” mozogsz; a kezdeti ért
 
 ## Mire jó?
 
-| Folyamat | Egyenlet | Jelentés |
-| --- | --- | --- |
-| szaporodás, kamatos kamat | $y' = ky$, $k > 0$ | a növekedés arányos a mennyiséggel |
-| radioaktív bomlás | $y' = -\lambda y$ | a bomlás arányos a még meglévő anyaggal |
-| Newton-féle hűlés | $T' = -k(T - T_k)$ | a hűlés arányos a hőmérséklet-különbséggel |
-| rugó, rezgőkör | $y'' = -\omega^2 y$ | a visszatérítő erő arányos a kitéréssel |
-| szabadesés | $y'' = -g$ | állandó gyorsulás |
+| Folyamat                  | Egyenlet            | Jelentés                                   |
+| ------------------------- | ------------------- | ------------------------------------------ |
+| szaporodás, kamatos kamat | $y' = ky$, $k > 0$  | a növekedés arányos a mennyiséggel         |
+| radioaktív bomlás         | $y' = -\lambda y$   | a bomlás arányos a még meglévő anyaggal    |
+| Newton-féle hűlés         | $T' = -k(T - T_k)$  | a hűlés arányos a hőmérséklet-különbséggel |
+| rugó, rezgőkör            | $y'' = -\omega^2 y$ | a visszatérítő erő arányos a kitéréssel    |
+| szabadesés                | $y'' = -g$          | állandó gyorsulás                          |
 
 ## Összefoglalás
 

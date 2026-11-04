@@ -14,15 +14,15 @@ minutes: 20
 
 Minden $A, B, C \subseteq U$ halmazra:
 
-| Név                    | Unió                                           | Metszet                                         |
-| ---------------------- | ---------------------------------------------- | ----------------------------------------------- |
-| felcserélhetőség       | $A \cup B = B \cup A$                          | $A \cap B = B \cap A$                           |
-| csoportosíthatóság     | $(A \cup B) \cup C = A \cup (B \cup C)$        | $(A \cap B) \cap C = A \cap (B \cap C)$         |
-| disztributivitás       | $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ | $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ |
-| idempotencia           | $A \cup A = A$                                 | $A \cap A = A$                                  |
-| elnyelés               | $A \cup (A \cap B) = A$                        | $A \cap (A \cup B) = A$                         |
-| semleges / zéró elem   | $A \cup \emptyset = A$, $A \cup U = U$         | $A \cap U = A$, $A \cap \emptyset = \emptyset$  |
-| komplementer           | $A \cup \overline{A} = U$                      | $A \cap \overline{A} = \emptyset$               |
+| Név                  | Unió                                             | Metszet                                          |
+| -------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| felcserélhetőség     | $A \cup B = B \cup A$                            | $A \cap B = B \cap A$                            |
+| csoportosíthatóság   | $(A \cup B) \cup C = A \cup (B \cup C)$          | $(A \cap B) \cap C = A \cap (B \cap C)$          |
+| disztributivitás     | $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ | $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ |
+| idempotencia         | $A \cup A = A$                                   | $A \cap A = A$                                   |
+| elnyelés             | $A \cup (A \cap B) = A$                          | $A \cap (A \cup B) = A$                          |
+| semleges / zéró elem | $A \cup \emptyset = A$, $A \cup U = U$           | $A \cap U = A$, $A \cap \emptyset = \emptyset$   |
+| komplementer         | $A \cup \overline{A} = U$                        | $A \cap \overline{A} = \emptyset$                |
 
 Valamint $\overline{\overline{A}} = A$ és $A \setminus B = A \cap \overline{B}$.
 
@@ -40,10 +40,10 @@ Egy $x$ elemről minden halmaznál két eset van: benne van ($1$) vagy nincs ($0
 
 | $x \in A$ | $x \in B$ | $x \in A \cup B$ | $x \in \overline{A \cup B}$ | $x \in \overline{A} \cap \overline{B}$ |
 | :-------: | :-------: | :--------------: | :-------------------------: | :------------------------------------: |
-| 0         | 0         | 0                | 1                           | 1                                      |
-| 0         | 1         | 1                | 0                           | 0                                      |
-| 1         | 0         | 1                | 0                           | 0                                      |
-| 1         | 1         | 1                | 0                           | 0                                      |
+|     0     |     0     |        0         |              1              |                   1                    |
+|     0     |     1     |        1         |              0              |                   0                    |
+|     1     |     0     |        1         |              0              |                   0                    |
+|     1     |     1     |        1         |              0              |                   0                    |
 
 Ez pontosan a **logika** igazságtáblája: az unió a „vagy” ($\lor$), a metszet az „és” ($\land$), a komplementer a „nem” ($\neg$). A halmazalgebra és az ítéletlogika ugyanannak a szerkezetnek, a **Boole-algebrának** két arca – ezt használja a digitális technika is.
 

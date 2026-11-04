@@ -17,10 +17,10 @@ minutes: 30
 
 Which "branch" of combinatorics applies depends on two questions: **does order matter**, and **can an element repeat**.
 
-| | Order matters | Order does not matter |
-| --- | --- | --- |
+|                        | Order matters                     | Order does not matter                                   |
+| ---------------------- | --------------------------------- | ------------------------------------------------------- |
 | **without repetition** | variation: $\dfrac{n!}{(n - k)!}$ | combination: $\dbinom{n}{k} = \dfrac{n!}{k!\,(n - k)!}$ |
-| **with repetition** | variation with repetition: $n^k$ | combination with repetition: $\dbinom{n + k - 1}{k}$ |
+| **with repetition**    | variation with repetition: $n^k$  | combination with repetition: $\dbinom{n + k - 1}{k}$    |
 
 Here $n$ is the number of elements to choose from and $k$ the number chosen. $n! = 1 \cdot 2 \cdots n$ ("$n$ factorial"), and $0! = 1$.
 

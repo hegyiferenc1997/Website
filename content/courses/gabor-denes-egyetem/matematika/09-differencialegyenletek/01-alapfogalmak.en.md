@@ -43,13 +43,13 @@ The $C$ slider moves you along the "family" of solution curves; the initial valu
 
 ## What is it good for?
 
-| Process | Equation | Meaning |
-| --- | --- | --- |
-| population growth, compound interest | $y' = ky$, $k > 0$ | growth is proportional to the amount |
-| radioactive decay | $y' = -\lambda y$ | decay is proportional to the remaining material |
-| Newton's law of cooling | $T' = -k(T - T_a)$ | cooling is proportional to the temperature difference |
-| spring, LC circuit | $y'' = -\omega^2 y$ | the restoring force is proportional to the displacement |
-| free fall | $y'' = -g$ | constant acceleration |
+| Process                              | Equation            | Meaning                                                 |
+| ------------------------------------ | ------------------- | ------------------------------------------------------- |
+| population growth, compound interest | $y' = ky$, $k > 0$  | growth is proportional to the amount                    |
+| radioactive decay                    | $y' = -\lambda y$   | decay is proportional to the remaining material         |
+| Newton's law of cooling              | $T' = -k(T - T_a)$  | cooling is proportional to the temperature difference   |
+| spring, LC circuit                   | $y'' = -\omega^2 y$ | the restoring force is proportional to the displacement |
+| free fall                            | $y'' = -g$          | constant acceleration                                   |
 
 ## Summary
 

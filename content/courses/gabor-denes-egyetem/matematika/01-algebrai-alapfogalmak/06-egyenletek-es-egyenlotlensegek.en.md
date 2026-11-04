@@ -77,7 +77,7 @@ $$
 
 1. Name the unknown (what is asked?), 2. write the relations as equations, 3. solve, 4. **check against the text**, and answer in a sentence.
 
-*Example:* A rectangle has perimeter $34$ cm and area $60$ cm². With sides $a$ and $b$: $a + b = 17$, $ab = 60$. By Vieta, $a, b$ are the roots of $t^2 - 17t + 60 = 0$: $t = 12$ and $t = 5$. The sides are $12$ cm and $5$ cm.
+_Example:_ A rectangle has perimeter $34$ cm and area $60$ cm². With sides $a$ and $b$: $a + b = 17$, $ab = 60$. By Vieta, $a, b$ are the roots of $t^2 - 17t + 60 = 0$: $t = 12$ and $t = 5$. The sides are $12$ cm and $5$ cm.
 
 ## Summary
 

@@ -49,11 +49,11 @@ $g(x) = \log_a x$ az exponenciális **inverze**: $D_g = ]0; \infty[$, $R_g = \ma
 
 A szögeket **radiánban** mérjük: $180^\circ = \pi$, $\ 90^\circ = \frac{\pi}{2}$. Az egységkör $\alpha$ szögű pontja $(\cos\alpha; \sin\alpha)$.
 
-| Függvény    | $D_f$                                 | $R_f$         | Periódus | Paritás  |
-| ----------- | ------------------------------------- | ------------- | -------- | -------- |
-| $\sin x$    | $\mathbb{R}$                          | $[-1; 1]$     | $2\pi$   | páratlan |
-| $\cos x$    | $\mathbb{R}$                          | $[-1; 1]$     | $2\pi$   | páros    |
-| $\tan x$    | $x \neq \frac{\pi}{2} + k\pi$         | $\mathbb{R}$  | $\pi$    | páratlan |
+| Függvény | $D_f$                         | $R_f$        | Periódus | Paritás  |
+| -------- | ----------------------------- | ------------ | -------- | -------- |
+| $\sin x$ | $\mathbb{R}$                  | $[-1; 1]$    | $2\pi$   | páratlan |
+| $\cos x$ | $\mathbb{R}$                  | $[-1; 1]$    | $2\pi$   | páros    |
+| $\tan x$ | $x \neq \frac{\pi}{2} + k\pi$ | $\mathbb{R}$ | $\pi$    | páratlan |
 
 Nevezetes értékek: $\sin 0 = 0$, $\sin\frac{\pi}{6} = \frac{1}{2}$, $\sin\frac{\pi}{2} = 1$, $\cos 0 = 1$, $\cos\frac{\pi}{3} = \frac{1}{2}$, $\cos\pi = -1$. Alapazonosság: $\sin^2 x + \cos^2 x = 1$.
 

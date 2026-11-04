@@ -38,11 +38,11 @@ $$
 
 ## A hiba
 
-| Módszer       | Hiba nagyságrendje | $n$ megduplázása után a hiba |
-| ------------- | ------------------ | ---------------------------- |
-| téglalap      | $h^2$              | kb. negyedére csökken        |
-| trapéz        | $h^2$              | kb. negyedére csökken        |
-| Simpson       | $h^4$              | kb. tizenhatodára csökken    |
+| Módszer  | Hiba nagyságrendje | $n$ megduplázása után a hiba |
+| -------- | ------------------ | ---------------------------- |
+| téglalap | $h^2$              | kb. negyedére csökken        |
+| trapéz   | $h^2$              | kb. negyedére csökken        |
+| Simpson  | $h^4$              | kb. tizenhatodára csökken    |
 
 A Simpson-szabály polinomokra harmadfokig **pontos**.
 

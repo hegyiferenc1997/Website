@@ -14,12 +14,12 @@ minutes: 20
 
 Let $f$ be the basic function (e.g. $x^2$, $\sqrt x$, $\sin x$).
 
-| New function     | Effect on the graph                                                 |
-| ---------------- | ------------------------------------------------------------------- |
-| $f(x) + d$       | **vertical** shift by $d$ (upwards if $d > 0$)                      |
-| $f(x - c)$       | **horizontal** shift by $c$ (to the **right** if $c > 0$!)          |
-| $a \cdot f(x)$   | **vertical stretch** by a factor $a$ ($\lvert a \rvert < 1$: shrink); $a < 0$: reflection in the $x$ axis |
-| $f(b x)$         | **horizontal shrink** to $1/b$ ($\lvert b \rvert > 1$); $b < 0$: reflection in the $y$ axis |
+| New function   | Effect on the graph                                                                                       |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| $f(x) + d$     | **vertical** shift by $d$ (upwards if $d > 0$)                                                            |
+| $f(x - c)$     | **horizontal** shift by $c$ (to the **right** if $c > 0$!)                                                |
+| $a \cdot f(x)$ | **vertical stretch** by a factor $a$ ($\lvert a \rvert < 1$: shrink); $a < 0$: reflection in the $x$ axis |
+| $f(b x)$       | **horizontal shrink** to $1/b$ ($\lvert b \rvert > 1$); $b < 0$: reflection in the $y$ axis               |
 
 The most common mistake: $f(x - 3)$ shifts to the **right**, not to the left. Think about it: $f(x - 3)$ takes the same value $3$ units later (at a larger $x$).
 

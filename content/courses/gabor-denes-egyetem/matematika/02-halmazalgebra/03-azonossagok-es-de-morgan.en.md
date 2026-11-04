@@ -14,15 +14,15 @@ minutes: 20
 
 For all $A, B, C \subseteq U$:
 
-| Name                   | Union                                          | Intersection                                    |
-| ---------------------- | ---------------------------------------------- | ----------------------------------------------- |
-| commutativity          | $A \cup B = B \cup A$                          | $A \cap B = B \cap A$                           |
-| associativity          | $(A \cup B) \cup C = A \cup (B \cup C)$        | $(A \cap B) \cap C = A \cap (B \cap C)$         |
-| distributivity         | $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ | $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ |
-| idempotence            | $A \cup A = A$                                 | $A \cap A = A$                                  |
-| absorption             | $A \cup (A \cap B) = A$                        | $A \cap (A \cup B) = A$                         |
-| identity / domination  | $A \cup \emptyset = A$, $A \cup U = U$         | $A \cap U = A$, $A \cap \emptyset = \emptyset$  |
-| complement             | $A \cup \overline{A} = U$                      | $A \cap \overline{A} = \emptyset$               |
+| Name                  | Union                                            | Intersection                                     |
+| --------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| commutativity         | $A \cup B = B \cup A$                            | $A \cap B = B \cap A$                            |
+| associativity         | $(A \cup B) \cup C = A \cup (B \cup C)$          | $(A \cap B) \cap C = A \cap (B \cap C)$          |
+| distributivity        | $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ | $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ |
+| idempotence           | $A \cup A = A$                                   | $A \cap A = A$                                   |
+| absorption            | $A \cup (A \cap B) = A$                          | $A \cap (A \cup B) = A$                          |
+| identity / domination | $A \cup \emptyset = A$, $A \cup U = U$           | $A \cap U = A$, $A \cap \emptyset = \emptyset$   |
+| complement            | $A \cup \overline{A} = U$                        | $A \cap \overline{A} = \emptyset$                |
 
 Also $\overline{\overline{A}} = A$ and $A \setminus B = A \cap \overline{B}$.
 
@@ -40,10 +40,10 @@ For an element $x$ there are two cases for each set: it is in it ($1$) or not ($
 
 | $x \in A$ | $x \in B$ | $x \in A \cup B$ | $x \in \overline{A \cup B}$ | $x \in \overline{A} \cap \overline{B}$ |
 | :-------: | :-------: | :--------------: | :-------------------------: | :------------------------------------: |
-| 0         | 0         | 0                | 1                           | 1                                      |
-| 0         | 1         | 1                | 0                           | 0                                      |
-| 1         | 0         | 1                | 0                           | 0                                      |
-| 1         | 1         | 1                | 0                           | 0                                      |
+|     0     |     0     |        0         |              1              |                   1                    |
+|     0     |     1     |        1         |              0              |                   0                    |
+|     1     |     0     |        1         |              0              |                   0                    |
+|     1     |     1     |        1         |              0              |                   0                    |
 
 This is exactly a truth table in **logic**: union is "or" ($\lor$), intersection is "and" ($\land$), complement is "not" ($\neg$). Set algebra and propositional logic are two faces of the same structure, **Boolean algebra** – which is also what digital electronics uses.
 

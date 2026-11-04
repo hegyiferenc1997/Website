@@ -24,7 +24,14 @@ export type PlotParam = { name: string; value: number; min: number; max: number;
 export type PlotItem =
   | { kind: "f" | "dash"; expr: string; label: string | null }
   | { kind: "tangent"; expr: string; at: string; label: string | null }
-  | { kind: "area" | "riemann"; expr: string; from: string; to: string; n: string | null; label: string | null }
+  | {
+      kind: "area" | "riemann";
+      expr: string;
+      from: string;
+      to: string;
+      n: string | null;
+      label: string | null;
+    }
   | { kind: "seq"; expr: string; from: number; to: number; label: string | null }
   | { kind: "point"; x: string; y: string; label: string | null }
   | { kind: "value"; label: string; expr: string };
@@ -139,7 +146,11 @@ export function parsePlot(text: string): PlotSpec {
       case "value": {
         const eq = rest.lastIndexOf("=");
         if (eq < 0) throw new Error(`Hiányzó „=”: ${line}`);
-        spec.items.push({ kind: "value", label: rest.slice(0, eq).trim(), expr: rest.slice(eq + 1).trim() });
+        spec.items.push({
+          kind: "value",
+          label: rest.slice(0, eq).trim(),
+          expr: rest.slice(eq + 1).trim(),
+        });
         break;
       }
       default:

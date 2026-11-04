@@ -40,11 +40,11 @@ $$
 
 Intuitively: reflection turns the slope of the tangent into its reciprocal. This gives:
 
-| $f(x)$         | $f'(x)$                        |
-| -------------- | ------------------------------ |
-| $\arcsin x$    | $\dfrac{1}{\sqrt{1 - x^2}}$    |
-| $\arccos x$    | $-\dfrac{1}{\sqrt{1 - x^2}}$   |
-| $\arctan x$    | $\dfrac{1}{1 + x^2}$           |
+| $f(x)$      | $f'(x)$                      |
+| ----------- | ---------------------------- |
+| $\arcsin x$ | $\dfrac{1}{\sqrt{1 - x^2}}$  |
+| $\arccos x$ | $-\dfrac{1}{\sqrt{1 - x^2}}$ |
+| $\arctan x$ | $\dfrac{1}{1 + x^2}$         |
 
 For example $\ln x$ is the inverse of $e^x$: $(\ln x)' = \dfrac{1}{e^{\ln x}} = \dfrac{1}{x}$.
 

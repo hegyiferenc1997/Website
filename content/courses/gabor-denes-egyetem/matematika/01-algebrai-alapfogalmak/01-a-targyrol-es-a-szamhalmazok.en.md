@@ -14,23 +14,23 @@ minutes: 15
 
 Mathematics (B-MATEMA) ends with a **term grade**; there are 2 hours of lectures, 1 hour of seminar and 2 hours of lab per week. Its goal is to give you the mathematical foundations on which programming, databases, algorithms, artificial intelligence and cryptography are built.
 
-| What?                 | Details                                                                     |
-| --------------------- | --------------------------------------------------------------------------- |
-| Week-0 classes        | refresher material (algebra, functions, sets, logic), up to **15 bonus points** |
-| Tests (full-time)     | **3 written tests**, each on the material since the previous one, **100 points** in total |
-| Tests (distance)      | 2 written tests, 100 points in total                                        |
-| Signature             | at least **5 points** in week 0 and at least **25 points** on the tests in total |
-| Retake                | a retake test on the whole material 1–2 weeks after the teaching period     |
+| What?             | Details                                                                                   |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| Week-0 classes    | refresher material (algebra, functions, sets, logic), up to **15 bonus points**           |
+| Tests (full-time) | **3 written tests**, each on the material since the previous one, **100 points** in total |
+| Tests (distance)  | 2 written tests, 100 points in total                                                      |
+| Signature         | at least **5 points** in week 0 and at least **25 points** on the tests in total          |
+| Retake            | a retake test on the whole material 1–2 weeks after the teaching period                   |
 
 The grade comes from the test points plus the bonus points:
 
-| Points  | Grade             |
-| ------- | ----------------- |
-| 0–49    | fail (1)          |
-| 50–62   | pass (2)          |
-| 63–75   | satisfactory (3)  |
-| 76–88   | good (4)          |
-| 89–100  | excellent (5)     |
+| Points | Grade            |
+| ------ | ---------------- |
+| 0–49   | fail (1)         |
+| 50–62  | pass (2)         |
+| 63–75  | satisfactory (3) |
+| 76–88  | good (4)         |
+| 89–100 | excellent (5)    |
 
 This material follows the 10 topics of the course description. The first two topics (and the beginning of functions) are the **week-0 refresher**: go through them carefully, because every later topic builds on them.
 
@@ -61,12 +61,12 @@ print(Fraction(1, 10) + Fraction(2, 10))   # 3/10
 
 For all real numbers $a, b, c$:
 
-| Law                       | Addition                        | Multiplication                        |
-| ------------------------- | ------------------------------- | ------------------------------------- |
-| commutativity             | $a + b = b + a$                 | $ab = ba$                             |
-| associativity             | $(a + b) + c = a + (b + c)$     | $(ab)c = a(bc)$                       |
-| identity element          | $a + 0 = a$                     | $a \cdot 1 = a$                       |
-| opposite / reciprocal     | $a + (-a) = 0$                  | $a \cdot \frac{1}{a} = 1$, if $a \neq 0$ |
+| Law                   | Addition                    | Multiplication                           |
+| --------------------- | --------------------------- | ---------------------------------------- |
+| commutativity         | $a + b = b + a$             | $ab = ba$                                |
+| associativity         | $(a + b) + c = a + (b + c)$ | $(ab)c = a(bc)$                          |
+| identity element      | $a + 0 = a$                 | $a \cdot 1 = a$                          |
+| opposite / reciprocal | $a + (-a) = 0$              | $a \cdot \frac{1}{a} = 1$, if $a \neq 0$ |
 
 The two are linked by **distributivity**: $a(b + c) = ab + ac$. Expanding brackets and factoring out are based on it.
 

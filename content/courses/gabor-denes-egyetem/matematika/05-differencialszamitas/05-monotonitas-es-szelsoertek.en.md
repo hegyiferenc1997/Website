@@ -39,10 +39,10 @@ $f(x) = x^3 - 6x^2 + 9x + 1$.
 2. Stationary points: $x = 1$ and $x = 3$.
 3. Sign chart:
 
-| $x$     | $x < 1$ | $1$     | $1 < x < 3$ | $3$     | $x > 3$ |
-| ------- | ------- | ------- | ----------- | ------- | ------- |
-| $f'(x)$ | $+$     | $0$     | $-$         | $0$     | $+$     |
-| $f(x)$  | increasing | max: $5$ | decreasing | min: $1$ | increasing |
+| $x$     | $x < 1$    | $1$      | $1 < x < 3$ | $3$      | $x > 3$    |
+| ------- | ---------- | -------- | ----------- | -------- | ---------- |
+| $f'(x)$ | $+$        | $0$      | $-$         | $0$      | $+$        |
+| $f(x)$  | increasing | max: $5$ | decreasing  | min: $1$ | increasing |
 
 ```plot
 title: f(x) = x³ − 6x² + 9x + 1 and its tangent

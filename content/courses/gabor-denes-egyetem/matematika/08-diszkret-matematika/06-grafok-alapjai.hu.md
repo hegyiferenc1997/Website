@@ -57,12 +57,12 @@ Ezért „rajzolható meg egy vonallal” a házikó (a ház alakú ábra): pont
 
 A **szomszédsági mátrix** $A$-jában $a_{ij} = 1$, ha $i$ és $j$ szomszédos, különben $0$. Irányítatlan gráfnál a mátrix szimmetrikus, és az $1$-esek száma $2\lvert E \rvert$. Ritka gráfoknál (kevés él) a **szomszédsági lista** takarékosabb.
 
-| | A | B | C | D |
-| --- | --- | --- | --- | --- |
-| **A** | 0 | 1 | 1 | 0 |
-| **B** | 1 | 0 | 1 | 1 |
-| **C** | 1 | 1 | 0 | 0 |
-| **D** | 0 | 1 | 0 | 0 |
+|       | A   | B   | C   | D   |
+| ----- | --- | --- | --- | --- |
+| **A** | 0   | 1   | 1   | 0   |
+| **B** | 1   | 0   | 1   | 1   |
+| **C** | 1   | 1   | 0   | 0   |
+| **D** | 0   | 1   | 0   | 0   |
 
 A **szélességi keresés** (BFS) egy kezdőcsúcsból rétegenként halad, és súlyozatlan gráfban megadja a legrövidebb utakat.
 

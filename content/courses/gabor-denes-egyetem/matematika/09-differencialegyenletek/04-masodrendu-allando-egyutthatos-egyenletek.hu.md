@@ -21,11 +21,11 @@ $$
 
 A gyököktől függően az általános megoldás:
 
-| Gyökök | Általános megoldás | Viselkedés |
-| --- | --- | --- |
-| két különböző valós: $\lambda_1 \neq \lambda_2$ | $C_1 e^{\lambda_1 x} + C_2 e^{\lambda_2 x}$ | exponenciális |
-| kettős valós: $\lambda$ | $(C_1 + C_2 x)\,e^{\lambda x}$ | exponenciális (határeset) |
-| komplex: $\alpha \pm \beta i$ | $e^{\alpha x}\big(C_1\cos(\beta x) + C_2\sin(\beta x)\big)$ | rezgés |
+| Gyökök                                          | Általános megoldás                                          | Viselkedés                |
+| ----------------------------------------------- | ----------------------------------------------------------- | ------------------------- |
+| két különböző valós: $\lambda_1 \neq \lambda_2$ | $C_1 e^{\lambda_1 x} + C_2 e^{\lambda_2 x}$                 | exponenciális             |
+| kettős valós: $\lambda$                         | $(C_1 + C_2 x)\,e^{\lambda x}$                              | exponenciális (határeset) |
+| komplex: $\alpha \pm \beta i$                   | $e^{\alpha x}\big(C_1\cos(\beta x) + C_2\sin(\beta x)\big)$ | rezgés                    |
 
 A két állandót két kezdeti feltétel ($y(0)$ és $y'(0)$) határozza meg.
 

@@ -54,12 +54,12 @@ $$
 
 ## Which one to choose?
 
-| If the integrand is…                            | Method                          |
-| ----------------------------------------------- | ------------------------------- |
-| a basic integral or $f(ax + b)$                 | table                           |
-| of the form $\frac{f'}{f}$ or $f' f^n$          | ready-made formula              |
-| an expression together with its derivative      | substitution                    |
-| polynomial · ($e^x$, $\sin x$, $\cos x$), or $\ln x$ | integration by parts       |
+| If the integrand is…                                 | Method               |
+| ---------------------------------------------------- | -------------------- |
+| a basic integral or $f(ax + b)$                      | table                |
+| of the form $\frac{f'}{f}$ or $f' f^n$               | ready-made formula   |
+| an expression together with its derivative           | substitution         |
+| polynomial · ($e^x$, $\sin x$, $\cos x$), or $\ln x$ | integration by parts |
 
 ## Summary
 

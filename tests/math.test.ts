@@ -134,7 +134,8 @@ describe("a tananyag képletei és ábrái", () => {
     for (const l of lessons)
       for (const m of l.body.matchAll(re))
         for (const q of parseQuiz(m[1]).questions)
-          if (q.kind === "fn" && checkFn(q, q.expr) !== "ok") problems.push(`${l.where}: ${q.expr}`);
+          if (q.kind === "fn" && checkFn(q, q.expr) !== "ok")
+            problems.push(`${l.where}: ${q.expr}`);
     expect(problems).toEqual([]);
   });
 

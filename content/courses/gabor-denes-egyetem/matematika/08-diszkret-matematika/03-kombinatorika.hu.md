@@ -17,10 +17,10 @@ minutes: 30
 
 A kombinatorika „ága” két kérdésen múlik: **számít-e a sorrend**, és **ismétlődhet-e** egy elem.
 
-| | Sorrend számít | Sorrend nem számít |
-| --- | --- | --- |
+|                     | Sorrend számít                   | Sorrend nem számít                                     |
+| ------------------- | -------------------------------- | ------------------------------------------------------ |
 | **ismétlés nélkül** | variáció: $\dfrac{n!}{(n - k)!}$ | kombináció: $\dbinom{n}{k} = \dfrac{n!}{k!\,(n - k)!}$ |
-| **ismétléssel** | ismétléses variáció: $n^k$ | ismétléses kombináció: $\dbinom{n + k - 1}{k}$ |
+| **ismétléssel**     | ismétléses variáció: $n^k$       | ismétléses kombináció: $\dbinom{n + k - 1}{k}$         |
 
 Itt $n$ a választható elemek száma, $k$ a kiválasztottaké. Az $n! = 1 \cdot 2 \cdots n$ („$n$ faktoriális”), és $0! = 1$.
 

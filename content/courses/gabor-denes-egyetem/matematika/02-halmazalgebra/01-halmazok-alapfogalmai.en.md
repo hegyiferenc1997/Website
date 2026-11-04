@@ -51,12 +51,12 @@ If $\lvert A \rvert = n$, then $\lvert \mathcal{P}(A) \rvert = 2^n$, because for
 
 The "connected" subsets of the reals ($a < b$):
 
-| Notation                   | Meaning             | Endpoints          |
-| -------------------------- | ------------------- | ------------------ |
-| $[a; b]$                   | $a \leq x \leq b$   | closed             |
-| $\left]a; b\right[$        | $a < x < b$         | open               |
-| $[a; b[$                  | $a \leq x < b$      | closed on the left |
-| $\left]-\infty; b\right]$  | $x \leq b$          | infinite           |
+| Notation                  | Meaning           | Endpoints          |
+| ------------------------- | ----------------- | ------------------ |
+| $[a; b]$                  | $a \leq x \leq b$ | closed             |
+| $\left]a; b\right[$       | $a < x < b$       | open               |
+| $[a; b[$                  | $a \leq x < b$    | closed on the left |
+| $\left]-\infty; b\right]$ | $x \leq b$        | infinite           |
 
 (Many books write the open interval as $(a; b)$.) $\infty$ is not a number, so the bracket is always open there.
 

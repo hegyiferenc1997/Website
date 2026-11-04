@@ -47,14 +47,14 @@ Ha $a_n \leq b_n \leq c_n$, és $a_n \to A$, $c_n \to A$, akkor $b_n \to A$ is. 
 
 ## Nevezetes határértékek
 
-| Sorozat                              | Határérték                 |
-| ------------------------------------ | -------------------------- |
-| $q^n$                                | $0$, ha $\lvert q \rvert < 1$; $1$, ha $q = 1$; $+\infty$, ha $q > 1$ |
-| $\sqrt[n]{a}$ ($a > 0$)              | $1$                        |
-| $\sqrt[n]{n}$                        | $1$                        |
-| $\dfrac{n^k}{a^n}$ ($a > 1$)         | $0$ (az exponenciális „győz”) |
-| $\left(1 + \dfrac{1}{n}\right)^n$    | $e \approx 2{,}71828$      |
-| $\left(1 + \dfrac{x}{n}\right)^n$    | $e^x$                      |
+| Sorozat                           | Határérték                                                            |
+| --------------------------------- | --------------------------------------------------------------------- |
+| $q^n$                             | $0$, ha $\lvert q \rvert < 1$; $1$, ha $q = 1$; $+\infty$, ha $q > 1$ |
+| $\sqrt[n]{a}$ ($a > 0$)           | $1$                                                                   |
+| $\sqrt[n]{n}$                     | $1$                                                                   |
+| $\dfrac{n^k}{a^n}$ ($a > 1$)      | $0$ (az exponenciális „győz”)                                         |
+| $\left(1 + \dfrac{1}{n}\right)^n$ | $e \approx 2{,}71828$                                                 |
+| $\left(1 + \dfrac{x}{n}\right)^n$ | $e^x$                                                                 |
 
 Az **$e$ szám** a kamatos kamatból is adódik: ha évi $100\%$ kamatot $n$ részletben írnak jóvá, $1$ Ft-ból egy év alatt $\left(1 + \frac{1}{n}\right)^n$ Ft lesz – és ez $n \to \infty$ esetén sem nő akármeddig, hanem $e$-hez tart.
 

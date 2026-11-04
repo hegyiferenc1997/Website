@@ -12,17 +12,17 @@ minutes: 25
 
 ## Table of derivatives
 
-| $f(x)$              | $f'(x)$                     |
-| ------------------- | --------------------------- |
-| $c$ (constant)      | $0$                         |
-| $x^n$ ($n$ real)    | $n x^{n-1}$                 |
-| $e^x$               | $e^x$                       |
-| $a^x$               | $a^x \ln a$                 |
-| $\ln x$             | $\dfrac{1}{x}$              |
-| $\log_a x$          | $\dfrac{1}{x \ln a}$        |
-| $\sin x$            | $\cos x$                    |
-| $\cos x$            | $-\sin x$                   |
-| $\tan x$            | $\dfrac{1}{\cos^2 x}$       |
+| $f(x)$           | $f'(x)$               |
+| ---------------- | --------------------- |
+| $c$ (constant)   | $0$                   |
+| $x^n$ ($n$ real) | $n x^{n-1}$           |
+| $e^x$            | $e^x$                 |
+| $a^x$            | $a^x \ln a$           |
+| $\ln x$          | $\dfrac{1}{x}$        |
+| $\log_a x$       | $\dfrac{1}{x \ln a}$  |
+| $\sin x$         | $\cos x$              |
+| $\cos x$         | $-\sin x$             |
+| $\tan x$         | $\dfrac{1}{\cos^2 x}$ |
 
 The power rule works for roots and fractions too: $(\sqrt x)' = \left(x^{1/2}\right)' = \dfrac{1}{2\sqrt x}$, $\left(\dfrac{1}{x^2}\right)' = (x^{-2})' = -\dfrac{2}{x^3}$.
 

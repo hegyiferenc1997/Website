@@ -75,10 +75,10 @@ Az $\frac{a_0}{2}$ tag a függvény **átlaga** egy perióduson.
 
 **Szimmetria spórol munkát:**
 
-| Ha $f$…                         | akkor                                              | a sor                    |
-| ------------------------------- | -------------------------------------------------- | ------------------------ |
-| **páros** ($f(-x) = f(x)$)      | $b_k = 0$, $a_k = \frac{2}{\pi}\int_0^\pi f(x)\cos(kx)\,dx$ | csak koszinuszos (koszinuszsor) |
-| **páratlan** ($f(-x) = -f(x)$)  | $a_k = 0$, $b_k = \frac{2}{\pi}\int_0^\pi f(x)\sin(kx)\,dx$ | csak szinuszos (szinuszsor) |
+| Ha $f$…                        | akkor                                                       | a sor                           |
+| ------------------------------ | ----------------------------------------------------------- | ------------------------------- |
+| **páros** ($f(-x) = f(x)$)     | $b_k = 0$, $a_k = \frac{2}{\pi}\int_0^\pi f(x)\cos(kx)\,dx$ | csak koszinuszos (koszinuszsor) |
+| **páratlan** ($f(-x) = -f(x)$) | $a_k = 0$, $b_k = \frac{2}{\pi}\int_0^\pi f(x)\sin(kx)\,dx$ | csak szinuszos (szinuszsor)     |
 
 **Példa.** Ha $f(x) = 3 + 2\sin x - \cos(4x)$, akkor ez már maga a Fourier-sor: $\frac{a_0}{2} = 3$, tehát $a_0 = 6$; $b_1 = 2$; $a_4 = -1$, és minden más együttható $0$.
 

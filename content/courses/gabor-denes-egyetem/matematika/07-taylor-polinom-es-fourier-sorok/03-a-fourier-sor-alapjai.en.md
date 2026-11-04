@@ -75,10 +75,10 @@ The term $\frac{a_0}{2}$ is the **average** of the function over one period.
 
 **Symmetry saves work:**
 
-| If $f$ is…                     | then                                               | the series               |
-| ------------------------------ | -------------------------------------------------- | ------------------------ |
-| **even** ($f(-x) = f(x)$)      | $b_k = 0$, $a_k = \frac{2}{\pi}\int_0^\pi f(x)\cos(kx)\,dx$ | cosines only (cosine series) |
-| **odd** ($f(-x) = -f(x)$)      | $a_k = 0$, $b_k = \frac{2}{\pi}\int_0^\pi f(x)\sin(kx)\,dx$ | sines only (sine series) |
+| If $f$ is…                | then                                                        | the series                   |
+| ------------------------- | ----------------------------------------------------------- | ---------------------------- |
+| **even** ($f(-x) = f(x)$) | $b_k = 0$, $a_k = \frac{2}{\pi}\int_0^\pi f(x)\cos(kx)\,dx$ | cosines only (cosine series) |
+| **odd** ($f(-x) = -f(x)$) | $a_k = 0$, $b_k = \frac{2}{\pi}\int_0^\pi f(x)\sin(kx)\,dx$ | sines only (sine series)     |
 
 **Example.** If $f(x) = 3 + 2\sin x - \cos(4x)$, this is already its own Fourier series: $\frac{a_0}{2} = 3$, so $a_0 = 6$; $b_1 = 2$; $a_4 = -1$, and every other coefficient is $0$.
 

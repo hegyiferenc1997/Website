@@ -29,17 +29,17 @@ Az $f(x)$ az **integrandus**, a $dx$ jelzi az integrálási változót, $C$ az *
 
 ## Alapintegrálok
 
-| $f(x)$                     | $\int f(x)\,dx$                  |
-| -------------------------- | -------------------------------- |
-| $x^n$ ($n \neq -1$)        | $\dfrac{x^{n+1}}{n + 1} + C$     |
-| $\dfrac{1}{x}$             | $\ln \lvert x \rvert + C$        |
-| $e^x$                      | $e^x + C$                        |
-| $a^x$                      | $\dfrac{a^x}{\ln a} + C$         |
-| $\sin x$                   | $-\cos x + C$                    |
-| $\cos x$                   | $\sin x + C$                     |
-| $\dfrac{1}{\cos^2 x}$      | $\tan x + C$                     |
-| $\dfrac{1}{1 + x^2}$       | $\arctan x + C$                  |
-| $\dfrac{1}{\sqrt{1 - x^2}}$ | $\arcsin x + C$                 |
+| $f(x)$                      | $\int f(x)\,dx$              |
+| --------------------------- | ---------------------------- |
+| $x^n$ ($n \neq -1$)         | $\dfrac{x^{n+1}}{n + 1} + C$ |
+| $\dfrac{1}{x}$              | $\ln \lvert x \rvert + C$    |
+| $e^x$                       | $e^x + C$                    |
+| $a^x$                       | $\dfrac{a^x}{\ln a} + C$     |
+| $\sin x$                    | $-\cos x + C$                |
+| $\cos x$                    | $\sin x + C$                 |
+| $\dfrac{1}{\cos^2 x}$       | $\tan x + C$                 |
+| $\dfrac{1}{1 + x^2}$        | $\arctan x + C$              |
+| $\dfrac{1}{\sqrt{1 - x^2}}$ | $\arcsin x + C$              |
 
 Minden sort ellenőrizhetsz deriválással! Például $\left(\ln\lvert x \rvert\right)' = \frac{1}{x}$ mind $x > 0$-ra, mind $x < 0$-ra.
 

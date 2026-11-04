@@ -49,11 +49,11 @@ $g(x) = \log_a x$ is the **inverse** of the exponential: $D_g = ]0; \infty[$, $R
 
 Angles are measured in **radians**: $180^\circ = \pi$, $\ 90^\circ = \frac{\pi}{2}$. The point of the unit circle at angle $\alpha$ is $(\cos\alpha; \sin\alpha)$.
 
-| Function    | $D_f$                                 | $R_f$         | Period   | Parity   |
-| ----------- | ------------------------------------- | ------------- | -------- | -------- |
-| $\sin x$    | $\mathbb{R}$                          | $[-1; 1]$     | $2\pi$   | odd      |
-| $\cos x$    | $\mathbb{R}$                          | $[-1; 1]$     | $2\pi$   | even     |
-| $\tan x$    | $x \neq \frac{\pi}{2} + k\pi$         | $\mathbb{R}$  | $\pi$    | odd      |
+| Function | $D_f$                         | $R_f$        | Period | Parity |
+| -------- | ----------------------------- | ------------ | ------ | ------ |
+| $\sin x$ | $\mathbb{R}$                  | $[-1; 1]$    | $2\pi$ | odd    |
+| $\cos x$ | $\mathbb{R}$                  | $[-1; 1]$    | $2\pi$ | even   |
+| $\tan x$ | $x \neq \frac{\pi}{2} + k\pi$ | $\mathbb{R}$ | $\pi$  | odd    |
 
 Special values: $\sin 0 = 0$, $\sin\frac{\pi}{6} = \frac{1}{2}$, $\sin\frac{\pi}{2} = 1$, $\cos 0 = 1$, $\cos\frac{\pi}{3} = \frac{1}{2}$, $\cos\pi = -1$. Basic identity: $\sin^2 x + \cos^2 x = 1$.
 

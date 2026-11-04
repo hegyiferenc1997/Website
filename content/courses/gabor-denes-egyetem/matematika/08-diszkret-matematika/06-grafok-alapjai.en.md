@@ -57,12 +57,12 @@ That is why the "house" figure can be drawn in one stroke: it has exactly two od
 
 In the **adjacency matrix** $A$, $a_{ij} = 1$ if $i$ and $j$ are adjacent, and $0$ otherwise. For an undirected graph the matrix is symmetric and the number of $1$s is $2\lvert E \rvert$. For sparse graphs (few edges) an **adjacency list** saves space.
 
-| | A | B | C | D |
-| --- | --- | --- | --- | --- |
-| **A** | 0 | 1 | 1 | 0 |
-| **B** | 1 | 0 | 1 | 1 |
-| **C** | 1 | 1 | 0 | 0 |
-| **D** | 0 | 1 | 0 | 0 |
+|       | A   | B   | C   | D   |
+| ----- | --- | --- | --- | --- |
+| **A** | 0   | 1   | 1   | 0   |
+| **B** | 1   | 0   | 1   | 1   |
+| **C** | 1   | 1   | 0   | 0   |
+| **D** | 0   | 1   | 0   | 0   |
 
 **Breadth-first search** (BFS) proceeds layer by layer from a start vertex and gives the shortest paths in an unweighted graph.
 

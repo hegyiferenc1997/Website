@@ -14,13 +14,13 @@ minutes: 20
 
 Let $U$ be the **universal set**, $A, B \subseteq U$.
 
-| Operation               | Notation         | Definition                                  | Python      |
-| ----------------------- | ---------------- | ------------------------------------------- | ----------- |
-| union                   | $A \cup B$       | $\{x : x \in A \text{ or } x \in B\}$       | `A \| B`    |
-| intersection            | $A \cap B$       | $\{x : x \in A \text{ and } x \in B\}$      | `A & B`     |
-| difference              | $A \setminus B$  | $\{x : x \in A \text{ and } x \notin B\}$   | `A - B`     |
-| complement              | $\overline{A}$   | $\{x \in U : x \notin A\}$                  | `U - A`     |
-| symmetric difference    | $A \triangle B$  | $(A \setminus B) \cup (B \setminus A)$      | `A ^ B`     |
+| Operation            | Notation        | Definition                                | Python   |
+| -------------------- | --------------- | ----------------------------------------- | -------- |
+| union                | $A \cup B$      | $\{x : x \in A \text{ or } x \in B\}$     | `A \| B` |
+| intersection         | $A \cap B$      | $\{x : x \in A \text{ and } x \in B\}$    | `A & B`  |
+| difference           | $A \setminus B$ | $\{x : x \in A \text{ and } x \notin B\}$ | `A - B`  |
+| complement           | $\overline{A}$  | $\{x \in U : x \notin A\}$                | `U - A`  |
+| symmetric difference | $A \triangle B$ | $(A \setminus B) \cup (B \setminus A)$    | `A ^ B`  |
 
 "Or" here is **inclusive**: elements in both sets are in the union too. If $A \cap B = \emptyset$, the two sets are **disjoint** (no common element).
 

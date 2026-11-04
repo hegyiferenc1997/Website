@@ -40,11 +40,11 @@ $$
 
 Szemléletesen: tükrözéskor az érintő meredeksége a reciprokára változik. Így kapjuk:
 
-| $f(x)$         | $f'(x)$                        |
-| -------------- | ------------------------------ |
-| $\arcsin x$    | $\dfrac{1}{\sqrt{1 - x^2}}$    |
-| $\arccos x$    | $-\dfrac{1}{\sqrt{1 - x^2}}$   |
-| $\arctan x$    | $\dfrac{1}{1 + x^2}$           |
+| $f(x)$      | $f'(x)$                      |
+| ----------- | ---------------------------- |
+| $\arcsin x$ | $\dfrac{1}{\sqrt{1 - x^2}}$  |
+| $\arccos x$ | $-\dfrac{1}{\sqrt{1 - x^2}}$ |
+| $\arctan x$ | $\dfrac{1}{1 + x^2}$         |
 
 Például $\ln x$ az $e^x$ inverze: $(\ln x)' = \dfrac{1}{e^{\ln x}} = \dfrac{1}{x}$.
 

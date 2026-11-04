@@ -340,7 +340,12 @@ function LessonBody({
  */
 function MathAssets() {
   const base = `/katex/${KATEX_VERSION}`;
-  const fonts = ["KaTeX_Main-Regular", "KaTeX_Math-Italic", "KaTeX_Size1-Regular", "KaTeX_Size2-Regular"];
+  const fonts = [
+    "KaTeX_Main-Regular",
+    "KaTeX_Math-Italic",
+    "KaTeX_Size1-Regular",
+    "KaTeX_Size2-Regular",
+  ];
   return (
     <>
       {fonts.map((f) => (

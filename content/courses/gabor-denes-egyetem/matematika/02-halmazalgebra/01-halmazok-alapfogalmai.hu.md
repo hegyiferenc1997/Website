@@ -51,12 +51,12 @@ Ha $\lvert A \rvert = n$, akkor $\lvert \mathcal{P}(A) \rvert = 2^n$, mert minde
 
 A valós számok „összefüggő” részhalmazai ($a < b$):
 
-| Jelölés                    | Jelentés            | Végpontok          |
-| -------------------------- | ------------------- | ------------------ |
-| $[a; b]$                   | $a \leq x \leq b$   | zárt               |
-| $\left]a; b\right[$        | $a < x < b$         | nyílt              |
-| $[a; b[$                  | $a \leq x < b$      | balról zárt        |
-| $\left]-\infty; b\right]$  | $x \leq b$          | végtelen           |
+| Jelölés                   | Jelentés          | Végpontok   |
+| ------------------------- | ----------------- | ----------- |
+| $[a; b]$                  | $a \leq x \leq b$ | zárt        |
+| $\left]a; b\right[$       | $a < x < b$       | nyílt       |
+| $[a; b[$                  | $a \leq x < b$    | balról zárt |
+| $\left]-\infty; b\right]$ | $x \leq b$        | végtelen    |
 
 (Más könyvekben a nyílt intervallum jele $(a; b)$.) A $\infty$ nem szám, ezért ott mindig nyílt a zárójel.
 

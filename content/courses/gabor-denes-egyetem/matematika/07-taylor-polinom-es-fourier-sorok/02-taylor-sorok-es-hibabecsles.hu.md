@@ -15,13 +15,13 @@ minutes: 25
 
 Ha a fokszámmal a végtelenig megyünk, a **Taylor-sort** kapjuk: $\sum_{k=0}^{\infty} \frac{f^{(k)}(a)}{k!}(x - a)^k$. Ez egy **hatványsor**, amely egy **konvergenciatartományon** belül egyenlő a függvénnyel.
 
-| Függvény           | Taylor-sor a $0$ körül                                            | Érvényes          |
-| ------------------ | ----------------------------------------------------------------- | ----------------- |
-| $e^x$              | $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$                 | minden $x$-re     |
-| $\sin x$           | $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots$                     | minden $x$-re     |
-| $\cos x$           | $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots$                     | minden $x$-re     |
-| $\frac{1}{1 - x}$  | $1 + x + x^2 + x^3 + \dots$ (mértani sor)                         | $\lvert x \rvert < 1$ |
-| $\ln(1 + x)$       | $x - \frac{x^2}{2} + \frac{x^3}{3} - \dots$                       | $-1 < x \leq 1$   |
+| Függvény          | Taylor-sor a $0$ körül                            | Érvényes              |
+| ----------------- | ------------------------------------------------- | --------------------- |
+| $e^x$             | $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots$ | minden $x$-re         |
+| $\sin x$          | $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots$     | minden $x$-re         |
+| $\cos x$          | $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots$     | minden $x$-re         |
+| $\frac{1}{1 - x}$ | $1 + x + x^2 + x^3 + \dots$ (mértani sor)         | $\lvert x \rvert < 1$ |
+| $\ln(1 + x)$      | $x - \frac{x^2}{2} + \frac{x^3}{3} - \dots$       | $-1 < x \leq 1$       |
 
 Szép következmény: $x = 1$-et írva az $\ln(1 + x)$ sorába $\ln 2 = 1 - \frac{1}{2} + \frac{1}{3} - \dots$ (a váltakozó harmonikus sor), és az $e^{ix}$ sorából az **Euler-formula**: $e^{ix} = \cos x + i \sin x$.
 

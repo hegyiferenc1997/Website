@@ -38,11 +38,11 @@ $$
 
 ## The error
 
-| Method        | Order of the error | Error after doubling $n$     |
-| ------------- | ------------------ | ---------------------------- |
-| midpoint      | $h^2$              | about a quarter              |
-| trapezoidal   | $h^2$              | about a quarter              |
-| Simpson       | $h^4$              | about a sixteenth            |
+| Method      | Order of the error | Error after doubling $n$ |
+| ----------- | ------------------ | ------------------------ |
+| midpoint    | $h^2$              | about a quarter          |
+| trapezoidal | $h^2$              | about a quarter          |
+| Simpson     | $h^4$              | about a sixteenth        |
 
 Simpson's rule is **exact** for polynomials up to degree three.
 

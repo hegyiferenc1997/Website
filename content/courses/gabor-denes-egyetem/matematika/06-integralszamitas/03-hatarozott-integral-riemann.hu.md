@@ -39,7 +39,7 @@ $$
 \int_a^b f(x)\,dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(\xi_i)\,\Delta x.
 $$
 
-Minden **folytonos** (sőt minden korlátos, véges sok szakadású) függvény integrálható. Az integrál jel egy megnyújtott S betű (*summa*), a $dx$ a $\Delta x$ „végtelenül kicsi” változata.
+Minden **folytonos** (sőt minden korlátos, véges sok szakadású) függvény integrálható. Az integrál jel egy megnyújtott S betű (_summa_), a $dx$ a $\Delta x$ „végtelenül kicsi” változata.
 
 ## Előjeles terület
 

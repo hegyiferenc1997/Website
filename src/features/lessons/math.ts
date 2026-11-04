@@ -51,9 +51,16 @@ export const mathExtension: MarkedExtension = {
       },
       tokenizer(src) {
         const m = /^\$\$([^$]+?)\$\$/.exec(src) ?? INLINE.exec(src);
-        if (m) return { type: "mathInline", raw: m[0], text: m[1].trim(), display: src.startsWith("$$") };
+        if (m)
+          return {
+            type: "mathInline",
+            raw: m[0],
+            text: m[1].trim(),
+            display: src.startsWith("$$"),
+          };
       },
-      renderer: (token) => renderTex((token as Tokens.Generic).text, (token as Tokens.Generic).display),
+      renderer: (token) =>
+        renderTex((token as Tokens.Generic).text, (token as Tokens.Generic).display),
     },
   ],
 };

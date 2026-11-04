@@ -21,11 +21,11 @@ $$
 
 Depending on the roots, the general solution is:
 
-| Roots | General solution | Behaviour |
-| --- | --- | --- |
-| two distinct real: $\lambda_1 \neq \lambda_2$ | $C_1 e^{\lambda_1 x} + C_2 e^{\lambda_2 x}$ | exponential |
-| double real: $\lambda$ | $(C_1 + C_2 x)\,e^{\lambda x}$ | exponential (borderline case) |
-| complex: $\alpha \pm \beta i$ | $e^{\alpha x}\big(C_1\cos(\beta x) + C_2\sin(\beta x)\big)$ | oscillation |
+| Roots                                         | General solution                                            | Behaviour                     |
+| --------------------------------------------- | ----------------------------------------------------------- | ----------------------------- |
+| two distinct real: $\lambda_1 \neq \lambda_2$ | $C_1 e^{\lambda_1 x} + C_2 e^{\lambda_2 x}$                 | exponential                   |
+| double real: $\lambda$                        | $(C_1 + C_2 x)\,e^{\lambda x}$                              | exponential (borderline case) |
+| complex: $\alpha \pm \beta i$                 | $e^{\alpha x}\big(C_1\cos(\beta x) + C_2\sin(\beta x)\big)$ | oscillation                   |
 
 The two constants are determined by two initial conditions ($y(0)$ and $y'(0)$).
 

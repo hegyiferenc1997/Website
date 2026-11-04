@@ -14,13 +14,13 @@ minutes: 20
 
 Legyen $U$ az **alaphalmaz** (univerzum), $A, B \subseteq U$.
 
-| Művelet                 | Jelölés          | Definíció                                   | Python      |
-| ----------------------- | ---------------- | ------------------------------------------- | ----------- |
-| unió (egyesítés)        | $A \cup B$       | $\{x : x \in A \text{ vagy } x \in B\}$     | `A \| B`    |
-| metszet (közös rész)    | $A \cap B$       | $\{x : x \in A \text{ és } x \in B\}$       | `A & B`     |
-| különbség               | $A \setminus B$  | $\{x : x \in A \text{ és } x \notin B\}$    | `A - B`     |
-| komplementer            | $\overline{A}$   | $\{x \in U : x \notin A\}$                  | `U - A`     |
-| szimmetrikus differencia| $A \triangle B$  | $(A \setminus B) \cup (B \setminus A)$      | `A ^ B`     |
+| Művelet                  | Jelölés         | Definíció                                | Python   |
+| ------------------------ | --------------- | ---------------------------------------- | -------- |
+| unió (egyesítés)         | $A \cup B$      | $\{x : x \in A \text{ vagy } x \in B\}$  | `A \| B` |
+| metszet (közös rész)     | $A \cap B$      | $\{x : x \in A \text{ és } x \in B\}$    | `A & B`  |
+| különbség                | $A \setminus B$ | $\{x : x \in A \text{ és } x \notin B\}$ | `A - B`  |
+| komplementer             | $\overline{A}$  | $\{x \in U : x \notin A\}$               | `U - A`  |
+| szimmetrikus differencia | $A \triangle B$ | $(A \setminus B) \cup (B \setminus A)$   | `A ^ B`  |
 
 A „vagy” itt **megengedő** vagy: a mindkettőben lévő elemek is az unióban vannak. Ha $A \cap B = \emptyset$, a két halmaz **diszjunkt** (nincs közös elemük).
 

@@ -54,12 +54,12 @@ $$
 
 ## Melyiket válasszam?
 
-| Ha az integrandus…                              | Módszer                         |
-| ----------------------------------------------- | ------------------------------- |
-| alapintegrál vagy $f(ax + b)$                    | táblázat                        |
-| $\frac{f'}{f}$ vagy $f' f^n$ alakú              | kész képlet                     |
-| kifejezés és a deriváltja is benne van          | helyettesítés                   |
-| polinom · ($e^x$, $\sin x$, $\cos x$), vagy $\ln x$ | parciális integrálás        |
+| Ha az integrandus…                                  | Módszer              |
+| --------------------------------------------------- | -------------------- |
+| alapintegrál vagy $f(ax + b)$                       | táblázat             |
+| $\frac{f'}{f}$ vagy $f' f^n$ alakú                  | kész képlet          |
+| kifejezés és a deriváltja is benne van              | helyettesítés        |
+| polinom · ($e^x$, $\sin x$, $\cos x$), vagy $\ln x$ | parciális integrálás |
 
 ## Összefoglalás
 

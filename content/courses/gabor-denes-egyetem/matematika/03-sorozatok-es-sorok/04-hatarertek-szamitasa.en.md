@@ -47,14 +47,14 @@ If $a_n \leq b_n \leq c_n$ and $a_n \to A$, $c_n \to A$, then $b_n \to A$ as wel
 
 ## Important limits
 
-| Sequence                             | Limit                      |
-| ------------------------------------ | -------------------------- |
-| $q^n$                                | $0$ if $\lvert q \rvert < 1$; $1$ if $q = 1$; $+\infty$ if $q > 1$ |
-| $\sqrt[n]{a}$ ($a > 0$)              | $1$                        |
-| $\sqrt[n]{n}$                        | $1$                        |
-| $\dfrac{n^k}{a^n}$ ($a > 1$)         | $0$ (the exponential "wins") |
-| $\left(1 + \dfrac{1}{n}\right)^n$    | $e \approx 2.71828$        |
-| $\left(1 + \dfrac{x}{n}\right)^n$    | $e^x$                      |
+| Sequence                          | Limit                                                              |
+| --------------------------------- | ------------------------------------------------------------------ |
+| $q^n$                             | $0$ if $\lvert q \rvert < 1$; $1$ if $q = 1$; $+\infty$ if $q > 1$ |
+| $\sqrt[n]{a}$ ($a > 0$)           | $1$                                                                |
+| $\sqrt[n]{n}$                     | $1$                                                                |
+| $\dfrac{n^k}{a^n}$ ($a > 1$)      | $0$ (the exponential "wins")                                       |
+| $\left(1 + \dfrac{1}{n}\right)^n$ | $e \approx 2.71828$                                                |
+| $\left(1 + \dfrac{x}{n}\right)^n$ | $e^x$                                                              |
 
 The **number $e$** also comes from compound interest: if $100\%$ annual interest is credited in $n$ instalments, $1$ HUF grows to $\left(1 + \frac{1}{n}\right)^n$ HUF in a year – and even as $n \to \infty$ this does not grow without bound but tends to $e$.
 

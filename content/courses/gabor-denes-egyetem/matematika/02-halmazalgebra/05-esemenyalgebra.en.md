@@ -22,12 +22,12 @@ An **event** is a subset of $\Omega$: $A$ = "we roll an even number" $= \{2, 4, 
 
 ## Operations on events
 
-| Event                          | Notation                  | Set operation   |
-| ------------------------------ | ------------------------- | --------------- |
-| $A$ **or** $B$ (sum)           | $A + B$ or $A \cup B$     | union           |
-| $A$ **and** $B$ (product)      | $AB$ or $A \cap B$        | intersection    |
-| $A$ but **not** $B$            | $A - B$                   | difference      |
-| **not** $A$ (complement)       | $\overline{A}$            | complement      |
+| Event                     | Notation              | Set operation |
+| ------------------------- | --------------------- | ------------- |
+| $A$ **or** $B$ (sum)      | $A + B$ or $A \cup B$ | union         |
+| $A$ **and** $B$ (product) | $AB$ or $A \cap B$    | intersection  |
+| $A$ but **not** $B$       | $A - B$               | difference    |
+| **not** $A$ (complement)  | $\overline{A}$        | complement    |
 
 $A$ and $B$ are **mutually exclusive** if $AB = \emptyset$ (they cannot occur together). Events $A_1, \dots, A_n$ form a **partition** (complete system of events) if they are pairwise mutually exclusive and their sum is $\Omega$ – exactly one of them always occurs.
 

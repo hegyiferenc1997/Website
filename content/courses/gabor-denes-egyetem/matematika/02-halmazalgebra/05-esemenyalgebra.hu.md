@@ -22,12 +22,12 @@ Az **esemény** az $\Omega$ egy részhalmaza: $A$ = „párosat dobunk” $= \{2
 
 ## Műveletek eseményekkel
 
-| Esemény                        | Jelölés                   | Halmazművelet   |
-| ------------------------------ | ------------------------- | --------------- |
-| $A$ **vagy** $B$ (összeg)      | $A + B$ vagy $A \cup B$   | unió            |
-| $A$ **és** $B$ (szorzat)       | $AB$ vagy $A \cap B$      | metszet         |
-| $A$, de **nem** $B$            | $A - B$                   | különbség       |
-| **nem** $A$ (ellentett)        | $\overline{A}$            | komplementer    |
+| Esemény                   | Jelölés                 | Halmazművelet |
+| ------------------------- | ----------------------- | ------------- |
+| $A$ **vagy** $B$ (összeg) | $A + B$ vagy $A \cup B$ | unió          |
+| $A$ **és** $B$ (szorzat)  | $AB$ vagy $A \cap B$    | metszet       |
+| $A$, de **nem** $B$       | $A - B$                 | különbség     |
+| **nem** $A$ (ellentett)   | $\overline{A}$          | komplementer  |
 
 Az $A$ és $B$ **kizárja egymást**, ha $AB = \emptyset$ (nem következhetnek be egyszerre). Az $A_1, \dots, A_n$ események **teljes eseményrendszert** alkotnak, ha páronként kizárják egymást, és összegük $\Omega$ – mindig pontosan egy következik be közülük.
 
