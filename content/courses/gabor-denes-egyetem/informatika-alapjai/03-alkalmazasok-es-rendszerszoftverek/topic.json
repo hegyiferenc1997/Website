@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Alkalmazások és rendszerszoftverek", "en": "Applications and System Software" },
+  "description": {
+    "hu": "A szoftverek csoportjai (rendszerszoftver, alkalmazás, segédprogram, firmware, illesztőprogram), a szoftverlicencek (kereskedelmi, ingyenes, nyílt forráskódú, előfizetéses), valamint a telepítés, a frissítés és a csomagkezelők.",
+    "en": "Groups of software (system software, applications, utilities, firmware, drivers), software licences (commercial, freeware, open source, subscription), and installing, updating and package managers."
+  }
+}

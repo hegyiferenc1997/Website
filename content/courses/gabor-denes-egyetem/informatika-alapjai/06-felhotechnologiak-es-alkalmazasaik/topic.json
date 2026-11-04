@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Felhőtechnológiák és alkalmazásaik",
+    "en": "Cloud Technologies and Their Applications"
+  },
+  "description": {
+    "hu": "A felhő fogalma és szolgáltatási modelljei (IaaS, PaaS, SaaS), telepítési modelljei (nyilvános, privát, hibrid), a munkaszervezést segítő felhős alkalmazások (közös dokumentumok, csapatkommunikáció, feladattáblák), valamint az alternatív vizualizációs lehetőségek, köztük az infografika.",
+    "en": "The concept of the cloud and its service models (IaaS, PaaS, SaaS) and deployment models (public, private, hybrid), cloud apps that help organise work (shared documents, team communication, task boards), and alternative visualisation options, including infographics."
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatszerkezetek és algoritmusok", "en": "Data Structures and Algorithms" },
+  "description": {
+    "hu": "Mi az algoritmus, hogyan írjuk le (pszeudokód, folyamatábra), az alapvető adatszerkezetek (tömb, lista, verem, sor, fa, gráf, hasítótábla), valamint a keresés, a rendezés és a futási idő becslése (O-jelölés).",
+    "en": "What an algorithm is, how to describe one (pseudocode, flowchart), the basic data structures (array, list, stack, queue, tree, graph, hash table), and searching, sorting and estimating running time (big-O notation)."
+  }
+}

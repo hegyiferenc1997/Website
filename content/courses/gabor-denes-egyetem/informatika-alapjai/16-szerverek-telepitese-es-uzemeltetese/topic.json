@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Szerverek telepítése és üzemeltetése",
+    "en": "Installing and Operating Servers"
+  },
+  "description": {
+    "hu": "Mi a szerver, milyen fajtái és hardverei vannak (fizikai, virtuális, felhős; RAID, redundáns táp), egy Linux-szerver telepítése és biztonságos beállítása (SSH-kulcs, felhasználók, frissítés, tűzfal), egy webszerver (nginx) és konténerek (Docker) üzembe helyezése, valamint a monitorozás, a naplók, a mentés és a rendelkezésre állás.",
+    "en": "What a server is, its kinds and hardware (physical, virtual, cloud; RAID, redundant power), installing and securely configuring a Linux server (SSH keys, users, updates, firewall), deploying a web server (nginx) and containers (Docker), and monitoring, logs, backups and availability."
+  }
+}

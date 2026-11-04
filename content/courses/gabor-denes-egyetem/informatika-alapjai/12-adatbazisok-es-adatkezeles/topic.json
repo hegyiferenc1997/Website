@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatbázisok és adatkezelés", "en": "Databases and Data Management" },
+  "description": {
+    "hu": "Mi az adatbázis és az adatbázis-kezelő, a relációs modell (tábla, rekord, mező, elsődleges és idegen kulcs, kapcsolatok), az SQL alapjai (SELECT, WHERE, ORDER BY, JOIN, INSERT, UPDATE, DELETE), a NoSQL-adatbázisok, valamint az adatkezelés szabályai (adatminőség, mentés, GDPR).",
+    "en": "What a database and a database management system are, the relational model (table, record, field, primary and foreign keys, relationships), SQL basics (SELECT, WHERE, ORDER BY, JOIN, INSERT, UPDATE, DELETE), NoSQL databases, and the rules of data management (data quality, backups, GDPR)."
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Python programozási nyelv alapjai", "en": "Python Programming Basics" },
+  "description": {
+    "hu": "Az első Python-programok a böngészőben: változók, típusok, beolvasás és kiírás, elágazások és ciklusok, listák és függvények – mindegyikhez kipróbálható példák és ellenőrzött feladatok.",
+    "en": "Your first Python programs in the browser: variables, types, input and output, conditions and loops, lists and functions – with runnable examples and checked exercises for each."
+  }
+}

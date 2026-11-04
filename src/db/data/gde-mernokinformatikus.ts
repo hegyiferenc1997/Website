@@ -34,7 +34,12 @@ const SW = "szoftverfejlesztes";
 export const semesters: CurriculumCourse[][] = [
   // 1. félév
   [
-    { name: "Informatika alapjai", en: "Fundamentals of Computer Science", credits: 8 },
+    {
+      name: "Informatika alapjai",
+      en: "Fundamentals of Computer Science",
+      credits: 8,
+      active: true,
+    },
     { name: "Közgazdaságtan alapjai", en: "Principles of Economics", credits: 5 },
     { name: "Matematika", en: "Mathematics", credits: 5, active: true },
     { name: "Operációs rendszerek", en: "Operating Systems", credits: 4, active: true },

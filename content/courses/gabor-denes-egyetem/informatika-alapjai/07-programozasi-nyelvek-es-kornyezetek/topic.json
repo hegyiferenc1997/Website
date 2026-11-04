@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Programozási nyelvek és környezetek",
+    "en": "Programming Languages and Environments"
+  },
+  "description": {
+    "hu": "A programozási nyelvek szintjei és generációi, a paradigmák (imperatív, objektumorientált, funkcionális, deklaratív), a fordító és az értelmező, valamint a fejlesztőkörnyezetek (szerkesztő, IDE, hibakereső) és a verziókezelés alapjai (git).",
+    "en": "Levels and generations of programming languages, paradigms (imperative, object-oriented, functional, declarative), compilers and interpreters, and development environments (editor, IDE, debugger) and version control basics (git)."
+  }
+}

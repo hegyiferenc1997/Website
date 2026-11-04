@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Szoftverfejlesztés és programozás alapjai",
+    "en": "Software Development and Programming Basics"
+  },
+  "description": {
+    "hu": "A szoftver életciklusa (követelmény, tervezés, megvalósítás, tesztelés, üzembe helyezés, karbantartás), a fejlesztési modellek (vízesés, iteratív, agilis, DevOps), a tesztelés szintjei és a jó kód ismérvei (olvashatóság, dokumentáció, kódáttekintés).",
+    "en": "The software life cycle (requirements, design, implementation, testing, deployment, maintenance), development models (waterfall, iterative, agile, DevOps), levels of testing and the marks of good code (readability, documentation, code review)."
+  }
+}

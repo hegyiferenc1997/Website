@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Robotika alapjai", "en": "Robotics Basics" },
+  "description": {
+    "hu": "Mi a robot, és miből áll (érzékelők, beavatkozók, vezérlő, energiaellátás), a robotok fajtái és alkalmazásai, a vezérlés és a szabályozás (visszacsatolás, PID-ötlet), valamint a robotok programozása mikrovezérlőkkel és egyszerű szimulációkkal.",
+    "en": "What a robot is and what it is made of (sensors, actuators, controller, power), types and applications of robots, open-loop and closed-loop control (feedback, the PID idea), and programming robots with microcontrollers and simple simulations."
+  }
+}
