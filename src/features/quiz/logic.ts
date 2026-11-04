@@ -2,6 +2,8 @@
 // logikai kifejezések kiértékelése, igazságtáblák számolása és a válaszok ellenőrzése.
 // Tiszta függvények: a szerver (Markdown → darabok), a böngésző (ellenőrzés) és a tesztek is ezt használják.
 
+import { parseMath } from "@/features/math/expr";
+
 // ---------------------------------------------------------------------------
 // Logikai kifejezések
 // ---------------------------------------------------------------------------
@@ -263,6 +265,18 @@ export type QuizQuestion =
       same: string | null;
       /** Közömbös sorok (az igazságtábla sorszámai): itt bármi lehet a válasz értéke. */
       dc: number[];
+    })
+  | (QuestionBase & {
+      /** Valós függvénykifejezés begépelése (pl. derivált): bármely vele egyenlő kifejezés jó. */
+      kind: "fn";
+      /** A változók (kisbetűvel), pl. ["x"]. */
+      vars: string[];
+      /** A várt kifejezés (lásd features/math/expr.ts). */
+      expr: string;
+      /** Ebből a tartományból vesszük a próbapontokat (pl. ln x-nél pozitív számok). */
+      domain: [number, number];
+      /** Határozatlan integrál: a válasz egy állandóval (+C) eltérhet. */
+      upToConstant: boolean;
     });
 
 /** Egy feladatlap: kérdések sorban. */
@@ -299,6 +313,9 @@ function checkVars(e: Expr, inputs: string[], where: string) {
  *   same: A + A̅·C       – az eredeti kifejezés (a tesztek nézik, hogy egyenértékű)
  *   dc: 10, 11          – közömbös sorok (az igazságtábla sorszámai), ott bármi elfogadott
  *   ! tipp              – hibás válasz után megjelenő segítség
+ *   fn: x -> 2x·cos x   – valós függvénykifejezés begépelése (számértékek alapján ellenőrizzük)
+ *   domain: 0.1, 5      – (fn) a próbapontok tartománya (alapból −3 … 3)
+ *   +C                  – (fn) határozatlan integrál: egy állandó eltérés megengedett
  * Hibás blokknál kivételt dob (a tesztek így minden blokkot ellenőriznek).
  */
 export function parseQuiz(text: string): Quiz {
@@ -314,6 +331,9 @@ export function parseQuiz(text: string): Quiz {
     limit: number | null;
     same: string | null;
     dc: number[];
+    fn: string | null;
+    domain: [number, number] | null;
+    upToConstant: boolean;
   };
   let d: Draft | null = null;
 
@@ -321,7 +341,9 @@ export function parseQuiz(text: string): Quiz {
   const finish = () => {
     if (!d) return;
     const where = d.prompt.slice(0, 60);
-    const kinds = [d.answers.length > 0, d.choices.length > 0, !!d.table, !!d.expr].filter(Boolean);
+    const kinds = [d.answers.length > 0, d.choices.length > 0, !!d.table, !!d.expr, !!d.fn].filter(
+      Boolean,
+    );
     if (kinds.length !== 1) throw new Error(`Egy kérdéshez pontosan egyféle válasz kell: ${where}`);
     const base = { prompt: d.prompt, hint: d.hint };
     if (d.answers.length) {
@@ -360,6 +382,21 @@ export function parseQuiz(text: string): Quiz {
         same: d.same,
         dc: d.dc,
       });
+    } else if (d.fn) {
+      // „x, y -> kifejezés” (a változók kisbetűsek); a kifejezésnek értelmezhetőnek kell lennie.
+      const i = d.fn.indexOf("->");
+      if (i < 0) throw new Error(`Hiányzó „->”: ${where}`);
+      const vars = d.fn
+        .slice(0, i)
+        .split(/[,\s]+/)
+        .filter(Boolean);
+      if (vars.length === 0 || vars.some((v) => !/^[a-z][a-z0-9]*$/.test(v)))
+        throw new Error(`Hibás változónév: ${where}`);
+      const expr = d.fn.slice(i + 2).trim();
+      parseMath(expr, vars);
+      const domain = d.domain ?? [-3, 3];
+      if (!(domain[0] < domain[1])) throw new Error(`Hibás tartomány: ${where}`);
+      questions.push({ ...base, kind: "fn", vars, expr, domain, upToConstant: d.upToConstant });
     }
     d = null;
   };
@@ -379,6 +416,9 @@ export function parseQuiz(text: string): Quiz {
         limit: null,
         same: null,
         dc: [],
+        fn: null,
+        domain: null,
+        upToConstant: false,
       };
       continue;
     }
@@ -392,13 +432,21 @@ export function parseQuiz(text: string): Quiz {
     else if (line.startsWith("expr:")) cur.expr = line.slice(5).trim();
     else if (line.startsWith("limit:")) cur.limit = Number(line.slice(6).trim()) || null;
     else if (line.startsWith("same:")) cur.same = line.slice(5).trim();
+    else if (line.startsWith("fn:")) cur.fn = line.slice(3).trim();
+    else if (line.startsWith("domain:")) {
+      const [lo, hi] = line
+        .slice(7)
+        .split(",")
+        .map((x) => Number(x.trim()));
+      cur.domain = [lo, hi];
+    } else if (line === "+C") cur.upToConstant = true;
     else if (line.startsWith("dc:"))
       cur.dc = line
         .slice(3)
         .split(",")
         .map((x) => Number(x.trim()));
     // A folytatósor a kérdés szövegéhez tartozik (hosszabb kérdéseknél).
-    else if (!cur.answers.length && !cur.choices.length && !cur.table && !cur.expr)
+    else if (!cur.answers.length && !cur.choices.length && !cur.table && !cur.expr && !cur.fn)
       cur.prompt += " " + line;
     else throw new Error(`Értelmezhetetlen sor: ${line}`);
   }
@@ -424,10 +472,30 @@ export function normalizeAnswer(s: string): string {
     .replace(/,/g, ".");
 }
 
-/** Jó-e a begépelt rövid válasz. */
+// Egy egységesített válasz számértéke, ha tizedes tört vagy közönséges tört (0.5, -3/4); különben null.
+function numValue(s: string): number | null {
+  const m = /^([-+]?(?:\d+\.?\d*|\.\d+))(?:\/([-+]?(?:\d+\.?\d*|\.\d+)))?$/.exec(s);
+  if (!m) return null;
+  const v = Number(m[1]) / (m[2] === undefined ? 1 : Number(m[2]));
+  return Number.isFinite(v) ? v : null;
+}
+
+/**
+ * Jó-e a begépelt rövid válasz. Ha a válaszban tizedespont vagy törtvonal van, számként is
+ * összevetjük, így pl. 0.5 = 1/2 = 0,50. (Egész számoknál marad a pontos egyezés, hogy pl. a
+ * 0110 bitminta ne legyen egyenlő a 110-zel.)
+ */
 export function checkInput(q: { answers: string[] }, given: string): boolean {
   const g = normalizeAnswer(given);
-  return g !== "" && q.answers.some((a) => normalizeAnswer(a) === g);
+  if (g === "") return false;
+  const gv = numValue(g);
+  return q.answers.some((raw) => {
+    const a = normalizeAnswer(raw);
+    if (a === g) return true;
+    if (!/[./]/.test(a + g)) return false;
+    const av = numValue(a);
+    return av !== null && gv !== null && Math.abs(av - gv) <= 1e-9 * Math.max(1, Math.abs(av));
+  });
 }
 
 /** Egy begépelt kifejezés ellenőrzésének eredménye. */

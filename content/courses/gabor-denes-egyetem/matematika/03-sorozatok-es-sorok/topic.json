@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Sorozatok vizsgálata: monotonitás, korlátosság, határérték. Sorok",
+    "en": "Sequences: Monotonicity, Boundedness, Limits. Series"
+  },
+  "description": {
+    "hu": "A sorozat fogalma és megadása, a számtani és a mértani sorozat, a monotonitás és a korlátosság vizsgálata, a határérték definíciója és kiszámítása (műveleti szabályok, nevezetes határértékek, az e szám), végül a végtelen sorok: részletösszeg, mértani sor, harmonikus sor és a konvergenciakritériumok.",
+    "en": "The concept and definition of sequences, arithmetic and geometric sequences, monotonicity and boundedness, the definition and computation of limits (limit laws, important limits, the number e), and finally infinite series: partial sums, geometric series, the harmonic series and convergence tests."
+  }
+}

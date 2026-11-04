@@ -261,6 +261,13 @@
     "editorLabel": "Python code editor",
     "keys": "Ctrl+Enter: run / check · Tab: indent · Esc, then Tab: leave the editor"
   },
+  "Plot": {
+    "label": "Interactive graph",
+    "reset": "Reset",
+    "slope": "slope of the tangent at x = {x}",
+    "area": "integral over [{a}, {b}]",
+    "riemann": "Riemann sum (n = {n})"
+  },
   "Quiz": {
     "label": "Worksheet",
     "labelRequired": "Worksheet · lesson exercise",
@@ -283,7 +290,11 @@
     "exprPlaceholder": "e.g. A·B' + C",
     "exprHelp": "Notation: NOT: A' or ¬A · AND: A·B, A*B or AB · OR: A+B · XOR: A⊕B or A^B · brackets: ( )",
     "tableHelp": "Click the output cells: ? → 0 → 1. Fill in every cell.",
-    "cellLabel": "output {output}, row {row}"
+    "cellLabel": "output {output}, row {row}",
+    "invalidFn": "I can't parse this formula. Check the brackets and operators (see the notation below the field).",
+    "fnPlaceholder": "e.g. 2{v} + sin({v})",
+    "fnHelp": "Notation: + − * / ^ (x^2), brackets ( ), sqrt(x) or √x, |x|, sin, cos, tan, ln, lg, e^x, pi, n!. 1/2x means (1/2)·x, so write 1/(2x).",
+    "fnHelpConst": "Notation: + − * / ^ (x^2), brackets ( ), sqrt(x), |x|, sin, cos, ln, e^x, pi. You don't have to write the +C constant."
   },
   "DashboardPage": {
     "title": "Dashboard",

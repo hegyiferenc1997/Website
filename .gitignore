@@ -48,3 +48,5 @@ next-env.d.ts
 
 # a böngészős Python fájljai (a pnpm install másolja be, lásd scripts/copy-pyodide.mjs)
 /public/pyodide/
+# a képletszedő (KaTeX) stíluslapja és betűi (a pnpm install másolja be, lásd scripts/copy-katex.mjs)
+/public/katex/

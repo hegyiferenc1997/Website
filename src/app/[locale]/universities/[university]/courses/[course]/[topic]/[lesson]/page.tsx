@@ -18,6 +18,8 @@ import { lessonKey } from "@/features/progress/data";
 import { GateScript } from "@/features/progress/gate-script";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
 import { Quiz } from "@/features/quiz/Quiz";
+import { Plot } from "@/features/plot/Plot";
+import { hasMath, KATEX_VERSION } from "@/features/lessons/math";
 import { Link } from "@/i18n/navigation";
 import { courseSemester } from "@/features/courses/semester";
 import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
@@ -91,6 +93,12 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   const paid = hasSemesterAccess(access, semester);
   const godMode = access.godMode;
   const segments = paid ? await renderLessonBody(localize(lesson.body, locale), locale) : [];
+  // Van-e képlet a leckében (csak akkor töltjük be a képletszedő stíluslapját és betűit).
+  const math = segments.some(
+    (s) =>
+      (s.kind === "html" && hasMath(s.html)) ||
+      (s.kind === "quiz" && hasMath(JSON.stringify(s.questions))),
+  );
 
   const university = course.university.slug;
   // Hányadik témakörben vagyunk (1-től számolva).
@@ -168,6 +176,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
       {paid && !godMode && (
         <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />
       )}
+      {math && <MathAssets />}
       <aside className="hidden lg:sticky lg:top-24 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
         {outline}
       </aside>
@@ -298,6 +307,8 @@ function LessonBody({
           <div key={i} className="contents" dangerouslySetInnerHTML={{ __html: s.html }} />
         ) : s.kind === "run" ? (
           <RunnableExample key={i} code={s.code} label={s.label} codeHtml={s.codeHtml} />
+        ) : s.kind === "plot" ? (
+          <Plot key={i} spec={s.spec} />
         ) : s.kind === "quiz" ? (
           <Quiz
             key={i}
@@ -320,6 +331,30 @@ function LessonBody({
         ),
       )}
     </div>
+  );
+}
+
+/**
+ * A képletszedő (KaTeX) stíluslapja és a leggyakoribb betűi. A React a <head>-be teszi őket; a betűk
+ * előtöltése miatt a képletek már az első kirajzoláskor a végleges alakjukban jelennek meg.
+ */
+function MathAssets() {
+  const base = `/katex/${KATEX_VERSION}`;
+  const fonts = ["KaTeX_Main-Regular", "KaTeX_Math-Italic", "KaTeX_Size1-Regular", "KaTeX_Size2-Regular"];
+  return (
+    <>
+      {fonts.map((f) => (
+        <link
+          key={f}
+          rel="preload"
+          href={`${base}/fonts/${f}.woff2`}
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      ))}
+      <link rel="stylesheet" href={`${base}/katex.min.css`} precedence="default" />
+    </>
   );
 }
 

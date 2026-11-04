@@ -5,10 +5,11 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { courseKey, isLessonDone, setLessonDone, useProgress } from "@/features/progress/store";
 import type { LessonHref, LessonRef } from "@/features/python/components";
+import { checkFn } from "@/features/math/expr";
 import { checkExpr, checkInput, inputRows, type ExprCheck, type QuizQuestion } from "./logic";
 
-// A leckékbe épített feladatlap (kvíz): rövid válasz, feleletválasztás, igazságtábla kitöltése és
-// logikai kifejezés begépelése. Az ellenőrzés a böngészőben fut (lásd logic.ts); a kötelező feladatlap
+// A leckékbe épített feladatlap (kvíz): rövid válasz, feleletválasztás, igazságtábla kitöltése,
+// logikai kifejezés és valós függvénykifejezés (pl. derivált) begépelése. Az ellenőrzés a böngészőben fut (lásd logic.ts); a kötelező feladatlap
 // hibátlan kitöltése késznek jelöli a leckét, és feloldja a következőt (mint a Python-feladatoknál).
 
 // Egy kérdés válasza: szöveg (input/expr), választott sorszám (choice), vagy a táblázat cellái (table).
@@ -38,6 +39,9 @@ function judge(q: QuizQuestion, a: Answer): Verdict {
       const r: ExprCheck = checkExpr(q, a);
       return r;
     }
+    case "fn":
+      if (typeof a !== "string" || !a.trim()) return "empty";
+      return checkFn(q, a);
     case "table": {
       const cells = a as (0 | 1 | null)[][];
       if (cells.some((col) => col.some((v) => v === null))) return "empty";
@@ -124,6 +128,7 @@ export function Quiz({
                 verdict={verdicts[i]}
                 hint={q.hint}
                 limit={q.kind === "expr" ? q.limit : null}
+                math={q.kind === "fn"}
               />
             )}
             {verdicts && verdicts[i] === "empty" && verdicts.some((v) => v !== "empty") && (
@@ -183,16 +188,19 @@ function Feedback({
   verdict,
   hint,
   limit,
+  math,
 }: {
   verdict: Verdict;
   hint: string | null;
   limit: number | null;
+  /** Valós függvénykifejezés-e (más a hibaüzenet, mint a logikainál). */
+  math: boolean;
 }) {
   const t = useTranslations("Quiz");
   if (verdict === "ok") return <p className="quiz-ok">✓ {t("correct")}</p>;
   const message =
     verdict === "invalid"
-      ? t("invalidExpr")
+      ? t(math ? "invalidFn" : "invalidExpr")
       : verdict === "too-long"
         ? t("tooLong", { limit: limit ?? 0 })
         : t("wrong");
@@ -232,7 +240,7 @@ function QuestionInput({
     }
   };
 
-  if (q.kind === "input" || q.kind === "expr") {
+  if (q.kind === "input" || q.kind === "expr" || q.kind === "fn") {
     return (
       <div className="quiz-field">
         <input
@@ -243,9 +251,18 @@ function QuestionInput({
           spellCheck={false}
           autoComplete="off"
           aria-label={t("answerLabel", { n: index + 1 })}
-          placeholder={q.kind === "expr" ? t("exprPlaceholder") : t("inputPlaceholder")}
+          placeholder={
+            q.kind === "expr"
+              ? t("exprPlaceholder")
+              : q.kind === "fn"
+                ? t("fnPlaceholder", { v: q.vars[0] })
+                : t("inputPlaceholder")
+          }
         />
         {q.kind === "expr" && <p className="quiz-note">{t("exprHelp")}</p>}
+        {q.kind === "fn" && (
+          <p className="quiz-note">{t(q.upToConstant ? "fnHelpConst" : "fnHelp")}</p>
+        )}
       </div>
     );
   }

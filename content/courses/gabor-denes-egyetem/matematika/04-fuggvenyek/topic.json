@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Függvények",
+    "en": "Functions"
+  },
+  "description": {
+    "hu": "A függvény fogalma, értelmezési tartomány és értékkészlet, az elemi függvények (hatvány-, exponenciális, logaritmus- és trigonometrikus függvények), a függvénytranszformációk, a függvények tulajdonságai (zérushely, paritás, monotonitás, szélsőérték, periodicitás), a függvényműveletek, az összetett és az inverz függvény, végül a határérték és a folytonosság.",
+    "en": "The concept of a function, domain and range, the elementary functions (power, exponential, logarithmic and trigonometric functions), transformations of functions, properties of functions (zeros, parity, monotonicity, extrema, periodicity), operations on functions, composite and inverse functions, and finally limits and continuity."
+  }
+}

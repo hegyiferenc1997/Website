@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     ".data/**",
     // A böngészős Python bemásolt (külső) fájljai.
     "public/pyodide/**",
+    // A képletszedő bemásolt (külső) fájljai.
+    "public/katex/**",
     // A Next.js alapból kihagyott mappái:
     ".next/**",
     "out/**",

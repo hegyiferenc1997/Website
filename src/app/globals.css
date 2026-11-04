@@ -885,3 +885,151 @@
 [data-locked] .gate-notice {
   display: grid;
 }
+
+/*
+ * Képletek (KaTeX, features/lessons/math.ts): a külön sorban álló képlet keskeny képernyőn
+ * vízszintesen görgethető, nem tolja szét az oldalt.
+ */
+.lesson-body .math-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+.lesson-body .katex {
+  font-size: 1.08em;
+}
+
+/*
+ * Interaktív függvényábra (features/plot): SVG rács, görbék, csúszkák, kiírt értékek.
+ * A görbék színei témánként.
+ */
+:root {
+  --plot-1: #3cc4a8;
+  --plot-2: #7aa2f7;
+  --plot-3: #e8b04b;
+  --plot-4: #f0716a;
+}
+
+:root[data-theme="light"] {
+  --plot-1: #0f8a72;
+  --plot-2: #3b63c4;
+  --plot-3: #a86a00;
+  --plot-4: #c4372f;
+}
+
+.lesson-body .plot-block {
+  margin: 0;
+}
+
+.lesson-body .plot-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--bg);
+  touch-action: pan-y;
+}
+
+.lesson-body .plot-grid line {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.lesson-body .plot-axis line {
+  stroke: var(--muted);
+  stroke-width: 1.25;
+}
+
+.lesson-body .plot-ticks text,
+.lesson-body .plot-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--muted);
+}
+
+.lesson-body .plot-label {
+  font-size: 12px;
+}
+
+.lesson-body .plot-controls {
+  display: grid;
+  gap: 0.625rem;
+  border-top: 1px solid var(--line);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.lesson-body .plot-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.lesson-body .plot-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.lesson-body .plot-swatch {
+  display: inline-block;
+  width: 1.25rem;
+  border-top-width: 2.5px;
+}
+
+.lesson-body .plot-slider {
+  display: grid;
+  grid-template-columns: minmax(7rem, auto) 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.lesson-body .plot-param {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.lesson-body .plot-slider input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.lesson-body .plot-readouts {
+  display: grid;
+  gap: 0.125rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.lesson-body .plot-readouts div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.lesson-body .plot-readouts dt {
+  color: var(--muted);
+}
+
+.lesson-body .plot-readouts dt::after {
+  content: ":";
+}
+
+.lesson-body .plot-readouts dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.lesson-body .quiz-btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+}

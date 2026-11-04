@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Taylor-polinom, Fourier-sorok",
+    "en": "Taylor Polynomials, Fourier Series"
+  },
+  "description": {
+    "hu": "Függvények közelítése polinomokkal: a Taylor-polinom, a nevezetes Taylor-sorok (eˣ, sin x, cos x, ln(1 + x)) és a hibabecslés; periodikus függvények közelítése szinuszokkal és koszinuszokkal: a Fourier-sor, az együtthatók kiszámítása, a négyszög- és a fűrészjel, és az alkalmazások a jelfeldolgozásban.",
+    "en": "Approximating functions with polynomials: the Taylor polynomial, the important Taylor series (eˣ, sin x, cos x, ln(1 + x)) and error estimates; approximating periodic functions with sines and cosines: the Fourier series, computing the coefficients, square and sawtooth waves, and applications in signal processing."
+  }
+}
