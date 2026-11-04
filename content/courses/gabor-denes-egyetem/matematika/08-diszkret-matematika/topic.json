@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Diszkrét matematika",
+    "en": "Discrete Mathematics"
+  },
+  "description": {
+    "hu": "Az informatika matematikája: ítéletlogika és igazságtáblák, kvantorok és bizonyítási módszerek (teljes indukció), kombinatorika, a binomiális tétel és a szitaformula, számelmélet és moduláris aritmetika (az RSA alapjai), valamint a gráfok alapjai.",
+    "en": "The mathematics of computer science: propositional logic and truth tables, quantifiers and proof techniques (mathematical induction), combinatorics, the binomial theorem and inclusion–exclusion, number theory and modular arithmetic (the basics of RSA), and the basics of graphs."
+  }
+}
