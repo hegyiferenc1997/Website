@@ -1,6 +1,6 @@
 ---
 title: Gyakorlás – sorozatok és sorok
-summary: Ellenőrző kérdések és összefoglaló feladatlap a sorozatokhoz, határértékekhez és sorokhoz (1. ZH-anyag).
+summary: Ellenőrző kérdések és összefoglaló feladatlap a sorozatokhoz, határértékekhez és sorokhoz.
 minutes: 30
 kind: practice
 ---

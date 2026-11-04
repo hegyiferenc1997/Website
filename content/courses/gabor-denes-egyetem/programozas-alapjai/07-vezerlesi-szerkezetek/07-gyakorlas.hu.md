@@ -136,7 +136,7 @@ print("Minden ellenőrzés sikeres!")
 
 ### 3. feladat: Jegy a pontszámból
 
-Írj `jegy(pont)` függvényt a tárgy értékelési skálája szerint: 0–49 → 1, 50–62 → 2, 63–75 → 3, 76–88 → 4, 89–100 → 5. Érvénytelen pontszámra (0 alatt vagy 100 felett) adjon vissza `None`-t!
+Írj `jegy(pont)` függvényt a következő skála szerint: 0–49 → 1, 50–62 → 2, 63–75 → 3, 76–88 → 4, 89–100 → 5. Érvénytelen pontszámra (0 alatt vagy 100 felett) adjon vissza `None`-t!
 
 ```python starter
 def jegy(pont):

@@ -23,7 +23,7 @@ $$
 \neg \forall x\, P(x) \equiv \exists x\, \neg P(x), \qquad \neg \exists x\, P(x) \equiv \forall x\, \neg P(x).
 $$
 
-For example, the negation of "Every student passed the test." is not "Nobody passed", but: "**There is** a student who did **not** pass."
+For example, the negation of "Every student passed the exam." is not "Nobody passed", but: "**There is** a student who did **not** pass."
 
 Order matters: $\forall x\, \exists y\, (y > x)$ is true over the reals (there is something bigger than anything), but $\exists y\, \forall x\, (y > x)$ is false (no number is bigger than everything).
 

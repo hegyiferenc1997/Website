@@ -54,8 +54,6 @@ print("Grade:", grade)   # 4
 
 > **Mind the order!** If `score >= 50` came first, 78 points would also give a 2, because that would be the first true branch. The stricter condition always goes first.
 
-These thresholds happen to be this course's grading scale (50–62 pass, 63–75 satisfactory, 76–88 good, 89–100 excellent).
-
 ## Nested branches
 
 A branch can contain another branch:

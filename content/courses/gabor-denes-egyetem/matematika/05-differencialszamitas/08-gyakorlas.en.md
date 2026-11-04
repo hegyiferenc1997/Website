@@ -1,6 +1,6 @@
 ---
 title: Practice – Differential Calculus
-summary: Review questions and a summary worksheet on differentiation and analysing functions (material of test 2).
+summary: Review questions and a summary worksheet on differentiation and analysing functions.
 minutes: 35
 kind: practice
 ---

@@ -13,7 +13,7 @@ minutes: 25
 
 ## The modelling cycle
 
-A **mathematical model** is a simplified description of reality with formulas. Every topic of this semester was such a tool: functions, derivatives, integrals and differential equations. The steps of modelling:
+A **mathematical model** is a simplified description of reality with formulas. Every topic of this course was such a tool: functions, derivatives, integrals and differential equations. The steps of modelling:
 
 1. **Understand the problem:** what do we want to know, and what will we use it for?
 2. **Assumptions and variables:** what matters and what can be neglected (e.g. "air resistance is negligible")? What are the inputs and the output, in what units?

@@ -1,6 +1,6 @@
 ---
 title: Gyakorlás – differenciálszámítás
-summary: Ellenőrző kérdések és összefoglaló feladatlap a deriválásról és a függvényvizsgálatról (2. ZH-anyag).
+summary: Ellenőrző kérdések és összefoglaló feladatlap a deriválásról és a függvényvizsgálatról.
 minutes: 35
 kind: practice
 ---

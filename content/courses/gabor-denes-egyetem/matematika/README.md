@@ -4,12 +4,13 @@ Ebben a mappában van az 1. féléves Matematika (B-MATEMA) tárgy tananyaga. In
 `pnpm db:seed` futtatásakor) az oldal innen tölti be az adatbázisba a témaköröket és a leckéket.
 
 A szerkezet a tantárgyleírás 10 fő témakörét követi: `01-algebrai-alapfogalmak` …
-`10-matematikai-modellezes`. Az első témakör a 0. heti felzárkóztató anyagot (algebra, egyenletek,
-exponenciális, logaritmikus és irracionális egyenletek) is lefedi, az első lecke pedig a
-követelményeket. Minden témakör végén egy gyakorló lecke van (`kind: practice`) ellenőrző kérdésekkel
-és összefoglaló feladatlappal; az utolsó lecke egy ZH-felkészítő vegyes feladatsor. A mappák, a
-`topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
+`10-matematikai-modellezes`. Minden témakör végén egy gyakorló lecke van (`kind: practice`) ellenőrző
+kérdésekkel és összefoglaló feladatlappal; az utolsó lecke egy vegyes feladatsor a teljes anyagból. A
+mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
 `../programozas-alapjai/README.md`).
+
+**Szabály:** a tárgy követelményei (jegyszerzés, ZH-k, pontok, aláírás, oktató) soha nem kerülnek a
+tananyagba, egyik tárgynál sem.
 
 ## Képletek
 

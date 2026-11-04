@@ -8,7 +8,7 @@ minutes: 20
 
 - how to organise a **group programming project** from idea to presentation,
 - how to work **together on the same code** (Git),
-- what **documentation** to produce and what goes into it – in this course **the documentation is graded too**!
+- what **documentation** to produce and what goes into it – in a good project **the documentation matters too**!
 
 ## Project phases
 
@@ -139,7 +139,7 @@ for name, function in [("read", read), ("average", average), ("report", report)]
 - **Library system:** books, loans, due dates, late fees.
 - **Text analysis tool:** mini project 2 extended with a command-line interface.
 
-## Assessment criteria (typically)
+## What makes a good team project?
 
 - the program **works** and meets the specification,
 - **code quality**: readable, well structured, commented, PEP 8,

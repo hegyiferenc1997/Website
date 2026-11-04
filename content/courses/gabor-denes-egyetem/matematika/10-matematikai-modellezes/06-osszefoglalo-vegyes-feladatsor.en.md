@@ -1,25 +1,23 @@
 ---
-title: Summary – Test Preparation Worksheet
-summary: A mixed set of problems from the whole semester, with tips for the written tests.
+title: Summary – Mixed Problem Set
+summary: A mixed set of problems from the whole course, with tips for revision.
 minutes: 45
 kind: practice
 ---
 
-## Tips for the tests
-
-The mid-term grade is made up of the points of **three tests** ($100$ points in total), and up to $15$ bonus points can be earned in week $0$. For the signature you need at least $5$ points in week $0$ and at least $25$ points on the tests in total. The grade boundaries: $0$–$49$ fail (1), $50$–$62$ pass (2), $63$–$75$ satisfactory (3), $76$–$88$ good (4), $89$–$100$ excellent (5). (For the details, always check with the lecturer, Dr. Krisztina Zimányi, and the official course information.)
+## Tips for revision
 
 <details>
-<summary>1. How should you prepare?</summary>
+<summary>1. How should you revise?</summary>
 
 Topic by topic: first review the **summaries** of the lessons, then redo the worksheets of the **practice lessons** **without help**. Where you get stuck, reread the lesson. With the interactive plots you remember the "why", not just the formula.
 
 </details>
 
 <details>
-<summary>2. What should you do during the test?</summary>
+<summary>2. How should you check your solution?</summary>
 
-First skim all the problems and start with the ones you are sure about. Write down every step (for partial credit), and **check** at the end: an integral by differentiating, the solution of an equation or a differential equation by substituting, a calculation with an order-of-magnitude estimate.
+Write down every step, and **check** at the end: an integral by differentiating, the solution of an equation or a differential equation by substituting, a calculation with an order-of-magnitude estimate.
 
 </details>
 

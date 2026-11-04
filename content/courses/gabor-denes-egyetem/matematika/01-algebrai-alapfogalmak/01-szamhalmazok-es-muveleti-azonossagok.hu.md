@@ -1,38 +1,13 @@
 ---
-title: A tárgyról és a számhalmazok
-summary: Hogyan épül fel a félév, mi kell az aláíráshoz és a jegyhez – és a számhalmazok, amelyekkel dolgozunk.
+title: Számhalmazok és a műveletek azonosságai
+summary: A természetes, egész, racionális és valós számok, és az alapműveletek azonosságai.
 minutes: 15
 ---
 
 ## Amit ebben a leckében megtanulsz
 
-- hogyan épül fel a **Matematika** tárgy, és hogyan kapsz **jegyet**,
 - melyek a **számhalmazok** ($\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{R}$), és mi a különbség köztük,
 - melyek az alapműveletek **azonosságai** (felcserélhetőség, csoportosíthatóság, széttagolhatóság).
-
-## A tárgy követelményei röviden
-
-A Matematika (B-MATEMA) **évközi jeggyel** zárul, heti 2 óra előadás, 1 óra gyakorlat és 2 óra labor. A célja, hogy megkapd azokat a matematikai alapokat, amelyekre a programozás, az adatbázisok, az algoritmusok, a mesterséges intelligencia és a kriptográfia épül.
-
-| Mi?               | Részletek                                                                          |
-| ----------------- | ---------------------------------------------------------------------------------- |
-| 0. heti órák      | felzárkóztató anyag (algebra, függvények, halmazok, logika), max. **15 pluszpont** |
-| ZH-k (nappali)    | **3 zárthelyi**, mindegyik az előző óta vett anyagból, összesen **100 pont**       |
-| ZH-k (távoktatás) | 2 zárthelyi, összesen 100 pont                                                     |
-| Aláírás           | a 0. héten legalább **5 pont** és a ZH-kon összesen legalább **25 pont**           |
-| Javítás           | a szorgalmi időszak után 1–2 héttel javító ZH a teljes anyagból                    |
-
-A jegy a ZH-pontok és a pluszpontok összegéből:
-
-| Pont   | Jegy          |
-| ------ | ------------- |
-| 0–49   | elégtelen (1) |
-| 50–62  | elégséges (2) |
-| 63–75  | közepes (3)   |
-| 76–88  | jó (4)        |
-| 89–100 | jeles (5)     |
-
-Ez a tananyag a tantárgyleírás 10 témakörét követi. Az első két témakör (és a függvények eleje) a **0. heti felzárkóztató** anyag: érdemes alaposan átvenni, mert minden későbbi témakör erre épül.
 
 ## A számhalmazok
 
@@ -74,24 +49,12 @@ A kettőt a **széttagolhatóság** (disztributivitás) köti össze: $a(b + c) 
 
 ## Összefoglalás
 
-- Jegy: 3 ZH (100 pont) + a 0. heti pluszpontok; az aláíráshoz 5 + 25 pont kell; 50 ponttól elégséges.
 - $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$; az irracionális számok (pl. $\sqrt 2$, $\pi$) nem törtek.
 - Az alapazonosságok: felcserélhetőség, csoportosíthatóság, széttagolhatóság; a műveleti sorrend: zárójel, hatvány, szorzás/osztás, összeadás/kivonás.
 
 ## A lecke feladata
 
 ```quiz required
-? Hány pont kell legalább a ZH-kon összesen az aláíráshoz?
-= 25
-! Az aláírás két feltétele: a 0. héten 5 pont és a ZH-kon összesen 25 pont.
-
-? Milyen jegyet kapsz 77 pontra?
-- elégséges
-- közepes
-+ jó
-- jeles
-! 76–88 pont: jó.
-
 ? Melyik szám **irracionális**?
 - $0{,}25$
 - $\frac{22}{7}$

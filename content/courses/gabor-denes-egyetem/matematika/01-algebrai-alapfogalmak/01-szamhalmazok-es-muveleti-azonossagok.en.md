@@ -1,38 +1,13 @@
 ---
-title: About the Course and Number Sets
-summary: How the semester is structured, what you need for the signature and the grade – and the number sets we work with.
+title: Number Sets and the Laws of Operations
+summary: Natural numbers, integers, rational and real numbers, and the laws of the basic operations.
 minutes: 15
 ---
 
 ## What you will learn
 
-- how the **Mathematics** course is structured and how you get your **grade**,
 - what the **number sets** are ($\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{R}$) and how they differ,
 - the **laws** of the basic operations (commutativity, associativity, distributivity).
-
-## Course requirements in brief
-
-Mathematics (B-MATEMA) ends with a **term grade**; there are 2 hours of lectures, 1 hour of seminar and 2 hours of lab per week. Its goal is to give you the mathematical foundations on which programming, databases, algorithms, artificial intelligence and cryptography are built.
-
-| What?             | Details                                                                                   |
-| ----------------- | ----------------------------------------------------------------------------------------- |
-| Week-0 classes    | refresher material (algebra, functions, sets, logic), up to **15 bonus points**           |
-| Tests (full-time) | **3 written tests**, each on the material since the previous one, **100 points** in total |
-| Tests (distance)  | 2 written tests, 100 points in total                                                      |
-| Signature         | at least **5 points** in week 0 and at least **25 points** on the tests in total          |
-| Retake            | a retake test on the whole material 1–2 weeks after the teaching period                   |
-
-The grade comes from the test points plus the bonus points:
-
-| Points | Grade            |
-| ------ | ---------------- |
-| 0–49   | fail (1)         |
-| 50–62  | pass (2)         |
-| 63–75  | satisfactory (3) |
-| 76–88  | good (4)         |
-| 89–100 | excellent (5)    |
-
-This material follows the 10 topics of the course description. The first two topics (and the beginning of functions) are the **week-0 refresher**: go through them carefully, because every later topic builds on them.
 
 ## Number sets
 
@@ -74,24 +49,12 @@ The two are linked by **distributivity**: $a(b + c) = ab + ac$. Expanding bracke
 
 ## Summary
 
-- Grade: 3 tests (100 points) + week-0 bonus points; the signature needs 5 + 25 points; 50 points is a pass.
 - $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$; irrational numbers (e.g. $\sqrt 2$, $\pi$) are not fractions.
 - Basic laws: commutativity, associativity, distributivity; order: brackets, powers, multiplication/division, addition/subtraction.
 
 ## Lesson exercise
 
 ```quiz required
-? How many points do you need on the tests in total, at least, for the signature?
-= 25
-! The two conditions of the signature: 5 points in week 0 and 25 points on the tests in total.
-
-? What grade do you get for 77 points?
-- pass
-- satisfactory
-+ good
-- excellent
-! 76–88 points: good.
-
 ? Which number is **irrational**?
 - $0.25$
 - $\frac{22}{7}$

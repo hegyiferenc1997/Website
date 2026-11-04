@@ -13,7 +13,7 @@ minutes: 25
 
 ## A modellezési ciklus
 
-Egy **matematikai modell** a valóság egyszerűsített leírása képletekkel. A félév minden témaköre ilyen eszköz volt: a függvények, a deriváltak, az integrálok és a differenciálegyenletek. A modellezés lépései:
+Egy **matematikai modell** a valóság egyszerűsített leírása képletekkel. A tananyag minden témaköre ilyen eszköz volt: a függvények, a deriváltak, az integrálok és a differenciálegyenletek. A modellezés lépései:
 
 1. **A probléma megértése:** mit akarunk tudni, és mire fogjuk használni?
 2. **Feltevések és változók:** mi számít, és mi hanyagolható el (pl. „a légellenállás elhanyagolható”)? Mik a bemenetek, mi a kimenet, milyen mértékegységben?

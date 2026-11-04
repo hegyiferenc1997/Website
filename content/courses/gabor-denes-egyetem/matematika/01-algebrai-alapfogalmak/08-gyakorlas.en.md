@@ -1,6 +1,6 @@
 ---
 title: Practice – Algebra and Equations
-summary: Review questions and a summary worksheet on the week-0 algebra material.
+summary: Review questions and a summary worksheet on basic algebra and equations.
 minutes: 30
 kind: practice
 ---

@@ -1,6 +1,6 @@
 ---
 title: Practice – Sequences and Series
-summary: Review questions and a summary worksheet on sequences, limits and series (material of test 1).
+summary: Review questions and a summary worksheet on sequences, limits and series.
 minutes: 30
 kind: practice
 ---

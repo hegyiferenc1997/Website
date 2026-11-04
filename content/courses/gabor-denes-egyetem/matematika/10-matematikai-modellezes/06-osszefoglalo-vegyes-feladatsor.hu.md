@@ -1,25 +1,23 @@
 ---
-title: Összefoglaló – ZH-felkészítő feladatlap
-summary: Vegyes feladatsor a félév teljes anyagából, tanácsokkal a zárthelyi dolgozatokhoz.
+title: Összefoglaló – vegyes feladatsor
+summary: Vegyes feladatsor a teljes tananyagból, tanácsokkal az ismétléshez.
 minutes: 45
 kind: practice
 ---
 
-## Tanácsok a ZH-khoz
-
-A félévközi jegy **három ZH** pontjaiból áll össze (összesen $100$ pont), és a $0.$ héten legfeljebb $15$ plusz pont szerezhető. Az aláíráshoz a $0.$ héten legalább $5$, a ZH-kon összesen legalább $25$ pont kell. A ponthatárok: $0$–$49$ elégtelen, $50$–$62$ elégséges, $63$–$75$ közepes, $76$–$88$ jó, $89$–$100$ jeles. (Pontosítás mindig a tárgy oktatójától, Dr. Zimányi Krisztinától és a hivatalos tájékoztatóból.)
+## Tanácsok a felkészüléshez
 
 <details>
-<summary>1. Hogyan érdemes készülni?</summary>
+<summary>1. Hogyan érdemes ismételni?</summary>
 
 Témakörönként: először nézd át a leckék **összefoglalását**, aztán oldd meg újra a **gyakorló leckék** feladatlapjait **segítség nélkül**. Ahol elakadsz, ott olvasd újra a leckét. Az interaktív ábrákkal a „miért” is megmarad, nem csak a képlet.
 
 </details>
 
 <details>
-<summary>2. Mit csinálj a ZH alatt?</summary>
+<summary>2. Hogyan ellenőrizd a megoldásodat?</summary>
 
-Először fusd át az összes feladatot, és kezdd azzal, amit biztosan tudsz. Minden lépést írj le (a részpontokért), és a végén **ellenőrizz**: deriválással egy integrált, behelyettesítéssel egy egyenlet vagy differenciálegyenlet megoldását, nagyságrendi becsléssel egy számolást.
+Minden lépést írj le, és a végén **ellenőrizz**: deriválással egy integrált, behelyettesítéssel egy egyenlet vagy differenciálegyenlet megoldását, nagyságrendi becsléssel egy számolást.
 
 </details>
 

@@ -1,6 +1,6 @@
 ---
 title: Gyakorlás – algebra és egyenletek
-summary: Ellenőrző kérdések és összefoglaló feladatlap a 0. heti algebrai anyaghoz.
+summary: Ellenőrző kérdések és összefoglaló feladatlap az algebrai alapfogalmakhoz és az egyenletekhez.
 minutes: 30
 kind: practice
 ---

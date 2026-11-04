@@ -23,7 +23,7 @@ $$
 \neg \forall x\, P(x) \equiv \exists x\, \neg P(x), \qquad \neg \exists x\, P(x) \equiv \forall x\, \neg P(x).
 $$
 
-Például a „Minden hallgató átment a ZH-n.” tagadása nem az, hogy „Senki sem ment át”, hanem: „**Van** olyan hallgató, aki **nem** ment át.”
+Például a „Minden hallgató átment a vizsgán.” tagadása nem az, hogy „Senki sem ment át”, hanem: „**Van** olyan hallgató, aki **nem** ment át.”
 
 A sorrend számít: $\forall x\, \exists y\, (y > x)$ igaz a valós számokon (mindenhez van nagyobb), de $\exists y\, \forall x\, (y > x)$ hamis (nincs mindennél nagyobb szám).
 
