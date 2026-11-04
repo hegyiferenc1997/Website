@@ -21,24 +21,35 @@ export async function getSearchItems(locale: string): Promise<SearchItem[]> {
     getTranslations("UniversitiesPage"),
   ]);
 
-  const uniItems: SearchItem[] = universities.map((u) => {
-    const name = localize(u.name, locale);
-    const huName = u.name.hu;
-    return {
-      kind: "university",
-      key: `university:${u.slug}`,
-      title: name,
-      // A szint (BSc / MSc) is látszik, mert ugyanaz az egyetem mindkét szinten szerepelhet.
-      meta: [levelShort(u.level), u.city, tUni("courseCount", { count: u.courses.length })]
-        .filter(Boolean)
-        .join(" · "),
-      // A magyar név és rövidítése (pl. GDE) más nyelven is kereshető.
-      keywords: [u.slug, acronym(name), huName, acronym(huName), u.city, levelShort(u.level)]
-        .filter(Boolean)
-        .join(" "),
-      university: u.slug,
-    };
-  });
+  // A tárgy nélküli (helykitöltő) egyetemeknek még nincs megnyitható oldaluk, ezért nem kereshetők.
+  const uniItems: SearchItem[] = universities
+    .filter((u) => u.courses.length > 0)
+    .map((u) => {
+      const name = localize(u.name, locale);
+      const huName = u.name.hu;
+      return {
+        kind: "university",
+        key: `university:${u.slug}`,
+        title: name,
+        // A szint (BSc / MSc) is látszik, mert ugyanaz az egyetem mindkét szinten szerepelhet.
+        meta: [levelShort(u.level), u.city, tUni("courseCount", { count: u.courses.length })]
+          .filter(Boolean)
+          .join(" · "),
+        // A magyar név és rövidítése (pl. GDE) más nyelven is kereshető.
+        keywords: [
+          u.slug,
+          u.shortName,
+          acronym(name),
+          huName,
+          acronym(huName),
+          u.city,
+          levelShort(u.level),
+        ]
+          .filter(Boolean)
+          .join(" "),
+        university: u.slug,
+      };
+    });
 
   const courseItems: SearchItem[] = catalog.map((c) => {
     const uniName = localize(c.university.name, locale);

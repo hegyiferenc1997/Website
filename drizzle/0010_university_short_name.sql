@@ -1,0 +1,1 @@
+ALTER TABLE "universities" ADD COLUMN "short_name" text;

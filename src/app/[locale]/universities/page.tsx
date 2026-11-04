@@ -24,13 +24,18 @@ export default async function UniversitiesPage() {
     getUniversities(),
   ]);
 
-  // Szakaszok szintenként, a szinten belül az egyetemek ábécérendben.
+  // Szakaszok szintenként; elöl a tárgyakkal rendelkező egyetemek, utánuk a helykitöltők
+  // („hamarosan”), mindkét csoporton belül ábécérendben.
   const collator = new Intl.Collator(locale);
   const sections = DEGREE_LEVELS.map((level) => ({
     level,
     list: list
       .filter((u) => u.level === level)
-      .sort((a, b) => collator.compare(localize(a.name, locale), localize(b.name, locale))),
+      .sort(
+        (a, b) =>
+          Number(a.courses.length === 0) - Number(b.courses.length === 0) ||
+          collator.compare(localize(a.name, locale), localize(b.name, locale)),
+      ),
   })).filter((s) => ALWAYS_SHOWN.has(s.level) || s.list.length > 0);
 
   return (
@@ -61,24 +66,47 @@ export default async function UniversitiesPage() {
                 <EmptyState>{t(`levelEmpty.${s.level}`)}</EmptyState>
               ) : (
                 <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {s.list.map((u) => (
-                    <li key={u.id}>
-                      <Link
-                        className="group block h-full"
-                        href={{
-                          pathname: "/universities/[university]",
-                          params: { university: u.slug },
-                        }}
-                      >
-                        <LinkCardBody
-                          title={localize(u.name, locale)}
-                          meta={[u.city, t("courseCount", { count: u.courses.length })]
-                            .filter(Boolean)
-                            .join(" · ")}
-                        />
-                      </Link>
-                    </li>
-                  ))}
+                  {s.list.map((u) =>
+                    // Tárgy nélküli egyetem: csak helykitöltő, nem kattintható, „hamarosan” címkével.
+                    u.courses.length === 0 ? (
+                      <li key={u.id}>
+                        <span className="flex h-full items-start justify-between gap-4 rounded-lg border border-dashed border-line p-5">
+                          <span className="grid flex-1 gap-1.5">
+                            <span className="font-mono text-base font-bold text-muted">
+                              {localize(u.name, locale)}
+                            </span>
+                            <span className="text-sm text-muted">
+                              {[u.shortName, u.city].filter(Boolean).join(" · ")}
+                            </span>
+                          </span>
+                          <span className="whitespace-nowrap rounded-md border border-line px-2 py-0.5 font-mono text-xs text-muted">
+                            {t("comingSoon")}
+                          </span>
+                        </span>
+                      </li>
+                    ) : (
+                      <li key={u.id}>
+                        <Link
+                          className="group block h-full"
+                          href={{
+                            pathname: "/universities/[university]",
+                            params: { university: u.slug },
+                          }}
+                        >
+                          <LinkCardBody
+                            title={localize(u.name, locale)}
+                            meta={[
+                              u.shortName,
+                              u.city,
+                              t("courseCount", { count: u.courses.length }),
+                            ]
+                              .filter(Boolean)
+                              .join(" · ")}
+                          />
+                        </Link>
+                      </li>
+                    ),
+                  )}
                 </ul>
               )}
             </section>

@@ -25,8 +25,22 @@ describe("adatbázis", () => {
   it("a kezdő adat többször is betölthető duplikálás nélkül", async () => {
     const db = await createLocalDb();
     await seed(db);
-    expect(await db.query.universities.findMany()).toHaveLength(1);
+    // GDE (BSc) + 11 helykitöltő egyetem: 8 BSc-n és MSc-n is, 3 csak BSc-n = 20 bejegyzés.
+    expect(await db.query.universities.findMany()).toHaveLength(20);
     expect(await db.query.courses.findMany()).toHaveLength(50);
+  });
+
+  it("a helykitöltő egyetemek szintenként külön sort kapnak, tárgyak nélkül", async () => {
+    const db = await createLocalDb();
+    const list = await db.query.universities.findMany({ with: { courses: true } });
+    const bme = list.filter((u) => u.shortName === "BME");
+    expect(bme.map((u) => [u.slug, u.level]).sort()).toEqual([
+      ["budapesti-muszaki-es-gazdasagtudomanyi-egyetem", "bsc"],
+      ["budapesti-muszaki-es-gazdasagtudomanyi-egyetem-msc", "msc"],
+    ]);
+    expect(bme.every((u) => u.courses.length === 0)).toBe(true);
+    // A Dunaújvárosi Egyetemnek csak alapszakja van.
+    expect(list.filter((u) => u.shortName === "DUE").map((u) => u.level)).toEqual(["bsc"]);
   });
 
   it("mind a 7 félév és a két specializáció betöltődik", async () => {

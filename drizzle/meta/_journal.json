@@ -71,6 +71,13 @@
       "when": 1793724890999,
       "tag": "0009_university_level",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793810237335,
+      "tag": "0010_university_short_name",
+      "breakpoints": true
     }
   ]
 }

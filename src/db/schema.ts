@@ -53,6 +53,8 @@ export const universities = pgTable("universities", {
   id: serial("id").primaryKey(),
   slug: text("slug").notNull().unique(),
   name: localized("name").notNull(),
+  /** Rövidítés, pl. „BME” vagy „GDE”: ezen a néven ismerik a hallgatók, a keresés is megtalálja. */
+  shortName: text("short_name"),
   /** Képzési szint: ez alapján kerül az Egyetemek oldalon a BSc vagy az MSc szakaszba. */
   level: degreeLevel("level").notNull().default("bsc"),
   country: text("country").notNull(), // ISO 3166-1 kód, pl. "HU"
