@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Halmazalgebra",
+    "en": "Set Algebra"
+  },
+  "description": {
+    "hu": "A halmaz fogalma és megadása, részhalmaz, hatványhalmaz és intervallumok, a halmazműveletek (unió, metszet, különbség, komplementer) és Venn-diagramjaik, a műveleti azonosságok és a De Morgan-szabályok, a Descartes-szorzat és a számosság (szitaformula), végül az eseményalgebra mint a valószínűségszámítás alapja.",
+    "en": "The concept and notation of sets, subsets, power sets and intervals, set operations (union, intersection, difference, complement) and their Venn diagrams, the laws of set algebra and De Morgan's laws, the Cartesian product and cardinality (inclusion–exclusion), and finally the algebra of events as the basis of probability."
+  }
+}

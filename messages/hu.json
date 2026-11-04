@@ -261,6 +261,13 @@
     "editorLabel": "Python kódszerkesztő",
     "keys": "Ctrl+Enter: futtatás / ellenőrzés · Tab: behúzás · Esc, majd Tab: kilépés a szerkesztőből"
   },
+  "Plot": {
+    "label": "Interaktív ábra",
+    "reset": "Alaphelyzet",
+    "slope": "érintő meredeksége x = {x} pontban",
+    "area": "integrál a [{a}; {b}] szakaszon",
+    "riemann": "közelítő összeg (n = {n})"
+  },
   "Quiz": {
     "label": "Feladatlap",
     "labelRequired": "Feladatlap · a lecke feladata",
@@ -283,7 +290,11 @@
     "exprPlaceholder": "pl. A·B' + C",
     "exprHelp": "Jelölések: NEM: A' vagy ¬A · ÉS: A·B, A*B vagy AB · VAGY: A+B · KIZÁRÓ VAGY: A⊕B vagy A^B · zárójel: ( )",
     "tableHelp": "Kattints a kimeneti cellákra: ? → 0 → 1. Minden cellát tölts ki.",
-    "cellLabel": "{output} kimenet, {row}. sor"
+    "cellLabel": "{output} kimenet, {row}. sor",
+    "invalidFn": "Ezt a képletet nem tudom értelmezni. Nézd meg a zárójeleket és a műveleti jeleket (lásd a mező alatti jelöléseket).",
+    "fnPlaceholder": "pl. 2{v} + sin({v})",
+    "fnHelp": "Jelölések: + − * / ^ (x^2), zárójel ( ), sqrt(x) vagy √x, |x|, sin, cos, tan, ln, lg, e^x, pi, n!. Az 1/2x jelentése (1/2)·x, ezért írd így: 1/(2x).",
+    "fnHelpConst": "Jelölések: + − * / ^ (x^2), zárójel ( ), sqrt(x), |x|, sin, cos, ln, e^x, pi. A +C állandót nem kötelező kiírni."
   },
   "DashboardPage": {
     "title": "Irányítópult",

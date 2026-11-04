@@ -54,8 +54,6 @@ print("Jegy:", jegy)   # 4
 
 > **Figyelj a sorrendre!** Ha a `pont >= 50` feltétel állna elöl, a 78 pont is 2-es lenne, mert az az első igaz ág. A szigorúbb feltétel mindig kerüljön előre.
 
-A fenti ponthatárok egyébként épp a tárgy értékelési skálája (50–62 elégséges, 63–75 közepes, 76–88 jó, 89–100 jeles).
-
 ## Beágyazott elágazás
 
 Egy ágon belül újabb elágazás is állhat:

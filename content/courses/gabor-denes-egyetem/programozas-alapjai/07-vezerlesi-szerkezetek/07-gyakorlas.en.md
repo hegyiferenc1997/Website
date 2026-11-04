@@ -136,7 +136,7 @@ print("All checks passed!")
 
 ### Exercise 3: Grade from score
 
-Write a function `grade(score)` using the course's scale: 0–49 → 1, 50–62 → 2, 63–75 → 3, 76–88 → 4, 89–100 → 5. For an invalid score (below 0 or above 100) return `None`!
+Write a function `grade(score)` using the following scale: 0–49 → 1, 50–62 → 2, 63–75 → 3, 76–88 → 4, 89–100 → 5. For an invalid score (below 0 or above 100) return `None`!
 
 ```python starter
 def grade(score):

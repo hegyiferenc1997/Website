@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Matematikai modellezés és alkalmazások",
+    "en": "Mathematical Modelling and Applications"
+  },
+  "description": {
+    "hu": "A matematika a gyakorlatban: a modellezés lépései, növekedési modellek (exponenciális és logisztikus), optimalizálás és lineáris programozás, adatokra illesztés a legkisebb négyzetek módszerével, az algoritmusok futási idejének növekedése, és egy összefoglaló vegyes feladatsor.",
+    "en": "Mathematics in practice: the steps of modelling, growth models (exponential and logistic), optimization and linear programming, fitting data with least squares, the growth of algorithms' running time, and a mixed summary problem set."
+  }
+}

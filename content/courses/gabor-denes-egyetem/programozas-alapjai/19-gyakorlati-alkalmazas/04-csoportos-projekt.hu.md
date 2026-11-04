@@ -8,7 +8,7 @@ minutes: 20
 
 - hogyan szervezz meg egy **csoportos programozási projektet** az ötlettől a bemutatásig,
 - hogyan dolgozzatok **közösen ugyanazon a kódon** (Git),
-- milyen **dokumentációt** kell készíteni, és mi kerüljön bele – a tárgy értékelésében **a dokumentáció is számít**!
+- milyen **dokumentációt** kell készíteni, és mi kerüljön bele – egy jó projektben **a dokumentáció is számít**!
 
 ## A projekt szakaszai
 
@@ -139,7 +139,7 @@ for nev, fuggveny in [("beolvas", beolvas), ("atlag", atlag), ("jelentes", jelen
 - **Könyvtári rendszer:** könyvek, kölcsönzés, határidők, késedelmi díj.
 - **Szövegelemző eszköz:** a 2. mini projekt kibővítése parancssori felülettel.
 
-## Az értékelés szempontjai (tipikusan)
+## Mitől jó egy csapatprojekt?
 
 - a program **működik**, és teljesíti a specifikációt,
 - **kódminőség**: olvasható, tagolt, kommentezett, PEP 8,

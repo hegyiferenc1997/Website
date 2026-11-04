@@ -3,7 +3,8 @@
 // - a tananyag minden kvízblokkja hibátlanul feldolgozható, a magyar és az angol változat
 //   ugyanazokat a jó válaszokat várja, és az egyszerűsítő feladatok megoldása tényleg egyenértékű
 //   az eredeti kifejezéssel;
-// - a Digitális technika minden leckéjének van kötelező feladata.
+// - a Digitális technika, az Innováció, az Operációs rendszerek és a Matematika minden leckéjének
+//   van kötelező feladata.
 
 import { describe, expect, it } from "vitest";
 import { loadContent } from "@/db/content";
@@ -67,6 +68,15 @@ describe("logikai kifejezések", () => {
     expect(checkExpr({ inputs: ["A", "B", "C"], values: v, limit: null, dc: [6, 7] }, "A")).toBe(
       "ok",
     );
+  });
+
+  it("a tört és a tizedes tört számként is egyezik", () => {
+    expect(checkInput({ answers: ["0.5"] }, "1/2")).toBe(true);
+    expect(checkInput({ answers: ["-3/4"] }, "-0,75")).toBe(true);
+    expect(checkInput({ answers: ["2.5"] }, "2.50")).toBe(true);
+    expect(checkInput({ answers: ["0.5"] }, "0.6")).toBe(false);
+    // Egész számoknál pontos egyezés kell (bitminták).
+    expect(checkInput({ answers: ["0110"] }, "110")).toBe(false);
   });
 
   it("a rövid válasz egységesítése", () => {
@@ -144,6 +154,8 @@ function answerKey(q: QuizQuestion): string {
       return /^[-+]?[0-9a-f.,x ]+$/i.test(q.answers[0])
         ? `input:${normalizeAnswer(q.answers[0])}`
         : "input:text";
+    case "fn":
+      return `fn:${q.vars.join(",")}:${q.expr.replace(/\s/g, "")}:${q.domain.join(",")}:${q.upToConstant}`;
   }
 }
 
@@ -246,6 +258,26 @@ describe("Operációs rendszerek", () => {
   it("van tananyaga, és minden leckének van kötelező feladata", () => {
     // 1 laborkörnyezet-témakör (VirtualBox) + a tantárgyleírás 16 témaköre.
     expect(course?.topics.length).toBe(17);
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("minden lecke két nyelven elérhető", () => {
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.body.en).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+});
+
+describe("Matematika", () => {
+  const course = loadContent().find((c) => c.course === "matematika");
+
+  it("van tananyaga, és minden leckének van kötelező feladata", () => {
+    // A tantárgyleírás 10 fő témaköre (a 0. heti felzárkóztató anyag az 1–2. és 4. témakörben van).
+    expect(course?.topics.length).toBe(10);
     const missing = course!.topics.flatMap((t) =>
       t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
     );

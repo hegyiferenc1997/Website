@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Integrálszámítás és alkalmazásai",
+    "en": "Integral Calculus and Its Applications"
+  },
+  "description": {
+    "hu": "A primitív függvény és a határozatlan integrál, az alapintegrálok, az integrálási módszerek (helyettesítés, parciális integrálás), a határozott integrál mint a Riemann-összegek határértéke, a Newton–Leibniz-formula és a területszámítás, az alkalmazások (két görbe közötti terület, átlagérték, forgástest térfogata, improprius integrál), végül a numerikus integrálás.",
+    "en": "Antiderivatives and the indefinite integral, basic integrals, integration techniques (substitution, integration by parts), the definite integral as the limit of Riemann sums, the Newton–Leibniz formula and computing areas, applications (area between curves, mean value, volume of solids of revolution, improper integrals), and finally numerical integration."
+  }
+}

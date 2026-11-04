@@ -2,8 +2,10 @@ import "server-only";
 import { Marked, type Token, type Tokens, type TokensList } from "marked";
 import { createHighlighterCore, type HighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+import { parsePlot, type PlotSpec } from "@/features/plot/spec";
 import { parseQuiz, type QuizQuestion } from "@/features/quiz/logic";
 import { parseCodeInfo, parseQuizInfo, type CodeRole } from "./code-info";
+import { mathExtension } from "./math";
 
 // A leckék Markdown szövegét HTML-lé alakítja a szerveren, színezett kódrészletekkel.
 // A böngészőbe kész HTML megy, így a kódkiemeléshez nem kell JavaScriptet letölteni.
@@ -163,9 +165,9 @@ function codeBlock(h: HighlighterCore, { text, lang }: Tokens.Code, locale: stri
   return `<details class="check-details"><summary>${escapeHtml(summary)}</summary>\n${block}</details>`;
 }
 
-// A Marked beállítása: saját kódblokk, címsor, link és táblázat kinézet.
+// A Marked beállítása: képletek ($…$), saját kódblokk, címsor, link és táblázat kinézet.
 function createMarked(h: HighlighterCore, locale: string) {
-  return new Marked({
+  return new Marked(mathExtension, {
     gfm: true,
     renderer: {
       code: (token) => codeBlock(h, token, locale),
@@ -235,6 +237,11 @@ export type LessonSegment =
       /** A kérdések; a kérdés és a válaszlehetőségek szövege már HTML (a szerveren alakítva). */
       questions: QuizQuestion[];
       required: boolean;
+    }
+  | {
+      /** Interaktív függvényábra (```plot blokk), csúszkákkal. */
+      kind: "plot";
+      spec: PlotSpec;
     };
 
 // Hány <details> nyílik / záródik egy HTML darabban (a lenyitható dobozokon belüli kódot nem bontjuk ki).
@@ -288,6 +295,12 @@ export async function renderLessonSegments(
           ...(q.kind === "choice" ? { choices: q.choices.map(inline) } : {}),
         })),
       });
+      return;
+    }
+    // Függvényábra (```plot): interaktív ábra lesz belőle.
+    if (token.type === "code" && (token as Tokens.Code).lang?.trim() === "plot" && depth === 0) {
+      flush();
+      segments.push({ kind: "plot", spec: parsePlot((token as Tokens.Code).text) });
       return;
     }
     const info = token.type === "code" ? parseCodeInfo((token as Tokens.Code).lang) : null;

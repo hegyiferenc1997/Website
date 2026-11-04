@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Differenciálszámítás és alkalmazásai",
+    "en": "Differential Calculus and Its Applications"
+  },
+  "description": {
+    "hu": "A derivált mint az érintő meredeksége és a pillanatnyi változási sebesség, a deriválási szabályok (összeg, szorzat, hányados, láncszabály), a L'Hospital-szabály, a monotonitás, szélsőérték, konvexitás és a teljes függvényvizsgálat, végül az optimalizálás és a Newton-módszer.",
+    "en": "The derivative as the slope of the tangent and the instantaneous rate of change, the differentiation rules (sum, product, quotient, chain rule), L'Hôpital's rule, monotonicity, extrema, convexity and the full analysis of a function, and finally optimisation and Newton's method."
+  }
+}
