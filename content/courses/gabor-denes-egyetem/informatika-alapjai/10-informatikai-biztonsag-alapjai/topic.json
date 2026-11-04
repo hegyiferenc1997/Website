@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Informatikai biztonság alapjai", "en": "IT Security Basics" },
+  "description": {
+    "hu": "A biztonság három célja (bizalmasság, sértetlenség, rendelkezésre állás), a fenyegetések (kártevők, zsarolóvírus, adathalászat, social engineering), a védekezés eszközei (erős jelszó, jelszókezelő, többfaktoros hitelesítés, titkosítás, frissítés), valamint a mentés 3-2-1 szabálya.",
+    "en": "The three goals of security (confidentiality, integrity, availability), threats (malware, ransomware, phishing, social engineering), means of defence (strong passwords, password managers, multi-factor authentication, encryption, updates), and the 3-2-1 backup rule."
+  }
+}

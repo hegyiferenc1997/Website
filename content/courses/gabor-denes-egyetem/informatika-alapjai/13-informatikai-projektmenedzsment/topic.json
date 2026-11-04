@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Informatikai projektmenedzsment", "en": "IT Project Management" },
+  "description": {
+    "hu": "Mi a projekt, a projektháromszög (terjedelem, idő, költség) és a projekt életciklusa, a tervezés eszközei (munkalebontási struktúra, Gantt-diagram, kritikus út, kockázatkezelés), valamint az agilis projektvezetés: Scrum szerepkörök, események és Kanban.",
+    "en": "What a project is, the project triangle (scope, time, cost) and the project life cycle, planning tools (work breakdown structure, Gantt chart, critical path, risk management), and agile project management: Scrum roles, events and Kanban."
+  }
+}

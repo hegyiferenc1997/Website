@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatok és információk", "en": "Data and Information" },
+  "description": {
+    "hu": "Az adat, az információ és a tudás közti különbség, a számrendszerek (kettes, tízes, tizenhatos) és az átváltás, valamint hogyan ábrázolja a számítógép a számokat, a szöveget, a képet és a hangot bitekkel.",
+    "en": "The difference between data, information and knowledge, number systems (binary, decimal, hexadecimal) and conversion between them, and how a computer represents numbers, text, images and sound with bits."
+  }
+}

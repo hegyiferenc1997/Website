@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Számítógépes hálózatok és internet",
+    "en": "Computer Networks and the Internet"
+  },
+  "description": {
+    "hu": "A hálózatok fajtái (PAN, LAN, WAN), topológiái és eszközei (switch, router, hozzáférési pont), a rétegmodellek (OSI, TCP/IP), az IP-cím, a DNS és a port, valamint a web működése: URL, HTTP, HTTPS.",
+    "en": "Types of networks (PAN, LAN, WAN), topologies and devices (switch, router, access point), layer models (OSI, TCP/IP), IP addresses, DNS and ports, and how the web works: URL, HTTP, HTTPS."
+  }
+}

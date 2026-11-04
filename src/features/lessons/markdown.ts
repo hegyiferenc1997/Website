@@ -35,6 +35,11 @@ const LANGS = {
   powershell: () => import("shiki/langs/powershell.mjs"),
   // Konténerképek leírása (Dockerfile) a virtualizációs témakörhöz.
   docker: () => import("shiki/langs/docker.mjs"),
+  // Weboldalak (HTML, CSS) és szerverbeállítások (YAML, nginx) az Informatika alapjaihoz.
+  html: () => import("shiki/langs/html.mjs"),
+  css: () => import("shiki/langs/css.mjs"),
+  yaml: () => import("shiki/langs/yaml.mjs"),
+  nginx: () => import("shiki/langs/nginx.mjs"),
 };
 
 // Más nevek ugyanarra a nyelvre, pl. ```py → python.
@@ -45,6 +50,7 @@ const ALIASES: Record<string, keyof typeof LANGS> = {
   ps1: "powershell",
   pwsh: "powershell",
   dockerfile: "docker",
+  yml: "yaml",
   shell: "bash",
   console: "bash",
   "c++": "cpp",
@@ -82,6 +88,10 @@ const LABELS: Partial<Record<keyof typeof LANGS, string>> = {
   tcl: "Tcl",
   powershell: "PowerShell",
   docker: "Dockerfile",
+  html: "HTML",
+  css: "CSS",
+  yaml: "YAML",
+  nginx: "nginx",
 };
 
 // Ezekhez a jelölésekhez nem írunk fejlécet (sima szöveg, kimenet).

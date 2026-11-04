@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Operációs rendszerek alapjai", "en": "Operating System Basics" },
+  "description": {
+    "hu": "Az operációs rendszer feladatai és a mai rendszerek (Windows, macOS, Linux, Android, iOS), a fájlrendszer felhasználói szemmel (mappák, elérési utak, kiterjesztések, jogosultságok), valamint a folyamatok, a Feladatkezelő és a parancssor első lépései.",
+    "en": "The tasks of an operating system and today's systems (Windows, macOS, Linux, Android, iOS), the file system from a user's view (folders, paths, extensions, permissions), and processes, the Task Manager and first steps on the command line."
+  }
+}
