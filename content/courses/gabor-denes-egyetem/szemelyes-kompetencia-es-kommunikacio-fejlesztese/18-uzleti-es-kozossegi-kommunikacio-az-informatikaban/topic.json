@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Üzleti és közösségi kommunikáció az informatikában",
+    "en": "Business and Community Communication in IT"
+  },
+  "description": {
+    "hu": "Kommunikáció nem technikai szereplőkkel (érintettek, követelmények, felhasználói történetek, becslések, magyarázat laikusoknak), incidens- és válságkommunikáció (állapotjelzés, hibáztatásmentes utólagos elemzés), valamint a szakmai és nyílt forráskódú közösségek kommunikációja (kódátnézés, issue és pull request, jó kérdés feltevése, magatartási kódex). A témakör gyakorló leckéje a tárgy záró, vegyes feladatsora.",
+    "en": "Communicating with non-technical stakeholders (stakeholders, requirements, user stories, estimates, explaining to laypeople), incident and crisis communication (status updates, blameless post-mortems), and communication in professional and open-source communities (code review, issues and pull requests, asking good questions, codes of conduct). The topic's practice lesson is the course's final mixed worksheet."
+  }
+}

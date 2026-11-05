@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Hatékony tanulás eszközei és módszerei",
+    "en": "Tools and Methods of Effective Learning"
+  },
+  "description": {
+    "hu": "Hogyan működik az emlékezet (munkamemória, hosszú távú memória, felejtési görbe), a kutatásokkal igazolt tanulási módszerek (aktív felidézés, időközös ismétlés, váltogatás, Feynman-technika) és a tévhitek, valamint a tanulás a gyakorlatban: jegyzetelés, alvás, programozás tanulása és a mesterséges intelligencia mint tanulótárs.",
+    "en": "How memory works (working memory, long-term memory, the forgetting curve), research-backed learning methods (active recall, spaced repetition, interleaving, the Feynman technique) and myths, and learning in practice: note-taking, sleep, learning to program and AI as a study partner."
+  }
+}
