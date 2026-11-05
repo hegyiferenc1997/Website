@@ -183,8 +183,7 @@
     "topicProgress": "{done} of {total} lessons done",
     "lessonDoneLabel": "“{title}” done",
     "lessonTodoLabel": "“{title}” not done yet",
-    "paywallHint": "Locked: buy a plan to open it",
-    "loginToMarkDone": "Sign in to mark it as done"
+    "paywallHint": "Locked: buy a plan to open it"
   },
   "Search": {
     "open": "Search",

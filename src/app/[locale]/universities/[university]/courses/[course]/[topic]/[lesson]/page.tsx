@@ -11,7 +11,6 @@ import {
   CourseProgressHeader,
   GatedLessonLink,
   LessonDoneButton,
-  LoginToMarkDone,
 } from "@/features/progress/components";
 import { lessonKey } from "@/features/progress/data";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
@@ -250,7 +249,12 @@ async function LessonContent({ params }: Pick<Props, "params">) {
             />
 
             <footer className="grid gap-6 border-t border-line pt-6">
-              <div>{signedIn ? <LessonDoneButton {...lessonRef} /> : <LoginToMarkDone />}</div>
+              {/* Késznek jelölni csak bejelentkezve lehet; vendégnek nincs gomb. */}
+              {signedIn && (
+                <div>
+                  <LessonDoneButton {...lessonRef} />
+                </div>
+              )}
               <LessonPager
                 nextLocked={!nextOpen}
                 prev={
