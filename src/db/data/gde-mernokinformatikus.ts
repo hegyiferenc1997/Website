@@ -60,6 +60,7 @@ export const semesters: CurriculumCourse[][] = [
       name: "Személyes kompetencia és kommunikáció fejlesztése",
       en: "Personal Competence and Communication Skills",
       credits: 3,
+      active: true,
     },
   ],
   // 2. félév

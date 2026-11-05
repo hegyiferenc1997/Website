@@ -153,7 +153,7 @@ export function SearchMenu({ items }: { items: SearchItem[] }) {
         <SearchIcon />
         <span className="sr-only md:not-sr-only">{t("open")}</span>
         <kbd className="hidden rounded border border-line px-1.5 font-mono text-[11px] lg:inline">
-          Ctrl K
+          Ctrl+K
         </kbd>
       </button>
 
