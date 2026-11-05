@@ -76,6 +76,8 @@ async function CourseContent({ params }: Pick<Props, "params">) {
   const until = access.fullUntil;
   const godMode = access.godMode;
   const paid = hasFullAccess(access);
+  // Kézzel pipálni csak bejelentkezve lehet.
+  const signedIn = access.user !== null;
   const buyButton = (
     <BuyButton
       university={course.university.slug}
@@ -221,8 +223,8 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         lessons={topic.lessons.map((l) => lessonKey(topic.slug, l.slug))}
                       />
                     </div>
-                    {/* A témakör leckéi: kész-jel, sorszám, cím, idő. Minden nyitott lecke kézzel ki-be pipálható
-                        (a feladat teljesítése is késznek jelöli); vásárlás nélkül csak az első lecke nyitott. */}
+                    {/* A témakör leckéi: kész-jel, sorszám, cím, idő. Bejelentkezve minden nyitott lecke kézzel
+                        ki-be pipálható (a feladat teljesítése is késznek jelöli); vásárlás nélkül csak az első lecke nyitott. */}
                     <ol className="divide-y divide-line">
                       {topic.lessons.map((lesson, j) => {
                         const title = localize(lesson.title, locale);
@@ -235,8 +237,12 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         };
                         return (
                           <li key={lesson.id} className="flex items-center gap-4 px-5 py-3">
-                            {/* Zárolt leckénél nem pipálható kézzel */}
-                            {open ? <LessonDoneToggle {...ref} /> : <LessonDoneMark {...ref} />}
+                            {/* Zárolt leckénél, illetve kijelentkezve nem pipálható kézzel */}
+                            {open && signedIn ? (
+                              <LessonDoneToggle {...ref} />
+                            ) : (
+                              <LessonDoneMark {...ref} />
+                            )}
                             <span className="w-8 font-mono text-xs text-muted tabular-nums">
                               {i + 1}.{j + 1}
                             </span>

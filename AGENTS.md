@@ -53,4 +53,5 @@ A csak ikont tartalmazó gombok `data-tooltip="…"` attribútumot kapnak (kétn
   a többi lakattal zárolt (`isLessonOpen`, `src/features/payments/lesson-access.ts`). A zárolt lecke
   szövege nem kerül a böngészőbe; a zárolásról mindig a szerver dönt (nincs villanás).
 - Minden megnyitható lecke **kézzel ki-be pipálható** (kész / nem kész), akkor is, ha van benne kötelező
-  feladat (a sikeres feladat is késznek jelöli). Új tárgynál ne vezess be más zárolási szabályt.
+  feladat (a sikeres feladat is késznek jelöli). Késznek jelölni (kézzel vagy feladattal) **csak bejelentkezve**
+  lehet; vendégnek a „Kész” gomb helyén a bejelentkezést megnyitó gomb áll. Új tárgynál ne vezess be más zárolási szabályt.

@@ -3,6 +3,7 @@
 import { useEffect, useId, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { openLoginPanel } from "@/features/auth/open-login";
 import { lessonKey } from "./data";
 import { PROGRESS_STYLE_ID } from "./script";
 import {
@@ -257,6 +258,23 @@ export function LessonDoneButton(props: LessonRef) {
   );
 }
 
+/**
+ * A „Kész” gomb helyett vendégnek: késznek jelölni csak bejelentkezve lehet,
+ * ezért ez a gomb a fejléc bejelentkezés paneljét nyitja meg.
+ */
+export function LoginToMarkDone() {
+  const t = useTranslations("Progress");
+  return (
+    <button
+      type="button"
+      onClick={openLoginPanel}
+      className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2 font-mono text-sm text-muted transition-colors hover:border-accent hover:text-fg"
+    >
+      {t("loginToMarkDone")}
+    </button>
+  );
+}
+
 /** Egy témakör elvégzett leckéinek száma, pl. „2/4”. */
 export function TopicProgress({
   university,
@@ -318,7 +336,7 @@ export function StartCourseLink({
   );
 }
 
-/** Nem kattintható kész-jelző a leckék listájában a zárolt leckéknél (vásárlás nélkül nem pipálható). */
+/** Nem kattintható kész-jelző a leckék listájában: zárolt leckénél, vagy ha nincs bejelentkezve. */
 export function LessonDoneMark(props: LessonRef & { title: string }) {
   const t = useTranslations("Progress");
   const progress = useProgress();

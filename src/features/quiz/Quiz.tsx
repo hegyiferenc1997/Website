@@ -57,11 +57,14 @@ export function Quiz({
   questions,
   required,
   lessonRef,
+  canMarkDone = true,
   next,
 }: {
   questions: QuizQuestion[];
   required: boolean;
   lessonRef?: LessonRef;
+  /** false: nincs bejelentkezve, ezért a sikeres feladatlap nem jelöli késznek a leckét. */
+  canMarkDone?: boolean;
   /** A következő lecke (a siker után „Tovább” link). */
   next?: { href: LessonHref; title: string } | null;
 }) {
@@ -85,7 +88,7 @@ export function Quiz({
   function check() {
     const result = questions.map((q, i) => judge(q, answers[i]));
     setVerdicts(result);
-    if (result.every((v) => v === "ok") && required && lessonRef) {
+    if (result.every((v) => v === "ok") && required && lessonRef && canMarkDone) {
       setLessonDone(courseKey(lessonRef.university, lessonRef.course), lessonRef.lesson, true);
     }
   }
@@ -151,7 +154,7 @@ export function Quiz({
         <div className="quiz-result">
           <div className="py-pass">
             <p>✓ {t("passed")}</p>
-            {required && lessonRef && (
+            {required && lessonRef && canMarkDone && (
               <p className="text-sm">
                 {t("lessonDone")}{" "}
                 {next && (
@@ -166,7 +169,7 @@ export function Quiz({
       )}
 
       {/* A kötelező feladat állapota: a ProgressScript a React előtt is helyesen mutatja (nincs villanás). */}
-      {required && lessonRef && (
+      {required && lessonRef && canMarkDone && (
         <p
           className={"py-required-status" + (done ? " is-done" : "")}
           data-exercise-done={`${courseKey(lessonRef.university, lessonRef.course)}:${lessonRef.lesson}`}

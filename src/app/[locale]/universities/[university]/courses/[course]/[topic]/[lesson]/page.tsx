@@ -11,6 +11,7 @@ import {
   CourseProgressHeader,
   GatedLessonLink,
   LessonDoneButton,
+  LoginToMarkDone,
 } from "@/features/progress/components";
 import { lessonKey } from "@/features/progress/data";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
@@ -93,6 +94,8 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   const thisKey = lessonKey(topic.slug, lesson.slug);
   const index = allLessons.indexOf(thisKey);
   const open = isLessonOpen(paid, index);
+  // Késznek jelölni (kézzel vagy a feladattal) csak bejelentkezve lehet.
+  const signedIn = access.user !== null;
   // Zárolt leckénél a szöveg el sem készül, és nem is kerül a böngészőbe.
   const segments = open ? await renderLessonBody(localize(lesson.body, locale), locale) : [];
   // Van-e képlet a leckében (csak akkor töltjük be a képletszedő stíluslapját és betűit).
@@ -242,13 +245,12 @@ async function LessonContent({ params }: Pick<Props, "params">) {
             <LessonBody
               segments={segments}
               lessonRef={lessonRef}
+              canMarkDone={signedIn}
               next={nextOpen ? nextLesson : null}
             />
 
             <footer className="grid gap-6 border-t border-line pt-6">
-              <div>
-                <LessonDoneButton {...lessonRef} />
-              </div>
+              <div>{signedIn ? <LessonDoneButton {...lessonRef} /> : <LoginToMarkDone />}</div>
               <LessonPager
                 nextLocked={!nextOpen}
                 prev={
@@ -282,10 +284,13 @@ async function LessonContent({ params }: Pick<Props, "params">) {
 function LessonBody({
   segments,
   lessonRef,
+  canMarkDone,
   next,
 }: {
   segments: LessonSegment[];
   lessonRef: LessonRef;
+  /** Bejelentkezve: a sikeres feladat késznek jelöli a leckét. */
+  canMarkDone: boolean;
   next: { href: LessonHref; title: string } | null;
 }) {
   return (
@@ -304,6 +309,7 @@ function LessonBody({
             questions={s.questions}
             required={s.required}
             lessonRef={lessonRef}
+            canMarkDone={canMarkDone}
             next={s.required ? next : null}
           />
         ) : (
@@ -315,6 +321,7 @@ function LessonBody({
             required={s.required}
             label={s.label}
             lessonRef={lessonRef}
+            canMarkDone={canMarkDone}
             next={s.required ? next : null}
           />
         ),

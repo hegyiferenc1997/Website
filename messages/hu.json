@@ -183,7 +183,8 @@
     "topicProgress": "{done} / {total} lecke kész",
     "lessonDoneLabel": "„{title}” kész",
     "lessonTodoLabel": "„{title}” még nincs kész",
-    "paywallHint": "Zárolva: vásárolj egy csomagot a megnyitáshoz"
+    "paywallHint": "Zárolva: vásárolj egy csomagot a megnyitáshoz",
+    "loginToMarkDone": "Jelentkezz be a késznek jelöléshez"
   },
   "Search": {
     "open": "Keresés",
