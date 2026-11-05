@@ -865,8 +865,7 @@
 }
 
 /*
- * Zárolt leckék (sorrendi haladás): a React a data-locked attribútummal jelöli őket.
- * Kirajzolás előtt ugyanezt a GateScript ideiglenes stílusa adja (features/progress/gate-script.tsx).
+ * Zárolt leckék (vásárlás nélkül csak az első lecke nyitott): a szerver a data-locked attribútummal jelöli őket.
  */
 [data-locked] .gate-lock {
   display: inline-flex;
@@ -876,14 +875,6 @@
   color: var(--muted);
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-[data-locked] .gate-content {
-  display: none;
-}
-
-[data-locked] .gate-notice {
-  display: grid;
 }
 
 /*

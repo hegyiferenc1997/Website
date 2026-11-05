@@ -85,7 +85,7 @@ Helló, világ!
 Programozni tanulok.
 ```
 
-Írd meg a kódot, nyomd meg a **Futtatás** gombot, hogy lásd a kimenetet, majd az **Ellenőrzés** gombbal nézesd meg a géppel, hogy jó-e. Ha minden stimmel, a lecke kész, és megnyílik a következő.
+Írd meg a kódot, nyomd meg a **Futtatás** gombot, hogy lásd a kimenetet, majd az **Ellenőrzés** gombbal nézesd meg a géppel, hogy jó-e. Ha minden stimmel, a lecke késznek jelölődik (a lecke alján kézzel is ki-be pipálhatod).
 
 ```python starter required
 # Írd ide a két print() sort!

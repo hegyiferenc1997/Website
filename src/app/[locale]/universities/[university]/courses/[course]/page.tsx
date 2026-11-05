@@ -17,10 +17,10 @@ import {
 } from "@/features/progress/components";
 import { courseLessons } from "@/features/courses/lessons";
 import { lessonKey } from "@/features/progress/data";
-import { GateScript } from "@/features/progress/gate-script";
 import { formatDateUntil } from "@/features/account/format";
 import { courseSemester } from "@/features/courses/semester";
-import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
+import { getUniversityAccess, hasFullAccess } from "@/features/payments/access";
+import { FREE_LESSONS_PER_COURSE, isLessonOpen } from "@/features/payments/lesson-access";
 import { BuyButton } from "@/features/payments/BuyButton";
 import { LockedNotice } from "@/features/payments/LockedNotice";
 
@@ -69,13 +69,15 @@ async function CourseContent({ params }: Pick<Props, "params">) {
   // Ismeretlen tárgy → 404 oldal.
   if (!course) notFound();
 
-  // Melyik félévhez tartozik, és meg van-e véve. Ha nincs, a témakörök és leckék címei látszanak,
-  // de a leckék nem nyithatók meg.
+  // Melyik félévhez tartozik (a vásárlás gombhoz), és van-e teljes hozzáférése.
+  // Teljes hozzáférés (bármelyik aktív csomag vagy god mode): minden lecke nyitva, sorrendi zárolás nélkül.
+  // Nélküle a témakörök és leckék címei látszanak, de csak az első lecke nyitható meg.
   const semester = courseSemester(course.programCourses);
-  // God mode-ban (admin) vásárlás nélkül is nyitva van, sorrendi zárolás nélkül.
-  const until = access.passes.get(semester);
+  const until = access.fullUntil;
   const godMode = access.godMode;
-  const paid = hasSemesterAccess(access, semester);
+  const paid = hasFullAccess(access);
+  // Kézzel pipálni csak bejelentkezve lehet.
+  const signedIn = access.user !== null;
   const buyButton = (
     <BuyButton
       university={course.university.slug}
@@ -96,23 +98,12 @@ async function CourseContent({ params }: Pick<Props, "params">) {
     params: { university: course.university.slug, course: course.slug, topic, lesson },
   });
 
-  // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben; a linkek folyamatos sorszámot kapnak.
+  // A tárgy összes leckéje sorrendben; a leckék folyamatos sorszámot kapnak (az ingyenes első leckéhez).
   const allLessons = courseLessons(course);
-  const gate = {
-    university: course.university.slug,
-    course: course.slug,
-    lessons: allLessons,
-    paid,
-    unlocked: godMode,
-  };
   let position = 0;
 
   return (
     <div className="grid gap-10">
-      {/* A zárolt leckék jelölése még a kirajzolás előtt (nincs villanás). */}
-      {paid && !godMode && (
-        <GateScript courseKey={`${course.university.slug}/${course.slug}`} lessons={allLessons} />
-      )}
       <div className="grid gap-4">
         {/* Morzsamenü: Egyetemek / <egyetem neve> */}
         <nav aria-label={t("breadcrumb")} className="text-sm text-muted">
@@ -143,8 +134,8 @@ async function CourseContent({ params }: Pick<Props, "params">) {
           course={course.slug}
           lessons={allLessons}
         />
-        {/* „Tananyag indítása”: a sorrendben első, még ki nem pipált leckére visz.
-            Megvásárolt félévnél a hozzáférés lejárata is látszik; ha nincs megvéve, lent a zárolás üzenete. */}
+        {/* „Tananyag indítása”: a sorrendben első, még ki nem pipált leckére visz (vásárlás nélkül az
+            ingyenes első leckére). Teljes hozzáférésnél a lejárata is látszik; ha nincs, lent a zárolás üzenete. */}
         {first && paid && (
           <p className="font-mono text-xs text-accent">
             {godMode
@@ -152,13 +143,13 @@ async function CourseContent({ params }: Pick<Props, "params">) {
               : until && `✓ ${t("accessUntil", { date: formatDateUntil(until, locale) })}`}
           </p>
         )}
-        {first && paid && (
+        {first && (
           <StartCourseLink
             university={course.university.slug}
             course={course.slug}
-            lessons={course.topics.flatMap((topic) =>
-              topic.lessons.map((l) => ({ topic: topic.slug, lesson: l.slug })),
-            )}
+            lessons={course.topics
+              .flatMap((topic) => topic.lessons.map((l) => ({ topic: topic.slug, lesson: l.slug })))
+              .slice(0, paid ? undefined : FREE_LESSONS_PER_COURSE)}
           >
             {t("start")} →
           </StartCourseLink>
@@ -202,12 +193,7 @@ async function CourseContent({ params }: Pick<Props, "params">) {
           <SectionTitle>{t("topics")}</SectionTitle>
           {/* Nincs megvásárolva: magyarázat a zárolásról, vásárlás gombbal */}
           {first && !paid && (
-            <LockedNotice
-              title={t("lockedTitle")}
-              text={t("lockedText", {
-                semester: semester === 0 ? tUni("noSemester") : tUni("semester", { semester }),
-              })}
-            >
+            <LockedNotice title={t("lockedTitle")} text={t("lockedText")}>
               {buyButton}
             </LockedNotice>
           )}
@@ -237,11 +223,12 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         lessons={topic.lessons.map((l) => lessonKey(topic.slug, l.slug))}
                       />
                     </div>
-                    {/* A témakör leckéi: kész-jel, sorszám, cím (zárolva, amíg az előzők nincsenek kész), idő.
-                        A feladatos leckék a feladat teljesítésével lesznek készek, a többi kézzel pipálható. */}
+                    {/* A témakör leckéi: kész-jel, sorszám, cím, idő. Bejelentkezve minden nyitott lecke kézzel
+                        ki-be pipálható (a feladat teljesítése is késznek jelöli); vásárlás nélkül csak az első lecke nyitott. */}
                     <ol className="divide-y divide-line">
                       {topic.lessons.map((lesson, j) => {
                         const title = localize(lesson.title, locale);
+                        const open = isLessonOpen(paid, position++);
                         const ref = {
                           university: course.university.slug,
                           course: course.slug,
@@ -250,18 +237,17 @@ async function CourseContent({ params }: Pick<Props, "params">) {
                         };
                         return (
                           <li key={lesson.id} className="flex items-center gap-4 px-5 py-3">
-                            {/* Zárolt (meg nem vásárolt) tárgynál nem pipálható kézzel */}
-                            {lesson.hasExercise || !paid ? (
-                              <LessonDoneMark {...ref} />
-                            ) : (
+                            {/* Zárolt leckénél, illetve kijelentkezve nem pipálható kézzel */}
+                            {open && signedIn ? (
                               <LessonDoneToggle {...ref} />
+                            ) : (
+                              <LessonDoneMark {...ref} />
                             )}
                             <span className="w-8 font-mono text-xs text-muted tabular-nums">
                               {i + 1}.{j + 1}
                             </span>
                             <GatedLessonLink
-                              gate={gate}
-                              index={position++}
+                              locked={!open}
                               href={lessonHref(topic.slug, lesson.slug)}
                               className="flex-1 hover:text-accent"
                             >

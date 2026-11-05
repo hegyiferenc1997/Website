@@ -7,7 +7,7 @@ import { universityLabel } from "@/features/courses/level";
 import { localize } from "@/features/courses/localize";
 import { getCourse, getCourses } from "@/features/courses/queries";
 import { courseSemester } from "@/features/courses/semester";
-import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
+import { getUniversityAccess, hasFullAccess } from "@/features/payments/access";
 import {
   emptyProgress,
   lessonKey,
@@ -35,7 +35,7 @@ export type DashboardCourse = {
   lessons: DashboardLesson[];
   /** A fiókban tárolt elvégzett leckék ("témakör/lecke"); a böngésző frissebb adata felülírhatja. */
   serverDone: string[];
-  /** Meg van-e véve a tárgy féléve (ha nem, a leckék nem nyithatók meg). */
+  /** Van-e teljes hozzáférése (bármelyik aktív csomag); ha nincs, csak az első lecke nyitható meg. */
   paid: boolean;
 };
 
@@ -97,13 +97,14 @@ export async function getDashboard(db: Database, userId: string, locale: string,
           })),
         ),
         serverDone: progress.doneLessons[key] ?? [],
-        paid: hasSemesterAccess(access, semester),
+        paid: hasFullAccess(access),
       };
-      // Foglalkozott-e már vele: van elvégzett leckéje, ezt nyitotta meg utoljára, vagy megvette.
+      // Foglalkozott-e már vele: van elvégzett leckéje, ezt nyitotta meg utoljára, vagy a féléve meg van véve.
+      // (A teljes hozzáférés minden tárgyat felold, de a listában csak a megvett félév tárgyai jelennek meg.)
       const started =
         course.lessons.some((l) => course.serverDone.includes(lessonKey(l.topic, l.lesson))) ||
         progress.lastCourse[c.university.slug] === c.slug ||
-        course.paid;
+        access.passes.has(semester);
       return { course, started };
     }),
   );

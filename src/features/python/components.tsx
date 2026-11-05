@@ -261,6 +261,7 @@ export function Exercise({
   required,
   label,
   lessonRef,
+  canMarkDone = true,
   next,
 }: {
   index: number;
@@ -269,6 +270,8 @@ export function Exercise({
   required: boolean;
   label: string;
   lessonRef?: LessonRef;
+  /** false: nincs bejelentkezve, ezért a sikeres feladat nem jelöli késznek a leckét. */
+  canMarkDone?: boolean;
   /** A következő lecke (a siker után „Tovább” link). */
   next?: { href: LessonHref; title: string } | null;
 }) {
@@ -304,7 +307,7 @@ export function Exercise({
   const runOnly = () => void run(value, { stdin, mode: "run" });
   async function check() {
     const result = await run(value, { test, stdin, mode: "check" });
-    if (result.ok && required && lessonRef) {
+    if (result.ok && required && lessonRef && canMarkDone) {
       setLessonDone(courseKey(lessonRef.university, lessonRef.course), lessonRef.lesson, true);
     }
   }
@@ -356,7 +359,7 @@ export function Exercise({
           {result && result.ok && (
             <div className="py-pass">
               <p>✓ {t("passed")}</p>
-              {required && lessonRef && (
+              {required && lessonRef && canMarkDone && (
                 <p className="text-sm">
                   {t("lessonDone")}{" "}
                   {next && (
@@ -379,7 +382,7 @@ export function Exercise({
         </OutputPanel>
       )}
       {/* A kötelező feladat állapota: a ProgressScript a React előtt is helyesen mutatja (nincs villanás). */}
-      {required && lessonRef && (
+      {required && lessonRef && canMarkDone && (
         <p
           className={"py-required-status" + (done ? " is-done" : "")}
           data-exercise-done={`${courseKey(lessonRef.university, lessonRef.course)}:${lessonRef.lesson}`}

@@ -43,3 +43,15 @@ elemekre; ha új, kattintható, de nem ilyen elem készül (pl. kattintható `di
 
 A csak ikont tartalmazó gombok `data-tooltip="…"` attribútumot kapnak (kétnyelvű szöveggel a messages fájlokból),
 így egérrel fölé érve megjelenik, mit csinálnak (lásd `globals.css`, „Súgó-buborék”).
+
+## Leckék zárolása (a projekt tulajdonosának kérése, minden jelenlegi és jövőbeli tárgyra)
+
+- Ha a felhasználónak van **bármilyen aktív vásárlása** (bármelyik csomag, bármelyik egyetem/félév), akkor
+  **minden tárgy minden leckéje nyitva van**, lakat és sorrendi zárolás nélkül (`hasFullAccess`,
+  `src/features/payments/access.ts`). Az admin god mode ugyanígy mindent megnyit.
+- Vásárlás nélkül, illetve kijelentkezve minden tárgyban **csak az első témakör első leckéje** nyitott,
+  a többi lakattal zárolt (`isLessonOpen`, `src/features/payments/lesson-access.ts`). A zárolt lecke
+  szövege nem kerül a böngészőbe; a zárolásról mindig a szerver dönt (nincs villanás).
+- Minden megnyitható lecke **kézzel ki-be pipálható** (kész / nem kész), akkor is, ha van benne kötelező
+  feladat (a sikeres feladat is késznek jelöli). Késznek jelölni (kézzel vagy feladattal) **csak bejelentkezve**
+  lehet; vendégnek nincs „Kész” gomb, a pipák nem kattinthatók. Új tárgynál ne vezess be más zárolási szabályt.
