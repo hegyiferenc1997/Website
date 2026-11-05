@@ -85,7 +85,7 @@ Hello, world!
 I am learning to program.
 ```
 
-Write the code, press **Run** to see the output, then press **Check** to let the computer verify it. When everything is right, the lesson is complete and the next one unlocks.
+Write the code, press **Run** to see the output, then press **Check** to let the computer verify it. When everything is right, the lesson is marked as done (you can also toggle it by hand at the bottom of the lesson).
 
 ```python starter required
 # Write the two print() lines here!

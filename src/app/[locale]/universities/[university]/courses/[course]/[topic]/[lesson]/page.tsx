@@ -11,18 +11,16 @@ import {
   CourseProgressHeader,
   GatedLessonLink,
   LessonDoneButton,
-  LessonExerciseStatus,
-  LessonGate,
 } from "@/features/progress/components";
 import { lessonKey } from "@/features/progress/data";
-import { GateScript } from "@/features/progress/gate-script";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
 import { Quiz } from "@/features/quiz/Quiz";
 import { Plot } from "@/features/plot/Plot";
 import { hasMath, KATEX_VERSION } from "@/features/lessons/math";
 import { Link } from "@/i18n/navigation";
 import { courseSemester } from "@/features/courses/semester";
-import { getUniversityAccess, hasSemesterAccess } from "@/features/payments/access";
+import { getUniversityAccess, hasFullAccess } from "@/features/payments/access";
+import { isLessonOpen } from "@/features/payments/lesson-access";
 import { BuyButton } from "@/features/payments/BuyButton";
 import { LockedNotice } from "@/features/payments/LockedNotice";
 
@@ -86,13 +84,17 @@ async function LessonContent({ params }: Pick<Props, "params">) {
   // Ismeretlen lecke → 404 oldal.
   if (!data) notFound();
   const { course, topic, lesson, number, prev, next } = data;
-  // Meg van-e véve a tárgy féléve. Ha nincs, a lecke szövege el sem készül és nem is kerül a böngészőbe.
   const semester = courseSemester(course.programCourses);
   const semesterTitle = semester === 0 ? tUni("noSemester") : tUni("semester", { semester });
-  // Megvette, vagy az admin god mode be van kapcsolva (ilyenkor sorrendi zárolás sincs).
-  const paid = hasSemesterAccess(access, semester);
-  const godMode = access.godMode;
-  const segments = paid ? await renderLessonBody(localize(lesson.body, locale), locale) : [];
+  // Teljes hozzáférés: bármelyik aktív csomag vagy admin god mode. Ilyenkor minden lecke nyitva.
+  const paid = hasFullAccess(access);
+  // A tárgy összes leckéje sorrendben, és hányadik ez közülük (vásárlás nélkül csak az első nyitott).
+  const allLessons = courseLessons(course);
+  const thisKey = lessonKey(topic.slug, lesson.slug);
+  const index = allLessons.indexOf(thisKey);
+  const open = isLessonOpen(paid, index);
+  // Zárolt leckénél a szöveg el sem készül, és nem is kerül a böngészőbe.
+  const segments = open ? await renderLessonBody(localize(lesson.body, locale), locale) : [];
   // Van-e képlet a leckében (csak akkor töltjük be a képletszedő stíluslapját és betűit).
   const math = segments.some(
     (s) =>
@@ -112,16 +114,13 @@ async function LessonContent({ params }: Pick<Props, "params">) {
     pathname: "/universities/[university]/courses/[course]" as const,
     params: { university, course: course.slug },
   };
-  // A sorrendi zároláshoz: a tárgy összes leckéje sorrendben, és hányadik ez közülük.
-  const allLessons = courseLessons(course);
-  const gate = { university, course: course.slug, lessons: allLessons, paid, unlocked: godMode };
-  const thisKey = lessonKey(topic.slug, lesson.slug);
-  const index = allLessons.indexOf(thisKey);
   const lessonRef: LessonRef = { university, course: course.slug, lesson: thisKey };
   const nextLesson = next && {
     href: href(next.topic.slug, next.lesson.slug),
     title: localize(next.lesson.title, locale),
   };
+  // Nyitott-e a következő lecke (ha nem, a feladat „Tovább” gombja sem jelenik meg).
+  const nextOpen = isLessonOpen(paid, index + 1);
   // Folyamatos sorszám a leckék linkjeihez (a zároláshoz).
   let position = 0;
 
@@ -147,8 +146,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
                 return (
                   <li key={l.id}>
                     <GatedLessonLink
-                      gate={gate}
-                      index={position++}
+                      locked={!isLessonOpen(paid, position++)}
                       href={href(x.slug, l.slug)}
                       current={current}
                       className={
@@ -172,10 +170,6 @@ async function LessonContent({ params }: Pick<Props, "params">) {
 
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12">
-      {/* A zárolás még a kirajzolás előtt érvényesül (frissítéskor sem villan fel a zárolt tartalom). */}
-      {paid && !godMode && (
-        <GateScript courseKey={`${university}/${course.slug}`} lessons={allLessons} />
-      )}
       {math && <MathAssets />}
       <aside className="hidden lg:sticky lg:top-24 lg:block lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
         {outline}
@@ -225,12 +219,9 @@ async function LessonContent({ params }: Pick<Props, "params">) {
           <div className="pt-4">{outline}</div>
         </details>
 
-        {/* Meg nem vásárolt félév: a lecke helyett a zárolás üzenete, vásárlás gombbal. */}
-        {!paid && (
-          <LockedNotice
-            title={t("lockedTitle")}
-            text={t("lockedText", { semester: semesterTitle })}
-          >
+        {/* Zárolt lecke (nincs vásárlás, és nem az első lecke): a lecke helyett üzenet, vásárlás gombbal. */}
+        {!open && (
+          <LockedNotice title={t("lockedTitle")} text={t("lockedText")}>
             <BuyButton
               university={university}
               semester={semester}
@@ -245,23 +236,21 @@ async function LessonContent({ params }: Pick<Props, "params">) {
           </LockedNotice>
         )}
 
-        {/* Zárolt lecke (az előzők még nincsenek kész): a tartalom helyett üzenet látszik. */}
-        {paid && (
-          <LessonGate gate={gate} index={index}>
-            <LessonBody segments={segments} lessonRef={lessonRef} next={nextLesson} />
+        {/* Nyitott lecke: a szöveg, alul a kézzel ki-be kapcsolható „Kész” gomb és a lapozás. */}
+        {open && (
+          <>
+            <LessonBody
+              segments={segments}
+              lessonRef={lessonRef}
+              next={nextOpen ? nextLesson : null}
+            />
 
-            {/* Alul: kész-állapot (vagy „Kész” gomb) és lapozás az előző / következő leckére */}
             <footer className="grid gap-6 border-t border-line pt-6">
               <div>
-                {lesson.hasExercise ? (
-                  <LessonExerciseStatus {...lessonRef} />
-                ) : (
-                  <LessonDoneButton {...lessonRef} />
-                )}
+                <LessonDoneButton {...lessonRef} />
               </div>
               <LessonPager
-                gate={gate}
-                index={index}
+                nextLocked={!nextOpen}
                 prev={
                   prev && {
                     href: href(prev.topic.slug, prev.lesson.slug),
@@ -279,7 +268,7 @@ async function LessonContent({ params }: Pick<Props, "params">) {
                 }}
               />
             </footer>
-          </LessonGate>
+          </>
         )}
       </article>
     </div>
@@ -365,18 +354,16 @@ function MathAssets() {
 
 /**
  * Előző / következő lecke. Az utolsó lecke után vissza a tárgy oldalára.
- * A következő lecke zárolt, amíg ez a lecke nincs kész.
+ * Vásárlás nélkül a következő lecke zárolt (lakattal).
  */
 function LessonPager({
-  gate,
-  index,
+  nextLocked,
   prev,
   next,
   courseHref,
   labels,
 }: {
-  gate: { university: string; course: string; lessons: string[]; unlocked?: boolean };
-  index: number;
+  nextLocked: boolean;
   prev: { href: LessonHref; title: string } | null;
   next: { href: LessonHref; title: string } | null;
   courseHref: {
@@ -400,8 +387,7 @@ function LessonPager({
       )}
       {next ? (
         <GatedLessonLink
-          gate={gate}
-          index={index + 1}
+          locked={nextLocked}
           href={next.href}
           className={card + " sm:text-right"}
           lockIcon={false}

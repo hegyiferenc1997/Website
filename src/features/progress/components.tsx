@@ -4,15 +4,12 @@ import { useEffect, useId, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { lessonKey } from "./data";
-import { GATE_STYLE_ID } from "./gate-script";
 import { PROGRESS_STYLE_ID } from "./script";
 import {
   courseKey,
   courseRatio,
   doneCount,
-  firstOpenIndex,
   isLessonDone,
-  isLessonLocked,
   setLastCourse,
   setLessonDone,
   setOpenSemesters,
@@ -321,7 +318,7 @@ export function StartCourseLink({
   );
 }
 
-/** Kész-jelző a leckék listájában azoknál a leckéknél, amelyek a feladat teljesítésével lesznek készek. */
+/** Nem kattintható kész-jelző a leckék listájában a zárolt leckéknél (vásárlás nélkül nem pipálható). */
 export function LessonDoneMark(props: LessonRef & { title: string }) {
   const t = useTranslations("Progress");
   const progress = useProgress();
@@ -346,83 +343,20 @@ export function LessonDoneMark(props: LessonRef & { title: string }) {
   );
 }
 
-/** A lecke „Kész” állapota a lecke alján, ha a leckét a feladat teljesítése zárja le (nem kattintható). */
-export function LessonExerciseStatus(props: LessonRef) {
-  const t = useTranslations("Progress");
-  const progress = useProgress();
-  useHandOverFromScript(progress !== null);
-  const done = isLessonDone(progress, courseKey(props.university, props.course), props.lesson);
-  return (
-    <p
-      data-lesson-done={doneAttr(props.university, props.course, props.lesson)}
-      className={
-        "lesson-done inline-flex w-fit items-center gap-2 rounded-md border border-line px-4 py-2 font-mono text-sm text-muted" +
-        (done ? " is-done" : "")
-      }
-    >
-      <span data-when="todo" className={done ? "hidden" : ""}>
-        {t("exerciseTodo")}
-      </span>
-      <span data-when="done" className={done ? "" : "hidden"}>
-        ✓ {t("exerciseDone")}
-      </span>
-    </p>
-  );
-}
-
-/** A zárolás ideiglenes stílusának törlése, amint a React a mentett haladással rajzolt. */
-function useHandOverGate(ready: boolean) {
-  useEffect(() => {
-    if (ready) document.getElementById(GATE_STYLE_ID)?.remove();
-  }, [ready]);
-}
-
 /**
- * Egy tárgy leckéi a zároláshoz: a tárgy és a leckék sorrendben ("témakör/lecke").
- * paid = false: a félév nincs megvásárolva, ezért minden lecke zárolt (a szerver dönti el, így nem villan).
- * unlocked = true: az admin god mode be van kapcsolva, nincs sorrendi zárolás (szintén a szerver dönti el).
- */
-type GateProps = {
-  university: string;
-  course: string;
-  lessons: string[];
-  paid?: boolean;
-  unlocked?: boolean;
-};
-
-/** A zárolás állapota az index. leckére, és a hozzá tartozó HTML attribútumok. */
-function useGate(
-  { university, course, lessons, paid = true, unlocked = false }: GateProps,
-  index: number,
-) {
-  const progress = useProgress();
-  useHandOverGate(progress !== null);
-  const key = courseKey(university, course);
-  // God mode-ban semmi sem zárolt; egyébként fizetés és sorrend szerint.
-  const locked = !unlocked && (!paid || isLessonLocked(progress, key, lessons, index));
-  return {
-    progress,
-    key,
-    locked,
-    attrs: { "data-gate": `${key}#${index}`, "data-locked": locked ? "" : undefined },
-  };
-}
-
-/**
- * Lecke link, amely zárolt, amíg az előző leckék nincsenek kész: halványabb, lakat ikon,
- * kattintásra nem visz sehova, és egérrel fölé érve megmondja, miért.
+ * Lecke link. Zárolva (locked = true) halványabb, lakat ikonnal, kattintásra nem visz sehova,
+ * és egérrel fölé érve megmondja, hogyan nyitható meg. Hogy zárolt-e, azt a szerver dönti el
+ * (vásárlás / első lecke, lásd payments/lesson-access.ts), így frissítéskor sem villan.
  */
 export function GatedLessonLink({
-  gate,
-  index,
+  locked,
   href,
   className,
   children,
   current,
   lockIcon = true,
 }: {
-  gate: GateProps;
-  index: number;
+  locked: boolean;
   href: {
     pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]";
     params: { university: string; course: string; topic: string; lesson: string };
@@ -434,14 +368,13 @@ export function GatedLessonLink({
   lockIcon?: boolean;
 }) {
   const t = useTranslations("Progress");
-  const { locked, attrs } = useGate(gate, index);
   return (
     <Link
       href={href}
-      {...attrs}
+      data-locked={locked ? "" : undefined}
       aria-current={current ? "page" : undefined}
       aria-disabled={locked || undefined}
-      data-tooltip={locked ? t(gate.paid === false ? "paywallHint" : "lockedHint") : undefined}
+      data-tooltip={locked ? t("paywallHint") : undefined}
       onClick={(e) => {
         if (locked) e.preventDefault();
       }}
@@ -454,44 +387,5 @@ export function GatedLessonLink({
       )}
       {children}
     </Link>
-  );
-}
-
-/**
- * A lecke tartalma, amely zárolt, amíg az előző leckék nincsenek kész. Ilyenkor a tartalom helyett
- * egy üzenet látszik, linkkel az első el nem végzett leckére.
- */
-export function LessonGate({
-  gate,
-  index,
-  children,
-}: {
-  gate: GateProps;
-  index: number;
-  children: ReactNode;
-}) {
-  const t = useTranslations("Progress");
-  const { progress, key, attrs } = useGate(gate, index);
-  // Az első el nem végzett lecke; a haladás betöltése előtt az első lecke (ugyanaz a felirat, nincs villanás).
-  const open =
-    gate.lessons[Math.min(firstOpenIndex(progress, key, gate.lessons), gate.lessons.length - 1)];
-  const [topic, lesson] = (progress ? open : gate.lessons[0]).split("/");
-  return (
-    <div {...attrs} className="grid gap-8">
-      <div className="gate-notice hidden gap-3 rounded-lg border border-line bg-surface p-6">
-        <p className="font-mono text-lg text-highlight">🔒 {t("lockedTitle")}</p>
-        <p className="text-muted">{t("lockedText")}</p>
-        <Link
-          href={{
-            pathname: "/universities/[university]/courses/[course]/[topic]/[lesson]",
-            params: { university: gate.university, course: gate.course, topic, lesson },
-          }}
-          className="w-fit rounded-md bg-accent px-4 py-2 font-mono text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
-        >
-          {t("goToOpen")} →
-        </Link>
-      </div>
-      <div className="gate-content grid gap-8">{children}</div>
-    </div>
   );
 }

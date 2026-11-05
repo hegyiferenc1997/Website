@@ -161,7 +161,7 @@
     "minutes": "{minutes} perc",
     "start": "Tananyag indítása",
     "lockedTitle": "A tananyag zárolt",
-    "lockedText": "A témakörök és leckék címei szabadon böngészhetők. A leckék megnyitásához vásárold meg a(z) {semester} hozzáférést – ez a félév összes tárgyát feloldja.",
+    "lockedText": "A témakörök és leckék címei szabadon böngészhetők, az első lecke ingyen kipróbálható. A többi lecke megnyitásához vásárold meg bármelyik csomagot – ez az összes tárgy minden leckéjét feloldja.",
     "accessUntil": "Hozzáférésed aktív: {date}-ig",
     "godModeActive": "God mode: minden lecke nyitva (admin)"
   },
@@ -183,13 +183,7 @@
     "topicProgress": "{done} / {total} lecke kész",
     "lessonDoneLabel": "„{title}” kész",
     "lessonTodoLabel": "„{title}” még nincs kész",
-    "exerciseTodo": "A lecke akkor lesz kész, ha a lecke feladatát sikeresen ellenőrizted.",
-    "exerciseDone": "Lecke kész – a feladatot teljesítetted",
-    "lockedHint": "Zárolva: előbb végezd el az előző leckéket",
-    "lockedTitle": "Ez a lecke még zárolva van",
-    "lockedText": "A tananyag sorban halad: egy lecke akkor nyílik meg, ha az összes előzőnek teljesítetted a feladatát.",
-    "goToOpen": "Ugrás az aktuális leckéhez",
-    "paywallHint": "Zárolva: vásárold meg a félévet a megnyitáshoz"
+    "paywallHint": "Zárolva: vásárolj egy csomagot a megnyitáshoz"
   },
   "Search": {
     "open": "Keresés",
@@ -234,7 +228,7 @@
     "backToCourse": "Vissza a tárgyhoz",
     "lessonNav": "Leckék közötti lapozás",
     "lockedTitle": "Ez a lecke zárolt",
-    "lockedText": "A lecke a(z) {semester} része. A megnyitásához vásárold meg a félévet – ez a félév összes tárgyát feloldja."
+    "lockedText": "Vásárlás nélkül minden tárgyban csak az első lecke nyitott. A lecke megnyitásához vásárold meg bármelyik csomagot – ez az összes tárgy minden leckéjét feloldja."
   },
   "Python": {
     "run": "Futtatás",
@@ -253,11 +247,11 @@
     "stopped": "Leállítva.",
     "loadFailed": "Nem sikerült betölteni a Pythont. Ellenőrizd az internetkapcsolatot, és próbáld újra!",
     "passed": "Siker! Minden ellenőrzés teljesült.",
-    "lessonDone": "A lecke kész, a következő lecke feloldva.",
+    "lessonDone": "A lecke kész.",
     "nextLesson": "Tovább: {title}",
     "failedTest": "Még nem jó: az ellenőrzés hibát talált. Ez a feltétel nem teljesült:",
     "failedCode": "Hiba történt a kódod futtatása közben:",
-    "requiredHint": "Ez a lecke feladata: sikeres ellenőrzés után a lecke kész, és megnyílik a következő.",
+    "requiredHint": "Ez a lecke feladata: sikeres ellenőrzés után a lecke késznek jelölődik.",
     "requiredDone": "Ezt a feladatot már teljesítetted.",
     "editorLabel": "Python kódszerkesztő",
     "keys": "Ctrl+Enter: futtatás / ellenőrzés · Tab: behúzás · Esc, majd Tab: kilépés a szerkesztőből"
@@ -276,9 +270,9 @@
     "check": "Ellenőrzés",
     "score": "{correct} / {total} válasz helyes. Javítsd a hibásakat, és ellenőrizd újra!",
     "passed": "Siker! Minden válasz helyes.",
-    "lessonDone": "A lecke kész, a következő lecke feloldva.",
+    "lessonDone": "A lecke kész.",
     "nextLesson": "Tovább: {title}",
-    "requiredHint": "Ez a lecke feladata: ha minden válasz helyes, a lecke kész, és megnyílik a következő.",
+    "requiredHint": "Ez a lecke feladata: ha minden válasz helyes, a lecke késznek jelölődik.",
     "requiredDone": "Ezt a feladatlapot már teljesítetted.",
     "correct": "Helyes!",
     "wrong": "Még nem jó.",
@@ -320,7 +314,7 @@
     "start": "Kezdés",
     "continue": "Folytatás",
     "review": "Átismétlés",
-    "locked": "A félév tananyaga még nincs megvásárolva.",
+    "locked": "Még nincs csomagod: csak az első lecke nyitott.",
     "buy": "Hozzáférés vásárlása",
     "weekTitle": "heti tanulás",
     "weekTotal": "Ezen a héten összesen",
@@ -391,7 +385,7 @@
     "comingSoon": "Hamarosan",
     "dialogEyebrow": "félév feloldása",
     "dialogTitle": "{semester} – teljes hozzáférés",
-    "dialogText": "A félév összes elérhető tárgyának minden leckéje, futtatható példákkal és ellenőrzött gyakorlófeladatokkal. Válaszd ki, mennyi időre kéred.",
+    "dialogText": "Bármelyik csomag az összes tárgy minden leckéjét feloldja, futtatható példákkal és ellenőrzött gyakorlófeladatokkal. Válaszd ki, mennyi időre kéred.",
     "extendNote": "Már van aktív hozzáférésed {date}-ig; az új időszak ennek a végétől számít, így egy nap sem vész el.",
     "close": "Bezárás",
     "bestValue": "Legjobb ár",

@@ -161,7 +161,7 @@
     "minutes": "{minutes} min",
     "start": "Start learning",
     "lockedTitle": "This course material is locked",
-    "lockedText": "Topic and lesson titles are free to browse. To open the lessons, buy access to {semester} – it unlocks every course in that semester.",
+    "lockedText": "Topic and lesson titles are free to browse, and the first lesson is free to try. To open the other lessons, buy any plan – it unlocks every lesson of every course.",
     "accessUntil": "Your access is active until {date}",
     "godModeActive": "God mode: every lesson is open (admin)"
   },
@@ -183,13 +183,7 @@
     "topicProgress": "{done} of {total} lessons done",
     "lessonDoneLabel": "“{title}” done",
     "lessonTodoLabel": "“{title}” not done yet",
-    "exerciseTodo": "The lesson is complete once you pass the lesson exercise's check.",
-    "exerciseDone": "Lesson complete – you passed the exercise",
-    "lockedHint": "Locked: finish the previous lessons first",
-    "lockedTitle": "This lesson is still locked",
-    "lockedText": "The course goes in order: a lesson unlocks once you have passed the exercises of all previous lessons.",
-    "goToOpen": "Go to your current lesson",
-    "paywallHint": "Locked: buy the semester to open it"
+    "paywallHint": "Locked: buy a plan to open it"
   },
   "Search": {
     "open": "Search",
@@ -234,7 +228,7 @@
     "backToCourse": "Back to the course",
     "lessonNav": "Lesson navigation",
     "lockedTitle": "This lesson is locked",
-    "lockedText": "This lesson is part of {semester}. Buy the semester to open it – it unlocks every course in that semester."
+    "lockedText": "Without a plan only the first lesson of each course is open. Buy any plan to open this lesson – it unlocks every lesson of every course."
   },
   "Python": {
     "run": "Run",
@@ -253,11 +247,11 @@
     "stopped": "Stopped.",
     "loadFailed": "Could not load Python. Check your internet connection and try again!",
     "passed": "Success! All checks passed.",
-    "lessonDone": "Lesson complete, the next lesson is unlocked.",
+    "lessonDone": "Lesson complete.",
     "nextLesson": "Next: {title}",
     "failedTest": "Not quite yet: the checker found a problem. This condition failed:",
     "failedCode": "An error occurred while running your code:",
-    "requiredHint": "This is the lesson exercise: once the check passes, the lesson is complete and the next one unlocks.",
+    "requiredHint": "This is the lesson exercise: once the check passes, the lesson is marked as done.",
     "requiredDone": "You have already passed this exercise.",
     "editorLabel": "Python code editor",
     "keys": "Ctrl+Enter: run / check · Tab: indent · Esc, then Tab: leave the editor"
@@ -276,9 +270,9 @@
     "check": "Check",
     "score": "{correct} / {total} answers correct. Fix the wrong ones and check again!",
     "passed": "Success! Every answer is correct.",
-    "lessonDone": "Lesson complete, the next lesson is unlocked.",
+    "lessonDone": "Lesson complete.",
     "nextLesson": "Next: {title}",
-    "requiredHint": "This is the lesson exercise: once every answer is correct, the lesson is complete and the next one unlocks.",
+    "requiredHint": "This is the lesson exercise: once every answer is correct, the lesson is marked as done.",
     "requiredDone": "You have already completed this worksheet.",
     "correct": "Correct!",
     "wrong": "Not quite yet.",
@@ -320,7 +314,7 @@
     "start": "Start",
     "continue": "Continue",
     "review": "Review",
-    "locked": "You haven't bought this semester's material yet.",
+    "locked": "No plan yet: only the first lesson is open.",
     "buy": "Buy access",
     "weekTitle": "this week",
     "weekTotal": "Total this week",
@@ -391,7 +385,7 @@
     "comingSoon": "Coming soon",
     "dialogEyebrow": "unlock semester",
     "dialogTitle": "{semester} – full access",
-    "dialogText": "Every lesson of every available course in this semester, with runnable examples and auto-checked exercises. Choose how long you need it.",
+    "dialogText": "Any plan unlocks every lesson of every course, with runnable examples and auto-checked exercises. Choose how long you need it.",
     "extendNote": "You already have access until {date}; the new period starts when that ends, so you don't lose a single day.",
     "close": "Close",
     "bestValue": "Best value",
