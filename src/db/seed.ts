@@ -16,7 +16,8 @@ import { placeholderUniversities } from "./data/universities";
 /**
  * Kezdő adat: a Gábor Dénes Egyetem Mérnökinformatikus BSc szakja mind a 7 félévvel,
  * a tárgyakkal, kreditekkel és az 5–6. félév két specializációjával.
- * Aktív tárgyak: Informatika alapjai, Matematika, Programozási alapok és Operációs rendszerek (1. félév),
+ * Aktív tárgyak: Informatika alapjai, Közgazdaságtan alapjai, Matematika, Programozási alapok és
+ * Operációs rendszerek (1. félév),
  * Digitális technika és Innováció- és projektmenedzsment (3. félév), a többi helykitöltő.
  * Mellette a többi magyar egyetem (BSc / MSc) tárgyak nélküli helykitöltőként (data/universities.ts).
  * A témakörök és leckék a content/courses mappából jönnek (lásd content.ts).

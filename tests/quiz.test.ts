@@ -3,8 +3,8 @@
 // - a tananyag minden kvízblokkja hibátlanul feldolgozható, a magyar és az angol változat
 //   ugyanazokat a jó válaszokat várja, és az egyszerűsítő feladatok megoldása tényleg egyenértékű
 //   az eredeti kifejezéssel;
-// - a Digitális technika, az Innováció, az Operációs rendszerek, a Matematika és az Informatika
-//   alapjai minden leckéjének van kötelező feladata.
+// - a Digitális technika, az Innováció, az Operációs rendszerek, a Matematika, az Informatika
+//   alapjai és a Közgazdaságtan alapjai minden leckéjének van kötelező feladata.
 
 import { describe, expect, it } from "vitest";
 import { loadContent } from "@/db/content";
@@ -309,5 +309,37 @@ describe("Informatika alapjai", () => {
       t.lessons.filter((l) => !l.body.en).map((l) => `${t.slug}/${l.slug}`),
     );
     expect(missing).toEqual([]);
+  });
+});
+
+describe("Közgazdaságtan alapjai", () => {
+  const course = loadContent().find((c) => c.course === "kozgazdasagtan-alapjai");
+
+  it("van tananyaga, és minden leckének van kötelező feladata", () => {
+    // A tanmenet 12 témaköre, témakörönként 3 lecke + 1 gyakorló lecke.
+    expect(course?.topics.length).toBe(12);
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("minden lecke két nyelven elérhető", () => {
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.body.en).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("a tárgy követelményei nincsenek a leckékben", () => {
+    // A tulajdonos kérése: számonkérés, ZH, pontok, jegyek soha ne kerüljenek a tananyagba.
+    // A „ZH” csak nagybetűvel számít (különben a „vízhálózat” is találat lenne).
+    const bad = /\bZH\b|zárthelyi|vizsgajegy|aláírás feltétel|kollokvium|grading|midterm/;
+    const found = course!.topics.flatMap((t) =>
+      t.lessons
+        .filter((l) => bad.test(l.body.hu ?? "") || bad.test(l.body.en ?? ""))
+        .map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(found).toEqual([]);
   });
 });

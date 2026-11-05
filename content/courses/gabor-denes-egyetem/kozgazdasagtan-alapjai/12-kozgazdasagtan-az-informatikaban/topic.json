@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Közgazdaságtan alapjai az informatikában és a technológiai fejlődésben",
+    "en": "Economics in Computing and Technological Progress"
+  },
+  "description": {
+    "hu": "A digitális gazdaság sajátosságai (információs javak, nulla határköltség, hálózati hatás, kétoldalú platformok, bezártság, „a győztes mindent visz”, adat és figyelem, a platformok szabályozása), a szoftveripar üzleti modelljei és mutatói (licenc, SaaS, freemium, felhasználásalapú árazás, árdiszkrimináció, CAC, LTV, lemorzsolódás, felhőgazdaságtan, nyílt forráskód), valamint a technológiai fejlődés gazdasági hatásai (kreatív rombolás, általános célú technológiák, termelékenységi paradoxon, mesterséges intelligencia és munkaerőpiac, az uniós MI-rendelet).",
+    "en": "The features of the digital economy (information goods, zero marginal cost, network effects, two-sided platforms, lock-in, winner takes all, data and attention, platform regulation), business models and metrics of the software industry (licences, SaaS, freemium, usage-based pricing, price discrimination, CAC, LTV, churn, cloud economics, open source), and the economic effects of technological progress (creative destruction, general purpose technologies, the productivity paradox, artificial intelligence and the labour market, the EU AI Act)."
+  }
+}
