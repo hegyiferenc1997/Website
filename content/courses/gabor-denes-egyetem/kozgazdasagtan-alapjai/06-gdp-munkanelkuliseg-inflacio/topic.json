@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "GDP, munkanélküliség és infláció",
+    "en": "GDP, Unemployment and Inflation"
+  },
+  "description": {
+    "hu": "A makrogazdaság három fő mutatója: a GDP mérése (termelési, kiadási és jövedelmi módszer, nominális és reál GDP, egy főre jutó GDP, vásárlóerő-paritás, GNI, a mutató korlátai), a munkanélküliség mérése (aktív és inaktív népesség, ILO-definíció, ráták), valamint az infláció mérése (fogyasztói árindex, maginfláció, deflátor), okai és költségei.",
+    "en": "The three main macroeconomic indicators: measuring GDP (production, expenditure and income approaches, nominal and real GDP, GDP per capita, purchasing power parity, GNI, limitations), measuring unemployment (active and inactive population, ILO definition, rates), and measuring inflation (consumer price index, core inflation, deflator), its causes and costs."
+  }
+}
