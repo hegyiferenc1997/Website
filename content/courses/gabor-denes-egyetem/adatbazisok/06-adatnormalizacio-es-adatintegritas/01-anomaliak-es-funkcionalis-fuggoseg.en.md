@@ -25,7 +25,7 @@ At first glance everything is fine. But look what happens in use:
 
 - **Update anomaly**: the credits of Databases change to 6. You have to change three rows; miss one and the database contradicts itself.
 - **Insertion anomaly**: a new course (Networks) starts, but nobody has taken it yet. You can't add it, because it has no Neptun code (which is part of the key).
-- **Deletion anomaly**: Dani Szabo drops Databases. If that was his only row, the fact that he exists and which major he studies disappears with it.
+- **Deletion anomaly**: Dani Szabo drops Databases. If that was their only row, the fact that they exist and which major they study disappears with it.
 
 All three have the same cause: **several things** (student, course, enrollment) are mixed in one table, so the same information appears **many times**. **Normalisation** is the method for taking this apart systematically.
 

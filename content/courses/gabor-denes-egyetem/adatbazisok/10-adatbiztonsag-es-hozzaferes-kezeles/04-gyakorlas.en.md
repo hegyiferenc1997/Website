@@ -54,7 +54,7 @@ Because if the application has a bug (e.g. SQL injection, topic 15), the attacke
 Implement the university's privilege plan! The first two lines of the starter code are the **current state**: long ago someone gave the intern every privilege. Keep these two lines, and write the rest below them:
 
 1. Create the `lecturer` **group** (can't log in). It may read the `students`, `courses` and `enrollments` tables, and in the `enrollments` table it may change **only the `grade`** column.
-2. Create the user `peter_kovacs` (can log in), and make him a member of the `lecturer` group.
+2. Create the user `peter_kovacs` (can log in), and make them a member of the `lecturer` group.
 3. The `intern` may only **read** the `students` table: revoke the insert, update and delete privileges.
 
 The checker looks at the result in the system catalog (`pg_roles`, `pg_auth_members`) and with the privilege-checking functions.

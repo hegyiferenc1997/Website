@@ -123,7 +123,7 @@ Against lost updates, for example: `SELECT stock FROM products WHERE id = 7 FOR 
 Using the accounts above (Anna 50,000, Bela 20,000, Cili 10,000):
 
 1. In **one transaction**, transfer **5000** from Anna (1) to Bela (2), and commit it.
-2. Start a **second transaction** in which Bela would transfer **8000** to Cili (3) – but Bela changes his mind, so **roll back** the transaction.
+2. Start a **second transaction** in which Bela would transfer **8000** to Cili (3) – but Bela changes their mind, so **roll back** the transaction.
 
 At the end the checker queries the balances.
 

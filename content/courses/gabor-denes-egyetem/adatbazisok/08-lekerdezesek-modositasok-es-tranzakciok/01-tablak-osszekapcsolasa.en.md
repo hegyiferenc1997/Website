@@ -32,7 +32,7 @@ ORDER BY s.name, e.code;
 
 - `JOIN` (full name `INNER JOIN`) is followed by the other table, and `ON` by the **matching condition**.
 - `s` and `e` are **table aliases**: shorter, and when two tables have a column with the same name (`neptun`), they say which one you mean.
-- Only rows that **have a pair** appear. Emma Varga didn't enroll in anything, so she's **left out**.
+- Only rows that **have a pair** appear. Emma Varga didn't enroll in anything, so Emma is **left out**.
 
 ## Three tables
 
@@ -94,7 +94,7 @@ GROUP BY s.name
 ORDER BY s.name;
 ```
 
-For Emma `COUNT(*)` shows 1, though she has no course! The LEFT JOIN gave her one row (with NULLs), and `COUNT(*)` counts every row. `COUNT(e.code)` skips the NULL → 0. **With an outer join, count a column of the right-hand table!**
+For Emma `COUNT(*)` shows 1, though Emma has no course! The LEFT JOIN gave Emma one row (with NULLs), and `COUNT(*)` counts every row. `COUNT(e.code)` skips the NULL → 0. **With an outer join, count a column of the right-hand table!**
 
 ## CROSS JOIN and self-join
 

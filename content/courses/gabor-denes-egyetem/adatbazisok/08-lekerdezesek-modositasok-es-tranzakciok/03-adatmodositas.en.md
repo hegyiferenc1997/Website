@@ -90,7 +90,7 @@ ON CONFLICT (neptun, code) DO UPDATE SET grade = EXCLUDED.grade;
 SELECT * FROM enrollments WHERE neptun = 'ABC123';
 ```
 
-Since Anna had already taken ADB, no new row was created; her grade changed to 4 instead. `EXCLUDED` means the row you tried to insert. The `DO NOTHING` variant simply skips the existing one.
+Since Anna had already taken ADB, no new row was created; Anna's grade changed to 4 instead. `EXCLUDED` means the row you tried to insert. The `DO NOTHING` variant simply skips the existing one.
 
 ## Modification and integrity
 
@@ -109,7 +109,7 @@ Make the following changes **in this order**:
 
 1. Delete the enrollments that **don't have a grade yet**.
 2. Add the new student: `GHI789`, `Gabor Fekete`, `computer engineering`, semester 1, `Pecs`, born `2007-05-05`.
-3. Enroll him in `PROG` (no grade yet).
+3. Enroll them in `PROG` (no grade yet).
 4. Change the credits of Operating Systems (`OPR`) to **5**.
 
 At the end the checker counts the students and enrollments and looks at OPR's credits.

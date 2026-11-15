@@ -73,7 +73,7 @@ SELECT * FROM enrollments;                   -- only Anna's rows!
 RESET ROLE;
 ```
 
-Anna wrote the same `SELECT * FROM enrollments` query, yet got an answer with only her own rows. The DBMS adds the policy to **every** query automatically – the application can't "forget" a `WHERE` condition.
+Anna wrote the same `SELECT * FROM enrollments` query, yet got an answer with only Anna's own rows. The DBMS adds the policy to **every** query automatically – the application can't "forget" a `WHERE` condition.
 
 - `USING (…)`: which **existing** rows they can see, update or delete.
 - `WITH CHECK (…)`: which **new** or modified rows they may write (e.g. so they can't insert in someone else's name).

@@ -61,7 +61,7 @@ Solution: whatever is determined by **part** of the key goes into a separate tab
 
 **Rule:** 2NF, and no non-key attribute depends on **another non-key** attribute.
 
-In the `orders` table: `order → customer_id → cust_name, cust_city`. The customer's name depends on the customer, not on the order – if Anna changes her name, every order of hers would need updating.
+In the `orders` table: `order → customer_id → cust_name, cust_city`. The customer's name depends on the customer, not on the order – if Anna changes name, every one of Anna's orders would need updating.
 
 Solution: transitively dependent attributes get their own table:
 

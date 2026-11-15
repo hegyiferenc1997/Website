@@ -47,7 +47,7 @@ DELETE FROM authors WHERE author_id = 1;
 SELECT * FROM posts;
 ```
 
-After deleting Anna, her post remained, it just became "authorless". Try it (Edit): change it to `ON DELETE CASCADE`, then remove the setting entirely – what happens in the three cases?
+After deleting Anna, the post remained, it just became "authorless". Try it (Edit): change it to `ON DELETE CASCADE`, then remove the setting entirely – what happens in the three cases?
 
 ## Multi-column CHECK conditions
 

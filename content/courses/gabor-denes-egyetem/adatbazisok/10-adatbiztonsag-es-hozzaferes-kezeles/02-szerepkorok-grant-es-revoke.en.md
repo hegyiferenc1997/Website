@@ -110,7 +110,7 @@ SELECT pg_has_role('peter_kovacs', 'lecturer', 'MEMBER') AS is_member,
        has_column_privilege('peter_kovacs', 'enrollments', 'grade', 'UPDATE') AS can_write_grade;
 ```
 
-Peter didn't get a single privilege directly, yet he can change grades – he inherited it from the group. If Peter leaves, a single `REVOKE lecturer FROM peter_kovacs;` is enough.
+Peter didn't get a single privilege directly, yet Peter can change grades – the privilege was inherited from the group. If Peter leaves, a single `REVOKE lecturer FROM peter_kovacs;` is enough.
 
 ## Passing privileges on: WITH GRANT OPTION
 
