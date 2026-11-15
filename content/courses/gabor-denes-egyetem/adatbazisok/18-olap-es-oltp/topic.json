@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "OLAP és OLTP", "en": "OLAP and OLTP" },
+  "description": {
+    "hu": "A működési (OLTP) és az elemző (OLAP) adatbázisok különbsége; az adattárház, a ténytáblák és dimenziótáblák, a csillag- és a hópehelyséma, az OLAP-kocka műveletei (lefúrás, felgörgetés, szeletelés); valamint elemző SQL: ROLLUP, CUBE, GROUPING SETS és ablakfüggvények – egy üzletlánc adattárházán, a böngészőben kipróbálva.",
+    "en": "The difference between operational (OLTP) and analytical (OLAP) databases; the data warehouse, fact and dimension tables, the star and snowflake schemas, the operations of the OLAP cube (drill down, roll up, slice); plus analytical SQL: ROLLUP, CUBE, GROUPING SETS and window functions – tried out in your browser on a retail chain's data warehouse."
+  }
+}
