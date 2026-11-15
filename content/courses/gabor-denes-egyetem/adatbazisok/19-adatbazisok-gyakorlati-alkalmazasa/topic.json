@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatbázisok gyakorlati alkalmazása", "en": "Databases in Practice" },
+  "description": {
+    "hu": "Minden, amit a tárgyban tanultál, egy helyen: egy rendszer megtervezése a követelményektől a táblákig, üzleti riportok és elemzések SQL-ben, az adatbázis helyes használata egy alkalmazásból (tranzakciók, megszorítások, optimista zárolás), végül egy záró gyakorlat – mind a böngészőben futó PostgreSQL-en.",
+    "en": "Everything you've learned in the course, in one place: designing a system from requirements to tables, business reports and analyses in SQL, using a database correctly from an application (transactions, constraints, optimistic locking), and finally a closing exercise – all on a PostgreSQL running in your browser."
+  }
+}
