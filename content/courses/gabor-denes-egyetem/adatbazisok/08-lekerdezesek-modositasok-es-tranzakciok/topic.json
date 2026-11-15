@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Lekérdezések, módosítások és tranzakciók", "en": "Queries, Modifications and Transactions" },
+  "description": {
+    "hu": "Táblák összekapcsolása (INNER, LEFT, RIGHT, FULL, CROSS és önösszekapcsolás), allekérdezések, EXISTS és CTE (WITH), halmazműveletek, adatmódosítás (INSERT, UPDATE, DELETE, RETURNING, UPSERT), valamint a tranzakciók: ACID, COMMIT, ROLLBACK, SAVEPOINT, elkülönítési szintek, zárolás és holtpont – mindez a böngészőben futó PostgreSQL-en.",
+    "en": "Joining tables (INNER, LEFT, RIGHT, FULL, CROSS and self-joins), subqueries, EXISTS and CTEs (WITH), set operations, modifying data (INSERT, UPDATE, DELETE, RETURNING, UPSERT), and transactions: ACID, COMMIT, ROLLBACK, SAVEPOINT, isolation levels, locking and deadlock – all on a PostgreSQL running in your browser."
+  }
+}

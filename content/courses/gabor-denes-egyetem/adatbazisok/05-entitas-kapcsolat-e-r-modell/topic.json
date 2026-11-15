@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Entitás-kapcsolat (E-R) modell", "en": "The Entity-Relationship (E-R) Model" },
+  "description": {
+    "hu": "Egyedek, egyedhalmazok és tulajdonságaik (egyszerű, összetett, többértékű, származtatott, kulcs), kapcsolatok fokszáma és számossága (1:1, 1:N, N:M), kötelező és opcionális részvétel, gyenge egyedek, a Chen- és a varjúláb-jelölés, valamint az E-R diagram átalakítása táblákká.",
+    "en": "Entities, entity sets and their attributes (simple, composite, multivalued, derived, key), the degree and cardinality of relationships (1:1, 1:N, N:M), mandatory and optional participation, weak entities, Chen and crow's foot notation, and turning an E-R diagram into tables."
+  }
+}

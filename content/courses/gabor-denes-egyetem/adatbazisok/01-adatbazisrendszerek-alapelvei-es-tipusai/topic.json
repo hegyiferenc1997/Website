@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbázisrendszerek alapelvei és típusai",
+    "en": "Principles and Types of Database Systems"
+  },
+  "description": {
+    "hu": "Mi a különbség adat és információ között, miért nem elég a fájlokban tárolás, mi az adatbázis és az adatbázis-kezelő rendszer (DBMS), mit csinál a DBMS, mi a háromszintű architektúra és az adatfüggetlenség, valamint milyen típusú adatbázisok léteznek (hierarchikus, hálós, relációs, objektum, NoSQL, NewSQL).",
+    "en": "The difference between data and information, why storing data in files is not enough, what a database and a database management system (DBMS) are, what a DBMS does, the three-level architecture and data independence, and the types of databases (hierarchical, network, relational, object, NoSQL, NewSQL)."
+  }
+}

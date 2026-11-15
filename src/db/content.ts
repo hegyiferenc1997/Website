@@ -47,6 +47,22 @@ export type TopicContent = {
 /** Egy tárgy teljes tananyaga. */
 export type CourseContent = { university: string; course: string; topics: TopicContent[] };
 
+// A közös SQL mintaadatbázis beillesztése: a lecke `<!-- sql-setup: név -->` sora helyére a tárgy
+// sql/<név>.<nyelv>.sql fájlja kerül ```sql setup blokként (így nem kell minden leckébe bemásolni).
+const SQL_SETUP = /^<!-- sql-setup: ([a-z0-9-]+) -->$/gm;
+
+/** A `<!-- sql-setup: név -->` sorok kicserélése a tárgy sql mappájában lévő fájl tartalmára. */
+export function expandSqlSetup(body: string, courseDir: string, lang: string): string {
+  return body.replace(SQL_SETUP, (_line, name: string) => {
+    const file = [`${name}.${lang}.sql`, `${name}.hu.sql`]
+      .map((f) => path.join(courseDir, "sql", f))
+      .find((f) => existsSync(f));
+    if (!file) throw new Error(`Hiányzó SQL mintaadatbázis: ${courseDir}/sql/${name}.${lang}.sql`);
+    const sql = readFileSync(file, "utf8").replace(/\r\n/g, "\n").trim();
+    return "```sql setup\n" + sql + "\n```";
+  });
+}
+
 // Mappa- és fájlnév minták: „01-slug” és „01-slug.hu.md”.
 const ORDERED = /^(\d+)-([a-z0-9-]+)$/;
 const LESSON_FILE = /^(\d+)-([a-z0-9-]+)\.([a-z]{2})\.md$/;
@@ -107,7 +123,7 @@ function readTopic(dir: string, name: string): TopicContent {
       if (!data.title) throw new Error(`Hiányzó cím (title): ${where}/${lessonSlug}.${lang}.md`);
       title[lang] = data.title;
       if (data.summary) summary[lang] = data.summary;
-      body[lang] = text;
+      body[lang] = expandSqlSetup(text, dir, lang);
       if (lang === "hu") {
         if (data.minutes) minutes = Number(data.minutes) || null;
         if (KINDS.includes(data.kind as LessonKind)) kind = data.kind as LessonKind;

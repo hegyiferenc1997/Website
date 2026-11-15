@@ -15,6 +15,7 @@ import {
 import { lessonKey } from "@/features/progress/data";
 import { Exercise, RunnableExample, type LessonRef } from "@/features/python/components";
 import { Quiz } from "@/features/quiz/Quiz";
+import { SqlExample, SqlExercise } from "@/features/sql/components";
 import { Plot } from "@/features/plot/Plot";
 import { hasMath, KATEX_VERSION } from "@/features/lessons/math";
 import { Link } from "@/i18n/navigation";
@@ -305,6 +306,28 @@ function LessonBody({
           <div key={i} className="contents" dangerouslySetInnerHTML={{ __html: s.html }} />
         ) : s.kind === "run" ? (
           <RunnableExample key={i} code={s.code} label={s.label} codeHtml={s.codeHtml} />
+        ) : s.kind === "sqlRun" ? (
+          <SqlExample
+            key={i}
+            code={s.code}
+            setup={s.setup}
+            label={s.label}
+            codeHtml={s.codeHtml}
+          />
+        ) : s.kind === "sqlExercise" ? (
+          <SqlExercise
+            key={i}
+            index={s.index}
+            starter={s.starter}
+            solution={s.solution}
+            check={s.check}
+            setup={s.setup}
+            required={s.required}
+            label={s.label}
+            lessonRef={lessonRef}
+            canMarkDone={canMarkDone}
+            next={s.required ? next : null}
+          />
         ) : s.kind === "plot" ? (
           <Plot key={i} spec={s.spec} />
         ) : s.kind === "quiz" ? (

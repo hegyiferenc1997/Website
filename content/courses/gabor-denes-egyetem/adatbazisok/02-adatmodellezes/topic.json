@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatmodellezés", "en": "Data Modelling" },
+  "description": {
+    "hu": "Mi az adatmodell, és mi a fogalmi, a logikai és a fizikai modell különbsége; az adatmodellezés lépései a követelményektől a sémáig; adattípusok, tartományok és megszorítások (NOT NULL, UNIQUE, CHECK, DEFAULT), valamint egy teljes kis modellezési példa.",
+    "en": "What a data model is and how conceptual, logical and physical models differ; the steps of data modelling from requirements to schema; data types, domains and constraints (NOT NULL, UNIQUE, CHECK, DEFAULT), plus a complete small modelling example."
+  }
+}

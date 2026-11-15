@@ -4,7 +4,9 @@
 // A kódblokk szerepe a nyelv utáni szóból, pl. ```python run. A böngészős Python futtató ez alapján
 // tudja, mit lehet futtatni: run = önálló példa, starter = feladat kiinduló kódja, solution = megoldás,
 // test = ellenőrző kód (a megoldás vagy a tanuló kódja után fut, assert sorokkal).
-export const CODE_ROLES = ["run", "starter", "solution", "test"] as const;
+// SQL-nél: setup = a mintaadatbázis (táblák + adatok), amelyen a lecke további SQL blokkjai futnak;
+// test = ellenőrző lekérdezés, amelynek eredményét a tanuló és a megoldás után összevetjük.
+export const CODE_ROLES = ["run", "starter", "solution", "test", "setup"] as const;
 export type CodeRole = (typeof CODE_ROLES)[number];
 
 /**
@@ -21,9 +23,9 @@ export function parseCodeInfo(info: string | undefined): {
   return { lang, role: known, required: known === "starter" && flags.includes("required") };
 }
 
-/** Van-e a leckében kötelező feladat (```python starter required vagy ```quiz required blokk). */
+/** Van-e a leckében kötelező feladat (```python / ```sql starter required vagy ```quiz required blokk). */
 export function hasRequiredExercise(markdown: string): boolean {
-  return /^```(python[ \t]+starter|quiz)[ \t]+required\b/m.test(markdown);
+  return /^```((python|sql)[ \t]+starter|quiz)[ \t]+required\b/m.test(markdown);
 }
 
 /** Kvízblokk-e (```quiz [required]), és ha igen, a lecke kötelező feladata-e. */

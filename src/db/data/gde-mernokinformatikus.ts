@@ -79,7 +79,7 @@ export const semesters: CurriculumCourse[][] = [
   ],
   // 3. félév
   [
-    { name: "Adatbázisok", en: "Databases", credits: 6 },
+    { name: "Adatbázisok", en: "Databases", credits: 6, active: true },
     { name: "Digitális technika", en: "Digital Electronics", credits: 4, active: true },
     {
       name: "Innováció- és projektmenedzsment",

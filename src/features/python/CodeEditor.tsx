@@ -18,6 +18,7 @@ export function CodeEditor({
   onFocus,
   label,
   readOnly = false,
+  highlight = highlightPython,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -27,8 +28,10 @@ export function CodeEditor({
   /** Akadálymentes név (képernyőolvasóknak). */
   label: string;
   readOnly?: boolean;
+  /** A színező (alapból Python; az SQL feladatok a saját SQL színezőjüket adják). */
+  highlight?: (code: string) => string;
 }) {
-  const html = useMemo(() => highlightPython(value), [value]);
+  const html = useMemo(() => highlight(value), [value, highlight]);
   const lineCount = value.split("\n").length;
 
   // A szövegdoboz tartalmának cseréje úgy, hogy a visszavonás (Ctrl+Z) is működjön, ahol lehet.

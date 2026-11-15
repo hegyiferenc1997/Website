@@ -1026,3 +1026,32 @@
   cursor: default;
   opacity: 0.5;
 }
+
+/*
+ * Böngészős SQL futtató (features/sql): az eredménytáblák a kimenet dobozában.
+ * Hosszú eredménynél a táblázat magában görget, nem nyújtja meg az oldalt.
+ */
+.lesson-body .sql-result {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.lesson-body .sql-table {
+  max-height: 20rem;
+  overflow: auto;
+}
+
+.lesson-body .sql-table table {
+  font-size: 0.8125rem;
+}
+
+.lesson-body .sql-table td {
+  font-family: var(--font-mono);
+  white-space: pre;
+}
+
+/* A NULL érték halványan, dőlten (hogy ne keverjük össze a "NULL" szöveggel). */
+.lesson-body .sql-table td.sql-null {
+  font-style: italic;
+  color: var(--muted);
+}

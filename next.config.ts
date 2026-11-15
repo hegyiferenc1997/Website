@@ -9,18 +9,34 @@ const pyodideVersion = (
   JSON.parse(readFileSync("node_modules/pyodide/package.json", "utf8")) as { version: string }
 ).version;
 
+// A böngészős SQL futtató (PGlite) verziója: a fájljai a public/pglite/<verzió>/ mappában vannak.
+const pgliteVersion = (
+  JSON.parse(readFileSync("node_modules/@electric-sql/pglite/package.json", "utf8")) as {
+    version: string;
+  }
+).version;
+
 // A next-intl bekötése (fordítások, nyelvi útvonalak).
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   // A böngészőbe kerülő kód is tudja, honnan töltse a Pythont.
-  env: { NEXT_PUBLIC_PYODIDE_URL: `/pyodide/${pyodideVersion}/` },
+  env: {
+    NEXT_PUBLIC_PYODIDE_URL: `/pyodide/${pyodideVersion}/`,
+    // Az SQL futtató (PGlite) helye, szintén verzióval.
+    NEXT_PUBLIC_PGLITE_URL: `/pglite/${pgliteVersion}/`,
+  },
   // A Pyodide fájljai verziózott mappában vannak, így a böngésző örökre eltárolhatja őket
   // (második látogatáskor már nem kell letölteni a ~13 MB-ot).
   async headers() {
     return [
       {
         source: "/pyodide/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        // A PGlite fájljai is verziózott mappában vannak (~16 MB, egyszer kell letölteni).
+        source: "/pglite/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
     ];

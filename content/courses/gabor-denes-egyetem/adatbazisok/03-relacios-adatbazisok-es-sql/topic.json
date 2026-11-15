@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Relációs adatbázisok és SQL", "en": "Relational Databases and SQL" },
+  "description": {
+    "hu": "A relációs modell fogalmai (reláció, sor, attribútum, tartomány, fokszám, számosság), a kulcsok fajtái (szuper-, jelölt-, elsődleges, idegen kulcs), Codd szabályai, a relációs algebra műveletei és SQL-megfelelőik, valamint az SQL nyelv története, alnyelvei és a táblák létrehozása, módosítása (CREATE, ALTER, DROP).",
+    "en": "The concepts of the relational model (relation, tuple, attribute, domain, degree, cardinality), kinds of keys (super, candidate, primary, foreign key), Codd's rules, the operations of relational algebra and their SQL equivalents, plus the history and sublanguages of SQL and creating and altering tables (CREATE, ALTER, DROP)."
+  }
+}

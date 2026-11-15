@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Indexelés és teljesítményoptimalizálás", "en": "Indexing and Performance Optimisation" },
+  "description": {
+    "hu": "Mi az index és miért gyorsít (könyv tárgymutatója, bináris keresés, B-fa), mennyibe kerül, hogyan hozunk létre egyszerű, egyedi, összetett, részleges és kifejezés alapú indexet, mikor nem használ az index, és hogyan olvassuk a lekérdezéstervet (EXPLAIN, EXPLAIN ANALYZE) egy 20 000 rendeléses webshop-adatbázison.",
+    "en": "What an index is and why it speeds things up (a book's index, binary search, B-tree), what it costs, how to create simple, unique, composite, partial and expression indexes, when an index doesn't help, and how to read a query plan (EXPLAIN, EXPLAIN ANALYZE) on a web shop database with 20,000 orders."
+  }
+}
