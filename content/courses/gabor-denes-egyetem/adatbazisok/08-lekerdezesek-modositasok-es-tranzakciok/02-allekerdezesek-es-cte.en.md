@@ -91,12 +91,12 @@ The same as before – but readable top-down, **step by step**. A `WITH` can hol
 
 They combine the results of two queries with **the same number and types of columns**:
 
-| Operation    | Result                                         |
-| ------------ | ---------------------------------------------- |
-| `UNION`      | rows of both, without duplicates               |
-| `UNION ALL`  | rows of both, with duplicates (faster)         |
-| `INTERSECT`  | only rows present in both                      |
-| `EXCEPT`     | rows in the first but not in the second        |
+| Operation   | Result                                  |
+| ----------- | --------------------------------------- |
+| `UNION`     | rows of both, without duplicates        |
+| `UNION ALL` | rows of both, with duplicates (faster)  |
+| `INTERSECT` | only rows present in both               |
+| `EXCEPT`    | rows in the first but not in the second |
 
 ```sql run
 -- Those who took both ADB AND DIG

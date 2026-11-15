@@ -12,13 +12,13 @@ minutes: 25
 
 ## Az öt nagy
 
-| DBMS                      | Licenc                          | Erősségei                                                                     | Tipikus helye                                 |
-| ------------------------- | ------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------- |
-| **PostgreSQL**            | nyílt (PostgreSQL License)      | szabványkövető, nagyon sok funkció (JSONB, ablakfüggvények, bővítmények: PostGIS, TimescaleDB, pgvector) | webalkalmazások, startupok, adatelemzés |
-| **MySQL** / **MariaDB**   | nyílt (GPL) + kereskedelmi változat | egyszerű, gyors olvasás, hatalmas közösség, sok tárhely kínálja           | weboldalak (WordPress), webshopok             |
-| **Microsoft SQL Server**  | kereskedelmi (ingyenes Express/Developer kiadással) | szoros integráció a Microsoft-világgal (.NET, Azure, Power BI), jó eszközök | vállalati rendszerek, Windows-környezet |
-| **Oracle Database**       | kereskedelmi                    | nagyvállalati funkciók, óriási terhelés, fürtözés (RAC), régi, bevált         | bankok, telekom, kormányzat                   |
-| **SQLite**                | közkincs (_public domain_)      | **nincs szerver**: egyetlen fájl, beágyazható, nulla beállítás                | mobilalkalmazások, böngészők, kis programok   |
+| DBMS                     | Licenc                                              | Erősségei                                                                                                | Tipikus helye                               |
+| ------------------------ | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| **PostgreSQL**           | nyílt (PostgreSQL License)                          | szabványkövető, nagyon sok funkció (JSONB, ablakfüggvények, bővítmények: PostGIS, TimescaleDB, pgvector) | webalkalmazások, startupok, adatelemzés     |
+| **MySQL** / **MariaDB**  | nyílt (GPL) + kereskedelmi változat                 | egyszerű, gyors olvasás, hatalmas közösség, sok tárhely kínálja                                          | weboldalak (WordPress), webshopok           |
+| **Microsoft SQL Server** | kereskedelmi (ingyenes Express/Developer kiadással) | szoros integráció a Microsoft-világgal (.NET, Azure, Power BI), jó eszközök                              | vállalati rendszerek, Windows-környezet     |
+| **Oracle Database**      | kereskedelmi                                        | nagyvállalati funkciók, óriási terhelés, fürtözés (RAC), régi, bevált                                    | bankok, telekom, kormányzat                 |
+| **SQLite**               | közkincs (_public domain_)                          | **nincs szerver**: egyetlen fájl, beágyazható, nulla beállítás                                           | mobilalkalmazások, böngészők, kis programok |
 
 Néhány érdekesség:
 
@@ -28,12 +28,12 @@ Néhány érdekesség:
 
 ## Nyílt forráskód vagy kereskedelmi licenc?
 
-| Szempont               | Nyílt forráskódú (PostgreSQL, MySQL, MariaDB)  | Kereskedelmi (Oracle, SQL Server)             |
-| ---------------------- | ---------------------------------------------- | --------------------------------------------- |
-| Licencdíj              | nincs                                          | gyakran processzormagonként, jelentős összeg  |
-| Támogatás              | közösség, illetve fizetős támogató cégek       | a gyártótól, szerződéssel                     |
-| Függés a gyártótól     | kicsi: a kód bárki számára elérhető            | nagyobb (_vendor lock-in_)                    |
-| Speciális funkciók     | bővítményekkel nagyon sok                      | sok beépített nagyvállalati funkció           |
+| Szempont           | Nyílt forráskódú (PostgreSQL, MySQL, MariaDB) | Kereskedelmi (Oracle, SQL Server)            |
+| ------------------ | --------------------------------------------- | -------------------------------------------- |
+| Licencdíj          | nincs                                         | gyakran processzormagonként, jelentős összeg |
+| Támogatás          | közösség, illetve fizetős támogató cégek      | a gyártótól, szerződéssel                    |
+| Függés a gyártótól | kicsi: a kód bárki számára elérhető           | nagyobb (_vendor lock-in_)                   |
+| Speciális funkciók | bővítményekkel nagyon sok                     | sok beépített nagyvállalati funkció          |
 
 A „licencdíj nélkül” nem jelenti, hogy „ingyen van”: az üzemeltetés, a szakember és a támogatás itt is pénzbe kerül. Ezt hívják a **teljes birtoklási költségnek** (_TCO, Total Cost of Ownership_).
 
@@ -41,13 +41,13 @@ A „licencdíj nélkül” nem jelenti, hogy „ingyen van”: az üzemeltetés
 
 Az SQL szabványos (ISO/IEC 9075), de minden DBMS bővíti, és néhol eltér tőle. Ha egyik rendszerről a másikra költözöl (17. témakör), ezekre figyelned kell:
 
-| Feladat                       | PostgreSQL                         | MySQL / MariaDB                  | SQL Server                         | Oracle                                |
-| ----------------------------- | ---------------------------------- | -------------------------------- | ---------------------------------- | ------------------------------------- |
-| első 5 sor                    | `LIMIT 5`                          | `LIMIT 5`                        | `SELECT TOP 5 …`                   | `FETCH FIRST 5 ROWS ONLY`             |
-| automatikus azonosító         | `GENERATED … AS IDENTITY`, `SERIAL` | `AUTO_INCREMENT`                | `IDENTITY(1,1)`                    | `GENERATED … AS IDENTITY`             |
-| szövegek összefűzése          | `'a' \|\| 'b'`                     | `CONCAT('a', 'b')`               | `'a' + 'b'`                        | `'a' \|\| 'b'`                        |
-| aktuális időpont              | `now()`                            | `NOW()`                          | `GETDATE()`                        | `SYSDATE`                             |
-| logikai típus                 | `BOOLEAN`                          | `BOOLEAN` (valójában `TINYINT(1)`) | `BIT`                            | `BOOLEAN` (csak újabb verziókban)     |
+| Feladat               | PostgreSQL                          | MySQL / MariaDB                    | SQL Server       | Oracle                            |
+| --------------------- | ----------------------------------- | ---------------------------------- | ---------------- | --------------------------------- |
+| első 5 sor            | `LIMIT 5`                           | `LIMIT 5`                          | `SELECT TOP 5 …` | `FETCH FIRST 5 ROWS ONLY`         |
+| automatikus azonosító | `GENERATED … AS IDENTITY`, `SERIAL` | `AUTO_INCREMENT`                   | `IDENTITY(1,1)`  | `GENERATED … AS IDENTITY`         |
+| szövegek összefűzése  | `'a' \|\| 'b'`                      | `CONCAT('a', 'b')`                 | `'a' + 'b'`      | `'a' \|\| 'b'`                    |
+| aktuális időpont      | `now()`                             | `NOW()`                            | `GETDATE()`      | `SYSDATE`                         |
+| logikai típus         | `BOOLEAN`                           | `BOOLEAN` (valójában `TINYINT(1)`) | `BIT`            | `BOOLEAN` (csak újabb verziókban) |
 
 A jó hír: a **szabványos** alakok egyre több helyen működnek. A PostgreSQL például a szabványos `FETCH FIRST`-öt és az `IDENTITY`-t is ismeri:
 

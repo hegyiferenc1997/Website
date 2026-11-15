@@ -74,13 +74,13 @@ FROM regi_export;
 
 A tisztításhoz hasznos függvények:
 
-| Függvény                           | Mire jó?                                             | Példa                                              |
-| ---------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
-| `TRIM(x)`                          | szóközök levágása az elejéről és a végéről           | `TRIM('  Tóth Cili ')` → `'Tóth Cili'`             |
-| `UPPER(x)`, `LOWER(x)`             | egységes kis- vagy nagybetű                          | `UPPER('bcd234')` → `'BCD234'`                     |
-| `NULLIF(x, '')`                    | az üres szövegből NULL lesz                          | `NULLIF('', '')` → `NULL`                          |
-| `to_date(x, 'YYYY.MM.DD')`         | szövegből dátum, megadott formátummal                | `to_date('2005.03.14', 'YYYY.MM.DD')`              |
-| `COALESCE(x, alap)`                | NULL helyett alapérték                               | `COALESCE(varos, 'ismeretlen')`                    |
+| Függvény                   | Mire jó?                                   | Példa                                  |
+| -------------------------- | ------------------------------------------ | -------------------------------------- |
+| `TRIM(x)`                  | szóközök levágása az elejéről és a végéről | `TRIM('  Tóth Cili ')` → `'Tóth Cili'` |
+| `UPPER(x)`, `LOWER(x)`     | egységes kis- vagy nagybetű                | `UPPER('bcd234')` → `'BCD234'`         |
+| `NULLIF(x, '')`            | az üres szövegből NULL lesz                | `NULLIF('', '')` → `NULL`              |
+| `to_date(x, 'YYYY.MM.DD')` | szövegből dátum, megadott formátummal      | `to_date('2005.03.14', 'YYYY.MM.DD')`  |
+| `COALESCE(x, alap)`        | NULL helyett alapérték                     | `COALESCE(varos, 'ismeretlen')`        |
 
 ```sql run
 SELECT UPPER(TRIM(split_part(sor, ';', 1)))                        AS neptun,
@@ -111,11 +111,11 @@ Ha a célban ugyanezt kiszámolod, és a két érték egyezik, biztos lehetsz be
 
 ## Átállási stratégiák
 
-| Stratégia                         | Hogyan?                                                                  | Előny / hátrány                                         |
-| --------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------- |
-| **Egyszerre** (_big bang_)        | egy hétvégén leáll a régi rendszer, migrálunk, hétfőn indul az új       | egyszerű, de nagy a kockázat, és kell egy leállási ablak |
-| **Fokozatosan** (_phased_)        | részenként (pl. karonként, modulonként) költözünk                        | kisebb kockázat, de egy ideig két rendszer él           |
-| **Párhuzamos írás** (_dual write_) / **CDC** | egy ideig mindkét rendszer megkapja a változásokat (17/1. lecke), majd átkapcsolunk | szinte nulla leállás, de bonyolult           |
+| Stratégia                                    | Hogyan?                                                                             | Előny / hátrány                                          |
+| -------------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| **Egyszerre** (_big bang_)                   | egy hétvégén leáll a régi rendszer, migrálunk, hétfőn indul az új                   | egyszerű, de nagy a kockázat, és kell egy leállási ablak |
+| **Fokozatosan** (_phased_)                   | részenként (pl. karonként, modulonként) költözünk                                   | kisebb kockázat, de egy ideig két rendszer él            |
+| **Párhuzamos írás** (_dual write_) / **CDC** | egy ideig mindkét rendszer megkapja a változásokat (17/1. lecke), majd átkapcsolunk | szinte nulla leállás, de bonyolult                       |
 
 Mindegyiknél legyen **visszaállási terv**: mi a teendő, ha az új rendszer élesben mégis hibázik? A régi rendszert és az adatait csak akkor kapcsold le végleg, ha az új már bizonyított.
 

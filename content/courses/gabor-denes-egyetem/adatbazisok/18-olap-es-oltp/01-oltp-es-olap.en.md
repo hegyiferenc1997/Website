@@ -19,17 +19,17 @@ Imagine two "users" of a web shop:
 
 Two kinds of systems were born for the two jobs:
 
-| Aspect                 | **OLTP** (_Online Transaction Processing_)      | **OLAP** (_Online Analytical Processing_)           |
-| ---------------------- | ----------------------------------------------- | --------------------------------------------------- |
-| Goal                   | daily operations: orders, bookings, recording grades | analysis, reports, decision support            |
-| Typical operation      | many short transactions: `INSERT`, `UPDATE`, few-row `SELECT`s | few but huge `SELECT`s with aggregation |
-| One query touches      | a few rows                                      | millions of rows, but few columns                   |
-| Users                  | many thousands (customers, applications)        | few (analysts, managers, reports)                   |
-| Data                   | the **current** state, always fresh             | **historical** data, going back years               |
-| Schema                 | normalised (3NF, topic 6)                       | denormalised, star schema (lesson 2)                |
-| Storage                | row-based (topic 9)                             | often column-based, with strong compression         |
-| Key metric             | transactions per second, response time          | query time on large data                            |
-| Examples               | PostgreSQL, MySQL, SQL Server, Oracle           | Snowflake, BigQuery, Redshift, ClickHouse, DuckDB   |
+| Aspect            | **OLTP** (_Online Transaction Processing_)                     | **OLAP** (_Online Analytical Processing_)         |
+| ----------------- | -------------------------------------------------------------- | ------------------------------------------------- |
+| Goal              | daily operations: orders, bookings, recording grades           | analysis, reports, decision support               |
+| Typical operation | many short transactions: `INSERT`, `UPDATE`, few-row `SELECT`s | few but huge `SELECT`s with aggregation           |
+| One query touches | a few rows                                                     | millions of rows, but few columns                 |
+| Users             | many thousands (customers, applications)                       | few (analysts, managers, reports)                 |
+| Data              | the **current** state, always fresh                            | **historical** data, going back years             |
+| Schema            | normalised (3NF, topic 6)                                      | denormalised, star schema (lesson 2)              |
+| Storage           | row-based (topic 9)                                            | often column-based, with strong compression       |
+| Key metric        | transactions per second, response time                         | query time on large data                          |
+| Examples          | PostgreSQL, MySQL, SQL Server, Oracle                          | Snowflake, BigQuery, Redshift, ClickHouse, DuckDB |
 
 ## Why don't we analyse on the production database?
 

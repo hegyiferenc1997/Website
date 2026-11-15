@@ -20,13 +20,13 @@ minutes: 30
 
 ## Aggregate functions
 
-| Function        | Meaning                                    |
-| --------------- | ------------------------------------------ |
-| `COUNT(*)`      | how many rows there are                    |
+| Function        | Meaning                                     |
+| --------------- | ------------------------------------------- |
+| `COUNT(*)`      | how many rows there are                     |
 | `COUNT(column)` | how many **non-NULL** values the column has |
-| `SUM(column)`   | sum                                        |
-| `AVG(column)`   | average                                    |
-| `MIN`, `MAX`    | smallest, largest value                    |
+| `SUM(column)`   | sum                                         |
+| `AVG(column)`   | average                                     |
+| `MIN`, `MAX`    | smallest, largest value                     |
 
 ```sql run
 SELECT COUNT(*) AS enrollments, COUNT(grade) AS graded, ROUND(AVG(grade), 2) AS average, MIN(grade), MAX(grade)

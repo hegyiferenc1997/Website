@@ -18,14 +18,14 @@ Az **adat** nyers tény, önmagában nem mond sokat: `42`, `"ABC123"`, `2026-01-
 
 Képzeld el, hogy egy egyetem minden irodája a saját Excel-fájljában tartja nyilván a hallgatókat: a tanulmányi osztály, a kollégium és a könyvtár is. Mi történik?
 
-| Probléma                    | Példa                                                                                                  |
-| --------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **Redundancia** (ismétlődés) | Kiss Anna címe három fájlban is szerepel.                                                              |
-| **Inkonzisztencia**          | Anna elköltözik, a tanulmányi osztály átírja, a kollégium nem – melyik cím az igazi?                  |
+| Probléma                     | Példa                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Redundancia** (ismétlődés) | Kiss Anna címe három fájlban is szerepel.                                                                          |
+| **Inkonzisztencia**          | Anna elköltözik, a tanulmányi osztály átírja, a kollégium nem – melyik cím az igazi?                               |
 | **Nehéz lekérdezés**         | „Kik a budapesti, 3. féléves hallgatók, akiknek könyvtári tartozásuk van?” – három fájlt kell kézzel összefésülni. |
-| **Egyidejű hozzáférés**      | Ketten egyszerre szerkesztik ugyanazt a fájlt: az egyik módosítás elvész.                              |
-| **Biztonság**                | A fájlt vagy mindenki látja, vagy senki – nem lehet megmondani, hogy a portás csak a nevet lássa.     |
-| **Adatvesztés**              | Áramszünet mentés közben: a fájl félig íródott ki, megsérült.                                          |
+| **Egyidejű hozzáférés**      | Ketten egyszerre szerkesztik ugyanazt a fájlt: az egyik módosítás elvész.                                          |
+| **Biztonság**                | A fájlt vagy mindenki látja, vagy senki – nem lehet megmondani, hogy a portás csak a nevet lássa.                  |
+| **Adatvesztés**              | Áramszünet mentés közben: a fájl félig íródott ki, megsérült.                                                      |
 
 Ezekre a gondokra született meg az adatbázis.
 

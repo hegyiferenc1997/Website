@@ -72,12 +72,12 @@ Figyeld meg a `CHECK (keszlet >= 0)` megszorítást: ha valaki több webkamerát
 
 Az alkalmazások gyakran így dolgoznak: **beolvassák** az adatot, a programban **kiszámolják** az új értéket, majd **visszaírják**. Két egyszerre futó kérésnél ez veszélyes:
 
-| Idő | Anna kérése                       | Béla kérése                       | Készlet az adatbázisban |
-| --- | --------------------------------- | --------------------------------- | ----------------------- |
-| 1   | beolvassa: készlet = 2            |                                   | 2                       |
-| 2   |                                   | beolvassa: készlet = 2            | 2                       |
-| 3   | kiír: 2 − 1 = **1**               |                                   | 1                       |
-| 4   |                                   | kiír: 2 − 1 = **1**               | 1 (!)                   |
+| Idő | Anna kérése            | Béla kérése            | Készlet az adatbázisban |
+| --- | ---------------------- | ---------------------- | ----------------------- |
+| 1   | beolvassa: készlet = 2 |                        | 2                       |
+| 2   |                        | beolvassa: készlet = 2 | 2                       |
+| 3   | kiír: 2 − 1 = **1**    |                        | 1                       |
+| 4   |                        | kiír: 2 − 1 = **1**    | 1 (!)                   |
 
 Két monitort adtunk el, a készlet mégis csak eggyel csökkent: **Anna frissítése elveszett**. Három megoldás van:
 
@@ -132,11 +132,11 @@ SELECT COUNT(*) AS webkamera_rendelesek FROM rendelesek WHERE termek_id = 4;
 
 Három vásárló szinte egyszerre ad le rendelést. Az alkalmazás mindegyiknél korábban beolvasta a termék verzióját:
 
-| Termék              | Kért darab | Beolvasott verzió |
-| ------------------- | ---------- | ----------------- |
-| 2 – Billentyűzet    | 2          | 3                 |
-| 3 – Monitor         | 1          | 6                 |
-| 4 – Webkamera       | 1          | 2                 |
+| Termék           | Kért darab | Beolvasott verzió |
+| ---------------- | ---------- | ----------------- |
+| 2 – Billentyűzet | 2          | 3                 |
+| 3 – Monitor      | 1          | 6                 |
+| 4 – Webkamera    | 1          | 2                 |
 
 Írd meg a három rendelést **egy tranzakcióban**, **optimista zárolással**: mindegyiknél csak akkor vond le a készletet (és növeld a verziót), ha a verzió még a beolvasott, és van elég készlet – és **csak akkor** rögzítsd a rendelést, ha a levonás sikerült (módosító CTE).
 

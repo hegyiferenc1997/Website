@@ -72,12 +72,12 @@ Notice the `CHECK (stock >= 0)` constraint: if someone tried to order more webca
 
 Applications often work like this: they **read** the data, **compute** the new value in the program, then **write it back**. With two simultaneous requests this is dangerous:
 
-| Time | Anna's request                  | Béla's request                  | Stock in the database |
-| ---- | ------------------------------- | ------------------------------- | --------------------- |
-| 1    | reads: stock = 2                |                                 | 2                     |
-| 2    |                                 | reads: stock = 2                | 2                     |
-| 3    | writes: 2 − 1 = **1**           |                                 | 1                     |
-| 4    |                                 | writes: 2 − 1 = **1**           | 1 (!)                 |
+| Time | Anna's request        | Béla's request        | Stock in the database |
+| ---- | --------------------- | --------------------- | --------------------- |
+| 1    | reads: stock = 2      |                       | 2                     |
+| 2    |                       | reads: stock = 2      | 2                     |
+| 3    | writes: 2 − 1 = **1** |                       | 1                     |
+| 4    |                       | writes: 2 − 1 = **1** | 1 (!)                 |
 
 We sold two monitors, yet the stock dropped by only one: **Anna's update was lost**. There are three fixes:
 
@@ -132,11 +132,11 @@ SELECT COUNT(*) AS webcam_orders FROM orders WHERE product_id = 4;
 
 Three customers place orders almost at the same time. For each one, the application read the product's version earlier:
 
-| Product          | Quantity | Version read |
-| ---------------- | -------- | ------------ |
-| 2 – Keyboard     | 2        | 3            |
-| 3 – Monitor      | 1        | 6            |
-| 4 – Webcam       | 1        | 2            |
+| Product      | Quantity | Version read |
+| ------------ | -------- | ------------ |
+| 2 – Keyboard | 2        | 3            |
+| 3 – Monitor  | 1        | 6            |
+| 4 – Webcam   | 1        | 2            |
 
 Write the three orders **in one transaction**, with **optimistic locking**: for each one, deduct the stock (and increase the version) only if the version is still the one read and there is enough stock – and record the order **only if** the deduction succeeded (data-modifying CTE).
 

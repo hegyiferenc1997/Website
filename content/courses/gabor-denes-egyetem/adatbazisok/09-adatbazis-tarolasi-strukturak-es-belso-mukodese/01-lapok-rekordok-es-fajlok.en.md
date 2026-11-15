@@ -16,12 +16,12 @@ So far we've looked at tables through "logical" eyes. Now we peek under the hood
 
 ## Memory and disk
 
-| Storage              | Access time (order of magnitude) | If 1 ns were 1 second |
-| -------------------- | -------------------------------- | --------------------- |
-| CPU cache            | ~1 ns                            | 1 second              |
-| RAM                  | ~100 ns                          | about 2 minutes       |
-| NVMe SSD             | ~20,000 ns (20 µs)               | about 6 hours         |
-| Hard disk (HDD)      | ~5,000,000 ns (5 ms)             | about 2 months        |
+| Storage         | Access time (order of magnitude) | If 1 ns were 1 second |
+| --------------- | -------------------------------- | --------------------- |
+| CPU cache       | ~1 ns                            | 1 second              |
+| RAM             | ~100 ns                          | about 2 minutes       |
+| NVMe SSD        | ~20,000 ns (20 µs)               | about 6 hours         |
+| Hard disk (HDD) | ~5,000,000 ns (5 ms)             | about 2 months        |
 
 A database is durable (it lives on disk), but the disk is **orders of magnitude** slower than memory. So every trick a DBMS uses is about touching the disk **as rarely as possible**.
 

@@ -307,13 +307,7 @@ function LessonBody({
         ) : s.kind === "run" ? (
           <RunnableExample key={i} code={s.code} label={s.label} codeHtml={s.codeHtml} />
         ) : s.kind === "sqlRun" ? (
-          <SqlExample
-            key={i}
-            code={s.code}
-            setup={s.setup}
-            label={s.label}
-            codeHtml={s.codeHtml}
-          />
+          <SqlExample key={i} code={s.code} setup={s.setup} label={s.label} codeHtml={s.codeHtml} />
         ) : s.kind === "sqlExercise" ? (
           <SqlExercise
             key={i}

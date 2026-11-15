@@ -26,15 +26,15 @@ A relációs modellben minden adat **relációkban** van. A gyakorlatban a relá
                      számosság = 3 (sorok száma)
 ```
 
-| Hivatalos név        | Hétköznapi név | Jelentés                                             |
-| -------------------- | -------------- | ---------------------------------------------------- |
-| **reláció**          | tábla          | azonos szerkezetű sorok halmaza                      |
-| **attribútum**       | oszlop, mező   | egy tulajdonság, névvel és tartománnyal              |
-| **n-es** (tuple)     | sor, rekord    | egy egyed adatai                                     |
-| **tartomány** (domain) | típus        | az attribútum lehetséges értékei                     |
-| **fokszám** (degree) | oszlopszám     | hány attribútuma van                                 |
-| **számosság** (cardinality) | sorszám | hány sora van (ez folyamatosan változik)             |
-| **séma**             | fejléc         | a reláció neve és attribútumai: `hallgatok(neptun, nev, szak, felev)` |
+| Hivatalos név               | Hétköznapi név | Jelentés                                                              |
+| --------------------------- | -------------- | --------------------------------------------------------------------- |
+| **reláció**                 | tábla          | azonos szerkezetű sorok halmaza                                       |
+| **attribútum**              | oszlop, mező   | egy tulajdonság, névvel és tartománnyal                               |
+| **n-es** (tuple)            | sor, rekord    | egy egyed adatai                                                      |
+| **tartomány** (domain)      | típus          | az attribútum lehetséges értékei                                      |
+| **fokszám** (degree)        | oszlopszám     | hány attribútuma van                                                  |
+| **számosság** (cardinality) | sorszám        | hány sora van (ez folyamatosan változik)                              |
+| **séma**                    | fejléc         | a reláció neve és attribútumai: `hallgatok(neptun, nev, szak, felev)` |
 
 A reláció **szabályai**:
 

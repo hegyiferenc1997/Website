@@ -20,10 +20,10 @@ A megoldás a **TLS** (a böngészőben ez a lakat és a `https://`). Adatbázis
 
 Mi van, ha valaki ellopja a szerver lemezét, vagy egy mentési fájlt? Ha az adat **tároláskor is titkosítva** van, a lopott fájl használhatatlan a kulcs nélkül.
 
-| Szint                               | Mit véd?                                         | Példa                                      |
-| ----------------------------------- | ------------------------------------------------ | ------------------------------------------ |
-| **Teljes lemez**                    | ellopott lemez, kidobott szerver                 | LUKS, BitLocker, felhős lemeztitkosítás    |
-| **Adatbázis-fájlok** (TDE)          | ellopott adatfájl vagy mentés                    | SQL Server, Oracle TDE                     |
+| Szint                                 | Mit véd?                                           | Példa                                                |
+| ------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- |
+| **Teljes lemez**                      | ellopott lemez, kidobott szerver                   | LUKS, BitLocker, felhős lemeztitkosítás              |
+| **Adatbázis-fájlok** (TDE)            | ellopott adatfájl vagy mentés                      | SQL Server, Oracle TDE                               |
 | **Oszlop szintű / alkalmazás oldali** | még az adatbázis-rendszergazda sem látja az adatot | bankkártyaszám, egészségügyi adat titkosítva tárolva |
 
 A **mentéseket** is mindig titkosítva kell tárolni – egy titkosítatlan mentés egy objektumtárban (13. témakör) ugyanakkora kockázat, mint maga az adatbázis.
@@ -37,11 +37,11 @@ A titkosítás csak annyit ér, amennyire a **kulcs** biztonságban van. A kulcs
 
 ## Titkosítás vagy hash?
 
-| Titkosítás                               | Hash (lenyomat)                                      |
-| ---------------------------------------- | ---------------------------------------------------- |
-| **visszafordítható** (a kulccsal)        | **egyirányú**: a lenyomatból nem számolható vissza az eredeti |
-| a kimenet hossza az adattól függ         | mindig ugyanakkora (pl. SHA-256: 256 bit)            |
-| akkor kell, ha később **vissza kell olvasni** az adatot | akkor kell, ha csak **ellenőrizni** kell, hogy egyezik-e |
+| Titkosítás                                              | Hash (lenyomat)                                               |
+| ------------------------------------------------------- | ------------------------------------------------------------- |
+| **visszafordítható** (a kulccsal)                       | **egyirányú**: a lenyomatból nem számolható vissza az eredeti |
+| a kimenet hossza az adattól függ                        | mindig ugyanakkora (pl. SHA-256: 256 bit)                     |
+| akkor kell, ha később **vissza kell olvasni** az adatot | akkor kell, ha csak **ellenőrizni** kell, hogy egyezik-e      |
 
 A hash ugyanarra a bemenetre mindig ugyanazt adja, de a legkisebb eltérésre is teljesen mást:
 
@@ -95,11 +95,11 @@ Ugyanaz a jelszó, mégis teljesen más a hash – az előre kiszámolt tábláz
 
 **2. A gyors hash túl gyors.** Egy modern videokártya másodpercenként **milliárdnyi** SHA-256-ot számol, így egy ellopott hash-listán a rövid jelszavakat végig lehet próbálgatni. Ezért jelszóhoz **szándékosan lassú**, beállítható költségű függvény kell:
 
-| Függvény     | Megjegyzés                                                         |
-| ------------ | ------------------------------------------------------------------ |
-| **Argon2id** | a mai ajánlás: lassú **és** sok memóriát igényel (nehéz videokártyán gyorsítani) |
-| **bcrypt**   | régóta bevált, széles körben elérhető                              |
-| **scrypt**, **PBKDF2** | elfogadhatók, ha a fentiek nem érhetők el                |
+| Függvény               | Megjegyzés                                                                       |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| **Argon2id**           | a mai ajánlás: lassú **és** sok memóriát igényel (nehéz videokártyán gyorsítani) |
+| **bcrypt**             | régóta bevált, széles körben elérhető                                            |
+| **scrypt**, **PBKDF2** | elfogadhatók, ha a fentiek nem érhetők el                                        |
 
 Ezek a függvények a sót is maguk kezelik, és a költségparaméterrel évről évre lassíthatók, ahogy a gépek gyorsulnak. A gyakorlatban a jelszó-hash-elést az **alkalmazás** (egy bevált könyvtár) végzi, nem kézzel írjuk meg.
 

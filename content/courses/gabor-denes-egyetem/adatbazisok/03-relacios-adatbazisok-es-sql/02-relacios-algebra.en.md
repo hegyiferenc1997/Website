@@ -113,14 +113,14 @@ SELECT DISTINCT code FROM enrollments WHERE grade = 5;
 
 ## Summary
 
-| Algebra | Meaning             | SQL                          |
-| ------- | ------------------- | ---------------------------- |
-| σ       | filter rows         | `WHERE`                      |
-| π       | pick columns        | `SELECT DISTINCT columns`    |
-| ρ       | rename              | `AS`                         |
-| ×       | every pair          | `CROSS JOIN`                 |
-| ⋈       | matching pairs      | `JOIN … ON`                  |
-| ∪, −, ∩ | set operations      | `UNION`, `EXCEPT`, `INTERSECT` |
+| Algebra | Meaning        | SQL                            |
+| ------- | -------------- | ------------------------------ |
+| σ       | filter rows    | `WHERE`                        |
+| π       | pick columns   | `SELECT DISTINCT columns`      |
+| ρ       | rename         | `AS`                           |
+| ×       | every pair     | `CROSS JOIN`                   |
+| ⋈       | matching pairs | `JOIN … ON`                    |
+| ∪, −, ∩ | set operations | `UNION`, `EXCEPT`, `INTERSECT` |
 
 ## Lesson exercise
 

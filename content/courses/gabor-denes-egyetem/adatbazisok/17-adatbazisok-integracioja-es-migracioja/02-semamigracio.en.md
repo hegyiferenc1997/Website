@@ -63,14 +63,14 @@ A golden rule: **never modify** a migration file that has **already run** – if
 
 On a live system, where thousands are using the database right now, a schema change needs a **lock**. During a long lock the table is unavailable – that's effectively downtime.
 
-| Change                                              | Risk          | Why?                                                                    |
-| --------------------------------------------------- | ------------- | ----------------------------------------------------------------------- |
-| a new, **optional** column (`NULL` allowed)         | low           | only the catalogue changes, instant                                     |
-| a new column **with a default**                     | low (in newer PostgreSQL) | the default isn't written into every row                    |
-| a new column **`NOT NULL` without a default**       | **error**     | the existing rows would violate the constraint                          |
-| **renaming** or **dropping** a column               | **high**      | the old program version still running breaks immediately                |
-| changing a column's **type**                        | **high**      | often rewrites the whole table, with a long lock                        |
-| creating an index                                   | medium        | may block writes; `CREATE INDEX CONCURRENTLY` doesn't                   |
+| Change                                        | Risk                      | Why?                                                     |
+| --------------------------------------------- | ------------------------- | -------------------------------------------------------- |
+| a new, **optional** column (`NULL` allowed)   | low                       | only the catalogue changes, instant                      |
+| a new column **with a default**               | low (in newer PostgreSQL) | the default isn't written into every row                 |
+| a new column **`NOT NULL` without a default** | **error**                 | the existing rows would violate the constraint           |
+| **renaming** or **dropping** a column         | **high**                  | the old program version still running breaks immediately |
+| changing a column's **type**                  | **high**                  | often rewrites the whole table, with a long lock         |
+| creating an index                             | medium                    | may block writes; `CREATE INDEX CONCURRENTLY` doesn't    |
 
 ## The "expand, then contract" pattern
 

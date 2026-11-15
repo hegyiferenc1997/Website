@@ -14,23 +14,23 @@ minutes: 25
 
 **Integritás** = az adatok **helyessége és ellentmondás-mentessége**. A normalizálás a szerkezetből adódó ellentmondásokat szünteti meg, a megszorítások pedig azt biztosítják, hogy hibás adat **be se kerüljön**. Négy fajtáját különböztetjük meg:
 
-| Fajta                    | Szabály                                                     | Eszköz                          |
-| ------------------------ | ----------------------------------------------------------- | ------------------------------- |
-| **Egyedintegritás**      | minden sor egyértelműen azonosítható                        | `PRIMARY KEY`                   |
-| **Hivatkozási integritás** | idegen kulcs csak létező sorra mutathat                   | `REFERENCES` (`FOREIGN KEY`)    |
-| **Tartományintegritás**  | az érték a megengedett tartományba esik                     | típus, `NOT NULL`, `CHECK`      |
-| **Üzleti szabályok**     | a cég saját szabályai (pl. „a kedvezmény max. 30%”)         | `CHECK`, triggerek, alkalmazás  |
+| Fajta                      | Szabály                                             | Eszköz                         |
+| -------------------------- | --------------------------------------------------- | ------------------------------ |
+| **Egyedintegritás**        | minden sor egyértelműen azonosítható                | `PRIMARY KEY`                  |
+| **Hivatkozási integritás** | idegen kulcs csak létező sorra mutathat             | `REFERENCES` (`FOREIGN KEY`)   |
+| **Tartományintegritás**    | az érték a megengedett tartományba esik             | típus, `NOT NULL`, `CHECK`     |
+| **Üzleti szabályok**       | a cég saját szabályai (pl. „a kedvezmény max. 30%”) | `CHECK`, triggerek, alkalmazás |
 
 ## Mi legyen az árva sorokkal?
 
 A hivatkozási integritás azt mondja: nem lehet olyan rendelés, amelynek a vevője nem létezik. De mi történjen, ha egy **vevőt törölnek**, akinek vannak rendelései? Erre az idegen kulcsnál adhatsz szabályt:
 
-| Beállítás                | Mi történik a vevő törlésekor?                                  | Mikor jó?                                     |
-| ------------------------ | --------------------------------------------------------------- | --------------------------------------------- |
-| `ON DELETE RESTRICT` / `NO ACTION` (alapértelmezés) | a törlés **hibát ad**, amíg vannak rendelései | ha a gyerek sorok fontos adatok (számlák!)     |
-| `ON DELETE CASCADE`      | a rendelései is **törlődnek** vele együtt                       | ha a gyerek a szülő nélkül értelmetlen (rendelés tételei) |
-| `ON DELETE SET NULL`     | a rendelésekben a `vevo_id` **NULL** lesz                       | ha a gyerek megmaradhat gazda nélkül (a tanár távozik, a tárgy marad) |
-| `ON DELETE SET DEFAULT`  | a `vevo_id` az alapértékre áll                                  | ritkán                                        |
+| Beállítás                                           | Mi történik a vevő törlésekor?                | Mikor jó?                                                             |
+| --------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
+| `ON DELETE RESTRICT` / `NO ACTION` (alapértelmezés) | a törlés **hibát ad**, amíg vannak rendelései | ha a gyerek sorok fontos adatok (számlák!)                            |
+| `ON DELETE CASCADE`                                 | a rendelései is **törlődnek** vele együtt     | ha a gyerek a szülő nélkül értelmetlen (rendelés tételei)             |
+| `ON DELETE SET NULL`                                | a rendelésekben a `vevo_id` **NULL** lesz     | ha a gyerek megmaradhat gazda nélkül (a tanár távozik, a tárgy marad) |
+| `ON DELETE SET DEFAULT`                             | a `vevo_id` az alapértékre áll                | ritkán                                                                |
 
 Ugyanezek léteznek `ON UPDATE`-re is (ha a hivatkozott kulcs megváltozik).
 

@@ -45,12 +45,12 @@ In a relational database you first have to design the tables (the schema), and e
 
 ## The four main families of NoSQL
 
-| Family             | How does it store data?                             | Examples                  | Typical job                            |
-| ------------------ | --------------------------------------------------- | ------------------------- | -------------------------------------- |
-| **Key-value**      | key → any value, like a giant dictionary            | Redis, DynamoDB           | cache, sessions, shopping cart         |
-| **Document**       | key → JSON-like document, searchable by fields      | MongoDB, Couchbase        | product catalogue, content management  |
-| **Wide-column**    | rows with flexible columns, split into partitions   | Cassandra, HBase          | huge write load, time series data      |
-| **Graph**          | nodes and edges                                     | Neo4j, Amazon Neptune     | social network, recommendation system  |
+| Family          | How does it store data?                           | Examples              | Typical job                           |
+| --------------- | ------------------------------------------------- | --------------------- | ------------------------------------- |
+| **Key-value**   | key → any value, like a giant dictionary          | Redis, DynamoDB       | cache, sessions, shopping cart        |
+| **Document**    | key → JSON-like document, searchable by fields    | MongoDB, Couchbase    | product catalogue, content management |
+| **Wide-column** | rows with flexible columns, split into partitions | Cassandra, HBase      | huge write load, time series data     |
+| **Graph**       | nodes and edges                                   | Neo4j, Amazon Neptune | social network, recommendation system |
 
 In the next lessons we look at the first three, and at graph databases in topic 12.
 
@@ -88,11 +88,11 @@ Relational databases promise **ACID** transactions (topic 8). Many NoSQL systems
 
 > Analogy: news spreading in a group of friends. Not everyone hears it at the same moment, but after a while everyone knows the same thing.
 
-| Aspect         | ACID (relational)                   | BASE (many NoSQL)                          |
-| -------------- | ----------------------------------- | ------------------------------------------ |
-| Consistency    | immediate, strict                   | eventual (with a short delay)              |
-| Main goal      | correctness                         | availability and scalability               |
-| Good choice for | finance, stock, bookings           | news feeds, likes, logs, recommendations   |
+| Aspect          | ACID (relational)        | BASE (many NoSQL)                        |
+| --------------- | ------------------------ | ---------------------------------------- |
+| Consistency     | immediate, strict        | eventual (with a short delay)            |
+| Main goal       | correctness              | availability and scalability             |
+| Good choice for | finance, stock, bookings | news feeds, likes, logs, recommendations |
 
 Today the line is blurring: MongoDB can do ACID transactions spanning several documents, and PostgreSQL handles JSON documents excellently (lesson 2).
 

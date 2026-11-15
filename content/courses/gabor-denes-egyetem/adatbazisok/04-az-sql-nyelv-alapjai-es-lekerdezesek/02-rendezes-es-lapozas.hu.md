@@ -63,14 +63,14 @@ A 3. oldal 20-as lapozásnál: `LIMIT 20 OFFSET 40`. Fontos: `LIMIT` mindig `ORD
 
 A `SELECT` után nemcsak oszlop állhat, hanem bármilyen **kifejezés**:
 
-| Kifejezés                       | Eredmény                                  |
-| ------------------------------- | ----------------------------------------- |
-| `kredit * 30`                   | szorzás (+, −, \*, /, % is van)           |
-| `nev \|\| ' (' \|\| szak \|\| ')'` | szövegek összefűzése                    |
-| `UPPER(nev)`, `LOWER(nev)`      | nagy-, kisbetűssé alakítás                |
-| `LENGTH(nev)`                   | szöveg hossza                             |
-| `EXTRACT(YEAR FROM szuletett)`  | az év a dátumból                          |
-| `ROUND(x, 2)`                   | kerekítés 2 tizedesre                     |
+| Kifejezés                          | Eredmény                        |
+| ---------------------------------- | ------------------------------- |
+| `kredit * 30`                      | szorzás (+, −, \*, /, % is van) |
+| `nev \|\| ' (' \|\| szak \|\| ')'` | szövegek összefűzése            |
+| `UPPER(nev)`, `LOWER(nev)`         | nagy-, kisbetűssé alakítás      |
+| `LENGTH(nev)`                      | szöveg hossza                   |
+| `EXTRACT(YEAR FROM szuletett)`     | az év a dátumból                |
+| `ROUND(x, 2)`                      | kerekítés 2 tizedesre           |
 
 Figyelj: két egész szám osztása PostgreSQL-ben **egész** eredményt ad (`7 / 2 = 3`)! Tizedes eredményhez legalább az egyik legyen tizedes: `7 / 2.0 = 3.5`.
 

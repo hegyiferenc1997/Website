@@ -72,12 +72,12 @@ SELECT * FROM accounts ORDER BY account_id;
 
 ## The ACID properties
 
-| Letter | Property        | Meaning                                                                    |
-| ------ | --------------- | -------------------------------------------------------------------------- |
-| **A**  | _Atomicity_     | all or nothing: the transaction either runs completely or leaves no trace  |
-| **C**  | _Consistency_   | a transaction takes the database from one valid state to another (all constraints hold) |
-| **I**  | _Isolation_     | concurrent transactions don't interfere, as if they ran one after another  |
-| **D**  | _Durability_    | a committed change survives a power cut (thanks to the log, topic 9)       |
+| Letter | Property      | Meaning                                                                                 |
+| ------ | ------------- | --------------------------------------------------------------------------------------- |
+| **A**  | _Atomicity_   | all or nothing: the transaction either runs completely or leaves no trace               |
+| **C**  | _Consistency_ | a transaction takes the database from one valid state to another (all constraints hold) |
+| **I**  | _Isolation_   | concurrent transactions don't interfere, as if they ran one after another               |
+| **D**  | _Durability_  | a committed change survives a power cut (thanks to the log, topic 9)                    |
 
 ## When many work at once
 
@@ -92,12 +92,12 @@ Thousands shop in a web shop at the same time. Without isolating transactions, t
 
 The stricter the level, the fewer the errors – but the more waiting for each other.
 
-| Level              | Dirty read  | Non-repeatable | Phantom    |
-| ------------------ | ----------- | -------------- | ---------- |
-| READ UNCOMMITTED   | possible*   | possible       | possible   |
-| **READ COMMITTED** (PostgreSQL default) | no | possible | possible |
-| REPEATABLE READ    | no          | no             | possible*  |
-| SERIALIZABLE       | no          | no             | no         |
+| Level                                   | Dirty read | Non-repeatable | Phantom   |
+| --------------------------------------- | ---------- | -------------- | --------- |
+| READ UNCOMMITTED                        | possible*  | possible       | possible  |
+| **READ COMMITTED** (PostgreSQL default) | no         | possible       | possible  |
+| REPEATABLE READ                         | no         | no             | possible* |
+| SERIALIZABLE                            | no         | no             | no        |
 
 \* PostgreSQL is stricter: it never allows dirty reads, and its REPEATABLE READ excludes phantoms too.
 

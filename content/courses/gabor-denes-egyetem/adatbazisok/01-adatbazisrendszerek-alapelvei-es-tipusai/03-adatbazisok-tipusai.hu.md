@@ -36,13 +36,13 @@ Gyors, ha a fa mentén keresünk, de a „sok a sokhoz” kapcsolat (egy hallgat
 
 ## További csoportosítási szempontok
 
-| Szempont             | Típusok                                                                                           |
-| -------------------- | ------------------------------------------------------------------------------------------------- |
-| **Felhasználás**     | **OLTP**: sok kis tranzakció (webshop rendelés, banki utalás); **OLAP**: nagy elemző lekérdezések (havi kimutatás) – lásd 18. témakör |
-| **Elhelyezkedés**    | **központi** (egy szerver) vagy **elosztott** (több gép, akár több kontinensen)                    |
-| **Üzemmód**          | **kliens-szerver** (külön szerverfolyamat, hálózaton érhető el, pl. PostgreSQL) vagy **beágyazott** (a program része, egy fájl, pl. SQLite a telefonodban) |
-| **Tárolás helye**    | **lemezalapú** vagy **memóriabeli** (in-memory, pl. Redis – nagyon gyors)                          |
-| **Üzemeltetés**      | saját szerveren vagy **felhőben szolgáltatásként** (DBaaS, pl. Amazon RDS, Neon, Supabase)         |
+| Szempont          | Típusok                                                                                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Felhasználás**  | **OLTP**: sok kis tranzakció (webshop rendelés, banki utalás); **OLAP**: nagy elemző lekérdezések (havi kimutatás) – lásd 18. témakör                      |
+| **Elhelyezkedés** | **központi** (egy szerver) vagy **elosztott** (több gép, akár több kontinensen)                                                                            |
+| **Üzemmód**       | **kliens-szerver** (külön szerverfolyamat, hálózaton érhető el, pl. PostgreSQL) vagy **beágyazott** (a program része, egy fájl, pl. SQLite a telefonodban) |
+| **Tárolás helye** | **lemezalapú** vagy **memóriabeli** (in-memory, pl. Redis – nagyon gyors)                                                                                  |
+| **Üzemeltetés**   | saját szerveren vagy **felhőben szolgáltatásként** (DBaaS, pl. Amazon RDS, Neon, Supabase)                                                                 |
 
 ## Melyiket mikor?
 

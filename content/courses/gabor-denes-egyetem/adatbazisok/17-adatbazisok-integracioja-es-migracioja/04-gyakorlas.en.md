@@ -65,7 +65,7 @@ A university is replacing its twenty-year-old, in-house student records program 
 + find and analyse the missing 588 rows (e.g. from the error table), and fix the script
 - delete 588 rows from the source too
 - restart the server
-! Silently lost data in a grading system is unacceptable.
+! Silently lost data in a student records system is unacceptable.
 
 ? Which cutover strategy fits best if the system can't stop for long during the semester?
 - all at once (big bang), on a weekday morning

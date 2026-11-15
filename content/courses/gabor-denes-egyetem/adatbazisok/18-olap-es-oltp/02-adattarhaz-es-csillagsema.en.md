@@ -83,13 +83,13 @@ LIMIT 8;
 
 Imagine the data as a **cube** whose axes are the dimensions (time, product, store), with the measures (revenue) in the cells. The analyst rotates and cuts this cube:
 
-| Operation        | Meaning                                                  | In SQL                                           |
-| ---------------- | -------------------------------------------------------- | ------------------------------------------------ |
-| **Roll up**      | aggregates to a coarser level (month → quarter → year)   | fewer columns in `GROUP BY`                      |
-| **Drill down**   | breaks down to a finer level (year → quarter → month)    | more columns in `GROUP BY`                       |
-| **Slice**        | fixes one value of a dimension ("only 2026")             | one `WHERE` condition                            |
-| **Dice**         | narrows in several dimensions ("2026, East and West, monitors") | several `WHERE` conditions                |
-| **Pivot**        | swaps rows and columns                                   | `SUM(…) FILTER (WHERE …)` (topic 14)             |
+| Operation      | Meaning                                                         | In SQL                               |
+| -------------- | --------------------------------------------------------------- | ------------------------------------ |
+| **Roll up**    | aggregates to a coarser level (month → quarter → year)          | fewer columns in `GROUP BY`          |
+| **Drill down** | breaks down to a finer level (year → quarter → month)           | more columns in `GROUP BY`           |
+| **Slice**      | fixes one value of a dimension ("only 2026")                    | one `WHERE` condition                |
+| **Dice**       | narrows in several dimensions ("2026, East and West, monitors") | several `WHERE` conditions           |
+| **Pivot**      | swaps rows and columns                                          | `SUM(…) FILTER (WHERE …)` (topic 14) |
 
 Rolling up to years:
 

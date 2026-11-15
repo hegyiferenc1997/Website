@@ -14,12 +14,12 @@ minutes: 20
 
 A beginner developer stores enrollments like this – in a single, seemingly convenient table:
 
-| neptun | name       | major    | code | course_name         | credits | grade |
-| ------ | ---------- | -------- | ---- | ------------------- | ------- | ----- |
-| ABC123 | Anna Kiss  | comp eng | ADB  | Databases           | 5       | 5     |
-| ABC123 | Anna Kiss  | comp eng | DIG  | Digital Technology  | 5       | 4     |
-| CDE345 | Cili Toth  | bus inf  | ADB  | Databases           | 5       | 4     |
-| DEF456 | Dani Szabo | comp eng | ADB  | Databases           | 5       | 3     |
+| neptun | name       | major    | code | course_name        | credits | grade |
+| ------ | ---------- | -------- | ---- | ------------------ | ------- | ----- |
+| ABC123 | Anna Kiss  | comp eng | ADB  | Databases          | 5       | 5     |
+| ABC123 | Anna Kiss  | comp eng | DIG  | Digital Technology | 5       | 4     |
+| CDE345 | Cili Toth  | bus inf  | ADB  | Databases          | 5       | 4     |
+| DEF456 | Dani Szabo | comp eng | ADB  | Databases          | 5       | 3     |
 
 At first glance everything is fine. But look what happens in use:
 

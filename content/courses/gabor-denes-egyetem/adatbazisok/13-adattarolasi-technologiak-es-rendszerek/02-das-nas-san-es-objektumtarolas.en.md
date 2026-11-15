@@ -13,11 +13,11 @@ minutes: 22
 
 ## Three levels: block, file, object
 
-| Level          | What does the server see?                           | Example                         |
-| -------------- | --------------------------------------------------- | ------------------------------- |
-| **Block**      | a "raw" disk with numbered blocks; it manages the file system itself | local SSD, SAN, cloud block storage (e.g. AWS EBS) |
-| **File**       | a shared folder with files and directories          | NAS (NFS, SMB share)            |
-| **Object**     | "buckets" holding key → object (file + metadata), accessed over HTTP | Amazon S3, Azure Blob, Google Cloud Storage |
+| Level      | What does the server see?                                            | Example                                            |
+| ---------- | -------------------------------------------------------------------- | -------------------------------------------------- |
+| **Block**  | a "raw" disk with numbered blocks; it manages the file system itself | local SSD, SAN, cloud block storage (e.g. AWS EBS) |
+| **File**   | a shared folder with files and directories                           | NAS (NFS, SMB share)                               |
+| **Object** | "buckets" holding key → object (file + metadata), accessed over HTTP | Amazon S3, Azure Blob, Google Cloud Storage        |
 
 Databases like **block-level** storage: they want to decide themselves what goes where on the disk (pages, WAL – topic 9), and they need very low latency.
 
@@ -77,11 +77,11 @@ What is it good for alongside a database?
 
 Cloud providers offer object storage in classes of different "temperatures":
 
-| Class          | Access                | Price (storage)  | For what?                              |
-| -------------- | --------------------- | ---------------- | -------------------------------------- |
-| **Hot**        | immediate, frequent   | most expensive   | actively used files                    |
-| **Cool**       | immediate, rare       | cheaper          | last month's backups                   |
-| **Archive**    | retrievable in hours  | very cheap       | data kept for years, rarely needed     |
+| Class       | Access               | Price (storage) | For what?                          |
+| ----------- | -------------------- | --------------- | ---------------------------------- |
+| **Hot**     | immediate, frequent  | most expensive  | actively used files                |
+| **Cool**    | immediate, rare      | cheaper         | last month's backups               |
+| **Archive** | retrievable in hours | very cheap      | data kept for years, rarely needed |
 
 With a **lifecycle policy**, objects can "cool down" automatically: e.g. a backup moves to the cool class after 30 days, to archive after 90 days, and is deleted after a year.
 

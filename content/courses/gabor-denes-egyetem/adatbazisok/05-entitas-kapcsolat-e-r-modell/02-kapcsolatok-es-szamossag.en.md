@@ -25,11 +25,11 @@ A relationship's **degree** says how many entity sets it connects:
 
 Cardinality tells **at most how many** others an entity can be connected to. Always ask **from both directions**!
 
-| Cardinality | Question from both directions                                   | Example                       |
-| ----------- | --------------------------------------------------------------- | ----------------------------- |
-| **1 : 1**   | An A has at most one B, and a B has at most one A.              | person – ID card              |
-| **1 : N**   | An A has many B, but a B has at most one A.                     | department – lecturer         |
-| **N : M**   | An A has many B, and a B has many A too.                        | student – course              |
+| Cardinality | Question from both directions                      | Example               |
+| ----------- | -------------------------------------------------- | --------------------- |
+| **1 : 1**   | An A has at most one B, and a B has at most one A. | person – ID card      |
+| **1 : N**   | An A has many B, but a B has at most one A.        | department – lecturer |
+| **N : M**   | An A has many B, and a B has many A too.           | student – course      |
 
 A trick to check: say both sentences out loud! _"A department employs **many** lecturers." "A lecturer works in **one** department."_ → 1 : N, the "many" side is the lecturer.
 

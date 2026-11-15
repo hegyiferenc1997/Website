@@ -17,11 +17,11 @@ Az adatbázisban van a cég „vagyona”: vásárlók, jelszó-lenyomatok, rend
 
 ## A biztonság három célja: a CIA-hármas
 
-| Cél                                             | Jelentése                                       | Példa a megsértésére                         |
-| ----------------------------------------------- | ----------------------------------------------- | -------------------------------------------- |
-| **Bizalmasság** (_Confidentiality_)             | csak az lássa az adatot, akinek szabad          | kiszivárog a vásárlók e-mail-címlistája      |
-| **Sértetlenség** (_Integrity_)                  | az adat ne változzon meg jogosulatlanul         | valaki átírja a saját jegyét 2-esről 5-ösre  |
-| **Rendelkezésre állás** (_Availability_)        | az adat elérhető legyen, amikor kell            | leáll a szerver a vizsgajelentkezés napján   |
+| Cél                                      | Jelentése                               | Példa a megsértésére                        |
+| ---------------------------------------- | --------------------------------------- | ------------------------------------------- |
+| **Bizalmasság** (_Confidentiality_)      | csak az lássa az adatot, akinek szabad  | kiszivárog a vásárlók e-mail-címlistája     |
+| **Sértetlenség** (_Integrity_)           | az adat ne változzon meg jogosulatlanul | valaki átírja a saját jegyét 2-esről 5-ösre |
+| **Rendelkezésre állás** (_Availability_) | az adat elérhető legyen, amikor kell    | leáll a szerver a vizsgajelentkezés napján  |
 
 Minden biztonsági intézkedés e három közül legalább egyet véd.
 
@@ -64,11 +64,11 @@ Ha egy új oktató érkezik, csak a szerepkörbe kell tenni. A PostgreSQL-ben a 
 
 ## Hozzáférés-szabályozási modellek
 
-| Modell                                          | Ki dönt a jogokról?                                         | Hol találkozol vele?                        |
-| ----------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------- |
-| **DAC** – tetszés szerinti (_Discretionary_)    | az objektum **tulajdonosa** adhat jogot másoknak            | SQL `GRANT`, fájlrendszerek                 |
-| **RBAC** – szerepköralapú (_Role-Based_)        | a jogok **szerepkörökhöz** tartoznak                        | szinte minden vállalati rendszer, DBMS-ek   |
-| **MAC** – kötelező (_Mandatory_)                | központi szabály, **biztonsági címkék** (pl. titkos, szigorúan titkos) | katonai, kormányzati rendszerek  |
+| Modell                                       | Ki dönt a jogokról?                                                    | Hol találkozol vele?                      |
+| -------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------- |
+| **DAC** – tetszés szerinti (_Discretionary_) | az objektum **tulajdonosa** adhat jogot másoknak                       | SQL `GRANT`, fájlrendszerek               |
+| **RBAC** – szerepköralapú (_Role-Based_)     | a jogok **szerepkörökhöz** tartoznak                                   | szinte minden vállalati rendszer, DBMS-ek |
+| **MAC** – kötelező (_Mandatory_)             | központi szabály, **biztonsági címkék** (pl. titkos, szigorúan titkos) | katonai, kormányzati rendszerek           |
 
 A relációs DBMS-ek a DAC-ot és az RBAC-ot kombinálják: a tábla tulajdonosa jogot adhat, és a jogokat szerepkörökön keresztül osztjuk ki. Sorszintű szabályokkal (3. lecke) a MAC-hoz hasonló finomhangolás is elérhető.
 

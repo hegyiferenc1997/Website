@@ -37,14 +37,14 @@ EXPLAIN SELECT * FROM rendelesek WHERE rendeles_id = 1234;
 
 ## A leggyakoribb műveletek
 
-| Művelet              | Mit csinál                                                        | Mikor jó                         |
-| -------------------- | ----------------------------------------------------------------- | -------------------------------- |
-| **Seq Scan**         | végigolvassa a táblát                                             | kis tábla, vagy a sorok nagy része kell |
-| **Index Scan**       | az indexben keres, majd sorról sorra beolvassa a táblából         | kevés találat                    |
-| **Index Only Scan**  | minden kell adat az indexben van, a táblához nem is nyúl          | a leggyorsabb                    |
-| **Bitmap Heap Scan** | az indexből összegyűjti a találatok helyét, majd lapok sorrendjében olvas | közepes számú találat    |
-| **Sort**             | rendez (ha nincs hozzá index)                                     | `ORDER BY`, `GROUP BY`           |
-| **HashAggregate**    | csoportosít hash-táblával                                         | `GROUP BY`                       |
+| Művelet              | Mit csinál                                                                | Mikor jó                                |
+| -------------------- | ------------------------------------------------------------------------- | --------------------------------------- |
+| **Seq Scan**         | végigolvassa a táblát                                                     | kis tábla, vagy a sorok nagy része kell |
+| **Index Scan**       | az indexben keres, majd sorról sorra beolvassa a táblából                 | kevés találat                           |
+| **Index Only Scan**  | minden kell adat az indexben van, a táblához nem is nyúl                  | a leggyorsabb                           |
+| **Bitmap Heap Scan** | az indexből összegyűjti a találatok helyét, majd lapok sorrendjében olvas | közepes számú találat                   |
+| **Sort**             | rendez (ha nincs hozzá index)                                             | `ORDER BY`, `GROUP BY`                  |
+| **HashAggregate**    | csoportosít hash-táblával                                                 | `GROUP BY`                              |
 
 ```sql run
 EXPLAIN SELECT statusz, COUNT(*) FROM rendelesek GROUP BY statusz;

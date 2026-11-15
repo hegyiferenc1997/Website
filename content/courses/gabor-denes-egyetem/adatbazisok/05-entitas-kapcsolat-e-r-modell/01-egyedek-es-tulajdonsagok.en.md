@@ -27,14 +27,14 @@ An entity can be a **tangible** thing (car, book, product) or an **abstract** co
 
 An attribute is a characteristic of an entity set. In Chen notation it is an **ellipse**, connected to the rectangle by a line.
 
-| Kind               | Meaning                                          | Example                                | Notation              |
-| ------------------ | ------------------------------------------------ | -------------------------------------- | --------------------- |
-| **Simple**         | can't be split further                           | date of birth                          | ellipse               |
-| **Composite**      | can be split into parts                          | address = postcode + city + street     | ellipse with more ellipses branching off |
-| **Single-valued**  | has one value per entity                         | Neptun code                            | ellipse               |
-| **Multivalued**    | can have several values per entity               | phone numbers, languages spoken        | **double** ellipse    |
-| **Derived**        | can be computed from other attributes            | age (from date of birth)               | **dashed** ellipse    |
-| **Key**            | uniquely identifies the entity                   | Neptun code                            | **underlined** name   |
+| Kind              | Meaning                               | Example                            | Notation                                 |
+| ----------------- | ------------------------------------- | ---------------------------------- | ---------------------------------------- |
+| **Simple**        | can't be split further                | date of birth                      | ellipse                                  |
+| **Composite**     | can be split into parts               | address = postcode + city + street | ellipse with more ellipses branching off |
+| **Single-valued** | has one value per entity              | Neptun code                        | ellipse                                  |
+| **Multivalued**   | can have several values per entity    | phone numbers, languages spoken    | **double** ellipse                       |
+| **Derived**       | can be computed from other attributes | age (from date of birth)           | **dashed** ellipse                       |
+| **Key**           | uniquely identifies the entity        | Neptun code                        | **underlined** name                      |
 
 ```text
                 (neptun)            ((phone))

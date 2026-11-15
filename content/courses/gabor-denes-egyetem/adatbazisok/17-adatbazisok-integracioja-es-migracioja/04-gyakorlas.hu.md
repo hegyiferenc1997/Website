@@ -65,7 +65,7 @@ Egy egyetem a húszéves, saját fejlesztésű tanulmányi programját (régi ad
 + megkeresni és elemezni a hiányzó 588 sort (pl. a hibatáblából), és javítani a szkriptet
 - a forrásból is törölni 588 sort
 - újraindítani a szervert
-! Csendben elveszett adat egy jegyrendszerben elfogadhatatlan.
+! Csendben elveszett adat egy tanulmányi rendszerben elfogadhatatlan.
 
 ? Melyik átállási stratégia illik a legjobban, ha a rendszer félév közben nem állhat le hosszabb időre?
 - egyszerre (big bang), egy hétköznap délelőtt

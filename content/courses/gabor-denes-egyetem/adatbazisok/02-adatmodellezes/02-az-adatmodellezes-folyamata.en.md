@@ -73,10 +73,10 @@ It doesn't matter which one you choose, but use it **consistently within a proje
 
 A **data dictionary** is a table that describes every field: what it means, its type, whether it's required, and what values it may take. It is worth its weight in gold when a new colleague (or you, six months later) tries to work out what `stat_code` means.
 
-| Field   | Meaning                 | Type        | Required | Rule                |
-| ------- | ----------------------- | ----------- | -------- | ------------------- |
-| `email` | the member's email      | text (120)  | yes      | unique              |
-| `born`  | date of birth           | date        | no       | can't be in the future |
+| Field   | Meaning            | Type       | Required | Rule                   |
+| ------- | ------------------ | ---------- | -------- | ---------------------- |
+| `email` | the member's email | text (120) | yes      | unique                 |
+| `born`  | date of birth      | date       | no       | can't be in the future |
 
 ## Summary
 

@@ -14,23 +14,23 @@ minutes: 25
 
 **Integrity** = the data is **correct and free of contradictions**. Normalisation removes the contradictions that come from structure; constraints make sure bad data **never gets in**. There are four kinds:
 
-| Kind                     | Rule                                                        | Tool                            |
-| ------------------------ | ----------------------------------------------------------- | ------------------------------- |
-| **Entity integrity**     | every row is uniquely identifiable                          | `PRIMARY KEY`                   |
-| **Referential integrity** | a foreign key may only point to an existing row            | `REFERENCES` (`FOREIGN KEY`)    |
-| **Domain integrity**     | the value is in the allowed domain                          | type, `NOT NULL`, `CHECK`       |
-| **Business rules**       | the company's own rules (e.g. "discount at most 30%")       | `CHECK`, triggers, application  |
+| Kind                      | Rule                                                  | Tool                           |
+| ------------------------- | ----------------------------------------------------- | ------------------------------ |
+| **Entity integrity**      | every row is uniquely identifiable                    | `PRIMARY KEY`                  |
+| **Referential integrity** | a foreign key may only point to an existing row       | `REFERENCES` (`FOREIGN KEY`)   |
+| **Domain integrity**      | the value is in the allowed domain                    | type, `NOT NULL`, `CHECK`      |
+| **Business rules**        | the company's own rules (e.g. "discount at most 30%") | `CHECK`, triggers, application |
 
 ## What about the orphans?
 
 Referential integrity says: there can't be an order whose customer doesn't exist. But what should happen when a **customer with orders is deleted**? You can set a rule on the foreign key:
 
-| Setting                   | What happens when the customer is deleted?                      | When is it right?                             |
-| ------------------------- | --------------------------------------------------------------- | --------------------------------------------- |
-| `ON DELETE RESTRICT` / `NO ACTION` (default) | the delete **fails** while they have orders | when the child rows are important (invoices!) |
-| `ON DELETE CASCADE`       | their orders are **deleted** too                                | when the child is meaningless without the parent (order items) |
-| `ON DELETE SET NULL`      | `customer_id` becomes **NULL** in the orders                    | when the child can live without an owner (the teacher leaves, the course stays) |
-| `ON DELETE SET DEFAULT`   | `customer_id` is set to its default                             | rarely                                        |
+| Setting                                      | What happens when the customer is deleted?   | When is it right?                                                               |
+| -------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------- |
+| `ON DELETE RESTRICT` / `NO ACTION` (default) | the delete **fails** while they have orders  | when the child rows are important (invoices!)                                   |
+| `ON DELETE CASCADE`                          | their orders are **deleted** too             | when the child is meaningless without the parent (order items)                  |
+| `ON DELETE SET NULL`                         | `customer_id` becomes **NULL** in the orders | when the child can live without an owner (the teacher leaves, the course stays) |
+| `ON DELETE SET DEFAULT`                      | `customer_id` is set to its default          | rarely                                                                          |
 
 The same options exist for `ON UPDATE` (when the referenced key changes).
 

@@ -60,11 +60,11 @@ db.termekek.find({ cimkek: "gamer", ar: { $lt: 50000 } })
 
 A dokumentum-adatbázisban a legfontosabb tervezési kérdés: egy rendelés tételeit **beágyazzuk** a rendelés dokumentumába, vagy külön gyűjteményben tároljuk és **hivatkozunk** rájuk?
 
-| Beágyazás (_embedding_)                                    | Hivatkozás (_referencing_)                              |
-| ---------------------------------------------------------- | ------------------------------------------------------- |
-| egy olvasással megvan minden (nincs JOIN)                  | nincs ismétlődés, egy helyen módosítasz                 |
-| jó, ha az adatot **mindig együtt** olvasod                 | jó, ha az adatot **külön is** használod, vagy sokan hivatkoznak rá |
-| pl. a rendelés tételei, egy blogbejegyzés címkéi           | pl. a vásárló adatai, akinek sok rendelése van          |
+| Beágyazás (_embedding_)                          | Hivatkozás (_referencing_)                                         |
+| ------------------------------------------------ | ------------------------------------------------------------------ |
+| egy olvasással megvan minden (nincs JOIN)        | nincs ismétlődés, egy helyen módosítasz                            |
+| jó, ha az adatot **mindig együtt** olvasod       | jó, ha az adatot **külön is** használod, vagy sokan hivatkoznak rá |
+| pl. a rendelés tételei, egy blogbejegyzés címkéi | pl. a vásárló adatai, akinek sok rendelése van                     |
 
 Az ökölszabály: **úgy tárold, ahogyan olvasni fogod.** Ez a relációs normalizálás (6. témakör) szöges ellentéte: ott az ismétlődés kerülése volt a cél, itt a gyors olvasás.
 
@@ -104,13 +104,13 @@ SELECT id, adat FROM termekek ORDER BY id;
 
 A legfontosabb operátorok:
 
-| Operátor       | Jelentése                                          | Példa                                      |
-| -------------- | -------------------------------------------------- | ------------------------------------------ |
-| `->`           | mező kiolvasása **JSON-ként**                      | `adat -> 'specifikacio'`                   |
-| `->>`          | mező kiolvasása **szövegként**                     | `adat ->> 'nev'`                           |
-| `#>>`          | mélyebb mező szövegként, útvonallal                | `adat #>> '{specifikacio,meret}'`          |
-| `?`            | van-e ilyen kulcs (vagy tömbelem)                  | `adat -> 'cimkek' ? 'rgb'`                 |
-| `@>`           | tartalmazza-e ezt a részdokumentumot               | `adat @> '{"kategoria": "monitor"}'`       |
+| Operátor | Jelentése                            | Példa                                |
+| -------- | ------------------------------------ | ------------------------------------ |
+| `->`     | mező kiolvasása **JSON-ként**        | `adat -> 'specifikacio'`             |
+| `->>`    | mező kiolvasása **szövegként**       | `adat ->> 'nev'`                     |
+| `#>>`    | mélyebb mező szövegként, útvonallal  | `adat #>> '{specifikacio,meret}'`    |
+| `?`      | van-e ilyen kulcs (vagy tömbelem)    | `adat -> 'cimkek' ? 'rgb'`           |
+| `@>`     | tartalmazza-e ezt a részdokumentumot | `adat @> '{"kategoria": "monitor"}'` |
 
 ```sql run
 SELECT adat ->> 'nev' AS nev,

@@ -45,12 +45,12 @@ A legfontosabb tulajdonságai:
 
 Ha egy csomópontból **f** irányba lehet továbblépni (ez az **elágazási tényező**, _fan-out_), akkor:
 
-| Szintek száma | Elérhető kulcsok (f = 200)  |
-| ------------- | --------------------------- |
-| 1             | 200                         |
-| 2             | 200² = 40 000               |
-| 3             | 200³ = 8 000 000            |
-| 4             | 200⁴ = 1 600 000 000        |
+| Szintek száma | Elérhető kulcsok (f = 200) |
+| ------------- | -------------------------- |
+| 1             | 200                        |
+| 2             | 200² = 40 000              |
+| 3             | 200³ = 8 000 000           |
+| 4             | 200⁴ = 1 600 000 000       |
 
 Tehát **100 millió** sorhoz is elég **4 szint**, azaz 4 lapolvasás – és a felső szintek szinte mindig a memóriában vannak, így a valóságban gyakran csak 1–2 lemezolvasás kell. Index nélkül ez akár több százezer lap végigolvasása lenne!
 
@@ -112,12 +112,12 @@ LSM-fát használ például a **Cassandra**, a **RocksDB**, a **LevelDB** és a 
 
 ## B+-fa, hash vagy LSM?
 
-| Szempont          | B+-fa                  | Hash index             | LSM-fa                    |
-| ----------------- | ---------------------- | ---------------------- | ------------------------- |
-| Egyenlőség        | gyors (pár lépés)      | nagyon gyors (~1 lépés) | jó                        |
-| Tartomány, rendezés | gyors (láncolt levelek) | nem támogatja          | jó                        |
-| Írás              | közepes                | közepes                | nagyon gyors              |
-| Tipikus helye     | relációs DBMS-ek       | memóriabeli táblák     | írásigényes NoSQL rendszerek |
+| Szempont            | B+-fa                   | Hash index              | LSM-fa                       |
+| ------------------- | ----------------------- | ----------------------- | ---------------------------- |
+| Egyenlőség          | gyors (pár lépés)       | nagyon gyors (~1 lépés) | jó                           |
+| Tartomány, rendezés | gyors (láncolt levelek) | nem támogatja           | jó                           |
+| Írás                | közepes                 | közepes                 | nagyon gyors                 |
+| Tipikus helye       | relációs DBMS-ek        | memóriabeli táblák      | írásigényes NoSQL rendszerek |
 
 ## Összefoglalás
 

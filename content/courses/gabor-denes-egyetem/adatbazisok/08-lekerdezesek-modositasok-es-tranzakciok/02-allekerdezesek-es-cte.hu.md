@@ -91,12 +91,12 @@ Ugyanaz, mint az előző – de felülről lefelé, **lépésenként** olvashat�
 
 Két, **azonos oszlopszámú és -típusú** lekérdezés eredményét kapcsolják össze:
 
-| Művelet      | Eredmény                                      |
-| ------------ | --------------------------------------------- |
-| `UNION`      | mindkettő sorai, ismétlődés nélkül            |
-| `UNION ALL`  | mindkettő sorai, ismétlődéssel (gyorsabb)     |
-| `INTERSECT`  | csak a mindkettőben szereplő sorok            |
-| `EXCEPT`     | az elsőben szereplő, a másodikban nem         |
+| Művelet     | Eredmény                                  |
+| ----------- | ----------------------------------------- |
+| `UNION`     | mindkettő sorai, ismétlődés nélkül        |
+| `UNION ALL` | mindkettő sorai, ismétlődéssel (gyorsabb) |
+| `INTERSECT` | csak a mindkettőben szereplő sorok        |
+| `EXCEPT`    | az elsőben szereplő, a másodikban nem     |
 
 ```sql run
 -- Akik az ADB-t ÉS a DIG-et is felvették

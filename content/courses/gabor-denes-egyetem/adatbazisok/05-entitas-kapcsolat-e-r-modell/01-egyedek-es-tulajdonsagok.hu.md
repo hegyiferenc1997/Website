@@ -27,14 +27,14 @@ Egyed lehet **kézzelfogható** dolog (autó, könyv, termék) és **elvont** fo
 
 A tulajdonság (attribútum) egy egyedhalmaz jellemzője. A Chen-féle jelölésben **ellipszis**, vonallal kötve a téglalaphoz.
 
-| Fajta              | Jelentés                                         | Példa                                 | Jelölés              |
-| ------------------ | ------------------------------------------------ | ------------------------------------- | -------------------- |
-| **Egyszerű**       | nem bontható tovább                              | születési dátum                       | ellipszis            |
-| **Összetett**      | részekre bontható                                | lakcím = irányítószám + város + utca  | ellipszis, belőle további ellipszisek |
-| **Egyértékű**      | egy egyednél egy értéke van                      | Neptun-kód                            | ellipszis            |
-| **Többértékű**     | egy egyednél több értéke is lehet                | telefonszámok, nyelvtudás             | **dupla** ellipszis  |
-| **Származtatott**  | más tulajdonságokból kiszámítható                | életkor (a születési dátumból)        | **szaggatott** ellipszis |
-| **Kulcs**          | egyértelműen azonosítja az egyedet               | Neptun-kód                            | **aláhúzott** név    |
+| Fajta             | Jelentés                           | Példa                                | Jelölés                               |
+| ----------------- | ---------------------------------- | ------------------------------------ | ------------------------------------- |
+| **Egyszerű**      | nem bontható tovább                | születési dátum                      | ellipszis                             |
+| **Összetett**     | részekre bontható                  | lakcím = irányítószám + város + utca | ellipszis, belőle további ellipszisek |
+| **Egyértékű**     | egy egyednél egy értéke van        | Neptun-kód                           | ellipszis                             |
+| **Többértékű**    | egy egyednél több értéke is lehet  | telefonszámok, nyelvtudás            | **dupla** ellipszis                   |
+| **Származtatott** | más tulajdonságokból kiszámítható  | életkor (a születési dátumból)       | **szaggatott** ellipszis              |
+| **Kulcs**         | egyértelműen azonosítja az egyedet | Neptun-kód                           | **aláhúzott** név                     |
 
 ```text
                 (neptun)          ((telefonszám))

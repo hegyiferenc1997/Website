@@ -35,13 +35,13 @@ A PostgreSQL-ben mindkettő **szerepkör**; a különbség csak a `LOGIN` jelző
 
 Az alakja: `GRANT jog(ok) ON tábla TO szerepkör;`
 
-| Jog          | Mit enged?                     |
-| ------------ | ------------------------------ |
-| `SELECT`     | olvasás                        |
-| `INSERT`     | új sor beszúrása               |
-| `UPDATE`     | meglévő sor módosítása         |
-| `DELETE`     | sor törlése                    |
-| `ALL`        | mindez együtt (és még néhány)  |
+| Jog      | Mit enged?                    |
+| -------- | ----------------------------- |
+| `SELECT` | olvasás                       |
+| `INSERT` | új sor beszúrása              |
+| `UPDATE` | meglévő sor módosítása        |
+| `DELETE` | sor törlése                   |
+| `ALL`    | mindez együtt (és még néhány) |
 
 ```sql run
 CREATE ROLE elemzo;

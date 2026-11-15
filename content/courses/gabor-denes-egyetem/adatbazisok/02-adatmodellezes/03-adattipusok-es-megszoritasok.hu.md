@@ -17,16 +17,16 @@ Minden tulajdonságnak van **tartománya** (domain): azoknak az értékeknek a h
 
 ## A leggyakoribb típusok (PostgreSQL)
 
-| Típus                    | Mire                                  | Példa                 |
-| ------------------------ | ------------------------------------- | --------------------- |
-| `INT` / `BIGINT`         | egész szám (kb. ±2 milliárd / óriási) | darabszám, azonosító  |
-| `NUMERIC(p, s)`          | **pontos** tizedes tört               | ár, pénzösszeg        |
-| `REAL` / `DOUBLE PRECISION` | közelítő lebegőpontos szám         | mérési adat           |
-| `VARCHAR(n)`             | szöveg legfeljebb n karakterrel       | név, e-mail           |
-| `TEXT`                   | tetszőleges hosszú szöveg             | leírás, komment       |
-| `CHAR(n)`                | pontosan n hosszú szöveg              | Neptun-kód            |
-| `DATE` / `TIMESTAMP`     | dátum / dátum + idő                   | születésnap, rendelés ideje |
-| `BOOLEAN`                | igaz / hamis                          | aktív-e               |
+| Típus                       | Mire                                  | Példa                       |
+| --------------------------- | ------------------------------------- | --------------------------- |
+| `INT` / `BIGINT`            | egész szám (kb. ±2 milliárd / óriási) | darabszám, azonosító        |
+| `NUMERIC(p, s)`             | **pontos** tizedes tört               | ár, pénzösszeg              |
+| `REAL` / `DOUBLE PRECISION` | közelítő lebegőpontos szám            | mérési adat                 |
+| `VARCHAR(n)`                | szöveg legfeljebb n karakterrel       | név, e-mail                 |
+| `TEXT`                      | tetszőleges hosszú szöveg             | leírás, komment             |
+| `CHAR(n)`                   | pontosan n hosszú szöveg              | Neptun-kód                  |
+| `DATE` / `TIMESTAMP`        | dátum / dátum + idő                   | születésnap, rendelés ideje |
+| `BOOLEAN`                   | igaz / hamis                          | aktív-e                     |
 
 Két fontos tanács:
 
@@ -35,13 +35,13 @@ Két fontos tanács:
 
 ## Megszorítások – a tábla „házirendje”
 
-| Megszorítás   | Jelentés                                         | Példa                             |
-| ------------- | ------------------------------------------------ | --------------------------------- |
-| `NOT NULL`    | kötelező kitölteni                               | `nev VARCHAR(80) NOT NULL`        |
-| `UNIQUE`      | nem ismétlődhet                                  | `email VARCHAR(120) UNIQUE`       |
-| `PRIMARY KEY` | egyedi azonosító (= `UNIQUE` + `NOT NULL`)       | `kod VARCHAR(10) PRIMARY KEY`     |
-| `CHECK (…)`   | tetszőleges feltételnek kell teljesülnie         | `CHECK (jegy BETWEEN 1 AND 5)`    |
-| `DEFAULT …`   | ha nem adunk meg értéket, ezt kapja              | `keszlet INT DEFAULT 0`           |
+| Megszorítás   | Jelentés                                   | Példa                          |
+| ------------- | ------------------------------------------ | ------------------------------ |
+| `NOT NULL`    | kötelező kitölteni                         | `nev VARCHAR(80) NOT NULL`     |
+| `UNIQUE`      | nem ismétlődhet                            | `email VARCHAR(120) UNIQUE`    |
+| `PRIMARY KEY` | egyedi azonosító (= `UNIQUE` + `NOT NULL`) | `kod VARCHAR(10) PRIMARY KEY`  |
+| `CHECK (…)`   | tetszőleges feltételnek kell teljesülnie   | `CHECK (jegy BETWEEN 1 AND 5)` |
+| `DEFAULT …`   | ha nem adunk meg értéket, ezt kapja        | `keszlet INT DEFAULT 0`        |
 
 A megszorítás olyan, mint egy szigorú portás: a hibás adatot **be sem engedi**. Sokkal jobb, ha a hibát az adatbázis azonnal visszadobja, mint ha hónapokkal később derülne ki, hogy valakinek negatív az ára.
 

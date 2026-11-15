@@ -60,11 +60,11 @@ db.products.find({ tags: "gaming", price: { $lt: 50000 } })
 
 In a document database the most important design question is: do we **embed** an order's items in the order document, or store them in a separate collection and **reference** them?
 
-| Embedding                                                  | Referencing                                             |
-| ---------------------------------------------------------- | ------------------------------------------------------- |
-| one read gets everything (no JOIN)                         | no duplication, you change it in one place              |
-| good if you **always read the data together**              | good if you **also use the data separately**, or many refer to it |
-| e.g. an order's items, a blog post's tags                  | e.g. the data of a customer who has many orders         |
+| Embedding                                     | Referencing                                                       |
+| --------------------------------------------- | ----------------------------------------------------------------- |
+| one read gets everything (no JOIN)            | no duplication, you change it in one place                        |
+| good if you **always read the data together** | good if you **also use the data separately**, or many refer to it |
+| e.g. an order's items, a blog post's tags     | e.g. the data of a customer who has many orders                   |
 
 The rule of thumb: **store it the way you'll read it.** This is the exact opposite of relational normalisation (topic 6): there the goal was to avoid duplication, here it's fast reads.
 
@@ -104,13 +104,13 @@ SELECT id, data FROM products ORDER BY id;
 
 The most important operators:
 
-| Operator       | Meaning                                            | Example                                    |
-| -------------- | -------------------------------------------------- | ------------------------------------------ |
-| `->`           | get a field **as JSON**                            | `data -> 'specs'`                          |
-| `->>`          | get a field **as text**                            | `data ->> 'name'`                          |
-| `#>>`          | a deeper field as text, by path                    | `data #>> '{specs,size}'`                  |
-| `?`            | does this key (or array element) exist             | `data -> 'tags' ? 'rgb'`                   |
-| `@>`           | does it contain this sub-document                  | `data @> '{"category": "monitor"}'`        |
+| Operator | Meaning                                | Example                             |
+| -------- | -------------------------------------- | ----------------------------------- |
+| `->`     | get a field **as JSON**                | `data -> 'specs'`                   |
+| `->>`    | get a field **as text**                | `data ->> 'name'`                   |
+| `#>>`    | a deeper field as text, by path        | `data #>> '{specs,size}'`           |
+| `?`      | does this key (or array element) exist | `data -> 'tags' ? 'rgb'`            |
+| `@>`     | does it contain this sub-document      | `data @> '{"category": "monitor"}'` |
 
 ```sql run
 SELECT data ->> 'name' AS name,

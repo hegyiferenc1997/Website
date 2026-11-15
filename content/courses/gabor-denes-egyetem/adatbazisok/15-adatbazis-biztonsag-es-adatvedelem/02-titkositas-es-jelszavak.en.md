@@ -20,10 +20,10 @@ The solution is **TLS** (in the browser, the padlock and `https://`). For databa
 
 What if someone steals the server's disk, or a backup file? If the data is **encrypted at rest** too, the stolen file is useless without the key.
 
-| Level                               | What does it protect against?                    | Example                                    |
-| ----------------------------------- | ------------------------------------------------ | ------------------------------------------ |
-| **Full disk**                       | a stolen disk, a discarded server                | LUKS, BitLocker, cloud disk encryption     |
-| **Database files** (TDE)            | a stolen data file or backup                     | SQL Server, Oracle TDE                     |
+| Level                               | What does it protect against?                      | Example                                    |
+| ----------------------------------- | -------------------------------------------------- | ------------------------------------------ |
+| **Full disk**                       | a stolen disk, a discarded server                  | LUKS, BitLocker, cloud disk encryption     |
+| **Database files** (TDE)            | a stolen data file or backup                       | SQL Server, Oracle TDE                     |
 | **Column level / application side** | even the database administrator can't see the data | card numbers, health data stored encrypted |
 
 **Backups** must always be stored encrypted too – an unencrypted backup in object storage (topic 13) is as big a risk as the database itself.
@@ -37,11 +37,11 @@ Encryption is only worth as much as the safety of the **key**. The key should **
 
 ## Encryption or hash?
 
-| Encryption                               | Hash (digest)                                        |
-| ---------------------------------------- | ---------------------------------------------------- |
-| **reversible** (with the key)            | **one-way**: the original can't be computed back from the digest |
-| the output's length depends on the data  | always the same size (e.g. SHA-256: 256 bits)        |
-| needed when you have to **read the data back** later | needed when you only have to **check** whether it matches |
+| Encryption                                           | Hash (digest)                                                    |
+| ---------------------------------------------------- | ---------------------------------------------------------------- |
+| **reversible** (with the key)                        | **one-way**: the original can't be computed back from the digest |
+| the output's length depends on the data              | always the same size (e.g. SHA-256: 256 bits)                    |
+| needed when you have to **read the data back** later | needed when you only have to **check** whether it matches        |
 
 A hash always gives the same result for the same input, but a completely different one for the slightest change:
 
@@ -95,11 +95,11 @@ Same password, yet a completely different hash – precomputed tables are useles
 
 **2. A fast hash is too fast.** A modern graphics card computes **billions** of SHA-256 hashes per second, so on a stolen hash list short passwords can be tried exhaustively. That's why passwords need a **deliberately slow** function with an adjustable cost:
 
-| Function     | Note                                                               |
-| ------------ | ------------------------------------------------------------------ |
-| **Argon2id** | today's recommendation: slow **and** memory-hungry (hard to speed up on graphics cards) |
-| **bcrypt**   | long-established, widely available                                 |
-| **scrypt**, **PBKDF2** | acceptable if the above aren't available                 |
+| Function               | Note                                                                                    |
+| ---------------------- | --------------------------------------------------------------------------------------- |
+| **Argon2id**           | today's recommendation: slow **and** memory-hungry (hard to speed up on graphics cards) |
+| **bcrypt**             | long-established, widely available                                                      |
+| **scrypt**, **PBKDF2** | acceptable if the above aren't available                                                |
 
 These functions handle the salt themselves, and their cost parameter can be raised year by year as machines get faster. In practice password hashing is done by the **application** (a proven library), not written by hand.
 

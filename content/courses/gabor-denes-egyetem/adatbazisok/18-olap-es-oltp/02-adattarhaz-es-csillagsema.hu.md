@@ -83,13 +83,13 @@ LIMIT 8;
 
 Képzeld el az adatot egy **kockának**, amelynek tengelyei a dimenziók (idő, termék, bolt), a cellákban pedig a ténymutatók (bevétel) vannak. Az elemző ezt a kockát forgatja és vágja:
 
-| Művelet                     | Jelentése                                             | SQL-ben                                          |
-| --------------------------- | ----------------------------------------------------- | ------------------------------------------------ |
-| **Felgörgetés** (_roll up_) | durvább szintre összesít (hónap → negyedév → év)      | kevesebb oszlop a `GROUP BY`-ban                 |
-| **Lefúrás** (_drill down_)  | finomabb szintre bont (év → negyedév → hónap)         | több oszlop a `GROUP BY`-ban                     |
-| **Szeletelés** (_slice_)    | egy dimenzió egy értékét rögzíti („csak 2026”)        | egy `WHERE` feltétel                             |
-| **Kockázás** (_dice_)       | több dimenzióban szűkít („2026, Kelet és Nyugat, monitorok”) | több `WHERE` feltétel                     |
-| **Forgatás** (_pivot_)      | a sorokat és az oszlopokat felcseréli                 | `SUM(…) FILTER (WHERE …)` (14. témakör)          |
+| Művelet                     | Jelentése                                                    | SQL-ben                                 |
+| --------------------------- | ------------------------------------------------------------ | --------------------------------------- |
+| **Felgörgetés** (_roll up_) | durvább szintre összesít (hónap → negyedév → év)             | kevesebb oszlop a `GROUP BY`-ban        |
+| **Lefúrás** (_drill down_)  | finomabb szintre bont (év → negyedév → hónap)                | több oszlop a `GROUP BY`-ban            |
+| **Szeletelés** (_slice_)    | egy dimenzió egy értékét rögzíti („csak 2026”)               | egy `WHERE` feltétel                    |
+| **Kockázás** (_dice_)       | több dimenzióban szűkít („2026, Kelet és Nyugat, monitorok”) | több `WHERE` feltétel                   |
+| **Forgatás** (_pivot_)      | a sorokat és az oszlopokat felcseréli                        | `SUM(…) FILTER (WHERE …)` (14. témakör) |
 
 Felgörgetés évekre:
 

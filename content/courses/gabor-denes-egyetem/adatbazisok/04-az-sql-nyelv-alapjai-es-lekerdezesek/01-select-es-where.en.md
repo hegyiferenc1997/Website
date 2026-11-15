@@ -52,11 +52,11 @@ FROM students;
 
 `WHERE` is followed by a **condition**; only the rows for which it is true remain.
 
-| Operator              | Meaning               | Example                              |
-| --------------------- | --------------------- | ------------------------------------ |
-| `=`, `<>` (or `!=`)   | equal, not equal      | `major = 'computer engineering'`     |
-| `<`, `<=`, `>`, `>=`  | less, greater         | `semester >= 3`                      |
-| `AND`, `OR`, `NOT`    | and, or, not          | `semester = 3 AND city = 'Budapest'` |
+| Operator             | Meaning          | Example                              |
+| -------------------- | ---------------- | ------------------------------------ |
+| `=`, `<>` (or `!=`)  | equal, not equal | `major = 'computer engineering'`     |
+| `<`, `<=`, `>`, `>=` | less, greater    | `semester >= 3`                      |
+| `AND`, `OR`, `NOT`   | and, or, not     | `semester = 3 AND city = 'Budapest'` |
 
 Note: **text** goes in single quotes (`'Budapest'`), numbers don't.
 

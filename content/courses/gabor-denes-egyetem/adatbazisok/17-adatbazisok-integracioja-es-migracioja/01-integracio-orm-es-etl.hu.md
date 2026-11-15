@@ -43,12 +43,12 @@ hallgatok = session.query(Hallgato).filter(Hallgato.felev == 3).order_by(Hallgat
 SELECT neptun, nev, szak, felev FROM hallgatok WHERE felev = $1 ORDER BY nev
 ```
 
-| Előnyök                                                         | Csapdák                                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| kevesebb ismétlődő kód, kényelmes használat                     | elrejti az SQL-t: könnyű észrevétlenül lassú lekérdezést írni               |
-| a lekérdezések **paraméterezettek** (véd az SQL-befecskendezés ellen) | az **N+1 probléma** (16. témakör) a „lusta betöltés” miatt                 |
-| típusellenőrzés, automatikus kiegészítés a szerkesztőben        | bonyolult riportokhoz, ablakfüggvényekhez gyakran mégis nyers SQL kell      |
-| gyakran **migrációkezelés** is jár vele (2. lecke)              | ha nem érted, mi történik alatta, nehéz a hibakeresés                       |
+| Előnyök                                                               | Csapdák                                                                |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| kevesebb ismétlődő kód, kényelmes használat                           | elrejti az SQL-t: könnyű észrevétlenül lassú lekérdezést írni          |
+| a lekérdezések **paraméterezettek** (véd az SQL-befecskendezés ellen) | az **N+1 probléma** (16. témakör) a „lusta betöltés” miatt             |
+| típusellenőrzés, automatikus kiegészítés a szerkesztőben              | bonyolult riportokhoz, ablakfüggvényekhez gyakran mégis nyers SQL kell |
+| gyakran **migrációkezelés** is jár vele (2. lecke)                    | ha nem érted, mi történik alatta, nehéz a hibakeresés                  |
 
 > Tanács: használj nyugodtan ORM-et, de **tudj SQL-ül** – és időnként nézd meg, milyen lekérdezéseket gyárt (a legtöbb ORM naplózni tudja őket).
 

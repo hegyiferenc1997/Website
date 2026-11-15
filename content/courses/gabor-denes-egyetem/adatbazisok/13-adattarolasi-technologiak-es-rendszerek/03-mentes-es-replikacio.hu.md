@@ -19,11 +19,11 @@ Az adat sokféleképpen veszhet el: lemezhiba, egy rosszul megírt `DELETE` `WHE
 
 ## Mentéstípusok
 
-| Típus                           | Mit ment?                                     | Mentés      | Visszaállítás                          |
-| ------------------------------- | --------------------------------------------- | ----------- | -------------------------------------- |
-| **Teljes** (_full_)             | mindent                                       | lassú, nagy | egyszerű: csak ez az egy kell          |
-| **Növekményes** (_incremental_) | ami a **legutóbbi bármilyen** mentés óta változott | gyors, kicsi | a teljes + **az összes** növekményes sorban |
-| **Különbségi** (_differential_) | ami a **legutóbbi teljes** mentés óta változott | közepes, napról napra nő | a teljes + **a legutolsó** különbségi |
+| Típus                           | Mit ment?                                          | Mentés                   | Visszaállítás                               |
+| ------------------------------- | -------------------------------------------------- | ------------------------ | ------------------------------------------- |
+| **Teljes** (_full_)             | mindent                                            | lassú, nagy              | egyszerű: csak ez az egy kell               |
+| **Növekményes** (_incremental_) | ami a **legutóbbi bármilyen** mentés óta változott | gyors, kicsi             | a teljes + **az összes** növekményes sorban |
+| **Különbségi** (_differential_) | ami a **legutóbbi teljes** mentés óta változott    | közepes, napról napra nő | a teljes + **a legutolsó** különbségi       |
 
 Példa: vasárnap teljes mentés, hétfőtől naponta kiegészítő mentés. Csütörtökön baj van:
 
@@ -89,10 +89,10 @@ Példa: ha csak éjjel 2-kor van mentés, és délután 6-kor ég le a szerver, 
 
 A **replikáció** során egy vagy több **másodlagos** szerver (_replica_, _standby_) folyamatosan követi az **elsődleges** szerver (_primary_) változásait. PostgreSQL-ben az elsődleges szerver a WAL-t küldi át, a másodlagosok pedig lejátsszák (_streaming replication_).
 
-| Fajta           | Hogyan működik?                                                       | Előny / hátrány                                    |
-| --------------- | --------------------------------------------------------------------- | -------------------------------------------------- |
-| **Szinkron**    | a `COMMIT` csak akkor kész, ha a másodlagos is megkapta a naplót      | nem vész el adat (RPO ≈ 0), de lassabb írás        |
-| **Aszinkron**   | a `COMMIT` azonnal kész, a napló utána megy át                        | gyors, de a primary összeomlásakor az utolsó pár másodperc elveszhet |
+| Fajta         | Hogyan működik?                                                  | Előny / hátrány                                                      |
+| ------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Szinkron**  | a `COMMIT` csak akkor kész, ha a másodlagos is megkapta a naplót | nem vész el adat (RPO ≈ 0), de lassabb írás                          |
+| **Aszinkron** | a `COMMIT` azonnal kész, a napló utána megy át                   | gyors, de a primary összeomlásakor az utolsó pár másodperc elveszhet |
 
 Mire jó a replikáció?
 

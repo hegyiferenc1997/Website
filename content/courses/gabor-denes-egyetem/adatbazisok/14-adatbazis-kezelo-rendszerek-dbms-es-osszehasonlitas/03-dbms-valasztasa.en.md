@@ -14,16 +14,16 @@ minutes: 28
 
 "Everyone uses MongoDB, so we'll choose it too" – decisions like that get expensive later. A good choice starts from **the job**. Some questions worth asking:
 
-| Criterion                 | Question                                                                          |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| **Data model**            | Tabular, interrelated data? Flexible documents? A web of relationships? Time series? |
-| **Workload**              | Many small transactions (OLTP) or big analytical queries (OLAP)? More writes or reads? |
-| **Consistency**           | Is strict ACID needed (money, stock), or is eventual consistency enough?          |
-| **Size and scaling**      | Gigabytes or petabytes? Is one server enough, or are several data centres needed? |
-| **Cost**                  | Licence, operations, experts – the total cost (TCO).                              |
-| **Team**                  | What does the team already know? How long will learning take?                     |
-| **Ecosystem**             | Is there a good driver for our programming language, ORM support, a cloud service, a community? |
-| **Legal aspects**         | Where may the data be stored (e.g. within the EU)? Which certifications are needed? |
+| Criterion            | Question                                                                                        |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| **Data model**       | Tabular, interrelated data? Flexible documents? A web of relationships? Time series?            |
+| **Workload**         | Many small transactions (OLTP) or big analytical queries (OLAP)? More writes or reads?          |
+| **Consistency**      | Is strict ACID needed (money, stock), or is eventual consistency enough?                        |
+| **Size and scaling** | Gigabytes or petabytes? Is one server enough, or are several data centres needed?               |
+| **Cost**             | Licence, operations, experts – the total cost (TCO).                                            |
+| **Team**             | What does the team already know? How long will learning take?                                   |
+| **Ecosystem**        | Is there a good driver for our programming language, ORM support, a cloud service, a community? |
+| **Legal aspects**    | Where may the data be stored (e.g. within the EU)? Which certifications are needed?             |
 
 > A good rule of thumb: unless you have a special reason to choose something else, a **well-known relational database** (e.g. PostgreSQL) is a safe starting point for most new projects. For special needs (huge write loads, graph traversal, caching) you can add a specialised system alongside it.
 

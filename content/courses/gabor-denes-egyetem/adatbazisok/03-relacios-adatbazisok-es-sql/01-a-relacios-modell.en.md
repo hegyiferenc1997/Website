@@ -26,15 +26,15 @@ In the relational model all data lives in **relations**. In practice a relation 
                      cardinality = 3 (number of rows)
 ```
 
-| Official name               | Everyday name   | Meaning                                              |
-| --------------------------- | --------------- | ---------------------------------------------------- |
-| **relation**                | table           | a set of rows with the same structure                |
-| **attribute**               | column, field   | a property, with a name and a domain                 |
-| **tuple**                   | row, record     | the data of one entity                               |
-| **domain**                  | type            | the possible values of the attribute                 |
-| **degree**                  | number of columns | how many attributes it has                         |
-| **cardinality**             | number of rows  | how many rows it has (this changes constantly)       |
-| **schema**                  | header          | the relation's name and attributes: `students(neptun, name, major, semester)` |
+| Official name   | Everyday name     | Meaning                                                                       |
+| --------------- | ----------------- | ----------------------------------------------------------------------------- |
+| **relation**    | table             | a set of rows with the same structure                                         |
+| **attribute**   | column, field     | a property, with a name and a domain                                          |
+| **tuple**       | row, record       | the data of one entity                                                        |
+| **domain**      | type              | the possible values of the attribute                                          |
+| **degree**      | number of columns | how many attributes it has                                                    |
+| **cardinality** | number of rows    | how many rows it has (this changes constantly)                                |
+| **schema**      | header            | the relation's name and attributes: `students(neptun, name, major, semester)` |
 
 The **rules** of a relation:
 

@@ -28,13 +28,13 @@ Ne találgass, hogy mi lassú. A 7. témakörben megismert `EXPLAIN` (és az `EX
 
 Egy feltétel akkor **indexbarát**, ha az index „bele tud keresni”: az oszlop **önmagában**, változatlanul áll az összehasonlítás egyik oldalán. Ha az oszlopra függvényt vagy műveletet alkalmazol, az indexet nem lehet használni, mert az a nyers értékek szerint rendezett.
 
-| Nem indexbarát                                  | Indexbarát átírás                                                 |
-| ----------------------------------------------- | ----------------------------------------------------------------- |
-| `WHERE EXTRACT(YEAR FROM datum) = 2025`         | `WHERE datum >= '2025-01-01' AND datum < '2026-01-01'`            |
-| `WHERE ar * 1.27 > 10000`                       | `WHERE ar > 10000 / 1.27`                                         |
-| `WHERE LOWER(email) = 'a@b.hu'`                 | kifejezés alapú index: `CREATE INDEX … ON vasarlok (LOWER(email))` |
-| `WHERE nev LIKE '%egér'`                        | (eleje ismeretlen: B-fa nem segít; teljes szöveges keresés kell)  |
-| `WHERE vasarlo_id + 0 = 42`                     | `WHERE vasarlo_id = 42`                                           |
+| Nem indexbarát                          | Indexbarát átírás                                                  |
+| --------------------------------------- | ------------------------------------------------------------------ |
+| `WHERE EXTRACT(YEAR FROM datum) = 2025` | `WHERE datum >= '2025-01-01' AND datum < '2026-01-01'`             |
+| `WHERE ar * 1.27 > 10000`               | `WHERE ar > 10000 / 1.27`                                          |
+| `WHERE LOWER(email) = 'a@b.hu'`         | kifejezés alapú index: `CREATE INDEX … ON vasarlok (LOWER(email))` |
+| `WHERE nev LIKE '%egér'`                | (eleje ismeretlen: B-fa nem segít; teljes szöveges keresés kell)   |
+| `WHERE vasarlo_id + 0 = 42`             | `WHERE vasarlo_id = 42`                                            |
 
 Nézd meg a különbséget! Tegyünk indexet a dátumra, és hasonlítsuk össze a két tervet:
 

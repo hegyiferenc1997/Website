@@ -87,14 +87,14 @@ Ezért a sharding az utolsó lépés. Vannak rendszerek, amelyek elrejtik a bony
 
 ## Mit figyelj? – a legfontosabb mérőszámok
 
-| Mérőszám                              | Mit árul el?                                                 |
-| ------------------------------------- | ------------------------------------------------------------ |
+| Mérőszám                                           | Mit árul el?                                                                |
+| -------------------------------------------------- | --------------------------------------------------------------------------- |
 | **Lekérdezések ideje** (átlag, 95/99. percentilis) | a felhasználók által érzett sebesség; a percentilis a „lassú szélt” mutatja |
-| **Pufferben talált lapok aránya**     | ha 99% alá esik, kevés a memória vagy rossz a lekérdezés     |
-| **Aktív kapcsolatok száma**           | közel a korláthoz? Kell kapcsolatkészlet?                    |
-| **Zárolásra várakozás, holtpontok**   | egymást blokkoló tranzakciók (8. témakör)                    |
-| **Replikációs késés**                 | mennyire friss a replika                                     |
-| **Lemez: IOPS, késleltetés, szabad hely** | a tároló bírja-e (13. témakör)                           |
+| **Pufferben talált lapok aránya**                  | ha 99% alá esik, kevés a memória vagy rossz a lekérdezés                    |
+| **Aktív kapcsolatok száma**                        | közel a korláthoz? Kell kapcsolatkészlet?                                   |
+| **Zárolásra várakozás, holtpontok**                | egymást blokkoló tranzakciók (8. témakör)                                   |
+| **Replikációs késés**                              | mennyire friss a replika                                                    |
+| **Lemez: IOPS, késleltetés, szabad hely**          | a tároló bírja-e (13. témakör)                                              |
 
 ## Összefoglalás
 

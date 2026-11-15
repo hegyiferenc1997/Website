@@ -19,17 +19,17 @@ Képzeld el egy webshop két „felhasználóját”:
 
 A két feladatra kétféle rendszer született:
 
-| Szempont               | **OLTP** (_Online Transaction Processing_)      | **OLAP** (_Online Analytical Processing_)           |
-| ---------------------- | ----------------------------------------------- | --------------------------------------------------- |
-| Cél                    | a napi működés: rendelés, foglalás, jegybeírás  | elemzés, riport, döntéstámogatás                    |
-| Tipikus művelet        | sok rövid tranzakció: `INSERT`, `UPDATE`, pár soros `SELECT` | kevés, de hatalmas `SELECT` összesítéssel |
-| Egy lekérdezés érint   | néhány sort                                     | milliónyi sort, de kevés oszlopot                   |
-| Felhasználók           | sok ezer (ügyfelek, alkalmazások)               | kevés (elemzők, vezetők, riportok)                  |
-| Adat                   | a **jelen** állapot, mindig friss               | **történeti** adat, évekre visszamenőleg            |
-| Séma                   | normalizált (3NF, 6. témakör)                   | denormalizált, csillagséma (2. lecke)               |
-| Tárolás                | sor alapú (9. témakör)                          | gyakran oszlop alapú, erős tömörítéssel             |
-| Fontos mérőszám        | tranzakció/másodperc, válaszidő                 | lekérdezés ideje nagy adaton                        |
-| Példák                 | PostgreSQL, MySQL, SQL Server, Oracle           | Snowflake, BigQuery, Redshift, ClickHouse, DuckDB   |
+| Szempont             | **OLTP** (_Online Transaction Processing_)                   | **OLAP** (_Online Analytical Processing_)         |
+| -------------------- | ------------------------------------------------------------ | ------------------------------------------------- |
+| Cél                  | a napi működés: rendelés, foglalás, jegybeírás               | elemzés, riport, döntéstámogatás                  |
+| Tipikus művelet      | sok rövid tranzakció: `INSERT`, `UPDATE`, pár soros `SELECT` | kevés, de hatalmas `SELECT` összesítéssel         |
+| Egy lekérdezés érint | néhány sort                                                  | milliónyi sort, de kevés oszlopot                 |
+| Felhasználók         | sok ezer (ügyfelek, alkalmazások)                            | kevés (elemzők, vezetők, riportok)                |
+| Adat                 | a **jelen** állapot, mindig friss                            | **történeti** adat, évekre visszamenőleg          |
+| Séma                 | normalizált (3NF, 6. témakör)                                | denormalizált, csillagséma (2. lecke)             |
+| Tárolás              | sor alapú (9. témakör)                                       | gyakran oszlop alapú, erős tömörítéssel           |
+| Fontos mérőszám      | tranzakció/másodperc, válaszidő                              | lekérdezés ideje nagy adaton                      |
+| Példák               | PostgreSQL, MySQL, SQL Server, Oracle                        | Snowflake, BigQuery, Redshift, ClickHouse, DuckDB |
 
 ## Miért nem elemzünk az éles adatbázison?
 

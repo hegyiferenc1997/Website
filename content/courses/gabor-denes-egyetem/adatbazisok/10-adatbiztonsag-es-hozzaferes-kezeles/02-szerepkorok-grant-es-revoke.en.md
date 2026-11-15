@@ -35,13 +35,13 @@ In PostgreSQL both are **roles**; the only difference is the `LOGIN` flag. (In r
 
 Its form: `GRANT privilege(s) ON table TO role;`
 
-| Privilege    | What does it allow?           |
-| ------------ | ----------------------------- |
-| `SELECT`     | reading                       |
-| `INSERT`     | inserting a new row           |
-| `UPDATE`     | modifying an existing row     |
-| `DELETE`     | deleting a row                |
-| `ALL`        | all of these (and a few more) |
+| Privilege | What does it allow?           |
+| --------- | ----------------------------- |
+| `SELECT`  | reading                       |
+| `INSERT`  | inserting a new row           |
+| `UPDATE`  | modifying an existing row     |
+| `DELETE`  | deleting a row                |
+| `ALL`     | all of these (and a few more) |
 
 ```sql run
 CREATE ROLE analyst;

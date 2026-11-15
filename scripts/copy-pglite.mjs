@@ -14,7 +14,8 @@ const dest = path.join(root, "public", "pglite", version);
 // Csak a futtatáshoz szükséges fájlok: a főmodul és darabjai, a WASM motor és az adatfájl
 // (a kiegészítők, a térképfájlok és a Node-os változatok nem kellenek).
 const FILES = readdirSync(src).filter(
-  (f) => /^(index|chunk-[\w-]+|pglite|initdb)\.js$/.test(f) || /^(pglite|initdb)\.(wasm|data)$/.test(f),
+  (f) =>
+    /^(index|chunk-[\w-]+|pglite|initdb)\.js$/.test(f) || /^(pglite|initdb)\.(wasm|data)$/.test(f),
 );
 
 mkdirSync(dest, { recursive: true });

@@ -87,14 +87,14 @@ That's why sharding is the last step. Some systems hide its complexity (e.g. Cit
 
 ## What to watch – the most important metrics
 
-| Metric                                | What does it tell you?                                       |
-| ------------------------------------- | ------------------------------------------------------------ |
-| **Query time** (average, 95th/99th percentile) | the speed users feel; percentiles show the "slow tail" |
-| **Buffer hit ratio**                  | if it drops below 99%, memory is short or a query is bad     |
-| **Number of active connections**      | close to the limit? Is a connection pool needed?             |
-| **Lock waits, deadlocks**             | transactions blocking each other (topic 8)                   |
-| **Replication lag**                   | how fresh the replica is                                     |
-| **Disk: IOPS, latency, free space**   | whether storage can cope (topic 13)                          |
+| Metric                                         | What does it tell you?                                   |
+| ---------------------------------------------- | -------------------------------------------------------- |
+| **Query time** (average, 95th/99th percentile) | the speed users feel; percentiles show the "slow tail"   |
+| **Buffer hit ratio**                           | if it drops below 99%, memory is short or a query is bad |
+| **Number of active connections**               | close to the limit? Is a connection pool needed?         |
+| **Lock waits, deadlocks**                      | transactions blocking each other (topic 8)               |
+| **Replication lag**                            | how fresh the replica is                                 |
+| **Disk: IOPS, latency, free space**            | whether storage can cope (topic 13)                      |
 
 ## Summary
 

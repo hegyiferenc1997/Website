@@ -13,11 +13,11 @@ minutes: 22
 
 ## Három szint: blokk, fájl, objektum
 
-| Szint          | Mit lát a szerver?                                  | Példa                           |
-| -------------- | --------------------------------------------------- | ------------------------------- |
-| **Blokk**      | egy „nyers” lemezt, számozott blokkokkal; a fájlrendszert ő maga kezeli | helyi SSD, SAN, felhős blokktároló (pl. AWS EBS) |
-| **Fájl**       | egy megosztott mappát, fájlokkal és könyvtárakkal  | NAS (NFS, SMB megosztás)        |
-| **Objektum**   | „vödröket” (_bucket_), bennük kulcs → objektum (fájl + metaadat), HTTP-n elérve | Amazon S3, Azure Blob, Google Cloud Storage |
+| Szint        | Mit lát a szerver?                                                              | Példa                                            |
+| ------------ | ------------------------------------------------------------------------------- | ------------------------------------------------ |
+| **Blokk**    | egy „nyers” lemezt, számozott blokkokkal; a fájlrendszert ő maga kezeli         | helyi SSD, SAN, felhős blokktároló (pl. AWS EBS) |
+| **Fájl**     | egy megosztott mappát, fájlokkal és könyvtárakkal                               | NAS (NFS, SMB megosztás)                         |
+| **Objektum** | „vödröket” (_bucket_), bennük kulcs → objektum (fájl + metaadat), HTTP-n elérve | Amazon S3, Azure Blob, Google Cloud Storage      |
 
 Az adatbázisok **blokkszintű** tárolást szeretnek: maguk akarják eldönteni, mi hová kerül a lemezen (lapok, WAL – 9. témakör), és nagyon alacsony késleltetésre van szükségük.
 
@@ -77,10 +77,10 @@ Mire jó egy adatbázis mellett?
 
 A felhőszolgáltatók az objektumtárolót különböző „hőmérsékletű” osztályokban kínálják:
 
-| Osztály           | Hozzáférés            | Ár (tárolás)     | Mire?                                  |
-| ----------------- | --------------------- | ---------------- | -------------------------------------- |
-| **Forró** (_hot_) | azonnali, gyakori     | legdrágább       | aktívan használt fájlok                |
-| **Hűvös** (_cool_) | azonnali, ritka      | olcsóbb          | a múlt havi mentések                   |
+| Osztály                | Hozzáférés               | Ár (tárolás) | Mire?                                  |
+| ---------------------- | ------------------------ | ------------ | -------------------------------------- |
+| **Forró** (_hot_)      | azonnali, gyakori        | legdrágább   | aktívan használt fájlok                |
+| **Hűvös** (_cool_)     | azonnali, ritka          | olcsóbb      | a múlt havi mentések                   |
 | **Archív** (_archive_) | órák alatt visszahozható | nagyon olcsó | évekig megőrzendő, ritkán kellő adatok |
 
 Életciklus-szabállyal (_lifecycle policy_) az objektumok automatikusan „lehűlhetnek”: pl. a mentés 30 nap után hűvös, 90 nap után archív osztályba kerül, és egy év után törlődik.

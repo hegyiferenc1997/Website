@@ -36,11 +36,11 @@ From the requirements we pick out the **nouns** (entity candidates) and the **ve
 
 ## 2. Tables and keys (topics 3 and 5)
 
-| Table     | Primary key                     | Foreign keys                               |
-| --------- | ------------------------------- | ------------------------------------------ |
-| `books`   | `isbn` (natural key)            | –                                          |
-| `members` | `member_id` (surrogate key)     | –                                          |
-| `loans`   | `loan_id` (automatic identity)  | `isbn` → `books`, `member_id` → `members`  |
+| Table     | Primary key                    | Foreign keys                              |
+| --------- | ------------------------------ | ----------------------------------------- |
+| `books`   | `isbn` (natural key)           | –                                         |
+| `members` | `member_id` (surrogate key)    | –                                         |
+| `loans`   | `loan_id` (automatic identity) | `isbn` → `books`, `member_id` → `members` |
 
 Why a separate `loan_id`? Because the same member can borrow the same book **several times**, so the (isbn, member_id) pair is not unique.
 
@@ -52,13 +52,13 @@ Let's check: does every non-key column depend on **the key, the whole key and no
 
 Every requirement becomes a **constraint** – so the database enforces the rules no matter which program writes to it:
 
-| Requirement                                | Constraint                                             |
-| ------------------------------------------ | ------------------------------------------------------ |
-| title and name are required                | `NOT NULL`                                             |
-| email is required and unique               | `NOT NULL UNIQUE`                                      |
-| issue date defaults to today               | `DEFAULT CURRENT_DATE`                                 |
-| return cannot be before issue              | `CHECK (returned IS NULL OR returned >= issued)`       |
-| no loan for a non-existent book/member     | `REFERENCES` (foreign key)                             |
+| Requirement                            | Constraint                                       |
+| -------------------------------------- | ------------------------------------------------ |
+| title and name are required            | `NOT NULL`                                       |
+| email is required and unique           | `NOT NULL UNIQUE`                                |
+| issue date defaults to today           | `DEFAULT CURRENT_DATE`                           |
+| return cannot be before issue          | `CHECK (returned IS NULL OR returned >= issued)` |
+| no loan for a non-existent book/member | `REFERENCES` (foreign key)                       |
 
 ## 5. Indexes and permissions (topics 7 and 10)
 

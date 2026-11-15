@@ -76,12 +76,12 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY havi_bevetel;
 
 Ezért olyan adatokra jó, amelyeknél elfogadható némi késés: napi riportok, irányítópultok, statisztikák – amelyeket pl. óránként vagy éjjel frissítünk.
 
-| Szempont          | Nézet                       | Materializált nézet                  | Denormalizált oszlop               |
-| ----------------- | --------------------------- | ------------------------------------ | ---------------------------------- |
-| Tárolja az adatot? | nem                         | igen                                 | igen                               |
-| Mindig friss?     | igen                        | nem, frissíteni kell                 | ha jól szinkronizálod              |
-| Olvasás           | olyan lassú, mint a lekérdezés | gyors                             | gyors                              |
-| Tipikus használat | egyszerűsítés, jogosultság  | riportok, irányítópultok             | gyakran kellő összegek, számlálók  |
+| Szempont           | Nézet                          | Materializált nézet      | Denormalizált oszlop              |
+| ------------------ | ------------------------------ | ------------------------ | --------------------------------- |
+| Tárolja az adatot? | nem                            | igen                     | igen                              |
+| Mindig friss?      | igen                           | nem, frissíteni kell     | ha jól szinkronizálod             |
+| Olvasás            | olyan lassú, mint a lekérdezés | gyors                    | gyors                             |
+| Tipikus használat  | egyszerűsítés, jogosultság     | riportok, irányítópultok | gyakran kellő összegek, számlálók |
 
 ## Particionálás
 

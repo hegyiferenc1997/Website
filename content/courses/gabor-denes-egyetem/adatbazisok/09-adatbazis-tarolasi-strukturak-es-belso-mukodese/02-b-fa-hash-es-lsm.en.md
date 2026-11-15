@@ -45,12 +45,12 @@ Its most important properties:
 
 If you can step on from a node in **f** directions (this is the **fan-out**), then:
 
-| Number of levels | Reachable keys (f = 200)    |
-| ---------------- | --------------------------- |
-| 1                | 200                         |
-| 2                | 200² = 40,000               |
-| 3                | 200³ = 8,000,000            |
-| 4                | 200⁴ = 1,600,000,000        |
+| Number of levels | Reachable keys (f = 200) |
+| ---------------- | ------------------------ |
+| 1                | 200                      |
+| 2                | 200² = 40,000            |
+| 3                | 200³ = 8,000,000         |
+| 4                | 200⁴ = 1,600,000,000     |
 
 So even **100 million** rows need only **4 levels**, i.e. 4 page reads – and the upper levels are almost always in memory, so in practice often just 1–2 disk reads are needed. Without an index this could mean reading hundreds of thousands of pages!
 
@@ -112,12 +112,12 @@ LSM trees are used by **Cassandra**, **RocksDB**, **LevelDB** and **ScyllaDB**, 
 
 ## B+ tree, hash or LSM?
 
-| Aspect            | B+ tree                | Hash index             | LSM tree                  |
-| ----------------- | ---------------------- | ---------------------- | ------------------------- |
-| Equality          | fast (a few steps)     | very fast (~1 step)    | good                      |
-| Range, sorting    | fast (chained leaves)  | not supported          | good                      |
-| Writes            | medium                 | medium                 | very fast                 |
-| Typical home      | relational DBMSs       | in-memory tables       | write-heavy NoSQL systems |
+| Aspect         | B+ tree               | Hash index          | LSM tree                  |
+| -------------- | --------------------- | ------------------- | ------------------------- |
+| Equality       | fast (a few steps)    | very fast (~1 step) | good                      |
+| Range, sorting | fast (chained leaves) | not supported       | good                      |
+| Writes         | medium                | medium              | very fast                 |
+| Typical home   | relational DBMSs      | in-memory tables    | write-heavy NoSQL systems |
 
 ## Summary
 

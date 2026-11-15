@@ -205,7 +205,12 @@ function OutputPanel({ view, children }: { view: NonNullable<RunView>; children?
       {result?.error && (
         <div className="py-fail-box">
           <p className="py-fail">
-            ✗ {result.phase === "setup" ? t("failedSetup") : result.phase === "check" ? t("failedCheckQuery") : t("failedCode")}
+            ✗{" "}
+            {result.phase === "setup"
+              ? t("failedSetup")
+              : result.phase === "check"
+                ? t("failedCheckQuery")
+                : t("failedCode")}
             {result.line ? ` (${t("line", { line: result.line })})` : ""}
           </p>
           <pre className="py-error">
@@ -214,7 +219,9 @@ function OutputPanel({ view, children }: { view: NonNullable<RunView>; children?
           </pre>
         </div>
       )}
-      {result?.results.map((table, i) => <ResultTable key={i} table={table} />)}
+      {result?.results.map((table, i) => (
+        <ResultTable key={i} table={table} />
+      ))}
       {result && result.ok && result.results.length === 0 && !result.empty && (
         <p className="py-note">{t("noOutput")}</p>
       )}

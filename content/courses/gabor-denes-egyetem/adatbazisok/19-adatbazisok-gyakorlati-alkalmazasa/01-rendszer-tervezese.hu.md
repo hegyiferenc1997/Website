@@ -36,10 +36,10 @@ A követelményekből kiemeljük a **főneveket** (egyedjelöltek) és az **igé
 
 ## 2. Táblák és kulcsok (3. és 5. témakör)
 
-| Tábla          | Elsődleges kulcs                      | Idegen kulcsok                          |
-| -------------- | ------------------------------------- | --------------------------------------- |
-| `konyvek`      | `isbn` (természetes kulcs)            | –                                       |
-| `tagok`        | `tag_id` (mesterséges kulcs)          | –                                       |
+| Tábla          | Elsődleges kulcs                        | Idegen kulcsok                         |
+| -------------- | --------------------------------------- | -------------------------------------- |
+| `konyvek`      | `isbn` (természetes kulcs)              | –                                      |
+| `tagok`        | `tag_id` (mesterséges kulcs)            | –                                      |
 | `kolcsonzesek` | `kolcsonzes_id` (automatikus azonosító) | `isbn` → `konyvek`, `tag_id` → `tagok` |
 
 Miért kell külön `kolcsonzes_id`? Mert ugyanaz a tag ugyanazt a könyvet **többször** is kikölcsönözheti, így az (isbn, tag_id) pár nem egyedi.
@@ -52,13 +52,13 @@ Ellenőrizzük: minden nem kulcs oszlop **a kulcstól, az egész kulcstól és c
 
 Minden követelményből egy **megszorítás** lesz – így a szabályokat az adatbázis betartatja, akármelyik program ír bele:
 
-| Követelmény                                | Megszorítás                                                  |
-| ------------------------------------------ | ------------------------------------------------------------ |
-| a cím és a név kötelező                    | `NOT NULL`                                                   |
-| az e-mail kötelező és egyedi               | `NOT NULL UNIQUE`                                            |
-| a kiadás alapból a mai nap                 | `DEFAULT CURRENT_DATE`                                       |
-| visszahozás nem lehet a kiadás előtt       | `CHECK (visszahozva IS NULL OR visszahozva >= kiadva)`       |
-| nem létező könyvre/tagra nincs kölcsönzés  | `REFERENCES` (idegen kulcs)                                  |
+| Követelmény                               | Megszorítás                                            |
+| ----------------------------------------- | ------------------------------------------------------ |
+| a cím és a név kötelező                   | `NOT NULL`                                             |
+| az e-mail kötelező és egyedi              | `NOT NULL UNIQUE`                                      |
+| a kiadás alapból a mai nap                | `DEFAULT CURRENT_DATE`                                 |
+| visszahozás nem lehet a kiadás előtt      | `CHECK (visszahozva IS NULL OR visszahozva >= kiadva)` |
+| nem létező könyvre/tagra nincs kölcsönzés | `REFERENCES` (idegen kulcs)                            |
 
 ## 5. Indexek és jogosultságok (7. és 10. témakör)
 

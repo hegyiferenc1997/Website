@@ -22,11 +22,11 @@ Nobody builds a house by just starting to lay bricks. First comes a sketch ("thr
 
 ## The three levels of modelling
 
-| Level          | Question                         | Audience             | Tool, example                                  |
-| -------------- | -------------------------------- | -------------------- | ---------------------------------------------- |
-| **Conceptual** | _What_ do we want to record?     | client, users        | E-R (entity-relationship) diagram, text        |
-| **Logical**    | In what _structure_?             | designer, developer  | relational schema: tables, columns, keys       |
-| **Physical**   | How in a _specific_ DBMS?        | developer, DBA       | `CREATE TABLE` statements, types, indexes      |
+| Level          | Question                     | Audience            | Tool, example                             |
+| -------------- | ---------------------------- | ------------------- | ----------------------------------------- |
+| **Conceptual** | _What_ do we want to record? | client, users       | E-R (entity-relationship) diagram, text   |
+| **Logical**    | In what _structure_?         | designer, developer | relational schema: tables, columns, keys  |
+| **Physical**   | How in a _specific_ DBMS?    | developer, DBA      | `CREATE TABLE` statements, types, indexes |
 
 Let's look at the same task on all three levels: _"A library records books and readers, and who borrowed which book."_
 

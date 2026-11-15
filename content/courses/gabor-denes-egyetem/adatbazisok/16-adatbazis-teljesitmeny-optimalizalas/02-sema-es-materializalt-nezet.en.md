@@ -76,12 +76,12 @@ REFRESH MATERIALIZED VIEW CONCURRENTLY monthly_revenue;
 
 So it's good for data where some delay is acceptable: daily reports, dashboards, statistics – refreshed e.g. hourly or at night.
 
-| Aspect            | View                        | Materialised view                    | Denormalised column                |
-| ----------------- | --------------------------- | ------------------------------------ | ---------------------------------- |
-| Stores the data?  | no                          | yes                                  | yes                                |
-| Always fresh?     | yes                         | no, it has to be refreshed           | if you keep it in sync properly    |
-| Reading           | as slow as the query        | fast                                 | fast                               |
-| Typical use       | simplification, privileges  | reports, dashboards                  | frequently needed totals, counters |
+| Aspect           | View                       | Materialised view          | Denormalised column                |
+| ---------------- | -------------------------- | -------------------------- | ---------------------------------- |
+| Stores the data? | no                         | yes                        | yes                                |
+| Always fresh?    | yes                        | no, it has to be refreshed | if you keep it in sync properly    |
+| Reading          | as slow as the query       | fast                       | fast                               |
+| Typical use      | simplification, privileges | reports, dashboards        | frequently needed totals, counters |
 
 ## Partitioning
 

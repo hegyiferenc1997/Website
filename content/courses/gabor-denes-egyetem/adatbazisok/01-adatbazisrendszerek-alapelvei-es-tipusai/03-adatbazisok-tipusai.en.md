@@ -36,13 +36,13 @@ Fast when searching along the tree, but a "many-to-many" relationship (a student
 
 ## Other ways to group databases
 
-| Aspect           | Types                                                                                              |
-| ---------------- | -------------------------------------------------------------------------------------------------- |
-| **Use**          | **OLTP**: many small transactions (web shop order, bank transfer); **OLAP**: big analytical queries (monthly report) – see topic 18 |
-| **Location**     | **centralised** (one server) or **distributed** (several machines, even on several continents)     |
-| **Mode**         | **client-server** (separate server process reached over the network, e.g. PostgreSQL) or **embedded** (part of the program, a single file, e.g. SQLite in your phone) |
-| **Storage**      | **disk-based** or **in-memory** (e.g. Redis – very fast)                                            |
-| **Operation**    | on your own server or **as a cloud service** (DBaaS, e.g. Amazon RDS, Neon, Supabase)               |
+| Aspect        | Types                                                                                                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Use**       | **OLTP**: many small transactions (web shop order, bank transfer); **OLAP**: big analytical queries (monthly report) – see topic 18                                   |
+| **Location**  | **centralised** (one server) or **distributed** (several machines, even on several continents)                                                                        |
+| **Mode**      | **client-server** (separate server process reached over the network, e.g. PostgreSQL) or **embedded** (part of the program, a single file, e.g. SQLite in your phone) |
+| **Storage**   | **disk-based** or **in-memory** (e.g. Redis – very fast)                                                                                                              |
+| **Operation** | on your own server or **as a cloud service** (DBaaS, e.g. Amazon RDS, Neon, Supabase)                                                                                 |
 
 ## Which one when?
 

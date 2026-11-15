@@ -73,13 +73,13 @@ Ha viszont az a kérdés, hogy „mennyi volt a tavalyi összes bevétel?”, a 
 
 ## Mire használják?
 
-| Terület                 | Példa kérdés                                                      |
-| ----------------------- | ----------------------------------------------------------------- |
-| Közösségi háló          | Kiket ismerhet még Anna? Milyen közösségek alakultak ki?          |
-| Ajánlórendszer          | Akik ezt megvették, mit vettek még?                               |
-| Csalásfelderítés        | Ugyanazt a telefonszámot és címet használja-e több „különböző” ügyfél? |
-| Útvonaltervezés, hálózat | Mi a legrövidebb út? Ha ez a router kiesik, mi válik elérhetetlenné? |
-| Tudásgráf               | Hogyan kapcsolódnak a fogalmak, személyek, helyek egymáshoz?      |
+| Terület                  | Példa kérdés                                                           |
+| ------------------------ | ---------------------------------------------------------------------- |
+| Közösségi háló           | Kiket ismerhet még Anna? Milyen közösségek alakultak ki?               |
+| Ajánlórendszer           | Akik ezt megvették, mit vettek még?                                    |
+| Csalásfelderítés         | Ugyanazt a telefonszámot és címet használja-e több „különböző” ügyfél? |
+| Útvonaltervezés, hálózat | Mi a legrövidebb út? Ha ez a router kiesik, mi válik elérhetetlenné?   |
+| Tudásgráf                | Hogyan kapcsolódnak a fogalmak, személyek, helyek egymáshoz?           |
 
 ## Összefoglalás
 

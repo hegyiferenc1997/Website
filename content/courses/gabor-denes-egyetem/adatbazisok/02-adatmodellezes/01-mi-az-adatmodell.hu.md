@@ -22,11 +22,11 @@ Házat sem úgy építünk, hogy elkezdjük rakni a téglát. Először vázlat 
 
 ## A modellezés három szintje
 
-| Szint       | Kérdés                       | Kinek szól              | Eszköz, példa                                  |
-| ----------- | ---------------------------- | ----------------------- | ---------------------------------------------- |
-| **Fogalmi** | _Mit_ akarunk nyilvántartani? | megrendelő, felhasználó | E-K (entitás-kapcsolat) diagram, szöveges leírás |
-| **Logikai** | Milyen _szerkezetben_?        | tervező, fejlesztő      | relációs séma: táblák, oszlopok, kulcsok       |
-| **Fizikai** | Hogyan egy _konkrét_ DBMS-ben? | fejlesztő, DBA          | `CREATE TABLE` utasítások, típusok, indexek    |
+| Szint       | Kérdés                         | Kinek szól              | Eszköz, példa                                    |
+| ----------- | ------------------------------ | ----------------------- | ------------------------------------------------ |
+| **Fogalmi** | _Mit_ akarunk nyilvántartani?  | megrendelő, felhasználó | E-K (entitás-kapcsolat) diagram, szöveges leírás |
+| **Logikai** | Milyen _szerkezetben_?         | tervező, fejlesztő      | relációs séma: táblák, oszlopok, kulcsok         |
+| **Fizikai** | Hogyan egy _konkrét_ DBMS-ben? | fejlesztő, DBA          | `CREATE TABLE` utasítások, típusok, indexek      |
 
 Nézzük ugyanazt a feladatot mindhárom szinten: _„Egy könyvtár nyilvántartja a könyveket és az olvasókat, és hogy ki melyik könyvet kölcsönözte ki.”_
 

@@ -24,15 +24,15 @@ There are also **special** categories with even stricter rules: health data, bio
 
 ## The principles of the GDPR – through a developer's eyes
 
-| Principle                        | Meaning                                                    | What it means in the database                                   |
-| -------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
-| **Lawfulness, transparency**     | a legal basis is needed (e.g. contract, consent), and people must be informed | consent (when, for what) must be stored too       |
-| **Purpose limitation**           | may only be used for the stated purpose                    | don't use the delivery address for advertising without a legal basis |
-| **Data minimisation**            | collect only the strictly necessary data                   | no "might come in handy" columns (e.g. mother's name in a web shop) |
-| **Accuracy**                     | data should be accurate and up to date                     | there should be a way to correct it                             |
-| **Storage limitation**           | keep it only as long as necessary                          | retention periods, automatic deletion or anonymisation          |
-| **Integrity, confidentiality**   | appropriate security                                       | privileges, encryption, auditing (topics 10, 15)                |
-| **Accountability**               | you must be able to prove you comply                       | documentation, logs of who saw or changed what                  |
+| Principle                      | Meaning                                                                       | What it means in the database                                        |
+| ------------------------------ | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Lawfulness, transparency**   | a legal basis is needed (e.g. contract, consent), and people must be informed | consent (when, for what) must be stored too                          |
+| **Purpose limitation**         | may only be used for the stated purpose                                       | don't use the delivery address for advertising without a legal basis |
+| **Data minimisation**          | collect only the strictly necessary data                                      | no "might come in handy" columns (e.g. mother's name in a web shop)  |
+| **Accuracy**                   | data should be accurate and up to date                                        | there should be a way to correct it                                  |
+| **Storage limitation**         | keep it only as long as necessary                                             | retention periods, automatic deletion or anonymisation               |
+| **Integrity, confidentiality** | appropriate security                                                          | privileges, encryption, auditing (topics 10, 15)                     |
+| **Accountability**             | you must be able to prove you comply                                          | documentation, logs of who saw or changed what                       |
 
 The GDPR explicitly expects **data protection by design and by default**: it has to be considered at design time, not stuck on afterwards.
 
@@ -40,13 +40,13 @@ The GDPR explicitly expects **data protection by design and by default**: it has
 
 People (the "data subjects") have rights regarding their data. The system has to be designed so these can be fulfilled:
 
-| Right                              | What can the data subject ask?                           | What does it mean technically?                             |
-| ---------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
-| **Access**                         | "What data do you store about me?"                       | a person's data must be collectable from every table       |
-| **Rectification**                  | "Correct my address."                                    | modifiable data, in one place (normalisation!)             |
-| **Erasure** ("to be forgotten")    | "Delete my data."                                        | deletion or anonymisation in every table – backups must be considered too |
-| **Data portability**               | "Give me my data in a machine-readable format."          | export e.g. as JSON or CSV                                 |
-| **Objection, restriction**         | "Don't use my data for marketing."                       | flags (e.g. `marketing_consent`) and honouring them        |
+| Right                           | What can the data subject ask?                  | What does it mean technically?                                            |
+| ------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------- |
+| **Access**                      | "What data do you store about me?"              | a person's data must be collectable from every table                      |
+| **Rectification**               | "Correct my address."                           | modifiable data, in one place (normalisation!)                            |
+| **Erasure** ("to be forgotten") | "Delete my data."                               | deletion or anonymisation in every table – backups must be considered too |
+| **Data portability**            | "Give me my data in a machine-readable format." | export e.g. as JSON or CSV                                                |
+| **Objection, restriction**      | "Don't use my data for marketing."              | flags (e.g. `marketing_consent`) and honouring them                       |
 
 If a person's data is scattered across twenty tables under five different identifiers, fulfilling these is a nightmare. A good data model helps a lot here too.
 
@@ -63,12 +63,12 @@ For analyses (e.g. "in which major and which semester do the most students drop 
 
 Common techniques:
 
-| Technique             | Example                                                    |
-| --------------------- | ---------------------------------------------------------- |
-| **Omission**          | the name and Neptun code are left out                      |
-| **Generalisation**    | only the year instead of the date of birth; only the county instead of the exact address |
-| **Masking**           | `anna.kiss@example.com` → `a***@example.com`               |
-| **Aggregation**       | only group averages instead of individual rows, hiding small groups |
+| Technique          | Example                                                                                  |
+| ------------------ | ---------------------------------------------------------------------------------------- |
+| **Omission**       | the name and Neptun code are left out                                                    |
+| **Generalisation** | only the year instead of the date of birth; only the county instead of the exact address |
+| **Masking**        | `anna.kiss@example.com` → `a***@example.com`                                             |
+| **Aggregation**    | only group averages instead of individual rows, hiding small groups                      |
 
 <details>
 <summary>Creating the sample database (SQL)</summary>

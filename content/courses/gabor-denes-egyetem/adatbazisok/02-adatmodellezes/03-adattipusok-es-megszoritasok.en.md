@@ -17,16 +17,16 @@ Every attribute has a **domain**: the set of values it can take. A grade's domai
 
 ## The most common types (PostgreSQL)
 
-| Type                        | For                                     | Example               |
-| --------------------------- | --------------------------------------- | --------------------- |
-| `INT` / `BIGINT`            | integer (about ±2 billion / huge)       | quantity, identifier  |
-| `NUMERIC(p, s)`             | **exact** decimal number                | price, money          |
-| `REAL` / `DOUBLE PRECISION` | approximate floating-point number       | measurement           |
-| `VARCHAR(n)`                | text of at most n characters            | name, email           |
-| `TEXT`                      | text of any length                      | description, comment  |
-| `CHAR(n)`                   | text of exactly n characters            | Neptun code           |
-| `DATE` / `TIMESTAMP`        | date / date + time                      | birthday, order time  |
-| `BOOLEAN`                   | true / false                            | is active             |
+| Type                        | For                               | Example              |
+| --------------------------- | --------------------------------- | -------------------- |
+| `INT` / `BIGINT`            | integer (about ±2 billion / huge) | quantity, identifier |
+| `NUMERIC(p, s)`             | **exact** decimal number          | price, money         |
+| `REAL` / `DOUBLE PRECISION` | approximate floating-point number | measurement          |
+| `VARCHAR(n)`                | text of at most n characters      | name, email          |
+| `TEXT`                      | text of any length                | description, comment |
+| `CHAR(n)`                   | text of exactly n characters      | Neptun code          |
+| `DATE` / `TIMESTAMP`        | date / date + time                | birthday, order time |
+| `BOOLEAN`                   | true / false                      | is active            |
 
 Two important tips:
 
@@ -35,13 +35,13 @@ Two important tips:
 
 ## Constraints – the table's "house rules"
 
-| Constraint    | Meaning                                       | Example                           |
-| ------------- | --------------------------------------------- | --------------------------------- |
-| `NOT NULL`    | must be filled in                             | `name VARCHAR(80) NOT NULL`       |
-| `UNIQUE`      | can't repeat                                  | `email VARCHAR(120) UNIQUE`       |
-| `PRIMARY KEY` | unique identifier (= `UNIQUE` + `NOT NULL`)   | `code VARCHAR(10) PRIMARY KEY`    |
-| `CHECK (…)`   | any condition that must hold                  | `CHECK (grade BETWEEN 1 AND 5)`   |
-| `DEFAULT …`   | the value used when none is given             | `stock INT DEFAULT 0`             |
+| Constraint    | Meaning                                     | Example                         |
+| ------------- | ------------------------------------------- | ------------------------------- |
+| `NOT NULL`    | must be filled in                           | `name VARCHAR(80) NOT NULL`     |
+| `UNIQUE`      | can't repeat                                | `email VARCHAR(120) UNIQUE`     |
+| `PRIMARY KEY` | unique identifier (= `UNIQUE` + `NOT NULL`) | `code VARCHAR(10) PRIMARY KEY`  |
+| `CHECK (…)`   | any condition that must hold                | `CHECK (grade BETWEEN 1 AND 5)` |
+| `DEFAULT …`   | the value used when none is given           | `stock INT DEFAULT 0`           |
 
 A constraint is like a strict doorman: bad data **doesn't even get in**. It is much better when the database rejects an error immediately than finding out months later that something has a negative price.
 

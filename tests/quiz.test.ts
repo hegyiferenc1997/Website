@@ -378,3 +378,37 @@ describe("Személyes kompetencia és kommunikáció fejlesztése", () => {
     expect(found).toEqual([]);
   });
 });
+
+describe("Adatbázisok", () => {
+  const course = loadContent().find((c) => c.course === "adatbazisok");
+
+  it("van tananyaga, és minden leckének van kötelező feladata", () => {
+    // A tanmenet 19 témaköre, témakörönként 3 lecke (a 8.-ban 4) + 1 gyakorló lecke.
+    expect(course?.topics.length).toBe(19);
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+    expect(course!.topics.every((t) => t.lessons.length >= 4)).toBe(true);
+  });
+
+  it("minden lecke két nyelven elérhető", () => {
+    const missing = course!.topics.flatMap((t) =>
+      t.lessons.filter((l) => !l.body.en).map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("a tárgy követelményei nincsenek a leckékben", () => {
+    // A tulajdonos kérése: számonkérés, ZH, pontok, jegyek, oktató soha ne kerüljenek a tananyagba.
+    // (A „jegy” és a „kredit” szó a mintaadatbázis oszlopa, ezért azokat nem keressük.)
+    const bad =
+      /\bZH\b|zárthelyi|vizsgajegy|évközi jegy|aláírás feltétel|kollokvium|beadandó|grading|midterm/;
+    const found = course!.topics.flatMap((t) =>
+      t.lessons
+        .filter((l) => bad.test(l.body.hu ?? "") || bad.test(l.body.en ?? ""))
+        .map((l) => `${t.slug}/${l.slug}`),
+    );
+    expect(found).toEqual([]);
+  });
+});

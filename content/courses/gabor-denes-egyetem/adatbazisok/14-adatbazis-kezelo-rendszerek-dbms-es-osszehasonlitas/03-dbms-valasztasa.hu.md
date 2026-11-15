@@ -14,16 +14,16 @@ minutes: 28
 
 „Mindenki MongoDB-t használ, mi is azt választjuk” – az ilyen döntések később sokba kerülnek. A jó választás a **feladatból** indul ki. Néhány kérdés, amelyet érdemes feltenni:
 
-| Szempont                  | Kérdés                                                                            |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| **Adatmodell**            | Táblázatos, összefüggő adatok? Rugalmas dokumentumok? Kapcsolatok hálója? Idősor? |
-| **Terhelés**              | Sok kis tranzakció (OLTP) vagy nagy elemző lekérdezések (OLAP)? Írás vagy olvasás a több? |
-| **Konzisztencia**         | Kell-e szigorú ACID (pénz, készlet), vagy elég a végső konzisztencia?             |
-| **Méret és skálázás**     | Gigabájt vagy petabájt? Elég egy szerver, vagy több adatközpont kell?             |
-| **Költség**               | Licenc, üzemeltetés, szakemberek – a teljes költség (TCO).                        |
-| **Csapat**                | Mit ismer már a csapat? Mennyi idő a betanulás?                                   |
-| **Ökoszisztéma**          | Van-e jó illesztőprogram a programnyelvünkhöz, ORM-támogatás, felhős szolgáltatás, közösség? |
-| **Jogi szempontok**       | Hol tárolható az adat (pl. EU-n belül)? Milyen tanúsítványok kellenek?            |
+| Szempont              | Kérdés                                                                                       |
+| --------------------- | -------------------------------------------------------------------------------------------- |
+| **Adatmodell**        | Táblázatos, összefüggő adatok? Rugalmas dokumentumok? Kapcsolatok hálója? Idősor?            |
+| **Terhelés**          | Sok kis tranzakció (OLTP) vagy nagy elemző lekérdezések (OLAP)? Írás vagy olvasás a több?    |
+| **Konzisztencia**     | Kell-e szigorú ACID (pénz, készlet), vagy elég a végső konzisztencia?                        |
+| **Méret és skálázás** | Gigabájt vagy petabájt? Elég egy szerver, vagy több adatközpont kell?                        |
+| **Költség**           | Licenc, üzemeltetés, szakemberek – a teljes költség (TCO).                                   |
+| **Csapat**            | Mit ismer már a csapat? Mennyi idő a betanulás?                                              |
+| **Ökoszisztéma**      | Van-e jó illesztőprogram a programnyelvünkhöz, ORM-támogatás, felhős szolgáltatás, közösség? |
+| **Jogi szempontok**   | Hol tárolható az adat (pl. EU-n belül)? Milyen tanúsítványok kellenek?                       |
 
 > Jó ökölszabály: ha nincs különleges okod mást választani, egy **jól ismert relációs adatbázis** (pl. PostgreSQL) a legtöbb új projekthez biztonságos kiindulópont. Különleges igényekhez (óriási írásterhelés, gráfbejárás, gyorsítótár) pedig mellé lehet tenni egy specializált rendszert.
 

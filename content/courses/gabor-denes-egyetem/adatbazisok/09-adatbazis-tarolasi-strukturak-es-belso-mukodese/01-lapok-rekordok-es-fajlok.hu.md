@@ -16,12 +16,12 @@ Eddig a táblákat „logikai” szemmel néztük. Most bekukkantunk a motorház
 
 ## A memória és a lemez
 
-| Tároló               | Hozzáférési idő (nagyságrend) | Ha 1 ns = 1 másodperc lenne |
-| -------------------- | ----------------------------- | --------------------------- |
-| CPU gyorsítótár      | ~1 ns                         | 1 másodperc                 |
-| RAM                  | ~100 ns                       | kb. 2 perc                  |
-| NVMe SSD             | ~20 000 ns (20 µs)            | kb. 6 óra                   |
-| Merevlemez (HDD)     | ~5 000 000 ns (5 ms)          | kb. 2 hónap                 |
+| Tároló           | Hozzáférési idő (nagyságrend) | Ha 1 ns = 1 másodperc lenne |
+| ---------------- | ----------------------------- | --------------------------- |
+| CPU gyorsítótár  | ~1 ns                         | 1 másodperc                 |
+| RAM              | ~100 ns                       | kb. 2 perc                  |
+| NVMe SSD         | ~20 000 ns (20 µs)            | kb. 6 óra                   |
+| Merevlemez (HDD) | ~5 000 000 ns (5 ms)          | kb. 2 hónap                 |
 
 Az adatbázis tartós (lemezen van), de a lemez **nagyságrendekkel** lassabb a memóriánál. Ezért a DBMS minden trükkje arról szól, hogy **minél kevesebbszer** kelljen a lemezhez nyúlni.
 

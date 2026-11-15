@@ -18,11 +18,11 @@ A 3NF-et sokan egy esküvel jegyzik meg: _„Minden nem kulcs attribútum a kulc
 
 Egy webshop a rendeléseket így tárolja (normalizálatlanul):
 
-| rendeles | datum      | vevo_id | vevo_nev  | vevo_varos | termekek                          |
-| -------- | ---------- | ------- | --------- | ---------- | --------------------------------- |
+| rendeles | datum      | vevo_id | vevo_nev  | vevo_varos | termekek                                |
+| -------- | ---------- | ------- | --------- | ---------- | --------------------------------------- |
 | 1001     | 2026-11-02 | 7       | Kiss Anna | Budapest   | egér ×2 (4990), billentyűzet ×1 (12990) |
-| 1002     | 2026-11-03 | 9       | Nagy Béla | Debrecen   | egér ×1 (4990)                    |
-| 1003     | 2026-11-03 | 7       | Kiss Anna | Budapest   | monitor ×1 (59990)                |
+| 1002     | 2026-11-03 | 9       | Nagy Béla | Debrecen   | egér ×1 (4990)                          |
+| 1003     | 2026-11-03 | 7       | Kiss Anna | Budapest   | monitor ×1 (59990)                      |
 
 ## 1. normálforma (1NF): atomi értékek
 
@@ -30,12 +30,12 @@ Egy webshop a rendeléseket így tárolja (normalizálatlanul):
 
 A `termekek` oszlop listát tartalmaz – ez sérti az 1NF-et. Bontsuk szét, minden tétel külön sor legyen:
 
-| rendeles | tetel_termek | datum      | vevo_id | vevo_nev  | vevo_varos | termek_nev   | egysegar | db |
-| -------- | ------------ | ---------- | ------- | --------- | ---------- | ------------ | -------- | -- |
-| 1001     | T1           | 2026-11-02 | 7       | Kiss Anna | Budapest   | egér         | 4990     | 2  |
-| 1001     | T2           | 2026-11-02 | 7       | Kiss Anna | Budapest   | billentyűzet | 12990    | 1  |
-| 1002     | T1           | 2026-11-03 | 9       | Nagy Béla | Debrecen   | egér         | 4990     | 1  |
-| 1003     | T3           | 2026-11-03 | 7       | Kiss Anna | Budapest   | monitor      | 59990    | 1  |
+| rendeles | tetel_termek | datum      | vevo_id | vevo_nev  | vevo_varos | termek_nev   | egysegar | db  |
+| -------- | ------------ | ---------- | ------- | --------- | ---------- | ------------ | -------- | --- |
+| 1001     | T1           | 2026-11-02 | 7       | Kiss Anna | Budapest   | egér         | 4990     | 2   |
+| 1001     | T2           | 2026-11-02 | 7       | Kiss Anna | Budapest   | billentyűzet | 12990    | 1   |
+| 1002     | T1           | 2026-11-03 | 9       | Nagy Béla | Debrecen   | egér         | 4990     | 1   |
+| 1003     | T3           | 2026-11-03 | 7       | Kiss Anna | Budapest   | monitor      | 59990    | 1   |
 
 Kulcs: `(rendeles, tetel_termek)`. Most már 1NF, de rengeteg az ismétlődés.
 

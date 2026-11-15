@@ -27,11 +27,11 @@ Without an index the DBMS has to look at every row: this is a **full table scan*
 
 An index is **sorted**, so it can be searched with **binary search**: look at the middle element and decide whether the value is before or after it. Every step **halves** what's left – like the "I'm thinking of a number between 1 and 100" game.
 
-| Rows          | Full scan (worst case)  | Binary search (about log₂ n steps) |
-| ------------- | ----------------------- | ---------------------------------- |
-| 1,000         | 1,000                   | 10                                 |
-| 1,000,000     | 1,000,000               | 20                                 |
-| 1,000,000,000 | 1,000,000,000           | 30                                 |
+| Rows          | Full scan (worst case) | Binary search (about log₂ n steps) |
+| ------------- | ---------------------- | ---------------------------------- |
+| 1,000         | 1,000                  | 10                                 |
+| 1,000,000     | 1,000,000              | 20                                 |
+| 1,000,000,000 | 1,000,000,000          | 30                                 |
 
 A thousand times more data → only **10 more steps**. That's why a well-indexed table finds something among a billion rows in milliseconds.
 

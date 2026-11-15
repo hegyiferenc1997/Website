@@ -28,13 +28,13 @@ Don't guess what's slow. `EXPLAIN`, which you met in topic 7 (and `EXPLAIN ANALY
 
 A condition is **index-friendly** if the index can "search into" it: the column stands **on its own**, unchanged, on one side of the comparison. If you apply a function or operation to the column, the index can't be used, because it's sorted by the raw values.
 
-| Not index-friendly                              | Index-friendly rewrite                                            |
-| ----------------------------------------------- | ----------------------------------------------------------------- |
-| `WHERE EXTRACT(YEAR FROM order_date) = 2025`    | `WHERE order_date >= '2025-01-01' AND order_date < '2026-01-01'`  |
-| `WHERE price * 1.27 > 10000`                    | `WHERE price > 10000 / 1.27`                                      |
-| `WHERE LOWER(email) = 'a@b.com'`                | an expression index: `CREATE INDEX … ON customers (LOWER(email))` |
-| `WHERE name LIKE '%mouse'`                      | (unknown start: a B-tree doesn't help; full-text search is needed) |
-| `WHERE customer_id + 0 = 42`                    | `WHERE customer_id = 42`                                          |
+| Not index-friendly                           | Index-friendly rewrite                                             |
+| -------------------------------------------- | ------------------------------------------------------------------ |
+| `WHERE EXTRACT(YEAR FROM order_date) = 2025` | `WHERE order_date >= '2025-01-01' AND order_date < '2026-01-01'`   |
+| `WHERE price * 1.27 > 10000`                 | `WHERE price > 10000 / 1.27`                                       |
+| `WHERE LOWER(email) = 'a@b.com'`             | an expression index: `CREATE INDEX … ON customers (LOWER(email))`  |
+| `WHERE name LIKE '%mouse'`                   | (unknown start: a B-tree doesn't help; full-text search is needed) |
+| `WHERE customer_id + 0 = 42`                 | `WHERE customer_id = 42`                                           |
 
 See the difference! Let's put an index on the date and compare the two plans:
 

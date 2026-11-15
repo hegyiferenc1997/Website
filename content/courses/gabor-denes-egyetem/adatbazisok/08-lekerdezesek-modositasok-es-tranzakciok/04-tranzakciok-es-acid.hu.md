@@ -72,12 +72,12 @@ SELECT * FROM szamlak ORDER BY szamla_id;
 
 ## Az ACID tulajdonságok
 
-| Betű  | Tulajdonság                       | Jelentés                                                                 |
-| ----- | --------------------------------- | ------------------------------------------------------------------------ |
-| **A** | _Atomicity_ – atomicitás          | minden vagy semmi: a tranzakció vagy teljesen lefut, vagy semmi nem marad belőle |
-| **C** | _Consistency_ – konzisztencia     | a tranzakció egy érvényes állapotból érvényes állapotba visz (minden megszorítás teljesül) |
-| **I** | _Isolation_ – elkülönítés         | az egyszerre futó tranzakciók nem zavarják egymást, mintha egymás után futnának |
-| **D** | _Durability_ – tartósság          | a véglegesített (COMMIT) változás áramszünet után is megmarad (a napló miatt, 9. témakör) |
+| Betű  | Tulajdonság                   | Jelentés                                                                                   |
+| ----- | ----------------------------- | ------------------------------------------------------------------------------------------ |
+| **A** | _Atomicity_ – atomicitás      | minden vagy semmi: a tranzakció vagy teljesen lefut, vagy semmi nem marad belőle           |
+| **C** | _Consistency_ – konzisztencia | a tranzakció egy érvényes állapotból érvényes állapotba visz (minden megszorítás teljesül) |
+| **I** | _Isolation_ – elkülönítés     | az egyszerre futó tranzakciók nem zavarják egymást, mintha egymás után futnának            |
+| **D** | _Durability_ – tartósság      | a véglegesített (COMMIT) változás áramszünet után is megmarad (a napló miatt, 9. témakör)  |
 
 ## Ha sokan dolgoznak egyszerre
 
@@ -92,12 +92,12 @@ Egy webshopban egyszerre ezrek vásárolnak. Ha a tranzakciók nem lennének elk
 
 Minél szigorúbb a szint, annál kevesebb a hiba – de annál többet kell várni egymásra.
 
-| Szint              | Piszkos olvasás | Nem ismételhető | Fantom    |
-| ------------------ | --------------- | --------------- | --------- |
-| READ UNCOMMITTED   | lehetséges*     | lehetséges      | lehetséges |
-| **READ COMMITTED** (PostgreSQL alapértelmezés) | nem | lehetséges | lehetséges |
-| REPEATABLE READ    | nem             | nem             | lehetséges* |
-| SERIALIZABLE       | nem             | nem             | nem       |
+| Szint                                          | Piszkos olvasás | Nem ismételhető | Fantom      |
+| ---------------------------------------------- | --------------- | --------------- | ----------- |
+| READ UNCOMMITTED                               | lehetséges*     | lehetséges      | lehetséges  |
+| **READ COMMITTED** (PostgreSQL alapértelmezés) | nem             | lehetséges      | lehetséges  |
+| REPEATABLE READ                                | nem             | nem             | lehetséges* |
+| SERIALIZABLE                                   | nem             | nem             | nem         |
 
 \* A PostgreSQL ennél szigorúbb: piszkos olvasás nála sosem fordul elő, és a REPEATABLE READ a fantomokat is kizárja.
 

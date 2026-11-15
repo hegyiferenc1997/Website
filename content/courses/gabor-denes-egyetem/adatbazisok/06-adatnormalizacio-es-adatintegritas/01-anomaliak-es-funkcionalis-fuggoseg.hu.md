@@ -14,12 +14,12 @@ minutes: 20
 
 Egy kezdő fejlesztő így tárolja a jelentkezéseket – egyetlen, kényelmesnek tűnő táblában:
 
-| neptun | nev       | szak        | kod  | targy_nev           | kredit | jegy |
-| ------ | --------- | ----------- | ---- | ------------------- | ------ | ---- |
-| ABC123 | Kiss Anna | mérnökinf   | ADB  | Adatbázisok         | 5      | 5    |
-| ABC123 | Kiss Anna | mérnökinf   | DIG  | Digitális technika  | 5      | 4    |
-| CDE345 | Tóth Cili | gazdinfo    | ADB  | Adatbázisok         | 5      | 4    |
-| DEF456 | Szabó Dani| mérnökinf   | ADB  | Adatbázisok         | 5      | 3    |
+| neptun | nev        | szak      | kod | targy_nev          | kredit | jegy |
+| ------ | ---------- | --------- | --- | ------------------ | ------ | ---- |
+| ABC123 | Kiss Anna  | mérnökinf | ADB | Adatbázisok        | 5      | 5    |
+| ABC123 | Kiss Anna  | mérnökinf | DIG | Digitális technika | 5      | 4    |
+| CDE345 | Tóth Cili  | gazdinfo  | ADB | Adatbázisok        | 5      | 4    |
+| DEF456 | Szabó Dani | mérnökinf | ADB | Adatbázisok        | 5      | 3    |
 
 Első ránézésre minden rendben. De nézd meg, mi történik a használat során:
 

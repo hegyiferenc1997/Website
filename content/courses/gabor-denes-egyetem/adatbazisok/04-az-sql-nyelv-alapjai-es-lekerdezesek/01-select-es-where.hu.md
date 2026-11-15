@@ -52,11 +52,11 @@ FROM hallgatok;
 
 A `WHERE` után egy **feltétel** áll; csak azok a sorok maradnak, amelyekre igaz.
 
-| Operátor             | Jelentés                 | Példa                    |
-| -------------------- | ------------------------ | ------------------------ |
-| `=`, `<>` (vagy `!=`) | egyenlő, nem egyenlő     | `szak = 'mérnökinformatikus'` |
-| `<`, `<=`, `>`, `>=` | kisebb, nagyobb          | `felev >= 3`             |
-| `AND`, `OR`, `NOT`   | és, vagy, nem            | `felev = 3 AND varos = 'Budapest'` |
+| Operátor              | Jelentés             | Példa                              |
+| --------------------- | -------------------- | ---------------------------------- |
+| `=`, `<>` (vagy `!=`) | egyenlő, nem egyenlő | `szak = 'mérnökinformatikus'`      |
+| `<`, `<=`, `>`, `>=`  | kisebb, nagyobb      | `felev >= 3`                       |
+| `AND`, `OR`, `NOT`    | és, vagy, nem        | `felev = 3 AND varos = 'Budapest'` |
 
 Figyelj: a **szöveget** egyszeres idézőjelbe tesszük (`'Budapest'`), a számot nem.
 

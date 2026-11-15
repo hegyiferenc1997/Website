@@ -13,7 +13,8 @@ let engine = null;
 // Betöltés: a PGlite csak a saját szerverünk verziózott mappájából jöhet (más címet nem fogadunk el).
 async function init(baseURL) {
   try {
-    if (typeof baseURL !== "string" || !/^\/pglite\/[\w.-]+\/$/.test(baseURL)) throw new Error("url");
+    if (typeof baseURL !== "string" || !/^\/pglite\/[\w.-]+\/$/.test(baseURL))
+      throw new Error("url");
     const { PGlite } = await import(/* webpackIgnore: true */ baseURL + "index.js");
     engine = createSqlEngine(PGlite);
     await engine.ready();

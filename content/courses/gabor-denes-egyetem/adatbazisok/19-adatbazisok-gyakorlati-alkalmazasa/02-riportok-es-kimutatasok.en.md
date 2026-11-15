@@ -23,12 +23,12 @@ The examples run on the **web shop** sample database (familiar from topics 4 and
 
 The manager asks: "How much did we sell in the first quarter per category?" Before writing a single line, settle these:
 
-| Question                      | Decision                                                           |
-| ----------------------------- | ------------------------------------------------------------------ |
-| What counts as a sale?        | only **done** orders (cancelled ones don't, shipping ones not yet) |
-| Which period?                 | 1 January – 31 March 2026, with an interval **open at the end**    |
-| What do we measure?           | revenue = quantity × unit price, plus the number of orders         |
-| What is one row of the report? | one **category** (this is the report's "grain")                   |
+| Question                       | Decision                                                           |
+| ------------------------------ | ------------------------------------------------------------------ |
+| What counts as a sale?         | only **done** orders (cancelled ones don't, shipping ones not yet) |
+| Which period?                  | 1 January – 31 March 2026, with an interval **open at the end**    |
+| What do we measure?            | revenue = quantity × unit price, plus the number of orders         |
+| What is one row of the report? | one **category** (this is the report's "grain")                    |
 
 These four decisions give you the `WHERE`, the `SELECT` and the `GROUP BY`. If you skip them, two colleagues will give two different numbers for the same question – and both will be "right".
 

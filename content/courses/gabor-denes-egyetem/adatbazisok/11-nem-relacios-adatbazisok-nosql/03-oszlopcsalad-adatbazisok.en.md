@@ -100,11 +100,11 @@ The golden rule: if the number of machines waited for on **write** and on **read
 
 ## When to choose it, and when not?
 
-| Good choice                                        | Bad choice                                       |
-| -------------------------------------------------- | ------------------------------------------------ |
-| huge, continuous write load                        | little data, one server is plenty                |
-| simple queries known in advance                    | many ad hoc queries, JOINs, reports              |
-| several data centres, continuous availability      | strict transactions (finance, stock)             |
+| Good choice                                   | Bad choice                           |
+| --------------------------------------------- | ------------------------------------ |
+| huge, continuous write load                   | little data, one server is plenty    |
+| simple queries known in advance               | many ad hoc queries, JOINs, reports  |
+| several data centres, continuous availability | strict transactions (finance, stock) |
 
 ## Summary
 

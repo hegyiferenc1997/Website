@@ -63,14 +63,14 @@ Egy aranyszabály: egy már **lefutott** migrációs fájlt **soha ne módosíts
 
 Egy élő rendszeren, ahol éppen ezrek használják az adatbázist, a sémaváltozás **zárolást** igényel. Egy hosszú zárolás alatt a tábla elérhetetlen – ez gyakorlatilag leállás.
 
-| Változtatás                                         | Kockázat      | Miért?                                                                  |
-| --------------------------------------------------- | ------------- | ----------------------------------------------------------------------- |
-| új, **nem kötelező** oszlop (`NULL` megengedett)    | alacsony      | csak a katalógus változik, azonnali                                     |
-| új oszlop **alapértékkel**                          | alacsony (újabb PostgreSQL-ben) | az alapértéket nem írja be minden sorba                 |
-| új oszlop **`NOT NULL`, alapérték nélkül**          | **hiba**      | a meglévő sorok megsértenék a megszorítást                              |
-| oszlop **átnevezése** vagy **törlése**              | **magas**     | a még futó régi programverzió azonnal elromlik                          |
-| oszlop **típusának** megváltoztatása                | **magas**     | gyakran az egész táblát újraírja, hosszú zárolással                     |
-| index létrehozása                                   | közepes       | írást blokkolhat; `CREATE INDEX CONCURRENTLY` nem blokkol               |
+| Változtatás                                      | Kockázat                        | Miért?                                                    |
+| ------------------------------------------------ | ------------------------------- | --------------------------------------------------------- |
+| új, **nem kötelező** oszlop (`NULL` megengedett) | alacsony                        | csak a katalógus változik, azonnali                       |
+| új oszlop **alapértékkel**                       | alacsony (újabb PostgreSQL-ben) | az alapértéket nem írja be minden sorba                   |
+| új oszlop **`NOT NULL`, alapérték nélkül**       | **hiba**                        | a meglévő sorok megsértenék a megszorítást                |
+| oszlop **átnevezése** vagy **törlése**           | **magas**                       | a még futó régi programverzió azonnal elromlik            |
+| oszlop **típusának** megváltoztatása             | **magas**                       | gyakran az egész táblát újraírja, hosszú zárolással       |
+| index létrehozása                                | közepes                         | írást blokkolhat; `CREATE INDEX CONCURRENTLY` nem blokkol |
 
 ## A „bővít, majd szűkít” minta
 

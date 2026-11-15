@@ -22,22 +22,22 @@ Idősoros adat minden olyan mérés, amelyhez egy **időbélyeg** tartozik, és 
 
 Jellemzői:
 
-| Tulajdonság                         | Mit jelent a gyakorlatban?                                         |
-| ----------------------------------- | ------------------------------------------------------------------ |
-| **szinte csak beszúrás**            | a régi mérést ritkán módosítjuk vagy töröljük egyenként            |
-| **időrendben érkezik**              | az új adat mindig a „végére” kerül                                 |
-| **óriási mennyiség**                | 1000 érzékelő × másodpercenként 1 mérés = napi 86,4 millió sor     |
-| **időtartományra kérdezünk**        | „az elmúlt 24 óra”, „óránkénti átlag a múlt héten”                 |
-| **a régi adat kevésbé értékes**     | tegnapról percenkénti adat kell, tavalyról elég a napi átlag       |
+| Tulajdonság                     | Mit jelent a gyakorlatban?                                     |
+| ------------------------------- | -------------------------------------------------------------- |
+| **szinte csak beszúrás**        | a régi mérést ritkán módosítjuk vagy töröljük egyenként        |
+| **időrendben érkezik**          | az új adat mindig a „végére” kerül                             |
+| **óriási mennyiség**            | 1000 érzékelő × másodpercenként 1 mérés = napi 86,4 millió sor |
+| **időtartományra kérdezünk**    | „az elmúlt 24 óra”, „óránkénti átlag a múlt héten”             |
+| **a régi adat kevésbé értékes** | tegnapról percenkénti adat kell, tavalyról elég a napi átlag   |
 
 ## Idősoros adatbázisok
 
-| Rendszer          | Jellemző                                                                      |
-| ----------------- | ----------------------------------------------------------------------------- |
-| **TimescaleDB**   | PostgreSQL-bővítmény: teljes SQL, a táblát automatikusan időszeletekre bontja |
-| **InfluxDB**      | önálló idősoros adatbázis, saját lekérdezőnyelvvel                            |
-| **Prometheus**    | szerverek és szolgáltatások monitorozására, a mérőszámokat maga gyűjti be     |
-| **ClickHouse**    | oszlopalapú elemző adatbázis, idősoros adatra is nagyon gyors                 |
+| Rendszer        | Jellemző                                                                      |
+| --------------- | ----------------------------------------------------------------------------- |
+| **TimescaleDB** | PostgreSQL-bővítmény: teljes SQL, a táblát automatikusan időszeletekre bontja |
+| **InfluxDB**    | önálló idősoros adatbázis, saját lekérdezőnyelvvel                            |
+| **Prometheus**  | szerverek és szolgáltatások monitorozására, a mérőszámokat maga gyűjti be     |
+| **ClickHouse**  | oszlopalapú elemző adatbázis, idősoros adatra is nagyon gyors                 |
 
 Az alapötlet mindegyikben hasonló: az adatot **időszeletekre** (_chunk_, _partíció_) bontják. Így a „tegnapi adatok” lekérdezése csak a tegnapi szeletet olvassa, és a régi szeletek egyben törölhetők vagy tömöríthetők. Az idősoros adat ráadásul nagyon jól **tömöríthető**, mert az egymás utáni értékek hasonlók.
 

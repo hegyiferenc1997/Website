@@ -30,11 +30,11 @@ Korlátai: drágább (GB-onként), és a cellák csak véges számú írást bí
 
 ## A teljesítmény három mérőszáma
 
-| Mérőszám                    | Jelentése                                       | HDD (kb.)        | NVMe SSD (kb.)      |
-| --------------------------- | ----------------------------------------------- | ---------------- | ------------------- |
-| **IOPS**                    | véletlenszerű műveletek másodpercenként         | 100–200          | 100 000 – 1 000 000 |
-| **Átviteli sebesség**       | sorban olvasott/írt adat másodpercenként        | 150–250 MB/s     | 3000–7000 MB/s      |
-| **Késleltetés** (_latency_) | egyetlen művelet ideje                          | 5–10 ms          | 0,02–0,1 ms         |
+| Mérőszám                    | Jelentése                                | HDD (kb.)    | NVMe SSD (kb.)      |
+| --------------------------- | ---------------------------------------- | ------------ | ------------------- |
+| **IOPS**                    | véletlenszerű műveletek másodpercenként  | 100–200      | 100 000 – 1 000 000 |
+| **Átviteli sebesség**       | sorban olvasott/írt adat másodpercenként | 150–250 MB/s | 3000–7000 MB/s      |
+| **Késleltetés** (_latency_) | egyetlen művelet ideje                   | 5–10 ms      | 0,02–0,1 ms         |
 
 Egy OLTP adatbázis (sok kis, véletlenszerű olvasás és írás: index-keresések, egy-egy sor módosítása) számára az **IOPS** és a **késleltetés** a legfontosabb – ezért fut ma szinte minden éles adatbázis SSD-n. Egy adattárház, amely hatalmas táblákat olvas végig, inkább az **átviteli sebességet** igényli.
 
@@ -97,13 +97,13 @@ A lemezeket párokba tükrözi (RAID 1), és a párok között csíkoz (RAID 0).
 
 ### Összefoglaló táblázat (n lemez, egyenként C kapacitással)
 
-| Szint    | Min. lemez | Hasznos kapacitás | Hány lemez eshet ki? | Jellemző                      |
-| -------- | ---------- | ----------------- | -------------------- | ----------------------------- |
-| RAID 0   | 2          | n × C             | 0                    | gyors, de veszélyes           |
-| RAID 1   | 2          | C (a fele)        | 1                    | egyszerű, biztonságos         |
-| RAID 5   | 3          | (n − 1) × C       | 1                    | jó kapacitás, lassabb írás    |
-| RAID 6   | 4          | (n − 2) × C       | 2                    | nagy tömbökhöz                |
-| RAID 10  | 4          | n × C / 2         | páronként 1          | adatbázisok kedvence          |
+| Szint   | Min. lemez | Hasznos kapacitás | Hány lemez eshet ki? | Jellemző                   |
+| ------- | ---------- | ----------------- | -------------------- | -------------------------- |
+| RAID 0  | 2          | n × C             | 0                    | gyors, de veszélyes        |
+| RAID 1  | 2          | C (a fele)        | 1                    | egyszerű, biztonságos      |
+| RAID 5  | 3          | (n − 1) × C       | 1                    | jó kapacitás, lassabb írás |
+| RAID 6  | 4          | (n − 2) × C       | 2                    | nagy tömbökhöz             |
+| RAID 10 | 4          | n × C / 2         | páronként 1          | adatbázisok kedvence       |
 
 > Fontos: **a RAID nem mentés!** Ha valaki véletlenül töröl egy táblát, vagy egy zsarolóvírus titkosítja az adatokat, a RAID ezt hűségesen „tükrözi” minden lemezre. A RAID a lemezhiba ellen véd, a mentés az adatvesztés ellen (3. lecke).
 

@@ -12,13 +12,13 @@ minutes: 25
 
 ## The big five
 
-| DBMS                      | Licence                         | Strengths                                                                     | Typical home                                  |
-| ------------------------- | ------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------- |
-| **PostgreSQL**            | open (PostgreSQL License)       | standards-compliant, very many features (JSONB, window functions, extensions: PostGIS, TimescaleDB, pgvector) | web applications, start-ups, data analysis |
-| **MySQL** / **MariaDB**   | open (GPL) + commercial edition | simple, fast reads, huge community, offered by many hosting providers         | websites (WordPress), web shops               |
-| **Microsoft SQL Server**  | commercial (with free Express/Developer editions) | tight integration with the Microsoft world (.NET, Azure, Power BI), good tools | enterprise systems, Windows environments |
-| **Oracle Database**       | commercial                      | enterprise features, huge loads, clustering (RAC), long-established           | banks, telecoms, government                   |
-| **SQLite**                | public domain                   | **no server**: a single file, embeddable, zero configuration                  | mobile apps, browsers, small programs         |
+| DBMS                     | Licence                                           | Strengths                                                                                                     | Typical home                               |
+| ------------------------ | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| **PostgreSQL**           | open (PostgreSQL License)                         | standards-compliant, very many features (JSONB, window functions, extensions: PostGIS, TimescaleDB, pgvector) | web applications, start-ups, data analysis |
+| **MySQL** / **MariaDB**  | open (GPL) + commercial edition                   | simple, fast reads, huge community, offered by many hosting providers                                         | websites (WordPress), web shops            |
+| **Microsoft SQL Server** | commercial (with free Express/Developer editions) | tight integration with the Microsoft world (.NET, Azure, Power BI), good tools                                | enterprise systems, Windows environments   |
+| **Oracle Database**      | commercial                                        | enterprise features, huge loads, clustering (RAC), long-established                                           | banks, telecoms, government                |
+| **SQLite**               | public domain                                     | **no server**: a single file, embeddable, zero configuration                                                  | mobile apps, browsers, small programs      |
 
 A few interesting facts:
 
@@ -28,12 +28,12 @@ A few interesting facts:
 
 ## Open source or commercial licence?
 
-| Aspect                 | Open source (PostgreSQL, MySQL, MariaDB)       | Commercial (Oracle, SQL Server)               |
-| ---------------------- | ---------------------------------------------- | --------------------------------------------- |
-| Licence fee            | none                                           | often per processor core, a significant sum   |
-| Support                | community, or paid support companies           | from the vendor, under contract               |
-| Dependence on the vendor | small: the code is available to anyone       | larger (_vendor lock-in_)                     |
-| Special features       | very many through extensions                   | many built-in enterprise features             |
+| Aspect                   | Open source (PostgreSQL, MySQL, MariaDB) | Commercial (Oracle, SQL Server)             |
+| ------------------------ | ---------------------------------------- | ------------------------------------------- |
+| Licence fee              | none                                     | often per processor core, a significant sum |
+| Support                  | community, or paid support companies     | from the vendor, under contract             |
+| Dependence on the vendor | small: the code is available to anyone   | larger (_vendor lock-in_)                   |
+| Special features         | very many through extensions             | many built-in enterprise features           |
 
 "No licence fee" doesn't mean "free": operations, experts and support cost money here too. This is called the **total cost of ownership** (_TCO_).
 
@@ -41,13 +41,13 @@ A few interesting facts:
 
 SQL is standard (ISO/IEC 9075), but every DBMS extends it, and differs from it here and there. If you move from one system to another (topic 17), you have to watch out for these:
 
-| Task                          | PostgreSQL                         | MySQL / MariaDB                  | SQL Server                         | Oracle                                |
-| ----------------------------- | ---------------------------------- | -------------------------------- | ---------------------------------- | ------------------------------------- |
-| first 5 rows                  | `LIMIT 5`                          | `LIMIT 5`                        | `SELECT TOP 5 …`                   | `FETCH FIRST 5 ROWS ONLY`             |
-| auto-generated ID             | `GENERATED … AS IDENTITY`, `SERIAL` | `AUTO_INCREMENT`                | `IDENTITY(1,1)`                    | `GENERATED … AS IDENTITY`             |
-| string concatenation          | `'a' \|\| 'b'`                     | `CONCAT('a', 'b')`               | `'a' + 'b'`                        | `'a' \|\| 'b'`                        |
-| current time                  | `now()`                            | `NOW()`                          | `GETDATE()`                        | `SYSDATE`                             |
-| boolean type                  | `BOOLEAN`                          | `BOOLEAN` (really `TINYINT(1)`)  | `BIT`                              | `BOOLEAN` (only in newer versions)    |
+| Task                 | PostgreSQL                          | MySQL / MariaDB                 | SQL Server       | Oracle                             |
+| -------------------- | ----------------------------------- | ------------------------------- | ---------------- | ---------------------------------- |
+| first 5 rows         | `LIMIT 5`                           | `LIMIT 5`                       | `SELECT TOP 5 …` | `FETCH FIRST 5 ROWS ONLY`          |
+| auto-generated ID    | `GENERATED … AS IDENTITY`, `SERIAL` | `AUTO_INCREMENT`                | `IDENTITY(1,1)`  | `GENERATED … AS IDENTITY`          |
+| string concatenation | `'a' \|\| 'b'`                      | `CONCAT('a', 'b')`              | `'a' + 'b'`      | `'a' \|\| 'b'`                     |
+| current time         | `now()`                             | `NOW()`                         | `GETDATE()`      | `SYSDATE`                          |
+| boolean type         | `BOOLEAN`                           | `BOOLEAN` (really `TINYINT(1)`) | `BIT`            | `BOOLEAN` (only in newer versions) |
 
 The good news: the **standard** forms work in more and more places. PostgreSQL, for example, knows the standard `FETCH FIRST` and `IDENTITY` too:
 

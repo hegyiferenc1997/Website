@@ -30,11 +30,11 @@ Its limits: it's more expensive (per GB), and the cells can only take a finite n
 
 ## Three performance metrics
 
-| Metric                 | Meaning                                         | HDD (approx.)    | NVMe SSD (approx.)  |
-| ---------------------- | ----------------------------------------------- | ---------------- | ------------------- |
-| **IOPS**               | random operations per second                    | 100–200          | 100,000 – 1,000,000 |
-| **Throughput**         | data read/written sequentially per second       | 150–250 MB/s     | 3000–7000 MB/s      |
-| **Latency**            | the time of a single operation                  | 5–10 ms          | 0.02–0.1 ms         |
+| Metric         | Meaning                                   | HDD (approx.) | NVMe SSD (approx.)  |
+| -------------- | ----------------------------------------- | ------------- | ------------------- |
+| **IOPS**       | random operations per second              | 100–200       | 100,000 – 1,000,000 |
+| **Throughput** | data read/written sequentially per second | 150–250 MB/s  | 3000–7000 MB/s      |
+| **Latency**    | the time of a single operation            | 5–10 ms       | 0.02–0.1 ms         |
 
 For an OLTP database (many small, random reads and writes: index lookups, updating single rows) **IOPS** and **latency** matter most – that's why almost every production database runs on SSDs today. A data warehouse that scans huge tables needs **throughput** more.
 
@@ -97,13 +97,13 @@ It mirrors the disks in pairs (RAID 1), and stripes across the pairs (RAID 0).
 
 ### Summary table (n disks, each with capacity C)
 
-| Level    | Min. disks | Usable capacity   | How many disks may fail? | Characteristic              |
-| -------- | ---------- | ----------------- | ------------------------ | --------------------------- |
-| RAID 0   | 2          | n × C             | 0                        | fast but dangerous          |
-| RAID 1   | 2          | C (half)          | 1                        | simple, safe                |
-| RAID 5   | 3          | (n − 1) × C       | 1                        | good capacity, slower writes |
-| RAID 6   | 4          | (n − 2) × C       | 2                        | for large arrays            |
-| RAID 10  | 4          | n × C / 2         | 1 per pair               | databases' favourite        |
+| Level   | Min. disks | Usable capacity | How many disks may fail? | Characteristic               |
+| ------- | ---------- | --------------- | ------------------------ | ---------------------------- |
+| RAID 0  | 2          | n × C           | 0                        | fast but dangerous           |
+| RAID 1  | 2          | C (half)        | 1                        | simple, safe                 |
+| RAID 5  | 3          | (n − 1) × C     | 1                        | good capacity, slower writes |
+| RAID 6  | 4          | (n − 2) × C     | 2                        | for large arrays             |
+| RAID 10 | 4          | n × C / 2       | 1 per pair               | databases' favourite         |
 
 > Important: **RAID is not a backup!** If someone accidentally drops a table, or ransomware encrypts the data, RAID faithfully "mirrors" that onto every disk. RAID protects against disk failure, a backup against data loss (lesson 3).
 

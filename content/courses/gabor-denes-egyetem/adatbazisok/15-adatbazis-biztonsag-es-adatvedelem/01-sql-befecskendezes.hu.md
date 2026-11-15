@@ -103,14 +103,14 @@ Az **ORM**-ek (17. témakör) is paraméterezett lekérdezéseket készítenek �
 
 A paraméterezés az alap, de a jó védelem **több rétegű** (_defense in depth_):
 
-| Réteg                         | Mit tesz?                                                                     |
-| ----------------------------- | ----------------------------------------------------------------------------- |
-| **Paraméterezett lekérdezés** | az adat soha nem lesz kód – ez a legfontosabb                                  |
-| **Legkisebb jogosultság**     | az alkalmazás fiókja csak azt tehesse, ami kell (10. témakör) – ha mégis betörnek, kisebb a kár |
-| **Bemenet ellenőrzése**       | egy Neptun-kód pontosan 6 betű vagy szám – ami nem ilyen, el sem jut az adatbázisig |
+| Réteg                         | Mit tesz?                                                                                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Paraméterezett lekérdezés** | az adat soha nem lesz kód – ez a legfontosabb                                                                                                 |
+| **Legkisebb jogosultság**     | az alkalmazás fiókja csak azt tehesse, ami kell (10. témakör) – ha mégis betörnek, kisebb a kár                                               |
+| **Bemenet ellenőrzése**       | egy Neptun-kód pontosan 6 betű vagy szám – ami nem ilyen, el sem jut az adatbázisig                                                           |
 | **Azonosítók fehérlistája**   | ha a felhasználó oszlop szerint rendez, csak előre megadott oszlopnevek közül választhasson (helyőrzővel tábla- vagy oszlopnév nem adható át) |
-| **Hibaüzenetek elrejtése**    | a felhasználó ne lássa a nyers adatbázis-hibát – az árulkodik a szerkezetről  |
-| **Naplózás és figyelés**      | a gyanús lekérdezések (pl. hirtelen sok hiba) riasszanak                      |
+| **Hibaüzenetek elrejtése**    | a felhasználó ne lássa a nyers adatbázis-hibát – az árulkodik a szerkezetről                                                                  |
+| **Naplózás és figyelés**      | a gyanús lekérdezések (pl. hirtelen sok hiba) riasszanak                                                                                      |
 
 > A bemenet „tisztogatása” (pl. az aposztrófok kicserélése) **nem** megbízható védelem – mindig akad egy kódolási trükk, amely átjut rajta. Paraméterezz!
 

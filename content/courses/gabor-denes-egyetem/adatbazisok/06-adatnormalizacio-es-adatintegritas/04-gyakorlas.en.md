@@ -46,11 +46,11 @@ Because a normalised schema needs many joins, which can be slow in very large, r
 
 A library keeps loans in a single table:
 
-| reader_id | reader_name | reader_phone | isbn | title        | author      | publisher  | publisher_city | loan_date  |
-| --------- | ----------- | ------------ | ---- | ------------ | ----------- | ---------- | -------------- | ---------- |
-| 1         | Anna Kiss   | 06301112222  | 111  | SQL Basics   | Gabor Nagy  | TechBooks  | Budapest       | 2026-10-01 |
-| 1         | Anna Kiss   | 06301112222  | 222  | Python       | Eva Toth    | CodePress  | Szeged         | 2026-10-05 |
-| 2         | Dani Szabo  | 06209998888  | 111  | SQL Basics   | Gabor Nagy  | TechBooks  | Budapest       | 2026-10-07 |
+| reader_id | reader_name | reader_phone | isbn | title      | author     | publisher | publisher_city | loan_date  |
+| --------- | ----------- | ------------ | ---- | ---------- | ---------- | --------- | -------------- | ---------- |
+| 1         | Anna Kiss   | 06301112222  | 111  | SQL Basics | Gabor Nagy | TechBooks | Budapest       | 2026-10-01 |
+| 1         | Anna Kiss   | 06301112222  | 222  | Python     | Eva Toth   | CodePress | Szeged         | 2026-10-05 |
+| 2         | Dani Szabo  | 06209998888  | 111  | SQL Basics | Gabor Nagy | TechBooks | Budapest       | 2026-10-07 |
 
 The key is `(reader_id, isbn, loan_date)`. A book has one author and one publisher.
 

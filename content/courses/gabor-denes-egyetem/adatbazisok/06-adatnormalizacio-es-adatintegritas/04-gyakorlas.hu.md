@@ -46,11 +46,11 @@ Mert a normalizált séma sok összekapcsolást igényel, ami nagyon nagy, olvas
 
 Egy könyvtár egyetlen táblában tartja a kölcsönzéseket:
 
-| olvaso_id | olvaso_nev | olvaso_tel   | isbn | cim          | szerzo     | kiado   | kiado_varos | kolcsonzes_datum |
-| --------- | ---------- | ------------ | ---- | ------------ | ---------- | ------- | ----------- | ---------------- |
-| 1         | Kiss Anna  | 06301112222  | 111  | SQL alapok   | Nagy Gábor | TechKönyv | Budapest  | 2026-10-01       |
-| 1         | Kiss Anna  | 06301112222  | 222  | Python       | Tóth Éva   | KódKiadó  | Szeged    | 2026-10-05       |
-| 2         | Szabó Dani | 06209998888  | 111  | SQL alapok   | Nagy Gábor | TechKönyv | Budapest  | 2026-10-07       |
+| olvaso_id | olvaso_nev | olvaso_tel  | isbn | cim        | szerzo     | kiado     | kiado_varos | kolcsonzes_datum |
+| --------- | ---------- | ----------- | ---- | ---------- | ---------- | --------- | ----------- | ---------------- |
+| 1         | Kiss Anna  | 06301112222 | 111  | SQL alapok | Nagy Gábor | TechKönyv | Budapest    | 2026-10-01       |
+| 1         | Kiss Anna  | 06301112222 | 222  | Python     | Tóth Éva   | KódKiadó  | Szeged      | 2026-10-05       |
+| 2         | Szabó Dani | 06209998888 | 111  | SQL alapok | Nagy Gábor | TechKönyv | Budapest    | 2026-10-07       |
 
 A kulcs `(olvaso_id, isbn, kolcsonzes_datum)`. Egy könyvnek egy szerzője és egy kiadója van.
 

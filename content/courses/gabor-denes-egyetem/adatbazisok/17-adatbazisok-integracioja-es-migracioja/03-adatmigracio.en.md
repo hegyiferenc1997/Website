@@ -74,13 +74,13 @@ FROM old_export;
 
 Useful functions for cleaning:
 
-| Function                           | What is it for?                                      | Example                                            |
-| ---------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
-| `TRIM(x)`                          | cutting spaces off the start and end                 | `TRIM('  Cili Toth ')` → `'Cili Toth'`             |
-| `UPPER(x)`, `LOWER(x)`             | consistent lower or upper case                       | `UPPER('bcd234')` → `'BCD234'`                     |
-| `NULLIF(x, '')`                    | an empty string becomes NULL                         | `NULLIF('', '')` → `NULL`                          |
-| `to_date(x, 'YYYY.MM.DD')`         | a date from text, with a given format                | `to_date('2005.03.14', 'YYYY.MM.DD')`              |
-| `COALESCE(x, default)`             | a default instead of NULL                            | `COALESCE(city, 'unknown')`                        |
+| Function                   | What is it for?                       | Example                                |
+| -------------------------- | ------------------------------------- | -------------------------------------- |
+| `TRIM(x)`                  | cutting spaces off the start and end  | `TRIM('  Cili Toth ')` → `'Cili Toth'` |
+| `UPPER(x)`, `LOWER(x)`     | consistent lower or upper case        | `UPPER('bcd234')` → `'BCD234'`         |
+| `NULLIF(x, '')`            | an empty string becomes NULL          | `NULLIF('', '')` → `NULL`              |
+| `to_date(x, 'YYYY.MM.DD')` | a date from text, with a given format | `to_date('2005.03.14', 'YYYY.MM.DD')`  |
+| `COALESCE(x, default)`     | a default instead of NULL             | `COALESCE(city, 'unknown')`            |
 
 ```sql run
 SELECT UPPER(TRIM(split_part(line, ';', 1)))                          AS neptun,
@@ -111,11 +111,11 @@ If you compute the same in the target and the two values match, you can be sure 
 
 ## Cutover strategies
 
-| Strategy                          | How?                                                                     | Pro / con                                               |
-| --------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------- |
-| **All at once** (_big bang_)      | the old system stops over a weekend, we migrate, the new one starts on Monday | simple, but high risk, and a downtime window is needed |
-| **Phased**                        | we move part by part (e.g. faculty by faculty, module by module)         | lower risk, but two systems live side by side for a while |
-| **Dual write** / **CDC**          | for a while both systems receive the changes (lesson 17/1), then we switch over | almost zero downtime, but complicated            |
+| Strategy                     | How?                                                                            | Pro / con                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| **All at once** (_big bang_) | the old system stops over a weekend, we migrate, the new one starts on Monday   | simple, but high risk, and a downtime window is needed    |
+| **Phased**                   | we move part by part (e.g. faculty by faculty, module by module)                | lower risk, but two systems live side by side for a while |
+| **Dual write** / **CDC**     | for a while both systems receive the changes (lesson 17/1), then we switch over | almost zero downtime, but complicated                     |
 
 With every strategy, have a **rollback plan**: what to do if the new system fails in production after all? Only switch off the old system and its data for good once the new one has proven itself.
 

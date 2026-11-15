@@ -103,14 +103,14 @@ Java (JDBC):        PreparedStatement ps = conn.prepareStatement("… WHERE nept
 
 Parameterisation is the basis, but good protection has **several layers** (_defence in depth_):
 
-| Layer                         | What does it do?                                                              |
-| ----------------------------- | ----------------------------------------------------------------------------- |
-| **Parameterised queries**     | data never becomes code – this is the most important                          |
-| **Least privilege**           | the application's account may only do what's needed (topic 10) – if someone gets in anyway, the damage is smaller |
-| **Input validation**          | a Neptun code is exactly 6 letters or digits – anything else doesn't even reach the database |
+| Layer                          | What does it do?                                                                                                                           |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Parameterised queries**      | data never becomes code – this is the most important                                                                                       |
+| **Least privilege**            | the application's account may only do what's needed (topic 10) – if someone gets in anyway, the damage is smaller                          |
+| **Input validation**           | a Neptun code is exactly 6 letters or digits – anything else doesn't even reach the database                                               |
 | **Allow-list for identifiers** | if the user sorts by a column, they may only choose from predefined column names (a table or column name can't be passed as a placeholder) |
-| **Hiding error messages**     | the user shouldn't see the raw database error – it gives away the structure  |
-| **Logging and monitoring**    | suspicious queries (e.g. a sudden burst of errors) should raise an alarm      |
+| **Hiding error messages**      | the user shouldn't see the raw database error – it gives away the structure                                                                |
+| **Logging and monitoring**     | suspicious queries (e.g. a sudden burst of errors) should raise an alarm                                                                   |
 
 > "Sanitising" input (e.g. replacing apostrophes) is **not** reliable protection – there's always some encoding trick that gets through. Parameterise!
 

@@ -73,10 +73,10 @@ Mindegy, melyiket választod, de **egy projekten belül következetesen** haszn�
 
 Az **adatszótár** egy táblázat, amely minden mezőről leírja, mit jelent, milyen típusú, kötelező-e, és milyen értékei lehetnek. Később aranyat ér, amikor egy új kolléga (vagy te fél év múlva) próbálja megérteni, mi az a `stat_kod`.
 
-| Mező        | Jelentés                 | Típus        | Kötelező | Szabály          |
-| ----------- | ------------------------ | ------------ | -------- | ---------------- |
-| `email`     | a tag e-mail címe        | szöveg (120) | igen     | egyedi           |
-| `szuletett` | születési dátum          | dátum        | nem      | nem lehet jövőbeli |
+| Mező        | Jelentés          | Típus        | Kötelező | Szabály            |
+| ----------- | ----------------- | ------------ | -------- | ------------------ |
+| `email`     | a tag e-mail címe | szöveg (120) | igen     | egyedi             |
+| `szuletett` | születési dátum   | dátum        | nem      | nem lehet jövőbeli |
 
 ## Összefoglalás
 

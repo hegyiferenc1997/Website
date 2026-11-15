@@ -4,3 +4,4 @@ drizzle/meta
 .data
 /public/pyodide/
 /public/katex/
+/public/pglite/

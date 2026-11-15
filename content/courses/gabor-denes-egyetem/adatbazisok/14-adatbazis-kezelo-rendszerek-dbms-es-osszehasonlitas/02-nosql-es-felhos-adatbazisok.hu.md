@@ -14,13 +14,13 @@ minutes: 22
 
 A 11–12. témakörben megismerted a családokat. Íme a legismertebb képviselőik egymás mellett:
 
-| Rendszer        | Család          | Erőssége                                                  | Mire ne?                                     |
-| --------------- | --------------- | --------------------------------------------------------- | -------------------------------------------- |
-| **MongoDB**     | dokumentum      | rugalmas séma, kényelmes fejlesztés, jó skálázás          | sok táblát összekapcsoló riportok            |
-| **Redis**       | kulcs-érték     | memóriában, villámgyors; gyorsítótár, számlálók, sorok    | elsődleges, nagy, tartós adattár             |
-| **Cassandra**   | oszlopcsalád    | óriási írásterhelés, több adatközpont, nincs egyetlen hibapont | ad hoc lekérdezések, JOIN-ok            |
-| **Neo4j**       | gráf            | kapcsolatok bejárása, legrövidebb út, ajánlás             | egyszerű összesítő riportok, tömeges írás    |
-| **DynamoDB**    | kulcs-érték / dokumentum | teljesen menedzselt (AWS), automatikus skálázás  | rugalmas lekérdezések, a felhőből kiköltözés |
+| Rendszer      | Család                   | Erőssége                                                       | Mire ne?                                     |
+| ------------- | ------------------------ | -------------------------------------------------------------- | -------------------------------------------- |
+| **MongoDB**   | dokumentum               | rugalmas séma, kényelmes fejlesztés, jó skálázás               | sok táblát összekapcsoló riportok            |
+| **Redis**     | kulcs-érték              | memóriában, villámgyors; gyorsítótár, számlálók, sorok         | elsődleges, nagy, tartós adattár             |
+| **Cassandra** | oszlopcsalád             | óriási írásterhelés, több adatközpont, nincs egyetlen hibapont | ad hoc lekérdezések, JOIN-ok                 |
+| **Neo4j**     | gráf                     | kapcsolatok bejárása, legrövidebb út, ajánlás                  | egyszerű összesítő riportok, tömeges írás    |
+| **DynamoDB**  | kulcs-érték / dokumentum | teljesen menedzselt (AWS), automatikus skálázás                | rugalmas lekérdezések, a felhőből kiköltözés |
 
 Egy nagyobb rendszerben gyakran **többet is** használnak egyszerre – ezt hívják **többnyelvű adatmegőrzésnek** (_polyglot persistence_): PostgreSQL a rendelésekhez, Redis a gyorsítótárhoz, Elasticsearch a szöveges kereséshez.
 
@@ -30,34 +30,34 @@ Egy adatbázist futtathatsz **saját magad** (saját szerveren vagy egy bérelt 
 
 Néhány menedzselt szolgáltatás:
 
-| Szolgáltató   | Relációs                                                  | NoSQL                          |
-| ------------- | --------------------------------------------------------- | ------------------------------ |
-| AWS           | Amazon RDS (PostgreSQL, MySQL, …), Aurora                 | DynamoDB, ElastiCache (Redis)  |
-| Microsoft     | Azure SQL Database, Azure Database for PostgreSQL         | Cosmos DB                      |
-| Google        | Cloud SQL, AlloyDB, Spanner                               | Firestore, Bigtable            |
-| Független     | Neon, Supabase (PostgreSQL), PlanetScale (MySQL)          | MongoDB Atlas, Redis Cloud     |
+| Szolgáltató | Relációs                                          | NoSQL                         |
+| ----------- | ------------------------------------------------- | ----------------------------- |
+| AWS         | Amazon RDS (PostgreSQL, MySQL, …), Aurora         | DynamoDB, ElastiCache (Redis) |
+| Microsoft   | Azure SQL Database, Azure Database for PostgreSQL | Cosmos DB                     |
+| Google      | Cloud SQL, AlloyDB, Spanner                       | Firestore, Bigtable           |
+| Független   | Neon, Supabase (PostgreSQL), PlanetScale (MySQL)  | MongoDB Atlas, Redis Cloud    |
 
 ### Ki miért felel?
 
 A felhőben a felelősség **megoszlik** a szolgáltató és az ügyfél között:
 
-| Feladat                                              | Saját szerver | Menedzselt (DBaaS) |
-| ---------------------------------------------------- | ------------- | ------------------ |
-| hardver, áram, hűtés, adatközpont                    | te            | szolgáltató        |
-| operációs rendszer és DBMS telepítése, frissítése    | te            | szolgáltató        |
+| Feladat                                              | Saját szerver | Menedzselt (DBaaS)      |
+| ---------------------------------------------------- | ------------- | ----------------------- |
+| hardver, áram, hűtés, adatközpont                    | te            | szolgáltató             |
+| operációs rendszer és DBMS telepítése, frissítése    | te            | szolgáltató             |
 | automatikus mentés, replikáció, feladatátvétel       | te            | szolgáltató (beállítod) |
-| **sématerv, indexek, lekérdezések**                  | te            | **te**             |
-| **felhasználók, jogosultságok, hálózati hozzáférés** | te            | **te**             |
-| **az adat tartalma és a jogszabályok betartása**     | te            | **te**             |
+| **sématerv, indexek, lekérdezések**                  | te            | **te**                  |
+| **felhasználók, jogosultságok, hálózati hozzáférés** | te            | **te**                  |
+| **az adat tartalma és a jogszabályok betartása**     | te            | **te**                  |
 
 A menedzselt szolgáltatás tehát **nem veszi le** a válladról az adatbázis tervezését és a biztonságos beállítást – csak az üzemeltetés „unalmas” részét.
 
-| Szempont          | Saját üzemeltetés                               | Menedzselt (DBaaS)                                  |
-| ----------------- | ----------------------------------------------- | --------------------------------------------------- |
-| Kontroll          | teljes (bármilyen bővítmény, beállítás)         | korlátozott (amit a szolgáltató enged)              |
-| Munka             | sok: frissítés, mentés, felügyelet              | kevés: pár kattintás                                |
-| Költség           | kiszámítható, nagy méretben olcsóbb lehet       | kis méretben olcsó, nagy méretben drága lehet       |
-| Szakértelem       | adatbázis-üzemeltető kell                       | kevesebb szakértelem is elég az induláshoz          |
+| Szempont    | Saját üzemeltetés                         | Menedzselt (DBaaS)                            |
+| ----------- | ----------------------------------------- | --------------------------------------------- |
+| Kontroll    | teljes (bármilyen bővítmény, beállítás)   | korlátozott (amit a szolgáltató enged)        |
+| Munka       | sok: frissítés, mentés, felügyelet        | kevés: pár kattintás                          |
+| Költség     | kiszámítható, nagy méretben olcsóbb lehet | kis méretben olcsó, nagy méretben drága lehet |
+| Szakértelem | adatbázis-üzemeltető kell                 | kevesebb szakértelem is elég az induláshoz    |
 
 ## Szerver nélküli (serverless) adatbázisok
 

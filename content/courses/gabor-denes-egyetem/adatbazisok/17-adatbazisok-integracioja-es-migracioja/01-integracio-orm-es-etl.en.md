@@ -43,12 +43,12 @@ students = session.query(Student).filter(Student.semester == 3).order_by(Student
 SELECT neptun, name, major, semester FROM students WHERE semester = $1 ORDER BY name
 ```
 
-| Advantages                                                      | Pitfalls                                                                    |
-| --------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| less repetitive code, convenient to use                         | it hides the SQL: it's easy to write a slow query without noticing          |
-| queries are **parameterised** (protects against SQL injection)  | the **N+1 problem** (topic 16) because of "lazy loading"                    |
-| type checking, autocompletion in the editor                     | complex reports and window functions often need raw SQL anyway              |
-| often comes with **migration management** (lesson 2)            | if you don't understand what happens underneath, debugging is hard          |
+| Advantages                                                     | Pitfalls                                                           |
+| -------------------------------------------------------------- | ------------------------------------------------------------------ |
+| less repetitive code, convenient to use                        | it hides the SQL: it's easy to write a slow query without noticing |
+| queries are **parameterised** (protects against SQL injection) | the **N+1 problem** (topic 16) because of "lazy loading"           |
+| type checking, autocompletion in the editor                    | complex reports and window functions often need raw SQL anyway     |
+| often comes with **migration management** (lesson 2)           | if you don't understand what happens underneath, debugging is hard |
 
 > Tip: feel free to use an ORM, but **know SQL** – and look at the queries it generates now and then (most ORMs can log them).
 

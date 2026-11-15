@@ -25,11 +25,11 @@ A kapcsolat **fokszáma** azt mondja meg, hány egyedhalmazt köt össze:
 
 A számosság megmondja, egy egyed **legfeljebb hány** másikhoz kapcsolódhat. Mindig **mindkét irányból** kérdezz rá!
 
-| Számosság | Kérdés mindkét irányból                                            | Példa                            |
-| --------- | ------------------------------------------------------------------ | -------------------------------- |
-| **1 : 1** | Egy A-hoz legfeljebb egy B, és egy B-hez legfeljebb egy A.         | személy – személyi igazolvány    |
-| **1 : N** | Egy A-hoz sok B, de egy B-hez legfeljebb egy A.                    | tanszék – oktató                 |
-| **N : M** | Egy A-hoz sok B, és egy B-hez is sok A.                            | hallgató – tárgy                 |
+| Számosság | Kérdés mindkét irányból                                    | Példa                         |
+| --------- | ---------------------------------------------------------- | ----------------------------- |
+| **1 : 1** | Egy A-hoz legfeljebb egy B, és egy B-hez legfeljebb egy A. | személy – személyi igazolvány |
+| **1 : N** | Egy A-hoz sok B, de egy B-hez legfeljebb egy A.            | tanszék – oktató              |
+| **N : M** | Egy A-hoz sok B, és egy B-hez is sok A.                    | hallgató – tárgy              |
 
 Egy trükk az ellenőrzéshez: mondd ki hangosan mindkét mondatot! _„Egy tanszéken **több** oktató dolgozik.” „Egy oktató **egy** tanszéken dolgozik.”_ → 1 : N, a „sok” oldal az oktató.
 

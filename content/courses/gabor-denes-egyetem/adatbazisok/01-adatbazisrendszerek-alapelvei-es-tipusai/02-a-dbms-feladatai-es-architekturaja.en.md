@@ -43,12 +43,12 @@ This is one of the biggest differences from file-based storage, where the progra
 
 SQL consists of several "sublanguages" – you will try all of them in the following topics:
 
-| Sublanguage | Used for                                | Example statements                      |
-| ----------- | --------------------------------------- | --------------------------------------- |
+| Sublanguage | Used for                                 | Example statements                     |
+| ----------- | ---------------------------------------- | -------------------------------------- |
 | **DDL**     | describing structure (_Data Definition_) | `CREATE TABLE`, `ALTER TABLE`, `DROP`  |
-| **DML**     | handling data (_Data Manipulation_)     | `SELECT`, `INSERT`, `UPDATE`, `DELETE`  |
-| **DCL**     | permissions (_Data Control_)            | `GRANT`, `REVOKE`                       |
-| **TCL**     | transactions (_Transaction Control_)    | `BEGIN`, `COMMIT`, `ROLLBACK`           |
+| **DML**     | handling data (_Data Manipulation_)      | `SELECT`, `INSERT`, `UPDATE`, `DELETE` |
+| **DCL**     | permissions (_Data Control_)             | `GRANT`, `REVOKE`                      |
+| **TCL**     | transactions (_Transaction Control_)     | `BEGIN`, `COMMIT`, `ROLLBACK`          |
 
 A simple memory aid: DDL builds the **shelf**, DML stacks the **books**, DCL hands out the **keys**, and TCL makes sure a stacking job either happens completely or not at all.
 

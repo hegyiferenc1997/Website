@@ -45,12 +45,12 @@ Relációs adatbázisban előbb meg kell tervezni a táblákat (séma), és mind
 
 ## A NoSQL négy fő családja
 
-| Család               | Hogyan tárol?                                     | Példák                    | Tipikus feladat                         |
-| -------------------- | ------------------------------------------------- | ------------------------- | --------------------------------------- |
-| **Kulcs-érték**      | kulcs → bármilyen érték, mint egy óriási szótár   | Redis, DynamoDB           | gyorsítótár, munkamenetek, kosár        |
-| **Dokumentum**       | kulcs → JSON-szerű dokumentum, mezőkre kereshető  | MongoDB, Couchbase        | termékkatalógus, tartalomkezelés        |
-| **Oszlopcsalád**     | sorok, rugalmas oszlopokkal, partíciókra osztva   | Cassandra, HBase          | óriási írásterhelés, idősoros adatok    |
-| **Gráf**             | csúcsok és élek                                   | Neo4j, Amazon Neptune     | közösségi háló, ajánlórendszer          |
+| Család           | Hogyan tárol?                                    | Példák                | Tipikus feladat                      |
+| ---------------- | ------------------------------------------------ | --------------------- | ------------------------------------ |
+| **Kulcs-érték**  | kulcs → bármilyen érték, mint egy óriási szótár  | Redis, DynamoDB       | gyorsítótár, munkamenetek, kosár     |
+| **Dokumentum**   | kulcs → JSON-szerű dokumentum, mezőkre kereshető | MongoDB, Couchbase    | termékkatalógus, tartalomkezelés     |
+| **Oszlopcsalád** | sorok, rugalmas oszlopokkal, partíciókra osztva  | Cassandra, HBase      | óriási írásterhelés, idősoros adatok |
+| **Gráf**         | csúcsok és élek                                  | Neo4j, Amazon Neptune | közösségi háló, ajánlórendszer       |
 
 A következő leckékben az első hármat nézzük meg, a gráfadatbázisokat a 12. témakörben.
 
@@ -88,11 +88,11 @@ A relációs adatbázisok **ACID** tranzakciókat ígérnek (8. témakör). Sok 
 
 > Hasonlat: egy hír terjedése a baráti társaságban. Nem tudja meg mindenki ugyanabban a pillanatban, de egy idő után mindenki ugyanazt tudja.
 
-| Szempont     | ACID (relációs)                       | BASE (sok NoSQL)                          |
-| ------------ | ------------------------------------- | ----------------------------------------- |
-| Konzisztencia | azonnali, szigorú                     | végső (rövid késéssel)                    |
-| Elsődleges cél | helyesség                            | elérhetőség és skálázhatóság              |
-| Jó választás | pénzügy, készlet, foglalás            | hírfolyam, lájkok, naplók, ajánlások      |
+| Szempont       | ACID (relációs)            | BASE (sok NoSQL)                     |
+| -------------- | -------------------------- | ------------------------------------ |
+| Konzisztencia  | azonnali, szigorú          | végső (rövid késéssel)               |
+| Elsődleges cél | helyesség                  | elérhetőség és skálázhatóság         |
+| Jó választás   | pénzügy, készlet, foglalás | hírfolyam, lájkok, naplók, ajánlások |
 
 Ma a határ elmosódik: a MongoDB is tud több dokumentumra kiterjedő ACID tranzakciót, a PostgreSQL pedig kiválóan kezel JSON-dokumentumokat (2. lecke).
 

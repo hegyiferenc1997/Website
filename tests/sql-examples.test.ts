@@ -11,7 +11,7 @@ import { describe, expect, it } from "vitest";
 import { loadContent } from "@/db/content";
 import { parseCodeInfo } from "@/features/lessons/code-info";
 // Sima JavaScript modul a public mappából (a böngésző is ezt tölti be).
-import { compareResults, createSqlEngine } from "../public/sql/engine.mjs";
+import { compareResults, createSqlEngine, formatValue } from "../public/sql/engine.mjs";
 
 /** Egy futtatandó eset. */
 type Case = {
@@ -34,6 +34,9 @@ function collect(): { cases: Case[]; problems: string[] } {
         for (const [lang, body] of Object.entries(lesson.body)) {
           if (!body) continue;
           const where = `${course.course}/${topic.slug}/${lesson.slug}.${lang}`;
+          // Lezáratlan kódblokk esetén a blokk (pl. az ellenőrzés) csendben kimaradna.
+          if ((body.match(/^```/gm) ?? []).length % 2 !== 0)
+            problems.push(`${where}: lezáratlan kódblokk`);
           const blocks = [...body.matchAll(re)]
             .map((m) => ({ ...parseCodeInfo(m[1]), code: m[2] }))
             .filter((b) => b.lang === "sql" && b.role);
@@ -41,7 +44,14 @@ function collect(): { cases: Case[]; problems: string[] } {
           blocks.forEach((b, i) => {
             if (b.role === "setup") setup = b.code;
             if (b.role === "run")
-              cases.push({ where: `${where} (példa)`, setup, code: b.code, solution: null, check: null, shouldPass: true });
+              cases.push({
+                where: `${where} (példa)`,
+                setup,
+                code: b.code,
+                solution: null,
+                check: null,
+                shouldPass: true,
+              });
             if (b.role !== "starter") return;
             // A feladat megoldása és ellenőrzése a következő starter előtt.
             let solution: string | null = null;
@@ -55,9 +65,23 @@ function collect(): { cases: Case[]; problems: string[] } {
               problems.push(`${where}: az SQL feladatnak nincs megoldása`);
               return;
             }
-            cases.push({ where: `${where} (megoldás)`, setup, code: solution, solution, check, shouldPass: true });
+            cases.push({
+              where: `${where} (megoldás)`,
+              setup,
+              code: solution,
+              solution,
+              check,
+              shouldPass: true,
+            });
             if (b.required)
-              cases.push({ where: `${where} (kiinduló kód – nem mehet át)`, setup, code: b.code, solution, check, shouldPass: false });
+              cases.push({
+                where: `${where} (kiinduló kód – nem mehet át)`,
+                setup,
+                code: b.code,
+                solution,
+                check,
+                shouldPass: false,
+              });
           });
         }
   return { cases, problems };
@@ -75,7 +99,10 @@ describe("az eredmények összevetése", () => {
   });
   it("a sorrend csak ORDER BY-nál számít, a számok formája nem", () => {
     expect(compareResults(t([["1"], ["2"]]), t([["2"], ["1"]]), false)).toBeNull();
-    expect(compareResults(t([["1"], ["2"]]), t([["2"], ["1"]]), true)).toEqual({ reason: "row", row: 1 });
+    expect(compareResults(t([["1"], ["2"]]), t([["2"], ["1"]]), true)).toEqual({
+      reason: "row",
+      row: 1,
+    });
     expect(compareResults(t([["2.50"]]), t([["2.5"]]), true)).toBeNull();
     expect(compareResults(t([["3.3333333333"]]), t([["3.33333333333333"]]), true)).toBeNull();
     expect(compareResults(t([[null]]), t([["NULL"]]), true)).not.toBeNull();
@@ -84,6 +111,17 @@ describe("az eredmények összevetése", () => {
     expect(compareResults(t([["1"]], 1), t([["1", "2"]], 2), false)?.reason).toBe("columns");
     expect(compareResults(t([["1"]]), t([["1"], ["1"]]), false)?.reason).toBe("rowCount");
     expect(compareResults(null, t([["1"]]), false)?.reason).toBe("noResult");
+  });
+});
+
+describe("a cellák szöveggé alakítása", () => {
+  it("dátum, bináris és null értékek", () => {
+    expect(formatValue(null, 25)).toBeNull();
+    expect(formatValue(new Date(Date.UTC(2026, 0, 5)), 1082)).toBe("2026-01-05");
+    expect(formatValue(new Date(Date.UTC(2026, 0, 5, 8, 30)), 1114)).toBe("2026-01-05 08:30:00");
+    // A bytea a PostgreSQL \x… hexa alakjában jelenik meg.
+    expect(formatValue(new Uint8Array([0, 15, 255]), 17)).toBe("\\x000fff");
+    expect(formatValue({ a: 1 }, 3802)).toBe('{"a":1}');
   });
 });
 

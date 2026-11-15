@@ -24,15 +24,15 @@ Vannak **különleges** kategóriák is, amelyekre még szigorúbb szabályok vo
 
 ## A GDPR alapelvei – fejlesztői szemmel
 
-| Alapelv                          | Jelentése                                                  | Mit jelent az adatbázisban?                                     |
-| -------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
-| **Jogszerűség, átláthatóság**    | kell jogalap (pl. szerződés, hozzájárulás), és tájékoztatni kell | a hozzájárulást (mikor, mire) is tárolni kell                   |
-| **Célhoz kötöttség**             | csak a megadott célra használható                          | ne használd a szállítási címet reklámra, ha arra nincs jogalap  |
-| **Adattakarékosság**             | csak a feltétlenül szükséges adatot gyűjtsd                | nincs „hátha jó lesz” oszlop (pl. anyja neve egy webshopban)    |
-| **Pontosság**                    | az adat legyen pontos és naprakész                         | legyen mód a javításra                                          |
-| **Korlátozott tárolhatóság**     | csak addig tárold, ameddig szükséges                       | megőrzési idők, automatikus törlés vagy anonimizálás            |
-| **Integritás, bizalmasság**      | megfelelő biztonság                                        | jogosultságok, titkosítás, naplózás (10., 15. témakör)          |
-| **Elszámoltathatóság**           | igazolni kell tudni, hogy betartod                         | dokumentáció, napló arról, ki mit látott vagy módosított         |
+| Alapelv                       | Jelentése                                                        | Mit jelent az adatbázisban?                                    |
+| ----------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------- |
+| **Jogszerűség, átláthatóság** | kell jogalap (pl. szerződés, hozzájárulás), és tájékoztatni kell | a hozzájárulást (mikor, mire) is tárolni kell                  |
+| **Célhoz kötöttség**          | csak a megadott célra használható                                | ne használd a szállítási címet reklámra, ha arra nincs jogalap |
+| **Adattakarékosság**          | csak a feltétlenül szükséges adatot gyűjtsd                      | nincs „hátha jó lesz” oszlop (pl. anyja neve egy webshopban)   |
+| **Pontosság**                 | az adat legyen pontos és naprakész                               | legyen mód a javításra                                         |
+| **Korlátozott tárolhatóság**  | csak addig tárold, ameddig szükséges                             | megőrzési idők, automatikus törlés vagy anonimizálás           |
+| **Integritás, bizalmasság**   | megfelelő biztonság                                              | jogosultságok, titkosítás, naplózás (10., 15. témakör)         |
+| **Elszámoltathatóság**        | igazolni kell tudni, hogy betartod                               | dokumentáció, napló arról, ki mit látott vagy módosított       |
 
 A GDPR kifejezetten elvárja a **beépített és alapértelmezett adatvédelmet** (_privacy by design and by default_): már a tervezésnél kell gondolni rá, nem utólag ráragasztani.
 
@@ -40,13 +40,13 @@ A GDPR kifejezetten elvárja a **beépített és alapértelmezett adatvédelmet*
 
 Az embereknek (az „érintetteknek”) jogaik vannak az adataikkal kapcsolatban. A rendszert úgy kell megtervezni, hogy ezeket teljesíteni lehessen:
 
-| Jog                                | Mit kérhet az érintett?                                  | Mit jelent technikailag?                                   |
-| ---------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
-| **Hozzáférés**                     | „Milyen adatot tárolnak rólam?”                          | minden táblából össze kell tudni gyűjteni egy ember adatait |
-| **Helyesbítés**                    | „Javítsák ki a címemet.”                                 | módosítható adat, egy helyen (normalizálás!)               |
-| **Törlés** („elfeledtetés”)        | „Töröljék az adataimat.”                                 | törlés vagy anonimizálás minden táblában – a mentésekben is számolni kell vele |
-| **Adathordozhatóság**              | „Adják ki az adataimat géppel olvasható formában.”       | exportálás pl. JSON vagy CSV formában                      |
-| **Tiltakozás, korlátozás**         | „Ne használják az adataimat marketingre.”                | jelzők (pl. `marketing_hozzajarulas`) és ezek betartása     |
+| Jog                         | Mit kérhet az érintett?                            | Mit jelent technikailag?                                                       |
+| --------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **Hozzáférés**              | „Milyen adatot tárolnak rólam?”                    | minden táblából össze kell tudni gyűjteni egy ember adatait                    |
+| **Helyesbítés**             | „Javítsák ki a címemet.”                           | módosítható adat, egy helyen (normalizálás!)                                   |
+| **Törlés** („elfeledtetés”) | „Töröljék az adataimat.”                           | törlés vagy anonimizálás minden táblában – a mentésekben is számolni kell vele |
+| **Adathordozhatóság**       | „Adják ki az adataimat géppel olvasható formában.” | exportálás pl. JSON vagy CSV formában                                          |
+| **Tiltakozás, korlátozás**  | „Ne használják az adataimat marketingre.”          | jelzők (pl. `marketing_hozzajarulas`) és ezek betartása                        |
 
 Ha egy ember adatai húsz táblában, ötféle azonosítóval szétszórva vannak, ezek teljesítése rémálom. A jó adatmodell itt is sokat segít.
 
@@ -63,12 +63,12 @@ Az elemzésekhez (pl. „melyik szakon hányadik félévben esnek ki a legtöbbe
 
 Gyakori technikák:
 
-| Technika              | Példa                                                      |
-| --------------------- | ---------------------------------------------------------- |
-| **Elhagyás**          | a név és a Neptun-kód kimarad                              |
-| **Általánosítás**     | születési dátum helyett csak az év; pontos cím helyett csak a megye |
-| **Maszkolás**         | `kiss.anna@pelda.hu` → `k***@pelda.hu`                     |
-| **Összesítés**        | egyéni sorok helyett csak csoportátlagok, kis csoportok elrejtésével |
+| Technika          | Példa                                                                |
+| ----------------- | -------------------------------------------------------------------- |
+| **Elhagyás**      | a név és a Neptun-kód kimarad                                        |
+| **Általánosítás** | születési dátum helyett csak az év; pontos cím helyett csak a megye  |
+| **Maszkolás**     | `kiss.anna@pelda.hu` → `k***@pelda.hu`                               |
+| **Összesítés**    | egyéni sorok helyett csak csoportátlagok, kis csoportok elrejtésével |
 
 <details>
 <summary>A mintaadatbázis létrehozása (SQL)</summary>

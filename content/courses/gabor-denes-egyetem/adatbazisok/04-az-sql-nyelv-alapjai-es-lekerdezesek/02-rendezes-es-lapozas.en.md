@@ -63,14 +63,14 @@ Page 3 with 20 per page: `LIMIT 20 OFFSET 40`. Important: `LIMIT` only makes sen
 
 After `SELECT` you can write not only columns but any **expression**:
 
-| Expression                         | Result                                    |
-| ---------------------------------- | ----------------------------------------- |
-| `credits * 30`                     | multiplication (+, −, \*, /, % exist too) |
-| `name \|\| ' (' \|\| major \|\| ')'` | concatenating text                       |
-| `UPPER(name)`, `LOWER(name)`       | upper / lower case                        |
-| `LENGTH(name)`                     | length of text                            |
-| `EXTRACT(YEAR FROM born)`          | the year of a date                        |
-| `ROUND(x, 2)`                      | rounding to 2 decimals                    |
+| Expression                           | Result                                    |
+| ------------------------------------ | ----------------------------------------- |
+| `credits * 30`                       | multiplication (+, −, \*, /, % exist too) |
+| `name \|\| ' (' \|\| major \|\| ')'` | concatenating text                        |
+| `UPPER(name)`, `LOWER(name)`         | upper / lower case                        |
+| `LENGTH(name)`                       | length of text                            |
+| `EXTRACT(YEAR FROM born)`            | the year of a date                        |
+| `ROUND(x, 2)`                        | rounding to 2 decimals                    |
 
 Careful: dividing two integers in PostgreSQL gives an **integer** (`7 / 2 = 3`)! For a decimal result at least one must be decimal: `7 / 2.0 = 3.5`.
 

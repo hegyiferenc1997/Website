@@ -22,22 +22,22 @@ Time series data is any measurement that has a **timestamp** and arrives **conti
 
 Its characteristics:
 
-| Property                            | What it means in practice                                          |
-| ----------------------------------- | ------------------------------------------------------------------ |
-| **almost only inserts**             | old measurements are rarely updated or deleted one by one          |
-| **arrives in time order**           | new data always goes to the "end"                                  |
-| **huge volume**                     | 1000 sensors × 1 measurement per second = 86.4 million rows a day  |
-| **we query time ranges**            | "the last 24 hours", "hourly average last week"                    |
-| **old data is less valuable**       | for yesterday you need per-minute data, for last year a daily average is enough |
+| Property                      | What it means in practice                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------- |
+| **almost only inserts**       | old measurements are rarely updated or deleted one by one                       |
+| **arrives in time order**     | new data always goes to the "end"                                               |
+| **huge volume**               | 1000 sensors × 1 measurement per second = 86.4 million rows a day               |
+| **we query time ranges**      | "the last 24 hours", "hourly average last week"                                 |
+| **old data is less valuable** | for yesterday you need per-minute data, for last year a daily average is enough |
 
 ## Time series databases
 
-| System            | Characteristic                                                                |
-| ----------------- | ----------------------------------------------------------------------------- |
-| **TimescaleDB**   | a PostgreSQL extension: full SQL, splits the table into time slices automatically |
-| **InfluxDB**      | a standalone time series database, with its own query language                |
-| **Prometheus**    | for monitoring servers and services, it collects the metrics itself           |
-| **ClickHouse**    | a column-based analytical database, very fast for time series data too        |
+| System          | Characteristic                                                                    |
+| --------------- | --------------------------------------------------------------------------------- |
+| **TimescaleDB** | a PostgreSQL extension: full SQL, splits the table into time slices automatically |
+| **InfluxDB**    | a standalone time series database, with its own query language                    |
+| **Prometheus**  | for monitoring servers and services, it collects the metrics itself               |
+| **ClickHouse**  | a column-based analytical database, very fast for time series data too            |
 
 The basic idea is similar in all of them: data is split into **time slices** (_chunks_, _partitions_). That way a query for "yesterday's data" only reads yesterday's slice, and old slices can be deleted or compressed in one go. On top of that, time series data **compresses** very well, because consecutive values are similar.
 

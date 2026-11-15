@@ -18,14 +18,14 @@ minutes: 15
 
 Imagine every office of a university keeps its own Excel file of students: the registrar, the dormitory and the library. What happens?
 
-| Problem                       | Example                                                                                               |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Redundancy** (duplication)  | Anna Kiss's address appears in three files.                                                           |
-| **Inconsistency**             | Anna moves; the registrar updates it, the dorm doesn't – which address is the real one?              |
-| **Hard to query**             | "Which 3rd-semester students from Budapest owe the library?" – three files must be merged by hand.    |
-| **Concurrent access**         | Two people edit the same file at once: one change is lost.                                            |
-| **Security**                  | Either everyone sees the file or no one – you can't say the porter may see only the name.            |
-| **Data loss**                 | A power cut during saving: the file is half-written and corrupted.                                   |
+| Problem                      | Example                                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- |
+| **Redundancy** (duplication) | Anna Kiss's address appears in three files.                                                        |
+| **Inconsistency**            | Anna moves; the registrar updates it, the dorm doesn't – which address is the real one?            |
+| **Hard to query**            | "Which 3rd-semester students from Budapest owe the library?" – three files must be merged by hand. |
+| **Concurrent access**        | Two people edit the same file at once: one change is lost.                                         |
+| **Security**                 | Either everyone sees the file or no one – you can't say the porter may see only the name.          |
+| **Data loss**                | A power cut during saving: the file is half-written and corrupted.                                 |
 
 Databases were invented to solve exactly these problems.
 

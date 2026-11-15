@@ -43,12 +43,12 @@ Ez az egyik legnagyobb különbség a fájlalapú tároláshoz képest, ahol a p
 
 Az SQL több „alnyelvből” áll – ezeket a következő témakörökben mind kipróbálod:
 
-| Alnyelv | Mire való                               | Példa utasítások                        |
-| ------- | --------------------------------------- | --------------------------------------- |
-| **DDL** | szerkezet leírása (_Data Definition_)   | `CREATE TABLE`, `ALTER TABLE`, `DROP`   |
-| **DML** | adatok kezelése (_Data Manipulation_)   | `SELECT`, `INSERT`, `UPDATE`, `DELETE`  |
-| **DCL** | jogosultságok (_Data Control_)          | `GRANT`, `REVOKE`                       |
-| **TCL** | tranzakciók (_Transaction Control_)     | `BEGIN`, `COMMIT`, `ROLLBACK`           |
+| Alnyelv | Mire való                             | Példa utasítások                       |
+| ------- | ------------------------------------- | -------------------------------------- |
+| **DDL** | szerkezet leírása (_Data Definition_) | `CREATE TABLE`, `ALTER TABLE`, `DROP`  |
+| **DML** | adatok kezelése (_Data Manipulation_) | `SELECT`, `INSERT`, `UPDATE`, `DELETE` |
+| **DCL** | jogosultságok (_Data Control_)        | `GRANT`, `REVOKE`                      |
+| **TCL** | tranzakciók (_Transaction Control_)   | `BEGIN`, `COMMIT`, `ROLLBACK`          |
 
 Egyszerű emlékeztető: a DDL a **polcot** építi, a DML a **könyveket** pakolja, a DCL a **kulcsokat** osztja, a TCL pedig gondoskodik róla, hogy egy pakolás vagy teljesen megtörténjen, vagy egyáltalán ne.
 

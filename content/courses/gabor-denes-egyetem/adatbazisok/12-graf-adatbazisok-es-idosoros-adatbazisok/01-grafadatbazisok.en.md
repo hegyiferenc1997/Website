@@ -73,13 +73,13 @@ But if the question is "what was last year's total revenue?", the graph has no a
 
 ## What is it used for?
 
-| Area                     | Example question                                                      |
-| ------------------------ | --------------------------------------------------------------------- |
-| Social network           | Who else might Anna know? Which communities have formed?              |
-| Recommendation system    | People who bought this, what else did they buy?                       |
-| Fraud detection          | Do several "different" customers use the same phone number and address? |
+| Area                     | Example question                                                          |
+| ------------------------ | ------------------------------------------------------------------------- |
+| Social network           | Who else might Anna know? Which communities have formed?                  |
+| Recommendation system    | People who bought this, what else did they buy?                           |
+| Fraud detection          | Do several "different" customers use the same phone number and address?   |
 | Route planning, networks | What's the shortest path? If this router fails, what becomes unreachable? |
-| Knowledge graph          | How are concepts, people and places connected to each other?          |
+| Knowledge graph          | How are concepts, people and places connected to each other?              |
 
 ## Summary
 

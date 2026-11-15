@@ -18,11 +18,11 @@ Many people remember 3NF as an oath: _"Every non-key attribute depends on the ke
 
 A web shop stores orders like this (unnormalised):
 
-| order | date       | customer_id | cust_name | cust_city | products                              |
-| ----- | ---------- | ----------- | --------- | --------- | ------------------------------------- |
-| 1001  | 2026-11-02 | 7           | Anna Kiss | Budapest  | mouse ×2 (4990), keyboard ×1 (12990)  |
-| 1002  | 2026-11-03 | 9           | Bela Nagy | Debrecen  | mouse ×1 (4990)                       |
-| 1003  | 2026-11-03 | 7           | Anna Kiss | Budapest  | monitor ×1 (59990)                    |
+| order | date       | customer_id | cust_name | cust_city | products                             |
+| ----- | ---------- | ----------- | --------- | --------- | ------------------------------------ |
+| 1001  | 2026-11-02 | 7           | Anna Kiss | Budapest  | mouse ×2 (4990), keyboard ×1 (12990) |
+| 1002  | 2026-11-03 | 9           | Bela Nagy | Debrecen  | mouse ×1 (4990)                      |
+| 1003  | 2026-11-03 | 7           | Anna Kiss | Budapest  | monitor ×1 (59990)                   |
 
 ## First normal form (1NF): atomic values
 

@@ -14,13 +14,13 @@ minutes: 22
 
 In topics 11–12 you met the families. Here are their best-known representatives side by side:
 
-| System          | Family          | Strength                                                  | Not for                                      |
-| --------------- | --------------- | --------------------------------------------------------- | -------------------------------------------- |
-| **MongoDB**     | document        | flexible schema, convenient development, good scaling     | reports joining many tables                  |
-| **Redis**       | key-value       | in memory, lightning fast; cache, counters, queues        | a primary, large, durable data store         |
-| **Cassandra**   | wide-column     | huge write load, multiple data centres, no single point of failure | ad hoc queries, JOINs               |
-| **Neo4j**       | graph           | traversing relationships, shortest path, recommendations  | simple aggregate reports, bulk writes        |
-| **DynamoDB**    | key-value / document | fully managed (AWS), automatic scaling              | flexible queries, moving out of the cloud    |
+| System        | Family               | Strength                                                           | Not for                                   |
+| ------------- | -------------------- | ------------------------------------------------------------------ | ----------------------------------------- |
+| **MongoDB**   | document             | flexible schema, convenient development, good scaling              | reports joining many tables               |
+| **Redis**     | key-value            | in memory, lightning fast; cache, counters, queues                 | a primary, large, durable data store      |
+| **Cassandra** | wide-column          | huge write load, multiple data centres, no single point of failure | ad hoc queries, JOINs                     |
+| **Neo4j**     | graph                | traversing relationships, shortest path, recommendations           | simple aggregate reports, bulk writes     |
+| **DynamoDB**  | key-value / document | fully managed (AWS), automatic scaling                             | flexible queries, moving out of the cloud |
 
 A larger system often uses **several** at once – this is called **polyglot persistence**: PostgreSQL for orders, Redis for caching, Elasticsearch for text search.
 
@@ -30,34 +30,34 @@ You can run a database **yourself** (on your own server or a rented virtual mach
 
 Some managed services:
 
-| Provider      | Relational                                                | NoSQL                          |
-| ------------- | --------------------------------------------------------- | ------------------------------ |
-| AWS           | Amazon RDS (PostgreSQL, MySQL, …), Aurora                 | DynamoDB, ElastiCache (Redis)  |
-| Microsoft     | Azure SQL Database, Azure Database for PostgreSQL         | Cosmos DB                      |
-| Google        | Cloud SQL, AlloyDB, Spanner                               | Firestore, Bigtable            |
-| Independent   | Neon, Supabase (PostgreSQL), PlanetScale (MySQL)          | MongoDB Atlas, Redis Cloud     |
+| Provider    | Relational                                        | NoSQL                         |
+| ----------- | ------------------------------------------------- | ----------------------------- |
+| AWS         | Amazon RDS (PostgreSQL, MySQL, …), Aurora         | DynamoDB, ElastiCache (Redis) |
+| Microsoft   | Azure SQL Database, Azure Database for PostgreSQL | Cosmos DB                     |
+| Google      | Cloud SQL, AlloyDB, Spanner                       | Firestore, Bigtable           |
+| Independent | Neon, Supabase (PostgreSQL), PlanetScale (MySQL)  | MongoDB Atlas, Redis Cloud    |
 
 ### Who is responsible for what?
 
 In the cloud, responsibility is **shared** between the provider and the customer:
 
-| Task                                                 | Own server    | Managed (DBaaS)    |
-| ---------------------------------------------------- | ------------- | ------------------ |
-| hardware, power, cooling, data centre                | you           | provider           |
-| installing and updating the OS and the DBMS          | you           | provider           |
-| automatic backups, replication, failover             | you           | provider (you configure it) |
-| **schema design, indexes, queries**                  | you           | **you**            |
-| **users, privileges, network access**                | you           | **you**            |
-| **the data's content and legal compliance**          | you           | **you**            |
+| Task                                        | Own server | Managed (DBaaS)             |
+| ------------------------------------------- | ---------- | --------------------------- |
+| hardware, power, cooling, data centre       | you        | provider                    |
+| installing and updating the OS and the DBMS | you        | provider                    |
+| automatic backups, replication, failover    | you        | provider (you configure it) |
+| **schema design, indexes, queries**         | you        | **you**                     |
+| **users, privileges, network access**       | you        | **you**                     |
+| **the data's content and legal compliance** | you        | **you**                     |
 
 So a managed service does **not** take database design and secure configuration off your shoulders – only the "boring" part of operations.
 
-| Aspect            | Self-hosting                                    | Managed (DBaaS)                                     |
-| ----------------- | ----------------------------------------------- | --------------------------------------------------- |
-| Control           | full (any extension, any setting)               | limited (whatever the provider allows)              |
-| Work              | a lot: updates, backups, monitoring             | little: a few clicks                                |
-| Cost              | predictable, can be cheaper at large scale      | cheap at small scale, can be expensive at large scale |
-| Expertise         | a database administrator is needed              | less expertise is enough to get started             |
+| Aspect    | Self-hosting                               | Managed (DBaaS)                                       |
+| --------- | ------------------------------------------ | ----------------------------------------------------- |
+| Control   | full (any extension, any setting)          | limited (whatever the provider allows)                |
+| Work      | a lot: updates, backups, monitoring        | little: a few clicks                                  |
+| Cost      | predictable, can be cheaper at large scale | cheap at small scale, can be expensive at large scale |
+| Expertise | a database administrator is needed         | less expertise is enough to get started               |
 
 ## Serverless databases
 

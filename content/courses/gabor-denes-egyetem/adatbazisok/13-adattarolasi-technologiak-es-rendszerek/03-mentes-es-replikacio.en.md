@@ -19,11 +19,11 @@ Data can be lost in many ways: disk failure, a badly written `DELETE` without a 
 
 ## Backup types
 
-| Type                  | What does it save?                                  | Backup      | Restore                                   |
-| --------------------- | --------------------------------------------------- | ----------- | ----------------------------------------- |
-| **Full**              | everything                                          | slow, large | simple: only this one is needed           |
-| **Incremental**       | what changed since the **last backup of any kind**  | fast, small | the full + **all** incrementals in order  |
-| **Differential**      | what changed since the **last full** backup         | medium, grows day by day | the full + **the latest** differential |
+| Type             | What does it save?                                 | Backup                   | Restore                                  |
+| ---------------- | -------------------------------------------------- | ------------------------ | ---------------------------------------- |
+| **Full**         | everything                                         | slow, large              | simple: only this one is needed          |
+| **Incremental**  | what changed since the **last backup of any kind** | fast, small              | the full + **all** incrementals in order |
+| **Differential** | what changed since the **last full** backup        | medium, grows day by day | the full + **the latest** differential   |
 
 Example: a full backup on Sunday, and from Monday an extra backup every day. On Thursday disaster strikes:
 
@@ -89,10 +89,10 @@ Example: if there's only a backup at 2 a.m. and the server burns down at 6 p.m.,
 
 With **replication**, one or more **secondary** servers (_replica_, _standby_) continuously follow the changes of the **primary** server. In PostgreSQL, the primary sends the WAL across and the secondaries replay it (_streaming replication_).
 
-| Kind             | How does it work?                                                    | Pro / con                                         |
-| ---------------- | -------------------------------------------------------------------- | ------------------------------------------------- |
-| **Synchronous**  | `COMMIT` is only done when the secondary has received the log too    | no data lost (RPO ≈ 0), but slower writes         |
-| **Asynchronous** | `COMMIT` is done immediately, the log goes across afterwards         | fast, but if the primary crashes the last few seconds may be lost |
+| Kind             | How does it work?                                                 | Pro / con                                                         |
+| ---------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| **Synchronous**  | `COMMIT` is only done when the secondary has received the log too | no data lost (RPO ≈ 0), but slower writes                         |
+| **Asynchronous** | `COMMIT` is done immediately, the log goes across afterwards      | fast, but if the primary crashes the last few seconds may be lost |
 
 What is replication good for?
 

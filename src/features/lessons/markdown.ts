@@ -347,7 +347,13 @@ export async function renderLessonSegments(
       if (depth === 0 && info.role === "run") {
         flush();
         const label = blockLabel((token as Tokens.Code).lang, locale);
-        segments.push({ kind: "sqlRun", code: text, setup, label, codeHtml: highlightCode(h, text, "sql") });
+        segments.push({
+          kind: "sqlRun",
+          code: text,
+          setup,
+          label,
+          codeHtml: highlightCode(h, text, "sql"),
+        });
         return;
       }
       if (depth === 0 && info.role === "starter") {

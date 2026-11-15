@@ -20,13 +20,13 @@ minutes: 30
 
 ## Összesítő függvények
 
-| Függvény       | Jelentés                                 |
-| -------------- | ---------------------------------------- |
-| `COUNT(*)`     | hány sor van                             |
-| `COUNT(oszlop)`| hány **nem NULL** érték van az oszlopban |
-| `SUM(oszlop)`  | összeg                                   |
-| `AVG(oszlop)`  | átlag                                    |
-| `MIN`, `MAX`   | legkisebb, legnagyobb érték              |
+| Függvény        | Jelentés                                 |
+| --------------- | ---------------------------------------- |
+| `COUNT(*)`      | hány sor van                             |
+| `COUNT(oszlop)` | hány **nem NULL** érték van az oszlopban |
+| `SUM(oszlop)`   | összeg                                   |
+| `AVG(oszlop)`   | átlag                                    |
+| `MIN`, `MAX`    | legkisebb, legnagyobb érték              |
 
 ```sql run
 SELECT COUNT(*) AS jelentkezesek, COUNT(jegy) AS jeggyel, ROUND(AVG(jegy), 2) AS atlag, MIN(jegy), MAX(jegy)

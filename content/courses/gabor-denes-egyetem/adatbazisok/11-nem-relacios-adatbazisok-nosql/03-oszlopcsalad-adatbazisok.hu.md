@@ -100,11 +100,11 @@ Az aranyszabály: ha az **írásnál** és az **olvasásnál** megvárt gépek s
 
 ## Mikor válaszd, és mikor ne?
 
-| Jó választás                                       | Rossz választás                                  |
-| -------------------------------------------------- | ------------------------------------------------ |
-| hatalmas, folyamatos írásterhelés                  | kevés adat, egy szerver is bőven elég            |
-| előre ismert, egyszerű lekérdezések                | sok ad hoc lekérdezés, JOIN-ok, riportok         |
-| több adatközpont, folyamatos elérhetőség           | szigorú tranzakciók (pénzügy, készlet)           |
+| Jó választás                             | Rossz választás                          |
+| ---------------------------------------- | ---------------------------------------- |
+| hatalmas, folyamatos írásterhelés        | kevés adat, egy szerver is bőven elég    |
+| előre ismert, egyszerű lekérdezések      | sok ad hoc lekérdezés, JOIN-ok, riportok |
+| több adatközpont, folyamatos elérhetőség | szigorú tranzakciók (pénzügy, készlet)   |
 
 ## Összefoglalás
 

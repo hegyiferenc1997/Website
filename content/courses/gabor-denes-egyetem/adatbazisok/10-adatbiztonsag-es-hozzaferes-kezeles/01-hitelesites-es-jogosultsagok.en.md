@@ -17,11 +17,11 @@ The database holds a company's "assets": customers, password hashes, orders, pay
 
 ## The three goals of security: the CIA triad
 
-| Goal                  | Meaning                                         | Example of a violation                          |
-| --------------------- | ----------------------------------------------- | ----------------------------------------------- |
-| **Confidentiality**   | only those allowed should see the data          | the customers' email list leaks                 |
-| **Integrity**         | data shouldn't change without authorization     | someone changes their own grade from 2 to 5     |
-| **Availability**      | data should be accessible when needed           | the server goes down on exam registration day   |
+| Goal                | Meaning                                     | Example of a violation                        |
+| ------------------- | ------------------------------------------- | --------------------------------------------- |
+| **Confidentiality** | only those allowed should see the data      | the customers' email list leaks               |
+| **Integrity**       | data shouldn't change without authorization | someone changes their own grade from 2 to 5   |
+| **Availability**    | data should be accessible when needed       | the server goes down on exam registration day |
 
 Every security measure protects at least one of these three.
 
@@ -64,11 +64,11 @@ When a new lecturer arrives, you just put them into the role. In PostgreSQL, a u
 
 ## Access control models
 
-| Model                         | Who decides about privileges?                                  | Where do you meet it?                    |
-| ----------------------------- | -------------------------------------------------------------- | ---------------------------------------- |
-| **DAC** – Discretionary       | the object's **owner** may grant privileges to others          | SQL `GRANT`, file systems                |
-| **RBAC** – Role-Based         | privileges belong to **roles**                                 | almost every business system, DBMSs      |
-| **MAC** – Mandatory           | a central rule, **security labels** (e.g. secret, top secret)  | military, government systems             |
+| Model                   | Who decides about privileges?                                 | Where do you meet it?               |
+| ----------------------- | ------------------------------------------------------------- | ----------------------------------- |
+| **DAC** – Discretionary | the object's **owner** may grant privileges to others         | SQL `GRANT`, file systems           |
+| **RBAC** – Role-Based   | privileges belong to **roles**                                | almost every business system, DBMSs |
+| **MAC** – Mandatory     | a central rule, **security labels** (e.g. secret, top secret) | military, government systems        |
 
 Relational DBMSs combine DAC and RBAC: the owner of a table may grant privileges, and privileges are handed out through roles. With row-level rules (lesson 3), MAC-like fine-tuning is possible too.
 

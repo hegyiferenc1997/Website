@@ -23,12 +23,12 @@ A lecke példái a **webshop** mintaadatbázison futnak (4. és 16. témakörbő
 
 A vezető ezt kéri: „Mennyit adtunk el az első negyedévben kategóriánként?” Mielőtt egy sort is írnál, tisztázd:
 
-| Kérdés                       | Döntés                                                           |
-| ---------------------------- | ---------------------------------------------------------------- |
-| Mi számít eladásnak?         | csak a **kész** rendelés (a törölt nem, a szállítás alatti még nem) |
-| Melyik időszak?              | 2026. január 1. – március 31., **a végén nyitott** intervallummal |
-| Mit mérünk?                  | bevétel = darab × egységár, plusz a rendelések száma               |
-| Mi egy sor a riportban?      | egy **kategória** (ez a riport „szemcséje”)                        |
+| Kérdés                  | Döntés                                                              |
+| ----------------------- | ------------------------------------------------------------------- |
+| Mi számít eladásnak?    | csak a **kész** rendelés (a törölt nem, a szállítás alatti még nem) |
+| Melyik időszak?         | 2026. január 1. – március 31., **a végén nyitott** intervallummal   |
+| Mit mérünk?             | bevétel = darab × egységár, plusz a rendelések száma                |
+| Mi egy sor a riportban? | egy **kategória** (ez a riport „szemcséje”)                         |
 
 Ez a négy döntés adja meg a `WHERE`, a `SELECT` és a `GROUP BY` részt. Ha nem tisztázod, két kolléga két különböző számot fog mondani ugyanarra a kérdésre – és mindkettő „jó” lesz.
 

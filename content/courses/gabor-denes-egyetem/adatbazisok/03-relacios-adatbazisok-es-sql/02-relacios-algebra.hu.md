@@ -113,14 +113,14 @@ SELECT DISTINCT kod FROM jelentkezesek WHERE jegy = 5;
 
 ## Összefoglalás
 
-| Algebra | Jelentés            | SQL                       |
-| ------- | ------------------- | ------------------------- |
-| σ       | sorok szűrése       | `WHERE`                   |
-| π       | oszlopok kiválasztása | `SELECT DISTINCT oszlopok` |
-| ρ       | átnevezés           | `AS`                      |
-| ×       | minden pár          | `CROSS JOIN`              |
-| ⋈       | összetartozó párok  | `JOIN … ON`               |
-| ∪, −, ∩ | halmazműveletek     | `UNION`, `EXCEPT`, `INTERSECT` |
+| Algebra | Jelentés              | SQL                            |
+| ------- | --------------------- | ------------------------------ |
+| σ       | sorok szűrése         | `WHERE`                        |
+| π       | oszlopok kiválasztása | `SELECT DISTINCT oszlopok`     |
+| ρ       | átnevezés             | `AS`                           |
+| ×       | minden pár            | `CROSS JOIN`                   |
+| ⋈       | összetartozó párok    | `JOIN … ON`                    |
+| ∪, −, ∩ | halmazműveletek       | `UNION`, `EXCEPT`, `INTERSECT` |
 
 ## A lecke feladata
 
