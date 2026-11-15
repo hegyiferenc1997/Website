@@ -28,6 +28,10 @@ export function formatValue(value, typeId) {
     }
     return d;
   }
+  // A bytea (bináris) értéket a PostgreSQL szokásos \x… hexa alakjában mutatjuk.
+  if (value instanceof Uint8Array) {
+    return "\\x" + Array.from(value, (b) => b.toString(16).padStart(2, "0")).join("");
+  }
   if (typeof value === "object") return JSON.stringify(value);
   return String(value);
 }
