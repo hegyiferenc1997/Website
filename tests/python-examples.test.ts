@@ -48,7 +48,9 @@ function collect(): { cases: Case[]; problems: string[] } {
           let lastSolution: string | null = null;
           let requiredStarter: string | null = null;
           // A kötelező feladat lehet feladatlap is (```quiz required), azt a quiz.test.ts nézi.
-          let requiredCount = (body.match(/^```quiz[ \t]+required\b/gm) ?? []).length;
+          // Az SQL feladat (```sql starter required) is lehet kötelező feladat, azt a sql-examples.test.ts futtatja.
+          let requiredCount = (body.match(/^```(quiz|sql[ \t]+starter)[ \t]+required\b/gm) ?? [])
+            .length;
           for (const block of blocks) {
             if (block.role === "run") {
               cases.push({ where, code: block.code, test: null, shouldPass: true });

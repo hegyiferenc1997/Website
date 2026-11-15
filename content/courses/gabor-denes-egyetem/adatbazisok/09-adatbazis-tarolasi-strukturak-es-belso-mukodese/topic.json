@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbázis tárolási struktúrák és belső működése",
+    "en": "Database Storage Structures and Internals"
+  },
+  "description": {
+    "hu": "Hogyan kerülnek az adatok a lemezre: lapok, rekordok, halomfájl, sor- és oszlopalapú tárolás, nagy értékek (TOAST); az indexek belseje (B+-fa magassága, hash index, LSM-fa); a pufferkezelés, a naplózás (WAL), az ellenőrzőpont és az összeomlás utáni helyreállítás, valamint a többverziós konkurenciakezelés (MVCC) és a VACUUM.",
+    "en": "How data reaches the disk: pages, records, heap files, row and column storage, large values (TOAST); inside indexes (B+ tree height, hash index, LSM tree); buffer management, logging (WAL), checkpoints and crash recovery, and multi-version concurrency control (MVCC) and VACUUM."
+  }
+}

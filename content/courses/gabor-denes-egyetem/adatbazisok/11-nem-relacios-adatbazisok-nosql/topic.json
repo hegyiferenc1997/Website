@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Nem-relációs adatbázisok (NoSQL)", "en": "Non-Relational Databases (NoSQL)" },
+  "description": {
+    "hu": "Miért születtek a NoSQL rendszerek: vízszintes skálázás, rugalmas séma, a CAP-tétel és a BASE elv; a kulcs-érték tárolók (Redis) és a dokumentum-adatbázisok (MongoDB), JSON-dokumentumok lekérdezése PostgreSQL-ben (JSONB); az oszlopcsalád-adatbázisok (Cassandra) és a lekérdezés-vezérelt adatmodellezés.",
+    "en": "Why NoSQL systems were born: horizontal scaling, flexible schemas, the CAP theorem and the BASE principle; key-value stores (Redis) and document databases (MongoDB), querying JSON documents in PostgreSQL (JSONB); wide-column databases (Cassandra) and query-driven data modelling."
+  }
+}

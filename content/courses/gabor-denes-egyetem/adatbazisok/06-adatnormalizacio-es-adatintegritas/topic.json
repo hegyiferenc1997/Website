@@ -1,0 +1,7 @@
+{
+  "title": { "hu": "Adatnormalizáció és adatintegritás", "en": "Normalisation and Data Integrity" },
+  "description": {
+    "hu": "A rosszul tervezett táblák anomáliái (beszúrási, módosítási, törlési), a funkcionális függőség, a normálformák (1NF, 2NF, 3NF, BCNF, röviden 4NF) lépésről lépésre egy példán, valamint az adatintegritás fajtái és megszorításai: egyed-, hivatkozási és tartományintegritás, ON DELETE CASCADE / SET NULL / RESTRICT.",
+    "en": "The anomalies of badly designed tables (insertion, update, deletion), functional dependency, the normal forms (1NF, 2NF, 3NF, BCNF, briefly 4NF) step by step on an example, and the kinds of data integrity and their constraints: entity, referential and domain integrity, ON DELETE CASCADE / SET NULL / RESTRICT."
+  }
+}

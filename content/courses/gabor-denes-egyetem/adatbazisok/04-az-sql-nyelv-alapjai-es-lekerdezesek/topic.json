@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Az SQL nyelv alapjai és lekérdezések",
+    "en": "SQL Basics and Queries"
+  },
+  "description": {
+    "hu": "Lekérdezések írása lépésről lépésre: SELECT és WHERE, összehasonlítások és logikai műveletek, LIKE, IN, BETWEEN, NULL kezelése, rendezés, ismétlődések kiszűrése és lapozás, végül összesítő függvények, GROUP BY és HAVING – mindezt egy böngészőben futó PostgreSQL-en kipróbálva.",
+    "en": "Writing queries step by step: SELECT and WHERE, comparisons and logical operators, LIKE, IN, BETWEEN, handling NULL, sorting, removing duplicates and paging, and finally aggregate functions, GROUP BY and HAVING – all tried out on a PostgreSQL running in your browser."
+  }
+}

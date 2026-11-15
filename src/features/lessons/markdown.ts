@@ -120,6 +120,7 @@ const ROLE_LABELS: Record<string, Record<CodeRole | "required", string>> = {
     starter: "kiinduló kód",
     solution: "megoldás",
     test: "ellenőrzés",
+    setup: "mintaadatbázis",
     required: "a lecke feladata",
   },
   en: {
@@ -127,6 +128,7 @@ const ROLE_LABELS: Record<string, Record<CodeRole | "required", string>> = {
     starter: "starter code",
     solution: "solution",
     test: "check",
+    setup: "sample database",
     required: "lesson exercise",
   },
 };
@@ -249,6 +251,28 @@ export type LessonSegment =
       required: boolean;
     }
   | {
+      /** Futtatható SQL példa (```sql run) a lecke mintaadatbázisán. */
+      kind: "sqlRun";
+      code: string;
+      /** A mintaadatbázis (az előtte álló ```sql setup blokk), ezen fut. */
+      setup: string;
+      label: string;
+      codeHtml: string;
+    }
+  | {
+      /** SQL feladat (```sql starter [required]): a megoldás eredményével vetjük össze. */
+      kind: "sqlExercise";
+      index: number;
+      starter: string;
+      /** A minta megoldás (```sql solution); ugyanazon a mintaadatbázison fut. */
+      solution: string | null;
+      /** Ellenőrző lekérdezés (```sql test), ha nem az utolsó lekérdezés eredményét kell nézni. */
+      check: string | null;
+      setup: string;
+      required: boolean;
+      label: string;
+    }
+  | {
       /** Interaktív függvényábra (```plot blokk), csúszkákkal. */
       kind: "plot";
       spec: PlotSpec;
@@ -283,6 +307,8 @@ export async function renderLessonSegments(
   };
 
   let quizIndex = 0;
+  // A lecke aktuális SQL mintaadatbázisa (az utolsó ```sql setup blokk).
+  let setup = "";
 
   // A kvíz kérdéseinek és válaszlehetőségeinek szövege soron belüli Markdown → HTML.
   const inline = (text: string) => marked.parseInline(text, { async: false });
@@ -314,6 +340,48 @@ export async function renderLessonSegments(
       return;
     }
     const info = token.type === "code" ? parseCodeInfo((token as Tokens.Code).lang) : null;
+    // SQL: a mintaadatbázis (setup) megjegyzése, a példák és a feladatok interaktív darabok lesznek.
+    if (info?.lang === "sql") {
+      const text = (token as Tokens.Code).text;
+      if (info.role === "setup") setup = text;
+      if (depth === 0 && info.role === "run") {
+        flush();
+        const label = blockLabel((token as Tokens.Code).lang, locale);
+        segments.push({
+          kind: "sqlRun",
+          code: text,
+          setup,
+          label,
+          codeHtml: highlightCode(h, text, "sql"),
+        });
+        return;
+      }
+      if (depth === 0 && info.role === "starter") {
+        flush();
+        // A megoldás és az ellenőrzés: a következő starter előtti első solution / test blokk.
+        let solution: string | null = null;
+        let check: string | null = null;
+        for (const next of tokens.slice(i + 1)) {
+          if (next.type !== "code") continue;
+          const c = parseCodeInfo((next as Tokens.Code).lang);
+          if (c.lang !== "sql") continue;
+          if (c.role === "starter") break;
+          if (c.role === "solution" && solution === null) solution = (next as Tokens.Code).text;
+          if (c.role === "test" && check === null) check = (next as Tokens.Code).text;
+        }
+        segments.push({
+          kind: "sqlExercise",
+          index: exerciseIndex++,
+          starter: text,
+          solution,
+          check,
+          setup,
+          required: info.required,
+          label: blockLabel((token as Tokens.Code).lang, locale),
+        });
+        return;
+      }
+    }
     if (
       !info ||
       info.lang !== "python" ||

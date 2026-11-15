@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbázis-teljesítmény optimalizálás",
+    "en": "Database Performance Optimisation"
+  },
+  "description": {
+    "hu": "Hogyan tedd gyorsabbá az adatbázist: lekérdezések átírása (indexbarát feltételek, csak a szükséges oszlopok, az N+1 probléma, kulcsalapú lapozás); sémaszintű eszközök (denormalizálás, materializált nézet, particionálás); valamint a skálázás és a gyorsítótárazás (kapcsolatkészlet, olvasási replikák, Redis gyorsítótár, mérés és megfigyelés) – a böngészőben futó PostgreSQL-en kipróbálva.",
+    "en": "How to make a database faster: rewriting queries (index-friendly conditions, only the needed columns, the N+1 problem, keyset pagination); schema-level tools (denormalisation, materialised views, partitioning); plus scaling and caching (connection pooling, read replicas, a Redis cache, measuring and monitoring) – tried out on a PostgreSQL running in your browser."
+  }
+}

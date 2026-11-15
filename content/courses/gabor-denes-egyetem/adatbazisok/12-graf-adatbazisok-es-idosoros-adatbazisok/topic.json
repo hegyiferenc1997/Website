@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Gráf-adatbázisok és idősoros adatbázisok",
+    "en": "Graph Databases and Time Series Databases"
+  },
+  "description": {
+    "hu": "A tulajdonsággráf modell (csúcsok, élek, tulajdonságok), a Cypher lekérdezőnyelv és mikor jobb a gráf a táblánál; gráfok bejárása SQL-ben rekurzív lekérdezéssel (WITH RECURSIVE); az idősoros adatok sajátosságai, időablakos összesítés, mozgóátlag, ritkítás és megőrzési szabályok – kipróbálva a böngészőben futó PostgreSQL-en.",
+    "en": "The property graph model (nodes, edges, properties), the Cypher query language and when a graph beats a table; traversing graphs in SQL with recursive queries (WITH RECURSIVE); the characteristics of time series data, time-bucket aggregation, moving averages, downsampling and retention rules – tried out on a PostgreSQL running in your browser."
+  }
+}

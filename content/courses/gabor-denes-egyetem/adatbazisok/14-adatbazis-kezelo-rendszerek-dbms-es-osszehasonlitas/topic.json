@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbázis-kezelő rendszerek (DBMS) és összehasonlítás",
+    "en": "Database Management Systems (DBMS) and Comparison"
+  },
+  "description": {
+    "hu": "A legismertebb relációs DBMS-ek (PostgreSQL, MySQL/MariaDB, SQL Server, Oracle, SQLite) erősségei, licencei és SQL-nyelvjárásai; a NoSQL és a felhős, menedzselt adatbázis-szolgáltatások; végül hogyan válassz DBMS-t egy projekthez szempontok és súlyozott döntési mátrix alapján – SQL-ben kiszámolva.",
+    "en": "The strengths, licences and SQL dialects of the best-known relational DBMSs (PostgreSQL, MySQL/MariaDB, SQL Server, Oracle, SQLite); NoSQL and cloud, managed database services; and finally how to choose a DBMS for a project using criteria and a weighted decision matrix – calculated in SQL."
+  }
+}

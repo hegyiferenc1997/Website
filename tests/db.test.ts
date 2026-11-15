@@ -60,8 +60,9 @@ describe("adatbázis", () => {
     expect(swInSem6).toHaveLength(4);
 
     const active = await db.query.courses.findMany({ where: eq(courses.isActive, true) });
-    // Aktív tárgyak: Informatika alapjai, Közgazdaságtan alapjai, Matematika, Programozási alapok, Operációs rendszerek, Személyes kompetencia (1. félév), Digitális technika és Innováció- és projektmenedzsment (3. félév).
+    // Aktív tárgyak: Informatika alapjai, Közgazdaságtan alapjai, Matematika, Programozási alapok, Operációs rendszerek, Személyes kompetencia (1. félév), Adatbázisok, Digitális technika és Innováció- és projektmenedzsment (3. félév).
     expect(active.map((c) => c.slug).sort()).toEqual([
+      "adatbazisok",
       "digitalis-technika",
       "informatika-alapjai",
       "innovacio-es-projektmenedzsment",

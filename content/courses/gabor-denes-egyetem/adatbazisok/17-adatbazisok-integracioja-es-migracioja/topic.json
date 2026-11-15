@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbázisok integrációja és migrációja",
+    "en": "Database Integration and Migration"
+  },
+  "description": {
+    "hu": "Hogyan kapcsolódik az adatbázis a külvilághoz: illesztőprogramok, kapcsolati adatok, ORM-ek, API-réteg, ETL és változáskövetés (CDC); a séma verziókezelése migrációs fájlokkal és a biztonságos, leállás nélküli sémaváltoztatás; valamint az adatmigráció lépései: leképezés, átalakítás, tisztítás, ellenőrzés és átállás – SQL-ben kipróbálva.",
+    "en": "How a database connects to the outside world: drivers, connection details, ORMs, an API layer, ETL and change data capture (CDC); versioning the schema with migration files and making safe, zero-downtime schema changes; plus the steps of data migration: mapping, transformation, cleaning, validation and cutover – tried out in SQL."
+  }
+}

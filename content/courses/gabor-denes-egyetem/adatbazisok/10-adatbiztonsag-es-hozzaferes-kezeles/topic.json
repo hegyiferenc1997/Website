@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbiztonság és hozzáférés-kezelés",
+    "en": "Data Security and Access Control"
+  },
+  "description": {
+    "hu": "Mitől biztonságos egy adatbázis: bizalmasság, sértetlenség, rendelkezésre állás; hitelesítés és jogosultságkezelés, a legkisebb jogosultság elve, szerepkörök (RBAC); GRANT és REVOKE a gyakorlatban; nézetek és sorszintű biztonság (RLS), naplózás – kipróbálva a böngészőben futó PostgreSQL-en.",
+    "en": "What makes a database secure: confidentiality, integrity, availability; authentication and authorization, the principle of least privilege, roles (RBAC); GRANT and REVOKE in practice; views and row-level security (RLS), auditing – tried out on a PostgreSQL running in your browser."
+  }
+}

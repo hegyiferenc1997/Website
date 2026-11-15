@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adattárolási technológiák és rendszerek",
+    "en": "Data Storage Technologies and Systems"
+  },
+  "description": {
+    "hu": "Hol fizikailag az adat: merevlemez és SSD, IOPS és átviteli sebesség, RAID-szintek és kapacitásszámítás; közvetlen, hálózati és tárolóhálózati tárolás (DAS, NAS, SAN), objektumtárolás és felhőtárhely; mentési stratégiák (teljes, növekményes, különbségi, 3-2-1 szabály), RPO és RTO, replikáció és időpontra való visszaállítás.",
+    "en": "Where data physically lives: hard disks and SSDs, IOPS and throughput, RAID levels and capacity calculation; direct, network and storage area network storage (DAS, NAS, SAN), object storage and cloud storage; backup strategies (full, incremental, differential, the 3-2-1 rule), RPO and RTO, replication and point-in-time recovery."
+  }
+}

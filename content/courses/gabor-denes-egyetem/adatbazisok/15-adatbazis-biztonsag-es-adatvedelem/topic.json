@@ -1,0 +1,10 @@
+{
+  "title": {
+    "hu": "Adatbázis-biztonság és adatvédelem",
+    "en": "Database Security and Data Protection"
+  },
+  "description": {
+    "hu": "A leggyakoribb támadások és a védekezés: SQL-befecskendezés és paraméterezett lekérdezések; titkosítás átvitel közben és tároláskor, a jelszavak biztonságos tárolása (sózott, lassú hash); a személyes adatok védelme, a GDPR alapelvei és jogai, álnevesítés és anonimizálás – kipróbálva a böngészőben futó PostgreSQL-en.",
+    "en": "The most common attacks and defences: SQL injection and parameterised queries; encryption in transit and at rest, storing passwords securely (salted, slow hashes); protecting personal data, the principles and rights of the GDPR, pseudonymisation and anonymisation – tried out on a PostgreSQL running in your browser."
+  }
+}
