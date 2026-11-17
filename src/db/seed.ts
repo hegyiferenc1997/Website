@@ -12,6 +12,8 @@ import {
 } from "./schema";
 import * as gde from "./data/gde-mernokinformatikus";
 import { placeholderUniversities } from "./data/universities";
+import { curricula, curriculumSlug } from "./data/curricula";
+import type { Curriculum, CurriculumCourse } from "./data/curricula/types";
 
 /**
  * Kezdő adat: a Gábor Dénes Egyetem Mérnökinformatikus BSc szakja mind a 7 félévvel,
@@ -19,7 +21,8 @@ import { placeholderUniversities } from "./data/universities";
  * Aktív tárgyak: Informatika alapjai, Közgazdaságtan alapjai, Matematika, Programozási alapok,
  * Operációs rendszerek és Személyes kompetencia és kommunikáció fejlesztése (1. félév),
  * Adatbázisok, Digitális technika és Innováció- és projektmenedzsment (3. félév), a többi helykitöltő.
- * Mellette a többi magyar egyetem (BSc / MSc) tárgyak nélküli helykitöltőként (data/universities.ts).
+ * Mellette a többi magyar egyetem (BSc / MSc): ahol a mintatanterv fel van dolgozva (data/curricula), ott a tárgyakkal,
+ * tananyag nélkül; a többi tárgyak nélküli helykitöltő (data/universities.ts).
  * A témakörök és leckék a content/courses mappából jönnek (lásd content.ts).
  * Többször is futtatható: a meglévő sorokat frissíti, nem duplikál.
  */
@@ -110,7 +113,10 @@ export async function seed(db: Database) {
   // 5. A többi egyetem helykitöltőként (tárgyak nélkül), szintenként külön sorban.
   await seedPlaceholderUniversities(db);
 
-  // 6. A témakörök és leckék a content mappából.
+  // 6. A feldolgozott mintatantervek tárgyai (tananyag nélkül, „hamarosan” jelöléssel).
+  for (const c of curricula) await seedCurriculum(db, c);
+
+  // 7. A témakörök és leckék a content mappából.
   await seedContent(db);
 }
 
@@ -137,6 +143,95 @@ async function seedPlaceholderUniversities(db: Database) {
           set: { ...values, updatedAt: sql`now()` },
         });
     }
+  }
+}
+
+/**
+ * Egy egyetem+szint mintatantervének betöltése: szak, specializációk, tárgyak, félévek.
+ * Ha ugyanaz a tárgy (slug) több specializációban is szerepel, közös tárgy lesz (egy tárgynak egy kapcsolata
+ * lehet a szakkal). Minden tárgy inaktív, mert még nincs tananyaga.
+ */
+async function seedCurriculum(db: Database, c: Curriculum) {
+  const slug = curriculumSlug(c);
+  const university = await db.query.universities.findFirst({ where: eq(universities.slug, slug) });
+  if (!university) throw new Error(`Ismeretlen egyetem a tantervben: ${slug}`);
+
+  const programName = { hu: "Mérnökinformatikus", en: "Computer Science Engineering" };
+  const [program] = await db
+    .insert(programs)
+    .values({
+      universityId: university.id,
+      slug: `mernokinformatikus-${c.level}`,
+      name: programName,
+      level: c.level,
+    })
+    .onConflictDoUpdate({
+      target: [programs.universityId, programs.slug],
+      set: { name: programName, updatedAt: sql`now()` },
+    })
+    .returning();
+
+  const specializationIds = new Map<string, number>();
+  for (const [position, s] of (c.specializations ?? []).entries()) {
+    const name = { hu: s.name, en: s.en };
+    const [row] = await db
+      .insert(specializations)
+      .values({ programId: program.id, slug: s.slug, name, position })
+      .onConflictDoUpdate({
+        target: [specializations.programId, specializations.slug],
+        set: { name, position, updatedAt: sql`now()` },
+      })
+      .returning();
+    specializationIds.set(s.slug, row.id);
+  }
+
+  // Tárgyak slug szerint összevonva: az első előfordulás félévét kapják; több specializáció esetén közösek.
+  type Entry = { course: CurriculumCourse; semester: number | null; specialization: string | null };
+  const entries = new Map<string, Entry>();
+  const all: [CurriculumCourse, number | null][] = [
+    ...c.semesters.flatMap((list, i) => list.map((x): [CurriculumCourse, number] => [x, i + 1])),
+    ...(c.unscheduled ?? []).map((x): [CurriculumCourse, null] => [x, null]),
+  ];
+  for (const [course, semester] of all) {
+    const key = course.slug ?? gde.slugify(course.name);
+    const existing = entries.get(key);
+    if (!existing) {
+      entries.set(key, { course, semester, specialization: course.specialization ?? null });
+    } else if (existing.specialization !== (course.specialization ?? null)) {
+      existing.specialization = null;
+    }
+  }
+
+  for (const [key, { course, semester, specialization }] of entries) {
+    if (specialization && !specializationIds.has(specialization)) {
+      throw new Error(`Ismeretlen specializáció (${slug}): ${specialization}`);
+    }
+    const values = {
+      name: { hu: course.name, en: course.en },
+      credits: course.credits,
+      language: "hu",
+      isActive: false,
+    };
+    const [row] = await db
+      .insert(courses)
+      .values({ universityId: university.id, slug: key, ...values })
+      .onConflictDoUpdate({
+        target: [courses.universityId, courses.slug],
+        set: { ...values, updatedAt: sql`now()` },
+      })
+      .returning();
+    const link = {
+      recommendedSemester: semester,
+      requirement: course.elective ? ("elective" as const) : ("mandatory" as const),
+      specializationId: specialization ? specializationIds.get(specialization)! : null,
+    };
+    await db
+      .insert(programCourses)
+      .values({ programId: program.id, courseId: row.id, ...link })
+      .onConflictDoUpdate({
+        target: [programCourses.programId, programCourses.courseId],
+        set: link,
+      });
   }
 }
 

@@ -12,6 +12,7 @@ import { courseLessons } from "@/features/courses/lessons";
 import { formatDateUntil } from "@/features/account/format";
 import { BuyButton } from "@/features/payments/BuyButton";
 import { getUniversityAccess } from "@/features/payments/access";
+import { findCurriculum } from "@/db/data/curricula";
 
 // Az oldal bemenete: az URL paraméterei (nyelv, egyetem azonosító).
 type Props = PageProps<"/[locale]/universities/[university]">;
@@ -85,8 +86,11 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
   const sortedGroups = [...groups.entries()].sort(([a], [b]) =>
     a === null ? 1 : b === null ? -1 : a - b,
   );
-  // A félév kreditje: közös tárgyak + egy specializáció (a hallgató csak egyet választ).
-  const sumCredits = (list: Course[]) => list.reduce((s, c) => s + (c.credits ?? 0), 0);
+  // Választható-e a tárgy (kötelezően választható / választható); ezek nem számítanak a félév kreditjébe.
+  const isElective = (c: Course) => c.programCourses.some((p) => p.requirement === "elective");
+  // A félév kreditje: közös kötelező tárgyak + egy specializáció (a hallgató csak egyet választ).
+  const sumCredits = (list: Course[]) =>
+    list.filter((c) => !isElective(c)).reduce((s, c) => s + (c.credits ?? 0), 0);
   const semesterCredits = (g: Group) =>
     sumCredits(g.common) + Math.max(0, ...[...g.specs.values()].map((x) => sumCredits(x.list)));
   // Tárgyak ábécérendben, a nyelv szabályai szerint.
@@ -110,6 +114,7 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
               title={localize(c.name, locale)}
               meta={[
                 c.credits !== null ? t("credits", { credits: c.credits }) : null,
+                isElective(c) ? t("elective") : null,
                 c.isActive ? null : t("comingSoon"),
               ]
                 .filter(Boolean)
@@ -148,6 +153,9 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
     );
   };
 
+  // A mintatanterv forrásai és megjegyzése (ha a tanterv egy feldolgozott hivatalos dokumentumból jön).
+  const curriculum = findCurriculum(university.slug);
+
   return (
     <div className="grid gap-10">
       <PageHeader
@@ -182,6 +190,27 @@ async function UniversityContent({ params }: Pick<Props, "params">) {
           )}
         </span>
       </PageHeader>
+
+      {/* A tanterv hivatalos forrásai; hiányos tantervnél egy rövid megjegyzés */}
+      {curriculum && (
+        <div className="grid gap-2 rounded-lg border border-line bg-surface p-4 text-sm text-muted">
+          {curriculum.note && <p>{localize(curriculum.note, locale)}</p>}
+          <p className="flex flex-wrap gap-x-3 gap-y-1">
+            <span>{t("sources")}:</span>
+            {curriculum.sources.map((s) => (
+              <a
+                key={s.url}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline"
+              >
+                {s.title} ↗
+              </a>
+            ))}
+          </p>
+        </div>
+      )}
 
       {/* Tárgyak félévenként lenyitható dobozokban */}
       <section className="grid gap-6">

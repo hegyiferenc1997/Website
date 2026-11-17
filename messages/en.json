@@ -133,6 +133,8 @@
     "noSemester": "No semester given",
     "credits": "{credits, plural, one {# credit} other {# credits}}",
     "specialization": "{name} specialisation",
+    "elective": "elective",
+    "sources": "Curriculum source",
     "comingSoon": "coming soon",
     "levelLabel": {
       "bsc": "Bachelor's (BSc)",
