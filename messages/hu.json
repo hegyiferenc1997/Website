@@ -133,6 +133,8 @@
     "noSemester": "Félév nincs megadva",
     "credits": "{credits} kredit",
     "specialization": "{name} specializáció",
+    "elective": "választható",
+    "sources": "A tanterv forrása",
     "comingSoon": "hamarosan",
     "levelLabel": {
       "bsc": "Alapszak (BSc)",
