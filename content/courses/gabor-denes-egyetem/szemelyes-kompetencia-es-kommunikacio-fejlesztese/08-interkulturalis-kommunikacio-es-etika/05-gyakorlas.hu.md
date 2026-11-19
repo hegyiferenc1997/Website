@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – interkulturális kommunikáció és etika
 summary: Ellenőrző kérdések és összefoglaló feladatlap a kulturális dimenziókról, a kontextusról, az időfelfogásról és a kommunikáció etikájáról.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -72,4 +72,121 @@ Mert a bemásolt szöveg (céges kód, ügyféladat, személyes adat) a szolgál
 + „Ezt a részt lépésről lépésre elmagyarázom, hogy mindenki könnyen követhesse.”
 - „Ezt egy igazi programozó magától tudja.”
 ! Tiszteletteljes, nem lekezelő.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Közös munkaidő.** Írd meg a `kozos_ora(e1, e2)` függvényt, amely két, UTC-hez képest `e1` és `e2` órával eltolt városban dolgozók közös munkaidejét adja órában, ha mindkét helyen helyi idő szerint 9 és 17 óra között dolgoznak! (Feltételezheted, hogy egyik munkaidő sem lóg át éjfélen UTC szerint.)
+
+```python starter
+def kozos_ora(e1, e2):
+    return 8 - abs(e1 - e2) / 2
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kozos_ora(e1, e2):
+    k1, v1 = 9 - e1, 17 - e1                  # munkaidő UTC-ben
+    k2, v2 = 9 - e2, 17 - e2
+    return max(0, min(v1, v2) - max(k1, k2))  # a két intervallum metszete
+```
+
+</details>
+
+```python test
+assert kozos_ora(1, -5) == 2
+assert kozos_ora(1, 5.5) == 3.5
+assert kozos_ora(1, 1) == 8
+assert kozos_ora(9, 0) == 0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Várható érték.** Írd meg a `varhato(hatasok)` függvényt, amely `(valószínűség, hatás)` párok listájából kiszámolja a várható értéket (2 tizedesre)!
+
+```python starter
+def varhato(hatasok):
+    return round(sum(h for _, h in hatasok) / len(hatasok), 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def varhato(hatasok):
+    return round(sum(p * h for p, h in hatasok), 2)   # valószínűséggel súlyozott összeg
+```
+
+</details>
+
+```python test
+assert varhato([(0.9, 10), (0.1, -200)]) == -11.0
+assert varhato([(1.0, -5), (1.0, 15)]) == 10.0
+assert varhato([(0.5, 4), (0.5, 0)]) == 2.0
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Eloszlások átfedése.** Két kultúra tagjainak egy tulajdonsága normális eloszlású, átlaguk `d` szórásnyira van egymástól. Írd meg az `atfedes(d)` függvényt, amely a két görbe alatti közös terület arányát adja (2 tizedesre): $2 \cdot \Phi(-|d|/2)$, ahol $\Phi(z) = \frac12\left(1 + \mathrm{erf}(z/\sqrt2)\right)$!
+
+```python starter
+def atfedes(d):
+    return round(1 - d / 4, 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import erf, sqrt
+
+def fi(z):
+    return 0.5 * (1 + erf(z / sqrt(2)))       # standard normális eloszlásfüggvény
+
+def atfedes(d):
+    return round(2 * fi(-abs(d) / 2), 2)
+```
+
+</details>
+
+```python test
+assert atfedes(0) == 1.0
+assert atfedes(1) == 0.62
+assert atfedes(2) == 0.32
+assert atfedes(-1) == 0.62
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit jelent a magas kontextusú kommunikáció?
++ sok minden a helyzetből, a kapcsolatból és a ki nem mondott jelekből derül ki
+- mindent pontosan, szó szerint kimondanak
+- csak írásban kommunikálnak
+- sok szakszót használnak
+! Pl. Japánban; az alacsony kontextusú kultúrák (pl. Németország) a kimondott szóra építenek.
+
+? Budapest UTC+1, Bengaluru UTC+5,5. Mindkét helyen 9–17 között dolgoznak. Hány óra a közös munkaidő? (tizedes törtként)
+= 3,5
+= 3.5
+! UTC-ben Budapest 8–16, Bengaluru 3,5–11,5: az átfedés 8–11,5, azaz 3,5 óra.
+
+? Melyik a befogadó nyelvhasználat példája?
+- „a srácok majd megcsinálják”
++ „a csapat majd megcsinálja”
+- „ezt a nagymamám is megértené”
+- „ez egy beteg ötlet”
+! Senkit sem zár ki vagy minősít.
+
+? Mit tanácsol az ACM etikai kódexe egy ismert, felhasználókat veszélyeztető hibáról?
+- hallgasd el, amíg kijavítod
++ légy őszinte és kerüld a kárt: jelezd az érintetteknek
+- csak a főnöködnek szólj, másnak soha
+- a felhasználók dolga észrevenni
+! A kár elkerülése és az őszinteség alapelv.
 ```

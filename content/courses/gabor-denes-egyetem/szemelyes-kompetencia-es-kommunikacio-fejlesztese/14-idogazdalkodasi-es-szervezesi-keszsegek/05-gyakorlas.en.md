@@ -1,7 +1,7 @@
 ---
 title: Practice – Time Management and Organisation
 summary: Review questions and a summary worksheet on goal setting, prioritising and time-management techniques; making your own weekly plan.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -71,4 +71,124 @@ Break it into small steps and write down the first 5-minute step (e.g. "create t
 - one more episode of the series
 - reading all the chat messages
 ! Starting is the hardest part.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Correction factor.** Write the function `factor(log)`, which from a list of `(estimate, actual time)` pairs computes the median of the actual/estimate ratios (to 2 decimals)!
+
+```python starter
+def factor(log):
+    return round(sum(a for _, a in log) / sum(e for e, _ in log), 2)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from statistics import median
+
+def factor(log):
+    return round(median(a / e for e, a in log), 2)   # the median is less sensitive to outliers
+```
+
+</details>
+
+```python test
+assert factor([(2, 3), (4, 6), (5, 7.5)]) == 1.5
+assert factor([(2, 3.5), (3, 4.5), (4, 6), (2, 2.5), (5, 9), (3, 4.5)]) == 1.5
+assert factor([(1, 1), (1, 10), (1, 2)]) == 2.0
+print("All checks passed!")
+```
+
+**2.** **Weekly capacity.** Write the function `plannable(fixed, reserve)`, which subtracts the sum of fixed times (`{activity: hours}`) from the 168 hours of a week, and sets aside a `reserve` share of what's left – returning the number of plannable hours (to 1 decimal)!
+
+```python starter
+def plannable(fixed, reserve):
+    return round(168 - sum(fixed.values()) - reserve, 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def plannable(fixed, reserve):
+    free = 168 - sum(fixed.values())           # what's left after fixed times
+    return round(free * (1 - reserve), 1)
+```
+
+</details>
+
+```python test
+assert plannable({"sleep": 52.5, "classes": 22, "other": 58}, 0.2) == 28.4
+assert plannable({"everything": 138}, 0.2) == 24.0
+assert plannable({}, 0) == 168.0
+print("All checks passed!")
+```
+
+**3.** **Maximum lateness.** Write the function `edd_lateness(tasks)`, which takes `(name, duration, deadline)` triples, does them one after another sorted by deadline (starting at day 0), and returns the maximum lateness in days (0 if nothing is late)!
+
+```python starter
+def edd_lateness(tasks):
+    time, late = 0, 0
+    for _, length, deadline in tasks:
+        time += length
+        late = max(late, time - deadline)
+    return late
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def edd_lateness(tasks):
+    time, late = 0, 0
+    for _, length, deadline in sorted(tasks, key=lambda t: t[2]):   # nearest deadline first
+        time += length
+        late = max(late, time - deadline)
+    return late
+```
+
+</details>
+
+```python test
+t = [("essay", 4, 5), ("lab", 1, 7), ("docs", 3, 4), ("practice", 2, 9)]
+assert edd_lateness(t) == 2
+assert edd_lateness([("a", 1, 5), ("b", 1, 5)]) == 0
+assert edd_lateness([("long", 5, 10), ("short", 1, 1)]) == 0
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is Parkinson's law?
++ work expands to fill the time available
+- the most important tasks should be done first
+- every task takes twice as long
+- 20% of the work brings 80% of the result
+! That's why a shorter but realistic deadline helps.
+
+? You plan 25 Pomodoro units (25 minutes of work + 5 minutes of break) for a week. How many hours is that in total, breaks included? (as a decimal)
+= 12,5
+= 12.5
+! $25 \cdot 30 = 750$ minutes $= 12.5$ hours.
+
+? Which is a SMART goal?
+- "I'll get better at programming."
++ "By 30 November I'll solve all 20 exercises of the practice set."
+- "I'll study a lot."
+- "Someday I'll learn Docker."
+! Specific, measurable, achievable, relevant and time-bound.
+
+? Which quadrant of the Eisenhower matrix does a not urgent but important task (e.g. preparing for an exam weeks ahead) belong to?
+- do it immediately
++ schedule it (give it a time slot)
+- delegate it
+- drop it
+! This quadrant brings the most long-term value.
 ```

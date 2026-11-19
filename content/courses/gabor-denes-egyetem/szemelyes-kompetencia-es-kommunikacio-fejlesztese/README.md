@@ -6,10 +6,21 @@ leckéket.
 
 A szerkezet a tanmenet 18 témakörét követi, ugyanabban a sorrendben:
 `01-kommunikacio-alapjai-es-tipusai` … `18-uzleti-es-kozossegi-kommunikacio-az-informatikaban`. Minden
-témakör 3 leckéből és egy `gyakorlas` (kind: practice) leckéből áll, ellenőrző kérdésekkel és
-összefoglaló feladatlappal; a 18. témakör gyakorló leckéje a tárgy záró, vegyes feladatsora (egy
-csapatprojekt története). A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a
-Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
+témakör 3 alapleckéből, egy `04-melyebben-…` leckéből és egy `05-gyakorlas` (kind: practice) leckéből
+áll; a 18. témakör gyakorló leckéje a tárgy záró, vegyes feladatsora (egy csapatprojekt története).
+
+- A **Mélyebben** lecke ugyanazt a témát számokkal, kis programokkal (` ```python run `), gyakran
+  interaktív ábrával (` ```plot `) és több nézőpontból mutatja be (pl. zaj és visszakérdezés
+  valószínűsége, beszédtempó és Bayes-tétel a testbeszédhez, LIX-mutató, Pareto-hatékony tárgyalási
+  csomagok, kapcsolati háló mint gráf, Condorcet-tétel, jelszóentrópia, korrekciós szorzó és EDD,
+  Leitner-doboz, 360 fokos visszajelzés és kalibráció, hibahatár és A/B teszt, rendelkezésre állás és
+  buszfaktor), saját kötelező kvízzel.
+- A **gyakorló** lecke ellenőrző kérdésekkel és összefoglaló feladatlappal (kötelező kvíz) indul, a végén
+  pedig „További gyakorló feladatok (nem kötelezők)” szakasz van: 3 számolós Python-feladat
+  (` ```python starter ` + rejtett megoldás + ` ```python test `) és egy nem kötelező gyors kvíz.
+
+A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
+`../programozas-alapjai/README.md`).
 
 Az egymáshoz közeli nevű témakörök más-más hangsúlyt kapnak: a 9. a kapcsolatépítés alapjai, a 12. a
 személyes márka (portfólió, GitHub, LinkedIn); a 10. a csapatszerepek, vezetés és visszajelzés, a 11. a
@@ -32,9 +43,9 @@ kérdésekkel. A formátum leírása: `../digitalis-technika/README.md`.
 
 ## Ábrák, kód
 
-- Két interaktív ` ```plot ` ábra: a csapaton belüli kommunikációs csatornák száma ($k(k-1)/2$, 11.
-  témakör) és a felejtési görbe (15. témakör). A magyar és az angol ábra csak a címben és a feliratokban
-  különbözhet (a teszt ellenőrzi). Az `x` és az `n` foglalt paraméternév.
-- Öt ` ```python run ` példa (ZOPA, Eisenhower-mátrix, ismétlési ütemterv, leíró statisztika stb.) – a
-  `tests/python-examples.test.ts` lefuttatja őket.
+- 16 interaktív ` ```plot ` ábra (pl. kommunikációs csatornák száma $k(k-1)/2$, felejtési görbe,
+  hibahatár a mintaméret függvényében, megengedett leállás). A magyar és az angol ábra csak a címben és
+  a feliratokban különbözhet (a teszt ellenőrzi). Az `x`, az `n` és az `e` foglalt paraméternév.
+- 55 ` ```python run ` példa és 54 starter/megoldás/teszt hármas a gyakorló leckékben – a
+  `tests/python-examples.test.ts` lefuttatja őket (a megoldásnak át kell mennie a teszten).
 - Beágyazott minták (e-mail, README, jegyzet) ` ```text ` blokkban.

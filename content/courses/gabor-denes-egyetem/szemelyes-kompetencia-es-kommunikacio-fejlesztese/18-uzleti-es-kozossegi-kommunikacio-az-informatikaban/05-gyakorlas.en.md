@@ -1,7 +1,7 @@
 ---
 title: Final Worksheet – A Project's Communication from Start to Finish
 summary: The course's mixed final worksheet, following a student project team's story, from the communication model through negotiation, teamwork and time management to incident handling.
-minutes: 40
+minutes: 65
 kind: practice
 ---
 
@@ -132,4 +132,122 @@ For example: presentations and delivery (a confident introduction, the STAR meth
 - "I took part in something."
 - he leaves it out because it was teamwork
 ! Exactly his own part (topic 12).
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Nines in minutes.** Write the function `downtime_min_month(percent)`, which gives how many minutes of downtime fit into a 30-day month at the given availability (to 1 decimal)!
+
+```python starter
+def downtime_min_month(percent):
+    return round(30 * 24 * 60 * percent / 100, 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def downtime_min_month(percent):
+    return round(30 * 24 * 60 * (1 - percent / 100), 1)   # the share of unavailable time
+```
+
+</details>
+
+```python test
+assert downtime_min_month(99.9) == 43.2
+assert downtime_min_month(99.99) == 4.3
+assert downtime_min_month(99) == 432.0
+assert downtime_min_month(100) == 0.0
+print("All checks passed!")
+```
+
+**2.** **Bus factor.** Write the function `bus_factor(commits)`, which from a `{name: number of commits}` dictionary gives the smallest number of people who make at least half of the commits!
+
+```python starter
+def bus_factor(commits):
+    return len(commits) // 2
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def bus_factor(commits):
+    total = sum(commits.values())
+    covered, count = 0, 0
+    for c in sorted(commits.values(), reverse=True):   # most active first
+        covered += c
+        count += 1
+        if covered / total >= 0.5:
+            break
+    return count
+```
+
+</details>
+
+```python test
+assert bus_factor({"maria": 410, "tom": 95, "lee": 60, "ana": 25, "dev42": 10}) == 1
+assert bus_factor({"a": 30, "b": 30, "c": 20, "d": 20}) == 2
+assert bus_factor({"a": 10, "b": 10, "c": 10, "d": 10, "e": 10}) == 3
+print("All checks passed!")
+```
+
+**3.** **Payback in working days.** Write the function `payback_days(investment, monthly_saving, workdays_month=21)`, which gives in how many working days an improvement pays off, rounded up to a whole number!
+
+```python starter
+def payback_days(investment, monthly_saving, workdays_month=21):
+    return round(investment / monthly_saving)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from math import ceil
+
+def payback_days(investment, monthly_saving, workdays_month=21):
+    daily = monthly_saving / workdays_month     # saving per working day
+    return ceil(investment / daily)
+```
+
+</details>
+
+```python test
+assert payback_days(640_000, 1_512_000) == 9
+assert payback_days(210_000, 210_000) == 21
+assert payback_days(100, 2100) == 1
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Why is it worth expressing a technical problem in forints for a manager as well?
+- because managers don't understand anything
++ because then the decision-maker can decide in their own language, on a cost–benefit basis
+- because forints are more precise than minutes
+- it isn't worth it
+! State your assumptions too, so they can be checked.
+
+? How many minutes of downtime fit into a 30-day month at 99.5% availability?
+= 216
+! $43\,200 \cdot 0.005 = 216$ minutes.
+
+? What does a blameless post-mortem mean?
+- they find out who's at fault and punish them
++ they look for flaws in the system and processes, not a scapegoat, so the error doesn't happen again
+- the incident is kept secret
+- only managers can read it
+! That way people say honestly what happened.
+
+? What can a company do whose product rests on a one-person open-source library?
+- nothing
++ sponsor the project, offer developer time, or assess alternatives
+- demand faster work from the maintainer
+- copy the code and keep quiet
+! The bus factor is a business risk.
 ```

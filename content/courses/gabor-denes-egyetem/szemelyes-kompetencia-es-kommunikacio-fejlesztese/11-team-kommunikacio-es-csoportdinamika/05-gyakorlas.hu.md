@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – team kommunikáció és csoportdinamika
 summary: Ellenőrző kérdések és összefoglaló feladatlap a csoportfejlődésről, a csoportos döntés csapdáiról és a csapatkommunikáció gyakorlatáról.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -68,4 +68,118 @@ Például: kérdezz nyilvános csatornában, ne privátban; válaszolj szálban;
 - társas lógás
 - Delphi-módszer
 ! Biztonságosnak kell lennie kérdezni és hibát beismerni.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Condorcet-tétel.** Írd meg a `tobbseg(n, p)` függvényt, amely megadja, mekkora eséllyel dönt jól egy `n` (páratlan) fős csoport többsége, ha mindenki egymástól függetlenül `p` eséllyel dönt jól (3 tizedesre)! Segítség: `math.comb(n, k)`.
+
+```python starter
+def tobbseg(n, p):
+    return round(p, 3)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import comb
+
+def tobbseg(n, p):
+    # legalább n//2 + 1 tagnak kell jól döntenie
+    return round(sum(comb(n, k) * p**k * (1 - p)**(n - k) for k in range(n // 2 + 1, n + 1)), 3)
+```
+
+</details>
+
+```python test
+assert tobbseg(1, 0.7) == 0.7
+assert tobbseg(3, 0.8) == 0.896
+assert tobbseg(9, 0.7) == 0.901
+assert tobbseg(3, 0.5) == 0.5
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Rejtett profil.** Egy információt `k` ember tud, és mindegyikük egymástól függetlenül `q` eséllyel hozza szóba. Írd meg az `elhangzik(q, k)` függvényt, amely megadja, mekkora eséllyel hangzik el a megbeszélésen (3 tizedesre)!
+
+```python starter
+def elhangzik(q, k):
+    return round(q * k, 3)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elhangzik(q, k):
+    return round(1 - (1 - q) ** k, 3)     # 1 − annak esélye, hogy senki sem említi
+```
+
+</details>
+
+```python test
+assert elhangzik(0.3, 1) == 0.3
+assert elhangzik(0.3, 3) == 0.657
+assert elhangzik(0.5, 4) == 0.938
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Tuckman-szakasz.** A `tunetek` szótár szakaszonként a jellemző tünetek halmazát tartalmazza. Írd meg a `szakasz(megfigyelt, tunetek)` függvényt, amely azt a szakaszt adja vissza, amelynek a legtöbb tünete szerepel a megfigyelt halmazban (egyenlőségnél a szótárban előbb álló nyer)!
+
+```python starter
+def szakasz(megfigyelt, tunetek):
+    return list(tunetek)[0]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szakasz(megfigyelt, tunetek):
+    talalat = {nev: len(jelek & megfigyelt) for nev, jelek in tunetek.items()}
+    return max(talalat, key=talalat.get)   # max az első legnagyobbat adja
+```
+
+</details>
+
+```python test
+t = {"alakulás": {"udvariasság", "bizonytalan szerepek"}, "viharzás": {"viták", "frakciók", "csúszás"},
+     "normaképzés": {"közös szabályok", "nyílt visszajelzés"}, "működés": {"önálló döntések", "magas teljesítmény"}}
+assert szakasz({"viták", "csúszás", "udvariasság"}, t) == "viharzás"
+assert szakasz({"közös szabályok"}, t) == "normaképzés"
+assert szakasz({"magas teljesítmény", "önálló döntések", "viták"}, t) == "működés"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a csoportgondolkodás (groupthink)?
++ az egyetértés fenntartása fontosabbá válik a kritikus gondolkodásnál, ezért senki sem mond ellent
+- a csoport mindig jobban dönt az egyénnél
+- a csoport tagjai egyénileg döntenek
+- brainstorming technika
+! Az ellenvélemények elhallgatása rossz döntésekhez vezet.
+
+? Hány kommunikációs csatorna van egy 8 fős csapatban ($k(k-1)/2$)?
+= 28
+! $8 \cdot 7 / 2 = 28$.
+
+? Mi a társas lógás (social loafing)?
+- a csapat közös szünete
++ csoportban az egyén kevesebb erőfeszítést tesz, mert az ő hozzájárulása kevésbé látszik
+- a vezető túlterhelése
+- a csapatépítő program
+! Ellenszer: látható, egyéni felelősség.
+
+? Mit jelent a pszichológiai biztonság egy csapatban?
+- senkit sem lehet kritizálni
++ a tagok kockázat nélkül kérdezhetnek, hibázhatnak és mondhatnak ellent
+- mindenki ugyanazt gondolja
+- a vezető dönt mindenről
+! Ebben a légkörben kerülnek elő a problémák időben.
 ```

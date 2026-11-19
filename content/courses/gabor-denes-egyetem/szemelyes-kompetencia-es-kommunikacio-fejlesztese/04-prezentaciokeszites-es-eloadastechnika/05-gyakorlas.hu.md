@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – prezentáció és előadás
 summary: Ellenőrző kérdések és összefoglaló feladatlap a felkészülésről, a diák tervezéséről és az előadástechnikáról, egy saját mini-előadás vázlatával.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -69,4 +69,117 @@ Hogy mindenki hallja (főleg nagy teremben vagy felvételnél), hogy ellenőrizd
 + mindent élőben begépelni, hogy hitelesebb legyen
 - felnagyított betűméret
 ! Az élő gépelés lassú és hibalehetőség.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Szókeret.** Írd meg a `szokeret(perc, tempo, tartalek)` függvényt, amely megadja, hány szót mondhatsz el egy `perc` hosszú előadásban, ha `tartalek` percet kérdésekre hagysz, és `tempo` szó/perc sebességgel beszélsz!
+
+```python starter
+def szokeret(perc, tempo, tartalek):
+    return perc * tempo
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szokeret(perc, tempo, tartalek):
+    return (perc - tartalek) * tempo        # csak a nettó idő számít
+```
+
+</details>
+
+```python test
+assert szokeret(15, 130, 2) == 1690
+assert szokeret(10, 140, 0) == 1400
+assert szokeret(20, 120, 5) == 1800
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Zsúfolt dia?** Írd meg a `zsufolt(pontok)` függvényt, amely `True`-t ad, ha a dián 6-nál több pont van, **vagy** a pontok összesen 30-nál több szóból állnak!
+
+```python starter
+def zsufolt(pontok):
+    return len(pontok) > 6
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def zsufolt(pontok):
+    szavak = sum(len(p.split()) for p in pontok)   # az összes szó a dián
+    return len(pontok) > 6 or szavak > 30
+```
+
+</details>
+
+```python test
+assert zsufolt(["a"] * 7) is True
+assert zsufolt(["Dupla foglalások", "Papíron vezetett változások"]) is False
+assert zsufolt(["egy két három négy öt hat hét nyolc kilenc tíz"] * 4) is True
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Időterv.** Írd meg az `idoterv(netto, aranyok)` függvényt, amely egy `{szakasz: arány}` szótárból `{szakasz: perc}` szótárat készít (1 tizedesre kerekítve)! Ha az arányok összege nem 1 (0,001-es tűréssel), dobjon `ValueError`-t.
+
+```python starter
+def idoterv(netto, aranyok):
+    return {nev: round(netto * a, 1) for nev, a in aranyok.items()}
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def idoterv(netto, aranyok):
+    if abs(sum(aranyok.values()) - 1) > 0.001:      # az arányoknak a teljes időt kell lefedniük
+        raise ValueError("az arányok összege nem 1")
+    return {nev: round(netto * a, 1) for nev, a in aranyok.items()}
+```
+
+</details>
+
+```python test
+assert idoterv(13, {"nyitás": 0.15, "demó": 0.3, "többi": 0.55}) == {"nyitás": 1.9, "demó": 3.9, "többi": 7.2}
+try:
+    idoterv(10, {"a": 0.5, "b": 0.6})
+    assert False, "ValueError kellett volna"
+except ValueError:
+    pass
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a 10/20/30 szabály (Guy Kawasaki)?
++ legfeljebb 10 dia, 20 perc, legalább 30-as betűméret
+- 10 perc, 20 dia, 30 kérdés
+- 10 pont diánként, 20 szó pontonként
+- 30 dia 10 perc alatt
+! Rövid, jól olvasható előadás.
+
+? Egy 20 perces előadáshoz diánként 2 percet tervezel. Hány dia legyen?
+= 10
+! $20 / 2 = 10$.
+
+? Mi a teendő élő demó előtt?
+- semmi, a demó úgyis működik
++ tartalék (felvett videó vagy képernyőképek), előre betöltött adatok és kipróbált környezet
+- a demó közben írni meg az utolsó funkciót
+- a demót a végére hagyni, hogy ne legyen rá idő
+! Ami elromolhat, az el is romlik – kell B terv.
+
+? Melyik a jó nyitás egy projektbemutatón?
+- „Hát, akkor kezdjük...”
++ egy konkrét probléma vagy meglepő adat, ami miatt a projekt fontos
+- a csapattagok életrajza
+- bocsánatkérés a felkészületlenségért
+! Az első percben dől el, figyel-e a közönség.
 ```

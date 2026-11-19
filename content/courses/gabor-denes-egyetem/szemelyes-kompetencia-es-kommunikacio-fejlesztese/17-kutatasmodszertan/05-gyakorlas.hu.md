@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – kutatásmódszertan
 summary: Ellenőrző kérdések és összefoglaló feladatlap a kutatási folyamatról, az adatgyűjtésről és -elemzésről, valamint a forrásokról és a hivatkozásról; egy mini kutatás megtervezése.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -69,4 +69,120 @@ Mindhármat megkeresem egy megbízható adatbázisban (Google Scholar, IEEE Xplo
 - plágium
 - túl nagy minta
 ! Kényelmi minta, nem reprezentatív.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Hibahatár.** Írd meg a `hibahatar(p, n)` függvényt, amely egy arány 95%-os hibahatárát adja: $1{,}96 \cdot \sqrt{p(1-p)/n}$ (3 tizedesre)!
+
+```python starter
+def hibahatar(p, n):
+    return round(1.96 * p * (1 - p) / n, 3)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import sqrt
+
+def hibahatar(p, n):
+    return round(1.96 * sqrt(p * (1 - p) / n), 3)   # 95%-os megbízhatóság
+```
+
+</details>
+
+```python test
+assert hibahatar(0.5, 100) == 0.098
+assert hibahatar(0.6, 400) == 0.048
+assert hibahatar(0.5, 1000) == 0.031
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Szükséges mintaméret.** Írd meg a `szukseges_n(hiba, p=0.5)` függvényt, amely megadja, legalább hány válaszadó kell a megadott hibahatárhoz: $(1{,}96 / \text{hiba})^2 \cdot p(1-p)$, felfelé kerekítve!
+
+```python starter
+def szukseges_n(hiba, p=0.5):
+    return round((1.96 / hiba) ** 2 * p * (1 - p))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import ceil
+
+def szukseges_n(hiba, p=0.5):
+    return ceil((1.96 / hiba) ** 2 * p * (1 - p))   # mindig felfelé: "legalább"
+```
+
+</details>
+
+```python test
+assert szukseges_n(0.05) == 385
+assert szukseges_n(0.03) == 1068
+assert szukseges_n(0.1) == 97
+assert szukseges_n(0.05, 0.1) == 139
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **A/B teszt z-értéke.** Írd meg a `z_proba(a_reg, a_lat, b_reg, b_lat)` függvényt, amely két arány különbségének z-értékét adja az összevont arány alapján: $z = (p_B - p_A) / \sqrt{p(1-p)(1/n_A + 1/n_B)}$ (2 tizedesre)!
+
+```python starter
+def z_proba(a_reg, a_lat, b_reg, b_lat):
+    return round(b_reg / b_lat - a_reg / a_lat, 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import sqrt
+
+def z_proba(a_reg, a_lat, b_reg, b_lat):
+    pa, pb = a_reg / a_lat, b_reg / b_lat
+    p = (a_reg + b_reg) / (a_lat + b_lat)            # összevont arány a nullhipotézis alatt
+    return round((pb - pa) / sqrt(p * (1 - p) * (1 / a_lat + 1 / b_lat)), 2)
+```
+
+</details>
+
+```python test
+assert z_proba(30, 400, 48, 400) == 2.15
+assert z_proba(50, 500, 50, 500) == 0.0
+assert z_proba(48, 400, 30, 400) == -2.15
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? A $|z| > 1{,}96$ szabály mit jelent egy A/B tesztben?
++ a különbség 5%-os küszöbön statisztikailag szignifikáns
+- B legalább 1,96%-kal jobb
+- a teszt 1,96 napig futott
+- a minta túl kicsi
+! Ez a kétoldali 5%-os küszöb határa.
+
+? Hányszoros mintára van szükség, ha a hibahatárt harmadára akarod csökkenteni?
+= 9
+! A hibahatár $1/\sqrt{n}$-nel csökken: $3^2 = 9$.
+
+? Egy Discord-szerveren 2000 válasz érkezett a kérdőívedre. Mi a legnagyobb gond?
+- túl sok a válasz
++ a minta nem véletlenszerű (önkiválasztás), így a nagy szám sem teszi reprezentatívvá
+- a hibahatár túl kicsi
+- semmi gond nincs
+! A hibahatár képlete csak véletlen mintára érvényes.
+
+? Mi a legerősebb módszer ok-okozati kapcsolat igazolására?
+- nagy mintán mért korreláció
++ véletlen besorolású kísérlet (pl. A/B teszt)
+- egy szakértő véleménye
+- egy blogbejegyzés
+! A véletlen besorolás kiegyenlíti a rejtett változókat.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Practice – Fundamentals of Communication
 summary: Review questions and a summary worksheet on the communication model, types of communication and Watzlawick's axioms.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -76,4 +76,120 @@ Read the situation and answer the questions.
 - lateral
 - diagonal
 ! It goes from the manager to the team.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **A flawless message.** A message consists of `k` independent details, each of which goes wrong with probability `p`. Write the function `flawless_chance(p, k)`, which gives the probability that every detail arrives correctly (rounded to 3 decimals)!
+
+```python starter
+def flawless_chance(p, k):
+    return round(1 - p * k, 3)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def flawless_chance(p, k):
+    return round((1 - p) ** k, 3)          # every detail has to get through separately
+```
+
+</details>
+
+```python test
+assert flawless_chance(0.2, 3) == 0.512
+assert flawless_chance(0.1, 5) == 0.59
+assert flawless_chance(0.5, 10) == 0.001
+print("All checks passed!")
+```
+
+**2.** **Asking back.** After one round of asking back, a detail stays wrong only if it went wrong at first and the check didn't catch it either (both with probability `p`). Write the function `with_asking_back(p, k)`, which gives the probability that all `k` details are correct (to 3 decimals)!
+
+```python starter
+def with_asking_back(p, k):
+    return round((1 - p) ** k, 3)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def with_asking_back(p, k):
+    return round((1 - p * p) ** k, 3)      # a detail stays wrong with probability p·p
+```
+
+</details>
+
+```python test
+assert with_asking_back(0.2, 3) == 0.885
+assert with_asking_back(0.1, 5) == 0.951
+assert with_asking_back(0.0, 7) == 1.0
+print("All checks passed!")
+```
+
+**3.** **Channel picker.** Write the function `channel(complexity, emotional)` (complexity 1–5): if the topic is emotional or the complexity is at least 4, return `"in person"`; if it's 3, `"video call"`; if it's 2, `"email"`; otherwise `"chat"`!
+
+```python starter
+def channel(complexity, emotional):
+    return "email"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def channel(complexity, emotional):
+    if emotional or complexity >= 4:       # complex or emotional topic → rich channel
+        return "in person"
+    if complexity == 3:
+        return "video call"
+    if complexity == 2:
+        return "email"
+    return "chat"
+```
+
+</details>
+
+```python test
+assert channel(1, False) == "chat"
+assert channel(2, False) == "email"
+assert channel(3, False) == "video call"
+assert channel(5, False) == "in person"
+assert channel(1, True) == "in person"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which is an example of semantic noise?
+- a stuttering video connection
++ the word "done" means something different to the developer and the client
+- a loud office
+- tiredness
+! The meaning of the words differs between the two parties.
+
+? A message consists of 4 independent details, each going wrong with 10% probability. What is the chance it arrives flawlessly? (as a decimal, to 4 decimals)
+= 0,6561
+= 0.6561
+! $0.9^4 = 0.6561$.
+
+? Which of Watzlawick's axioms says that every message has a content and a relationship level?
++ content and relationship levels
+- one cannot not communicate
+- punctuation of events
+- digital and analogue communication
+! The relationship level tells us how to interpret the content.
+
+? What is the role of feedback in the communication model?
+- it reduces the cost of the channel
++ it shows the sender whether the receiver understood what they meant to say
+- it replaces encoding
+- it only exists in writing
+! Without feedback, information flows one way only.
 ```

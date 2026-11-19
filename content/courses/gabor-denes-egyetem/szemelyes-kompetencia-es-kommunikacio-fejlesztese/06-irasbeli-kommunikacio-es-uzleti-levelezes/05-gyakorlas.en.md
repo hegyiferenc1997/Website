@@ -1,7 +1,7 @@
 ---
 title: Practice – Written Communication
 summary: Review questions and a summary worksheet on business email, business documents and technical documentation.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -78,4 +78,129 @@ Because everyone still remembers, and if someone understood a decision different
 ? How many pages are recommended for a graduate CV?
 = 1
 ! One well-structured page.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **LIX readability index.** Write the function `lix(text)` (to 1 decimal): words/sentences + 100 · long words/words, where a long word has at least 7 letters! Split words with `re.findall(r"\w+", ...)` and sentences along `.`, `!`, `?` (skip empty pieces).
+
+```python starter
+import re
+
+def lix(text):
+    words = re.findall(r"\w+", text)
+    long = [w for w in words if len(w) > 7]
+    return round(len(words) + 100 * len(long) / len(words), 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import re
+
+def lix(text):
+    words = re.findall(r"\w+", text)
+    sentences = [s for s in re.split(r"[.!?]+", text) if s.strip()]   # without empty pieces
+    long = [w for w in words if len(w) >= 7]
+    return round(len(words) / len(sentences) + 100 * len(long) / len(words), 1)
+```
+
+</details>
+
+```python test
+assert lix("Maintenance happens on Saturday. Everything works again by noon.") == 48.9
+assert lix("This is a small test. Here is one more.") == 4.5
+assert lix("Short sentence!") == 52.0
+print("All checks passed!")
+```
+
+**2.** **Good subject line?** Write the function `good_subject(subject)`: `True` if the subject line has at least 3 words, contains no exclamation mark, and isn't all capitals!
+
+```python starter
+def good_subject(subject):
+    return len(subject.split()) >= 3
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def good_subject(subject):
+    long_enough = len(subject.split()) >= 3
+    not_shouting = "!" not in subject and not subject.isupper()   # no exclamation mark, not all caps
+    return long_enough and not_shouting
+```
+
+</details>
+
+```python test
+assert good_subject("Approval needed: API docs v2, by Thursday") is True
+assert good_subject("Question") is False
+assert good_subject("Important, very urgent request!!!") is False
+assert good_subject("VERY IMPORTANT THING NOW") is False
+print("All checks passed!")
+```
+
+**3.** **Commit message.** Write the function `conventional(message)`, which returns `True` if the message has the form `type(scope): description` or `type: description`, where the type is `feat`, `fix`, `docs`, `refactor`, `test` or `chore`, the scope consists of lowercase letters, digits and hyphens, and the description is 3–72 characters!
+
+```python starter
+def conventional(message):
+    return ":" in message
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import re
+
+PATTERN = re.compile(r"^(feat|fix|docs|refactor|test|chore)(\([a-z0-9-]+\))?: .{3,72}$")
+
+def conventional(message):
+    return bool(PATTERN.match(message))
+```
+
+</details>
+
+```python test
+assert conventional("fix(login): no 500 error for an empty email") is True
+assert conventional("docs: update README") is True
+assert conventional("Fix: something") is False
+assert conventional("fixes") is False
+assert conventional("feat(Booking): new feature") is False
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is the essence of the pyramid principle in business writing?
++ the main point (conclusion, request) first, then the support
+- chronological order, with the conclusion at the end
+- the longest possible introduction
+- the request in the P.S.
+! The recipient knows from the first sentences what they need to do.
+
+? A text has 60 words and 5 sentences, 18 of them long words. What is its LIX value?
+= 42
+! $60/5 + 100 \cdot 18/60 = 12 + 30 = 42$.
+
+? When should you use "Blind carbon copy" (Bcc)?
+- when you want to involve someone without your boss knowing
++ when you write to many recipients who don't know each other, and their email addresses need protecting
+- in every email
+- never
+! That way recipients can't see each other's addresses.
+
+? What belongs in a good bug report?
+- just "it doesn't work"
++ the steps to reproduce the bug, the expected and actual behaviour, the environment
+- the name of the colleague at fault
+- the full source code
+! That way the bug can be reproduced and fixed.
 ```

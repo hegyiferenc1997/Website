@@ -1,7 +1,7 @@
 ---
 title: Záró feladatsor – egy projekt kommunikációja az elejétől a végéig
 summary: A tárgy vegyes, záró feladatsora egy egyetemi projektcsapat történetén keresztül, a kommunikációs modelltől a tárgyaláson, a csapatmunkán és az időbeosztáson át az incidenskezelésig.
-minutes: 40
+minutes: 65
 kind: practice
 ---
 
@@ -132,4 +132,122 @@ Például: a prezentáció és az előadástechnika (magabiztos bemutatkozás, S
 - „Részt vettem valamiben.”
 - nem írja bele, mert csapatmunka volt
 ! Pontosan a saját része (12. témakör).
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Kilencesek percekben.** Írd meg a `leallas_perc_ho(szazalek)` függvényt, amely megadja, hány perc leállás fér bele egy 30 napos hónapba az adott rendelkezésre állás mellett (1 tizedesre)!
+
+```python starter
+def leallas_perc_ho(szazalek):
+    return round(30 * 24 * 60 * szazalek / 100, 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def leallas_perc_ho(szazalek):
+    return round(30 * 24 * 60 * (1 - szazalek / 100), 1)   # a nem elérhető idő aránya
+```
+
+</details>
+
+```python test
+assert leallas_perc_ho(99.9) == 43.2
+assert leallas_perc_ho(99.99) == 4.3
+assert leallas_perc_ho(99) == 432.0
+assert leallas_perc_ho(100) == 0.0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Buszfaktor.** Írd meg a `buszfaktor(commitok)` függvényt, amely egy `{név: commitok száma}` szótárból megadja, legkevesebb hány ember adja a commitok legalább felét!
+
+```python starter
+def buszfaktor(commitok):
+    return len(commitok) // 2
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def buszfaktor(commitok):
+    osszes = sum(commitok.values())
+    fedezet, db = 0, 0
+    for c in sorted(commitok.values(), reverse=True):   # a legaktívabbak előre
+        fedezet += c
+        db += 1
+        if fedezet / osszes >= 0.5:
+            break
+    return db
+```
+
+</details>
+
+```python test
+assert buszfaktor({"maria": 410, "tom": 95, "lee": 60, "ana": 25, "dev42": 10}) == 1
+assert buszfaktor({"a": 30, "b": 30, "c": 20, "d": 20}) == 2
+assert buszfaktor({"a": 10, "b": 10, "c": 10, "d": 10, "e": 10}) == 3
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Megtérülés munkanapban.** Írd meg a `megterules_nap(beruhazas, havi_megtakaritas, munkanap_ho=21)` függvényt, amely megadja, hány munkanap alatt térül meg egy fejlesztés, egészre felfelé kerekítve!
+
+```python starter
+def megterules_nap(beruhazas, havi_megtakaritas, munkanap_ho=21):
+    return round(beruhazas / havi_megtakaritas)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import ceil
+
+def megterules_nap(beruhazas, havi_megtakaritas, munkanap_ho=21):
+    napi = havi_megtakaritas / munkanap_ho      # egy munkanapra jutó megtakarítás
+    return ceil(beruhazas / napi)
+```
+
+</details>
+
+```python test
+assert megterules_nap(640_000, 1_512_000) == 9
+assert megterules_nap(210_000, 210_000) == 21
+assert megterules_nap(100, 2100) == 1
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Miért érdemes egy műszaki problémát forintban is megfogalmazni egy vezetőnek?
+- mert a vezetők nem értenek semmihez
++ mert így a döntéshozó saját nyelvén, költség–haszon alapon tud dönteni
+- mert a forint pontosabb a percnél
+- nem érdemes
+! A feltevéseket is mondd ki, hogy ellenőrizhetők legyenek.
+
+? Hány perc leállás fér bele egy 30 napos hónapba 99,5%-os rendelkezésre állásnál?
+= 216
+! $43\,200 \cdot 0{,}005 = 216$ perc.
+
+? Mit jelent a hibáztatásmentes utólagos elemzés (blameless post-mortem)?
+- megkeresik, ki a hibás, és megbüntetik
++ a rendszer és a folyamatok hibáit keresik, nem bűnbakot, hogy a hiba ne ismétlődjön meg
+- titokban tartják az incidenst
+- csak a vezetők olvashatják
+! Így az emberek őszintén elmondják, mi történt.
+
+? Mit tehet egy cég, amelynek terméke egy egyemberes nyílt forrású könyvtárra épül?
+- semmit
++ szponzorálja a projektet, fejlesztői időt ajánl fel, vagy alternatívát mér fel
+- követeli a karbantartótól a gyorsabb munkát
+- lemásolja a kódot és elhallgatja
+! A buszfaktor üzleti kockázat.
 ```

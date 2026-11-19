@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – önreflexió
 summary: Ellenőrző kérdések és összefoglaló feladatlap a tapasztalati tanulásról, az önismereti eszközökről, a fejlődési szemléletről és az érzelmi intelligenciáról; saját reflexió egy eseményről.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -74,4 +74,123 @@ Mert a szakma hatalmas és gyorsan változik, mindig van, amit nem tudsz; a kezd
 - motiváció
 - társas készségek
 ! Kezeli az érzelmeit.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Eltérés a 360 fokos visszajelzésben.** Írd meg az `elteres(sajat, masok)` függvényt, amely visszaadja a saját értékelés és a mások értékeléseinek átlaga közti különbséget (saját − átlag, 2 tizedesre)!
+
+```python starter
+def elteres(sajat, masok):
+    return round(sajat - max(masok), 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from statistics import mean
+
+def elteres(sajat, masok):
+    return round(sajat - mean(masok), 2)   # pozitív: többre tartod magad
+```
+
+</details>
+
+```python test
+assert elteres(4, [2, 3, 2.5]) == 1.5
+assert elteres(3, [5, 4, 5]) == -1.67
+assert elteres(4, [4, 4]) == 0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Johari-címke.** Írd meg a `johari(elteres)` függvényt: ha az eltérés legalább 1, adja vissza: `"vak folt"`, ha legfeljebb −1: `"rejtett erősség"`, különben `"nyílt terület"`!
+
+```python starter
+def johari(elteres):
+    return "vak folt" if elteres > 0 else "rejtett erősség"
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def johari(elteres):
+    if elteres >= 1:
+        return "vak folt"              # mások kevesebbre tartanak
+    if elteres <= -1:
+        return "rejtett erősség"       # mások többre tartanak
+    return "nyílt terület"
+```
+
+</details>
+
+```python test
+assert johari(1.5) == "vak folt"
+assert johari(1) == "vak folt"
+assert johari(-1.67) == "rejtett erősség"
+assert johari(0.5) == "nyílt terület"
+assert johari(-0.9) == "nyílt terület"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Kalibráció.** Írd meg a `kalibracio(eredmenyek)` függvényt, amely `(becsült %, valós %)` párokból visszaadja a `(torzítás, átlagos hiba)` párt: a torzítás a (becslés − valós) különbségek átlaga, az átlagos hiba ezek abszolút értékének átlaga (mindkettő 1 tizedesre)!
+
+```python starter
+def kalibracio(eredmenyek):
+    k = [b - v for b, v in eredmenyek]
+    return round(sum(k) / len(k), 1), round(sum(k) / len(k), 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kalibracio(eredmenyek):
+    k = [b - v for b, v in eredmenyek]                 # pozitív: túlbecslés
+    torzitas = sum(k) / len(k)
+    hiba = sum(abs(x) for x in k) / len(k)             # a tipikus tévedés mérete
+    return round(torzitas, 1), round(hiba, 1)
+```
+
+</details>
+
+```python test
+assert kalibracio([(80, 70), (70, 60), (60, 50)]) == (10.0, 10.0)
+assert kalibracio([(80, 62), (60, 55), (85, 70), (50, 58), (75, 64)]) == (8.2, 11.4)
+assert kalibracio([(50, 60), (70, 60)]) == (0.0, 10.0)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Miért kevés két tévedés, amelyek kioltják egymást (egyszer +10, egyszer −10), ahhoz, hogy jól kalibráltnak mondd magad?
++ mert a torzítás 0, de az átlagos hiba 10 pont – a becslések egyenként pontatlanok
+- mert a torzítás 10
+- mert két mérés mindig elég
+- mert a kalibrációt csak tanár mérheti
+! Ezért kell a torzítás mellé az átlagos hibát is nézni.
+
+? Önértékelésed 2, a csapattársaid 4, 3 és 5 pontot adnak. Mekkora az eltérés (saját − mások átlaga)?
+= -2
+! A mások átlaga 4, az eltérés $2 - 4 = -2$: rejtett erősség.
+
+? Mit érdemes tenni, ha a 360 fokos visszajelzés vak foltot mutat?
+- vitatkozni az értékelőkkel
++ konkrét példát kérni („mikor láttad ezt?”), és egy fejlődési célt kitűzni
+- figyelmen kívül hagyni
+- legközelebb nem kérni visszajelzést
+! A vak folt a legértékesebb információ, mert magadtól nem vennéd észre.
+
+? Mi a Gibbs-ciklus utolsó lépése?
+- leírás
+- érzések
+- elemzés
++ cselekvési terv
+! A változás a konkrét, felelőshöz és időponthoz kötött teendőkkel kezdődik.
 ```

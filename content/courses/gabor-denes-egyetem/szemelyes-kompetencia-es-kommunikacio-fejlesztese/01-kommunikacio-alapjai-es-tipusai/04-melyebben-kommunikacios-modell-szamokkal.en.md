@@ -95,13 +95,13 @@ Anna: This won't work like this. Why didn't you use proper validation?
 
 Bence is in a bad mood all afternoon, and the next day doesn't speak to Anna. Let's analyse it with Watzlawick's five axioms!
 
-| Axiom                                         | What happened?                                                                                                                            |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **One cannot not communicate**                | Bence's silence the next day is also a message: "I'm offended". Anna may not even notice.                                                 |
-| **Content and relationship levels**           | Content: validation is missing. Relationship: "proper" and "why didn't you" sound to Bence like "you're sloppy".                          |
-| **Punctuation of the sequence of events**     | Anna: "Bence is sloppy, so I'm strict". Bence: "Anna is hurtful, so I don't ask". Each treats the other's behaviour as the starting point.  |
-| **Digital and analogue communication**        | In writing there's no tone, face or smile – Bence fills the missing analogue cues with the worst interpretation.                          |
-| **Symmetrical and complementary interaction** | Two equal team members (a symmetrical relationship), but the comment strikes a teacher–pupil (complementary) tone, which creates tension. |
+| Axiom                                         | What happened?                                                                                                                             |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **One cannot not communicate**                | Bence's silence the next day is also a message: "I'm offended". Anna may not even notice.                                                  |
+| **Content and relationship levels**           | Content: validation is missing. Relationship: "proper" and "why didn't you" sound to Bence like "you're sloppy".                           |
+| **Punctuation of the sequence of events**     | Anna: "Bence is sloppy, so I'm strict". Bence: "Anna is hurtful, so I don't ask". Each treats the other's behaviour as the starting point. |
+| **Digital and analogue communication**        | In writing there's no tone, face or smile – Bence fills the missing analogue cues with the worst interpretation.                           |
+| **Symmetrical and complementary interaction** | Two equal team members (a symmetrical relationship), but the comment strikes a teacher–pupil (complementary) tone, which creates tension.  |
 
 **Three viewpoints:**
 

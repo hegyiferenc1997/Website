@@ -1,7 +1,7 @@
 ---
 title: Practice – Online Communication and Social Media
 summary: Review questions and a summary worksheet on choosing channels, video call and chat etiquette, and a safe online presence.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -69,4 +69,116 @@ Because as a user you consume content more consciously (filter bubbles, manipula
 + an `@everyone` mention in every message
 - sending code in a code block
 ! Mass mentions disturb everyone.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **The cost of interruptions.** Write the function `lost_minutes(interruptions, recovery, day_minutes=480)`, which gives how many minutes are lost in a day to the recovery needed after interruptions – but at most the whole day!
+
+```python starter
+def lost_minutes(interruptions, recovery, day_minutes=480):
+    return interruptions * recovery
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def lost_minutes(interruptions, recovery, day_minutes=480):
+    return min(day_minutes, interruptions * recovery)   # you can't lose more than the day
+```
+
+</details>
+
+```python test
+assert lost_minutes(6, 15) == 90
+assert lost_minutes(32, 12) == 384
+assert lost_minutes(50, 15) == 480
+assert lost_minutes(10, 10, day_minutes=60) == 60
+print("All checks passed!")
+```
+
+**2.** **Password entropy.** Write the function `entropy(n, length)`, which gives the entropy in bits of a password of `length` elements chosen at random from `n` kinds of elements (characters or words) (to 1 decimal)!
+
+```python starter
+def entropy(n, length):
+    return round(n * length / 8, 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from math import log2
+
+def entropy(n, length):
+    return round(length * log2(n), 1)      # n^length possibilities → length · log2(n) bits
+```
+
+</details>
+
+```python test
+assert entropy(26, 8) == 37.6
+assert entropy(2048, 4) == 44.0
+assert entropy(7776, 6) == 77.5
+print("All checks passed!")
+```
+
+**3.** **The real domain.** Write the function `real_domain(url)`, which from an address starting with `http://` or `https://` returns the last two parts of the domain (e.g. `login-check.com`), lowercased! The port (`:8080`) and the path shouldn't count.
+
+```python starter
+def real_domain(url):
+    return url.split("/")[2].split(".")[0]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def real_domain(url):
+    host = url.split("/")[2].split(":")[0].lower()   # the part after "//", without the port
+    return ".".join(host.split(".")[-2:])            # reading from the right, the last two parts
+```
+
+</details>
+
+```python test
+assert real_domain("http://neptun-uni-hu.login-check.com/login") == "login-check.com"
+assert real_domain("https://github.com/settings") == "github.com"
+assert real_domain("https://WWW.Example.org:8080/a/b") == "example.org"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is two-factor authentication (2FA)?
++ besides the password, a second proof (e.g. a code on your phone) is needed to log in
+- two different passwords
+- typing the password twice
+- two usernames
+! Even if the password leaks, you can't log in without the second factor.
+
+? What is the entropy in bits of a 10-character PIN made only of random digits (10 kinds)? (to 1 decimal)
+= 33,2
+= 33.2
+! $10 \cdot \log_2 10 \approx 33.2$ bits.
+
+? Which is good practice on a video call?
+- microphone on the whole time in a noisy place
++ muting when you're not speaking; camera and sound tested beforehand; an agenda in the invite
+- starting on time but without an agenda
+- writing emails meanwhile
+! Preparation saves everyone's time.
+
+? What is a filter bubble?
+- a chat app
++ when algorithms mainly show content that reinforces opinions we already hold
+- a form of advertising
+- a privacy setting on social media
+! It's worth deliberately reading sources with different viewpoints too.
 ```

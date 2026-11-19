@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – online kommunikáció és közösségi média
 summary: Ellenőrző kérdések és összefoglaló feladatlap a csatornaválasztásról, a videóhívás és a chat illemtanáról, valamint a biztonságos online jelenlétről.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -69,4 +69,116 @@ Mert felhasználóként így tudatosabban fogyasztja a tartalmakat (véleménybu
 + minden üzenetben `@mindenki` említés
 - kód küldése kódblokkban
 ! A tömeges említés mindenkit megzavar.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **A megszakítások ára.** Írd meg az `elveszett_perc(megszakitasok, visszaallas, nap_perc=480)` függvényt, amely megadja, hány perc vész el egy napon a megszakítások után szükséges visszaállás miatt – de legfeljebb a teljes nap!
+
+```python starter
+def elveszett_perc(megszakitasok, visszaallas, nap_perc=480):
+    return megszakitasok * visszaallas
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elveszett_perc(megszakitasok, visszaallas, nap_perc=480):
+    return min(nap_perc, megszakitasok * visszaallas)   # a napnál több nem veszhet el
+```
+
+</details>
+
+```python test
+assert elveszett_perc(6, 15) == 90
+assert elveszett_perc(32, 12) == 384
+assert elveszett_perc(50, 15) == 480
+assert elveszett_perc(10, 10, nap_perc=60) == 60
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Jelszóentrópia.** Írd meg az `entropia(n, hossz)` függvényt, amely megadja egy véletlenszerűen, `n` féle elemből (karakterből vagy szóból) választott, `hossz` elemű jelszó entrópiáját bitekben (1 tizedesre)!
+
+```python starter
+def entropia(n, hossz):
+    return round(n * hossz / 8, 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import log2
+
+def entropia(n, hossz):
+    return round(hossz * log2(n), 1)       # n^hossz lehetőség → hossz · log2(n) bit
+```
+
+</details>
+
+```python test
+assert entropia(26, 8) == 37.6
+assert entropia(2048, 4) == 44.0
+assert entropia(7776, 6) == 77.5
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Valódi domain.** Írd meg a `valodi_domain(url)` függvényt, amely egy `http://` vagy `https://` kezdetű címből visszaadja a domain utolsó két tagját (pl. `login-check.com`), kisbetűsítve! A port (`:8080`) és az útvonal ne számítson.
+
+```python starter
+def valodi_domain(url):
+    return url.split("/")[2].split(".")[0]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def valodi_domain(url):
+    host = url.split("/")[2].split(":")[0].lower()   # a "//" utáni rész, port nélkül
+    return ".".join(host.split(".")[-2:])            # jobbról olvasva az utolsó két tag
+```
+
+</details>
+
+```python test
+assert valodi_domain("http://neptun-uni-hu.login-check.com/belepes") == "login-check.com"
+assert valodi_domain("https://github.com/settings") == "github.com"
+assert valodi_domain("https://WWW.Example.org:8080/a/b") == "example.org"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a kétlépcsős azonosítás (2FA)?
++ a jelszó mellett egy második bizonyíték (pl. kód a telefonon) is kell a belépéshez
+- két különböző jelszó
+- kétszer kell beírni a jelszót
+- két felhasználónév
+! Ha a jelszó ki is szivárog, a második tényező nélkül nem lehet belépni.
+
+? Hány bit egy 10 karakteres, csak számjegyekből (10 féle) véletlenszerűen álló PIN entrópiája? (1 tizedesre)
+= 33,2
+= 33.2
+! $10 \cdot \log_2 10 \approx 33{,}2$ bit.
+
+? Melyik a videóhívás jó gyakorlata?
+- végig bekapcsolt mikrofon zajos helyen
++ némítás, amikor nem beszélsz; előre kipróbált kamera és hang; a meghívóban napirend
+- késés nélkül, de napirend nélkül indulni
+- közben e-maileket írni
+! A felkészülés mindenki idejét kíméli.
+
+? Mi a véleménybuborék?
+- egy chatalkalmazás
++ amikor az algoritmusok főleg a már meglévő véleményünket megerősítő tartalmat mutatják
+- egy reklámforma
+- a közösségi média adatvédelmi beállítása
+! Tudatosan érdemes eltérő nézőpontú forrásokat is olvasni.
 ```
