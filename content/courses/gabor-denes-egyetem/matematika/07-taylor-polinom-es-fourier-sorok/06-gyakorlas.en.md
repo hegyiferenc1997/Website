@@ -1,7 +1,7 @@
 ---
 title: Practice – Taylor Polynomials, Fourier Series
 summary: Review questions and a summary worksheet on Taylor polynomials and Fourier series.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -79,4 +79,135 @@ domain: 0.5, 1.5
 + the periodic extension of $\lvert x \rvert$ (triangle wave)
 - all three equally fast
 ! A continuous signal without jumps: $\frac{1}{k^2}$ decay.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **e^x with a Taylor polynomial.** Write the function `exp_approx(x, n)`, which adds up the first `n` terms ($k = 0, 1, \ldots, n - 1$) of the Taylor series of $e^x$ and rounds to 6 decimals! Don't use `math.factorial`: compute every term from the previous one.
+
+```python starter
+def exp_approx(x, n):
+    return round(1 + x, 6)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def exp_approx(x, n):
+    total, term = 0.0, 1.0
+    for k in range(n):
+        total += term
+        term *= x / (k + 1)               # x^(k+1)/(k+1)! from the previous one
+    return round(total, 6)
+```
+
+</details>
+
+```python test
+assert exp_approx(1, 1) == 1.0
+assert exp_approx(1, 2) == 2.0
+assert exp_approx(1, 10) == 2.718282
+assert exp_approx(2, 5) == 7.0
+assert exp_approx(-1, 15) == 0.367879
+print("All checks passed!")
+```
+
+**2.** **How many terms are needed?** Write the function `terms_needed(x, eps)`, which tells at least how many terms of the Taylor series of $\sin x$ ($x - \frac{x^3}{3!} + \frac{x^5}{5!} - \ldots$) must be added so that the difference from `math.sin(x)` is less than `eps`!
+
+```python starter
+def terms_needed(x, eps):
+    return 1
+```
+
+<details>
+<summary>Solution</summary>
+
+The further $x$ is from $0$, the more terms are needed – that's why it's worth bringing large angles into the interval $[-\pi, \pi]$ first.
+
+```python solution
+import math
+
+def terms_needed(x, eps):
+    total, term, count = 0.0, x, 0
+    while abs(total - math.sin(x)) >= eps:
+        total += term
+        count += 1
+        term *= -x * x / ((2 * count) * (2 * count + 1))   # the next odd-degree term
+    return count
+```
+
+</details>
+
+```python test
+assert terms_needed(0.1, 1e-6) == 2
+assert terms_needed(1, 1e-6) == 5
+assert terms_needed(3, 1e-6) == 8
+assert terms_needed(3, 1e-2) == 5
+print("All checks passed!")
+```
+
+**3.** **Fourier series of the sawtooth wave.** The Fourier series of the sawtooth wave ($f(x) = x$ on the interval $(-\pi, \pi)$, periodically) is $2\left(\sin x - \frac{\sin 2x}{2} + \frac{\sin 3x}{3} - \ldots\right) = \sum_{k=1}^{\infty} \frac{2(-1)^{k+1}}{k}\sin kx$. Write the function `sawtooth(x, n)`, which returns the sum of the first `n` terms rounded to 4 decimals!
+
+```python starter
+def sawtooth(x, n):
+    import math
+    return round(sum(2 / k * math.sin(k * x) for k in range(1, n + 1)), 4)
+```
+
+<details>
+<summary>Solution</summary>
+
+The starter code is missing the alternating sign. With many terms the partial sum tends to $x$ (with $1000$ terms, $0.9989$ at $x = 1$).
+
+```python solution
+import math
+
+def sawtooth(x, n):
+    return round(sum(2 * (-1) ** (k + 1) / k * math.sin(k * x) for k in range(1, n + 1)), 4)
+```
+
+</details>
+
+```python test
+import math
+assert sawtooth(math.pi / 2, 1) == 2.0
+assert sawtooth(math.pi / 2, 3) == 1.3333
+assert sawtooth(1, 1000) == 0.9989
+assert sawtooth(0, 50) == 0.0
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is the second-degree Taylor polynomial of $\cos x$ around $0$?
+fn: x -> 1 - x^2/2
+domain: -1, 1
+! $\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \ldots$
+
+? What is the third derivative of $f(x) = e^{2x}$ at $0$?
+= 8
+! $f'''(x) = 8e^{2x}$.
+
+? What is the coefficient of $x^3$ in the Taylor series of $\ln(1 + x)$? (fraction or decimal)
+= 1/3
+= 0,3333
+= 0.3333
+! $\ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \ldots$
+
+? Which terms appear in the Fourier series of an odd function?
+- only cosine terms
++ only sine terms
+- only the constant term
+- both sine and cosine terms
+! Cosine is an even function, so for an odd function $a_k = 0$.
+
+? In the Fourier series of a function periodic with $2\pi$, what is the frequency of the $\sin 5x$ term if the fundamental frequency is 50 Hz? (Hz)
+= 250
+! The frequency of the $k$-th harmonic is $k \cdot f_0 = 5 \cdot 50 = 250$ Hz.
 ```

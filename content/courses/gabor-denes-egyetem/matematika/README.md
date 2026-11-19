@@ -4,9 +4,18 @@ Ebben a mappában van az 1. féléves Matematika (B-MATEMA) tárgy tananyaga. In
 `pnpm db:seed` futtatásakor) az oldal innen tölti be az adatbázisba a témaköröket és a leckéket.
 
 A szerkezet a tantárgyleírás 10 fő témakörét követi: `01-algebrai-alapfogalmak` …
-`10-matematikai-modellezes`. Minden témakör végén egy gyakorló lecke van (`kind: practice`) ellenőrző
-kérdésekkel és összefoglaló feladatlappal; az utolsó lecke egy vegyes feladatsor a teljes anyagból. A
-mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
+`10-matematikai-modellezes`. Minden témakör az alapleckék után egy `melyebben-…` leckével és egy gyakorló
+leckével (`kind: practice`) zárul; az utolsó témakör gyakorló leckéje egy vegyes feladatsor a teljes
+anyagból.
+
+- A **Mélyebben** lecke ugyanazt a témát számokkal, szimulációval (` ```python run `) és interaktív ábrával
+  mutatja be (pl. Horner-elrendezés, küszöbindex géppel, numerikus derivált és gradiens-ereszkedés,
+  Monte-Carlo-integrálás, DFT, Dijkstra, SIR-modell, túlillesztés), saját kötelező kvízzel.
+- A **gyakorló** lecke ellenőrző kérdésekkel és összefoglaló feladatlappal (kötelező kvíz) indul, a végén
+  pedig „További gyakorló feladatok (nem kötelezők)” szakasz van: 3 számolós Python-feladat
+  (` ```python starter ` + rejtett megoldás + ` ```python test `) és egy nem kötelező gyors kvíz.
+
+A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
 `../programozas-alapjai/README.md`).
 
 **Szabály:** a tárgy követelményei (jegyszerzés, ZH-k, pontok, aláírás, oktató) soha nem kerülnek a

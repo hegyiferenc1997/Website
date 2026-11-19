@@ -1,7 +1,7 @@
 ---
 title: Practice – Integral Calculus
 summary: Review questions and a summary worksheet on indefinite and definite integrals.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -72,4 +72,127 @@ domain: -1, 1
 ? What is $\displaystyle\int_0^\infty x e^{-x^2}\,dx$? (As a fraction or decimal.)
 = 1/2
 ! The antiderivative is $-\frac{1}{2} e^{-x^2}$.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Trapezoid rule.** Write the function `trapezoid(f, a, b, n)`, which approximates $\int_a^b f(x)\,dx$ with the trapezoid rule, dividing into $n$ equal parts, and returns it rounded to 4 decimals!
+
+```python starter
+def trapezoid(f, a, b, n):
+    h = (b - a) / n
+    return round(sum(f(a + i * h) for i in range(n)) * h, 4)
+```
+
+<details>
+<summary>Solution</summary>
+
+The starter code is the left rectangle rule: it errs even for a linear function, while the trapezoid rule is exact for one.
+
+```python solution
+def trapezoid(f, a, b, n):
+    h = (b - a) / n
+    inner = sum(f(a + i * h) for i in range(1, n))   # the inner points with double weight
+    return round(h * (f(a) / 2 + inner + f(b) / 2), 4)
+```
+
+</details>
+
+```python test
+import math
+assert trapezoid(lambda x: x, 0, 2, 4) == 2.0
+assert trapezoid(lambda x: x * x, 0, 1, 100) == 0.3334
+assert trapezoid(math.sin, 0, math.pi, 1000) == 2.0
+print("All checks passed!")
+```
+
+**2.** **Average value of a function.** Write the function `average(f, a, b)`, which gives the average value of $f$ on the interval $[a, b]$: $\frac{1}{b - a}\int_a^b f(x)\,dx$! Compute the integral with the midpoint rule, dividing into $n = 10\,000$ parts, and round to 3 decimals.
+
+```python starter
+def average(f, a, b):
+    return round((f(a) + f(b)) / 2, 3)
+```
+
+<details>
+<summary>Solution</summary>
+
+The third test is the average of an AC power: the average of $\sin^2$ over a period is $\frac12$ – that's where the RMS formula $\frac{U_{\max}}{\sqrt2}$ comes from.
+
+```python solution
+def average(f, a, b):
+    n = 10_000
+    h = (b - a) / n
+    integral = sum(f(a + (i + 0.5) * h) for i in range(n)) * h   # rectangles at the midpoints
+    return round(integral / (b - a), 3)
+```
+
+</details>
+
+```python test
+import math
+assert average(lambda x: x * x, 0, 3) == 3.0
+assert average(math.sin, 0, math.pi) == 0.637
+assert average(lambda x: 325 * math.sin(x) ** 2, 0, 2 * math.pi) == 162.5
+print("All checks passed!")
+```
+
+**3.** **Energy from measured data.** A solar panel's power (W) is measured at equal time intervals. Write the function `energy_kwh(measurements, step_hours)`, which computes the energy produced in kWh with the trapezoid rule, rounded to 2 decimals!
+
+```python starter
+def energy_kwh(measurements, step_hours):
+    return round(sum(measurements) * step_hours / 1000, 2)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def energy_kwh(measurements, step_hours):
+    m = measurements
+    wh = sum((m[i] + m[i + 1]) / 2 * step_hours for i in range(len(m) - 1))
+    return round(wh / 1000, 2)            # Wh → kWh
+```
+
+</details>
+
+```python test
+assert energy_kwh([0, 1000, 2000, 1000, 0], 1) == 4.0
+assert energy_kwh([0, 500, 1500, 3000, 3200, 2800, 1500, 400, 0], 1.5) == 19.35
+assert energy_kwh([1000, 1000], 0.25) == 0.25
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Give an antiderivative of $f(x) = 6x^2 - 2x$!
+fn: x -> 2*x^3 - x^2
++C
+domain: -2, 2
+! $\int 6x^2\,dx = 2x^3$, $\int 2x\,dx = x^2$ (any constant can be added).
+
+? What is $\displaystyle\int_0^2 3x^2\,dx$?
+= 8
+! $\left[x^3\right]_0^2 = 8$.
+
+? What is $\displaystyle\int_0^{\pi} \sin x\,dx$?
+= 2
+! $\left[-\cos x\right]_0^{\pi} = 1 - (-1) = 2$.
+
+? What is the area between the curves $y = x$ and $y = x^2$ on the interval $[0, 1]$? (fraction or decimal)
+= 1/6
+= 0,1667
+= 0.1667
+! $\int_0^1 (x - x^2)\,dx = \frac12 - \frac13 = \frac16$.
+
+? Which improper integral converges?
+- $\int_1^\infty \frac{1}{\sqrt{x}}\,dx$
+- $\int_1^\infty \frac{1}{x}\,dx$
++ $\int_1^\infty \frac{1}{x^3}\,dx$
+- $\int_1^\infty 1\,dx$
+! $\int_1^\infty x^{-p}\,dx$ is finite if $p > 1$.
 ```

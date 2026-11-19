@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – differenciálegyenletek
 summary: Ellenőrző kérdések és összefoglaló feladatlap a differenciálegyenletekhez.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -70,4 +70,133 @@ domain: -2, 2
 ? Az $y' = 2x$, $y(0) = 0$ feladatra két Euler-lépést teszünk $h = 0{,}5$-tel. Mennyi $y_2$? (Tizedes törtként.)
 = 0.5
 ! A pontos érték $y(1) = 1$; az Euler-módszer itt alulbecsül.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Euler-módszer.** Írd meg az `euler(f, y0, h, lepesek)` függvényt, amely az $y' = f(t, y)$, $y(0) = y_0$ kezdetiérték-problémát `lepesek` darab `h` hosszú lépéssel közelíti, és $y$ végső értékét 4 tizedesre kerekítve adja vissza!
+
+```python starter
+def euler(f, y0, h, lepesek):
+    return round(y0 + f(0, y0) * h * lepesek, 4)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A kiinduló kód végig az induló meredekséggel lép – ez csak akkor helyes, ha a meredekség állandó.
+
+```python solution
+def euler(f, y0, h, lepesek):
+    t, y = 0.0, y0
+    for _ in range(lepesek):
+        y += h * f(t, y)                  # lépés az aktuális meredekséggel
+        t += h
+    return round(y, 4)
+```
+
+</details>
+
+```python test
+assert euler(lambda t, y: y, 1, 0.5, 2) == 2.25
+assert euler(lambda t, y: y, 1, 0.001, 1000) == 2.7169
+assert euler(lambda t, y: 2 * t, 0, 0.1, 10) == 0.9
+assert euler(lambda t, y: -0.5 * y, 10, 1, 3) == 1.25
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Felezési idő.** Az $N' = -kN$ bomlás megoldása $N(t) = N_0 e^{-kt}$. Írd meg a `felezesi_ido(k)` és a `maradek(n0, k, t)` függvényt: az első a felezési időt adja vissza 2 tizedesre, a második a $t$ idő múlva megmaradt mennyiséget 2 tizedesre kerekítve!
+
+```python starter
+def felezesi_ido(k):
+    return round(1 / k, 2)
+
+def maradek(n0, k, t):
+    return round(n0 - k * t, 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import math
+
+def felezesi_ido(k):
+    return round(math.log(2) / k, 2)      # e^(−kT) = 1/2  →  T = ln 2 / k
+
+def maradek(n0, k, t):
+    return round(n0 * math.exp(-k * t), 2)
+```
+
+</details>
+
+```python test
+assert felezesi_ido(0.1) == 6.93
+assert felezesi_ido(0.000121) == 5728.49   # szén-14, években
+assert maradek(100, 0.1, 6.931) == 50.0
+assert maradek(80, 0.5, 2) == 29.43
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Newton-féle hűlés.** A $T' = -k(T - T_k)$ egyenlet megoldása $T(t) = T_k + (T_0 - T_k)e^{-kt}$. Írd meg a `mikor_hul_le(T0, Tk, k, cel)` függvényt, amely megadja, hány perc alatt hűl le a tárgy a `cel` hőmérsékletre (1 tizedesre kerekítve)!
+
+```python starter
+def mikor_hul_le(T0, Tk, k, cel):
+    return round((T0 - cel) / k, 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A forró kávé (90 °C) 20 °C-os szobában kb. 14 perc alatt éri el az iható 55 °C-ot, de a 30 °C-hoz már majdnem háromszor annyi idő kell – minél közelebb van a környezethez, annál lassabban hűl.
+
+```python solution
+import math
+
+def mikor_hul_le(T0, Tk, k, cel):
+    # cel = Tk + (T0 − Tk)·e^(−kt)  →  t = ln((T0 − Tk) / (cel − Tk)) / k
+    return round(math.log((T0 - Tk) / (cel - Tk)) / k, 1)
+```
+
+</details>
+
+```python test
+assert mikor_hul_le(90, 20, 0.05, 55) == 13.9
+assert mikor_hul_le(90, 20, 0.05, 30) == 38.9
+assert mikor_hul_le(200, 25, 0.1, 60) == 16.1
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Hányadrendű az $y'' + 3y' - y = \sin x$ differenciálegyenlet?
+= 2
+! A legmagasabb előforduló derivált a második.
+
+? Add meg az $y' = -3y$, $y(0) = 5$ kezdetiérték-probléma megoldását!
+fn: x -> 5*e^(-3*x)
+domain: 0, 1
+! $y = Ce^{-3x}$, $C = 5$.
+
+? Egy anyag felezési ideje 10 nap. A kezdeti mennyiség hányad része marad meg 30 nap múlva? (tört vagy tizedes tört)
+= 1/8
+= 0,125
+= 0.125
+! Három felezés: $\left(\frac12\right)^3 = \frac18$.
+
+? Az $y'' + 4y = 0$ egyenlet karakterisztikus gyökei $\pm 2i$. Milyen mozgást ír le?
+- exponenciálisan csillapodó mozgást, rezgés nélkül
++ csillapítatlan harmonikus rezgést
+- exponenciálisan növekvő mozgást
+- egyenletes mozgást
+! $y = C_1 \cos 2x + C_2 \sin 2x$.
+
+? Egy RC-kör időállandója $\tau = RC$. Mennyi $\tau$ (s), ha $R = 10\,\text{k}\Omega$ és $C = 100\,\mu\text{F}$?
+= 1
+! $10^4 \cdot 10^{-4} = 1$ s.
 ```

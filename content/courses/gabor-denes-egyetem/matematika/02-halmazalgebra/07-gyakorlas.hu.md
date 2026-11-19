@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – halmazalgebra
 summary: Ellenőrző kérdések és összefoglaló feladatlap a halmazokhoz, a szitaformulához és az eseményalgebrához.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -67,4 +67,120 @@ table: A, B, C -> Y = A'·(B + C)
 + „merőleges” a sík egyenesein
 - „részhalmaza” a halmazokon
 ! Ha $a \perp b$ és $b \perp c$, akkor $a \parallel c$.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Szimmetrikus differencia.** Írd meg a `szim_diff(A, B)` függvényt, amely visszaadja azokat az elemeket, amelyek pontosan az egyik halmazban vannak benne! Ne használd a `^` operátort – építsd fel unióból, metszetből és különbségből.
+
+```python starter
+def szim_diff(A, B):
+    return A | B
+```
+
+<details>
+<summary>Megoldás</summary>
+
+Ugyanez másképp: $(A \setminus B) \cup (B \setminus A)$.
+
+```python solution
+def szim_diff(A, B):
+    return (A | B) - (A & B)              # az unióból kivesszük a közös részt
+```
+
+</details>
+
+```python test
+assert szim_diff({1, 2, 3}, {2, 3, 4}) == {1, 4}
+assert szim_diff({1, 2}, {3}) == {1, 2, 3}
+assert szim_diff({5}, {5}) == set()
+assert szim_diff(set(), {7}) == {7}
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Logikai szita.** Írd meg az `oszthato_db(n, a, b)` függvényt, amely megadja, hány szám osztható 1 és `n` között `a`-val **vagy** `b`-vel – ciklus nélkül, a szitaformulával! (Tipp: `math.lcm`, és `n // a` a többszörösök száma.)
+
+```python starter
+def oszthato_db(n, a, b):
+    return n // a + n // b
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A $4$ és a $6$ közös többszörösei a $12$ többszörösei (nem a $24$-é!) – ezért kell az lkkt.
+
+```python solution
+import math
+
+def oszthato_db(n, a, b):
+    # |A ∪ B| = |A| + |B| − |A ∩ B|; a közös többszörösök az lkkt többszörösei
+    return n // a + n // b - n // math.lcm(a, b)
+```
+
+</details>
+
+```python test
+assert oszthato_db(100, 2, 3) == 67
+assert oszthato_db(1000, 3, 5) == 467
+assert oszthato_db(100, 4, 6) == 33
+assert oszthato_db(10, 2, 2) == 5
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Descartes-szorzat.** Írd meg a `descartes(A, B)` függvényt, amely visszaadja az összes `(a, b)` párt, ahol `a` az `A`-ból, `b` a `B`-ből való, halmazként!
+
+```python starter
+def descartes(A, B):
+    return set()
+```
+
+<details>
+<summary>Megoldás</summary>
+
+$|A \times B| = |A| \cdot |B|$ – ezért 20 pár van a második tesztben.
+
+```python solution
+def descartes(A, B):
+    return {(a, b) for a in A for b in B}  # minden a-t minden b-vel párosítunk
+```
+
+</details>
+
+```python test
+assert descartes({1, 2}, {"x", "y"}) == {(1, "x"), (1, "y"), (2, "x"), (2, "y")}
+assert len(descartes(set(range(4)), set(range(5)))) == 20
+assert descartes({1}, set()) == set()
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? $|A| = 12$, $|B| = 9$, $|A \cap B| = 4$. Mennyi $|A \cup B|$?
+= 17
+! $12 + 9 - 4 = 17$.
+
+? Hány részhalmaza van egy 5 elemű halmaznak?
+= 32
+! $2^5 = 32$.
+
+? Melyik egyenlő $\overline{A \cup B}$-vel (De Morgan)?
+- $\overline{A} \cup \overline{B}$
++ $\overline{A} \cap \overline{B}$
+- $A \cap B$
+- $\overline{A \cap B}$
+! Ami nincs benne az unióban, az egyikben sincs benne.
+
+? $A = \{1, 2, 3, 4\}$, $B = \{3, 4, 5\}$. Hány elemű $A \setminus B$?
+= 2
+! $A \setminus B = \{1, 2\}$.
+
+? Egy 30 fős csoportban 18-an tanulnak angolt, 12-en németet, 5-en mindkettőt. Hányan nem tanulnak egyiket sem?
+= 5
+! $30 - (18 + 12 - 5) = 5$.
 ```
