@@ -1,0 +1,21 @@
+{
+  "hallgato": "Kiss Anna",
+  "felev": 1,
+  "targyak": [
+    {
+      "nev": "Matematika",
+      "kredit": 6,
+      "napok": [
+        "hétfő",
+        "szerda"
+      ]
+    },
+    {
+      "nev": "Programozási alapok",
+      "kredit": 8,
+      "napok": [
+        "kedd"
+      ]
+    }
+  ]
+}
