@@ -48,7 +48,7 @@ print(f"elérhető címtér: 2^48 bájt = {2**48 // 2**40} TB")
 
 ### TLB-vel
 
-Legyen a TLB elérése 1 ns, egy memóriaolvasás 100 ns, és (egyszerűség kedvéért) **egyszintű** laptábla. Találatnál: 1 + 100 ns. Hiánynál: 1 + 100 (laptábla) + 100 (adat) ns. Ha a találati arány *h*:
+Legyen a TLB elérése 1 ns, egy memóriaolvasás 100 ns, és (egyszerűség kedvéért) **egyszintű** laptábla. Találatnál: 1 + 100 ns. Hiánynál: 1 + 100 (laptábla) + 100 (adat) ns. Ha a találati arány _h_:
 
 ```text
 EAT = h · (1 + 100) + (1 − h) · (1 + 100 + 100)
@@ -58,7 +58,7 @@ EAT = h · (1 + 100) + (1 − h) · (1 + 100 + 100)
 
 ### Laphibákkal
 
-Egy laphiba (lap betöltése lemezről) nagyságrendileg **8 ms = 8 000 000 ns**. Ha a hozzáférések *p* hányada laphiba:
+Egy laphiba (lap betöltése lemezről) nagyságrendileg **8 ms = 8 000 000 ns**. Ha a hozzáférések _p_ hányada laphiba:
 
 ```text
 EAT = (1 − p) · 100 + p · 8 000 000   [ns]
@@ -189,7 +189,7 @@ A másodikban kövesd a memóriát (`watch -n 1 free -m`), és nyomj Entert az e
 
 A `free` kimenetében a **buff/cache** oszlop a lapgyorsítótár: az OS a szabad memóriát a lemezről olvasott fájlok gyorsítótárazására használja, de azonnal visszaadja, ha egy programnak kell. Ezért nem baj, ha Linuxon „kevés a szabad memória” – az **available** (elérhető) oszlop számít.
 
-Windowson: **Erőforrás-figyelő** (`resmon`) → **Memória** lap. A *Kemény laphibák/mp* oszlop mutatja, melyik program okoz lemezről betöltést igénylő laphibát; az alsó sáv pedig a *Hardvernek fenntartott / Használatban / Módosított / Készenléti / Szabad* részeket.
+Windowson: **Erőforrás-figyelő** (`resmon`) → **Memória** lap. A _Kemény laphibák/mp_ oszlop mutatja, melyik program okoz lemezről betöltést igénylő laphibát; az alsó sáv pedig a _Hardvernek fenntartott / Használatban / Módosított / Készenléti / Szabad_ részeket.
 
 ## Összefoglalás
 

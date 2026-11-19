@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – rendszerhívások
 summary: Rendszerhívások nyomon követése strace-szel, ellenőrző kérdések és összefoglaló feladatlap.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -70,4 +70,134 @@ Hogy a program kimenete és a hibaüzenetek szétválaszthatók legyenek: péld�
 + védelem
 - eszközkezelés
 ! A fájl jogosultságait állítja.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Hány rendszerhívás?** Írd meg a `write_hivasok(sorok, mod, puffer=4096)` függvényt. A `sorok` a kiírandó sorok listája (mindegyik `\n`-nel végződik). `"sor"` módban (terminál) minden sor egy `write()`, `"teljes"` módban (cső, fájl) a puffer betelésekor és a végén van `write()` – vagyis az összes bájt / puffer, felfelé kerekítve. `"nincs"` módban minden **bájt** külön hívás.
+
+```python starter
+def write_hivasok(sorok, mod, puffer=4096):
+    return len(sorok)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def write_hivasok(sorok, mod, puffer=4096):
+    osszes = sum(len(s.encode()) for s in sorok)    # bájtokban számolunk
+    if mod == "sor":
+        return len(sorok)
+    if mod == "teljes":
+        return -(-osszes // puffer)                  # felfelé kerekítve
+    return osszes                                     # "nincs": bájtonként
+```
+
+</details>
+
+```python test
+sorok = [f"{i}. sor\n" for i in range(1000)]          # összesen 8890 bájt
+assert write_hivasok(sorok, "sor") == 1000
+assert write_hivasok(sorok, "teljes") == 3
+assert write_hivasok(sorok, "nincs") == 8890
+assert write_hivasok([], "teljes") == 0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Átirányítás a fájlleíró-táblában.** Kezdetben a tábla: `{0: "tty", 1: "tty", 2: "tty"}`. Írd meg az `atiranyit(lepesek)` függvényt, amely sorban végrehajtja a lépéseket, és visszaadja a táblát! Egy lépés `("fajl", fd, nev)` – az fd-t a fájlra irányítja (mint a `>`), vagy `("dup", cel, forras)` – a `cel` oda mutasson, ahová a `forras` **éppen most** mutat (mint a `2>&1`).
+
+```python starter
+def atiranyit(lepesek):
+    return {0: "tty", 1: "tty", 2: "tty"}
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def atiranyit(lepesek):
+    tabla = {0: "tty", 1: "tty", 2: "tty"}
+    for tipus, a, b in lepesek:
+        if tipus == "fajl":
+            tabla[a] = b              # pl. > ki.txt: az 1-es a fájlra mutat
+        else:
+            tabla[a] = tabla[b]       # pl. 2>&1: a 2-es oda, ahová az 1-es MOST mutat
+    return tabla
+```
+
+</details>
+
+```python test
+# ls > ki.txt 2>&1
+assert atiranyit([("fajl", 1, "ki.txt"), ("dup", 2, 1)]) == {0: "tty", 1: "ki.txt", 2: "ki.txt"}
+# ls 2>&1 > ki.txt  – a sorrend számít!
+assert atiranyit([("dup", 2, 1), ("fajl", 1, "ki.txt")]) == {0: "tty", 1: "ki.txt", 2: "tty"}
+# sort < be.txt
+assert atiranyit([("fajl", 0, "be.txt")])[0] == "be.txt"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Mennyi időt nyerünk a pufferrel?** Egy rendszerhívás fix költsége `hivas_us` µs. Írd meg a `megtakaritas(bajt, puffer, hivas_us=1.0)` függvényt: hány µs-t spórolunk, ha `puffer` méretű darabokban írunk bájtonkénti írás helyett? (Csak a hívások fix költségét számold.)
+
+```python starter
+def megtakaritas(bajt, puffer, hivas_us=1.0):
+    return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def megtakaritas(bajt, puffer, hivas_us=1.0):
+    bajtonkent = bajt * hivas_us
+    pufferrel = -(-bajt // puffer) * hivas_us
+    return bajtonkent - pufferrel
+```
+
+</details>
+
+```python test
+assert megtakaritas(1048576, 4096) == 1048576 - 256
+assert megtakaritas(100, 100, 2.0) == 198.0
+assert megtakaritas(0, 4096) == 0
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik a rendszerhívás helyes leírása?
++ egy program kérése a kerneltől egy védett művelet elvégzésére (pl. fájl megnyitása), kernel módba váltással
+- egy függvény meghívása egy másik programból
+- a felhasználó kérése a rendszergazdától
+! A program maga nem érheti el közvetlenül a hardvert.
+
+? Melyik paranccsal követed nyomon egy program rendszerhívásait Linuxon?
++ strace
+- top
+- ls
+- grep
+! Pl. strace -c ls összesítést ad.
+
+? Milyen értékkel tér vissza a write() rendszerhívás hiba esetén?
+= -1
+! A hiba okát az errno változó tartalmazza.
+
+? Mi a POSIX szerepe?
++ szabványos rendszerhívás- és parancsfelületet ír le, így egy program több Unix-szerű rendszeren is lefordítható
+- egy Linux-disztribúció neve
+- egy fájlrendszer
+! A Windows saját API-t (Win32) használ.
+
+? Melyik nem rendszerhívás, hanem könyvtári függvény (ami a háttérben rendszerhívást használhat)?
+- open
+- read
++ printf
+- fork
+! A printf pufferel, és időnként write()-ot hív.
 ```

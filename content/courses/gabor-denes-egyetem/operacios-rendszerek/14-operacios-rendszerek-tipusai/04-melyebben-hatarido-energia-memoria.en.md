@@ -118,12 +118,12 @@ Always awake, the coin cell is flat in **2 days**; with well-written sleep it la
 
 A phone has no swap in the usual sense (the flash memory would wear out, and it would be slow), so when RAM runs low, Android **kills** background apps. The decision is based on an **importance score** (on Linux `oom_score_adj`, between −1000 and +1000): the higher it is, the sooner the app is sacrificed.
 
-| Category                      | Example                        | Score (approx.) |
-| ----------------------------- | ------------------------------ | --------------- |
-| foreground app                | what you're using right now    | 0               |
-| visible / perceptible         | music player in the background | 100–200         |
-| service                       | synchronisation                | around 500      |
-| previously used (cached)      | the game you opened yesterday  | 900–999         |
+| Category                 | Example                        | Score (approx.) |
+| ------------------------ | ------------------------------ | --------------- |
+| foreground app           | what you're using right now    | 0               |
+| visible / perceptible    | music player in the background | 100–200         |
+| service                  | synchronisation                | around 500      |
+| previously used (cached) | the game you opened yesterday  | 900–999         |
 
 ```python run
 # Simplified decision of Android's low-memory killer (lmkd)

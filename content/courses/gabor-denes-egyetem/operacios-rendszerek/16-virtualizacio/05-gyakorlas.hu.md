@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – virtualizáció
 summary: Élő migráció szimulációja Pythonban, kipróbálós feladat a VirtualBoxban és Dockerrel, ellenőrző kérdések és összefoglaló feladatlap.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -96,4 +96,130 @@ Mert a modern VirtualBox a hardveresen támogatott virtualizációra épül: a v
 + SaaS
 - egyik sem
 ! Software as a Service, pl. Gmail.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Futásidő cgroups-korláttal.** Írd meg a `futasido(munka_mp, kvota_us, periodus_us, szalak=1)` függvényt: a `cpu.max` értékből adódó magszám kvóta / periódus, de egy szál legfeljebb egy magot használhat. Mennyi ideig tart `munka_mp` másodpercnyi CPU-munka (egy tizedesre)?
+
+```python starter
+def futasido(munka_mp, kvota_us, periodus_us, szalak=1):
+    return munka_mp
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def futasido(munka_mp, kvota_us, periodus_us, szalak=1):
+    magok = kvota_us / periodus_us
+    hasznalhato = min(magok, szalak)          # egy szál = legfeljebb egy mag
+    return round(munka_mp / hasznalhato, 1)
+```
+
+</details>
+
+```python test
+assert futasido(10, 50000, 100000) == 20.0
+assert futasido(10, 200000, 100000) == 10.0
+assert futasido(10, 200000, 100000, szalak=4) == 5.0
+assert futasido(6, 25000, 100000, szalak=2) == 24.0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Élő migráció körei.** Írd meg a `migracio(memoria_mb, savszel, piszkolas, kuszob=50, max_kor=30)` függvényt: körönként a maradékot átküldjük (idő = maradék / sávszél), közben piszkolás · idő MB válik piszkossá (legfeljebb a teljes memória) – ez lesz az új maradék. Ha a maradék ≤ küszöb vagy elértük a max. kört, megállunk. Add vissza a `(körök száma, leállás ms-ban egészre kerekítve)` párt; a leállás = maradék / sávszél.
+
+```python starter
+def migracio(memoria_mb, savszel, piszkolas, kuszob=50, max_kor=30):
+    return (1, 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A harmadik esetben a piszkolás gyorsabb a hálózatnál: a maradék sosem csökken, minden kör után a teljes memória piszkos – ilyenkor a VM-et lassítani kell, vagy utómásolásra (post-copy) váltani.
+
+```python solution
+def migracio(memoria_mb, savszel, piszkolas, kuszob=50, max_kor=30):
+    maradek, kor = memoria_mb, 0
+    while kor < max_kor:
+        kor += 1
+        ido = maradek / savszel
+        maradek = min(piszkolas * ido, memoria_mb)   # közben piszkos lett
+        if maradek <= kuszob:
+            break
+    return (kor, round(maradek / savszel * 1000))
+```
+
+</details>
+
+```python test
+assert migracio(8192, 1250, 200) == (3, 27)
+assert migracio(4000, 1000, 100) == (2, 40)
+assert migracio(8192, 1250, 1300, max_kor=5) == (5, 6554)
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **KSM megtakarítás.** Írd meg a `memoria_igeny(vm_db, vm_gb, kozos_gb)` függvényt, amely egy párt ad vissza: a szükséges memória KSM nélkül, és KSM-mel, ha VM-enként `kozos_gb` azonos tartalmú lapot csak egyszer kell tárolni (egy tizedesre)!
+
+```python starter
+def memoria_igeny(vm_db, vm_gb, kozos_gb):
+    return (vm_db * vm_gb, vm_db * vm_gb)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def memoria_igeny(vm_db, vm_gb, kozos_gb):
+    nelkule = vm_db * vm_gb
+    vele = vm_db * (vm_gb - kozos_gb) + kozos_gb     # a közös rész egyszer
+    return (round(nelkule, 1), round(vele, 1))
+```
+
+</details>
+
+```python test
+assert memoria_igeny(20, 4, 1.2) == (80, 57.2)
+assert memoria_igeny(1, 4, 1) == (4, 4)
+assert memoria_igeny(10, 2, 0) == (20, 20)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a különbség az 1-es és a 2-es típusú hipervizor között?
++ az 1-es közvetlenül a hardveren fut (pl. Hyper-V, ESXi, KVM), a 2-es egy gazda OS-en futó program (pl. VirtualBox)
+- az 1-es csak Linuxot futtat
+- a 2-es gyorsabb
+! A szervereken az 1-es típus az általános.
+
+? Melyik két Linux-kernelfunkcióra épülnek a konténerek?
++ névterek (namespaces) és cgroups
+- TLB és MMU
+- swap és cache
+! A névterek azt szabályozzák, mit lát a folyamat, a cgroups azt, mennyit használhat.
+
+? Mi az IaaS, PaaS és SaaS közül az, amikor a szolgáltató csak a virtuális gépet adja, minden más (OS, alkalmazás) a te dolgod?
++ IaaS
+- PaaS
+- SaaS
+! A SaaS kész alkalmazás (pl. webes levelező).
+
+? Miért indul el egy konténer sokkal gyorsabban, mint egy virtuális gép?
++ mert a gazda kernelét használja, nem kell operációs rendszert bootolni
+- mert kevesebb fájlja van
+- mert a konténer nem használ CPU-t
+! Az ára: minden konténer ugyanazt a kernelt használja.
+
+? Mit mutat a vendég rendszerben a top „st” (steal time) oszlopa?
++ mennyi időt várt a VM, mert a hipervizor a fizikai CPU-t más VM-eknek adta
+- mennyi memóriát loptak el
+- a lemez várakozási idejét
+! Magas érték túlfoglalt gazdagépre utal.
 ```

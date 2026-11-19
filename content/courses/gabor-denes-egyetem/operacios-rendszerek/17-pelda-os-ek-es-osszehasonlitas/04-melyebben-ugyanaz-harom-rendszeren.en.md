@@ -84,12 +84,12 @@ For a 1 GB process, `fork()` copies about **2 MB** of page table – 0.2% of the
 
 **Windows** thinks differently: `CreateProcess` creates an **empty** process in a single call and loads the new program into it straight away – there's no "copy myself" step. This is cleaner, but it's why Windows can't cheaply imitate `fork()`: Cygwin's (a Unix layer for Windows) `fork()` is slow, and that's why **WSL 2** runs a real Linux kernel in a lightweight VM. Modern Unix programs increasingly use **`posix_spawn()`**, which follows the Windows-style "one step" approach.
 
-| Aspect                     | `fork()` + `exec()`                                   | `CreateProcess`                             |
-| -------------------------- | ----------------------------------------------------- | ------------------------------------------- |
-| steps                      | 2: copy, then replace                                 | 1: new, empty process with the new program  |
-| what does the child inherit? | almost everything (open files, environment)         | what you specify in the parameters          |
-| redirection in the shell   | rewires descriptors between `fork` and `exec`         | in the call's parameters (STARTUPINFO)      |
-| cheap?                     | yes, with copy-on-write                               | yes, but there's no cheap "copy" operation  |
+| Aspect                       | `fork()` + `exec()`                           | `CreateProcess`                            |
+| ---------------------------- | --------------------------------------------- | ------------------------------------------ |
+| steps                        | 2: copy, then replace                         | 1: new, empty process with the new program |
+| what does the child inherit? | almost everything (open files, environment)   | what you specify in the parameters         |
+| redirection in the shell     | rewires descriptors between `fork` and `exec` | in the call's parameters (STARTUPINFO)     |
+| cheap?                       | yes, with copy-on-write                       | yes, but there's no cheap "copy" operation |
 
 ## 3. File names: letter case, forbidden names, paths
 

@@ -124,11 +124,11 @@ Meglepő eredmény: Anna, a **tulajdonos**, nem olvashatja a saját fájlját, m
 
 Könyvtáraknál a jogok mást jelentenek:
 
-| Jog | Fájlon            | Könyvtáron                                            |
-| --- | ----------------- | ----------------------------------------------------- |
-| r   | tartalom olvasása | a könyvtár **listázása** (`ls`)                       |
-| w   | tartalom írása    | fájlok **létrehozása, törlése, átnevezése** benne     |
-| x   | futtatás          | **belépés** (`cd`), és a benne lévő fájlok elérése    |
+| Jog | Fájlon            | Könyvtáron                                         |
+| --- | ----------------- | -------------------------------------------------- |
+| r   | tartalom olvasása | a könyvtár **listázása** (`ls`)                    |
+| w   | tartalom írása    | fájlok **létrehozása, törlése, átnevezése** benne  |
+| x   | futtatás          | **belépés** (`cd`), és a benne lévő fájlok elérése |
 
 Ebből fakad egy gyakori meglepetés: egy fájlt **törölhetsz**, ha a **könyvtárára** van írási jogod – akkor is, ha magára a fájlra nincs! (A `/tmp`-n ezért van a **sticky bit**, `drwxrwxrwt`: ott csak a saját fájljaidat törölheted.)
 
@@ -205,11 +205,11 @@ print("kanárival:       ", fuggveny_hivas(tamadas, kanari_vedelem=True))
 
 A három védelmi vonal, amely ma ezt megnehezíti:
 
-| Védelem              | Mit csinál?                                                              | Mi ellen?                              |
-| -------------------- | ------------------------------------------------------------------------ | -------------------------------------- |
-| **veremkanári**      | véletlen érték a puffer és a visszatérési cím között; ha sérül, leáll    | a visszatérési cím felülírása          |
-| **NX / DEP**         | a verem nem futtatható                                                   | a puffer helyére írt kártékony kód     |
-| **ASLR**             | a verem, a könyvtárak, a program címe minden indításkor más              | a „hova ugorjak?” kérdés kitalálása    |
+| Védelem         | Mit csinál?                                                           | Mi ellen?                           |
+| --------------- | --------------------------------------------------------------------- | ----------------------------------- |
+| **veremkanári** | véletlen érték a puffer és a visszatérési cím között; ha sérül, leáll | a visszatérési cím felülírása       |
+| **NX / DEP**    | a verem nem futtatható                                                | a puffer helyére írt kártékony kód  |
+| **ASLR**        | a verem, a könyvtárak, a program címe minden indításkor más           | a „hova ugorjak?” kérdés kitalálása |
 
 A **kanári** neve a bányászok kanárijából jön: a madár a mérges gázra hamarabb reagált, mint az ember – riasztott, mielőtt nagy lett volna a baj.
 

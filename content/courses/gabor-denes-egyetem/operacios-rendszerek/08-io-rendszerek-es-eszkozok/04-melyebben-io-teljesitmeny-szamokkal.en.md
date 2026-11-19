@@ -129,7 +129,7 @@ sudo iotop -o                                    # which processes are reading/w
 
 In the `iostat` output `%util` shows what percentage of the time the device was busy; if it's persistently near 100%, it's the bottleneck. (On a virtual machine the numbers also reflect the host's disk.)
 
-On Windows: **Resource Monitor → Disk** tab: read and write (B/s) per process, and at the bottom the disks' *Response Time* and *Active Time (%)*. The disk graph on Task Manager's **Performance** page also shows active time.
+On Windows: **Resource Monitor → Disk** tab: read and write (B/s) per process, and at the bottom the disks' _Response Time_ and _Active Time (%)_. The disk graph on Task Manager's **Performance** page also shows active time.
 
 ## Summary
 

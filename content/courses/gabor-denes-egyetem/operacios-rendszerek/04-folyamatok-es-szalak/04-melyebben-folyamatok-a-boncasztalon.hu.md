@@ -31,13 +31,13 @@ cat /proc/$$/limits | head -5    # korlátok: max. megnyitott fájlok, verem mé
 
 Ami itt látszik, az pontosan a **folyamatvezérlő blokk** (PCB) és a **címtér** egy része, amiről az első leckében tanultál:
 
-| A PCB eleme              | Hol látod?                          |
-| ------------------------ | ----------------------------------- |
-| azonosító, szülő         | `status`: `Pid`, `PPid`             |
-| állapot                  | `status`: `State` (R, S, D, Z, T)   |
-| megnyitott fájlok        | `fd/` mappa                         |
-| memória (címtér)         | `maps`, `status`: `VmRSS`, `VmSize` |
-| ütemezési adatok         | `sched`, `stat`                     |
+| A PCB eleme       | Hol látod?                          |
+| ----------------- | ----------------------------------- |
+| azonosító, szülő  | `status`: `Pid`, `PPid`             |
+| állapot           | `status`: `State` (R, S, D, Z, T)   |
+| megnyitott fájlok | `fd/` mappa                         |
+| memória (címtér)  | `maps`, `status`: `VmRSS`, `VmSize` |
+| ütemezési adatok  | `sched`, `stat`                     |
 
 A `VmSize` a **virtuális** címtér mérete (amennyit a folyamat „lefoglalt”), a `VmRSS` (_resident set size_) az, ami **ténylegesen a RAM-ban** van. A kettő között gyakran nagy a különbség – ennek okáról a memóriakezelés témakörben lesz szó.
 

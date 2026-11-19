@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – multitasking és időosztás
 summary: Kísérlet a nice értékkel és a magokkal, ellenőrző kérdések és összefoglaló feladatlap.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -87,4 +87,126 @@ Mert az új magon hideg a gyorsítótár és a TLB, ezért a szál egy ideig las
 = egyidejűség
 = concurrency
 ! A párhuzamosság a valóban egyidejű futás több magon.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Rezsi és várakozás.** Írd meg a `kvantum_elemzes(n, q, s)` függvényt, amely egy párt ad vissza: a rezsit százalékban (s / (q + s) · 100, egy tizedesre kerekítve) és a leghosszabb várakozást két futás között ((n − 1) · (q + s), egy tizedesre).
+
+```python starter
+def kvantum_elemzes(n, q, s):
+    return (0, 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kvantum_elemzes(n, q, s):
+    rezsi = round(s / (q + s) * 100, 1)
+    varakozas = round((n - 1) * (q + s), 1)
+    return (rezsi, varakozas)
+```
+
+</details>
+
+```python test
+assert kvantum_elemzes(5, 4, 1) == (20.0, 20.0)
+assert kvantum_elemzes(10, 10, 0.1) == (1.0, 90.9)
+assert kvantum_elemzes(1, 20, 0) == (0.0, 0.0)
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **CPU-részesedés nice értékből.** A Linux ütemezője a nice értékből súlyt képez: nagyjából **súly = 1024 / 1,25^nice**. Írd meg a `reszesedes(nice_ertekek)` függvényt, amely visszaadja, hogy az egy magon versengő feladatok a CPU hány százalékát kapják (egész számra kerekítve)!
+
+```python starter
+def reszesedes(nice_ertekek):
+    return [100 // len(nice_ertekek)] * len(nice_ertekek)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def reszesedes(nice_ertekek):
+    sulyok = [1024 / 1.25 ** n for n in nice_ertekek]
+    osszes = sum(sulyok)
+    return [round(100 * s / osszes) for s in sulyok]
+```
+
+</details>
+
+```python test
+assert reszesedes([0, 0]) == [50, 50]
+assert reszesedes([0, 1]) == [56, 44]
+assert reszesedes([0, 5]) == [75, 25]
+assert reszesedes([0, 10]) == [90, 10]
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Terheléselosztás magok között.** Írd meg a `befejezes(feladatok, magok)` függvényt: a feladatokat (futásidők ms-ban) **a leghosszabbal kezdve** mindig a legkevésbé terhelt magra tesszük. Add vissza, mikor végez a legutolsó mag (ms)!
+
+```python starter
+def befejezes(feladatok, magok):
+    return sum(feladatok)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+Ez a „leghosszabb előre” (LPT) mohó módszer. A második példa mutatja a korlátot: egy 10 ms-os feladatot semmilyen elosztás nem gyorsít – egy feladat egyszerre csak egy magon fut.
+
+```python solution
+def befejezes(feladatok, magok):
+    terheles = [0] * magok
+    for f in sorted(feladatok, reverse=True):     # a leghosszabbal kezdünk
+        i = terheles.index(min(terheles))         # a legkevésbé terhelt mag
+        terheles[i] += f
+    return max(terheles)
+```
+
+</details>
+
+```python test
+assert befejezes([5, 5, 4, 4, 3, 3], 3) == 8
+assert befejezes([10, 1, 1, 1], 2) == 10
+assert befejezes([2, 2, 2, 2], 4) == 2
+assert befejezes([7, 3], 1) == 10
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a különbség a párhuzamosság és a konkurencia között?
++ párhuzamosság: több feladat valóban egyszerre fut több magon; konkurencia: több feladat halad egymásba fonódva, akár egy magon is
+- nincs különbség
+- a konkurencia csak hálózaton létezik
+! Egy magon is lehet konkurencia, de párhuzamosság nem.
+
+? Mi a processzor-affinitás?
++ egy szál lehetőleg ugyanazon a magon fusson, mert ott „meleg” a gyorsítótára
+- a processzor órajelének növelése
+- a processzor hőmérséklet-szabályozása
+! Linuxon a taskset paranccsal állítható.
+
+? Melyik nice érték jelenti a legmagasabb prioritást Linuxon?
+= -20
+! A tartomány −20 (legmagasabb) … +19 (legalacsonyabb).
+
+? Miért nem érdemes a Windows Feladatkezelőben egy programot „Valós idejű” prioritásra állítani?
++ mert egy elszabadult program elveheti a CPU-t a rendszer többi részétől is
+- mert attól a program lassabb lesz
+- mert ez csak Linuxon működik
+! A valós idejű szintek mindig megelőzik a közönségeseket.
+
+? Mi az önkéntes környezetváltás?
++ amikor a folyamat maga vár (pl. I/O-ra), és lemond a CPU-ról
+- amikor lejár az időszelete
+- amikor a felhasználó bezárja a programot
+! A kényszerített (nonvoluntary) váltás az időszelet lejártakor történik.
 ```

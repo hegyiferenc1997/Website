@@ -17,18 +17,18 @@ minutes: 45
 
 The method of performance engineer Brendan Gregg: for **every resource** (CPU, memory, disk, network), check **three** things:
 
-| Letter | Meaning           | Question                                        |
-| ------ | ----------------- | ----------------------------------------------- |
-| **U**  | **Utilisation**   | What percentage of the time was it busy?        |
-| **S**  | **Saturation**    | Is there a queue, is anyone waiting for it?     |
-| **E**  | **Errors**        | Are there errors (retransmissions, I/O errors)? |
+| Letter | Meaning         | Question                                        |
+| ------ | --------------- | ----------------------------------------------- |
+| **U**  | **Utilisation** | What percentage of the time was it busy?        |
+| **S**  | **Saturation**  | Is there a queue, is anyone waiting for it?     |
+| **E**  | **Errors**      | Are there errors (retransmissions, I/O errors)? |
 
-| Resource | Utilisation               | Saturation                           | Errors                        |
-| -------- | ------------------------- | ------------------------------------ | ----------------------------- |
-| CPU      | `top`: %us + %sy          | `vmstat`: **r** > number of cores    | rare (`dmesg`: MCE errors)    |
-| memory   | `free`: used / total      | `vmstat`: **si/so** (paging) > 0     | `dmesg`: OOM killer           |
-| disk     | `iostat -x`: **%util**    | `iostat -x`: **aqu-sz** (queue size) | `dmesg`: I/O error            |
-| network  | `sar -n DEV`: kbit/s      | `ss -ti`: retransmits, drops         | `ip -s link`: errors, dropped |
+| Resource | Utilisation            | Saturation                           | Errors                        |
+| -------- | ---------------------- | ------------------------------------ | ----------------------------- |
+| CPU      | `top`: %us + %sy       | `vmstat`: **r** > number of cores    | rare (`dmesg`: MCE errors)    |
+| memory   | `free`: used / total   | `vmstat`: **si/so** (paging) > 0     | `dmesg`: OOM killer           |
+| disk     | `iostat -x`: **%util** | `iostat -x`: **aqu-sz** (queue size) | `dmesg`: I/O error            |
+| network  | `sar -n DEV`: kbit/s   | `ss -ti`: retransmits, drops         | `ip -s link`: errors, dropped |
 
 The point: **saturation** is often more important than utilisation. A CPU working at 100% may still be fine (if nobody's waiting for it), but if 20 processes are queuing, users feel the slowness.
 

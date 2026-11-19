@@ -129,7 +129,7 @@ sudo iotop -o                                    # mely folyamatok írnak/olvasn
 
 Az `iostat` kimenetében a `%util` azt mutatja, az idő hány százalékában volt foglalt az eszköz; ha tartósan 100% közelében van, az a szűk keresztmetszet. (Virtuális gépen a számok a gazdagép lemezét is tükrözik.)
 
-Windowson: **Erőforrás-figyelő → Lemez** lap: folyamatonként az olvasás és írás (B/s), lent pedig a lemezek *Válaszideje* és *Aktív idő (%)* értéke. A Feladatkezelő **Teljesítmény** lapján a lemez grafikonja szintén az aktív időt mutatja.
+Windowson: **Erőforrás-figyelő → Lemez** lap: folyamatonként az olvasás és írás (B/s), lent pedig a lemezek _Válaszideje_ és _Aktív idő (%)_ értéke. A Feladatkezelő **Teljesítmény** lapján a lemez grafikonja szintén az aktív időt mutatja.
 
 ## Összefoglalás
 

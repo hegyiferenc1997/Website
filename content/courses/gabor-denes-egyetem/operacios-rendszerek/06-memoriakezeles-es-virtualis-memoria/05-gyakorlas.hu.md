@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – memóriakezelés
 summary: Ellenőrző kérdések, számolós feladatok címfordításból és lapcseréből, kísérlet a VM-ben.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -71,4 +71,133 @@ Valószínűleg vergődés: kevés a RAM a futó programokhoz. Zárjon be progra
 ? Mi a Windows lapozófájljának neve?
 = pagefile.sys
 ! Linuxon swap partíció vagy swapfile.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Címfordítás laptáblával.** Írd meg a `fizikai(cim, laptabla, lapmeret=4096)` függvényt: bontsd a virtuális címet lapszámra és eltolásra, keresd meg a lapszámhoz tartozó keretet a `laptabla` szótárban, és add vissza a fizikai címet. Ha a lap nincs a táblában, add vissza a `None`-t (laphiba)!
+
+```python starter
+def fizikai(cim, laptabla, lapmeret=4096):
+    return cim
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def fizikai(cim, laptabla, lapmeret=4096):
+    lap, eltolas = divmod(cim, lapmeret)     # lapszám és lapon belüli eltolás
+    if lap not in laptabla:
+        return None                          # laphiba
+    return laptabla[lap] * lapmeret + eltolas
+```
+
+</details>
+
+```python test
+tabla = {0: 5, 1: 2, 3: 7}
+assert fizikai(100, tabla) == 5 * 4096 + 100
+assert fizikai(4096 + 10, tabla) == 2 * 4096 + 10
+assert fizikai(2 * 4096, tabla) is None
+assert fizikai(3 * 4096 + 4095, tabla) == 7 * 4096 + 4095
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **LRU laphibák.** Írd meg az `lru_hibak(hivatkozasok, keretek)` függvényt, amely megszámolja a laphibákat LRU lapcserével: ha a memória tele van, a **legrégebben használt** lapot kell kidobni.
+
+```python starter
+def lru_hibak(hivatkozasok, keretek):
+    return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def lru_hibak(hivatkozasok, keretek):
+    memoria = []                     # elöl a legrégebben használt
+    hibak = 0
+    for lap in hivatkozasok:
+        if lap in memoria:
+            memoria.remove(lap)      # találat: a végére kerül (legutóbb használt)
+        else:
+            hibak += 1
+            if len(memoria) == keretek:
+                memoria.pop(0)       # a legrégebben használt megy
+        memoria.append(lap)
+    return hibak
+```
+
+</details>
+
+```python test
+sor = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
+assert lru_hibak(sor, 3) == 9
+assert lru_hibak([1, 2, 1, 2], 2) == 2
+assert lru_hibak([1, 2, 3, 1, 2, 3], 2) == 6
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Effektív memória-elérési idő.** A TLB keresése `tlb` ns, egy memóriaolvasás `mem` ns. TLB-találatnál 1 memóriaolvasás kell, TLB-hibánál 2 (laptábla + adat; egyszintű laptáblát feltételezve). Írd meg az `eat(tlb, mem, talalati_arany)` függvényt!
+
+```python starter
+def eat(tlb, mem, talalati_arany):
+    return mem
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def eat(tlb, mem, talalati_arany):
+    talalat = tlb + mem              # TLB + az adat
+    hiba = tlb + 2 * mem             # TLB + laptábla + az adat
+    return talalati_arany * talalat + (1 - talalati_arany) * hiba
+```
+
+</details>
+
+```python test
+assert round(eat(20, 100, 0.8), 1) == 140.0
+assert round(eat(20, 100, 0.98), 1) == 122.0
+assert round(eat(0, 100, 1.0), 1) == 100.0
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Egy 32 bites címtérben 4 KB-os lapokat használunk. Hány bit jut az eltolásra (offset)?
+= 12
+! 4096 = 2¹², a maradék 20 bit a lapszám.
+
+? Mi a vergődés (thrashing)?
++ a rendszer több időt tölt lapozással, mint hasznos munkával, mert kevés a memória a futó folyamatoknak
+- a merevlemez fizikai rezgése
+- a TLB túl gyakori ürítése
+! Megoldás: kevesebb egyidejű folyamat vagy több RAM.
+
+? Mi a különbség a belső és a külső tördelődés között?
++ belső: a kiosztott blokkon belül marad kihasználatlan hely; külső: a szabad hely sok kis darabban van szétszórva
+- a belső a RAM-ban, a külső a lemezen keletkezik
+- nincs különbség
+! A lapozás megszünteti a külső tördelődést, de kis belsőt okoz (a lap végén).
+
+? Mi a Bélády-anomália?
+- a laphibák száma csökken, ha kevesebb keretünk van
++ FIFO lapcserénél több keret néha több laphibát okoz
+- az LRU mindig a legjobb
+! Az LRU-nál és az optimálisnál nem fordul elő.
+
+? Melyik lapcsere-algoritmus a legjobb elméletben, de a gyakorlatban megvalósíthatatlan?
++ az optimális (OPT): azt dobja ki, amelyiket a legkésőbb használják újra
+- FIFO
+- LRU
+- óra (clock)
+! A jövőt nem ismerjük – mércének használják.
 ```

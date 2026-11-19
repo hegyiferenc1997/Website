@@ -40,21 +40,21 @@ A 4. lépés (fork + exec) a folyamatok témakörben kerül elő részletesen: m
 
 A kifejtés hasznos, de meglepetéseket is okozhat. Az idézőjelekkel szabályozod:
 
-| Írásmód          | Mi történik?                                               | Példa                         | Eredmény                  |
-| ---------------- | ---------------------------------------------------------- | ----------------------------- | ------------------------- |
-| idézőjel nélkül  | minden kifejtés megtörténik, a szóközök szavakat választanak el | `echo $HOME *.txt`        | `/home/anna a.txt b.txt`  |
-| `"…"` (dupla)    | a változók kifejtődnek, a `*` és a szóközök nem            | `echo "$HOME *.txt"`          | `/home/anna *.txt`        |
-| `'…'` (szimpla)  | **semmi** nem fejtődik ki, betű szerint marad              | `echo '$HOME *.txt'`          | `$HOME *.txt`             |
+| Írásmód         | Mi történik?                                                    | Példa                | Eredmény                 |
+| --------------- | --------------------------------------------------------------- | -------------------- | ------------------------ |
+| idézőjel nélkül | minden kifejtés megtörténik, a szóközök szavakat választanak el | `echo $HOME *.txt`   | `/home/anna a.txt b.txt` |
+| `"…"` (dupla)   | a változók kifejtődnek, a `*` és a szóközök nem                 | `echo "$HOME *.txt"` | `/home/anna *.txt`       |
+| `'…'` (szimpla) | **semmi** nem fejtődik ki, betű szerint marad                   | `echo '$HOME *.txt'` | `$HOME *.txt`            |
 
 Gyakori hiba: egy szóközt tartalmazó fájlnév. A `rm Saját dokumentum.txt` **két** fájlt próbál törölni (`Saját` és `dokumentum.txt`)! Helyesen: `rm "Saját dokumentum.txt"`. Szkriptben a változókat mindig tedd dupla idézőjelbe: `"$fajl"`.
 
 A helyettesítő karakterek (_glob_):
 
-| Minta      | Jelentés                          | Példa                                  |
-| ---------- | --------------------------------- | -------------------------------------- |
-| `*`        | bármennyi (akár 0) karakter       | `*.log` – minden `.log` végű fájl      |
-| `?`        | pontosan egy karakter             | `nap?.txt` – `nap1.txt`, `nap2.txt`    |
-| `[abc]`    | egy karakter a felsoroltak közül  | `[ab]*.txt` – `a` vagy `b` kezdetű     |
+| Minta   | Jelentés                         | Példa                               |
+| ------- | -------------------------------- | ----------------------------------- |
+| `*`     | bármennyi (akár 0) karakter      | `*.log` – minden `.log` végű fájl   |
+| `?`     | pontosan egy karakter            | `nap?.txt` – `nap1.txt`, `nap2.txt` |
+| `[abc]` | egy karakter a felsoroltak közül | `[ab]*.txt` – `a` vagy `b` kezdetű  |
 
 Figyelem: a glob **nem** reguláris kifejezés! A `*` itt „bármi”, a regexben „az előző karakter akárhányszor”.
 
@@ -71,11 +71,11 @@ ls /nincs-ilyen     ; echo $?        # 2 – hiba (nincs ilyen mappa)
 
 A kilépési kódra építve fűzhetsz össze parancsokat:
 
-| Összekötés | Jelentés                                          | Példa                                           |
-| ---------- | ------------------------------------------------- | ----------------------------------------------- |
-| `a ; b`    | `a`, utána `b` mindenképp                         | `cd /tmp ; ls`                                  |
-| `a && b`   | `b` csak akkor fut, ha `a` **sikerült**           | `sudo apt update && sudo apt upgrade`           |
-| `a \|\| b` | `b` csak akkor fut, ha `a` **nem sikerült**       | `ping -c1 pelda.hu \|\| echo "Nincs net!"`       |
+| Összekötés | Jelentés                                    | Példa                                      |
+| ---------- | ------------------------------------------- | ------------------------------------------ |
+| `a ; b`    | `a`, utána `b` mindenképp                   | `cd /tmp ; ls`                             |
+| `a && b`   | `b` csak akkor fut, ha `a` **sikerült**     | `sudo apt update && sudo apt upgrade`      |
+| `a \|\| b` | `b` csak akkor fut, ha `a` **nem sikerült** | `ping -c1 pelda.hu \|\| echo "Nincs net!"` |
 
 Az `apt update && apt upgrade` azért jó szokás, mert ha a csomaglista frissítése nem sikerül (pl. nincs internet), a frissítés el sem indul.
 
@@ -98,7 +98,7 @@ export PATH="$PATH:$HOME/bin"     # a ~/bin mappát a lista végére tesszük
 
 **Biztonsági megjegyzés:** soha ne tedd a PATH **elejére** az aktuális mappát (`.`)! Ha valaki egy `ls` nevű kártevőt hagy egy mappában, és te ott kiadod az `ls` parancsot, az ő programja futna a valódi helyett. (Ezért kell Linuxon a saját programot `./program` alakban indítani.)
 
-Windowson is van PATH (`$env:Path` PowerShellben), és ugyanígy működik; a környezeti változókat a *Rendszer → Speciális rendszerbeállítások → Környezeti változók* ablakban is szerkesztheted.
+Windowson is van PATH (`$env:Path` PowerShellben), és ugyanígy működik; a környezeti változókat a _Rendszer → Speciális rendszerbeállítások → Környezeti változók_ ablakban is szerkesztheted.
 
 ## 5. Esettanulmány: naplóelemzés csővezetékkel
 

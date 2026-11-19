@@ -1,7 +1,7 @@
 ---
 title: Practice – Interfaces
 summary: Review questions, command-line mini exercises and a summary worksheet.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -78,4 +78,126 @@ Under X11 any graphical program can read the other programs' keystrokes and scre
 + Xfce
 - Aqua
 ! Xubuntu uses it; it is good for older machines too.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Your own `wc`.** Write the `wc(text)` function, which returns a triple: the number of **lines** (the number of `\n` characters, as with the real `wc -l`), the number of **words** (separated by spaces and line ends), and the number of **characters**.
+
+```python starter
+def wc(text):
+    return (0, 0, 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def wc(text):
+    lines = text.count("\n")          # wc -l counts line endings
+    words = len(text.split())         # split() without an argument: on any whitespace
+    return (lines, words, len(text))
+```
+
+</details>
+
+```python test
+assert wc("hello kernel\nhi shell\n") == (2, 4, 22)
+assert wc("") == (0, 0, 0)
+assert wc("one  two   three") == (0, 3, 16)
+print("All checks passed!")
+```
+
+**2.** **Your own `grep -c`.** Write the `grep_c(lines, pattern, ignore_case=False)` function: how many lines contain the pattern? If `ignore_case` is true (like `grep -i`), upper and lower case shouldn't matter.
+
+```python starter
+def grep_c(lines, pattern, ignore_case=False):
+    return 0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def grep_c(lines, pattern, ignore_case=False):
+    if ignore_case:
+        pattern = pattern.lower()
+        lines = [s.lower() for s in lines]
+    return sum(1 for s in lines if pattern in s)
+```
+
+</details>
+
+```python test
+log = ["ERROR disk", "info start-up", "error network", "Warning", "ERROR memory"]
+assert grep_c(log, "ERROR") == 2
+assert grep_c(log, "error", ignore_case=True) == 3
+assert grep_c(log, "none") == 0
+print("All checks passed!")
+```
+
+**3.** **Where does the shell look for the command?** The shell searches the directories of the `PATH` variable **in order**, and runs the **first** match. Write the `which(command, path, existing)` function: `path` is a colon-separated list of directories, `existing` is the set of full paths of existing files. Return the path of the first match, or `None`!
+
+```python starter
+def which(command, path, existing):
+    return None
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def which(command, path, existing):
+    for directory in path.split(":"):        # in order, the first wins
+        candidate = directory.rstrip("/") + "/" + command
+        if candidate in existing:
+            return candidate
+    return None
+```
+
+</details>
+
+```python test
+files = {"/usr/bin/python3", "/usr/local/bin/python3", "/bin/ls"}
+assert which("python3", "/usr/local/bin:/usr/bin:/bin", files) == "/usr/local/bin/python3"
+assert which("python3", "/usr/bin:/usr/local/bin", files) == "/usr/bin/python3"
+assert which("ls", "/usr/bin:/bin", files) == "/bin/ls"
+assert which("none", "/usr/bin:/bin", files) is None
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does echo $? print if the previous command ran successfully?
+= 0
+! Exit code 0 means success, anything else an error.
+
+? What does command1 && command2 do?
++ command2 runs only if command1 succeeded
+- command2 runs in any case
+- the two commands run in parallel
+! || is the opposite: it runs the second only on failure.
+
+? Which files does the pattern *.txt match?
++ every file ending in .txt in the current directory (except hidden ones starting with a dot)
+- only the file called txt
+- every file in subdirectories too
+! The shell expands the pattern, not the program.
+
+? What is the difference between the > and >> redirections?
+- there's no difference
++ > overwrites the file, >> appends to its end
+- >> redirects the error output
+! The error output is 2>.
+
+? How can you work on a server without a graphical interface?
++ with a command-line interface, for example over SSH
+- only by connecting a monitor
+- you can't
+! Most servers run without a graphical interface.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Practice – Closing Summary of the Course
 summary: A Linux–Windows command dictionary, a comparison task on your two virtual machines, review questions and a closing worksheet covering the whole course.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -115,4 +115,138 @@ Because the macOS licence only allows it to run on Apple hardware, and VirtualBo
 - macOS
 - FreeRTOS
 ! Free, open and easy to automate.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Boot time with parallel start-up.** The `services` dictionary maps each name to a `(start_up_time, list_of_dependencies)` pair. Write the `boot_time(services)` function: a service can start once all its dependencies have finished; return when the last one finishes (the length of the critical path)!
+
+```python starter
+def boot_time(services):
+    return sum(t for t, _ in services.values())
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def boot_time(services):
+    done = {}
+    def end(name):
+        if name not in done:
+            t, deps = services[name]
+            start = max((end(d) for d in deps), default=0)
+            done[name] = start + t
+        return done[name]
+    return max(end(n) for n in services)
+```
+
+</details>
+
+```python test
+s = {"A": (2, []), "B": (3, ["A"]), "C": (4, ["A"])}
+assert boot_time(s) == 6
+s2 = {"disk": (1, []), "net": (2, ["disk"]), "db": (3, ["disk"]), "web": (1, ["net", "db"])}
+assert boot_time(s2) == 5
+assert boot_time({"one": (7, [])}) == 7
+print("All checks passed!")
+```
+
+**2.** **Valid Windows file name?** Write the `ok_on_windows(name)` function: false if the name contains any of the characters `<>:"/\|?*`, if its part before the dot is (case-insensitively) a reserved device name (`CON`, `PRN`, `AUX`, `NUL`, `COM1`–`COM9`, `LPT1`–`LPT9`), or if it ends with a space or a dot; otherwise true.
+
+```python starter
+def ok_on_windows(name):
+    return True
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+FORBIDDEN = set('<>:"/\\|?*')
+RESERVED = {"CON", "PRN", "AUX", "NUL"} | {f"COM{i}" for i in range(1, 10)} \
+         | {f"LPT{i}" for i in range(1, 10)}
+
+def ok_on_windows(name):
+    if FORBIDDEN & set(name):
+        return False
+    if name.split(".")[0].upper() in RESERVED:
+        return False
+    return not name.endswith((" ", "."))
+```
+
+</details>
+
+```python test
+assert ok_on_windows("notes.md") is True
+assert ok_on_windows("draft:1.md") is False
+assert ok_on_windows("con.txt") is False
+assert ok_on_windows("Com3") is False
+assert ok_on_windows("console.txt") is True
+assert ok_on_windows("data.csv ") is False
+print("All checks passed!")
+```
+
+**3.** **CRLF to LF.** Write the `to_lf(data)` function: replace every `\r\n` in the byte sequence with `\n`, and return the pair `(new bytes, number of replacements)` – this is what `dos2unix` does.
+
+```python starter
+def to_lf(data):
+    return (data, 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def to_lf(data):
+    n = data.count(b"\r\n")
+    return (data.replace(b"\r\n", b"\n"), n)
+```
+
+</details>
+
+```python test
+assert to_lf(b"echo hello\r\necho bye\r\n") == (b"echo hello\necho bye\n", 2)
+assert to_lf(b"already fine\n") == (b"already fine\n", 0)
+assert to_lf(b"") == (b"", 0)
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which is the first user process (PID 1) on today's Ubuntu?
++ systemd
+- init.exe
+- launchd
+- bash
+! On macOS launchd, on Windows the System process is PID 4.
+
+? Where does Windows store most system and program settings?
++ in the registry
+- in the /etc directory
+- in .plist files
+! On Linux text files in /etc, on macOS .plist files.
+
+? Which file system is the default on today's macOS?
+- NTFS
+- ext4
++ APFS
+! Windows: NTFS, Linux: ext4.
+
+? What is WSL?
++ the Windows Subsystem for Linux: running Linux programs on Windows (WSL 2 with a real Linux kernel)
+- a Windows antivirus
+- a Linux distribution
+! It gives computer engineers a comfortable Linux environment on Windows too.
+
+? Which package manager lets you install programs from the command line on Windows?
++ winget
+- apt
+- Homebrew
+! Ubuntu: apt, macOS: Homebrew (installed separately).
 ```

@@ -124,11 +124,11 @@ A surprising result: Anna, the **owner**, can't read her own file, while Cili (o
 
 On directories, permissions mean something different:
 
-| Perm | On a file         | On a directory                                         |
-| ---- | ----------------- | ------------------------------------------------------ |
-| r    | read the contents | **list** the directory (`ls`)                          |
-| w    | write the contents| **create, delete, rename** files in it                 |
-| x    | execute           | **enter** it (`cd`), and access the files in it        |
+| Perm | On a file          | On a directory                                  |
+| ---- | ------------------ | ----------------------------------------------- |
+| r    | read the contents  | **list** the directory (`ls`)                   |
+| w    | write the contents | **create, delete, rename** files in it          |
+| x    | execute            | **enter** it (`cd`), and access the files in it |
 
 This leads to a common surprise: you can **delete** a file if you have write permission on its **directory** – even if you have none on the file itself! (That's why `/tmp` has the **sticky bit**, `drwxrwxrwt`: there you can only delete your own files.)
 
@@ -205,11 +205,11 @@ print("with canary:     ", function_call(attack, canary_protection=True))
 
 The three lines of defence that make this hard today:
 
-| Defence          | What does it do?                                                          | Against what?                          |
-| ---------------- | ------------------------------------------------------------------------- | -------------------------------------- |
-| **stack canary** | a random value between the buffer and the return address; abort if damaged | overwriting the return address        |
-| **NX / DEP**     | the stack isn't executable                                                | malicious code written into the buffer |
-| **ASLR**         | the stack, libraries and program address differ on every start            | guessing "where should I jump?"        |
+| Defence          | What does it do?                                                           | Against what?                          |
+| ---------------- | -------------------------------------------------------------------------- | -------------------------------------- |
+| **stack canary** | a random value between the buffer and the return address; abort if damaged | overwriting the return address         |
+| **NX / DEP**     | the stack isn't executable                                                 | malicious code written into the buffer |
+| **ASLR**         | the stack, libraries and program address differ on every start             | guessing "where should I jump?"        |
 
 The **canary** is named after the miners' canary: the bird reacted to poisonous gas sooner than people – it raised the alarm before things got bad.
 

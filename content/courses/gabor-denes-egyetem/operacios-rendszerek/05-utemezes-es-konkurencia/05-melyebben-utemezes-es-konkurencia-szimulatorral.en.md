@@ -31,12 +31,12 @@ A reminder of the metrics:
 
 FCFS runs in arrival order: P1 0–7, P2 7–11, P3 11–12, P4 12–16.
 
-| Process | Completion | Turnaround    | Waiting    |
-| ------- | ---------- | ------------- | ---------- |
-| P1      | 7          | 7 − 0 = 7     | 7 − 7 = 0  |
-| P2      | 11         | 11 − 2 = 9    | 9 − 4 = 5  |
-| P3      | 12         | 12 − 4 = 8    | 8 − 1 = 7  |
-| P4      | 16         | 16 − 5 = 11   | 11 − 4 = 7 |
+| Process | Completion | Turnaround  | Waiting    |
+| ------- | ---------- | ----------- | ---------- |
+| P1      | 7          | 7 − 0 = 7   | 7 − 7 = 0  |
+| P2      | 11         | 11 − 2 = 9  | 9 − 4 = 5  |
+| P3      | 12         | 12 − 4 = 8  | 8 − 1 = 7  |
+| P4      | 16         | 16 − 5 = 11 | 11 − 4 = 7 |
 
 Average waiting: (0 + 5 + 7 + 7) / 4 = **4.75 ms**. Poor P3, which only wanted 1 ms, had to wait 7 ms – this is the **convoy effect**: short processes get stuck behind a long one.
 

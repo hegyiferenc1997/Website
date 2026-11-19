@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – a laborkörnyezet
 summary: Ellenőrző lista a kész laborhoz, ellenőrző kérdések és összefoglaló feladatlap.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -110,4 +110,124 @@ Hogy a vendég eddig csak kb. 12 GB-ot írt a lemezére. A fájl a használattal
 + Kikapcsolás (tápkábel kihúzása)
 - Pillanatkép készítése
 ! A kikapcsolás adatvesztéssel járhat, ezért csak végső esetben.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Mennyi RAM-ot adhatsz a VM-nek?** Írd meg a `vm_ram(gazda_gb)` függvényt: a gazdagépnek a RAM **felét**, de **legalább 4 GB**-ot meg kell tartania; a többit adhatod a VM-nek (negatív érték helyett 0).
+
+```python starter
+def vm_ram(gazda_gb):
+    # a gazdának legalább a fele, de minimum 4 GB marad
+    return gazda_gb
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def vm_ram(gazda_gb):
+    # a gazdának legalább a fele, de minimum 4 GB marad
+    megtart = max(gazda_gb / 2, 4)
+    return max(gazda_gb - megtart, 0)
+```
+
+</details>
+
+```python test
+assert vm_ram(16) == 8
+assert vm_ram(6) == 2
+assert vm_ram(4) == 0
+assert vm_ram(32) == 16
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **GB vagy GiB?** A lemezgyártók 10-es (1 GB = 10⁹ bájt), a Windows és a VirtualBox gyakran 2-es alapú egységet (1 GiB = 2³⁰ bájt) használ. Írd meg a `gb_bol_gib(gb)` függvényt, amely két tizedesre kerekítve megadja, hány GiB egy adott GB-os lemez!
+
+```python starter
+def gb_bol_gib(gb):
+    return gb
+```
+
+<details>
+<summary>Megoldás</summary>
+
+Ezért látsz egy „1 TB-os” lemezből a Windowsban csak kb. 931 GB-ot: nincs elveszett hely, csak más a mértékegység.
+
+```python solution
+def gb_bol_gib(gb):
+    bajt = gb * 10**9            # a gyártó 10-es alapú gigabájtja
+    return round(bajt / 2**30, 2)
+```
+
+</details>
+
+```python test
+assert gb_bol_gib(1000) == 931.32      # egy "1 TB-os" lemez
+assert gb_bol_gib(500) == 465.66
+assert gb_bol_gib(1) == 0.93
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Elfér-e egyszerre?** Írd meg az `elfer(vm_ramok, gazda_gb)` függvényt: igaz, ha az egyszerre futó VM-ek RAM-jának összege, plusz a gazdának fenntartott **4 GB**, legfeljebb akkora, mint a gazda RAM-ja.
+
+```python starter
+def elfer(vm_ramok, gazda_gb):
+    return True
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elfer(vm_ramok, gazda_gb):
+    return sum(vm_ramok) + 4 <= gazda_gb
+```
+
+</details>
+
+```python test
+assert elfer([4, 4], 16) is True
+assert elfer([8, 4], 16) is True
+assert elfer([8, 6], 16) is False
+assert elfer([], 4) is True
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik hálózati módban kap a VM az otthoni routertől saját IP-címet, így a hálózat többi gépe is eléri?
+- NAT
++ híd (bridged)
+- csak gazda (host-only)
+! A NAT mögött a VM a 10.0.2.15 magáncímet kapja, kívülről nem érhető el közvetlenül.
+
+? Mire való a pillanatkép (snapshot) a VirtualBoxban?
++ a VM egy adott állapotának elmentésére, ahová később vissza lehet állni
+- a VM képernyőjének lefényképezésére
+- a VM áthelyezésére egy másik gépre
+! Kísérletezés előtt mindig érdemes pillanatképet készíteni.
+
+? A gépeden 8 logikai processzor van. Legfeljebb hány vCPU-t ésszerű adni egy VM-nek, hogy a gazda is használható maradjon?
+- 8
++ 4
+- 16
+! Ökölszabály: legfeljebb a logikai processzorok fele.
+
+? Mi a dinamikusan foglalt virtuális lemez előnye a fix méretűvel szemben?
++ csak annyi helyet foglal a gazdán, amennyi adat ténylegesen van rajta
+- mindig gyorsabb
+- nem lehet megtelni
+! A fix méretű lemez kicsit gyorsabb lehet, de rögtön a teljes méretet lefoglalja.
+
+? Mit telepít a vendég rendszerbe a VirtualBox vendégkiegészítő (Guest Additions)?
+- egy második operációs rendszert
++ illesztőprogramokat: jobb grafika, közös vágólap, megosztott mappák
+- vírusirtót
+! Linuxon a vboxguest kernelmodul is ennek része.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Practice – the Lab Environment
 summary: Checklist for the finished lab, review questions and a summary worksheet.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -110,4 +110,124 @@ That the guest has written only about 12 GB to its disk so far. The file grows w
 + Power off (pulling the cable)
 - Taking a snapshot
 ! Powering off may lose data, so only as a last resort.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **How much RAM can you give the VM?** Write the `vm_ram(host_gb)` function: the host must keep **half** of the RAM, but **at least 4 GB**; you can give the rest to the VM (0 instead of a negative value).
+
+```python starter
+def vm_ram(host_gb):
+    # the host keeps at least half, but minimum 4 GB
+    return host_gb
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def vm_ram(host_gb):
+    # the host keeps at least half, but minimum 4 GB
+    keep = max(host_gb / 2, 4)
+    return max(host_gb - keep, 0)
+```
+
+</details>
+
+```python test
+assert vm_ram(16) == 8
+assert vm_ram(6) == 2
+assert vm_ram(4) == 0
+assert vm_ram(32) == 16
+print("All checks passed!")
+```
+
+**2.** **GB or GiB?** Disk manufacturers use base-10 units (1 GB = 10⁹ bytes), Windows and VirtualBox often base-2 units (1 GiB = 2³⁰ bytes). Write the `gb_to_gib(gb)` function, which returns how many GiB a disk of a given GB size is, rounded to two decimals!
+
+```python starter
+def gb_to_gib(gb):
+    return gb
+```
+
+<details>
+<summary>Solution</summary>
+
+That's why a "1 TB" disk shows up as only about 931 GB in Windows: no space is lost, the unit is just different.
+
+```python solution
+def gb_to_gib(gb):
+    nbytes = gb * 10**9          # the manufacturer's base-10 gigabyte
+    return round(nbytes / 2**30, 2)
+```
+
+</details>
+
+```python test
+assert gb_to_gib(1000) == 931.32       # a "1 TB" disk
+assert gb_to_gib(500) == 465.66
+assert gb_to_gib(1) == 0.93
+print("All checks passed!")
+```
+
+**3.** **Do they fit at once?** Write the `fits(vm_rams, host_gb)` function: true if the sum of the RAM of the VMs running at the same time, plus the **4 GB** reserved for the host, is at most the host's RAM.
+
+```python starter
+def fits(vm_rams, host_gb):
+    return True
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def fits(vm_rams, host_gb):
+    return sum(vm_rams) + 4 <= host_gb
+```
+
+</details>
+
+```python test
+assert fits([4, 4], 16) is True
+assert fits([8, 4], 16) is True
+assert fits([8, 6], 16) is False
+assert fits([], 4) is True
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? In which network mode does the VM get its own IP address from the home router, so other machines on the network can reach it?
+- NAT
++ bridged
+- host-only
+! Behind NAT the VM gets the private address 10.0.2.15 and can't be reached directly from outside.
+
+? What is a snapshot for in VirtualBox?
++ saving a given state of the VM that you can return to later
+- taking a picture of the VM's screen
+- moving the VM to another machine
+! It's always worth taking a snapshot before experimenting.
+
+? Your machine has 8 logical processors. At most how many vCPUs is it sensible to give a VM so the host stays usable?
+- 8
++ 4
+- 16
+! Rule of thumb: at most half of the logical processors.
+
+? What is the advantage of a dynamically allocated virtual disk over a fixed-size one?
++ it takes up only as much space on the host as the data actually on it
+- it's always faster
+- it can never fill up
+! A fixed-size disk can be slightly faster, but reserves the full size immediately.
+
+? What do the VirtualBox Guest Additions install in the guest system?
+- a second operating system
++ drivers: better graphics, shared clipboard, shared folders
+- an antivirus
+! On Linux the vboxguest kernel module is part of it.
 ```

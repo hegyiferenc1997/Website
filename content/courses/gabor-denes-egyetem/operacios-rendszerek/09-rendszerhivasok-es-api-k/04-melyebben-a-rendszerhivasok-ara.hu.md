@@ -46,11 +46,11 @@ A `/dev/zero` végtelen nullát ad, a `/dev/null` mindent elnyel – így csak a
 
 A C könyvtár (és a Python is) **háromféle** pufferelést használ a szabványos kimenetre:
 
-| Mód                  | Mikor írja ki?                      | Mikor használják?                          |
-| -------------------- | ----------------------------------- | ------------------------------------------ |
-| **puffereletlen**    | azonnal                             | hibakimenet (`stderr`) – a hiba ne vesszen el |
-| **sorpufferelt**     | minden sorvégnél (`\n`)             | ha a kimenet **terminál** – lásd azonnal   |
-| **teljesen pufferelt** | ha megtelik a puffer (pl. 4–8 KB) | ha a kimenet **fájl vagy cső** – gyorsabb  |
+| Mód                    | Mikor írja ki?                    | Mikor használják?                             |
+| ---------------------- | --------------------------------- | --------------------------------------------- |
+| **puffereletlen**      | azonnal                           | hibakimenet (`stderr`) – a hiba ne vesszen el |
+| **sorpufferelt**       | minden sorvégnél (`\n`)           | ha a kimenet **terminál** – lásd azonnal      |
+| **teljesen pufferelt** | ha megtelik a puffer (pl. 4–8 KB) | ha a kimenet **fájl vagy cső** – gyorsabb     |
 
 Ebből egy gyakori meglepetés adódik: egy program, amely a terminálban soronként írja ki a haladását, **csőbe** kötve csak a végén, egyszerre ír ki mindent. Nézd meg a rendszerhívásokban:
 
@@ -99,13 +99,13 @@ ls -l /proc/self/fd | cat                  # az 1-es egy csőre mutat: pipe:[…
 
 Ha egy rendszerhívás nem sikerül, a kernel **negatív számot** ad vissza, a C könyvtár pedig ezt az **`errno`** változóba teszi. A leggyakoribbak:
 
-| Kód      | Szám | Jelentés                              | Tipikus ok                              |
-| -------- | ---- | ------------------------------------- | --------------------------------------- |
-| `ENOENT` | 2    | nincs ilyen fájl vagy könyvtár        | elgépelt útvonal                        |
-| `EACCES` | 13   | hozzáférés megtagadva                 | nincs jogod olvasni/írni                |
-| `EEXIST` | 17   | a fájl már létezik                    | `mkdir` egy létező névvel               |
-| `ENOSPC` | 28   | nincs hely az eszközön                | megtelt a lemez (vagy elfogyott az inode) |
-| `EMFILE` | 24   | túl sok megnyitott fájl               | a program nem zárja be a fájljait       |
+| Kód      | Szám | Jelentés                       | Tipikus ok                                |
+| -------- | ---- | ------------------------------ | ----------------------------------------- |
+| `ENOENT` | 2    | nincs ilyen fájl vagy könyvtár | elgépelt útvonal                          |
+| `EACCES` | 13   | hozzáférés megtagadva          | nincs jogod olvasni/írni                  |
+| `EEXIST` | 17   | a fájl már létezik             | `mkdir` egy létező névvel                 |
+| `ENOSPC` | 28   | nincs hely az eszközön         | megtelt a lemez (vagy elfogyott az inode) |
+| `EMFILE` | 24   | túl sok megnyitott fájl        | a program nem zárja be a fájljait         |
 
 A `strace` kiírja őket:
 

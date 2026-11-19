@@ -17,18 +17,18 @@ minutes: 45
 
 Brendan Gregg teljesítménymérnök módszere: **minden erőforrásra** (CPU, memória, lemez, hálózat) nézz meg **három** dolgot:
 
-| Betű | Jelentés                                    | Kérdés                                       |
-| ---- | ------------------------------------------- | -------------------------------------------- |
-| **U** | **kihasználtság** (_Utilization_)          | Az idő hány százalékában dolgozott?          |
-| **S** | **telítettség** (_Saturation_)             | Van-e sor, várakozik-e valaki rá?            |
-| **E** | **hibák** (_Errors_)                       | Vannak-e hibák (újraküldés, I/O-hiba)?       |
+| Betű  | Jelentés                          | Kérdés                                 |
+| ----- | --------------------------------- | -------------------------------------- |
+| **U** | **kihasználtság** (_Utilization_) | Az idő hány százalékában dolgozott?    |
+| **S** | **telítettség** (_Saturation_)    | Van-e sor, várakozik-e valaki rá?      |
+| **E** | **hibák** (_Errors_)              | Vannak-e hibák (újraküldés, I/O-hiba)? |
 
-| Erőforrás | Kihasználtság             | Telítettség                         | Hibák                         |
-| --------- | ------------------------- | ----------------------------------- | ----------------------------- |
-| CPU       | `top`: %us + %sy          | `vmstat`: **r** > magok száma       | ritka (`dmesg`: MCE-hibák)    |
-| memória   | `free`: used / total      | `vmstat`: **si/so** (lapozás) > 0   | `dmesg`: OOM killer           |
-| lemez     | `iostat -x`: **%util**    | `iostat -x`: **aqu-sz** (sorhossz)  | `dmesg`: I/O error            |
-| hálózat   | `sar -n DEV`: kbit/s      | `ss -ti`: újraküldések, eldobások   | `ip -s link`: errors, dropped |
+| Erőforrás | Kihasználtság          | Telítettség                        | Hibák                         |
+| --------- | ---------------------- | ---------------------------------- | ----------------------------- |
+| CPU       | `top`: %us + %sy       | `vmstat`: **r** > magok száma      | ritka (`dmesg`: MCE-hibák)    |
+| memória   | `free`: used / total   | `vmstat`: **si/so** (lapozás) > 0  | `dmesg`: OOM killer           |
+| lemez     | `iostat -x`: **%util** | `iostat -x`: **aqu-sz** (sorhossz) | `dmesg`: I/O error            |
+| hálózat   | `sar -n DEV`: kbit/s   | `ss -ti`: újraküldések, eldobások  | `ip -s link`: errors, dropped |
 
 A lényeg: a **telítettség** gyakran fontosabb a kihasználtságnál. Egy 100%-on dolgozó CPU még lehet rendben (ha senki sem vár rá), de ha 20 folyamat áll a sorban, a felhasználók lassúságot éreznek.
 

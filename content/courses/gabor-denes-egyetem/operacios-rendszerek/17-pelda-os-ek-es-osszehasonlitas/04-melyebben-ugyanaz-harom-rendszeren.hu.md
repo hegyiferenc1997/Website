@@ -84,12 +84,12 @@ Egy 1 GB-os folyamatnál a `fork()` kb. **2 MB** laptáblát másol – a memór
 
 A **Windows** másképp gondolkodik: a `CreateProcess` egyetlen hívással **üres** folyamatot hoz létre, és rögtön az új programot tölti bele – nincs „lemásolom magam” lépés. Ez tisztább, de a Windows ezért nem tudja olcsón utánozni a `fork()`-ot: a Cygwin (Unix-réteg Windowsra) `fork()`-ja ezért lassú, és ezért fut a **WSL 2** egy valódi Linux-kernellel egy könnyű VM-ben. A modern Unix-programok egyre gyakrabban a **`posix_spawn()`**-t használják, amely a Windows-féle „egy lépésben” szemléletet követi.
 
-| Szempont               | `fork()` + `exec()`                                | `CreateProcess`                          |
-| ---------------------- | -------------------------------------------------- | ---------------------------------------- |
-| lépések                | 2: másolat, majd csere                             | 1: új, üres folyamat az új programmal    |
-| a gyermek mit örököl?  | szinte mindent (nyitott fájlok, környezet)         | amit a paraméterekben megadsz            |
-| átirányítás a shellben | a `fork` és az `exec` között átállítja a leírókat  | a hívás paramétereiben (STARTUPINFO)     |
-| olcsó?                 | igen, copy-on-write-tal                            | igen, de nincs olcsó „másolat” művelet   |
+| Szempont               | `fork()` + `exec()`                               | `CreateProcess`                        |
+| ---------------------- | ------------------------------------------------- | -------------------------------------- |
+| lépések                | 2: másolat, majd csere                            | 1: új, üres folyamat az új programmal  |
+| a gyermek mit örököl?  | szinte mindent (nyitott fájlok, környezet)        | amit a paraméterekben megadsz          |
+| átirányítás a shellben | a `fork` és az `exec` között átállítja a leírókat | a hívás paramétereiben (STARTUPINFO)   |
+| olcsó?                 | igen, copy-on-write-tal                           | igen, de nincs olcsó „másolat” művelet |
 
 ## 3. Fájlnevek: kis-nagybetű, tiltott nevek, útvonalak
 

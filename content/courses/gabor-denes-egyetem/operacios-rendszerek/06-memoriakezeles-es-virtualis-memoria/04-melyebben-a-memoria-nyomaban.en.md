@@ -48,7 +48,7 @@ print(f"addressable space: 2^48 bytes = {2**48 // 2**40} TB")
 
 ### With a TLB
 
-Let a TLB access be 1 ns, a memory read 100 ns, and (for simplicity) a **single-level** page table. On a hit: 1 + 100 ns. On a miss: 1 + 100 (page table) + 100 (data) ns. With hit ratio *h*:
+Let a TLB access be 1 ns, a memory read 100 ns, and (for simplicity) a **single-level** page table. On a hit: 1 + 100 ns. On a miss: 1 + 100 (page table) + 100 (data) ns. With hit ratio _h_:
 
 ```text
 EAT = h · (1 + 100) + (1 − h) · (1 + 100 + 100)
@@ -58,7 +58,7 @@ At a 98% hit ratio: 0.98 · 101 + 0.02 · 201 = 98.98 + 4.02 = **103 ns**. So ad
 
 ### With page faults
 
-A page fault (loading a page from disk) is on the order of **8 ms = 8,000,000 ns**. If a fraction *p* of accesses are page faults:
+A page fault (loading a page from disk) is on the order of **8 ms = 8,000,000 ns**. If a fraction _p_ of accesses are page faults:
 
 ```text
 EAT = (1 − p) · 100 + p · 8,000,000   [ns]
@@ -189,7 +189,7 @@ In the second, follow memory (`watch -n 1 free -m`), and press Enter in the firs
 
 In the `free` output the **buff/cache** column is the page cache: the OS uses free memory to cache files read from disk, but gives it back immediately if a program needs it. That's why it's no problem if Linux has "little free memory" – the **available** column is what counts.
 
-On Windows: **Resource Monitor** (`resmon`) → **Memory** tab. The *Hard Faults/sec* column shows which program causes page faults that need loading from disk; the bar at the bottom shows the *Hardware Reserved / In Use / Modified / Standby / Free* parts.
+On Windows: **Resource Monitor** (`resmon`) → **Memory** tab. The _Hard Faults/sec_ column shows which program causes page faults that need loading from disk; the bar at the bottom shows the _Hardware Reserved / In Use / Modified / Standby / Free_ parts.
 
 ## Summary
 

@@ -118,10 +118,10 @@ A **seL4** különlegessége, hogy kb. 10 000 sorának helyességét **matematik
 
 Amikor egy eszköz megszakítást kér, a kernel azonnal félbeszakítja, amit csinált. A megszakításkezelő alatt gyakran **más megszakítások tiltva vannak** – ezért nagyon rövidnek kell lennie. A kernel ezért két részre bontja a munkát:
 
-| Rész                                | Mikor fut?                         | Mit csinál?                                                       |
-| ----------------------------------- | ---------------------------------- | ----------------------------------------------------------------- |
-| **felső fél** (_top half_)          | azonnal, a megszakításkor          | nyugtázza az eszközt, elmenti az adatot, beütemezi a többit – µs  |
-| **alsó fél** (_bottom half_)        | kicsit később, megszakítható módon | a tényleges feldolgozás (pl. a hálózati csomag a TCP/IP vermen át) |
+| Rész                         | Mikor fut?                         | Mit csinál?                                                        |
+| ---------------------------- | ---------------------------------- | ------------------------------------------------------------------ |
+| **felső fél** (_top half_)   | azonnal, a megszakításkor          | nyugtázza az eszközt, elmenti az adatot, beütemezi a többit – µs   |
+| **alsó fél** (_bottom half_) | kicsit később, megszakítható módon | a tényleges feldolgozás (pl. a hálózati csomag a TCP/IP vermen át) |
 
 Linuxon az alsó fél neve **softirq**, **tasklet** vagy **workqueue**; Windowson **DPC** (_Deferred Procedure Call_).
 

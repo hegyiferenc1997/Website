@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – a tárgy záró összefoglalója
 summary: Linux–Windows parancsszótár, egy összehasonlító feladat a két virtuális gépeden, ellenőrző kérdések és a tárgy egészét átfogó záró feladatlap.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -115,4 +115,138 @@ Mert a macOS licence csak Apple hardveren engedi a futtatást, és a VirtualBox 
 - macOS
 - FreeRTOS
 ! Ingyenes, nyílt, jól automatizálható.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Boot ideje párhuzamos indításnál.** A `szolgaltatasok` szótár minden névhez egy `(indítási_idő, függőségek_listája)` párt ad. Írd meg a `boot_ido(szolgaltatasok)` függvényt: egy szolgáltatás akkor indulhat, amikor minden függősége elkészült; add vissza, mikor készül el az utolsó (a kritikus út hossza)!
+
+```python starter
+def boot_ido(szolgaltatasok):
+    return sum(ido for ido, _ in szolgaltatasok.values())
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def boot_ido(szolgaltatasok):
+    kesz = {}
+    def vege(nev):
+        if nev not in kesz:
+            ido, fuggosegek = szolgaltatasok[nev]
+            kezdes = max((vege(f) for f in fuggosegek), default=0)
+            kesz[nev] = kezdes + ido
+        return kesz[nev]
+    return max(vege(n) for n in szolgaltatasok)
+```
+
+</details>
+
+```python test
+s = {"A": (2, []), "B": (3, ["A"]), "C": (4, ["A"])}
+assert boot_ido(s) == 6
+s2 = {"lemez": (1, []), "halo": (2, ["lemez"]), "db": (3, ["lemez"]), "web": (1, ["halo", "db"])}
+assert boot_ido(s2) == 5
+assert boot_ido({"egy": (7, [])}) == 7
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Érvényes Windows-fájlnév?** Írd meg a `windowson_jo(nev)` függvényt: hamis, ha a név tartalmazza a `<>:"/\|?*` jelek valamelyikét, ha a pont előtti része (kis- és nagybetűtől függetlenül) foglalt eszköznév (`CON`, `PRN`, `AUX`, `NUL`, `COM1`–`COM9`, `LPT1`–`LPT9`), vagy ha szóközre vagy pontra végződik; különben igaz.
+
+```python starter
+def windowson_jo(nev):
+    return True
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+TILTOTT = set('<>:"/\\|?*')
+FOGLALT = {"CON", "PRN", "AUX", "NUL"} | {f"COM{i}" for i in range(1, 10)} \
+        | {f"LPT{i}" for i in range(1, 10)}
+
+def windowson_jo(nev):
+    if TILTOTT & set(nev):
+        return False
+    if nev.split(".")[0].upper() in FOGLALT:
+        return False
+    return not nev.endswith((" ", "."))
+```
+
+</details>
+
+```python test
+assert windowson_jo("jegyzet.md") is True
+assert windowson_jo("vazlat:1.md") is False
+assert windowson_jo("con.txt") is False
+assert windowson_jo("Com3") is False
+assert windowson_jo("console.txt") is True
+assert windowson_jo("adat.csv ") is False
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **CRLF-ből LF.** Írd meg az `lf_re(adat)` függvényt: a bájtsorozatban minden `\r\n`-t cserélj `\n`-re, és add vissza az `(új bájtok, cserék száma)` párt – ezt csinálja a `dos2unix`.
+
+```python starter
+def lf_re(adat):
+    return (adat, 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def lf_re(adat):
+    db = adat.count(b"\r\n")
+    return (adat.replace(b"\r\n", b"\n"), db)
+```
+
+</details>
+
+```python test
+assert lf_re(b"echo szia\r\necho vege\r\n") == (b"echo szia\necho vege\n", 2)
+assert lf_re(b"mar jo\n") == (b"mar jo\n", 0)
+assert lf_re(b"") == (b"", 0)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik az első felhasználói folyamat (PID 1) egy mai Ubuntun?
++ systemd
+- init.exe
+- launchd
+- bash
+! macOS-en launchd, Windowson a System folyamat a 4-es PID.
+
+? Hol tárolja a Windows a rendszer- és programbeállítások nagy részét?
++ a beállításjegyzékben (registry)
+- a /etc könyvtárban
+- .plist fájlokban
+! Linuxon szöveges fájlok a /etc-ben, macOS-en .plist fájlok.
+
+? Melyik fájlrendszer az alapértelmezett a mai macOS-en?
+- NTFS
+- ext4
++ APFS
+! Windows: NTFS, Linux: ext4.
+
+? Mi a WSL?
++ a Windows alrendszere Linuxhoz: Linux-programok futtatása Windowson (a WSL 2 valódi Linux-kernellel)
+- egy Windows-vírusirtó
+- egy Linux-disztribúció
+! Mérnökinformatikusként Windowson is kényelmes Linux-környezetet ad.
+
+? Melyik csomagkezelővel telepíthetsz programot parancssorból Windowson?
++ winget
+- apt
+- Homebrew
+! Ubuntu: apt, macOS: Homebrew (külön telepítendő).
 ```

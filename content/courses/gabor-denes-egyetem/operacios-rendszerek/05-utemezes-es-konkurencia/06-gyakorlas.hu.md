@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – ütemezés és konkurencia
 summary: Ellenőrző kérdések és egy számolós összefoglaló feladatlap ütemezésből, szemaforokból és holtpontból.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -76,4 +76,146 @@ Három folyamat érkezik a 0. ms-ban ebben a sorrendben: **P1 = 4 ms**, **P2 = 8
 - Round Robin
 - prioritásos, véletlen prioritással
 ! Bizonyítható, hogy az SJF optimális az átlagos várakozásra.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **FCFS és SJF átlagos várakozás.** Minden folyamat a 0. ms-ban érkezik. Írd meg az `atlag_varakozas(loketek, sjf=False)` függvényt: FCFS-nél a megadott sorrendben, SJF-nél a löketek szerint növekvő sorrendben futnak; add vissza az átlagos várakozási időt!
+
+```python starter
+def atlag_varakozas(loketek, sjf=False):
+    return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def atlag_varakozas(loketek, sjf=False):
+    sorrend = sorted(loketek) if sjf else list(loketek)
+    ido, osszes = 0, 0
+    for loket in sorrend:
+        osszes += ido                 # ennyit várt, mielőtt sorra került
+        ido += loket
+    return osszes / len(sorrend)
+```
+
+</details>
+
+```python test
+assert atlag_varakozas([4, 8, 2]) == 16 / 3
+assert atlag_varakozas([4, 8, 2], sjf=True) == 8 / 3
+assert atlag_varakozas([24, 3, 3]) == 17
+assert atlag_varakozas([24, 3, 3], sjf=True) == 3
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Round Robin befejezési idők.** Írd meg az `rr_befejezes(loketek, q)` függvényt: a folyamatok a 0. ms-ban érkeznek a megadott sorrendben, Round Robin ütemezés q kvantummal (a váltás idejét hanyagold el). Add vissza a befejezési időket a folyamatok eredeti sorrendjében!
+
+```python starter
+def rr_befejezes(loketek, q):
+    return [0] * len(loketek)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from collections import deque
+
+def rr_befejezes(loketek, q):
+    maradek = list(loketek)
+    sor = deque(range(len(loketek)))
+    vege = [0] * len(loketek)
+    ido = 0
+    while sor:
+        i = sor.popleft()
+        fut = min(q, maradek[i])
+        ido += fut
+        maradek[i] -= fut
+        if maradek[i] > 0:
+            sor.append(i)              # vissza a sor végére
+        else:
+            vege[i] = ido
+    return vege
+```
+
+</details>
+
+```python test
+assert rr_befejezes([4, 8, 2], 4) == [4, 14, 10]
+assert rr_befejezes([5, 3], 2) == [8, 7]
+assert rr_befejezes([3], 10) == [3]
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Bankár algoritmus – biztonságos az állapot?** Írd meg a `biztonsagos(szabad, max_igeny, foglal)` függvényt egyetlen erőforrástípusra: `szabad` a szabad példányok száma, a listák folyamatonként a maximális igényt és a jelenleg lefoglaltat adják. Az állapot biztonságos, ha van olyan sorrend, amelyben minden folyamat megkaphatja a hiányzó részt, lefut, és felszabadítja, amit foglal.
+
+```python starter
+def biztonsagos(szabad, max_igeny, foglal):
+    return True
+```
+
+<details>
+<summary>Megoldás</summary>
+
+Az első példában: P2-nek 2 hiányzik (3 szabad) → lefut, 5 szabad; P1-nek 5 hiányzik → lefut, 10 szabad; végül P3 is. A másodikban 2 szabad: P2 lefut (4 szabad), de P1-nek és P3-nak is 5-5 hiányzik → elakadunk.
+
+```python solution
+def biztonsagos(szabad, max_igeny, foglal):
+    kesz = [False] * len(foglal)
+    haladt = True
+    while haladt:
+        haladt = False
+        for i in range(len(foglal)):
+            if not kesz[i] and max_igeny[i] - foglal[i] <= szabad:
+                szabad += foglal[i]          # lefut, és visszaadja, amit foglalt
+                kesz[i] = True
+                haladt = True
+    return all(kesz)
+```
+
+</details>
+
+```python test
+assert biztonsagos(3, [10, 4, 9], [5, 2, 2]) is True
+assert biztonsagos(2, [10, 4, 9], [5, 2, 3]) is False
+assert biztonsagos(0, [2, 2], [2, 2]) is True
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik ütemezés okozhat kiéheztetést, ha folyamatosan érkeznek rövid folyamatok?
++ SJF
+- FCFS
+- Round Robin
+! A hosszú folyamat sosem kerül sorra; öregítés (aging) segít.
+
+? Mit jelent a kritikus szakasz?
++ a kódnak az a része, amely közös adatot ér el, és egyszerre csak egy szál futtathatja
+- a program leglassabb része
+- a kernel indító kódja
+! Mutex vagy szemafor védi.
+
+? Egy bináris szemafor (mutex) értéke 1. Egy szál meghívja a wait()-et. Mennyi lesz az értéke?
+= 0
+! A következő wait() már blokkol.
+
+? Melyik módszer előzi meg a holtpontot a körkörös várakozás kizárásával?
++ minden szál ugyanabban a rögzített sorrendben foglalja a zárakat
+- minden szál véletlen sorrendben foglal
+- több szálat indítunk
+! Ha mindenki először az A, aztán a B zárat kéri, nem alakulhat ki kör.
+
+? Mit jelent a „foglalva várakozás” (hold and wait) holtpontfeltétel?
+- a folyamat aktívan, ciklusban várakozik
++ a folyamat már tart erőforrást, és közben újabbra vár
+- a folyamat sosem kap erőforrást
+! A négy feltétel: kölcsönös kizárás, foglalva várakozás, nincs elvétel, körkörös várakozás.
 ```

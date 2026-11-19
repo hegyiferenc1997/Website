@@ -31,13 +31,13 @@ cat /proc/$$/limits | head -5    # limits: max open files, stack size…
 
 What you see here is exactly part of the **process control block** (PCB) and the **address space** you learned about in the first lesson:
 
-| PCB element              | Where do you see it?                |
-| ------------------------ | ----------------------------------- |
-| ID, parent               | `status`: `Pid`, `PPid`             |
-| state                    | `status`: `State` (R, S, D, Z, T)   |
-| open files               | the `fd/` folder                    |
-| memory (address space)   | `maps`, `status`: `VmRSS`, `VmSize` |
-| scheduling data          | `sched`, `stat`                     |
+| PCB element            | Where do you see it?                |
+| ---------------------- | ----------------------------------- |
+| ID, parent             | `status`: `Pid`, `PPid`             |
+| state                  | `status`: `State` (R, S, D, Z, T)   |
+| open files             | the `fd/` folder                    |
+| memory (address space) | `maps`, `status`: `VmRSS`, `VmSize` |
+| scheduling data        | `sched`, `stat`                     |
 
 `VmSize` is the size of the **virtual** address space (what the process has "reserved"), `VmRSS` (_resident set size_) is what's **actually in RAM**. The difference between the two is often large – the reason comes up in the memory management topic.
 

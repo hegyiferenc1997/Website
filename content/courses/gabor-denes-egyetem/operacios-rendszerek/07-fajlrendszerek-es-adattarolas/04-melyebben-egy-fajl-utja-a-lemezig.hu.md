@@ -143,12 +143,12 @@ cat kemeny.txt          # működik: az adat megvan, csak egy név tűnt el (lin
 cat szimbolikus.txt     # hiba: a link egy már nem létező névre mutat („lógó” link)
 ```
 
-| Tulajdonság                    | Kemény link            | Szimbolikus link             |
-| ------------------------------ | ---------------------- | ---------------------------- |
-| saját inode?                   | nem, ugyanaz           | igen                         |
-| eredeti törlése után           | működik                | „lóg”                        |
-| mutathat könyvtárra?           | nem                    | igen                         |
-| mutathat másik fájlrendszerre? | nem                    | igen                         |
+| Tulajdonság                    | Kemény link  | Szimbolikus link |
+| ------------------------------ | ------------ | ---------------- |
+| saját inode?                   | nem, ugyanaz | igen             |
+| eredeti törlése után           | működik      | „lóg”            |
+| mutathat könyvtárra?           | nem          | igen             |
+| mutathat másik fájlrendszerre? | nem          | igen             |
 
 ## 5. A törölt, de helyet foglaló fájl – df kontra du
 

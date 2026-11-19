@@ -11,8 +11,13 @@ A szerkezet a tantárgyleírás 16 témakörét követi, egy plusz **laborkörny
   virtuális gépre építenek.
 - `02-felepites-es-funkciok` … `17-pelda-os-ek-es-osszehasonlitas`: a tantárgyleírás 16 témaköre.
 
-Minden témakör végén egy `gyakorlas` lecke van ellenőrző kérdésekkel és összefoglaló feladatlappal; a 17. témakör gyakorló leckéje a tárgy záró összefoglalója. A mappák, a `topic.json` és a lecke fájlok
-felépítése ugyanaz, mint a Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
+Minden témakör az alapleckék után egy `melyebben-…` leckével és egy `gyakorlas` (kind: practice) leckével zárul; a 17. témakör gyakorló leckéje a tárgy záró összefoglalója.
+
+- A **Mélyebben** lecke ugyanazt a témát számokkal, szimulátorokkal (` ```python run `), esettanulmányokkal és más szemszögből mutatja be, saját kötelező kvízzel.
+- A **gyakorlás** lecke az ellenőrző kérdések és a kötelező összefoglaló feladatlap után a „További gyakorló feladatok (nem kötelezők)” szakaszt is tartalmazza: 3 számolós Python-feladat (` ```python starter ` + ` ```python solution ` + ` ```python test `) és egy nem kötelező ` ```quiz ` blokk. Ezek nem zárnak le semmit, csak gyakorlásra valók.
+- A leckék azonosítója a sorszám nélküli slug, ezért a gyakorló leckék eggyel hátrébb sorolása nem veszíti el a haladást.
+
+A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
 
 ## Kötelező feladat: kvíz
 

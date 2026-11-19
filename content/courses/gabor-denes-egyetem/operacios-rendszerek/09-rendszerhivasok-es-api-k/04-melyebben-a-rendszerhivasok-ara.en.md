@@ -46,11 +46,11 @@ strace -c dd if=/dev/zero of=/dev/null bs=1 count=100000 2>&1 | tail -15   # sum
 
 The C library (and Python too) uses **three** kinds of buffering for standard output:
 
-| Mode                 | When does it write out?             | When is it used?                           |
-| -------------------- | ----------------------------------- | ------------------------------------------ |
-| **unbuffered**       | immediately                         | error output (`stderr`) – errors mustn't be lost |
-| **line-buffered**    | at every line end (`\n`)            | if the output is a **terminal** – see it immediately |
-| **fully buffered**   | when the buffer fills (e.g. 4–8 KB) | if the output is a **file or pipe** – faster |
+| Mode               | When does it write out?             | When is it used?                                     |
+| ------------------ | ----------------------------------- | ---------------------------------------------------- |
+| **unbuffered**     | immediately                         | error output (`stderr`) – errors mustn't be lost     |
+| **line-buffered**  | at every line end (`\n`)            | if the output is a **terminal** – see it immediately |
+| **fully buffered** | when the buffer fills (e.g. 4–8 KB) | if the output is a **file or pipe** – faster         |
 
 A common surprise follows: a program that prints its progress line by line in the terminal prints everything **at once at the end** when connected to a **pipe**. Look at it in the system calls:
 
@@ -66,11 +66,11 @@ strace -e trace=write python3 -u -c "for i in range(3): print(i)" | cat   # -u: 
 
 Every process has a **file descriptor table**: small integers pointing to open files, pipes, the terminal. The first three are always the same:
 
-| Number | Name     | Default        |
-| ------ | -------- | -------------- |
-| 0      | `stdin`  | keyboard       |
-| 1      | `stdout` | terminal       |
-| 2      | `stderr` | terminal       |
+| Number | Name     | Default  |
+| ------ | -------- | -------- |
+| 0      | `stdin`  | keyboard |
+| 1      | `stdout` | terminal |
+| 2      | `stderr` | terminal |
 
 Redirection is really **rewriting** this table before the shell starts the program (with the `dup2()` system call):
 
@@ -99,13 +99,13 @@ ls -l /proc/self/fd | cat                  # 1 points to a pipe: pipe:[…]
 
 If a system call fails, the kernel returns a **negative number**, and the C library puts it into the **`errno`** variable. The most common ones:
 
-| Code     | Number | Meaning                               | Typical cause                           |
-| -------- | ------ | ------------------------------------- | --------------------------------------- |
-| `ENOENT` | 2      | no such file or directory             | mistyped path                           |
-| `EACCES` | 13     | permission denied                     | you have no right to read/write         |
-| `EEXIST` | 17     | the file already exists               | `mkdir` with an existing name           |
-| `ENOSPC` | 28     | no space left on device               | the disk is full (or inodes ran out)    |
-| `EMFILE` | 24     | too many open files                   | the program doesn't close its files     |
+| Code     | Number | Meaning                   | Typical cause                        |
+| -------- | ------ | ------------------------- | ------------------------------------ |
+| `ENOENT` | 2      | no such file or directory | mistyped path                        |
+| `EACCES` | 13     | permission denied         | you have no right to read/write      |
+| `EEXIST` | 17     | the file already exists   | `mkdir` with an existing name        |
+| `ENOSPC` | 28     | no space left on device   | the disk is full (or inodes ran out) |
+| `EMFILE` | 24     | too many open files       | the program doesn't close its files  |
 
 `strace` prints them:
 

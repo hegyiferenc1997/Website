@@ -26,10 +26,10 @@ minutes: 40
 
 The **hypervisor** (virtual machine monitor) is the software that runs virtual machines. There are two main kinds:
 
-| Type                      | Where does it run?                              | Examples                            | Typical use                 |
-| ------------------------- | ----------------------------------------------- | ----------------------------------- | --------------------------- |
-| **Type 1** ("bare metal") | directly on the hardware, no other OS below it  | VMware ESXi, Microsoft Hyper-V, KVM | servers, cloud              |
-| **Type 2** ("hosted")     | as an application on an ordinary OS             | **VirtualBox**, VMware Workstation  | desktop, learning, testing  |
+| Type                      | Where does it run?                             | Examples                            | Typical use                |
+| ------------------------- | ---------------------------------------------- | ----------------------------------- | -------------------------- |
+| **Type 1** ("bare metal") | directly on the hardware, no other OS below it | VMware ESXi, Microsoft Hyper-V, KVM | servers, cloud             |
+| **Type 2** ("hosted")     | as an application on an ordinary OS            | **VirtualBox**, VMware Workstation  | desktop, learning, testing |
 
 Most guest code runs **directly on the processor**, at full speed – that's why a virtual machine isn't slow. Only for **sensitive instructions** (e.g. accessing hardware, switching the memory map) does the hypervisor need to step in. The processor's **hardware virtualisation** extension (Intel **VT-x**, AMD **AMD-V**) makes this efficient: when the guest tries to execute such an instruction, the processor sets a "trap" and hands control to the hypervisor. That's why you had to enable virtualisation in the BIOS/UEFI in lesson 1.
 
@@ -41,10 +41,10 @@ The disk, network and display, however, are **emulated** or **paravirtualised** 
 
 When you specified a 25 GB disk while creating the machine, VirtualBox offered two options:
 
-| Disk type                | How big is the file at first? | Advantage                 | Disadvantage                           |
-| ------------------------ | ----------------------------- | ------------------------- | -------------------------------------- |
-| **dynamically allocated** | a few MB, and it grows       | takes little space        | slightly slower writes, grows "unexpectedly" |
-| **fixed size**           | the full 25 GB at once        | faster, predictable       | takes the space immediately            |
+| Disk type                 | How big is the file at first? | Advantage           | Disadvantage                                 |
+| ------------------------- | ----------------------------- | ------------------- | -------------------------------------------- |
+| **dynamically allocated** | a few MB, and it grows        | takes little space  | slightly slower writes, grows "unexpectedly" |
+| **fixed size**            | the full 25 GB at once        | faster, predictable | takes the space immediately                  |
 
 Important: a dynamic disk **doesn't shrink by itself**. If you download 5 GB in the guest and then delete it, the `.vdi` file on the host stays 5 GB larger – the guest only "marks the blocks as free", and the hypervisor doesn't know about it.
 
@@ -178,15 +178,15 @@ ls --help       # short help
 
 ### The same on Windows 11 (PowerShell)
 
-| Task                   | Ubuntu (bash)      | Windows (PowerShell)                    |
-| ---------------------- | ------------------ | --------------------------------------- |
-| where am I?            | `pwd`              | `Get-Location` (short: `pwd`)           |
-| what's here?           | `ls -la`           | `Get-ChildItem -Force` (short: `ls`)    |
-| change folder          | `cd /etc`          | `Set-Location C:\Windows` (`cd`)        |
-| file contents          | `cat first.txt`    | `Get-Content first.txt` (`cat`)         |
-| OS version             | `cat /etc/os-release` | `Get-ComputerInfo -Property OsName, OsVersion` |
-| processors             | `nproc`            | `(Get-CimInstance Win32_Processor).NumberOfLogicalProcessors` |
-| help                   | `man ls`           | `Get-Help Get-ChildItem`                |
+| Task          | Ubuntu (bash)         | Windows (PowerShell)                                          |
+| ------------- | --------------------- | ------------------------------------------------------------- |
+| where am I?   | `pwd`                 | `Get-Location` (short: `pwd`)                                 |
+| what's here?  | `ls -la`              | `Get-ChildItem -Force` (short: `ls`)                          |
+| change folder | `cd /etc`             | `Set-Location C:\Windows` (`cd`)                              |
+| file contents | `cat first.txt`       | `Get-Content first.txt` (`cat`)                               |
+| OS version    | `cat /etc/os-release` | `Get-ComputerInfo -Property OsName, OsVersion`                |
+| processors    | `nproc`               | `(Get-CimInstance Win32_Processor).NumberOfLogicalProcessors` |
+| help          | `man ls`              | `Get-Help Get-ChildItem`                                      |
 
 PowerShell knows many bash command names as **aliases**, but something different works in the background: PowerShell passes **objects** between commands, bash passes **text**. There's more about this in the user interfaces topic.
 

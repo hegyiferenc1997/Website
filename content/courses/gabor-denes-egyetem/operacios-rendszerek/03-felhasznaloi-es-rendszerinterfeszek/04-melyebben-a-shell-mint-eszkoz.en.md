@@ -40,21 +40,21 @@ Step 4 (fork + exec) comes up in detail in the processes topic: every command yo
 
 Expansion is useful, but it can also cause surprises. Quotes control it:
 
-| Notation         | What happens?                                              | Example                       | Result                    |
-| ---------------- | ---------------------------------------------------------- | ----------------------------- | ------------------------- |
-| no quotes        | every expansion happens, spaces separate words             | `echo $HOME *.txt`            | `/home/anna a.txt b.txt`  |
-| `"…"` (double)   | variables expand, `*` and spaces don't                     | `echo "$HOME *.txt"`          | `/home/anna *.txt`        |
-| `'…'` (single)   | **nothing** expands, it stays literally                    | `echo '$HOME *.txt'`          | `$HOME *.txt`             |
+| Notation       | What happens?                                  | Example              | Result                   |
+| -------------- | ---------------------------------------------- | -------------------- | ------------------------ |
+| no quotes      | every expansion happens, spaces separate words | `echo $HOME *.txt`   | `/home/anna a.txt b.txt` |
+| `"…"` (double) | variables expand, `*` and spaces don't         | `echo "$HOME *.txt"` | `/home/anna *.txt`       |
+| `'…'` (single) | **nothing** expands, it stays literally        | `echo '$HOME *.txt'` | `$HOME *.txt`            |
 
 A common mistake: a file name containing a space. `rm My document.txt` tries to delete **two** files (`My` and `document.txt`)! Correctly: `rm "My document.txt"`. In scripts, always put variables in double quotes: `"$file"`.
 
 Wildcards (_globs_):
 
-| Pattern    | Meaning                           | Example                                |
-| ---------- | --------------------------------- | -------------------------------------- |
-| `*`        | any number of (even 0) characters | `*.log` – every file ending in `.log`  |
-| `?`        | exactly one character             | `day?.txt` – `day1.txt`, `day2.txt`    |
-| `[abc]`    | one character from the list       | `[ab]*.txt` – starting with `a` or `b` |
+| Pattern | Meaning                           | Example                                |
+| ------- | --------------------------------- | -------------------------------------- |
+| `*`     | any number of (even 0) characters | `*.log` – every file ending in `.log`  |
+| `?`     | exactly one character             | `day?.txt` – `day1.txt`, `day2.txt`    |
+| `[abc]` | one character from the list       | `[ab]*.txt` – starting with `a` or `b` |
 
 Careful: a glob is **not** a regular expression! Here `*` means "anything", in a regex "the previous character any number of times".
 
@@ -71,11 +71,11 @@ ls /no-such-dir     ; echo $?        # 2 – error (no such folder)
 
 Building on the exit code, you can chain commands:
 
-| Chaining   | Meaning                                           | Example                                         |
-| ---------- | ------------------------------------------------- | ----------------------------------------------- |
-| `a ; b`    | `a`, then `b` in any case                         | `cd /tmp ; ls`                                  |
-| `a && b`   | `b` only runs if `a` **succeeded**                | `sudo apt update && sudo apt upgrade`           |
-| `a \|\| b` | `b` only runs if `a` **failed**                   | `ping -c1 example.com \|\| echo "No network!"`  |
+| Chaining   | Meaning                            | Example                                        |
+| ---------- | ---------------------------------- | ---------------------------------------------- |
+| `a ; b`    | `a`, then `b` in any case          | `cd /tmp ; ls`                                 |
+| `a && b`   | `b` only runs if `a` **succeeded** | `sudo apt update && sudo apt upgrade`          |
+| `a \|\| b` | `b` only runs if `a` **failed**    | `ping -c1 example.com \|\| echo "No network!"` |
 
 `apt update && apt upgrade` is a good habit because if updating the package list fails (e.g. no internet), the upgrade doesn't even start.
 
@@ -98,7 +98,7 @@ export PATH="$PATH:$HOME/bin"     # put the ~/bin folder at the end of the list
 
 **Security note:** never put the current folder (`.`) at the **start** of PATH! If someone leaves malware called `ls` in a folder and you type `ls` there, their program would run instead of the real one. (That's why on Linux you have to start your own program as `./program`.)
 
-Windows has a PATH too (`$env:Path` in PowerShell), and it works the same way; you can also edit environment variables in the *System → Advanced system settings → Environment Variables* window.
+Windows has a PATH too (`$env:Path` in PowerShell), and it works the same way; you can also edit environment variables in the _System → Advanced system settings → Environment Variables_ window.
 
 ## 5. Case study: log analysis with a pipeline
 

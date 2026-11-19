@@ -26,10 +26,10 @@ minutes: 40
 
 A **hipervizor** (virtuálisgép-kezelő) az a szoftver, amely a virtuális gépeket futtatja. Két fő fajtája van:
 
-| Típus                     | Hol fut?                                       | Példák                              | Jellemző felhasználás       |
-| ------------------------- | ---------------------------------------------- | ----------------------------------- | --------------------------- |
-| **1-es típus** („bare metal”) | közvetlenül a hardveren, alatta nincs más OS | VMware ESXi, Microsoft Hyper-V, KVM | szerverek, felhő            |
-| **2-es típus** („hosted”) | egy hagyományos OS-en futó alkalmazásként      | **VirtualBox**, VMware Workstation  | asztali gép, tanulás, tesztelés |
+| Típus                         | Hol fut?                                     | Példák                              | Jellemző felhasználás           |
+| ----------------------------- | -------------------------------------------- | ----------------------------------- | ------------------------------- |
+| **1-es típus** („bare metal”) | közvetlenül a hardveren, alatta nincs más OS | VMware ESXi, Microsoft Hyper-V, KVM | szerverek, felhő                |
+| **2-es típus** („hosted”)     | egy hagyományos OS-en futó alkalmazásként    | **VirtualBox**, VMware Workstation  | asztali gép, tanulás, tesztelés |
 
 A legtöbb vendégkód **közvetlenül a processzoron** fut, teljes sebességgel – ezért nem lassú egy virtuális gép. Csak az **érzékeny utasításoknál** (pl. hardver elérése, a memóriatérkép átállítása) kell a hipervizornak közbelépnie. Ezt a processzor **hardveres virtualizációs** kiegészítése (Intel **VT-x**, AMD **AMD-V**) teszi hatékonnyá: amikor a vendég ilyen utasítást próbál végrehajtani, a processzor „csapdát” állít, és átadja a vezérlést a hipervizornak. Ezért kellett az 1. leckében bekapcsolni a virtualizációt a BIOS/UEFI-ben.
 
@@ -41,10 +41,10 @@ A lemez, a hálózat és a kijelző viszont **emulált** vagy **paravirtualizál
 
 Amikor a gép létrehozásakor 25 GB-os lemezt adtál meg, a VirtualBox két lehetőséget kínált:
 
-| Lemezfajta            | Mekkora a fájl az elején? | Előny                       | Hátrány                                   |
-| --------------------- | ------------------------- | --------------------------- | ----------------------------------------- |
-| **dinamikusan növekvő** | néhány MB, és nő        | kevés helyet foglal         | kicsit lassabb írás, „váratlanul” megnő   |
-| **fix méretű**        | azonnal a teljes 25 GB    | gyorsabb, kiszámítható      | azonnal elfoglalja a helyet               |
+| Lemezfajta              | Mekkora a fájl az elején? | Előny                  | Hátrány                                 |
+| ----------------------- | ------------------------- | ---------------------- | --------------------------------------- |
+| **dinamikusan növekvő** | néhány MB, és nő          | kevés helyet foglal    | kicsit lassabb írás, „váratlanul” megnő |
+| **fix méretű**          | azonnal a teljes 25 GB    | gyorsabb, kiszámítható | azonnal elfoglalja a helyet             |
 
 Fontos: a dinamikus lemez **nem zsugorodik magától**. Ha a vendégben letöltesz 5 GB-ot, majd törlöd, a `.vdi` fájl a gazdán 5 GB-tal nagyobb marad – a vendég ugyanis csak „szabadnak jelöli” a blokkokat, a hipervizor erről nem tud.
 
@@ -178,15 +178,15 @@ ls --help       # rövid súgó
 
 ### Ugyanez Windows 11-en (PowerShell)
 
-| Feladat                | Ubuntu (bash)      | Windows (PowerShell)                    |
-| ---------------------- | ------------------ | --------------------------------------- |
-| hol vagyok?            | `pwd`              | `Get-Location` (röviden: `pwd`)         |
-| mi van itt?            | `ls -la`           | `Get-ChildItem -Force` (röviden: `ls`)  |
-| mappaváltás            | `cd /etc`          | `Set-Location C:\Windows` (`cd`)        |
-| fájl tartalma          | `cat elso.txt`     | `Get-Content elso.txt` (`cat`)          |
-| OS verziója            | `cat /etc/os-release` | `Get-ComputerInfo -Property OsName, OsVersion` |
-| processzorok           | `nproc`            | `(Get-CimInstance Win32_Processor).NumberOfLogicalProcessors` |
-| súgó                   | `man ls`           | `Get-Help Get-ChildItem`                |
+| Feladat       | Ubuntu (bash)         | Windows (PowerShell)                                          |
+| ------------- | --------------------- | ------------------------------------------------------------- |
+| hol vagyok?   | `pwd`                 | `Get-Location` (röviden: `pwd`)                               |
+| mi van itt?   | `ls -la`              | `Get-ChildItem -Force` (röviden: `ls`)                        |
+| mappaváltás   | `cd /etc`             | `Set-Location C:\Windows` (`cd`)                              |
+| fájl tartalma | `cat elso.txt`        | `Get-Content elso.txt` (`cat`)                                |
+| OS verziója   | `cat /etc/os-release` | `Get-ComputerInfo -Property OsName, OsVersion`                |
+| processzorok  | `nproc`               | `(Get-CimInstance Win32_Processor).NumberOfLogicalProcessors` |
+| súgó          | `man ls`              | `Get-Help Get-ChildItem`                                      |
 
 A PowerShell sok bash-parancsnevet **álnévként** (alias) is ismer, de a háttérben más működik: a PowerShell **objektumokat** ad tovább a parancsok között, a bash **szöveget**. Erről a felhasználói felületek témakörben bővebben lesz szó.
 

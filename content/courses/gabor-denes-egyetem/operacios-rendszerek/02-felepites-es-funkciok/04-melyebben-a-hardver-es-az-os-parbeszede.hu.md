@@ -16,11 +16,11 @@ minutes: 40
 
 Ugyanarra a programra háromféleképpen is lehet nézni:
 
-| Szerep                    | Mit csinál?                                                          | Hasonlat                                             |
-| ------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------- |
-| **erőforrás-gazda**       | elosztja a processzoridőt, a memóriát, a lemezt a programok között  | egy étterem főpincére: ki melyik asztalt kapja, mikor |
-| **kibővített gép** (absztrakció) | a bonyolult hardvert egyszerű fogalmakká alakítja: fájl, folyamat, socket | az autó kormánya és pedálja: nem kell tudnod, hogyan működik a befecskendezés |
-| **játékvezető** (védelem) | betartatja a szabályokat: egy program ne írhasson bele a másik memóriájába | a focibíró: aki szabálytalankodik, kiállítja        |
+| Szerep                           | Mit csinál?                                                                | Hasonlat                                                                      |
+| -------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **erőforrás-gazda**              | elosztja a processzoridőt, a memóriát, a lemezt a programok között         | egy étterem főpincére: ki melyik asztalt kapja, mikor                         |
+| **kibővített gép** (absztrakció) | a bonyolult hardvert egyszerű fogalmakká alakítja: fájl, folyamat, socket  | az autó kormánya és pedálja: nem kell tudnod, hogyan működik a befecskendezés |
+| **játékvezető** (védelem)        | betartatja a szabályokat: egy program ne írhasson bele a másik memóriájába | a focibíró: aki szabálytalankodik, kiállítja                                  |
 
 Nézzük meg az absztrakciót egy példán. Amikor egy program ezt írja:
 
@@ -116,7 +116,7 @@ sudo dmesg | head -30              # a kernel első üzenetei: felismert hardver
 lsblk                              # lemezek és partíciók (köztük az EFI rendszerpartíció)
 ```
 
-Windows 11-en: **Win + R → `msinfo32`**: itt látod a *BIOS mód: UEFI* és a *Biztonságos rendszerindítás állapota: Be* sorokat. A Feladatkezelő **Indítási alkalmazások** lapján (jobb felső sarok) pedig a *Legutóbbi BIOS-idő*, vagyis hogy mennyi ideig tartott a firmware szakasz.
+Windows 11-en: **Win + R → `msinfo32`**: itt látod a _BIOS mód: UEFI_ és a _Biztonságos rendszerindítás állapota: Be_ sorokat. A Feladatkezelő **Indítási alkalmazások** lapján (jobb felső sarok) pedig a _Legutóbbi BIOS-idő_, vagyis hogy mennyi ideig tartott a firmware szakasz.
 
 ### Megszakítások élőben
 

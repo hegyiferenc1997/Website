@@ -16,11 +16,11 @@ minutes: 40
 
 The same program can be looked at in three ways:
 
-| Role                      | What does it do?                                                     | Analogy                                              |
-| ------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------- |
-| **resource manager**      | shares processor time, memory and disk between programs             | a restaurant's head waiter: who gets which table, when |
-| **extended machine** (abstraction) | turns complex hardware into simple concepts: file, process, socket | a car's steering wheel and pedals: you needn't know how fuel injection works |
-| **referee** (protection)  | enforces the rules: one program mustn't write into another's memory | a football referee: whoever breaks the rules is sent off |
+| Role                               | What does it do?                                                    | Analogy                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **resource manager**               | shares processor time, memory and disk between programs             | a restaurant's head waiter: who gets which table, when                       |
+| **extended machine** (abstraction) | turns complex hardware into simple concepts: file, process, socket  | a car's steering wheel and pedals: you needn't know how fuel injection works |
+| **referee** (protection)           | enforces the rules: one program mustn't write into another's memory | a football referee: whoever breaks the rules is sent off                     |
 
 Let's look at abstraction with an example. When a program writes:
 
@@ -116,7 +116,7 @@ sudo dmesg | head -30              # the kernel's first messages: detected hardw
 lsblk                              # disks and partitions (including the EFI system partition)
 ```
 
-On Windows 11: **Win + R → `msinfo32`**: here you see the *BIOS Mode: UEFI* and *Secure Boot State: On* lines. And on Task Manager's **Startup apps** page (top right corner) there's *Last BIOS time*, i.e. how long the firmware phase took.
+On Windows 11: **Win + R → `msinfo32`**: here you see the _BIOS Mode: UEFI_ and _Secure Boot State: On_ lines. And on Task Manager's **Startup apps** page (top right corner) there's _Last BIOS time_, i.e. how long the firmware phase took.
 
 ### Interrupts live
 

@@ -143,12 +143,12 @@ cat hard.txt            # works: the data is there, only one name disappeared (l
 cat symbolic.txt        # error: the link points to a name that no longer exists ("dangling" link)
 ```
 
-| Property                       | Hard link              | Symbolic link                |
-| ------------------------------ | ---------------------- | ---------------------------- |
-| own inode?                     | no, the same one       | yes                          |
-| after deleting the original    | works                  | "dangles"                    |
-| can point to a directory?      | no                     | yes                          |
-| can point to another file system? | no                  | yes                          |
+| Property                          | Hard link        | Symbolic link |
+| --------------------------------- | ---------------- | ------------- |
+| own inode?                        | no, the same one | yes           |
+| after deleting the original       | works            | "dangles"     |
+| can point to a directory?         | no               | yes           |
+| can point to another file system? | no               | yes           |
 
 ## 5. The deleted but space-consuming file – df versus du
 

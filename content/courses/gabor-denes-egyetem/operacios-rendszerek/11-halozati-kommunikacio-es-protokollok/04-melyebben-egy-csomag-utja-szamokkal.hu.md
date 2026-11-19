@@ -92,12 +92,12 @@ A `10.8.5.20` három bejegyzésre is illeszkedik (/0, /16, /24) – a /24 a legp
 
 Minden réteg hozzáteszi a saját **fejlécét**. Egy tipikus Etherneten át küldött TCP-szegmensnél:
 
-| Réteg    | Fejléc   |
-| -------- | -------- |
-| Ethernet | 14 bájt  |
-| IPv4     | 20 bájt  |
-| TCP      | 20 bájt  |
-| Összesen | 54 bájt  |
+| Réteg    | Fejléc  |
+| -------- | ------- |
+| Ethernet | 14 bájt |
+| IPv4     | 20 bájt |
+| TCP      | 20 bájt |
+| Összesen | 54 bájt |
 
 Az Ethernet **MTU**-ja (a legnagyobb hasznos teher a keretben) **1500 bájt**; ebből az IP és a TCP fejléce után **1460 bájt** marad adatra. A hatékonyság csomagmérettől függ:
 

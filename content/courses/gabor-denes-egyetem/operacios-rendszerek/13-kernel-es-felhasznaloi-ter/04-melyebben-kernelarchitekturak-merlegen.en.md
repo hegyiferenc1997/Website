@@ -117,10 +117,10 @@ What makes **seL4** special is that the correctness of its roughly 10,000 lines 
 
 When a device requests an interrupt, the kernel immediately suspends what it was doing. While the interrupt handler runs, **other interrupts are often disabled** – so it must be very short. The kernel therefore splits the work in two:
 
-| Part                          | When does it run?                    | What does it do?                                                       |
-| ----------------------------- | ------------------------------------ | ---------------------------------------------------------------------- |
-| **top half**                  | immediately, at the interrupt        | acknowledges the device, saves the data, schedules the rest – µs       |
-| **bottom half**               | a little later, in interruptible mode | the actual processing (e.g. the network packet through the TCP/IP stack) |
+| Part            | When does it run?                     | What does it do?                                                         |
+| --------------- | ------------------------------------- | ------------------------------------------------------------------------ |
+| **top half**    | immediately, at the interrupt         | acknowledges the device, saves the data, schedules the rest – µs         |
+| **bottom half** | a little later, in interruptible mode | the actual processing (e.g. the network packet through the TCP/IP stack) |
 
 On Linux the bottom half is called a **softirq**, **tasklet** or **workqueue**; on Windows a **DPC** (_Deferred Procedure Call_).
 

@@ -118,12 +118,12 @@ Mindig ébren a gombelem **2 nap** alatt lemerül; jól megírt alvással **fél
 
 A telefonon nincs swap a megszokott módon (a flash-memória kopna, és lassú lenne), ezért ha fogy a RAM, az Android **leállít** háttéralkalmazásokat. A döntés alapja egy **fontossági pontszám** (Linuxon `oom_score_adj`, −1000 és +1000 között): minél nagyobb, annál előbb áldozzák fel.
 
-| Kategória                     | Példa                          | Pontszám (kb.) |
-| ----------------------------- | ------------------------------ | -------------- |
-| előtérben lévő alkalmazás     | amit éppen használsz           | 0              |
-| látható / érzékelhető         | zenelejátszó a háttérben       | 100–200        |
-| szolgáltatás                  | szinkronizálás                 | 500 körül      |
-| korábban használt (gyorsítótár) | a tegnap megnyitott játék    | 900–999        |
+| Kategória                       | Példa                     | Pontszám (kb.) |
+| ------------------------------- | ------------------------- | -------------- |
+| előtérben lévő alkalmazás       | amit éppen használsz      | 0              |
+| látható / érzékelhető           | zenelejátszó a háttérben  | 100–200        |
+| szolgáltatás                    | szinkronizálás            | 500 körül      |
+| korábban használt (gyorsítótár) | a tegnap megnyitott játék | 900–999        |
 
 ```python run
 # Az Android "kevés memória" gyilkosának (lmkd) leegyszerűsített döntése

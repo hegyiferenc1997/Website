@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – fájlrendszerek
 summary: Ellenőrző kérdések, parancssori feladatok linkekkel és lemezekkel, összefoglaló feladatlap.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -75,4 +75,126 @@ Igen. A RAID csak lemezhiba ellen véd; a véletlen törlés, a zsarolóvírus v
 ? Melyik fájl sorolja fel Linuxon az induláskor automatikusan csatolandó fájlrendszereket?
 = /etc/fstab
 ! File System TABle.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Blokkok és elpazarolt hely.** Egy fájl mindig egész számú blokkot foglal. Írd meg a `foglalas(meret, blokk=4096)` függvényt, amely egy párt ad vissza: hány blokkot foglal a fájl, és hány bájt marad kihasználatlanul az utolsó blokkban!
+
+```python starter
+def foglalas(meret, blokk=4096):
+    return (0, 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def foglalas(meret, blokk=4096):
+    db = -(-meret // blokk)           # felfelé kerekített osztás
+    return (db, db * blokk - meret)
+```
+
+</details>
+
+```python test
+assert foglalas(10000) == (3, 2288)
+assert foglalas(4096) == (1, 0)
+assert foglalas(1) == (1, 4095)
+assert foglalas(0) == (0, 0)
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Az inode legnagyobb fájlja.** Egy inode-ban 12 közvetlen mutató, egy egyszeres, egy kétszeres és egy háromszoros közvetett mutató van. Egy mutató 4 bájt. Írd meg a `max_fajl(blokk)` függvényt, amely bájtban megadja a legnagyobb ábrázolható fájlméretet!
+
+```python starter
+def max_fajl(blokk):
+    return 12 * blokk
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def max_fajl(blokk):
+    n = blokk // 4                    # ennyi mutató fér egy blokkba
+    blokkok = 12 + n + n**2 + n**3    # közvetlen + egyszeres + kétszeres + háromszoros
+    return blokkok * blokk
+```
+
+</details>
+
+```python test
+assert max_fajl(1024) == (12 + 256 + 256**2 + 256**3) * 1024
+assert max_fajl(4096) == (12 + 1024 + 1024**2 + 1024**3) * 4096
+print(f"4 KB-os blokkokkal: {max_fajl(4096) / 2**40:.2f} TiB")
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **FAT-lánc követése.** A FAT táblában minden blokkhoz a fájl **következő** blokkjának száma tartozik, az utolsónál `-1`. Írd meg a `lanc(fat, kezdo)` függvényt, amely visszaadja a fájl blokkjainak listáját sorrendben!
+
+```python starter
+def lanc(fat, kezdo):
+    return [kezdo]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def lanc(fat, kezdo):
+    blokkok = []
+    b = kezdo
+    while b != -1:
+        blokkok.append(b)
+        b = fat[b]                    # a következő blokk száma
+    return blokkok
+```
+
+</details>
+
+```python test
+fat = {2: 9, 9: 4, 4: -1, 5: 6, 6: -1}
+assert lanc(fat, 2) == [2, 9, 4]
+assert lanc(fat, 5) == [5, 6]
+assert lanc({7: -1}, 7) == [7]
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit tárol az inode?
++ a fájl adatait (méret, jogok, tulajdonos, időbélyegek) és az adatblokkok helyét – a nevét nem
+- a fájl nevét és tartalmát
+- csak a fájl nevét
+! A nevet a könyvtárbejegyzés tárolja, ezért lehet egy fájlnak több neve (hard link).
+
+? Mi történik egy szimbolikus linkkel, ha töröljük az eredeti fájlt?
++ „lóg”: egy nem létező útvonalra mutat
+- automatikusan törlődik
+- tovább működik, mert az adatokra mutat
+! A hard link viszont tovább működik.
+
+? Mire való a naplózás (journaling) egy fájlrendszerben?
++ összeomlás után gyorsan helyreállítható, konzisztens állapotba hozható a fájlrendszer
+- a felhasználók tevékenységének naplózására
+- a fájlok tömörítésére
+! Előbb a naplóba írja a szándékot, csak utána a helyére.
+
+? Melyik fájlrendszert ajánlod egy pendrive-ra, amelyet Windowson, macOS-en és Linuxon is használni akarsz, és 4 GB-nál nagyobb fájlokat is tárolnál rajta?
+- FAT32
++ exFAT
+- ext4
+! A FAT32 legfeljebb 4 GB-os fájlt tud, az ext4-et a Windows alapból nem olvassa.
+
+? Mit mutat a df -h parancs?
++ a csatolt fájlrendszerek méretét, a foglalt és a szabad helyet
+- a könyvtárak méretét
+- a futó folyamatokat
+! A könyvtárak méretét a du -sh mutatja.
 ```
