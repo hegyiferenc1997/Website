@@ -1,7 +1,7 @@
 ---
 title: Practice – Registers, Counters, Memories
 summary: Review questions and a summary worksheet: shift register, ring and Johnson counters, asynchronous and synchronous counters, memories.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -88,4 +88,135 @@ dc: 1, 3, 4, 5, 6, 7
 - DRAM
 - NAND Flash
 - EEPROM
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Shift register.** Write the `shift(reg, inp)` function, which shifts a bit list (the register's content, the first flip-flop on the left) to the right by one clock: the input bit enters on the left, and the rightmost bit drops out. Return the `(new_register, bit_out)` pair!
+
+```python starter
+def shift(reg, inp):
+    return (reg, 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+The last test is serial-to-parallel conversion: after 4 clocks the 4 bits that arrived one after another can be read out at once (the first one to arrive is on the far right).
+
+```python solution
+def shift(reg, inp):
+    return ([inp] + reg[:-1], reg[-1])       # in on the left, out on the right
+```
+
+</details>
+
+```python test
+assert shift([0, 0, 0, 0], 1) == ([1, 0, 0, 0], 0)
+assert shift([1, 0, 1, 1], 0) == ([0, 1, 0, 1], 1)
+reg = [0, 0, 0, 0]
+for b in [1, 0, 1, 1]:                       # serial → parallel conversion in 4 clocks
+    reg, _ = shift(reg, b)
+assert reg == [1, 1, 0, 1]
+print("All checks passed!")
+```
+
+**2.** **LFSR period.** Write the `lfsr_period(bits, taps, start=1)` function! The register is a `bits`-bit integer; at every step the new bit is the XOR of the bit positions given in the `taps` list, the register shifts left, and the new bit goes into position 0. Return after how many steps it returns to the start state!
+
+```python starter
+def lfsr_period(bits, taps, start=1):
+    return 2 ** bits
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def lfsr_period(bits, taps, start=1):
+    state, steps = start, 0
+    while True:
+        new = 0
+        for t in taps:
+            new ^= (state >> t) & 1                          # XOR of the fed-back bits
+        state = ((state << 1) | new) & (2 ** bits - 1)       # shift, keep only n bits
+        steps += 1
+        if state == start:
+            return steps
+```
+
+</details>
+
+```python test
+assert lfsr_period(4, [3, 2]) == 15          # x^4 + x^3 + 1: maximal length
+assert lfsr_period(3, [2, 1]) == 7
+assert lfsr_period(4, [3, 1]) < 15           # bad choice of taps: a shorter period
+print("All checks passed!")
+```
+
+**3.** **Address lines and capacity.** Write the `memory(address_lines, data_bits)` function, which returns the memory's capacity **in bytes**, and the `address_lines_needed(words)` function, which returns how many address lines a given number of words needs!
+
+```python starter
+def memory(address_lines, data_bits):
+    return 0
+
+def address_lines_needed(words):
+    return 0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def memory(address_lines, data_bits):
+    return 2 ** address_lines * data_bits // 8   # number of words × word width, in bytes
+
+def address_lines_needed(words):
+    k = 0
+    while 2 ** k < words:                        # the smallest k for which 2^k ≥ words
+        k += 1
+    return k
+```
+
+</details>
+
+```python test
+assert memory(15, 8) == 32768                # 62256 SRAM: 32 KiB
+assert memory(20, 16) == 2 * 1024 * 1024     # 1 Mi words × 16 bits = 2 MiB
+assert address_lines_needed(65536) == 16
+assert address_lines_needed(1000) == 10
+assert address_lines_needed(1) == 0
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? How many flip-flops does a modulo-10 (0…9) counter need?
+= 4
+! 2^3 = 8 < 10 ≤ 16 = 2^4.
+
+? How many states does a 4-flip-flop ring counter have?
+= 4
+! A single 1 circulates in a ring counter: n flip-flops → n states.
+
+? Why is the asynchronous (ripple) counter used less today?
++ because the delays add up, and false states appear during transitions
+- because it needs more flip-flops
+- because it can only count down
+! In a synchronous counter every bit changes at once.
+
+? Which memory loses its content without power?
+- Flash
+- EEPROM
++ SRAM
+- mask-programmed ROM
+! RAMs (SRAM, DRAM) are volatile; the ROM families and Flash are not.
+
+? A 3-bit synchronous counter is in state 111. What is its next state?
+= 000
+! It overflows and starts from 0 again.
 ```

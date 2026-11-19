@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – Digitális tervezés és szimuláció
 summary: Ellenőrző kérdések és összefoglaló feladatlap: tervezési lépések, setup és hold, kritikus út, szinkron tervezés, testbench, tesztvektorok, hibakeresés és mérés.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -76,4 +76,131 @@ table: A, B, C -> Y = A ⊕ B·C
 + Engedélyező (enable) bemenetet használni, az órajelet változatlanul hagyni.
 - Egy invertert tenni az órajelbe.
 - Lekötni az órajel bemenetét a földre.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Időzítési tartalék.** Írd meg a `slack(t_clk, t_cq, t_logika, t_setup)` függvényt (ns-ban, két tizedesre kerekítve), és a `legrosszabb(t_clk, t_cq, t_setup, utak)` függvényt, amely egy `{név: logikai késleltetés}` szótárból visszaadja a legkisebb tartalékú út nevét és tartalékát!
+
+```python starter
+def slack(t_clk, t_cq, t_logika, t_setup):
+    return 0
+
+def legrosszabb(t_clk, t_cq, t_setup, utak):
+    return ("", 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def slack(t_clk, t_cq, t_logika, t_setup):
+    return round(t_clk - t_setup - (t_cq + t_logika), 2)
+
+def legrosszabb(t_clk, t_cq, t_setup, utak):
+    nev = min(utak, key=lambda n: slack(t_clk, t_cq, utak[n], t_setup))   # a kritikus út
+    return (nev, slack(t_clk, t_cq, utak[nev], t_setup))
+```
+
+</details>
+
+```python test
+assert slack(8, 1, 6, 0.5) == 0.5
+assert slack(10, 0.5, 9.5, 0.3) == -0.3
+utak = {"szorzó": 9.5, "ALU": 8.5, "számláló": 3.2}
+assert legrosszabb(10, 0.5, 0.3, utak) == ("szorzó", -0.3)
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Önellenőrző teszt.** Írd meg a `teszt(dut, referencia, n_bit)` függvényt, amely két n bites bemenetű függvényt **minden** bemenetpárra összehasonlít, és visszaadja a hibás `(a, b)` párok listáját!
+
+```python starter
+def teszt(dut, referencia, n_bit):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def teszt(dut, referencia, n_bit):
+    hibak = []
+    for a in range(2 ** n_bit):
+        for b in range(2 ** n_bit):          # teljes körű teszt: minden kombináció
+            if dut(a, b) != referencia(a, b):
+                hibak.append((a, b))
+    return hibak
+```
+
+</details>
+
+```python test
+jo = lambda a, b: a + b
+rossz = lambda a, b: (a + b) & 0x0F           # elfelejtett átvitel
+assert teszt(jo, jo, 4) == []
+assert len(teszt(rossz, jo, 4)) == 120        # ennyi esetben van átvitel
+assert teszt(rossz, jo, 4)[0] == (1, 15)
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Logikai analizátor beállítása.** Írd meg az `analizator(minta_per_s, memoria, jel_hz)` függvényt, amely visszaadja a rögzítési időt ms-ban (egy tizedesre kerekítve), és azt, hogy jut-e legalább 4 minta a jel egy periódusára: `(idő_ms, elég_e)`!
+
+```python starter
+def analizator(minta_per_s, memoria, jel_hz):
+    return (0, True)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def analizator(minta_per_s, memoria, jel_hz):
+    ido_ms = round(memoria / minta_per_s * 1000, 1)     # mikor telik meg a memória
+    eleg = minta_per_s / jel_hz >= 4                     # ökölszabály: ≥ 4 minta / periódus
+    return (ido_ms, eleg)
+```
+
+</details>
+
+```python test
+assert analizator(24e6, 1e6, 1e6) == (41.7, True)
+assert analizator(24e6, 1e6, 10e6) == (41.7, False)
+assert analizator(100e6, 10e6, 25e6) == (100.0, True)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a különbség a funkcionális és az időzítési szimuláció között?
++ a funkcionális késleltetések nélkül, a logikai működést nézi; az időzítési a valódi késleltetésekkel
+- a funkcionális lassabb
+- az időzítési csak az órajelet szimulálja
+! Ezért nem derül ki a funkcionális szimulációból egy negatív slack.
+
+? Mi a DUT egy testbenchben?
+- a gerjesztő jeleket előállító modul
++ a tesztelt áramkör
+- a referenciamodell
+! A testbench gerjeszti a DUT-ot, és ellenőrzi a kimeneteit.
+
+? Mit jelent a hold-idő megsértése?
+- a jel túl későn érkezik az órajel-él előtt
++ a jel túl hamar változik meg az órajel-él után
+- az órajel túl lassú
+! A hold-hibát nem lehet az órajel lassításával javítani.
+
+? Mire való a trigger egy logikai analizátoron?
++ hogy a rögzítés egy adott esemény bekövetkezésekor induljon
+- hogy gyorsabban mintavételezzen
+- hogy több memóriát használjon
+! Ritka hibák elkapásának legfontosabb eszköze.
+
+? Egy 4 bites összeadó teljes körű tesztjéhez hány bemeneti kombináció kell (két 4 bites bemenet)?
+= 256
+! 2^4 · 2^4 = 256.
 ```

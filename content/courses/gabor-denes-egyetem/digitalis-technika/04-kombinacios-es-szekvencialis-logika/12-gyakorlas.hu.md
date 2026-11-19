@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – kombinációs és szekvenciális logika
 summary: Ellenőrző kérdések és összefoglaló feladatlap: Karnaugh-tábla, hazárdok, összeadók, multiplexer, dekóder, tárolók és flip-flopok.
-minutes: 40
+minutes: 65
 kind: practice
 ---
 
@@ -109,4 +109,120 @@ same: A'B'C' + AB' + ABC
 = 100
 = 100MHz
 ! T_min = 10 ns.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Teljes összeadó.** Írd meg a `teljes_osszeado(a, b, c)` függvényt, amely két bit és a bejövő átvitel összegét `(S, K)` párként adja vissza (S az összegbit, K a kimenő átvitel) – csak logikai műveletekkel (`&`, `|`, `^`)!
+
+```python starter
+def teljes_osszeado(a, b, c):
+    return (0, 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def teljes_osszeado(a, b, c):
+    s = a ^ b ^ c                    # páratlan sok 1-es → összegbit 1
+    k = (a & b) | (c & (a ^ b))      # legalább két 1-es → átvitel
+    return (s, k)
+```
+
+</details>
+
+```python test
+eredmeny = [teljes_osszeado(a, b, c) for a in (0, 1) for b in (0, 1) for c in (0, 1)]
+assert eredmeny == [(0, 0), (1, 0), (1, 0), (0, 1), (1, 0), (0, 1), (0, 1), (1, 1)]
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Soros átvitelű összeadó.** Írd meg a `ripple(a_bitek, b_bitek)` függvényt, amely két egyforma hosszú bitlistát (a **legkisebb helyiértékű bit van elöl**) összead teljes összeadók láncával, és visszaadja az `(összeg_bitek, kimenő_átvitel)` párt!
+
+```python starter
+def ripple(a_bitek, b_bitek):
+    return ([0] * len(a_bitek), 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ripple(a_bitek, b_bitek):
+    c, osszeg = 0, []
+    for a, b in zip(a_bitek, b_bitek):      # LSB-től az MSB felé, ahogy az átvitel halad
+        osszeg.append(a ^ b ^ c)
+        c = (a & b) | (c & (a ^ b))
+    return (osszeg, c)
+```
+
+</details>
+
+```python test
+assert ripple([1, 1, 0, 0], [1, 0, 0, 0]) == ([0, 0, 1, 0], 0)    # 3 + 1 = 4
+assert ripple([1, 1, 1, 1], [1, 0, 0, 0]) == ([0, 0, 0, 0], 1)    # 15 + 1 = 16 → átvitel
+assert ripple([0, 1, 0, 1], [1, 1, 1, 0]) == ([1, 0, 0, 0], 1)    # 10 + 7 = 17
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **4:1 multiplexer.** Írd meg a `mux4(d, s1, s0)` függvényt, ahol `d` egy négyelemű bitlista (d0…d3), és a kiválasztó bitek (s1 a felső) megadják, melyik bemenet jut a kimenetre! Csak logikai műveleteket használj, ne indexeld a listát a kiválasztó bitekkel.
+
+```python starter
+def mux4(d, s1, s0):
+    return d[0]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A második teszt egy trükk: ha a d bemenetekre a XOR igazságtábláját kötjük, a multiplexer XOR kapuként működik – így valósít meg egy MUX tetszőleges függvényt.
+
+```python solution
+def mux4(d, s1, s0):
+    n1, n0 = 1 - s1, 1 - s0
+    # Y = S1'S0'·D0 + S1'S0·D1 + S1S0'·D2 + S1S0·D3
+    return (n1 & n0 & d[0]) | (n1 & s0 & d[1]) | (s1 & n0 & d[2]) | (s1 & s0 & d[3])
+```
+
+</details>
+
+```python test
+d = [1, 0, 0, 1]
+assert [mux4(d, s1, s0) for s1 in (0, 1) for s0 in (0, 1)] == [1, 0, 0, 1]
+d = [0, 1, 1, 0]
+assert [mux4(d, s1, s0) for s1 in (0, 1) for s0 in (0, 1)] == [0, 1, 1, 0]
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Hány cellás egy négyváltozós Karnaugh-tábla?
+= 16
+! 2^4 = 16 cella, mindegyik egy minterm.
+
+? Mekkora csoportokat szabad kijelölni a Karnaugh-táblán?
+- tetszőleges méretűt
++ 1, 2, 4, 8, … cellásat (kettő hatványait), téglalap alakban
+- csak párokat
+! A tábla szélei körbeérnek, a sarkok is szomszédosak.
+
+? Hány kiválasztó bemenete van egy 8:1 multiplexernek?
+= 3
+! 2^3 = 8 adatbemenet.
+
+? Mi a különbség a D tároló (latch) és a D flip-flop között?
++ a tároló szintvezérelt, a flip-flop élvezérelt
+- a flip-flop két bitet tárol
+- a tárolónak nincs bemenete
+! A latch átlátszó, amíg az engedélyező jel aktív; a flip-flop csak az órajel élénél vesz mintát.
+
+? Hány kimenete van egy 3 → 8 dekódernek?
+= 8
+! Minden bemeneti kombinációhoz egy kimenet tartozik.
 ```

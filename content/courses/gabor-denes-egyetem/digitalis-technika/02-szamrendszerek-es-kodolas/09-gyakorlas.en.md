@@ -1,7 +1,7 @@
 ---
 title: Practice – Number Systems and Codes
 summary: Review questions and a mixed summary worksheet with conversions, two's complement, BCD, Gray and Hamming codes.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -103,4 +103,135 @@ It detects one (an odd number of) bit errors, but misses two bit errors, and it 
 + 1100
 - 0111
 ! Only 0000 … 1001 are valid in BCD.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Conversion to any base.** Write the `convert(n, base)` function, which converts a non-negative integer to the given base (2…16) and returns it as a string (digits above 9: A–F)! The built-in `bin`, `hex`, `format` may not be used this time.
+
+```python starter
+def convert(n, base):
+    return str(n)
+```
+
+<details>
+<summary>Solution</summary>
+
+This is the method of repeated division: the remainders read from bottom to top give the result, which is why we always prepend.
+
+```python solution
+def convert(n, base):
+    digits = "0123456789ABCDEF"
+    if n == 0:
+        return "0"
+    s = ""
+    while n > 0:
+        s = digits[n % base] + s     # the remainder is the next digit (going to the left)
+        n //= base
+    return s
+```
+
+</details>
+
+```python test
+assert convert(13, 2) == "1101"
+assert convert(255, 16) == "FF"
+assert convert(100, 8) == "144"
+assert convert(0, 2) == "0"
+assert convert(2026, 16) == "7EA"
+print("All checks passed!")
+```
+
+**2.** **Two's complement.** Write the `twos_complement(x, bits)` function, which returns an integer (possibly negative) in two's complement form with the given number of bits, as a string! If the number doesn't fit, return `None`.
+
+```python starter
+def twos_complement(x, bits):
+    return format(x, "b")
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def twos_complement(x, bits):
+    if not -(2 ** (bits - 1)) <= x < 2 ** (bits - 1):
+        return None                                  # doesn't fit in the signed range
+    return format(x % 2 ** bits, f"0{bits}b")        # for negatives: 2^n + x
+```
+
+</details>
+
+```python test
+assert twos_complement(5, 8) == "00000101"
+assert twos_complement(-5, 8) == "11111011"
+assert twos_complement(-128, 8) == "10000000"
+assert twos_complement(128, 8) is None
+assert twos_complement(-1, 4) == "1111"
+print("All checks passed!")
+```
+
+**3.** **Gray code there and back.** Write the `gray(n)` and `gray_back(g)` functions! Binary → Gray conversion: g = n XOR (n >> 1). Backwards, starting from the top bit, every bit = the previous (already converted) bit XOR the Gray bit.
+
+```python starter
+def gray(n):
+    return n
+
+def gray_back(g):
+    return g
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def gray(n):
+    return n ^ (n >> 1)
+
+def gray_back(g):
+    n = 0
+    while g:
+        n ^= g          # the XOR of all higher bits accumulates
+        g >>= 1
+    return n
+```
+
+</details>
+
+```python test
+assert [gray(i) for i in range(8)] == [0, 1, 3, 2, 6, 7, 5, 4]
+assert all(gray_back(gray(i)) == i for i in range(256))
+assert all(bin(gray(i) ^ gray(i + 1)).count("1") == 1 for i in range(255))   # neighbours: 1 bit difference
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is 0x2F in decimal?
+= 47
+! 2 · 16 + 15 = 47.
+
+? Which is the two's complement form of −1 on 8 bits?
+- 10000001
++ 11111111
+- 01111111
+! All bits are 1: 256 − 1 = 255 = 11111111.
+
+? What is the BCD code of 7?
+= 0111
+! BCD represents every decimal digit in binary on 4 bits.
+
+? What is the largest 8-bit unsigned number?
+= 255
+! 2^8 − 1 = 255.
+
+? What is the most important property of the Gray code?
++ the codes of two neighbouring numbers differ in exactly one bit
+- it's shorter than the binary code
+- it can correct errors
+! That's why it's used e.g. in rotary encoders: no false value appears during a transition.
 ```

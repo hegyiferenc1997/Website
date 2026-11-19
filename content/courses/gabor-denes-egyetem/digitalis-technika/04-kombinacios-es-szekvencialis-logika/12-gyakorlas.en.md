@@ -1,7 +1,7 @@
 ---
 title: Practice – Combinational and Sequential Logic
 summary: Review questions and a summary worksheet: Karnaugh maps, hazards, adders, multiplexer, decoder, latches and flip-flops.
-minutes: 40
+minutes: 65
 kind: practice
 ---
 
@@ -109,4 +109,120 @@ same: A'B'C' + AB' + ABC
 = 100
 = 100MHz
 ! T_min = 10 ns.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Full adder.** Write the `full_adder(a, b, c)` function, which returns the sum of two bits and the incoming carry as an `(S, K)` pair (S is the sum bit, K the outgoing carry) – using only logic operations (`&`, `|`, `^`)!
+
+```python starter
+def full_adder(a, b, c):
+    return (0, 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def full_adder(a, b, c):
+    s = a ^ b ^ c                    # an odd number of 1s → sum bit 1
+    k = (a & b) | (c & (a ^ b))      # at least two 1s → carry
+    return (s, k)
+```
+
+</details>
+
+```python test
+result = [full_adder(a, b, c) for a in (0, 1) for b in (0, 1) for c in (0, 1)]
+assert result == [(0, 0), (1, 0), (1, 0), (0, 1), (1, 0), (0, 1), (0, 1), (1, 1)]
+print("All checks passed!")
+```
+
+**2.** **Ripple-carry adder.** Write the `ripple(a_bits, b_bits)` function, which adds two bit lists of equal length (the **least significant bit comes first**) with a chain of full adders, and returns the `(sum_bits, carry_out)` pair!
+
+```python starter
+def ripple(a_bits, b_bits):
+    return ([0] * len(a_bits), 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def ripple(a_bits, b_bits):
+    c, total = 0, []
+    for a, b in zip(a_bits, b_bits):        # from the LSB to the MSB, as the carry travels
+        total.append(a ^ b ^ c)
+        c = (a & b) | (c & (a ^ b))
+    return (total, c)
+```
+
+</details>
+
+```python test
+assert ripple([1, 1, 0, 0], [1, 0, 0, 0]) == ([0, 0, 1, 0], 0)    # 3 + 1 = 4
+assert ripple([1, 1, 1, 1], [1, 0, 0, 0]) == ([0, 0, 0, 0], 1)    # 15 + 1 = 16 → carry
+assert ripple([0, 1, 0, 1], [1, 1, 1, 0]) == ([1, 0, 0, 0], 1)    # 10 + 7 = 17
+print("All checks passed!")
+```
+
+**3.** **4:1 multiplexer.** Write the `mux4(d, s1, s0)` function, where `d` is a four-element bit list (d0…d3), and the select bits (s1 is the upper one) determine which input reaches the output! Use only logic operations, no list indexing by the select bits.
+
+```python starter
+def mux4(d, s1, s0):
+    return d[0]
+```
+
+<details>
+<summary>Solution</summary>
+
+The second test is a trick: if the truth table of XOR is connected to the d inputs, the multiplexer works as an XOR gate – this is how a MUX implements any function.
+
+```python solution
+def mux4(d, s1, s0):
+    n1, n0 = 1 - s1, 1 - s0
+    # Y = S1'S0'·D0 + S1'S0·D1 + S1S0'·D2 + S1S0·D3
+    return (n1 & n0 & d[0]) | (n1 & s0 & d[1]) | (s1 & n0 & d[2]) | (s1 & s0 & d[3])
+```
+
+</details>
+
+```python test
+d = [1, 0, 0, 1]
+assert [mux4(d, s1, s0) for s1 in (0, 1) for s0 in (0, 1)] == [1, 0, 0, 1]
+d = [0, 1, 1, 0]
+assert [mux4(d, s1, s0) for s1 in (0, 1) for s0 in (0, 1)] == [0, 1, 1, 0]
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? How many cells does a four-variable Karnaugh map have?
+= 16
+! 2^4 = 16 cells, each one a minterm.
+
+? What size groups may be marked on a Karnaugh map?
+- any size
++ 1, 2, 4, 8, … cells (powers of two), in a rectangle
+- only pairs
+! The edges of the map wrap around, the corners are neighbours too.
+
+? How many select inputs does an 8:1 multiplexer have?
+= 3
+! 2^3 = 8 data inputs.
+
+? What is the difference between a D latch and a D flip-flop?
++ the latch is level-triggered, the flip-flop edge-triggered
+- the flip-flop stores two bits
+- the latch has no input
+! The latch is transparent while the enable signal is active; the flip-flop samples only at the clock edge.
+
+? How many outputs does a 3 → 8 decoder have?
+= 8
+! There is one output for every input combination.
 ```

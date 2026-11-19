@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – mikroprocesszorok és mikrokontrollerek
 summary: Ellenőrző kérdések és összefoglaló feladatlap: CPU felépítése, buszok, flag-ek, utasításciklus, pipeline, megszakítás, bitkezelés és illesztés.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -80,4 +80,148 @@ Mert a regiszter többi bitje más funkciókat (más lábakat, beállításokat)
 + Harvard
 - CISC Neumann
 - nincs benne CPU
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Regiszterbitek maszkokkal.** Egy mikrokontroller perifériáit regiszterbitekkel vezérled. Írd meg a `bit_be(reg, n)`, `bit_ki(reg, n)`, `bit_valt(reg, n)` és `bit_e(reg, n)` függvényt (1-be állítás, törlés, átbillentés, lekérdezés)! A többi bit nem változhat.
+
+```python starter
+def bit_be(reg, n):
+    return reg
+
+def bit_ki(reg, n):
+    return reg
+
+def bit_valt(reg, n):
+    return reg
+
+def bit_e(reg, n):
+    return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def bit_be(reg, n):
+    return reg | (1 << n)            # VAGY: csak az n. bit lesz 1
+
+def bit_ki(reg, n):
+    return reg & ~(1 << n)           # ÉS a negált maszkkal: csak az n. bit törlődik
+
+def bit_valt(reg, n):
+    return reg ^ (1 << n)            # XOR: az n. bit átbillen
+
+def bit_e(reg, n):
+    return (reg >> n) & 1
+```
+
+</details>
+
+```python test
+assert bit_be(0b0000_0000, 5) == 0b0010_0000
+assert bit_ki(0b1111_1111, 0) == 0b1111_1110
+assert bit_valt(0b1010_0000, 7) == 0b0010_0000
+assert bit_e(0b0000_1000, 3) == 1 and bit_e(0b0000_1000, 2) == 0
+assert bit_be(0b1000_0001, 0) == 0b1000_0001     # ami már 1, az 1 marad
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Időzítő beállítása.** Írd meg az `idozito(f_cpu, f_cel, max_top=255)` függvényt, amely az `[1, 8, 64, 256, 1024]` előosztók közül megkeresi a **legkisebbet**, amellyel a `TOP = f_cpu / (előosztó · f_cel) − 1` érték **egész szám** és legfeljebb `max_top`. Add vissza az `(előosztó, TOP)` párt, vagy `None`-t, ha egyik sem jó!
+
+```python starter
+def idozito(f_cpu, f_cel, max_top=255):
+    return None
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def idozito(f_cpu, f_cel, max_top=255):
+    for eloszto in [1, 8, 64, 256, 1024]:
+        oszto = eloszto * f_cel
+        if f_cpu % oszto == 0:                 # pontos, egész számú osztás kell
+            top = f_cpu // oszto - 1
+            if 0 <= top <= max_top:
+                return (eloszto, top)
+    return None
+```
+
+</details>
+
+```python test
+assert idozito(16_000_000, 1000) == (64, 249)
+assert idozito(16_000_000, 1000, max_top=65535) == (1, 15999)   # 16 bites időzítő
+assert idozito(16_000_000, 50_000) == (8, 39)     # 1-es előosztóval a TOP 319 lenne: nem fér el
+assert idozito(8_000_000, 100) is None           # egyik előosztóval sem jön ki pontosan
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Pipeline futásideje.** Írd meg a `pipeline_utem(n, fokozat, buborek=0)` függvényt (n utasítás, k fokozat, plusz várakozási ütemek) és a `gyorsulas(n, fokozat, buborek=0)` függvényt, amely két tizedesre kerekítve megadja, hányszor gyorsabb a pipeline a pipeline nélküli (n · k ütemes) futásnál!
+
+```python starter
+def pipeline_utem(n, fokozat, buborek=0):
+    return n * fokozat
+
+def gyorsulas(n, fokozat, buborek=0):
+    return 1.0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def pipeline_utem(n, fokozat, buborek=0):
+    return fokozat + (n - 1) + buborek        # feltöltés, aztán ütemenként egy kész
+
+def gyorsulas(n, fokozat, buborek=0):
+    return round(n * fokozat / pipeline_utem(n, fokozat, buborek), 2)
+```
+
+</details>
+
+```python test
+assert pipeline_utem(100, 5) == 104
+assert pipeline_utem(1, 5) == 5
+assert gyorsulas(1000, 5) == 4.98
+assert gyorsulas(1000, 5, buborek=200) == 4.15
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi a Harvard-architektúra lényege?
+- a program és az adat ugyanabban a memóriában van
++ a programmemória és az adatmemória külön busszal érhető el
+- nincs benne utasításszámláló
+! Így egyszerre olvasható utasítás és adat – sok mikrokontroller ilyen.
+
+? Mit tartalmaz az utasításszámláló (PC)?
++ a következő végrehajtandó utasítás címét
+- az eddig végrehajtott utasítások számát
+- az utolsó művelet eredményét
+! Ugrásnál a PC értéke felülíródik.
+
+? Mire való a watchdog időzítő egy mikrokontrollerben?
+- pontos idő mérésére
++ ha a program lefagy és nem „eteti” időben, újraindítja a mikrokontrollert
+- a fogyasztás csökkentésére
+! Beágyazott rendszerekben ez a végső védelem a lefagyás ellen.
+
+? Mi történik egy megszakítás (interrupt) beérkezésekor?
++ a CPU elmenti, hol tartott, lefuttatja a kiszolgáló rutint, majd onnan folytatja
+- a CPU újraindul
+- a program véget ér
+! A visszatérési cím a verembe kerül.
+
+? Egy regiszter értéke 0b0000_0110. Mennyi lesz 0b0000_0100-zel vett ÉS után (tízes számrendszerben)?
+= 4
+! Csak a 2. bit marad meg: 0b0000_0100 = 4.
 ```

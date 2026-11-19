@@ -1,7 +1,7 @@
 ---
 title: Practice – Digital Technology in Computing
 summary: Review questions and a summary worksheet: signal-to-noise ratio, dithering, digital filters, DSP hardware, ECC, accelerators, the design decisions of the stopwatch project – and a few course-wide review questions.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -81,4 +81,131 @@ dc: 6, 7
 + The quantisation error appears as even, less noticeable noise instead of a regular pattern.
 - The bit count of the signal increases.
 - The sampling frequency doubles.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Moving-average filter.** Write the `moving_average(signal, n)` function, which returns the outputs of an n-point moving average from the sample where n samples are already available (rounded to two decimals)!
+
+```python starter
+def moving_average(signal, n):
+    return signal
+```
+
+<details>
+<summary>Solution</summary>
+
+The last test shows the signal at half the sampling frequency (the fastest possible): the 2-point average cancels it completely.
+
+```python solution
+def moving_average(signal, n):
+    out = []
+    for i in range(n - 1, len(signal)):
+        window = signal[i - n + 1:i + 1]      # the last n samples
+        out.append(round(sum(window) / n, 2))
+    return out
+```
+
+</details>
+
+```python test
+assert moving_average([2, 4, 6, 8], 4) == [5.0]
+assert moving_average([1, 2, 3, 4, 5], 2) == [1.5, 2.5, 3.5, 4.5]
+assert moving_average([1, -1, 1, -1, 1, -1], 2) == [0.0, 0.0, 0.0, 0.0, 0.0]   # the fastest signal disappears
+print("All checks passed!")
+```
+
+**2.** **Q15 with saturation.** Write the `q15(x)` function (real number → 16-bit integer, rounded, saturated to −32768 … 32767) and the `q15_add(a, b)` function, which adds two Q15 integers **with saturation**!
+
+```python starter
+def q15(x):
+    return round(x * 32768)
+
+def q15_add(a, b):
+    return a + b
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def q15(x):
+    return max(-32768, min(32767, round(x * 32768)))
+
+def q15_add(a, b):
+    return max(-32768, min(32767, a + b))     # the extreme value instead of overflow
+```
+
+</details>
+
+```python test
+assert q15(0.5) == 16384
+assert q15(-0.25) == -8192
+assert q15(1.0) == 32767                      # +1 can't be represented: saturation
+assert q15_add(q15(0.75), q15(0.75)) == 32767
+assert q15_add(-30000, -10000) == -32768
+assert q15_add(1000, 2000) == 3000
+print("All checks passed!")
+```
+
+**3.** **ECC bits.** Write the `secded_bits(m)` function, which returns how many check bits m data bits need with a SECDED code (the smallest r for which 2^r ≥ m + r + 1, plus 1 parity bit)!
+
+```python starter
+def secded_bits(m):
+    return 8
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def secded_bits(m):
+    r = 0
+    while 2 ** r < m + r + 1:      # the syndrome names every bit + the "no error" case
+        r += 1
+    return r + 1                   # + one parity bit to detect a double error
+```
+
+</details>
+
+```python test
+assert secded_bits(64) == 8        # 72-bit server memory
+assert secded_bits(32) == 7
+assert secded_bits(4) == 4
+assert secded_bits(128) == 9
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? How many MAC operations per second does a 32-coefficient FIR filter perform at 48 kHz sampling (on one channel)?
+= 1536000
+! 32 · 48,000 = 1,536,000.
+
+? In which application is ECC memory NOT usually used?
+- a data centre server
+- an aircraft's controller
++ a cheap games console
+! ECC is more expensive, so it's used where a silent data error can cause serious damage.
+
+? What is dithering?
++ adding a small, deliberate noise before quantisation, so the quantisation error isn't a distortion correlated with the signal
+- amplifying the signal
+- removing the noise completely
+! With quiet sounds, an even, less disturbing noise is heard instead of distortion.
+
+? What is the job of the multiply-accumulate (MAC) unit in a DSP?
++ it computes acc + a · b in one step
+- it compares two numbers
+- it addresses the memory
+! The basic operation of FIR filters, matrix multiplication and neural networks.
+
+? How many bits is a server memory word with 64 data bits and SECDED ECC?
+= 72
+! 64 data bits + 8 check bits.
 ```
