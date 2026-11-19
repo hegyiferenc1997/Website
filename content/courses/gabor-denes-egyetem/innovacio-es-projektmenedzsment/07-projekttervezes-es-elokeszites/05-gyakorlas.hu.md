@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – tervezés és kritikus út
 summary: Ellenőrző kérdések és egy teljes kritikusút-számítás összefoglaló feladatlapként.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -88,4 +88,141 @@ Egy mobilalkalmazás fejlesztésének tevékenységei (időtartam napokban):
 - WBS-szótár
 - Gantt-diagram
 ! Technikai, gazdasági, jogi, működési, ütemezési megvalósíthatóság.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Kritikus út.** Írd meg a `cpm(tev)` függvényt, amely a `{név: (időtartam, [megelőzők])}` szótárból (amely már helyes sorrendben van) a `(projekt hossza, kritikus tevékenységek listája)` párt adja vissza! A kritikus lista a felsorolás sorrendjét kövesse.
+
+```python starter
+def cpm(tev):
+    return (sum(ido for ido, _ in tev.values()), list(tev))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def cpm(tev):
+    ES, EF = {}, {}
+    for nev, (ido, elozok) in tev.items():            # előre számítás
+        ES[nev] = max((EF[e] for e in elozok), default=0)
+        EF[nev] = ES[nev] + ido
+    hossz = max(EF.values())
+    LS = {}
+    for nev in reversed(list(tev)):                    # visszafelé számítás
+        utodok = [u for u, (_, el) in tev.items() if nev in el]
+        LS[nev] = min((LS[u] for u in utodok), default=hossz) - tev[nev][0]
+    return (hossz, [n for n in tev if LS[n] == ES[n]])  # tartalék nélküliek
+```
+
+</details>
+
+```python test
+pelda = {"A": (3, []), "B": (2, ["A"]), "C": (4, ["A"]), "D": (3, ["B"]), "E": (2, ["C", "D"])}
+assert cpm(pelda) == (10, ["A", "B", "D", "E"])
+webshop = {"Köv": (4, []), "UI": (3, ["Köv"]), "DB": (3, ["Köv"]), "Backend": (6, ["DB"]),
+           "Frontend": (5, ["UI"]), "Fizetés": (3, ["Backend"]), "Teszt": (4, ["Frontend", "Fizetés"]),
+           "Élesítés": (1, ["Teszt"])}
+assert cpm(webshop) == (21, ["Köv", "DB", "Backend", "Fizetés", "Teszt", "Élesítés"])
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Topologikus sorrend.** Írd meg a `topologikus(tev)` függvényt, amely tetszőleges sorrendű `{név: (időtartam, [megelőzők])}` szótárból olyan listát ad, amelyben minden tevékenység a megelőzői után jön! Ha a függőségekben kör van, adjon vissza `None`-t.
+
+```python starter
+def topologikus(tev):
+    return list(tev)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A kör (A vár B-re, B vár A-ra) hibás terv: egyik tevékenység sem kezdhető el, ezért a program jelezze.
+
+```python solution
+def topologikus(tev):
+    sorrend = []
+    while len(sorrend) < len(tev):
+        uj = [n for n, (_, el) in tev.items() if n not in sorrend and all(e in sorrend for e in el)]
+        if not uj:
+            return None                    # nincs elindítható tevékenység: kör van
+        sorrend.extend(uj)
+    return sorrend
+```
+
+</details>
+
+```python test
+def helyes(tev, sorrend):
+    return sorted(sorrend) == sorted(tev) and all(
+        sorrend.index(e) < sorrend.index(n) for n, (_, el) in tev.items() for e in el)
+
+forditott = {"E": (2, ["C", "D"]), "D": (3, ["B"]), "C": (4, ["A"]), "B": (2, ["A"]), "A": (3, [])}
+assert helyes(forditott, topologikus(forditott))
+assert helyes({"B": (1, ["A"]), "A": (1, [])}, topologikus({"B": (1, ["A"]), "A": (1, [])}))
+assert topologikus({"A": (1, ["B"]), "B": (1, ["A"])}) is None
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **WBS összegzés.** Írd meg a `wbs_osszeg(elem)` függvényt, amely egy egymásba ágyazott szótárban (a levelek számok: a munkacsomagok becslései) rekurzívan összeadja a becsléseket!
+
+```python starter
+def wbs_osszeg(elem):
+    return sum(v for v in elem.values() if isinstance(v, (int, float)))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def wbs_osszeg(elem):
+    if isinstance(elem, (int, float)):
+        return elem                        # munkacsomag
+    return sum(wbs_osszeg(gyerek) for gyerek in elem.values())   # a gyerekek összege
+```
+
+</details>
+
+```python test
+wbs = {"Tervezés": {"Követelmények": 400, "UI-terv": 300},
+       "Fejlesztés": {"Backend": 1200, "Frontend": 900, "Fizetés": 500},
+       "Bevezetés": {"Tesztelés": 600, "Élesítés": 100}}
+assert wbs_osszeg(wbs) == 4000
+assert wbs_osszeg(wbs["Fejlesztés"]) == 2600
+assert wbs_osszeg({"a": {"b": {"c": 5}}, "d": 2}) == 7
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit mond a WBS 100%-os szabálya?
++ a gyerekelemek együtt pontosan a szülő teljes munkáját fedik le
+- minden munkacsomag 100 óránál rövidebb
+- a projekt 100%-ban kész
+- a költségvetés 100%-át el kell költeni
+! Se több, se kevesebb munka, mint a szülőelemé.
+
+? Mit jelent az FS függőség?
+- a két tevékenység egyszerre kezdődik
++ a rákövetkező csak az előző befejezése után kezdődhet
+- a két tevékenység egyszerre fejeződik be
+- a rákövetkező befejezése az előző kezdéséhez kötött
+! Finish-to-Start: a leggyakoribb függőségtípus.
+
+? Egy tevékenység ES = 4, LS = 7. Mennyi a tartalékideje (nap)?
+= 3
+! Tartalék = LS − ES = 3.
+
+? Mit tartalmaz a projekt alapító okirat?
+- a részletes ütemtervet napra pontosan
++ a projekt célját, a főbb kereteket, a szponzort és a projektmenedzser kijelölését
+- a csapattagok fizetését
+- a kódot
+! Ez a projekt hivatalos „születési anyakönyvi kivonata”.
 ```

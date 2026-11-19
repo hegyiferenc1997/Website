@@ -1,7 +1,7 @@
 ---
 title: Practice – Project Management Basics
 summary: Review questions and a summary worksheet for the sixth topic.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -83,4 +83,130 @@ At the start much is still unknown, so uncertainty is high. At the same time lit
 - risk register
 - Business Model Canvas
 ! Activities in rows, time horizontally.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Communication channels.** Write the function `channels(n)` (the number of channels in an `n`-person team) and the function `subteam_channels(sizes)`, which for sub-teams gives the sum of the internal channels and the channels between the sub-team leads!
+
+```python starter
+def channels(n):
+    return n * (n - 1)
+
+def subteam_channels(sizes):
+    return sum(channels(s) for s in sizes)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def channels(n):
+    return n * (n - 1) // 2                # every pair is one channel
+
+def subteam_channels(sizes):
+    return sum(channels(s) for s in sizes) + channels(len(sizes))   # + the leads among themselves
+```
+
+</details>
+
+```python test
+assert channels(6) == 15
+assert channels(12) == 66
+assert subteam_channels([6, 6]) == 31
+assert subteam_channels([4, 4, 4]) == 21
+print("All checks passed!")
+```
+
+**2.** **Team size and duration.** Write the function `duration(work, n, loss)`: in how many weeks do `n` people finish a task of `work` person-weeks, if every additional member reduces everyone's efficiency by the ratio `loss` (to 1 decimal)? `shortest(work, loss, max_n)` should tell with how many people (between 1 and `max_n`) the project is shortest!
+
+```python starter
+def duration(work, n, loss):
+    return round(work / n, 1)
+
+def shortest(work, loss, max_n):
+    return max_n
+```
+
+<details>
+<summary>Solution</summary>
+
+Beyond a point every new person takes away more through communication than they add – that's the essence of Brooks's law.
+
+```python solution
+def duration(work, n, loss):
+    return round(work / (n * (1 - loss * (n - 1))), 1)   # effective capacity
+
+def shortest(work, loss, max_n):
+    valid = [n for n in range(1, max_n + 1) if 1 - loss * (n - 1) > 0]
+    return min(valid, key=lambda n: work / (n * (1 - loss * (n - 1))))
+```
+
+</details>
+
+```python test
+assert duration(120, 10, 0.03) == 16.4
+assert duration(60, 3, 0.05) == 22.2
+assert shortest(120, 0.03, 30) == 17
+assert shortest(120, 0.04, 30) == 13
+print("All checks passed!")
+```
+
+**3.** **Early review.** Fixing a defect in the requirements phase costs `base` Ft, in testing 20 times as much. Write the function `total_cost(defects, base, filtered, review)`: a requirements review costing `review` Ft filters out the `filtered` share of the defects right at the start, and the rest we fix in testing. What is the total cost (rounded to a whole number)?
+
+```python starter
+def total_cost(defects, base, filtered, review):
+    return round(review + defects * base * 20)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def total_cost(defects, base, filtered, review):
+    early = defects * filtered * base              # cheaply, in the requirements phase
+    late = defects * (1 - filtered) * base * 20    # expensively, in testing
+    return round(review + early + late)
+```
+
+</details>
+
+```python test
+assert total_cost(40, 50_000, 0.6, 600_000) == 17_800_000
+assert total_cost(40, 50_000, 0, 0) == 40_000_000
+assert total_cost(10, 20_000, 0.5, 100_000) == 2_200_000
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What are the three corners of the project triangle?
++ scope, time, cost
+- team, customer, sponsor
+- planning, execution, closing
+- risk, quality, communication
+! If one changes, at least one other has to change too.
+
+? What distinguishes a project from ongoing operations?
+- a project is always more expensive
++ a project is unique and temporary: it has a start and an end
+- a project has no team
+- ongoing operations have a deadline
+! Operations are repetitive; a project creates a one-off result.
+
+? How many communication channels are there in an 8-person team?
+= 28
+! $\frac{8 \cdot 7}{2} = 28$.
+
+? Which process group includes monitoring and controlling changes?
+- initiating
+- closing
++ monitoring and controlling
+- planning
+! This process group runs through the project's whole life cycle.
 ```

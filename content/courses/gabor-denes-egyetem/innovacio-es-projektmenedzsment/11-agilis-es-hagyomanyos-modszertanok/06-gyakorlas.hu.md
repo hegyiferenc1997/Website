@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – agilis és hagyományos
 summary: Ellenőrző kérdések és összefoglaló feladatlap a tizenegyedik témakörhöz.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -81,4 +81,127 @@ Hibridet: a szabályozási követelményeket és a mérföldköveket hagyományo
 - folyamatok az egyénekkel szemben
 - terv követése a változásra való reagálással szemben
 ! A bal oldali tételt becsülik többre.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Little törvénye.** Írd meg az `atfutas(wip, atereszto)` függvényt (átlagos átfutási idő 1 tizedesre) és a `szukseges_wip(cel_atfutas, atereszto)` függvényt, amely megadja, legfeljebb mekkora WIP mellett teljesül a kívánt átfutási idő!
+
+```python starter
+def atfutas(wip, atereszto):
+    return round(wip * atereszto, 1)
+
+def szukseges_wip(cel_atfutas, atereszto):
+    return cel_atfutas / atereszto
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def atfutas(wip, atereszto):
+    return round(wip / atereszto, 1)       # átfutás = WIP / áteresztőképesség
+
+def szukseges_wip(cel_atfutas, atereszto):
+    return cel_atfutas * atereszto         # ugyanaz a képlet átrendezve
+```
+
+</details>
+
+```python test
+assert atfutas(12, 4) == 3.0
+assert atfutas(30, 5) == 6.0
+assert szukseges_wip(2, 5) == 10
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Burndown.** Írd meg az `idealis(vallalas, napok)` függvényt, amely a 0. naptól a `napok`-adik napig megadja az ideális hátralévő munkát (1 tizedesre, listában), és a `lemaradas(vallalas, hatralevo, kuszob)` függvényt, amely azokat a napokat adja vissza, amikor a tényleges hátralévő munka legalább `kuszob` ponttal az ideális fölött van! (`hatralevo[0]` a 0. nap.)
+
+```python starter
+def idealis(vallalas, napok):
+    return [round(vallalas * (1 - nap / napok), 1) for nap in range(napok)]
+
+def lemaradas(vallalas, hatralevo, kuszob):
+    return [nap for nap, h in enumerate(hatralevo) if h > vallalas / 2]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def idealis(vallalas, napok):
+    return [round(vallalas * (1 - nap / napok), 1) for nap in range(napok + 1)]   # a 0. naptól az utolsóig
+
+def lemaradas(vallalas, hatralevo, kuszob):
+    ideal = idealis(vallalas, len(hatralevo) - 1)
+    return [nap for nap, h in enumerate(hatralevo) if h - ideal[nap] >= kuszob]
+```
+
+</details>
+
+```python test
+assert idealis(40, 4) == [40.0, 30.0, 20.0, 10.0, 0.0]
+assert lemaradas(40, [40, 38, 38, 33, 30, 30, 24, 18, 13, 6, 0], 6) == [2, 4, 5, 6, 7]
+assert lemaradas(20, [20, 15, 10, 5, 0], 1) == []
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Hány sprint kell?** Írd meg a `sprintek(backlog, sebessegek)` függvényt, amely a `(az átlag alapján, a legrosszabb sprint alapján, a legjobb sprint alapján)` szükséges sprintszámokat adja vissza! Csak egész sprint létezik, ezért felfelé kerekíts.
+
+```python starter
+def sprintek(backlog, sebessegek):
+    atlag = sum(sebessegek) / len(sebessegek)
+    return (round(backlog / atlag), round(backlog / min(sebessegek)), round(backlog / max(sebessegek)))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import math
+
+def sprintek(backlog, sebessegek):
+    atlag = sum(sebessegek) / len(sebessegek)
+    return (math.ceil(backlog / atlag),            # egy félig kész sprint is egész sprint
+            math.ceil(backlog / min(sebessegek)),
+            math.ceil(backlog / max(sebessegek)))
+```
+
+</details>
+
+```python test
+assert sprintek(120, [18, 22, 15, 25, 20, 19]) == (7, 8, 5)
+assert sprintek(90, [18]) == (5, 5, 5)
+assert sprintek(100, [30, 40]) == (3, 4, 3)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Hány értéket tartalmaz az Agilis kiáltvány?
+= 4
+! Például: egyének és interakciók a folyamatok és eszközök helyett.
+
+? Ki felel a Scrumban a Product Backlog tartalmáért és sorrendjéért?
+- a Scrum Master
++ a Product Owner (terméktulajdonos)
+- a fejlesztők
+- a szponzor
+! A terméktulajdonos maximalizálja a termék értékét.
+
+? Egy csapat hetente 6 jegyet fejez be, és legfeljebb 2 hetes átfutást szeretne. Mekkora lehet a WIP-korlát?
+= 12
+! $2 \cdot 6 = 12$.
+
+? Mit mutat a V-modell?
++ hogy a fejlesztés minden szintjéhez (követelmény, terv, kód) egy megfelelő tesztszint tartozik
+- a sprintek sorrendjét
+- a Kanban-tábla oszlopait
+- a csapat fejlődési szakaszait
+! Pl. a követelményekhez az elfogadási teszt tartozik.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – értékelés és kockázat
 summary: Ellenőrző kérdések és összefoglaló számolós feladatlap a negyedik témakörhöz.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -74,4 +74,124 @@ Elkerülés: nem építünk saját fizetési rendszert, hanem bevált szolgálta
 - hold
 - recycle
 ! Go = tovább, kill = leállít, hold = felfüggeszt, recycle = átdolgoz.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Nettó jelenérték.** Írd meg az `npv(aramok, r)` függvényt, amely a `[C0, CF1, CF2, …]` pénzáramlista nettó jelenértékét adja vissza `r` kamatláb mellett (1 tizedesre)! A 0. elem a mai pénzáram (általában negatív).
+
+```python starter
+def npv(aramok, r):
+    return round(sum(aramok), 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def npv(aramok, r):
+    return round(sum(cf / (1 + r) ** t for t, cf in enumerate(aramok)), 1) + 0.0   # diszkontált összeg
+```
+
+</details>
+
+```python test
+assert npv([-1000, 500, 500, 500], 0.1) == 243.4
+assert npv([-1000, 1210], 0.1) == 100.0
+assert npv([-100, 0, 121], 0.1) == 0.0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Belső megtérülési ráta.** Írd meg az `irr(aramok)` függvényt, amely felezéses kereséssel megadja azt a kamatlábat 0 és 1 között, amelynél az NPV nulla (4 tizedesre)!
+
+```python starter
+def irr(aramok):
+    return 0.1
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def irr(aramok):
+    npv = lambda r: sum(cf / (1 + r) ** t for t, cf in enumerate(aramok))
+    also, felso = 0.0, 1.0
+    for _ in range(60):
+        kozep = (also + felso) / 2
+        if npv(kozep) > 0:
+            also = kozep                   # még pozitív: az IRR nagyobb
+        else:
+            felso = kozep
+    return round(kozep, 4)
+```
+
+</details>
+
+```python test
+assert irr([-1000, 500, 500, 500]) == 0.2338
+assert irr([-100, 150]) == 0.5
+assert irr([-1000, 1200]) == 0.2
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Stage-Gate.** Írd meg a `stage_gate(koltsegek, siker, ertek)` függvényt, amely a `(várható költség, várható érték)` párt adja vissza (1 tizedesre), ha az i-edik szakaszt csak akkor fizetjük ki, ha a projekt az előző kapukon átjutott, és a végén `ertek` értékű termék születik!
+
+```python starter
+def stage_gate(koltsegek, siker, ertek):
+    p = 1.0
+    for s in siker:
+        p *= s
+    return (round(sum(koltsegek), 1), round(p * ertek - sum(koltsegek), 1))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A kiinduló kód úgy számol, mintha minden szakaszt mindenképp kifizetnénk – épp a korai leállítás értéke vész el.
+
+```python solution
+def stage_gate(koltsegek, siker, ertek):
+    varhato, eljut = 0.0, 1.0
+    for k, s in zip(koltsegek, siker):
+        varhato += eljut * k               # ezt a szakaszt csak ekkora eséllyel fizetjük
+        eljut *= s
+    return (round(varhato, 1), round(eljut * ertek - varhato, 1))
+```
+
+</details>
+
+```python test
+assert stage_gate([10, 40, 150, 400], [0.5, 0.6, 0.7, 0.9], 2000) == (159.0, 219.0)
+assert stage_gate([10, 100], [0.5, 1.0], 300) == (60.0, 90.0)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Egy projekt 600 ezer Ft-ba kerül, és évi 150 ezer Ft-ot hoz. Mennyi a megtérülési idő (év)?
+= 4
+! $600 / 150 = 4$ év.
+
+? Egy befektetés 200 egység, a nyereség 50 egység. Mennyi a ROI (%)?
+= 25
+! $50 / 200 = 0{,}25$.
+
+? Mit jelent a „gyors kudarc” (fail fast) elve?
+- minél több projektet kell elbuktatni
++ olcsón és korán kell tesztelni, hogy a rossz ötletek hamar, kis veszteséggel kiderüljenek
+- a kudarcot el kell titkolni
+- csak biztos ötletekbe szabad fektetni
+! A korai, olcsó kudarc tanulás; a késői, drága kudarc veszteség.
+
+? Melyik a négy kockázati válaszstratégia egyike (veszélyre)?
+- figyelmen kívül hagyás
++ áthárítás (pl. biztosítással)
+- elhallgatás
+- megduplázás
+! Elkerülés, áthárítás, csökkentés, elfogadás.
 ```

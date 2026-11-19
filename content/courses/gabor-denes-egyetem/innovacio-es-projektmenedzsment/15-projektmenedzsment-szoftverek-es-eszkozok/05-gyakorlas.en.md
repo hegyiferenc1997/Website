@@ -1,7 +1,7 @@
 ---
 title: Practice – PM Software and Summary
 summary: Review questions and a summary worksheet for the fifteenth topic, with calculation exercises covering the whole course.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -68,4 +68,124 @@ Reducing scope (postponing a feature to the next version) or requesting extra bu
 ? EV = 30, PV = 40. What is the SPI?
 = 0.75
 ! EV / PV.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Tipping point.** Two tools' scores depend linearly on a criterion's weight `w`: $A(w) = a_0 + a_1 w$, $B(w) = b_0 + b_1 w$. Write the function `tipping_point(a0, a1, b0, b1)`, which tells at which `w` the two are equal (to 3 decimals); if the two lines are parallel, return `None`!
+
+```python starter
+def tipping_point(a0, a1, b0, b1):
+    return round((b0 - a0) / (a1 + b1), 3)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def tipping_point(a0, a1, b0, b1):
+    if a1 == b1:
+        return None                        # parallel lines: never equal (or always)
+    return round((b0 - a0) / (a1 - b1), 3) # a0 + a1·w = b0 + b1·w
+```
+
+</details>
+
+```python test
+assert tipping_point(2.9, 2.1, 4.4, -1.4) == 0.429
+assert tipping_point(3, 2, 4, -1) == 0.333
+assert tipping_point(1, 1, 2, 1) is None
+print("All checks passed!")
+```
+
+**2.** **Workflow check.** Write the function `first_illegal(history, transitions)`, which from a ticket's state history returns the first illegal transition as a `(from, to)` pair, or `None` if every transition is allowed!
+
+```python starter
+def first_illegal(history, transitions):
+    return None
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def first_illegal(history, transitions):
+    for src, dst in zip(history, history[1:]):   # consecutive state pairs
+        if dst not in transitions[src]:
+            return (src, dst)
+    return None
+```
+
+</details>
+
+```python test
+transitions = {"New": {"In progress", "Rejected"}, "In progress": {"Review", "New"},
+               "Review": {"Done", "In progress"}, "Done": set(), "Rejected": set()}
+assert first_illegal(["New", "In progress", "Review", "Done"], transitions) is None
+assert first_illegal(["New", "In progress", "Done"], transitions) == ("In progress", "Done")
+assert first_illegal(["New", "Rejected", "In progress"], transitions) == ("Rejected", "In progress")
+print("All checks passed!")
+```
+
+**3.** **Cycle time percentile.** Write the function `percentile(data, p)`: sort the data and return the `round(p · n)`-th element (counting from 1; `int(p * n + 0.5)`), and the function `mean_and_p85(data)`, which gives the pair `(mean to 1 decimal, 85th percentile)`!
+
+```python starter
+def percentile(data, p):
+    return data[int(p * len(data) + 0.5) - 1]
+
+def mean_and_p85(data):
+    return (round(sum(data) / len(data), 1), percentile(data, 0.85))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def percentile(data, p):
+    ordered = sorted(data)                           # a percentile needs sorted data
+    return ordered[int(p * len(ordered) + 0.5) - 1]
+
+def mean_and_p85(data):
+    return (round(sum(data) / len(data), 1), percentile(data, 0.85))
+```
+
+</details>
+
+```python test
+times = [5, 2, 10, 3, 3, 14, 4, 3, 6, 2]
+assert mean_and_p85(times) == (5.2, 10)
+assert percentile(list(range(20, 0, -1)), 0.85) == 17
+assert percentile([5, 1, 3], 0.5) == 3
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which view shows tasks on a timeline, as bars, together with their dependencies?
++ Gantt view
+- Kanban board
+- list view
+- calendar
+! Gantt is the basic view of classic schedulers.
+
+? What is the role of a pilot in introducing a new PM tool?
+- rolling the tool out to the whole organisation at once
++ trying it with a smaller team, refining the rollout based on the experience
+- deleting the old tool
+- negotiating the tool's price
+! What works in practice is revealed at low risk.
+
+? Two tools: A = 2 + 3w, B = 3 + w. At which w are their scores equal? (as a decimal)
+= 0,5
+= 0.5
+! $2 + 3w = 3 + w \Rightarrow w = 0.5$.
+
+? The cycle times of 10 tickets, sorted: 1, 2, 2, 3, 3, 4, 4, 5, 8, 12. What is the 85th percentile (with the simple method)?
+= 8
+! Element $0.85 \cdot 10 = 8.5 \to 9$: 8.
 ```

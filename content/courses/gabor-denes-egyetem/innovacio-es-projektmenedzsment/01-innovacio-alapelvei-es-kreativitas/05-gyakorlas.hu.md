@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – innováció és kreativitás
 summary: Ellenőrző kérdések és összefoglaló feladatlap az első témakörhöz.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -91,4 +91,133 @@ Először interjúkkal megértenék a diákok gondjait (empátia), megfogalmazn�
 = 5
 = öt
 ! Empátia, definiálás, ötletelés, prototípus, teszt.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Morfológiai doboz.** Írd meg a `kombinaciok(doboz)` függvényt, amely egy `{jellemző: [lehetőségek]}` szótárból megadja, hány különböző ötlet (kombináció) képezhető!
+
+```python starter
+def kombinaciok(doboz):
+    return sum(len(lehetosegek) for lehetosegek in doboz.values())
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A lehetőségeket nem összeadni, hanem összeszorozni kell: minden választás minden másikkal párosítható.
+
+```python solution
+def kombinaciok(doboz):
+    db = 1
+    for lehetosegek in doboz.values():
+        db *= len(lehetosegek)             # minden jellemzőnél szorzódik a választások száma
+    return db
+```
+
+</details>
+
+```python test
+assert kombinaciok({"a": [1, 2, 3], "b": [1, 2]}) == 6
+assert kombinaciok({"p": [1, 2, 3], "f": [1, 2, 3, 4], "b": [1, 2, 3], "c": [1, 2, 3]}) == 108
+assert kombinaciok({"x": ["egyetlen"]}) == 1
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Hány ötlet kell?** Írd meg a `legalabb_egy(p, n)` függvényt, amely megadja, mekkora eséllyel van legalább egy jó ötlet `n` független ötlet között, ha egy ötlet `p` eséllyel jó (3 tizedesre), és a `hany_otlet(p, cel)` függvényt, amely megadja a legkisebb `n`-t, amelynél ez az esély eléri a `cel` értéket!
+
+```python starter
+def legalabb_egy(p, n):
+    return round(p * n, 3)
+
+def hany_otlet(p, cel):
+    return round(cel / p)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A `p · n` csak nagyon kicsi `p · n` esetén jó közelítés – nagy `n`-nél akár 1-nél nagyobb „valószínűséget” is adna.
+
+```python solution
+def legalabb_egy(p, n):
+    return round(1 - (1 - p) ** n, 3)      # 1 − annak esélye, hogy mind rossz
+
+def hany_otlet(p, cel):
+    n = 1
+    while 1 - (1 - p) ** n < cel:
+        n += 1
+    return n
+```
+
+</details>
+
+```python test
+assert legalabb_egy(0.1, 2) == 0.19
+assert legalabb_egy(0.05, 20) == 0.642
+assert hany_otlet(0.05, 0.9) == 45
+assert hany_otlet(0.5, 0.9) == 4
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Súlyozott pontozás.** Írd meg a `gyoztes(otletek, sulyok)` függvényt, amely az `{ötlet: {szempont: pont}}` szótárból a súlyozott pontszám szerint legjobb ötlet nevét adja vissza!
+
+```python starter
+def gyoztes(otletek, sulyok):
+    return max(otletek, key=lambda nev: sum(otletek[nev].values()))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def gyoztes(otletek, sulyok):
+    def pont(nev):
+        return sum(sulyok[sz] * p for sz, p in otletek[nev].items())   # súlyozott összeg
+    return max(otletek, key=pont)
+```
+
+</details>
+
+```python test
+otletek = {
+    "AI": {"érték": 5, "megvalósíthatóság": 2, "újdonság": 5},
+    "csoportos": {"érték": 4, "megvalósíthatóság": 4, "újdonság": 3},
+    "kártyás": {"érték": 3, "megvalósíthatóság": 5, "újdonság": 2},
+}
+assert gyoztes(otletek, {"érték": 0.4, "megvalósíthatóság": 0.3, "újdonság": 0.3}) == "AI"
+assert gyoztes(otletek, {"érték": 0.3, "megvalósíthatóság": 0.6, "újdonság": 0.1}) == "kártyás"
+assert gyoztes(otletek, {"érték": 0.5, "megvalósíthatóság": 0.4, "újdonság": 0.1}) == "csoportos"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Egy morfológiai dobozban 4 jellemző van, mindegyikhez 3 lehetőség. Hány kombináció képezhető?
+= 81
+! $3^4 = 81$.
+
+? Mi a SCAMPER módszer lényege?
+- az ötletek pontozása
++ kérdéslista egy meglévő termék módosításához (helyettesít, kombinál, átalakít, …)
+- a csapattagok szerepeinek kiosztása
+- a piac méretének becslése
+! Minden betű egy átalakítási irányt jelöl.
+
+? Egy ötlet 20% eséllyel jó. Mekkora eséllyel van legalább egy jó 3 független ötlet között? (tizedes törtként, 3 tizedesre)
+= 0,488
+= 0.488
+! $1 - 0{,}8^3 = 1 - 0{,}512 = 0{,}488$.
+
+? Melyik a radikális innováció jellemzője?
+- egy meglévő termék kis javítása
++ alapvetően új technológia vagy megoldás, amely új lehetőségeket nyit
+- csak az ár csökkentése
+- a marketingkampány megújítása
+! Az inkrementális innováció a kis lépésekben javító változat.
 ```

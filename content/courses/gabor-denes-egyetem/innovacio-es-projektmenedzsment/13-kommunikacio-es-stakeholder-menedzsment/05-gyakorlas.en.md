@@ -1,7 +1,7 @@
 ---
 title: Practice – Communication and Stakeholders
 summary: Review questions and a summary worksheet for the thirteenth topic.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -80,4 +80,127 @@ Assess the alternatives in advance (another supplier, an open-source solution). 
 - everyone says what they did at the weekend
 - raise new topics at the end of the meeting
 ! Written minutes with decisions and actions.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Power–interest grid.** Write the function `strategy(power, interest, threshold=5)`, which, treating values above the threshold as high, returns the strategy: `"manage closely"`, `"keep satisfied"`, `"keep informed"` or `"monitor"`!
+
+```python starter
+def strategy(power, interest, threshold=5):
+    return "manage closely" if power > threshold else "monitor"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def strategy(power, interest, threshold=5):
+    if power > threshold:
+        return "manage closely" if interest > threshold else "keep satisfied"
+    return "keep informed" if interest > threshold else "monitor"
+```
+
+</details>
+
+```python test
+assert strategy(8, 8) == "manage closely"
+assert strategy(9, 4) == "keep satisfied"
+assert strategy(4, 9) == "keep informed"
+assert strategy(2, 3) == "monitor"
+print("All checks passed!")
+```
+
+**2.** **Salience model.** Write the function `salience(power, legitimacy, urgency)` (boolean parameters), which gives the stakeholder's type: `"dormant"`, `"discretionary"`, `"demanding"`, `"dominant"`, `"dangerous"`, `"dependent"`, `"definitive"` or `"not a stakeholder"`!
+
+```python starter
+def salience(power, legitimacy, urgency):
+    return "definitive" if power and legitimacy and urgency else "not a stakeholder"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def salience(power, legitimacy, urgency):
+    types = {
+        (1, 0, 0): "dormant", (0, 1, 0): "discretionary", (0, 0, 1): "demanding",
+        (1, 1, 0): "dominant", (1, 0, 1): "dangerous", (0, 1, 1): "dependent",
+        (1, 1, 1): "definitive", (0, 0, 0): "not a stakeholder",
+    }
+    return types[(int(power), int(legitimacy), int(urgency))]
+```
+
+</details>
+
+```python test
+assert salience(True, True, True) == "definitive"
+assert salience(True, True, False) == "dominant"
+assert salience(False, True, True) == "dependent"
+assert salience(False, False, True) == "demanding"
+assert salience(True, False, False) == "dormant"
+print("All checks passed!")
+```
+
+**3.** **Engagement actions.** Write the function `engagement_ranking(stakeholders)`, which from a list of `(name, power, current, desired)` quadruples returns the names of those whose desired level is higher than the current one, in descending order of the priority (desired − current) × power!
+
+```python starter
+def engagement_ranking(stakeholders):
+    ordered = sorted(stakeholders, key=lambda s: -(s[3] - s[2]))
+    return [s[0] for s in ordered if s[3] > s[2]]
+```
+
+<details>
+<summary>Solution</summary>
+
+The starter code looks only at the gap, so a stakeholder with little power but a big gap would come out on top.
+
+```python solution
+def engagement_ranking(stakeholders):
+    ordered = sorted(stakeholders, key=lambda s: -(s[3] - s[2]) * s[1])   # gap × power
+    return [s[0] for s in ordered if s[3] > s[2]]
+```
+
+</details>
+
+```python test
+stakeholders = [("lecturers", 5, 2, 4), ("registrar's office", 7, 3, 5), ("rector", 9, 3, 4),
+                ("student union", 4, 1, 4), ("IT directorate", 8, 4, 5),
+                ("software vendor", 6, 4, 4)]
+assert engagement_ranking(stakeholders) == ["registrar's office", "student union",
+                                            "lecturers", "rector", "IT directorate"]
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is pull communication?
+- sending an e-mail to every stakeholder
++ the information is available in a shared place and the stakeholder looks it up (e.g. wiki, dashboard)
+- a live meeting
+- a phone call
+! Push: we send it; pull: we make it available; interactive: dialogue.
+
+? What does BATNA mean?
++ the best alternative to a negotiated agreement – what we'd do if no agreement is reached
+- the opening offer of the negotiation
+- the negotiation deadline
+- the list of negotiating parties
+! The better your BATNA, the stronger your negotiating position.
+
+? A stakeholder's current level is 1, the desired is 4, their power is 3. What is their priority?
+= 9
+! $(4 - 1) \cdot 3 = 9$.
+
+? Which quadrant does a stakeholder with little power but high interest belong to?
+- manage closely
+- keep satisfied
++ keep informed
+- monitor
+! They need regular updates, and often give valuable feedback.
 ```
