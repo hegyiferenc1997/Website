@@ -1,7 +1,7 @@
 ---
 title: Practice – GDP, Unemployment, Inflation
 summary: Review questions and a summary worksheet on the macro data of an imaginary country: GDP from the expenditure side, real growth, labour market rates and inflation.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -81,4 +81,124 @@ Data of an imaginary country (thousand billion HUF, or thousand people):
 + disinflation
 - hyperinflation
 ! Inflation slowed from 8% to 4%, but prices are still rising.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Real growth.** Write the function `real_growth(nominal, deflator)`, which computes real growth to 1 decimal from nominal GDP growth and the change in the deflator (both %)!
+
+```python starter
+def real_growth(nominal, deflator):
+    return round(nominal - deflator, 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def real_growth(nominal, deflator):
+    return round(100 * ((1 + nominal / 100) / (1 + deflator / 100) - 1), 1)
+```
+
+</details>
+
+```python test
+assert real_growth(8, 5) == 2.9
+assert real_growth(16.4, 11.4) == 4.5
+assert real_growth(3, 3) == 0.0
+assert real_growth(2, 6) == -3.8
+print("All checks passed!")
+```
+
+**2.** **Labour market rates.** Write the function `rates(employed, unemployed, inactive)`, which returns the triple `(unemployment rate, activity rate, employment rate)` in percent, to 1 decimal!
+
+```python starter
+def rates(employed, unemployed, inactive):
+    pop = employed + unemployed + inactive
+    return (round(100 * unemployed / pop, 1), 0, 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+The third test is the example from the lesson: 60 thousand discouraged unemployed people "improve" the rate, while employment doesn't change.
+
+```python solution
+def rates(employed, unemployed, inactive):
+    active = employed + unemployed                  # labour force
+    pop = active + inactive                         # population aged 15–74
+    return (round(100 * unemployed / active, 1),    # relative to the labour force!
+            round(100 * active / pop, 1),
+            round(100 * employed / pop, 1))
+```
+
+</details>
+
+```python test
+assert rates(4700, 210, 2590) == (4.3, 65.5, 62.7)
+assert rates(900, 100, 500) == (10.0, 66.7, 60.0)
+assert rates(4700, 150, 2650) == (3.1, 64.7, 62.7)
+print("All checks passed!")
+```
+
+**3.** **Consumer price index.** Write the function `inflation(basket)`, which computes the weighted average inflation to 2 decimals from the dictionary `{item: (weight, price change %)}`! The weights don't necessarily add up to 1 – in that case normalise them.
+
+```python starter
+def inflation(basket):
+    return round(sum(c for w, c in basket.values()) / len(basket), 2)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def inflation(basket):
+    total_weight = sum(w for w, c in basket.values())
+    return round(sum(w * c for w, c in basket.values()) / total_weight, 2)   # weighted average
+```
+
+</details>
+
+```python test
+assert inflation({"food": (0.6, 5), "other": (0.4, 10)}) == 7.0
+assert inflation({"a": (25, 6), "b": (20, 3), "c": (15, -2), "d": (10, 8), "e": (5, -5), "f": (25, 4)}) == 3.35
+assert inflation({"x": (1, 2), "y": (3, 6)}) == 5.0
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which is NOT counted in GDP?
+- a newly built home
+- a domestically made car
++ the sale of a used car between private individuals
+- a hairdresser's service
+! The used product was already counted in GDP once, when it was produced.
+
+? A country's population is 10 million, its GDP 80,000 billion Ft. What is GDP per capita (million Ft)?
+= 8
+! $80\,000 \text{ bn} / 10 \text{ million} = 8$ million Ft.
+
+? What does core inflation show?
++ the change in the price level without the most volatile items (e.g. energy, fresh food)
+- only the rise in food prices
+- wage growth
+- the GDP deflator
+! It shows the lasting inflation process better.
+
+? Whom does unexpectedly high inflation benefit?
+- savers
++ debtors with fixed-rate loans
+- people on fixed incomes
+- pensioners, if pensions don't follow prices
+! The real value of the debt falls.
+
+? Nominal GDP rises from 1000 to 1100, the deflator from 100 to 105. What will real GDP be (rounded to a whole number)?
+= 1048
+! $\frac{1100}{1.05} \approx 1048$.
 ```

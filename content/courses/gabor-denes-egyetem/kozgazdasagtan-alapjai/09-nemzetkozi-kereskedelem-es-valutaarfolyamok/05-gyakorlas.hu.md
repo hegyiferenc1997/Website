@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – kereskedelem és árfolyamok
 summary: Ellenőrző kérdések és összefoglaló feladatlap a komparatív előnyről, a vámokról, az árfolyamváltozások hatásáról és a fizetési mérlegről.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -77,4 +77,145 @@ Munkaórák egy egység előállításához:
 + a pénzügyi mérlegben, közvetlen tőkebefektetésként
 - a folyó mérlegben, transzferként
 ! Befektetés – tőkebeáramlás.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Import és vám.** A hazai kereslet $Q_D = a - bp$, a hazai kínálat $Q_S = c + dp$, a világpiaci ár `vilagar`. Írd meg az `import_vammal(a, b, c, d, vilagar, vam)` függvényt, amely az `(import mennyisége, vámbevétel)` párt adja vissza! A hazai ár a világár + vám, de legfeljebb az autark (kereskedelem nélküli) ár – ha eléri, az import és a vámbevétel is 0 (tiltó vám). 1 tizedesre kerekíts.
+
+```python starter
+def import_vammal(a, b, c, d, vilagar, vam):
+    p = vilagar + vam
+    q = (a - b * p) - (c + d * p)
+    return (round(q, 1), round(vam * q, 1))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+A kiinduló kód 30-as vámnál negatív importot (azaz exportot) és negatív vámbevételt számolna – a tiltó vámnál nagyobb vám már semmit sem változtat.
+
+```python solution
+def import_vammal(a, b, c, d, vilagar, vam):
+    autark = (a - c) / (b + d)                   # ár kereskedelem nélkül
+    p = min(vilagar + vam, autark)               # tiltó vám fölött nem drágul tovább
+    q = (a - b * p) - (c + d * p)                # a hiányt importból fedezzük
+    return (round(q, 1) + 0.0, round(vam * q, 1) + 0.0)
+```
+
+</details>
+
+```python test
+assert import_vammal(200, 2, 20, 1, 40, 0) == (60.0, 0.0)
+assert import_vammal(200, 2, 20, 1, 40, 10) == (30.0, 300.0)
+assert import_vammal(200, 2, 20, 1, 40, 20) == (0.0, 0.0)
+assert import_vammal(200, 2, 20, 1, 40, 30) == (0.0, 0.0)
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Keresztárfolyam és átváltás.** Írd meg a `keresztarfolyam(eur_huf, usd_huf)` függvényt, amely megadja, hány dollárt ér 1 euró (4 tizedesre), és az `atvalt(forint, arfolyam, jutalek)` függvényt, amely megadja, mennyi devizát kapsz `forint` összegért, ha a váltó `jutalek` %-ot levon a forintból (2 tizedesre)!
+
+```python starter
+def keresztarfolyam(eur_huf, usd_huf):
+    return round(usd_huf / eur_huf, 4)
+
+def atvalt(forint, arfolyam, jutalek):
+    return round(forint / arfolyam, 2)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def keresztarfolyam(eur_huf, usd_huf):
+    return round(eur_huf / usd_huf, 4)           # 1 € = eur_huf Ft = eur_huf / usd_huf dollár
+
+def atvalt(forint, arfolyam, jutalek):
+    marad = forint * (1 - jutalek / 100)         # előbb levonják a jutalékot
+    return round(marad / arfolyam, 2)
+```
+
+</details>
+
+```python test
+assert keresztarfolyam(400, 360) == 1.1111
+assert keresztarfolyam(390, 390) == 1.0
+assert atvalt(100_000, 400, 0) == 250.0
+assert atvalt(100_000, 400, 2) == 245.0
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Vásárlóerő-paritás.** Egy hamburger itthon `ar_hazai` forint, az USA-ban `ar_kulfoldi` dollár. Írd meg a `ppp_arfolyam(ar_hazai, ar_kulfoldi)` függvényt (2 tizedesre), és az `elteres(piaci, ar_hazai, ar_kulfoldi)` függvényt, amely megadja, hány %-kal tér el a piaci árfolyam a PPP-árfolyamtól (1 tizedesre; pozitív = a forint a PPP szerint alulértékelt)!
+
+```python starter
+def ppp_arfolyam(ar_hazai, ar_kulfoldi):
+    return round(ar_kulfoldi / ar_hazai, 2)
+
+def elteres(piaci, ar_hazai, ar_kulfoldi):
+    return round(piaci - ar_hazai / ar_kulfoldi, 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+Pozitív eltérésnél egy dollárért több forintot kell adni, mint amennyit a kosárárak indokolnak: a forint "olcsó", a hazai termékek külföldről nézve olcsók.
+
+```python solution
+def ppp_arfolyam(ar_hazai, ar_kulfoldi):
+    return round(ar_hazai / ar_kulfoldi, 2)      # ennyi forint ér 1 dollárt "kosár szerint"
+
+def elteres(piaci, ar_hazai, ar_kulfoldi):
+    ppp = ar_hazai / ar_kulfoldi
+    return round(100 * (piaci - ppp) / ppp, 1)   # százalékos eltérés
+```
+
+</details>
+
+```python test
+assert ppp_arfolyam(1900, 5.5) == 345.45
+assert elteres(380, 1900, 5.5) == 10.0
+assert elteres(300, 1900, 5.5) == -13.2
+assert elteres(400, 2000, 5) == 0.0
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Magyarország 1 óra alatt 10 chipet vagy 20 szoftvermodult, Ausztria 1 óra alatt 8 chipet vagy 8 szoftvermodult tud előállítani. Miben van Magyarországnak komparatív előnye?
+- chipben
++ szoftvermodulban
+- mindkettőben
+- egyikben sem
+! A szoftver alternatív költsége Magyarországon 0,5 chip, Ausztriában 1 chip.
+
+? Ha a forint gyengül az euróhoz képest, mi történik a magyar exporttal (ceteris paribus)?
++ versenyképesebb lesz, mert külföldön olcsóbb
+- csökken, mert drágább lesz
+- nem változik
+- megszűnik
+! Ugyanannyi euró több forintot ér, így a magyar termék euróban olcsóbb.
+
+? Ki fizeti egy importvám terhének nagy részét egy kis ország esetén?
++ a hazai fogyasztók, a magasabb ár miatt
+- a külföldi termelők
+- az állam
+- senki
+! Kis ország nem befolyásolja a világárat, így a vám a hazai árat emeli.
+
+? Ha 1 € = 400 Ft és 1 $ = 320 Ft, hány dollárt ér 1 euró?
+= 1,25
+= 1.25
+! $400 / 320 = 1{,}25$.
+
+? Mit jelent a fizetési mérleg folyó fizetési mérleg-hiánya?
+- az állam többet költ, mint amennyi adót szed
++ az ország többet importál (és fizet ki külföldre), mint amennyit exportál
+- a jegybank tartalékai nőnek
+- a bankok több hitelt adnak
+! A folyó fizetési mérleg a külkereskedelmi és jövedelemáramlásokat méri.
 ```

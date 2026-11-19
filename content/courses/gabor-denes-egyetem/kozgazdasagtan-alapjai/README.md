@@ -5,9 +5,20 @@ Ebben a mappában van az 1. féléves Közgazdaságtan alapjai (B-KOZGAL) tárgy
 
 A szerkezet a tanmenet 12 témakörét követi, ugyanabban a sorrendben:
 `01-kozgazdasagtan-es-gazdasagi-rendszerek` … `12-kozgazdasagtan-az-informatikaban`. Az 1–4. témakör
-főleg mikroökonómia, a 6–11. makroökonómia, az 5. és a 12. mindkettőt érinti. Minden témakör 3 leckéből
-és egy `gyakorlas` (kind: practice) leckéből áll, ellenőrző kérdésekkel és összefoglaló feladatlappal; a 12. témakör gyakorló leckéje a tárgy záró, vegyes feladatsora. A mappák, a `topic.json` és a lecke fájlok
-felépítése ugyanaz, mint a Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
+főleg mikroökonómia, a 6–11. makroökonómia, az 5. és a 12. mindkettőt érinti. Minden témakör 3 alapleckéből,
+egy `04-melyebben-…` leckéből és egy `05-gyakorlas` (kind: practice) leckéből áll; a 12. témakör gyakorló
+leckéje a tárgy záró, vegyes feladatsora.
+
+- A **Mélyebben** lecke ugyanazt a témát számokkal, szimulációval (` ```python run `) és interaktív ábrával
+  mutatja be (pl. döntési fa, pókhálómodell, monopólium-optimum, hiteltörlesztés, pénzteremtés,
+  munkanélküliségi fürdőkád, vám hatása, Solow-modell, bankroham és adósságspirál, hálózati hatás),
+  saját kötelező kvízzel.
+- A **gyakorló** lecke ellenőrző kérdésekkel és összefoglaló feladatlappal (kötelező kvíz) indul, a végén
+  pedig „További gyakorló feladatok (nem kötelezők)” szakasz van: 3 számolós Python-feladat
+  (` ```python starter ` + rejtett megoldás + ` ```python test `) és egy nem kötelező gyors kvíz.
+
+A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
+`../programozas-alapjai/README.md`).
 
 **Szabály:** a tárgy követelményei (számonkérés, ZH-k, pontok, jegyek, aláírás, oktató) soha nem kerülnek
 a tananyagba (a teszt egy egyszerű szókereséssel ellenőrzi).
@@ -32,8 +43,8 @@ kérdésekkel. A formátum leírása: `../digitalis-technika/README.md`.
 - Interaktív ábrák ` ```plot ` blokkban (termelési lehetőségek határa, kereslet-kínálat és egyensúly,
   költséggörbék, kamatos kamat, Phillips-görbe, növekedés, termelési függvény, Lorenz-görbe). A magyar és
   az angol ábra csak a címben és a feliratokban különbözhet (a teszt ellenőrzi).
-- Két ` ```python run ` példa (kamatos kamat, előfizetéses egységgazdaságtan) – a
-  `tests/python-examples.test.ts` lefuttatja őket.
+- ` ```python run ` példák (az alapleckékben és a Mélyebben leckékben), valamint a gyakorló leckék
+  starter/solution/test feladatai – a `tests/python-examples.test.ts` lefuttatja őket.
 - Diagramok ` ```text ` blokkban.
 
 ## Időszerű adatok

@@ -1,7 +1,7 @@
 ---
 title: Practice – Consumers and Producers
 summary: Review questions and a summary worksheet on a SaaS company's costs, profit maximum and market position.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -78,4 +78,133 @@ A SaaS company's monthly data:
 = 2,75
 = 2.75
 ! 11 million / 4 thousand = 2.75 thousand HUF.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Average and marginal cost.** The dictionary `costs` gives the total cost at a few production levels (e.g. `{0: 20000, 100: 35000, 200: 45000}`). Write the functions `average_cost(costs, q)` and `marginal_cost(costs, q1, q2)`: the first gives the total cost per unit at level `q`, the second the extra cost per unit between `q1` and `q2`, rounded to 1 decimal!
+
+```python starter
+def average_cost(costs, q):
+    return round(costs[q], 1)
+
+def marginal_cost(costs, q1, q2):
+    return round(costs[q2] / q2, 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def average_cost(costs, q):
+    return round(costs[q] / q, 1)                            # TC / Q
+
+def marginal_cost(costs, q1, q2):
+    return round((costs[q2] - costs[q1]) / (q2 - q1), 1)     # ΔTC / ΔQ
+```
+
+</details>
+
+```python test
+k = {0: 20000, 100: 35000, 200: 45000, 300: 53000, 400: 64000}
+assert average_cost(k, 200) == 225.0
+assert average_cost(k, 300) == 176.7
+assert marginal_cost(k, 100, 200) == 100.0
+assert marginal_cost(k, 300, 400) == 110.0
+assert marginal_cost(k, 0, 100) == 150.0
+print("All checks passed!")
+```
+
+**2.** **Monopoly optimum.** Demand is $P = a - bQ$, marginal cost is a constant `mc`. Marginal revenue is $MR = a - 2bQ$. Write the function `monopoly(a, b, mc)`, which returns the profit-maximising triple `(quantity, price, profit)` (without fixed cost), rounded to 2 decimals!
+
+```python starter
+def monopoly(a, b, mc):
+    q = (a - mc) / b                       # this is the competitive quantity
+    p = a - b * q
+    return (round(q, 2), round(p, 2), round((p - mc) * q, 2))
+```
+
+<details>
+<summary>Solution</summary>
+
+The starter code gives the competitive solution ($P = MC$, zero profit) – the monopolist produces less, at a higher price.
+
+```python solution
+def monopoly(a, b, mc):
+    q = (a - mc) / (2 * b)                 # MR = MC
+    p = a - b * q                          # the price is read off the demand curve
+    return (round(q, 2), round(p, 2), round((p - mc) * q, 2))
+```
+
+</details>
+
+```python test
+assert monopoly(100, 1, 20) == (40.0, 60.0, 1600.0)
+assert monopoly(120, 1, 20) == (50.0, 70.0, 2500.0)
+assert monopoly(200, 2, 40) == (40.0, 120.0, 3200.0)
+print("All checks passed!")
+```
+
+**3.** **Produce or shut down?** Write the function `decision(price, atc_min, avc_min)`, which tells what a competitive firm should do in the short run: `"profitable"` if the price is above the minimum of average total cost; `"produce at a loss"` if it's between the minimum of average total cost and that of average variable cost; `"shut down"` if it's below (or equal to) the minimum of AVC!
+
+```python starter
+def decision(price, atc_min, avc_min):
+    return "profitable" if price > atc_min else "shut down"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def decision(price, atc_min, avc_min):
+    if price > atc_min:
+        return "profitable"
+    if price > avc_min:
+        return "produce at a loss"         # this way it still covers part of the fixed cost
+    return "shut down"
+```
+
+</details>
+
+```python test
+assert decision(170, 160, 110) == "profitable"
+assert decision(130, 160, 110) == "produce at a loss"
+assert decision(100, 160, 110) == "shut down"
+assert decision(110, 160, 110) == "shut down"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? A consumer spends 6000 Ft on coffee (500 Ft) and cake (1000 Ft). At most how many cakes can they buy if they also buy 4 coffees?
+= 4
+! $6000 - 4 \cdot 500 = 4000$, that's 4 cakes.
+
+? Which is a fixed cost for a bakery (in the short run)?
+- flour
++ rent
+- the energy cost of baking
+- packaging
+! It must be paid regardless of the quantity produced.
+
+? In which market structure are there many small players selling an identical product?
++ perfect competition
+- monopoly
+- oligopoly
+- monopolistic competition
+! None of the players can influence the price.
+
+? Production rises from 10 to 11 units, total cost from 500 to 540. What is the marginal cost?
+= 40
+! $540 - 500 = 40$.
+
+? A firm's accounting profit is 5 million Ft; the owner would earn 6 million Ft elsewhere. What is the economic profit (million Ft)?
+= -1
+= −1
+! Economic profit also subtracts the opportunity cost: $5 - 6 = -1$.
 ```
