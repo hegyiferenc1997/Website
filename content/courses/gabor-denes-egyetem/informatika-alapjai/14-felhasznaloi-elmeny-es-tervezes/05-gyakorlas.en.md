@@ -1,7 +1,7 @@
 ---
 title: Practice – User Experience and Design
 summary: Review questions, a mini design task and a summary worksheet on UX, accessibility and the design process.
-minutes: 22
+minutes: 47
 kind: practice
 ---
 
@@ -68,4 +68,118 @@ Because they already know the system and the jargon; they don't see what is conf
 ? Which popular browser-based tool is used to make wireframes and prototypes?
 = Figma
 ! With co-editing, a favourite of design teams.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Hex to RGB.** Write the `hex_rgb(colour)` function, which turns a `"#rrggbb"` colour code into an `(r, g, b)` triple (integers between 0 and 255)! Accept both lowercase and uppercase.
+
+```python starter
+def hex_rgb(colour):
+    return (0, 0, 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def hex_rgb(colour):
+    return tuple(int(colour[i:i + 2], 16) for i in (1, 3, 5))   # two hex digits = one colour channel
+```
+
+</details>
+
+```python test
+assert hex_rgb("#000000") == (0, 0, 0)
+assert hex_rgb("#FFFFFF") == (255, 255, 255)
+assert hex_rgb("#0b5394") == (11, 83, 148)
+print("All checks passed!")
+```
+
+**2.** **Which button is faster?** Write the `fitts_time(distance, width)` function, which returns the time to reach a target according to Fitts's law ($T = 100 + 150 \cdot \log_2(D/W + 1)$ ms), rounded to an integer!
+
+```python starter
+def fitts_time(distance, width):
+    return 100 + 150 * distance / width
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from math import log2
+
+def fitts_time(distance, width):
+    return round(100 + 150 * log2(distance / width + 1))   # logarithmic index of difficulty
+```
+
+</details>
+
+```python test
+assert fitts_time(300, 100) == 400
+assert fitts_time(700, 100) == 550
+assert fitts_time(100, 100) == 250
+print("All checks passed!")
+```
+
+**3.** **SUS score.** Write the `sus(answers)` function, which computes the SUS score from 10 answers between 1 and 5! Odd questions (1st, 3rd, …): answer − 1; even questions: 5 − answer; the sum multiplied by 2.5. For a list of the wrong length, raise a `ValueError`!
+
+```python starter
+def sus(answers):
+    return sum(answers) * 2.5
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def sus(answers):
+    if len(answers) != 10:
+        raise ValueError("exactly 10 answers are needed")
+    score = sum((a - 1) if i % 2 == 0 else (5 - a) for i, a in enumerate(answers))   # i=0 is question 1
+    return score * 2.5
+```
+
+</details>
+
+```python test
+assert sus([5, 1] * 5) == 100
+assert sus([1, 5] * 5) == 0
+assert sus([3] * 10) == 50
+try:
+    sus([3] * 9)
+    assert False, "a ValueError was expected"
+except ValueError:
+    pass
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is the minimum contrast ratio for large text at WCAG level AA? (without the ":1")
+= 3
+! 4.5:1 for normal text, 3:1 for large.
+
+? According to Hick's law, what does decision time depend on logarithmically?
+- the size of the buttons
++ the number of choices
+- the screen resolution
+- the user's age
+! That's why rare options are worth putting in a "More" menu.
+
+? If one tester finds 31% of the problems, roughly what percent do three testers find together? (whole number)
+= 67
+! $1 - 0.69^3 \approx 0.671$.
+
+? An interface's SUS score is 55. What does that mean?
+- excellent usability
++ below-average usability (the average is around 68)
+- 55% of users are satisfied
+- 55 bugs were found
+! SUS is a 0–100 scale, not a percentage.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adatbázisok és adatkezelés
 summary: Ellenőrző kérdések és összefoglaló feladatlap a relációs modellről, az SQL-ről, a NoSQL-ről és a GDPR-ról.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -83,4 +83,117 @@ for szak, atlagok in csoport.items():
 - az adatok törlése
 + más személyek adatainak lekérése
 ! Csak a saját adataira vonatkoznak a jogai.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **JOIN szótárral.** Írd meg az `osszekapcsol(rendelesek, vasarlok)` függvényt, amely `(rendelés-azonosító, vásárló-azonosító)` párokból és egy `{vásárló-azonosító: név}` szótárból `(rendelés-azonosító, név)` párok listáját adja! A nem létező vásárlóra hivatkozó rendelés maradjon ki (mint egy INNER JOIN-nál).
+
+```python starter
+def osszekapcsol(rendelesek, vasarlok):
+    return [(r, vasarlok[v]) for r, v in rendelesek]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def osszekapcsol(rendelesek, vasarlok):
+    return [(r, vasarlok[v]) for r, v in rendelesek if v in vasarlok]   # csak a párosíthatók
+```
+
+</details>
+
+```python test
+v = {1: "Anna", 2: "Béla"}
+assert osszekapcsol([(10, 1), (11, 2), (12, 1)], v) == [(10, "Anna"), (11, "Béla"), (12, "Anna")]
+assert osszekapcsol([(13, 9), (14, 2)], v) == [(14, "Béla")]
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Csoportosítás (GROUP BY).** Írd meg az `osszeg_csoportonkent(sorok)` függvényt, amely `(kategória, összeg)` párokból `{kategória: összeg}` szótárat készít, mint egy `SELECT kategoria, SUM(osszeg) … GROUP BY kategoria` lekérdezés!
+
+```python starter
+def osszeg_csoportonkent(sorok):
+    return dict(sorok)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def osszeg_csoportonkent(sorok):
+    eredmeny = {}
+    for kat, osszeg in sorok:
+        eredmeny[kat] = eredmeny.get(kat, 0) + osszeg     # kategóriánként összeadjuk
+    return eredmeny
+```
+
+</details>
+
+```python test
+s = [("élelmiszer", 3000), ("utazás", 1500), ("élelmiszer", 2500), ("szórakozás", 4000)]
+assert osszeg_csoportonkent(s) == {"élelmiszer": 5500, "utazás": 1500, "szórakozás": 4000}
+assert osszeg_csoportonkent([]) == {}
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Duplikátumok.** Írd meg a `duplikaltak(rekordok, kulcs)` függvényt, amely szótárak listájából ábécérendben visszaadja azokat a `kulcs` szerinti értékeket, amelyek többször is előfordulnak!
+
+```python starter
+def duplikaltak(rekordok, kulcs):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from collections import Counter
+
+def duplikaltak(rekordok, kulcs):
+    db = Counter(r[kulcs] for r in rekordok)
+    return sorted(k for k, n in db.items() if n > 1)
+```
+
+</details>
+
+```python test
+r = [{"neptun": "ABC123"}, {"neptun": "XYZ789"}, {"neptun": "ABC123"}, {"neptun": "QWE456"}, {"neptun": "XYZ789"}]
+assert duplikaltak(r, "neptun") == ["ABC123", "XYZ789"]
+assert duplikaltak([{"a": 1}], "a") == []
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi az elsődleges kulcs?
++ egy oszlop (vagy oszlopok), amely minden sort egyértelműen azonosít
+- a tábla első oszlopa
+- egy másik táblára mutató hivatkozás
+- a jelszó titkosítási kulcsa
+! A másik táblára mutató hivatkozás az idegen kulcs.
+
+? Egy `termekek` táblában 120 sor van, ebből 45-nek az ára 5000 Ft fölött. Hány sort ad a `SELECT * FROM termekek WHERE ar <= 5000;` lekérdezés?
+= 75
+! $120 - 45 = 75$.
+
+? Milyen kapcsolat van a hallgatók és a kurzusok között, ha egy hallgató több kurzust vehet fel, és egy kurzusra több hallgató jár?
+- 1:1
+- 1:N
++ N:M (kapcsolótáblával)
+- nincs kapcsolat
+! Az N:M kapcsolatot egy harmadik táblával valósítjuk meg.
+
+? Miért kell paraméterezett lekérdezést használni, amikor a felhasználó adatát egy SQL-lekérdezésbe tesszük?
+- mert gyorsabb a gépelés
++ hogy a bemenet ne értelmeződhessen SQL-utasításként (SQL-befecskendezés ellen)
+- mert az SQL másképp nem működik
+- hogy szebb legyen a kód
+! A szövegösszefűzéssel épített lekérdezés támadható.
 ```

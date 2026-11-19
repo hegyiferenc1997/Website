@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – informatikai biztonság
 summary: Ellenőrző kérdések és összefoglaló feladatlap a fenyegetésekről, a hitelesítésről, a titkosításról és a mentésről.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -84,4 +84,122 @@ for j in ["Anna2007", "lila-bicikli-esik-hetfon", "Lila-Bicikli-7-Hetfon"]:
 - senkinek nincs jelszava
 - a legkevesebb felhasználó használhatja a gépet
 ! A mindennapi munkát ne rendszergazdaként végezd.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Entrópia bitekben.** Írd meg a `bitek(n, hossz)` függvényt, amely egy `n` féle jelből véletlenszerűen választott, `hossz` hosszú jelszó entrópiáját adja bitekben (1 tizedesre)!
+
+```python starter
+def bitek(n, hossz):
+    return round(n * hossz, 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+from math import log2
+
+def bitek(n, hossz):
+    return round(hossz * log2(n), 1)       # minden jel log2(n) bitet ad
+```
+
+</details>
+
+```python test
+assert bitek(64, 10) == 60.0
+assert bitek(26, 8) == 37.6
+assert bitek(7776, 6) == 77.5
+assert bitek(10, 4) == 13.3
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Caesar-kód.** Írd meg a `caesar(szoveg, eltolas)` függvényt, amely az angol ábécé kisbetűit `eltolas`-sal eltolja (körbefordulva, negatív eltolással is), a többi karaktert változatlanul hagyja!
+
+```python starter
+def caesar(szoveg, eltolas):
+    return "".join(chr(ord(c) + eltolas) for c in szoveg)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+ABC = "abcdefghijklmnopqrstuvwxyz"
+
+def caesar(szoveg, eltolas):
+    ki = ""
+    for c in szoveg:
+        if c in ABC:
+            ki += ABC[(ABC.index(c) + eltolas) % 26]   # a % 26 fordít körbe
+        else:
+            ki += c
+    return ki
+```
+
+</details>
+
+```python test
+assert caesar("abc xyz", 3) == "def abc"
+assert caesar("def abc", -3) == "abc xyz"
+assert caesar("hello, world!", 13) == "uryyb, jbeyq!"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Kockázati rangsor.** Írd meg a `rangsor(kockazatok)` függvényt, amely egy `{név: (valószínűség, hatás)}` szótárból a kockázatok neveit adja vissza a pontszám (valószínűség × hatás) szerint csökkenő sorrendben! Egyenlő pontszámnál a nagyobb hatású legyen előbb.
+
+```python starter
+def rangsor(kockazatok):
+    return sorted(kockazatok)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def rangsor(kockazatok):
+    return sorted(kockazatok, key=lambda n: (-kockazatok[n][0] * kockazatok[n][1], -kockazatok[n][1]))
+```
+
+</details>
+
+```python test
+k = {"adathalászat": (5, 3), "zsarolóvírus": (2, 5), "laptop": (3, 4), "meteor": (1, 5), "áram": (5, 2)}
+assert rangsor(k) == ["adathalászat", "laptop", "zsarolóvírus", "áram", "meteor"]
+assert rangsor({}) == []
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit jelent a CIA-hármasban az „A” (availability)?
+- hitelesség
++ rendelkezésre állás: az adat és a szolgáltatás elérhető, amikor kell
+- titkosság
+- sértetlenség
+! C: bizalmasság, I: sértetlenség, A: rendelkezésre állás.
+
+? Hány másolatot ír elő a 3-2-1 mentési szabály?
+= 3
+! 3 másolat, 2 féle adathordozón, 1 másik helyen.
+
+? Melyik a legerősebb második faktor?
+- SMS-ben kapott kód
+- e-mailben kapott kód
++ passkey vagy hardveres biztonsági kulcs
+- egy biztonsági kérdés (pl. „anyja neve”)
+! Ezek adathalászattal sem csalhatók ki.
+
+? Mi a teendő, ha gyanús, sürgető e-mailt kapsz a „bankodtól” egy belépési linkkel?
+- rákattintasz, és megadod az adataidat
++ nem kattintasz; a bank hivatalos oldalát vagy számát magad keresed meg
+- továbbítod mindenkinek
+- válaszolsz a jelszavaddal
+! A sürgetés az adathalászat tipikus jele.
 ```

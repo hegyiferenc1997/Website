@@ -1,7 +1,7 @@
 ---
 title: Practice – Installing and Operating Servers
 summary: Review questions, a lab task and the course's closing summary worksheet.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -90,4 +90,123 @@ print(codes)
 - RAID 0
 - turning off the firewall
 ! The loss of one machine shouldn't stop the service.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **How many servers?** Write the `servers(peak, capacity, utilisation, spare)` function, which gives the number of servers needed: $\lceil peak / (capacity \cdot utilisation) \rceil$ + the number of spare machines!
+
+```python starter
+def servers(peak, capacity, utilisation, spare):
+    return peak // capacity
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from math import ceil
+
+def servers(peak, capacity, utilisation, spare):
+    return ceil(peak / (capacity * utilisation)) + spare   # round up: there's no half machine
+```
+
+</details>
+
+```python test
+assert servers(840, 150, 0.7, 0) == 8
+assert servers(840, 150, 0.7, 1) == 9
+assert servers(100, 150, 0.7, 1) == 2
+print("All checks passed!")
+```
+
+**2.** **Percentile.** Write the `percentile(times, p)` function with the simplest ("nearest rank") method: sort the values and return the $\lceil p/100 \cdot n \rceil$-th element (counting from 1)!
+
+```python starter
+def percentile(times, p):
+    return sum(times) / len(times)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from math import ceil
+
+def percentile(times, p):
+    ordered = sorted(times)
+    k = max(1, ceil(p / 100 * len(ordered)))   # the rank is at least 1
+    return ordered[k - 1]
+```
+
+</details>
+
+```python test
+t = [120, 80, 95, 2000, 85, 90, 100, 110, 88, 92]
+assert percentile(t, 50) == 92
+assert percentile(t, 90) == 120
+assert percentile(t, 100) == 2000
+assert percentile([5], 95) == 5
+print("All checks passed!")
+```
+
+**3.** **Can it be restored?** Write the `restorable(days_ago, daily, weekly, monthly)` function for a grandfather–father–son backup scheme! Return `"daily"` if `days_ago <= daily`; `"weekly"` if `days_ago <= weekly * 7`; `"monthly"` if `days_ago <= monthly * 30`; otherwise `"none"`.
+
+```python starter
+def restorable(days_ago, daily, weekly, monthly):
+    return "daily"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def restorable(days_ago, daily, weekly, monthly):
+    if days_ago <= daily:
+        return "daily"
+    if days_ago <= weekly * 7:
+        return "weekly"
+    if days_ago <= monthly * 30:
+        return "monthly"
+    return "none"                       # we don't keep older backups
+```
+
+</details>
+
+```python test
+assert restorable(3, 7, 4, 12) == "daily"
+assert restorable(20, 7, 4, 12) == "weekly"
+assert restorable(200, 7, 4, 12) == "monthly"
+assert restorable(400, 7, 4, 12) == "none"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Serving a request takes 20 ms. What is the average response time at 95% utilisation (ms)?
+= 400
+! $20 / (1 - 0.95) = 400$ ms.
+
+? What does the N+1 principle mean?
+- we always let in one more user
++ there are enough machines that the system handles the peak even if one fails
+- every backup has one extra copy
+- the number of servers is always odd
+! It matters for maintenance too: one machine can be taken down.
+
+? How many simultaneous disk failures does a RAID 6 array survive without data loss?
+= 2
+! RAID 5 survives one, RAID 6 two.
+
+? What is the most important thing about a backup scheme that many skip?
+- storing the backups as compressed as possible
++ regularly testing the restore
+- putting every backup on the same disk
+- checking the backups only once a year
+! With a never-tested backup, you only find out on the day of disaster that it's unusable.
 ```

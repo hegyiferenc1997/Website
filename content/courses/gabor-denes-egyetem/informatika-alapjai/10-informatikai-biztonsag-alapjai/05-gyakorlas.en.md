@@ -1,7 +1,7 @@
 ---
 title: Practice – IT Security
 summary: Review questions and a summary worksheet on threats, authentication, encryption and backups.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -84,4 +84,122 @@ for p in ["Anna2007", "purple-bike-falls-monday", "Purple-Bike-7-Monday"]:
 - nobody has a password
 - the fewest users may use the machine
 ! Don't do everyday work as an administrator.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Calculation programming exercises
+
+**1.** **Entropy in bits.** Write the `bits(n, length)` function, which gives the entropy in bits of a password of `length` symbols chosen at random from `n` kinds of symbols (to 1 decimal)!
+
+```python starter
+def bits(n, length):
+    return round(n * length, 1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+from math import log2
+
+def bits(n, length):
+    return round(length * log2(n), 1)      # every symbol adds log2(n) bits
+```
+
+</details>
+
+```python test
+assert bits(64, 10) == 60.0
+assert bits(26, 8) == 37.6
+assert bits(7776, 6) == 77.5
+assert bits(10, 4) == 13.3
+print("All checks passed!")
+```
+
+**2.** **Caesar cipher.** Write the `caesar(text, shift)` function, which shifts the lowercase letters of the English alphabet by `shift` (wrapping around, also with a negative shift), leaving the other characters unchanged!
+
+```python starter
+def caesar(text, shift):
+    return "".join(chr(ord(c) + shift) for c in text)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+ABC = "abcdefghijklmnopqrstuvwxyz"
+
+def caesar(text, shift):
+    out = ""
+    for c in text:
+        if c in ABC:
+            out += ABC[(ABC.index(c) + shift) % 26]   # % 26 wraps around
+        else:
+            out += c
+    return out
+```
+
+</details>
+
+```python test
+assert caesar("abc xyz", 3) == "def abc"
+assert caesar("def abc", -3) == "abc xyz"
+assert caesar("hello, world!", 13) == "uryyb, jbeyq!"
+print("All checks passed!")
+```
+
+**3.** **Risk ranking.** Write the `ranking(risks)` function, which, from a `{name: (likelihood, impact)}` dictionary, returns the names of the risks in decreasing order of score (likelihood × impact)! With equal scores, the one with the bigger impact comes first.
+
+```python starter
+def ranking(risks):
+    return sorted(risks)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def ranking(risks):
+    return sorted(risks, key=lambda n: (-risks[n][0] * risks[n][1], -risks[n][1]))
+```
+
+</details>
+
+```python test
+r = {"phishing": (5, 3), "ransomware": (2, 5), "laptop": (3, 4), "meteor": (1, 5), "power": (5, 2)}
+assert ranking(r) == ["phishing", "laptop", "ransomware", "power", "meteor"]
+assert ranking({}) == []
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does the "A" (availability) in the CIA triad mean?
+- authenticity
++ availability: the data and the service are accessible when needed
+- confidentiality
+- integrity
+! C: confidentiality, I: integrity, A: availability.
+
+? How many copies does the 3-2-1 backup rule require?
+= 3
+! 3 copies, on 2 kinds of media, 1 in another location.
+
+? Which is the strongest second factor?
+- a code received by SMS
+- a code received by email
++ a passkey or a hardware security key
+- a security question (e.g. "mother's maiden name")
+! These can't be phished.
+
+? What should you do if you get a suspicious, urgent email from "your bank" with a login link?
+- click it and enter your details
++ don't click; find the bank's official site or number yourself
+- forward it to everyone
+- reply with your password
+! Urgency is a typical sign of phishing.
 ```

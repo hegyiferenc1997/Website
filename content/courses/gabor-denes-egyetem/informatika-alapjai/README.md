@@ -4,8 +4,17 @@ Ebben a mappában van az 1. féléves Informatika alapjai (B-INFOAP) tárgy tana
 `pnpm db:seed` futtatásakor) az oldal innen tölti be az adatbázisba a témaköröket és a leckéket.
 
 A szerkezet a tantárgyleírás 16 témakörét követi, ugyanabban a sorrendben:
-`01-adatok-es-informaciok` … `16-szerverek-telepitese-es-uzemeltetese`. Minden témakör 3 leckéből és
-egy `gyakorlas` (kind: practice) leckéből áll, ellenőrző kérdésekkel és összefoglaló feladatlappal; a 16. témakör gyakorló leckéje a tárgy záró összefoglalója. A mappák, a `topic.json` és a lecke fájlok
+`01-adatok-es-informaciok` … `16-szerverek-telepitese-es-uzemeltetese`. Minden témakör 5 leckéből áll:
+
+- 3 alaplecke (`01`–`03`),
+- egy **Mélyebben** lecke (`04-melyebben-…`), amely kis futtatható programokkal, interaktív ábrával
+  (` ```plot `) és több nézőpontból (felhasználó, fejlesztő, üzemeltető, cégvezetés) mélyíti el a témát,
+- egy `gyakorlas` (kind: practice) lecke (`05`), ellenőrző kérdésekkel és összefoglaló feladatlappal,
+  a végén egy nem kötelező „További gyakorló feladatok” résszel: 3 számolós Python-feladat
+  (kiinduló kód, elrejtett megoldás, ellenőrző teszt) és egy gyors kvíz.
+
+A 16. témakör gyakorló leckéje a tárgy záró összefoglalója. Összesen 16 interaktív ábra, 116
+` ```python run ` példa és 53 starter/megoldás/teszt hármas van a tárgyban. A mappák, a `topic.json` és a lecke fájlok
 felépítése ugyanaz, mint a Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
 
 A tárgy követelményei (számonkérés, pontok, jegyek) szándékosan nincsenek a leckékben.

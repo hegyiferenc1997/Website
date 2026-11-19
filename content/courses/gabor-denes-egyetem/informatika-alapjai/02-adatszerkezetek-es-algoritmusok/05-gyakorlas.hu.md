@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adatszerkezetek és algoritmusok
 summary: Ellenőrző kérdések és összefoglaló feladatlap az algoritmusokhoz és adatszerkezetekhez.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -85,4 +85,141 @@ print(db, sorted(lista))
 - O(n log n)
 + O(n²)
 ! Az n² nő a leggyorsabban.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Számolós programozási feladatok
+
+**1.** **Bináris keresés lépésszámmal.** Írd meg a `binaris_kereses(lista, cel)` függvényt, amely egy rendezett listában megkeresi a `cel` indexét, és a `(index, lépések száma)` párt adja vissza! Ha nincs benne, az index legyen `-1`. Egy lépés egy középső elem megvizsgálása.
+
+```python starter
+def binaris_kereses(lista, cel):
+    if cel in lista:
+        return (lista.index(cel), 1)
+    return (-1, 1)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def binaris_kereses(lista, cel):
+    bal, jobb, lepes = 0, len(lista) - 1, 0
+    while bal <= jobb:
+        lepes += 1
+        kozep = (bal + jobb) // 2
+        if lista[kozep] == cel:
+            return (kozep, lepes)
+        if lista[kozep] < cel:
+            bal = kozep + 1                  # a jobb felében folytatjuk
+        else:
+            jobb = kozep - 1
+    return (-1, lepes)
+```
+
+</details>
+
+```python test
+l = list(range(0, 100, 2))
+assert binaris_kereses(l, 48) == (24, 1)
+assert binaris_kereses(l, 98) == (49, 6)
+assert binaris_kereses(l, 7)[0] == -1
+assert binaris_kereses([], 3) == (-1, 0)
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Zárójelek ellenőrzése.** Írd meg a `rendben(szoveg)` függvényt, amely veremmel ellenőrzi, hogy a `()`, `[]`, `{}` zárójelek helyesen vannak-e párosítva (a többi karaktert hagyd figyelmen kívül)!
+
+```python starter
+def rendben(szoveg):
+    return szoveg.count("(") == szoveg.count(")")
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+PAR = {")": "(", "]": "[", "}": "{"}
+
+def rendben(szoveg):
+    verem = []
+    for c in szoveg:
+        if c in "([{":
+            verem.append(c)
+        elif c in PAR:
+            if not verem or verem.pop() != PAR[c]:   # nincs vagy rossz a párja
+                return False
+    return not verem
+```
+
+</details>
+
+```python test
+assert rendben("f(x[1])") is True
+assert rendben("([)]") is False
+assert rendben("((") is False
+assert rendben("{a: [1, (2)]}") is True
+assert rendben(")(") is False
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Buborékrendezés számlálóval.** Írd meg a `buborek(lista)` függvényt, amely visszaadja a rendezett lista másolatát és a cserék számát `(rendezett, cserek)` alakban! Az eredeti lista ne változzon.
+
+```python starter
+def buborek(lista):
+    return (sorted(lista), 0)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def buborek(lista):
+    a, cserek = lista[:], 0                   # másolaton dolgozunk
+    for i in range(len(a) - 1):
+        for j in range(len(a) - 1 - i):
+            if a[j] > a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+                cserek += 1
+    return (a, cserek)
+```
+
+</details>
+
+```python test
+eredeti = [3, 1, 2]
+assert buborek(eredeti) == ([1, 2, 3], 2)
+assert eredeti == [3, 1, 2]
+assert buborek([5, 4, 3, 2, 1]) == ([1, 2, 3, 4, 5], 10)
+assert buborek([1, 2, 3]) == ([1, 2, 3], 0)
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik adatszerkezet működik „elsőként be, elsőként ki” elven?
+- verem
++ sor
+- fa
+- hasítótábla
+! FIFO: a nyomtatási sor is így működik.
+
+? Legfeljebb hány lépés kell a bináris kereséshez egy 1000 elemű rendezett listában?
+= 10
+! $2^{10} = 1024 \geq 1000$.
+
+? Hányszorosára nő egy $O(n^2)$ algoritmus futási ideje, ha az adat mérete tízszeresére nő?
+= 100
+! $10^2 = 100$.
+
+? Miért gyors a keresés egy Python-szótárban?
+- mert a szótár mindig rendezett
++ mert a hasítófüggvény közvetlenül megmondja, melyik rekeszben van a kulcs
+- mert a szótár kicsi
+- nem gyors
+! Átlagosan $O(1)$ lépés.
 ```

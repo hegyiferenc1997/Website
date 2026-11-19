@@ -296,8 +296,9 @@ describe("Informatika alapjai", () => {
   const course = loadContent().find((c) => c.course === "informatika-alapjai");
 
   it("van tananyaga, és minden leckének van kötelező feladata", () => {
-    // A tantárgyleírás 16 témaköre, témakörönként 3 lecke + 1 gyakorló lecke.
+    // A tantárgyleírás 16 témaköre, témakörönként 3 lecke + 1 Mélyebben lecke + 1 gyakorló lecke.
     expect(course?.topics.length).toBe(16);
+    expect(course!.topics.every((t) => t.lessons.length === 5)).toBe(true);
     const missing = course!.topics.flatMap((t) =>
       t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
     );
