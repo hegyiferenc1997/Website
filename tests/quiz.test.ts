@@ -356,7 +356,7 @@ describe("Személyes kompetencia és kommunikáció fejlesztése", () => {
       t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
     );
     expect(missing).toEqual([]);
-    expect(course!.topics.every((t) => t.lessons.length >= 4)).toBe(true);
+    expect(course!.topics.every((t) => t.lessons.length === 5)).toBe(true);
   });
 
   it("minden lecke két nyelven elérhető", () => {
