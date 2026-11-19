@@ -93,20 +93,20 @@ In a student team project, Bence opens a pull request, and Anna comments:
 Anna: This won't work like this. Why didn't you use proper validation?
 ```
 
-Bence is in a bad mood all afternoon, and the next day he doesn't speak to Anna. Let's analyse it with Watzlawick's five axioms!
+Bence is in a bad mood all afternoon, and the next day doesn't speak to Anna. Let's analyse it with Watzlawick's five axioms!
 
 | Axiom                                         | What happened?                                                                                                                            |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | **One cannot not communicate**                | Bence's silence the next day is also a message: "I'm offended". Anna may not even notice.                                                 |
 | **Content and relationship levels**           | Content: validation is missing. Relationship: "proper" and "why didn't you" sound to Bence like "you're sloppy".                          |
-| **Punctuation of the sequence of events**     | Anna: "he's sloppy, so I'm strict". Bence: "she's hurtful, so I don't ask her". Each treats the other's behaviour as the starting point.  |
+| **Punctuation of the sequence of events**     | Anna: "Bence is sloppy, so I'm strict". Bence: "Anna is hurtful, so I don't ask". Each treats the other's behaviour as the starting point.  |
 | **Digital and analogue communication**        | In writing there's no tone, face or smile – Bence fills the missing analogue cues with the worst interpretation.                          |
 | **Symmetrical and complementary interaction** | Two equal team members (a symmetrical relationship), but the comment strikes a teacher–pupil (complementary) tone, which creates tension. |
 
 **Three viewpoints:**
 
-- **Anna** (the sender) thinks she was just efficient: she pointed out the bug and asked a question. By her intention she _helped_.
-- **Bence** (the receiver) reacted to the relationship message, not the content: he felt _judged_.
+- **Anna** (the sender) thinks they were just efficient: Anna pointed out the bug and asked a question. By intention, Anna _helped_.
+- **Bence** (the receiver) reacted to the relationship message, not the content, and felt _judged_.
 - **An outside observer** (e.g. the team's third member) sees that the content was justified, but the form cost the team half a day, and on the next PR Bence may not dare to ask.
 
 How could it have gone better? The same content with a different relationship message:
