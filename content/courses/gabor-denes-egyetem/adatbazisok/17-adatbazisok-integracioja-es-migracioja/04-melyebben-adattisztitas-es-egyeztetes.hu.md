@@ -62,7 +62,7 @@ FROM stg_vasarlok;
 ```
 
 - `TRIM` – levágja a szóközöket a két végéről;
-- `regexp_replace(…, '\s+', ' ', 'g')` – a belső, többszörös szóközt egyre cseréli („Varga  Emma” → „Varga Emma”);
+- `regexp_replace(…, '\s+', ' ', 'g')` – a belső, többszörös szóközt egyre cseréli („Varga Emma” → „Varga Emma”);
 - `LOWER` – az e-mail-cím nem kis-/nagybetű-érzékeny, ezért egységesen kisbetűsre alakítjuk (így vehetjük észre az ismétlődést).
 
 A szögletes zárójel csak azért van, hogy lássuk a láthatatlan szóközöket.

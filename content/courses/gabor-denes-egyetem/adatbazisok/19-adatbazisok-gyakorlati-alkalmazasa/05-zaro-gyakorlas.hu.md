@@ -1,7 +1,7 @@
 ---
 title: Záró gyakorlás – az egész tárgy egyben
 summary: Ellenőrző kérdések a tárgy legfontosabb gondolatairól a tervezéstől a teljesítményig, majd egy záró SQL feladat, amely több témakör tudását köti össze: összekapcsolás, LEFT JOIN, csoportosítás, szűrt összesítés, NULL-kezelés és rendezés.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -102,5 +102,178 @@ Mi miért van benne:
 - `GROUP BY h.neptun, h.nev`: a kulcs szerint csoportosítunk, így két azonos nevű hallgató sem olvadna össze.
 
 Gratulálunk, végigértél az Adatbázisok tárgyon! Ez a lekérdezés egymagában a tervezés, az SQL, a NULL-logika és a riportkészítés tudását is igényli.
+
+</details>
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+Vegyes, „valódi életből” vett feladatok: tervezési minták kipróbálása és néhány tipikus kérdés a tanulmányi adatbázison.
+
+**1.** **Tárgyajánló.** Melyik tárgyakat **nem vette még fel** Kiss Anna (`ABC123`)? (Kód, név; kód szerint.)
+
+```sql starter
+SELECT kod FROM jelentkezesek WHERE neptun = 'ABC123';
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT kod, nev
+FROM targyak
+WHERE kod NOT IN (SELECT kod FROM jelentkezesek WHERE neptun = 'ABC123')
+ORDER BY kod;
+```
+
+</details>
+
+**2.** **Állapot kódtáblával.** Hozd létre a `statuszok` kódtáblát (`kod` kulcs, `nev` kötelező) a `'uj'`, `'fizetve'`, `'szallitva'` kódokkal, és a `megrendelesek` táblát (`id` kulcs, `statusz` **idegen kulcs** a kódtáblára, kötelező)! Az ellenőrzés kipróbálja, hogy elírt állapot nem kerülhet be.
+
+```sql starter
+CREATE TABLE statuszok (kod VARCHAR(10) PRIMARY KEY);
+CREATE TABLE megrendelesek (id INT PRIMARY KEY);
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE statuszok (kod VARCHAR(10) PRIMARY KEY, nev VARCHAR(30) NOT NULL);
+INSERT INTO statuszok VALUES ('uj', 'Új'), ('fizetve', 'Fizetve'), ('szallitva', 'Szállítva');
+
+CREATE TABLE megrendelesek (
+  id      INT PRIMARY KEY,
+  statusz VARCHAR(10) NOT NULL REFERENCES statuszok (kod)   -- csak a kódtábla értékei
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION probal(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'sikerült';
+EXCEPTION WHEN others THEN
+  RETURN 'elutasítva';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE eredmeny (sorszam INT, eset TEXT, eredmeny TEXT);
+INSERT INTO eredmeny VALUES (1, 'fizetve', probal($q$INSERT INTO megrendelesek VALUES (1, 'fizetve')$q$));
+INSERT INTO eredmeny VALUES (2, 'Fizetve (nagybetűvel)', probal($q$INSERT INTO megrendelesek VALUES (2, 'Fizetve')$q$));
+INSERT INTO eredmeny VALUES (3, 'állapot nélkül', probal($q$INSERT INTO megrendelesek VALUES (3, NULL)$q$));
+INSERT INTO eredmeny SELECT 4, 'állapotok száma', COUNT(*)::TEXT FROM statuszok;
+SELECT * FROM eredmeny ORDER BY sorszam;
+```
+
+**3.** **Logikai törlés visszavonása.** A „Monitor” terméket tévedésből törölték (logikailag). **Állítsd vissza**, majd kérdezd le az aktív termékeket a nézetből, azonosító szerint!
+
+```sql starter
+CREATE TABLE termekek (id INT PRIMARY KEY, nev VARCHAR(40) NOT NULL, torolve_ekkor TIMESTAMP);
+INSERT INTO termekek VALUES (1, 'Egér', NULL), (2, 'Monitor', '2025-03-01 10:00'), (3, 'Billentyűzet', NULL);
+CREATE VIEW aktiv_termekek AS SELECT id, nev FROM termekek WHERE torolve_ekkor IS NULL;
+
+SELECT * FROM aktiv_termekek ORDER BY id;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE termekek (id INT PRIMARY KEY, nev VARCHAR(40) NOT NULL, torolve_ekkor TIMESTAMP);
+INSERT INTO termekek VALUES (1, 'Egér', NULL), (2, 'Monitor', '2025-03-01 10:00'), (3, 'Billentyűzet', NULL);
+CREATE VIEW aktiv_termekek AS SELECT id, nev FROM termekek WHERE torolve_ekkor IS NULL;
+
+UPDATE termekek SET torolve_ekkor = NULL WHERE nev = 'Monitor';   -- a visszaállítás egyetlen UPDATE
+
+SELECT * FROM aktiv_termekek ORDER BY id;
+```
+
+</details>
+
+**4.** **Előzménytábla.** Mennyi volt **minden termék ára 2025. március 15-én**? (Termékazonosító, ár; azonosító szerint.)
+
+```sql starter
+CREATE TABLE ar_tortenet (termek_id INT, ar NUMERIC(10, 2), ervenyes_tol DATE NOT NULL, ervenyes_ig DATE);
+INSERT INTO ar_tortenet VALUES
+  (1, 4490, '2024-01-01', '2024-09-30'), (1, 4990, '2024-10-01', '2025-05-31'), (1, 5490, '2025-06-01', NULL),
+  (2, 21990, '2024-01-01', '2025-02-28'), (2, 24990, '2025-03-01', NULL);
+
+SELECT * FROM ar_tortenet;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE ar_tortenet (termek_id INT, ar NUMERIC(10, 2), ervenyes_tol DATE NOT NULL, ervenyes_ig DATE);
+INSERT INTO ar_tortenet VALUES
+  (1, 4490, '2024-01-01', '2024-09-30'), (1, 4990, '2024-10-01', '2025-05-31'), (1, 5490, '2025-06-01', NULL),
+  (2, 21990, '2024-01-01', '2025-02-28'), (2, 24990, '2025-03-01', NULL);
+
+SELECT termek_id, ar
+FROM ar_tortenet
+WHERE ervenyes_tol <= DATE '2025-03-15'
+  AND (ervenyes_ig IS NULL OR ervenyes_ig >= DATE '2025-03-15')   -- NULL = ma is érvényes
+ORDER BY termek_id;
+```
+
+</details>
+
+**5.** **Vesszős lista helyett sorok.** Egy régi tábla a címkéket egyetlen mezőben, vesszővel elválasztva tárolja (ez antiminta!). Bontsd szét a listát soronként egy címkére (`string_to_table`), és számold meg, **melyik címke hányszor** fordul elő! (Címke, darab; darab szerint csökkenően, azon belül címke szerint.)
+
+```sql starter
+CREATE TABLE cikkek (id INT PRIMARY KEY, cimkek TEXT);
+INSERT INTO cikkek VALUES (1, 'akcio,uj'), (2, 'uj'), (3, 'akcio,kiemelt,uj'), (4, 'kiemelt');
+
+SELECT id, cimkek FROM cikkek;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE cikkek (id INT PRIMARY KEY, cimkek TEXT);
+INSERT INTO cikkek VALUES (1, 'akcio,uj'), (2, 'uj'), (3, 'akcio,kiemelt,uj'), (4, 'kiemelt');
+
+SELECT cimke, COUNT(*) AS db
+FROM cikkek, string_to_table(cimkek, ',') AS cimke     -- minden címke külön sor lesz
+GROUP BY cimke
+ORDER BY db DESC, cimke;
+```
+
+</details>
+
+**6.** **Rugalmas extra adatok JSONB-ben.** A termékek közös adatai rendes oszlopokban vannak, a típusfüggő extrák egy `extra` JSONB oszlopban. Melyik termékek képernyője **legalább 27 colos**? (Név, méret; méret szerint csökkenően.)
+
+```sql starter
+CREATE TABLE termekek_x (id INT PRIMARY KEY, nev VARCHAR(40) NOT NULL, extra JSONB);
+INSERT INTO termekek_x VALUES
+  (1, '24 colos monitor', '{"meret_col": 24, "panel": "IPS"}'),
+  (2, '27 colos monitor', '{"meret_col": 27, "panel": "VA"}'),
+  (3, 'Gamer egér',       '{"dpi": 16000}'),
+  (4, '32 colos monitor', '{"meret_col": 32, "panel": "IPS"}');
+
+SELECT nev, extra FROM termekek_x;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE termekek_x (id INT PRIMARY KEY, nev VARCHAR(40) NOT NULL, extra JSONB);
+INSERT INTO termekek_x VALUES
+  (1, '24 colos monitor', '{"meret_col": 24, "panel": "IPS"}'),
+  (2, '27 colos monitor', '{"meret_col": 27, "panel": "VA"}'),
+  (3, 'Gamer egér',       '{"dpi": 16000}'),
+  (4, '32 colos monitor', '{"meret_col": 32, "panel": "IPS"}');
+
+SELECT nev, (extra ->> 'meret_col')::INT AS meret
+FROM termekek_x
+WHERE (extra ->> 'meret_col')::INT >= 27     -- az egérnél NULL → kimarad
+ORDER BY meret DESC;
+```
 
 </details>

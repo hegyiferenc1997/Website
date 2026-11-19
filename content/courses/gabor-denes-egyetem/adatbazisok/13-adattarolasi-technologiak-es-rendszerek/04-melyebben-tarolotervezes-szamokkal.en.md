@@ -41,12 +41,12 @@ Required usable capacity ≈ 1968 · 1.4 / 0.75 ≈ **3,700 GB**, rounded to **4
 
 An **IOPS** is one read or write operation per second. RAID levels **multiply writes**, because the redundancy has to be updated too:
 
-| RAID        | How many physical writes per logical write? | Why?                                      |
-| ----------- | ------------------------------------------- | ----------------------------------------- |
-| RAID 0      | 1                                           | no redundancy                             |
-| RAID 1 / 10 | 2                                           | both mirrors must be written              |
+| RAID        | How many physical writes per logical write? | Why?                                                    |
+| ----------- | ------------------------------------------- | ------------------------------------------------------- |
+| RAID 0      | 1                                           | no redundancy                                           |
+| RAID 1 / 10 | 2                                           | both mirrors must be written                            |
 | RAID 5      | 4                                           | read old data + old parity, write new data + new parity |
-| RAID 6      | 6                                           | the same with two parities                |
+| RAID 6      | 6                                           | the same with two parities                              |
 
 Physical load on the disks: **reads + writes · penalty**.
 
@@ -125,11 +125,11 @@ Restoring is typically **slower** than backing up: files must be copied back, in
 
 ## Step 5 – RPO and RTO → solution
 
-| Target                  | Nightly backup only | Backup + WAL archiving (PITR)  | Synchronous replica with automatic failover |
-| ----------------------- | ------------------- | ------------------------------ | ------------------------------------------- |
-| RPO (max. data loss)    | up to 24 hours      | a few minutes                  | ≈ 0                                         |
-| RTO (recovery time)     | hours               | hours (restore + replay)       | seconds–minutes                             |
-| Cost                    | low                 | medium                         | high (second server, network)               |
+| Target               | Nightly backup only | Backup + WAL archiving (PITR) | Synchronous replica with automatic failover |
+| -------------------- | ------------------- | ----------------------------- | ------------------------------------------- |
+| RPO (max. data loss) | up to 24 hours      | a few minutes                 | ≈ 0                                         |
+| RTO (recovery time)  | hours               | hours (restore + replay)      | seconds–minutes                             |
+| Cost                 | low                 | medium                        | high (second server, network)               |
 
 Our case: RPO = 15 minutes, RTO = 1 hour. PITR meets the RPO, but the restore takes 1.5 hours – not the RTO. Solution: a **replica** (a second server that continuously follows the first) for fast failover **and** backup + WAL archiving against logical errors (e.g. an accidental `DELETE`) – because the replica copies the faulty delete instantly too!
 

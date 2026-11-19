@@ -76,7 +76,7 @@ SELECT * FROM cikkek ORDER BY id;
 
 ## 3. minta – előzménytábla (history)
 
-Ha nemcsak azt kell tudni, hogy *mikor* változott valami, hanem azt is, hogy **mi volt előtte** (pl. „mennyi volt a termék ára tavaly márciusban?”), egy **előzménytábla** kell, érvényességi időszakkal:
+Ha nemcsak azt kell tudni, hogy _mikor_ változott valami, hanem azt is, hogy **mi volt előtte** (pl. „mennyi volt a termék ára tavaly márciusban?”), egy **előzménytábla** kell, érvényességi időszakkal:
 
 ```sql run
 CREATE TABLE ar_elozmeny (
@@ -103,10 +103,10 @@ Ez a **„lassan változó dimenzió” (2-es típus)** mintája az adattárház
 
 Egy rendelés állapota csak néhány érték lehet. Két jó megoldás:
 
-| Megoldás                                     | Előny                                          | Mikor?                                        |
-| -------------------------------------------- | ---------------------------------------------- | --------------------------------------------- |
-| `statusz TEXT CHECK (statusz IN ('új', 'fizetve', 'szállítva'))` | egyszerű, nincs JOIN               | kevés, ritkán változó érték                   |
-| `statusz_id INT REFERENCES statuszok`        | új érték felvétele adatmódosítás, nem sémaváltozás; további adat tárolható (név két nyelven, sorrend, szín) | sok érték, felhasználó által bővíthető lista |
+| Megoldás                                                         | Előny                                                                                                       | Mikor?                                       |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `statusz TEXT CHECK (statusz IN ('új', 'fizetve', 'szállítva'))` | egyszerű, nincs JOIN                                                                                        | kevés, ritkán változó érték                  |
+| `statusz_id INT REFERENCES statuszok`                            | új érték felvétele adatmódosítás, nem sémaváltozás; további adat tárolható (név két nyelven, sorrend, szín) | sok érték, felhasználó által bővíthető lista |
 
 A **rossz** megoldás: szabad szöveg megszorítás nélkül – előbb-utóbb lesz `'Fizetve'`, `'fizetett'` és `'payed'` is.
 
@@ -156,16 +156,16 @@ Egyetlen `adatok` tábla 120 oszloppal, amelyből soronként 10 van kitöltve, m
 
 ## Összefoglaló táblázat
 
-| Helyzet                                          | Minta                                              |
-| ------------------------------------------------ | -------------------------------------------------- |
-| törölni, de megőrizni                            | logikai törlés + nézet + részleges egyedi index    |
-| mikor jött létre / módosult?                     | `DEFAULT` + `BEFORE UPDATE` trigger                |
-| milyen volt korábban?                            | előzménytábla érvényességi időszakkal              |
-| kevés rögzített érték                            | `CHECK (… IN (…))`                                 |
-| bővíthető értéklista                             | kódtábla idegen kulccsal                           |
-| esemény időpontja                                | `TIMESTAMPTZ`                                      |
-| változó extra tulajdonságok                      | rendes oszlopok + JSONB (nem EAV)                  |
-| több fajta „szülőhöz” kapcsolódó adat            | külön kapcsolótáblák (nem polimorf hivatkozás)     |
+| Helyzet                               | Minta                                           |
+| ------------------------------------- | ----------------------------------------------- |
+| törölni, de megőrizni                 | logikai törlés + nézet + részleges egyedi index |
+| mikor jött létre / módosult?          | `DEFAULT` + `BEFORE UPDATE` trigger             |
+| milyen volt korábban?                 | előzménytábla érvényességi időszakkal           |
+| kevés rögzített érték                 | `CHECK (… IN (…))`                              |
+| bővíthető értéklista                  | kódtábla idegen kulccsal                        |
+| esemény időpontja                     | `TIMESTAMPTZ`                                   |
+| változó extra tulajdonságok           | rendes oszlopok + JSONB (nem EAV)               |
+| több fajta „szülőhöz” kapcsolódó adat | külön kapcsolótáblák (nem polimorf hivatkozás)  |
 
 ## Összefoglalás
 

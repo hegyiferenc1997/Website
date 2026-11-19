@@ -1,7 +1,7 @@
 ---
 title: Practice – SQL Queries
 summary: Review questions and query exercises on filtering, sorting, paging, aggregation and grouping.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -107,6 +107,126 @@ FROM students
 WHERE city IS NOT NULL
 GROUP BY city
 ORDER BY headcount DESC, city;
+```
+
+</details>
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+**1.** **Average per group, with filtered groups.** Per course (`code`), the **average grade rounded to two decimals** – but only for courses with **at least 2 grades**. Sorted by the average descending, ties by code.
+
+```sql starter
+SELECT code, AVG(grade)
+FROM enrollments
+GROUP BY code;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code, ROUND(AVG(grade), 2) AS average
+FROM enrollments
+GROUP BY code
+HAVING COUNT(grade) >= 2         -- HAVING filters the groups (a NULL grade doesn't count)
+ORDER BY average DESC, code;
+```
+
+</details>
+
+**2.** **Paging.** We sort courses by credits descending, then by name, with **2** courses per page. Query the **2nd page** (code, name, credits)!
+
+```sql starter
+SELECT code, name, credits
+FROM courses
+ORDER BY credits DESC, name;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code, name, credits
+FROM courses
+ORDER BY credits DESC, name
+LIMIT 2 OFFSET 2;                -- skip the first 2 rows
+```
+
+</details>
+
+**3.** **Missing data.** Whose **city or birth date is unknown**? (Name, city, birth date, by name.)
+
+```sql starter
+SELECT name, city, born
+FROM students;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name, city, born
+FROM students
+WHERE city IS NULL OR born IS NULL     -- NULL can only be searched with IS NULL
+ORDER BY name;
+```
+
+</details>
+
+**4.** **Grouping with several aggregates.** Per major, the **number** of students and the **lowest and highest semester**. Sorted by major.
+
+```sql starter
+SELECT major
+FROM students;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT major, COUNT(*) AS headcount, MIN(semester) AS min_semester, MAX(semester) AS max_semester
+FROM students
+GROUP BY major
+ORDER BY major;
+```
+
+</details>
+
+**5.** **Ranges.** The name and birth date of students born **in 2005**, in order of birth. (It can be solved two ways: with `BETWEEN` or with two comparisons.)
+
+```sql starter
+SELECT name, born
+FROM students;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name, born
+FROM students
+WHERE born BETWEEN DATE '2005-01-01' AND DATE '2005-12-31'
+ORDER BY born;
+```
+
+</details>
+
+**6.** **A computed column.** For every course, show how many **hours of work** it means (1 credit ≈ 30 hours of student work): code, credits, `hours`. Sorted by hours descending, then by code.
+
+```sql starter
+SELECT code, credits
+FROM courses;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code, credits, credits * 30 AS hours
+FROM courses
+ORDER BY hours DESC, code;
 ```
 
 </details>

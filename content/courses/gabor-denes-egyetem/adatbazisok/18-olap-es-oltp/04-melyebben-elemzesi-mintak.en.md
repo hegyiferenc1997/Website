@@ -28,11 +28,11 @@ One fact table (`fact_sales`) and three dimensions (`dim_date`, `dim_product`, `
 
 Imagine a race where two runners tie for second place. What place is the next one?
 
-| Function        | Numbers      | When to use it?                                          |
-| --------------- | ------------ | -------------------------------------------------------- |
-| `ROW_NUMBER()`  | 1, 2, 3, 4   | a unique number is needed (e.g. paging, removing duplicates) – breaks ties arbitrarily |
-| `RANK()`        | 1, 2, 2, 4   | "Olympic" ranking: a place is skipped after a tie        |
-| `DENSE_RANK()`  | 1, 2, 2, 3   | "dense" ranking: no gaps (e.g. "the top 3 price levels") |
+| Function       | Numbers    | When to use it?                                                                        |
+| -------------- | ---------- | -------------------------------------------------------------------------------------- |
+| `ROW_NUMBER()` | 1, 2, 3, 4 | a unique number is needed (e.g. paging, removing duplicates) – breaks ties arbitrarily |
+| `RANK()`       | 1, 2, 2, 4 | "Olympic" ranking: a place is skipped after a tie                                      |
+| `DENSE_RANK()` | 1, 2, 2, 3 | "dense" ranking: no gaps (e.g. "the top 3 price levels")                               |
 
 ```sql run
 -- Ranking products by price: prices are all different,
@@ -52,12 +52,12 @@ Look at the 20,000 and 0 price bands: several products fall into the same band. 
 
 For each row, a window function looks at a **frame**: a subset of the partition's rows. If `OVER (…)` contains `ORDER BY`, the **default frame** is "from the start of the partition **up to the current row** (and its peers with the same sort value)". That's why `SUM(...) OVER (ORDER BY ...)` automatically becomes a **running total**.
 
-| Frame                                               | Meaning                                       |
-| --------------------------------------------------- | --------------------------------------------- |
-| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`  | from the start to the current row (running total) |
-| `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`          | the previous 2 and the current row (3-element moving average) |
-| `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | the whole partition                    |
-| `RANGE …`                                           | counts a **value range**, not rows: rows with the same sort value move together |
+| Frame                                                      | Meaning                                                                         |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`         | from the start to the current row (running total)                               |
+| `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`                 | the previous 2 and the current row (3-element moving average)                   |
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | the whole partition                                                             |
+| `RANGE …`                                                  | counts a **value range**, not rows: rows with the same sort value move together |
 
 ### The LAST_VALUE trap
 

@@ -1,7 +1,7 @@
 ---
 title: Practice – Database System Basics
 summary: Review questions and a summary worksheet on databases, the DBMS, the three-level architecture and database types.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -84,4 +84,121 @@ A starting team is building a **food delivery app**. Help them decide!
 - OLTP
 + OLAP
 ! Online Analytical Processing.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+<details>
+<summary>Creating the sample database (SQL)</summary>
+
+<!-- sql-setup: egyetem -->
+
+</details>
+
+**1.** First steps in the sample database: list the **name and city** of students whose **city is known**, in alphabetical order by name.
+
+```sql starter
+SELECT name, city
+FROM students;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name, city
+FROM students
+WHERE city IS NOT NULL       -- the unknown (NULL) city is left out
+ORDER BY name;
+```
+
+</details>
+
+**2.** **The external level in practice.** The dormitory porter only sees students from Budapest. Create the `budapest_students` **view** (with the `neptun` and `name` columns), then query it sorted by Neptun code!
+
+```sql starter
+-- 1. CREATE VIEW budapest_students AS ...
+-- 2. SELECT ... FROM budapest_students ...
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE VIEW budapest_students AS
+SELECT neptun, name
+FROM students
+WHERE city = 'Budapest';
+
+SELECT * FROM budapest_students ORDER BY neptun;
+```
+
+</details>
+
+**3.** **The DBMS can also give data about itself** (the data dictionary). Query the **names and data types of the columns** of the `students` table from the `information_schema.columns` view, in their order in the table (`ordinal_position`)!
+
+```sql starter
+SELECT column_name, data_type
+FROM information_schema.columns;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'students'
+ORDER BY ordinal_position;
+```
+
+</details>
+
+**4.** How many **tables** are there in the `public` schema? (The `information_schema.tables` view helps.)
+
+```sql starter
+SELECT table_name
+FROM information_schema.tables;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT COUNT(*) AS table_count
+FROM information_schema.tables
+WHERE table_schema = 'public'
+  AND table_type = 'BASE TABLE';    -- only real tables, not views
+```
+
+</details>
+
+**5.** **Physical data independence, tried out.** Create an index on the `students.city` column, then run _the same_ query as without the index: the names of students from Szeged and Debrecen, sorted by name. Notice: nothing in the query had to change!
+
+```sql starter
+SELECT name
+FROM students
+WHERE city IN ('Szeged', 'Debrecen')
+ORDER BY name;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE INDEX idx_students_city ON students (city);   -- only the internal level changes
+
+SELECT name
+FROM students
+WHERE city IN ('Szeged', 'Debrecen')
+ORDER BY name;
+```
+
+</details>
+
+```sql test
+SELECT (SELECT COUNT(*) FROM pg_indexes WHERE tablename = 'students' AND indexdef LIKE '%(city)%') AS has_index,
+       (SELECT string_agg(name, ', ' ORDER BY name) FROM students WHERE city IN ('Szeged', 'Debrecen')) AS names;
 ```

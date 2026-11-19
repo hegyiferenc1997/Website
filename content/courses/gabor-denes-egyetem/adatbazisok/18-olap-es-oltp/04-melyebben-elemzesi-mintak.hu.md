@@ -28,11 +28,11 @@ Egy ténytábla (`teny_eladas`) és három dimenzió (`dim_datum`, `dim_termek`,
 
 Képzelj el egy futóversenyt, ahol ketten holtversenyben másodikak lettek. Hányadik a következő?
 
-| Függvény        | Sorszámok    | Mikor használd?                                         |
-| --------------- | ------------ | ------------------------------------------------------- |
-| `ROW_NUMBER()`  | 1, 2, 3, 4   | egyedi sorszám kell (pl. lapozás, ismétlődés-szűrés) – a holtversenyt önkényesen bontja |
-| `RANK()`        | 1, 2, 2, 4   | „olimpiai” rangsor: holtverseny után kimarad hely       |
-| `DENSE_RANK()`  | 1, 2, 2, 3   | „sűrű” rangsor: nincs kihagyás (pl. „a 3 legjobb árszint”) |
+| Függvény       | Sorszámok  | Mikor használd?                                                                         |
+| -------------- | ---------- | --------------------------------------------------------------------------------------- |
+| `ROW_NUMBER()` | 1, 2, 3, 4 | egyedi sorszám kell (pl. lapozás, ismétlődés-szűrés) – a holtversenyt önkényesen bontja |
+| `RANK()`       | 1, 2, 2, 4 | „olimpiai” rangsor: holtverseny után kimarad hely                                       |
+| `DENSE_RANK()` | 1, 2, 2, 3 | „sűrű” rangsor: nincs kihagyás (pl. „a 3 legjobb árszint”)                              |
 
 ```sql run
 -- Termékek ára szerinti rangsor: minden ár különböző, ezért csináljunk holtversenyt:
@@ -52,12 +52,12 @@ Figyeld meg a 20 000-es és a 0-s ársávot: több termék is ugyanoda esik. A `
 
 Egy ablakfüggvény minden sornál egy **keretet** (frame) néz: a partíció sorainak egy részét. Ha az `OVER (…)`-ban van `ORDER BY`, az **alapértelmezett keret**: „a partíció elejétől **az aktuális sorig** (és a vele azonos rendezési értékűekig)”. Ezért lesz a `SUM(...) OVER (ORDER BY ...)` automatikusan **futó összeg**.
 
-| Keret                                               | Jelentés                                      |
-| --------------------------------------------------- | --------------------------------------------- |
-| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`  | elejétől az aktuális sorig (futó összeg)      |
-| `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`          | az előző 2 és az aktuális sor (3 elemű mozgóátlag) |
-| `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | a teljes partíció                     |
-| `RANGE …`                                           | nem sorokat, hanem **értéktartományt** számol: az azonos rendezési értékű sorok együtt mozognak |
+| Keret                                                      | Jelentés                                                                                        |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`         | elejétől az aktuális sorig (futó összeg)                                                        |
+| `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`                 | az előző 2 és az aktuális sor (3 elemű mozgóátlag)                                              |
+| `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING` | a teljes partíció                                                                               |
+| `RANGE …`                                                  | nem sorokat, hanem **értéktartományt** számol: az azonos rendezési értékű sorok együtt mozognak |
 
 ### A LAST_VALUE csapdája
 

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – indexelés
 summary: Ellenőrző kérdések és egy indexelési esettanulmány: melyik lekérdezéshez milyen index kell, és melyik feltétel nem tudja használni az indexet.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -88,3 +88,134 @@ A webshop fejlesztői a következő lekérdezéseket gyűjtötték össze. A `re
 - Index Scan
 ! Kis táblánál a teljes olvasás olcsóbb.
 ```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+A feladatok a webshop mintaadatbázisán futnak (5000 vásárló, 20 000 rendelés, 40 000 tétel), így az indexeknek már tényleg van jelentőségük. Bármelyik lekérdezés elé odaírhatod az `EXPLAIN`-t, hogy lásd, mit választ a tervező.
+
+<details>
+<summary>A mintaadatbázis létrehozása (SQL)</summary>
+
+<!-- sql-setup: webshop -->
+
+</details>
+
+**1.** **Egyszerű index.** A termékoldalon gyakran szűrünk kategóriára. Hozz létre indexet a `termekek.kategoria` oszlopra, majd kérdezd le a `periféria` kategória termékeit (név, ár) ár szerint!
+
+```sql starter
+SELECT nev, ar
+FROM termekek
+WHERE kategoria = 'periféria'
+ORDER BY ar;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE INDEX idx_termekek_kategoria ON termekek (kategoria);
+
+SELECT nev, ar
+FROM termekek
+WHERE kategoria = 'periféria'
+ORDER BY ar;
+```
+
+</details>
+
+```sql test
+SELECT (SELECT COUNT(*) FROM pg_indexes WHERE tablename = 'termekek' AND indexdef LIKE '%(kategoria)%') AS index_van,
+       (SELECT string_agg(nev, ', ' ORDER BY ar) FROM termekek WHERE kategoria = 'periféria') AS termekek;
+```
+
+**2.** **Részleges index.** A raktár csak a **szállítás alatt** álló rendeléseket keresi dátum szerint; a kész és törölt rendelésekre nincs szükség az indexben. Hozz létre **részleges indexet** a `rendelesek (datum)` oszlopra `WHERE statusz = 'szállítás'` feltétellel!
+
+```sql starter
+CREATE INDEX idx_szallitas ON rendelesek (datum);
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE INDEX idx_szallitas ON rendelesek (datum)
+WHERE statusz = 'szállítás';            -- csak ezek a sorok kerülnek az indexbe → kisebb, gyorsabb
+```
+
+</details>
+
+```sql test
+SELECT COUNT(*) AS reszleges_index
+FROM pg_indexes
+WHERE tablename = 'rendelesek' AND indexdef LIKE '%(datum) WHERE%szállítás%';
+```
+
+**3.** **Kifejezésindex.** Bejelentkezéskor a felhasználó bárhogyan gépelheti az e-mail-címét (kis- vagy nagybetűvel), ezért a keresés `LOWER(email) = ...` formájú. Egy sima `email`-index ezt nem tudja kiszolgálni. Hozz létre indexet a `LOWER(email)` **kifejezésre**, majd keresd meg a `Vasarlo42@Pelda.hu` címhez tartozó vásárló azonosítóját és nevét!
+
+```sql starter
+SELECT vasarlo_id, nev
+FROM vasarlok
+WHERE LOWER(email) = LOWER('Vasarlo42@Pelda.hu');
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE INDEX idx_vasarlok_email_lower ON vasarlok (LOWER(email));   -- pontosan a keresett kifejezés
+
+SELECT vasarlo_id, nev
+FROM vasarlok
+WHERE LOWER(email) = LOWER('Vasarlo42@Pelda.hu');
+```
+
+</details>
+
+```sql test
+SELECT (SELECT COUNT(*) FROM pg_indexes WHERE tablename = 'vasarlok' AND indexdef LIKE '%lower%') AS kifejezesindex,
+       (SELECT nev FROM vasarlok WHERE LOWER(email) = 'vasarlo42@pelda.hu') AS nev;
+```
+
+**4.** **„A legutóbbi 5” lekérdezés.** A „Rendeléseim” oldal a 42-es vásárló **5 legújabb** rendelését mutatja (azonosító, dátum, állapot), a legújabbal kezdve; azonos dátumnál a nagyobb azonosító előbb. (Egy `(vasarlo_id, datum)` összetett index pont ezt szolgálná ki rendezés nélkül.)
+
+```sql starter
+SELECT rendeles_id, datum, statusz
+FROM rendelesek
+WHERE vasarlo_id = 42;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT rendeles_id, datum, statusz
+FROM rendelesek
+WHERE vasarlo_id = 42
+ORDER BY datum DESC, rendeles_id DESC
+LIMIT 5;
+```
+
+</details>
+
+**5.** **Index-kiválasztás számokkal.** Mekkora a **szelektivitás**? Számold ki, a rendelések hány százaléka (1 tizedesre kerekítve) `törölt`, `szállítás` és `kész` állapotú! (Minél kisebb a százalék, annál jobban megéri indexszel keresni.) Állapot szerint rendezve.
+
+```sql starter
+SELECT statusz, COUNT(*)
+FROM rendelesek
+GROUP BY statusz;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT statusz,
+       ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM rendelesek), 1) AS szazalek
+FROM rendelesek
+GROUP BY statusz
+ORDER BY statusz;
+```
+
+</details>

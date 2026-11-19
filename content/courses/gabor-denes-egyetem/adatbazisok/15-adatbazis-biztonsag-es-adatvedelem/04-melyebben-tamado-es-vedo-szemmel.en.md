@@ -25,13 +25,13 @@ The story below is fictional, but every step has occurred in real incidents. A s
 
 ### Where could it have been stopped?
 
-| Step | Defensive layer                                 | Topic   |
-| ---- | ----------------------------------------------- | ------- |
-| 1.   | parameterised queries, input validation         | 15/1    |
-| 2.   | least privilege, separate application account   | 10      |
-| 3.   | slow, salted password hash (bcrypt, Argon2)     | 15/2    |
-| 4.   | data minimisation, retention, pseudonymisation  | 15/3, this lesson |
-| 5.   | logging, alerting, regular review               | 10/4    |
+| Step | Defensive layer                                | Topic             |
+| ---- | ---------------------------------------------- | ----------------- |
+| 1.   | parameterised queries, input validation        | 15/1              |
+| 2.   | least privilege, separate application account  | 10                |
+| 3.   | slow, salted password hash (bcrypt, Argon2)    | 15/2              |
+| 4.   | data minimisation, retention, pseudonymisation | 15/3, this lesson |
+| 5.   | logging, alerting, regular review              | 10/4              |
 
 This is the principle of **defense in depth**: we don't rely on a single perfect wall but on **several independent** layers. If one breaks, the next may still stop the attack – or at least reduce the damage.
 
@@ -41,14 +41,14 @@ This is the principle of **defense in depth**: we don't rely on a single perfect
 
 STRIDE is a checklist: six attack types we think through for every part of a system.
 
-| Letter | Threat                             | Database example                                    | Defence                                    |
-| ------ | ---------------------------------- | --------------------------------------------------- | ------------------------------------------ |
-| S      | **S**poofing                       | logging in with a stolen password                   | strong authentication, two-factor          |
-| T      | **T**ampering                      | changing grades after the fact                      | permissions, log, checksums                |
-| R      | **R**epudiation                    | "I didn't delete it"                                | personal accounts, immutable log           |
-| I      | **I**nformation disclosure         | injection, unencrypted backup                       | parameterisation, encryption, masking      |
-| D      | **D**enial of service              | overloading with masses of slow queries             | timeouts, rate limits, indexes             |
-| E      | **E**levation of privilege         | hijacking a SECURITY DEFINER function               | fixed `search_path`, narrow rights         |
+| Letter | Threat                     | Database example                        | Defence                               |
+| ------ | -------------------------- | --------------------------------------- | ------------------------------------- |
+| S      | **S**poofing               | logging in with a stolen password       | strong authentication, two-factor     |
+| T      | **T**ampering              | changing grades after the fact          | permissions, log, checksums           |
+| R      | **R**epudiation            | "I didn't delete it"                    | personal accounts, immutable log      |
+| I      | **I**nformation disclosure | injection, unencrypted backup           | parameterisation, encryption, masking |
+| D      | **D**enial of service      | overloading with masses of slow queries | timeouts, rate limits, indexes        |
+| E      | **E**levation of privilege | hijacking a SECURITY DEFINER function   | fixed `search_path`, narrow rights    |
 
 ## 3. Lesser-known forms of injection
 

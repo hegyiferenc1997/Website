@@ -1,7 +1,7 @@
 ---
 title: Practice – Relational Model and SQL
 summary: Review questions, translating a relational algebra expression to SQL, and a summary worksheet on keys, relational algebra and DDL.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -106,3 +106,100 @@ WHERE major = 'business informatics';
 = ALTER TABLE
 ! ALTER TABLE … ADD COLUMN …
 ```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+**1.** **Selection and projection.** In relational algebra: π<sub>name, credits</sub>(σ<sub>credits ≥ 5</sub>(courses)). Write it in SQL, sorted by name!
+
+```sql starter
+SELECT *
+FROM courses;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name, credits         -- projection (π)
+FROM courses
+WHERE credits >= 5           -- selection (σ)
+ORDER BY name;
+```
+
+</details>
+
+**2.** **Union.** Who (Neptun code) has **already got a 5** in something, **or** is in the **5th semester**? Every code should appear once, sorted.
+
+```sql starter
+SELECT neptun FROM enrollments WHERE grade = 5;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT neptun FROM enrollments WHERE grade = 5
+UNION                                   -- UNION removes duplicates
+SELECT neptun FROM students WHERE semester = 5
+ORDER BY 1;
+```
+
+</details>
+
+**3.** **Intersection.** Who took **both** `ADB` **and** `DIG`? (Neptun code, sorted.)
+
+```sql starter
+SELECT neptun FROM enrollments WHERE code = 'ADB';
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT neptun FROM enrollments WHERE code = 'ADB'
+INTERSECT
+SELECT neptun FROM enrollments WHERE code = 'DIG'
+ORDER BY 1;
+```
+
+</details>
+
+**4.** **Join.** The **name and grade** of the students who took _Programming Basics_, sorted by name. You'll need to join the students, enrollments and courses tables.
+
+```sql starter
+SELECT *
+FROM enrollments;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT s.name, e.grade
+FROM enrollments e
+JOIN students s ON s.neptun = e.neptun
+JOIN courses c  ON c.code = e.code
+WHERE c.name = 'Programming Basics'
+ORDER BY s.name;
+```
+
+</details>
+
+**5.** **Cartesian product.** How many rows does the `students × courses` product have? Work it out in your head first (6 students, 5 courses), then check with SQL!
+
+```sql starter
+SELECT *
+FROM students CROSS JOIN courses;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT COUNT(*) AS row_count
+FROM students CROSS JOIN courses;       -- 6 × 5 = 30
+```
+
+</details>

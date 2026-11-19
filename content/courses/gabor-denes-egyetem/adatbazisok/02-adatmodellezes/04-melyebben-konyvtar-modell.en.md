@@ -23,15 +23,15 @@ Underline the nouns: _book, title, author, publication year, ISBN, copy, reader,
 
 Now sort them: which is an **independent thing** (entity), and which is just a **property** of a thing?
 
-| Noun              | Entity or property?           | Why?                                                   |
-| ----------------- | ----------------------------- | ------------------------------------------------------ |
-| book              | **entity**                    | many properties, many other things relate to it        |
-| title, ISBN, year | properties of the book        | not interesting on their own                           |
-| author            | **entity** (!)                | a book can have several authors, an author several books |
-| copy              | **entity**                    | borrowed separately, has its own condition             |
-| reader            | **entity**                    | many properties, many loans                            |
-| loan              | **entity** (an event)         | has its own data: when taken, when returned            |
-| late fee          | **computed value**            | can be calculated from the dates, no need to store it  |
+| Noun              | Entity or property?    | Why?                                                     |
+| ----------------- | ---------------------- | -------------------------------------------------------- |
+| book              | **entity**             | many properties, many other things relate to it          |
+| title, ISBN, year | properties of the book | not interesting on their own                             |
+| author            | **entity** (!)         | a book can have several authors, an author several books |
+| copy              | **entity**             | borrowed separately, has its own condition               |
+| reader            | **entity**             | many properties, many loans                              |
+| loan              | **entity** (an event)  | has its own data: when taken, when returned              |
+| late fee          | **computed value**     | can be calculated from the dates, no need to store it    |
 
 Note the last row: we usually don't store **computable** data, because if a date changes, the stored fee becomes outdated (contradiction!).
 
@@ -97,12 +97,12 @@ If you can't answer a question, something is missing from the model.
 
 Several correct models can be given for the same description. Some decisions where debate is legitimate:
 
-| Question                                  | Option A                              | Option B                                 | When which?                                          |
-| ----------------------------------------- | ------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
-| Author: separate table or text?           | `authors` table + junction table      | `author` text field in the book          | if you need to search/filter by author → A; if only displayed → B is enough |
-| Key: natural or surrogate?                | `isbn` is the key                     | `book_id SERIAL`, ISBN only unique       | old books have no ISBN → B is safer                  |
-| Address: one field or several?            | `address TEXT`                        | `zip`, `city`, `street`, `number`        | if you need statistics by city → B                   |
-| Late fee: stored or computed?             | `fee` column                          | computed in the query                    | if the fee rate may change and the old fee matters → stored |
+| Question                        | Option A                         | Option B                           | When which?                                                                 |
+| ------------------------------- | -------------------------------- | ---------------------------------- | --------------------------------------------------------------------------- |
+| Author: separate table or text? | `authors` table + junction table | `author` text field in the book    | if you need to search/filter by author → A; if only displayed → B is enough |
+| Key: natural or surrogate?      | `isbn` is the key                | `book_id SERIAL`, ISBN only unique | old books have no ISBN → B is safer                                         |
+| Address: one field or several?  | `address TEXT`                   | `zip`, `city`, `street`, `number`  | if you need statistics by city → B                                          |
+| Late fee: stored or computed?   | `fee` column                     | computed in the query              | if the fee rate may change and the old fee matters → stored                 |
 
 The last row is interesting: if the library charges 100 HUF per day from tomorrow, **past** late returns still use the old 50 HUF. In that case we **save** the computed fee at return time, because it is now a closed, historical fact. So "don't store computed values" is not dogma – the point is to decide **consciously**.
 
@@ -170,16 +170,16 @@ Click **Edit**, change `'Anna'` to `'Annabella'`, and run it: PostgreSQL rejects
 
 ## Type cheat sheet
 
-| Data                     | Good type              | Bad choice               |
-| ------------------------ | ---------------------- | ------------------------ |
-| price, balance           | `NUMERIC(12, 2)`       | `REAL`, `FLOAT`          |
-| quantity, age            | `INT` (+ `CHECK >= 0`) | `VARCHAR`                |
-| date                     | `DATE`                 | `VARCHAR`                |
-| point in time            | `TIMESTAMP`            | two separate strings     |
-| phone number, postcode   | `VARCHAR`              | `INT`                    |
-| yes/no                   | `BOOLEAN`              | `CHAR(1)` 'Y'/'N'        |
-| ISBN                     | `CHAR(13)`             | `BIGINT`                 |
-| long description         | `TEXT`                 | `VARCHAR(50)`            |
+| Data                   | Good type              | Bad choice           |
+| ---------------------- | ---------------------- | -------------------- |
+| price, balance         | `NUMERIC(12, 2)`       | `REAL`, `FLOAT`      |
+| quantity, age          | `INT` (+ `CHECK >= 0`) | `VARCHAR`            |
+| date                   | `DATE`                 | `VARCHAR`            |
+| point in time          | `TIMESTAMP`            | two separate strings |
+| phone number, postcode | `VARCHAR`              | `INT`                |
+| yes/no                 | `BOOLEAN`              | `CHAR(1)` 'Y'/'N'    |
+| ISBN                   | `CHAR(13)`             | `BIGINT`             |
+| long description       | `TEXT`                 | `VARCHAR(50)`        |
 
 ## Summary
 

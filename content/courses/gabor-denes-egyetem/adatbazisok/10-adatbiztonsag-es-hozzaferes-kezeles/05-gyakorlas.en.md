@@ -1,7 +1,7 @@
 ---
 title: Practice – Data Security
 summary: Review questions about authentication, privileges, views and row-level security, then implementing a complete privilege plan in SQL: a group, a user, a column-level privilege and revoking an overly generous privilege.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -114,3 +114,111 @@ SELECT (SELECT rolcanlogin FROM pg_roles WHERE oid = r.lecturer)              AS
          OR has_table_privilege(r.intern, 'students', 'DELETE')               AS intern_write
 FROM r;
 ```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+Privileges can be checked with the `has_table_privilege` and `has_column_privilege` functions: they give a true/false answer to whether a role may perform the given operation.
+
+**1.** **Read only.** Create the `reader` role and give it **read-only** rights on the `students` table! Then query whether it can read (`SELECT`) and modify (`UPDATE`) the table.
+
+```sql starter
+CREATE ROLE reader;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE ROLE reader;
+GRANT SELECT ON students TO reader;
+
+SELECT has_table_privilege('reader', 'students', 'SELECT') AS can_read,
+       has_table_privilege('reader', 'students', 'UPDATE') AS can_modify;
+```
+
+</details>
+
+**2.** **A column-level right.** The lecturer (`lecturer` role) may read the enrollments but may only modify **the `grade` column**. Grant the rights, then check: may they modify `grade`, and `neptun`?
+
+```sql starter
+CREATE ROLE lecturer;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE ROLE lecturer;
+GRANT SELECT ON enrollments TO lecturer;
+GRANT UPDATE (grade) ON enrollments TO lecturer;    -- only this one column
+
+SELECT has_column_privilege('lecturer', 'enrollments', 'grade', 'UPDATE')  AS can_write_grade,
+       has_column_privilege('lecturer', 'enrollments', 'neptun', 'UPDATE') AS can_write_neptun;
+```
+
+</details>
+
+**3.** **Revoking a right.** The intern got too many rights. Revoke their **delete** (`DELETE`) right on the `courses` table, keep the rest! Check the `SELECT`, `INSERT` and `DELETE` rights.
+
+```sql starter
+CREATE ROLE intern;
+GRANT ALL ON courses TO intern;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE ROLE intern;
+GRANT ALL ON courses TO intern;
+REVOKE DELETE ON courses FROM intern;
+
+SELECT has_table_privilege('intern', 'courses', 'SELECT') AS can_read,
+       has_table_privilege('intern', 'courses', 'INSERT') AS can_insert,
+       has_table_privilege('intern', 'courses', 'DELETE') AS can_delete;
+```
+
+</details>
+
+**4.** **Protection with a view.** The porter may only see students' names and majors, not their birth date or city. Create the `name_list` view (`name`, `major`), grant read rights on it to the `porter` role – but not on the `students` table itself! Check both.
+
+```sql starter
+CREATE ROLE porter;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE ROLE porter;
+CREATE VIEW name_list AS SELECT name, major FROM students;
+GRANT SELECT ON name_list TO porter;                -- yes on the view, no on the table
+
+SELECT has_table_privilege('porter', 'name_list', 'SELECT') AS sees_view,
+       has_table_privilege('porter', 'students', 'SELECT')  AS sees_table;
+```
+
+</details>
+
+**5.** **A group role.** Create a `department` group role with read rights on the `courses` table, and a `kovacs` user who is a **member** of the group. Check that `kovacs` can read the courses through the group!
+
+```sql starter
+CREATE ROLE department;
+CREATE ROLE kovacs;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE ROLE department;
+CREATE ROLE kovacs;
+GRANT SELECT ON courses TO department;
+GRANT department TO kovacs;                          -- kovacs inherits the group's rights
+
+SELECT has_table_privilege('kovacs', 'courses', 'SELECT') AS can_read;
+```
+
+</details>

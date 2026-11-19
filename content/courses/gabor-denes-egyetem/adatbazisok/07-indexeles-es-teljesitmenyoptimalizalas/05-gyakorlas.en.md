@@ -1,7 +1,7 @@
 ---
 title: Practice – Indexing
 summary: Review questions and an indexing case study: which query needs which index, and which condition can't use an index.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -88,3 +88,134 @@ The web shop's developers collected the following queries. The `orders` table cu
 - Index Scan
 ! For a small table a full scan is cheaper.
 ```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+The exercises run on the webshop sample database (5,000 customers, 20,000 orders, 40,000 items), so indexes really matter here. You can put `EXPLAIN` in front of any query to see what the planner chooses.
+
+<details>
+<summary>Creating the sample database (SQL)</summary>
+
+<!-- sql-setup: webshop -->
+
+</details>
+
+**1.** **A simple index.** On the product page we often filter by category. Create an index on the `products.category` column, then query the products of the `peripheral` category (name, price) by price!
+
+```sql starter
+SELECT name, price
+FROM products
+WHERE category = 'peripheral'
+ORDER BY price;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE INDEX idx_products_category ON products (category);
+
+SELECT name, price
+FROM products
+WHERE category = 'peripheral'
+ORDER BY price;
+```
+
+</details>
+
+```sql test
+SELECT (SELECT COUNT(*) FROM pg_indexes WHERE tablename = 'products' AND indexdef LIKE '%(category)%') AS has_index,
+       (SELECT string_agg(name, ', ' ORDER BY price) FROM products WHERE category = 'peripheral') AS products;
+```
+
+**2.** **A partial index.** The warehouse only looks up orders that are **being shipped**, by date; done and cancelled orders aren't needed in the index. Create a **partial index** on `orders (order_date)` with the condition `WHERE status = 'shipping'`!
+
+```sql starter
+CREATE INDEX idx_shipping ON orders (order_date);
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE INDEX idx_shipping ON orders (order_date)
+WHERE status = 'shipping';              -- only these rows go into the index → smaller, faster
+```
+
+</details>
+
+```sql test
+SELECT COUNT(*) AS partial_index
+FROM pg_indexes
+WHERE tablename = 'orders' AND indexdef LIKE '%(order_date) WHERE%shipping%';
+```
+
+**3.** **An expression index.** At login the user may type their e-mail address any way (lower or upper case), so the search has the form `LOWER(email) = ...`. A plain `email` index can't serve that. Create an index on the **expression** `LOWER(email)`, then find the ID and name of the customer with the address `Customer42@Example.com`!
+
+```sql starter
+SELECT customer_id, name
+FROM customers
+WHERE LOWER(email) = LOWER('Customer42@Example.com');
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE INDEX idx_customers_email_lower ON customers (LOWER(email));   -- exactly the searched expression
+
+SELECT customer_id, name
+FROM customers
+WHERE LOWER(email) = LOWER('Customer42@Example.com');
+```
+
+</details>
+
+```sql test
+SELECT (SELECT COUNT(*) FROM pg_indexes WHERE tablename = 'customers' AND indexdef LIKE '%lower%') AS expression_index,
+       (SELECT name FROM customers WHERE LOWER(email) = 'customer42@example.com') AS name;
+```
+
+**4.** **The "latest 5" query.** The "My orders" page shows the **5 newest** orders of customer 42 (ID, date, status), newest first; for the same date the larger ID comes first. (A composite `(customer_id, order_date)` index would serve exactly this, without sorting.)
+
+```sql starter
+SELECT order_id, order_date, status
+FROM orders
+WHERE customer_id = 42;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT order_id, order_date, status
+FROM orders
+WHERE customer_id = 42
+ORDER BY order_date DESC, order_id DESC
+LIMIT 5;
+```
+
+</details>
+
+**5.** **Choosing an index with numbers.** What is the **selectivity**? Compute what percentage (rounded to 1 decimal) of orders are `cancelled`, `shipping` and `done`! (The smaller the percentage, the more an index search pays off.) Sorted by status.
+
+```sql starter
+SELECT status, COUNT(*)
+FROM orders
+GROUP BY status;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT status,
+       ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM orders), 1) AS percent
+FROM orders
+GROUP BY status
+ORDER BY status;
+```
+
+</details>

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – biztonság és adatvédelem
 summary: Ellenőrző kérdések az SQL-befecskendezésről, a titkosításról, a jelszavakról és a GDPR-ról, majd egy biztonsági átvilágítás: öt kódrészlet és helyzet, amelyekben meg kell találnod a hibát és a jó megoldást.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -81,3 +81,123 @@ Egy webshop kódját és működését vizsgálod. Mindegyik helyzetnél válasz
 - a vásárlót inaktívnak jelölni, de minden adatát megtartani
 ! A törléshez való jog minden olyan adatra vonatkozik, amelyet nem kötelező megőrizni.
 ```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+<details>
+<summary>A mintaadatbázis létrehozása (SQL)</summary>
+
+<!-- sql-setup: egyetem -->
+
+</details>
+
+**1.** **Maszkolás.** A tanulmányi osztály kimutatásában a Neptun-kódnak csak az **első két karaktere** látszhat, a többi helyén `****` áll (pl. `AB****`). Írd ki a maszkolt kódot és a nevet, név szerint!
+
+```sql starter
+SELECT neptun, nev
+FROM hallgatok
+ORDER BY nev;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT LEFT(neptun, 2) || '****' AS neptun, nev
+FROM hallgatok
+ORDER BY nev;
+```
+
+</details>
+
+**2.** **Álnevesítés.** Egy kutató a jegyeket elemzi, de nem tudhatja meg, kié a jegy. Cseréld a Neptun-kódot egy **álnévre**: a kód `md5` lenyomatának első 8 karakterére! (Álnév, tárgykód, jegy; csak a meglévő jegyek, álnév és tárgykód szerint rendezve.) Ugyanahhoz a hallgatóhoz mindig ugyanaz az álnév tartozik, így az elemzés működik.
+
+```sql starter
+SELECT neptun, kod, jegy
+FROM jelentkezesek;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT LEFT(md5(neptun), 8) AS alnev, kod, jegy
+FROM jelentkezesek
+WHERE jegy IS NOT NULL
+ORDER BY alnev, kod;
+```
+
+</details>
+
+**3.** **k-anonimitás ellenőrzése.** Ha egy (szak, város) kombinációhoz csak **egyetlen** hallgató tartozik, az „anonim” adatból is azonosítható. Keresd meg ezeket a kombinációkat (szak, város, létszám)! Az ismeretlen várost is vedd külön csoportnak. Szak, majd város szerint rendezve.
+
+```sql starter
+SELECT szak, varos
+FROM hallgatok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT szak, varos, COUNT(*) AS letszam
+FROM hallgatok
+GROUP BY szak, varos
+HAVING COUNT(*) < 2                -- k = 2: ennél kisebb csoport már kockázatos
+ORDER BY szak, varos;
+```
+
+</details>
+
+**4.** **Paraméter, nem összefűzés.** Írj egy `letszam(v TEXT)` SQL-függvényt, amely megadja, hány hallgató van a `v` városból! Mivel a `v` **paraméterként** kerül a lekérdezésbe, egy SQL-befecskendezési kísérlet egyszerűen 0-t ad. Hívd meg `'Budapest'`-tel és a `Budapest' OR '1'='1` támadó szöveggel!
+
+```sql starter
+-- CREATE FUNCTION letszam(v TEXT) RETURNS BIGINT LANGUAGE sql AS $$ ... $$;
+SELECT COUNT(*) FROM hallgatok WHERE varos = 'Budapest';
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE FUNCTION letszam(v TEXT) RETURNS BIGINT LANGUAGE sql AS $$
+  SELECT COUNT(*) FROM hallgatok WHERE varos = v      -- v érték, sosem SQL-kód
+$$;
+
+SELECT letszam('Budapest') AS rendes,
+       letszam($t$Budapest' OR '1'='1$t$) AS tamadas;
+```
+
+</details>
+
+**5.** **Naplózás triggerrel.** Minden jegymódosítást naplózni kell: ki (Neptun), melyik tárgy, régi és új jegy. Hozd létre a `jegynaplo` táblát és egy `AFTER UPDATE` triggert, majd módosítsd Tóth Cili (`CDE345`) matekjegyét 2-ről **3**-ra, és kérdezd le a naplót!
+
+```sql starter
+CREATE TABLE jegynaplo (neptun CHAR(6), kod VARCHAR(6), regi INT, uj INT);
+-- trigger függvény + trigger, majd UPDATE
+SELECT * FROM jegynaplo;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE jegynaplo (neptun CHAR(6), kod VARCHAR(6), regi INT, uj INT);
+
+CREATE FUNCTION jegy_naplozas() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  INSERT INTO jegynaplo VALUES (NEW.neptun, NEW.kod, OLD.jegy, NEW.jegy);   -- OLD: előtte, NEW: utána
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER jegy_valtozas AFTER UPDATE OF jegy ON jelentkezesek
+FOR EACH ROW EXECUTE FUNCTION jegy_naplozas();
+
+UPDATE jelentkezesek SET jegy = 3 WHERE neptun = 'CDE345' AND kod = 'MAT';
+
+SELECT * FROM jegynaplo;
+```
+
+</details>

@@ -76,7 +76,7 @@ SELECT * FROM articles ORDER BY id;
 
 ## Pattern 3 – history table
 
-If you need to know not only *when* something changed but also **what it was before** (e.g. "what was the product's price last March?"), you need a **history table** with validity periods:
+If you need to know not only _when_ something changed but also **what it was before** (e.g. "what was the product's price last March?"), you need a **history table** with validity periods:
 
 ```sql run
 CREATE TABLE price_history (
@@ -103,10 +103,10 @@ This is the **"slowly changing dimension" (type 2)** pattern from data warehouse
 
 An order's status can only take a few values. Two good solutions:
 
-| Solution                                     | Advantage                                      | When?                                         |
-| -------------------------------------------- | ---------------------------------------------- | --------------------------------------------- |
-| `status TEXT CHECK (status IN ('new', 'paid', 'shipped'))` | simple, no JOIN                    | few, rarely changing values                   |
-| `status_id INT REFERENCES statuses`          | adding a value is a data change, not a schema change; extra data can be stored (name in two languages, order, colour) | many values, user-extensible list |
+| Solution                                                   | Advantage                                                                                                             | When?                             |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `status TEXT CHECK (status IN ('new', 'paid', 'shipped'))` | simple, no JOIN                                                                                                       | few, rarely changing values       |
+| `status_id INT REFERENCES statuses`                        | adding a value is a data change, not a schema change; extra data can be stored (name in two languages, order, colour) | many values, user-extensible list |
 
 The **bad** solution: free text without a constraint – sooner or later there'll be `'Paid'`, `'payed'` and `'PAID'` too.
 
@@ -156,16 +156,16 @@ A single `data` table with 120 columns, of which 10 are filled per row, because 
 
 ## Summary table
 
-| Situation                                        | Pattern                                            |
-| ------------------------------------------------ | -------------------------------------------------- |
-| delete, but keep                                 | soft delete + view + partial unique index          |
-| when was it created / modified?                  | `DEFAULT` + `BEFORE UPDATE` trigger                |
-| what was it like before?                         | history table with validity periods                |
-| few fixed values                                 | `CHECK (… IN (…))`                                 |
-| extensible value list                            | lookup table with a foreign key                    |
-| time of an event                                 | `TIMESTAMPTZ`                                      |
-| variable extra attributes                        | proper columns + JSONB (not EAV)                   |
-| data attached to several kinds of "parent"       | separate junction tables (not a polymorphic reference) |
+| Situation                                  | Pattern                                                |
+| ------------------------------------------ | ------------------------------------------------------ |
+| delete, but keep                           | soft delete + view + partial unique index              |
+| when was it created / modified?            | `DEFAULT` + `BEFORE UPDATE` trigger                    |
+| what was it like before?                   | history table with validity periods                    |
+| few fixed values                           | `CHECK (… IN (…))`                                     |
+| extensible value list                      | lookup table with a foreign key                        |
+| time of an event                           | `TIMESTAMPTZ`                                          |
+| variable extra attributes                  | proper columns + JSONB (not EAV)                       |
+| data attached to several kinds of "parent" | separate junction tables (not a polymorphic reference) |
 
 ## Summary
 

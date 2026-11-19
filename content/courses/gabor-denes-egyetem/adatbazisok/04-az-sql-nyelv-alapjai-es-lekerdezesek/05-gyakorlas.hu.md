@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – SQL lekérdezések
 summary: Ellenőrző kérdések és lekérdezés-feladatok a szűrésről, rendezésről, lapozásról, összesítésről és csoportosításról.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -107,6 +107,126 @@ FROM hallgatok
 WHERE varos IS NOT NULL
 GROUP BY varos
 ORDER BY letszam DESC, varos;
+```
+
+</details>
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+**1.** **Átlag csoportonként, szűrt csoportokkal.** Tárgyanként (`kod`) a jegyek **átlaga két tizedesre kerekítve** – de csak azoknál a tárgyaknál, ahol **legalább 2 jegy** van. Az átlag szerint csökkenően, egyenlőségnél kód szerint rendezve.
+
+```sql starter
+SELECT kod, AVG(jegy)
+FROM jelentkezesek
+GROUP BY kod;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT kod, ROUND(AVG(jegy), 2) AS atlag
+FROM jelentkezesek
+GROUP BY kod
+HAVING COUNT(jegy) >= 2          -- a csoportokat a HAVING szűri (a NULL jegy nem számít)
+ORDER BY atlag DESC, kod;
+```
+
+</details>
+
+**2.** **Lapozás.** A tárgyakat kredit szerint csökkenően, azon belül név szerint rendezzük, oldalanként **2** tárggyal. Kérd le a **2. oldalt** (kód, név, kredit)!
+
+```sql starter
+SELECT kod, nev, kredit
+FROM targyak
+ORDER BY kredit DESC, nev;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT kod, nev, kredit
+FROM targyak
+ORDER BY kredit DESC, nev
+LIMIT 2 OFFSET 2;                -- az első 2 sort átugorjuk
+```
+
+</details>
+
+**3.** **Hiányzó adatok.** Kiknek **ismeretlen a városa vagy a születési dátuma**? (Név, város, születési dátum, név szerint.)
+
+```sql starter
+SELECT nev, varos, szuletett
+FROM hallgatok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT nev, varos, szuletett
+FROM hallgatok
+WHERE varos IS NULL OR szuletett IS NULL    -- NULL-t csak IS NULL-lal lehet keresni
+ORDER BY nev;
+```
+
+</details>
+
+**4.** **Csoportosítás több összesítővel.** Szakonként a hallgatók **száma**, valamint a **legkisebb és legnagyobb félév**. Szak szerint rendezve.
+
+```sql starter
+SELECT szak
+FROM hallgatok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT szak, COUNT(*) AS letszam, MIN(felev) AS min_felev, MAX(felev) AS max_felev
+FROM hallgatok
+GROUP BY szak
+ORDER BY szak;
+```
+
+</details>
+
+**5.** **Tartományok.** A **2005-ben** született hallgatók neve és születési dátuma, születés szerint sorban. (Kétféleképpen is megoldható: `BETWEEN`-nel vagy két összehasonlítással.)
+
+```sql starter
+SELECT nev, szuletett
+FROM hallgatok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT nev, szuletett
+FROM hallgatok
+WHERE szuletett BETWEEN DATE '2005-01-01' AND DATE '2005-12-31'
+ORDER BY szuletett;
+```
+
+</details>
+
+**6.** **Számított oszlop.** Minden tárgyhoz írd ki, hány **tanórát** jelent (1 kredit ≈ 30 óra hallgatói munka): kód, kredit, `oraszam`. Az óraszám szerint csökkenően, azon belül kód szerint.
+
+```sql starter
+SELECT kod, kredit
+FROM targyak;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT kod, kredit, kredit * 30 AS oraszam
+FROM targyak
+ORDER BY oraszam DESC, kod;
 ```
 
 </details>

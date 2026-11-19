@@ -18,14 +18,14 @@ minutes: 40
 
 ### Egyedek és tulajdonságok
 
-| Egyed       | Tulajdonságok                                      | Megjegyzés                                     |
-| ----------- | -------------------------------------------------- | ---------------------------------------------- |
-| Vásárló     | **vasarlo_id**, nev, email                         | a „több szállítási cím” többértékű!            |
-| Cím         | **cim_id**, irsz, varos, utca                      | a többértékű tulajdonságból lett egyed         |
-| Kategória   | **kategoria_id**, nev                              | önmagával kapcsolatban áll (alkategória)       |
-| Termék      | **termek_id**, nev, aktualis_ar                    |                                                |
-| Rendelés    | **rendeles_id**, datum, statusz                    | a végösszeg **származtatott** (tételekből)     |
-| Értékelés   | **vasarlo + termek**, csillag, szoveg              | kapcsolat saját tulajdonságokkal               |
+| Egyed     | Tulajdonságok                         | Megjegyzés                                 |
+| --------- | ------------------------------------- | ------------------------------------------ |
+| Vásárló   | **vasarlo_id**, nev, email            | a „több szállítási cím” többértékű!        |
+| Cím       | **cim_id**, irsz, varos, utca         | a többértékű tulajdonságból lett egyed     |
+| Kategória | **kategoria_id**, nev                 | önmagával kapcsolatban áll (alkategória)   |
+| Termék    | **termek_id**, nev, aktualis_ar       |                                            |
+| Rendelés  | **rendeles_id**, datum, statusz       | a végösszeg **származtatott** (tételekből) |
+| Értékelés | **vasarlo + termek**, csillag, szoveg | kapcsolat saját tulajdonságokkal           |
 
 ### Kapcsolatok
 
@@ -122,11 +122,11 @@ Két kérdést kell megválaszolni:
 
 ### Három leképezési stratégia
 
-| Stratégia                      | Táblák                                          | Előny                                         | Hátrány                                         |
-| ------------------------------ | ----------------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
-| **1. Egy közös tábla**         | `szemelyek(id, nev, email, tipus, szak, felev, tanszek, beosztas)` | egyszerű, nincs JOIN               | sok NULL; nehéz kikényszeríteni, hogy a hallgatónak legyen szakja |
-| **2. Táblánként az altípus**   | `hallgatok(id, nev, email, szak, felev)`, `oktatok(id, nev, email, tanszek, beosztas)` | nincs NULL | a közös oszlopok ismétlődnek; „minden személy” lekérdezéséhez UNION kell; átfedésnél duplikáció |
-| **3. Szülő + gyerek táblák**   | `szemelyek(id, nev, email)`, `hallgatok(id → szemelyek, szak, felev)`, `oktatok(id → szemelyek, tanszek, beosztas)` | tiszta, nincs ismétlődés, átfedés is megy | az altípus adataihoz JOIN kell |
+| Stratégia                    | Táblák                                                                                                              | Előny                                     | Hátrány                                                                                         |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **1. Egy közös tábla**       | `szemelyek(id, nev, email, tipus, szak, felev, tanszek, beosztas)`                                                  | egyszerű, nincs JOIN                      | sok NULL; nehéz kikényszeríteni, hogy a hallgatónak legyen szakja                               |
+| **2. Táblánként az altípus** | `hallgatok(id, nev, email, szak, felev)`, `oktatok(id, nev, email, tanszek, beosztas)`                              | nincs NULL                                | a közös oszlopok ismétlődnek; „minden személy” lekérdezéséhez UNION kell; átfedésnél duplikáció |
+| **3. Szülő + gyerek táblák** | `szemelyek(id, nev, email)`, `hallgatok(id → szemelyek, szak, felev)`, `oktatok(id → szemelyek, tanszek, beosztas)` | tiszta, nincs ismétlődés, átfedés is megy | az altípus adataihoz JOIN kell                                                                  |
 
 Melyik a jó? **Attól függ** – és ez nem kibúvó:
 

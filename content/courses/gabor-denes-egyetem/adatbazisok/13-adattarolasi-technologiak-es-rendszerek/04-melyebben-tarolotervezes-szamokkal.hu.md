@@ -41,12 +41,12 @@ Szükséges hasznos kapacitás ≈ 1968 · 1,4 / 0,75 ≈ **3700 GB**, kerekítv
 
 Egy **IOPS** egy másodpercenkénti írási vagy olvasási művelet. A RAID-szintek az **írásokat megsokszorozzák**, mert a redundanciát is frissíteni kell:
 
-| RAID   | Egy logikai írásból hány fizikai lesz? | Miért?                                       |
-| ------ | -------------------------------------- | -------------------------------------------- |
-| RAID 0 | 1                                      | nincs redundancia                            |
-| RAID 1 / 10 | 2                                 | mindkét tükörre írni kell                    |
-| RAID 5 | 4                                      | régi adat + régi paritás olvasása, új adat + új paritás írása |
-| RAID 6 | 6                                      | ugyanez két paritással                       |
+| RAID        | Egy logikai írásból hány fizikai lesz? | Miért?                                                        |
+| ----------- | -------------------------------------- | ------------------------------------------------------------- |
+| RAID 0      | 1                                      | nincs redundancia                                             |
+| RAID 1 / 10 | 2                                      | mindkét tükörre írni kell                                     |
+| RAID 5      | 4                                      | régi adat + régi paritás olvasása, új adat + új paritás írása |
+| RAID 6      | 6                                      | ugyanez két paritással                                        |
 
 A lemezekre jutó fizikai terhelés: **olvasás + írás · büntetés**.
 
@@ -125,11 +125,11 @@ A visszaállítás jellemzően **lassabb**, mint a mentés: a fájlokat vissza k
 
 ## 5. lépés – RPO és RTO → megoldás
 
-| Cél                     | Csak éjjeli mentés | Mentés + WAL-archiválás (PITR) | Szinkron replika automatikus átállással |
-| ----------------------- | ------------------ | ------------------------------ | --------------------------------------- |
-| RPO (max. adatvesztés)  | akár 24 óra        | néhány perc                    | ≈ 0                                     |
-| RTO (helyreállási idő)  | órák               | órák (visszaállítás + lejátszás) | másodpercek–percek                    |
-| Költség                 | alacsony           | közepes                        | magas (második szerver, hálózat)        |
+| Cél                    | Csak éjjeli mentés | Mentés + WAL-archiválás (PITR)   | Szinkron replika automatikus átállással |
+| ---------------------- | ------------------ | -------------------------------- | --------------------------------------- |
+| RPO (max. adatvesztés) | akár 24 óra        | néhány perc                      | ≈ 0                                     |
+| RTO (helyreállási idő) | órák               | órák (visszaállítás + lejátszás) | másodpercek–percek                      |
+| Költség                | alacsony           | közepes                          | magas (második szerver, hálózat)        |
 
 A mi esetünk: RPO = 15 perc, RTO = 1 óra. A PITR teljesíti az RPO-t, de a visszaállítás 1,5 óra – az RTO-t nem. Megoldás: **replika** (egy második szerver, amely folyamatosan követi az elsőt) a gyors átálláshoz **és** mentés + WAL-archiválás a logikai hibák (pl. véletlen `DELETE`) ellen – mert a replika a hibás törlést is azonnal lemásolja!
 

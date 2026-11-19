@@ -120,12 +120,12 @@ PostgreSQL automatically creates an index for the **primary key** and **UNIQUE**
 
 An index is sorted by the column's **original values**. If you apply a **function** to the column in `WHERE`, the index becomes unusable – the DBMS has to compute the function for every row.
 
-| Not search-friendly ✘                           | Search-friendly ✔                                                       |
-| ----------------------------------------------- | ----------------------------------------------------------------------- |
-| `WHERE EXTRACT(YEAR FROM order_date) = 2024`    | `WHERE order_date >= '2024-01-01' AND order_date < '2025-01-01'`        |
-| `WHERE price * 1.27 > 10000`                    | `WHERE price > 10000 / 1.27`                                            |
-| `WHERE LOWER(email) = 'a@b.com'`                | expression index: `CREATE INDEX … ON customers (LOWER(email))`          |
-| `WHERE name LIKE '%anna'` (start unknown)       | `WHERE name LIKE 'Anna%'` (start known)                                 |
+| Not search-friendly ✘                        | Search-friendly ✔                                                |
+| -------------------------------------------- | ---------------------------------------------------------------- |
+| `WHERE EXTRACT(YEAR FROM order_date) = 2024` | `WHERE order_date >= '2024-01-01' AND order_date < '2025-01-01'` |
+| `WHERE price * 1.27 > 10000`                 | `WHERE price > 10000 / 1.27`                                     |
+| `WHERE LOWER(email) = 'a@b.com'`             | expression index: `CREATE INDEX … ON customers (LOWER(email))`   |
+| `WHERE name LIKE '%anna'` (start unknown)    | `WHERE name LIKE 'Anna%'` (start known)                          |
 
 ```sql run
 CREATE INDEX idx_orders_date ON orders (order_date);

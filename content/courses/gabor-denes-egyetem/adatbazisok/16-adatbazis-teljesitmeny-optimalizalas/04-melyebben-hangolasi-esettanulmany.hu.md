@@ -24,12 +24,12 @@ minutes: 45
 
 Egy webshop üzemeltetője panaszkodik, hogy „lassú az oldal”. A naplóból (PostgreSQL-ben a `pg_stat_statements` bővítmény gyűjti) ezt látjuk:
 
-| Lekérdezés                   | Egy futás | Futások naponta | Összesen naponta |
-| ---------------------------- | --------- | --------------- | ---------------- |
-| A) havi riport               | 40 s      | 1               | 40 s             |
-| B) termékoldal               | 30 ms     | 200 000         | **6000 s**       |
-| C) „Rendeléseim” oldal       | 120 ms    | 20 000          | 2400 s           |
-| D) keresés                   | 800 ms    | 2 000           | 1600 s           |
+| Lekérdezés             | Egy futás | Futások naponta | Összesen naponta |
+| ---------------------- | --------- | --------------- | ---------------- |
+| A) havi riport         | 40 s      | 1               | 40 s             |
+| B) termékoldal         | 30 ms     | 200 000         | **6000 s**       |
+| C) „Rendeléseim” oldal | 120 ms    | 20 000          | 2400 s           |
+| D) keresés             | 800 ms    | 2 000           | 1600 s           |
 
 A leglassabb (A) ránézésre a fő gonosz, de naponta csak 40 másodpercet visz el. A **B** lekérdezés egyenként gyors, de a sokszori futtatás miatt a teljes terhelés legnagyobb részét adja: ha 30 ms-ról 10 ms-ra gyorsítjuk, naponta **4000 másodpercet** spórolunk – százszor többet, mint ha az A-t nullára vinnénk.
 
@@ -146,7 +146,7 @@ Az optimalizáló ezt **semi-join**-ként hajtja végre. **Árulkodó jel:** ha 
 
 1. **Mérj és rangsorolj:** gyakoriság × időtartam (`pg_stat_statements`, lassú-lekérdezés napló).
 2. **Nézd meg a tervet:** `EXPLAIN (ANALYZE, BUFFERS)`. Keresd a legdrágább csomópontot, a `Seq Scan`-t nagy táblán, a `SubPlan`-t, a nagy `Sort`-ot, a becsült és valódi sorszám nagy eltérését.
-3. **Egyszerre egy változtatás:** index *vagy* átírás *vagy* statisztika-frissítés (`ANALYZE`) – különben nem tudod, mi segített.
+3. **Egyszerre egy változtatás:** index _vagy_ átírás _vagy_ statisztika-frissítés (`ANALYZE`) – különben nem tudod, mi segített.
 4. **Mérj újra** ugyanazokkal az adatokkal, többször (az első futás a hideg puffer miatt lassabb).
 5. **Ellenőrizd az eredményt:** az átírt lekérdezés **ugyanazt** adja-e? (Egy gyors, de hibás lekérdezés rosszabb a lassúnál.)
 6. **Dokumentáld:** miért van ott az index, mit javított.

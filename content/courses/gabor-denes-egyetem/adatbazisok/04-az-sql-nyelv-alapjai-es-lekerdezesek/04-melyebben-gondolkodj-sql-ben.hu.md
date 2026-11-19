@@ -138,15 +138,15 @@ SELECT 10 / NULLIF(0, 0) AS biztonsagos_osztas;
 
 ## 5. Szövegfüggvények
 
-| Függvény                    | Mit csinál?                      | Példa → eredmény                       |
-| --------------------------- | -------------------------------- | -------------------------------------- |
-| `UPPER(s)`, `LOWER(s)`      | nagy-, kisbetűsít                | `UPPER('anna')` → `ANNA`               |
-| `LENGTH(s)`                 | hossz karakterben                | `LENGTH('Béla')` → 4                   |
-| `TRIM(s)`                   | szóközt vág le a két végéről     | `TRIM('  x ')` → `x`                   |
-| `SUBSTRING(s FROM i FOR n)` | részszöveg                       | `SUBSTRING('ABC123' FROM 4 FOR 3)` → `123` |
-| `s1 \|\| s2`                | összefűzés                       | `'Kiss' \|\| ' ' \|\| 'Anna'`           |
-| `SPLIT_PART(s, sep, n)`     | n-edik darab elválasztó szerint  | `SPLIT_PART('Kiss Anna', ' ', 2)` → `Anna` |
-| `REPLACE(s, mit, mire)`     | csere                            | `REPLACE('a-b', '-', '/')` → `a/b`     |
+| Függvény                    | Mit csinál?                     | Példa → eredmény                           |
+| --------------------------- | ------------------------------- | ------------------------------------------ |
+| `UPPER(s)`, `LOWER(s)`      | nagy-, kisbetűsít               | `UPPER('anna')` → `ANNA`                   |
+| `LENGTH(s)`                 | hossz karakterben               | `LENGTH('Béla')` → 4                       |
+| `TRIM(s)`                   | szóközt vág le a két végéről    | `TRIM('  x ')` → `x`                       |
+| `SUBSTRING(s FROM i FOR n)` | részszöveg                      | `SUBSTRING('ABC123' FROM 4 FOR 3)` → `123` |
+| `s1 \|\| s2`                | összefűzés                      | `'Kiss' \|\| ' ' \|\| 'Anna'`              |
+| `SPLIT_PART(s, sep, n)`     | n-edik darab elválasztó szerint | `SPLIT_PART('Kiss Anna', ' ', 2)` → `Anna` |
+| `REPLACE(s, mit, mire)`     | csere                           | `REPLACE('a-b', '-', '/')` → `a/b`         |
 
 ```sql run
 SELECT nev,

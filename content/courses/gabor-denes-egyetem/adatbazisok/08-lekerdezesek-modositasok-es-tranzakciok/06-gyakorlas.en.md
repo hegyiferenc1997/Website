@@ -1,7 +1,7 @@
 ---
 title: Practice – Queries, Modifications, Transactions
 summary: Review questions, practice exercises on joins, subqueries and modifications, and a summary reporting exercise.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -109,6 +109,132 @@ FROM courses c
 LEFT JOIN enrollments e ON e.code = c.code
 GROUP BY c.code, c.name
 ORDER BY c.name;
+```
+
+</details>
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+**1.** **Those left out.** Which student **hasn't enrolled in any course**? (Name.) Solve it with `NOT EXISTS` or with `LEFT JOIN … IS NULL`!
+
+```sql starter
+SELECT name FROM students;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT s.name
+FROM students s
+LEFT JOIN enrollments e ON e.neptun = s.neptun
+WHERE e.neptun IS NULL;          -- no matching enrollment
+```
+
+</details>
+
+**2.** **A subquery with aggregation.** Whose **own average grade** is higher than **the average of all grades**? (Name, own average to two decimals, sorted by name.)
+
+```sql starter
+SELECT AVG(grade) FROM enrollments;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT s.name, ROUND(AVG(e.grade), 2) AS average
+FROM students s
+JOIN enrollments e ON e.neptun = s.neptun
+GROUP BY s.neptun, s.name
+HAVING AVG(e.grade) > (SELECT AVG(grade) FROM enrollments)   -- scalar subquery
+ORDER BY s.name;
+```
+
+</details>
+
+**3.** **CTE: the best in each course.** Per course, who got **the best grade**? (Course code, student name, grade; by code, then by name.) As a first step, compute the maximum per course in a `WITH` block!
+
+```sql starter
+WITH maxima AS (
+  SELECT code, MAX(grade) AS best
+  FROM enrollments
+  GROUP BY code
+)
+SELECT * FROM maxima;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+WITH maxima AS (
+  SELECT code, MAX(grade) AS best
+  FROM enrollments
+  GROUP BY code
+)
+SELECT e.code, s.name, e.grade
+FROM enrollments e
+JOIN maxima m ON m.code = e.code AND m.best = e.grade      -- only those reaching the maximum
+JOIN students s ON s.neptun = e.neptun
+ORDER BY e.code, s.name;
+```
+
+</details>
+
+**4.** **Modify and check.** Feri Kovacs (`FGH678`) passed Databases with a **4**. Enter his grade, then query the **average** of the `ADB` course to two decimals!
+
+```sql starter
+SELECT * FROM enrollments WHERE code = 'ADB';
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+UPDATE enrollments
+SET grade = 4
+WHERE neptun = 'FGH678' AND code = 'ADB';    -- without WHERE every row would be a 4!
+
+SELECT ROUND(AVG(grade), 2) AS average FROM enrollments WHERE code = 'ADB';
+```
+
+</details>
+
+**5.** **Bulk insert from a query.** Enrol every **first-semester** student in `OPR` (without a grade) – but don't try again for those already enrolled (`ON CONFLICT DO NOTHING`)! Then give the **number** of `OPR` enrollments.
+
+```sql starter
+SELECT neptun FROM students WHERE semester = 1;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+INSERT INTO enrollments (neptun, code)
+SELECT neptun, 'OPR' FROM students WHERE semester = 1
+ON CONFLICT DO NOTHING;                      -- skips on a conflict (already enrolled)
+
+SELECT COUNT(*) AS headcount FROM enrollments WHERE code = 'OPR';
+```
+
+</details>
+
+**6.** **Deleting with a condition.** Delete the enrollments that **don't have a grade yet** (NULL), then query how many enrollments are left!
+
+```sql starter
+SELECT * FROM enrollments WHERE grade IS NULL;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+DELETE FROM enrollments WHERE grade IS NULL;
+
+SELECT COUNT(*) AS remaining FROM enrollments;
 ```
 
 </details>

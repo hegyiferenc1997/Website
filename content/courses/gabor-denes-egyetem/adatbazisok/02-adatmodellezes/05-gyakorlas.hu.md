@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adatmodellezés
 summary: Ellenőrző kérdések és összefoglaló feladatlap a modellezési szintekről, a modellezés lépéseiről, az adattípusokról és a megszorításokról.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -83,4 +83,146 @@ Egy **kutyamenhely** szeretné nyilvántartani a kutyákat (név, fajta, szület
 - logikai
 + fizikai
 ! Konkrét adattípus = fizikai modell.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+**1.** **Típusok és megszorítások.** Hozd létre a `termek` táblát: `id` egész, elsődleges kulcs; `nev` legfeljebb 40 karakter, kötelező; `ar` pénzösszeg két tizedesjeggyel (`NUMERIC(10, 2)`), **nagyobb mint 0**; `keszlet` egész, kötelező, **alapértéke 0**. Az ellenőrzés néhány beszúrást próbál ki.
+
+```sql starter
+CREATE TABLE termek (
+  id INT
+);
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE termek (
+  id      INT PRIMARY KEY,
+  nev     VARCHAR(40) NOT NULL,
+  ar      NUMERIC(10, 2) CHECK (ar > 0),
+  keszlet INT NOT NULL DEFAULT 0          -- ha nem adjuk meg, 0 lesz
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION probal(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'sikerült';
+EXCEPTION WHEN others THEN
+  RETURN 'elutasítva';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE eredmeny (sorszam INT, eset TEXT, eredmeny TEXT);
+INSERT INTO eredmeny VALUES (1, 'helyes sor', probal($q$INSERT INTO termek (id, nev, ar) VALUES (1, 'Egér', 4990)$q$));
+INSERT INTO eredmeny VALUES (2, '0 Ft-os ár', probal($q$INSERT INTO termek (id, nev, ar) VALUES (2, 'Ingyen', 0)$q$));
+INSERT INTO eredmeny VALUES (3, 'név nélkül', probal($q$INSERT INTO termek (id, nev, ar) VALUES (3, NULL, 100)$q$));
+INSERT INTO eredmeny VALUES (4, 'ismétlődő id', probal($q$INSERT INTO termek (id, nev, ar) VALUES (1, 'Másik', 100)$q$));
+INSERT INTO eredmeny SELECT 5, 'alapértelmezett készlet', keszlet::TEXT FROM termek WHERE id = 1;
+SELECT * FROM eredmeny ORDER BY sorszam;
+```
+
+**2.** **1:N kapcsolat idegen kulccsal.** Egy cégnél minden dolgozó pontosan egy osztályhoz tartozik. Hozd létre az `osztalyok` (`id` kulcs, `nev` kötelező) és a `dolgozok` (`id` kulcs, `nev` kötelező, `osztaly_id` **kötelező, idegen kulcs**) táblát! Az ellenőrzés kipróbálja, hogy nem létező osztályhoz nem lehet dolgozót felvenni.
+
+```sql starter
+CREATE TABLE osztalyok (
+  id INT PRIMARY KEY
+);
+CREATE TABLE dolgozok (
+  id INT PRIMARY KEY
+);
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE osztalyok (
+  id  INT PRIMARY KEY,
+  nev VARCHAR(40) NOT NULL
+);
+CREATE TABLE dolgozok (
+  id         INT PRIMARY KEY,
+  nev        VARCHAR(40) NOT NULL,
+  osztaly_id INT NOT NULL REFERENCES osztalyok (id)   -- az „N” oldalon áll az idegen kulcs
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION probal(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'sikerült';
+EXCEPTION WHEN others THEN
+  RETURN 'elutasítva';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE eredmeny (sorszam INT, eset TEXT, eredmeny TEXT);
+INSERT INTO eredmeny VALUES (1, 'új osztály', probal($q$INSERT INTO osztalyok VALUES (1, 'Fejlesztés')$q$));
+INSERT INTO eredmeny VALUES (2, 'dolgozó létező osztályba', probal($q$INSERT INTO dolgozok VALUES (1, 'Kiss Anna', 1)$q$));
+INSERT INTO eredmeny VALUES (3, 'dolgozó nem létező osztályba', probal($q$INSERT INTO dolgozok VALUES (2, 'Nagy Béla', 99)$q$));
+INSERT INTO eredmeny VALUES (4, 'dolgozó osztály nélkül', probal($q$INSERT INTO dolgozok VALUES (3, 'Tóth Cili', NULL)$q$));
+SELECT * FROM eredmeny ORDER BY sorszam;
+```
+
+**3.** **Miért jó a dátumtípus?** Számold ki SQL-lel, hány nap telik el **2025. március 1.** és **2025. december 24.** között! (Két `DATE` különbsége egész szám: a napok száma. Szövegként tárolt dátumokkal ez nem menne.)
+
+```sql starter
+SELECT '2025-12-24', '2025-03-01';
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT DATE '2025-12-24' - DATE '2025-03-01' AS napok;
+```
+
+</details>
+
+**4.** **Egyediség.** Hozd létre a `felhasznalok` táblát: `id` kulcs; `email` legfeljebb 80 karakter, **kötelező és egyedi**; `szuletett` dátum, amely **2010. január 1. előtti** (csak nagykorúak regisztrálhatnak – egyszerűsítve).
+
+```sql starter
+CREATE TABLE felhasznalok (
+  id INT PRIMARY KEY
+);
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE felhasznalok (
+  id        INT PRIMARY KEY,
+  email     VARCHAR(80) NOT NULL UNIQUE,
+  szuletett DATE CHECK (szuletett < DATE '2010-01-01')
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION probal(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'sikerült';
+EXCEPTION WHEN others THEN
+  RETURN 'elutasítva';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE eredmeny (sorszam INT, eset TEXT, eredmeny TEXT);
+INSERT INTO eredmeny VALUES (1, 'helyes sor', probal($q$INSERT INTO felhasznalok VALUES (1, 'anna@pelda.hu', '2004-05-06')$q$));
+INSERT INTO eredmeny VALUES (2, 'foglalt e-mail', probal($q$INSERT INTO felhasznalok VALUES (2, 'anna@pelda.hu', '2003-01-01')$q$));
+INSERT INTO eredmeny VALUES (3, 'túl fiatal', probal($q$INSERT INTO felhasznalok VALUES (3, 'kicsi@pelda.hu', '2015-01-01')$q$));
+INSERT INTO eredmeny VALUES (4, 'e-mail nélkül', probal($q$INSERT INTO felhasznalok VALUES (4, NULL, '2000-01-01')$q$));
+SELECT * FROM eredmeny ORDER BY sorszam;
 ```

@@ -68,12 +68,12 @@ Relációs tervezésnél **az adatból** indulsz ki (milyen egyedek és kapcsola
 
 ## Beágyazás vagy hivatkozás – számokkal
 
-| Kérdés                                        | Beágyazás felé billen                  | Hivatkozás felé billen                      |
-| --------------------------------------------- | -------------------------------------- | ------------------------------------------- |
-| Hány „gyerek” elem lehet?                     | kevés, korlátos (rendelés tételei: 1–50) | sok, korlátlan (egy termék értékelései: akár 100 000) |
-| Együtt olvasod őket?                          | szinte mindig                          | ritkán                                      |
-| Változik-e a gyerek önállóan?                 | nem (a tétel a rendeléssel együtt él)  | igen (a termék ára, leírása)                |
-| Megosztott más dokumentumokkal?               | nem                                    | igen (ugyanaz a termék sok rendelésben)     |
+| Kérdés                          | Beágyazás felé billen                    | Hivatkozás felé billen                                |
+| ------------------------------- | ---------------------------------------- | ----------------------------------------------------- |
+| Hány „gyerek” elem lehet?       | kevés, korlátos (rendelés tételei: 1–50) | sok, korlátlan (egy termék értékelései: akár 100 000) |
+| Együtt olvasod őket?            | szinte mindig                            | ritkán                                                |
+| Változik-e a gyerek önállóan?   | nem (a tétel a rendeléssel együtt él)    | igen (a termék ára, leírása)                          |
+| Megosztott más dokumentumokkal? | nem                                      | igen (ugyanaz a termék sok rendelésben)               |
 
 **Számpélda:** a MongoDB-ben egy dokumentum legfeljebb **16 MB** lehet. Ha egy népszerű termék értékeléseit beágyaznánk, és egy értékelés átlagosan 500 bájt, akkor 16 MB / 500 B ≈ **32 000 értékelés** után a dokumentum nem bővíthető tovább. Ráadásul a termékoldal minden megnyitásakor az összes értékelést beolvasnánk. Ezért az értékelés **hivatkozott** külön gyűjtemény, a rendelés tételei viszont **beágyazottak**.
 

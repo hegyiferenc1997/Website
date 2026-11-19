@@ -63,14 +63,14 @@ JOIN jelentkezesek j ON j.neptun = h.neptun    -- ⋈
 WHERE j.kod = 'ADB' AND j.jegy >= 4;           -- σ
 ```
 
-| Algebra             | SQL                                   |
-| ------------------- | ------------------------------------- |
-| σ (szelekció)       | `WHERE`                               |
-| π (projekció)       | a `SELECT` utáni oszloplista          |
-| ⋈ (összekapcsolás)  | `JOIN … ON …`                         |
-| × (szorzat)         | `CROSS JOIN` (vagy vessző a `FROM`-ban) |
-| ρ (átnevezés)       | `AS`                                  |
-| ∪, ∩, −             | `UNION`, `INTERSECT`, `EXCEPT`        |
+| Algebra            | SQL                                     |
+| ------------------ | --------------------------------------- |
+| σ (szelekció)      | `WHERE`                                 |
+| π (projekció)      | a `SELECT` utáni oszloplista            |
+| ⋈ (összekapcsolás) | `JOIN … ON …`                           |
+| × (szorzat)        | `CROSS JOIN` (vagy vessző a `FROM`-ban) |
+| ρ (átnevezés)      | `AS`                                    |
+| ∪, ∩, −            | `UNION`, `INTERSECT`, `EXCEPT`          |
 
 ## Halmaz vagy multihalmaz?
 

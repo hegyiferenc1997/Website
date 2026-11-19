@@ -38,12 +38,12 @@ Egy vizsgajelentkezési tábla: `R(neptun, nev, kod, targynev, kredit, datum, te
 
 Mi a kulcs? Próbáljuk ki a `{neptun, kod, datum}` halmazt:
 
-| Lépés | Felhasznált FF          | X⁺                                                    |
-| ----- | ----------------------- | ----------------------------------------------------- |
-| 0.    | –                       | neptun, kod, datum                                    |
-| 1.    | neptun → nev            | neptun, kod, datum, **nev**                           |
-| 2.    | kod → targynev, kredit  | …, **targynev, kredit**                               |
-| 3.    | kod, datum → terem      | …, **terem** → minden oszlop megvan ✔                 |
+| Lépés | Felhasznált FF         | X⁺                                    |
+| ----- | ---------------------- | ------------------------------------- |
+| 0.    | –                      | neptun, kod, datum                    |
+| 1.    | neptun → nev           | neptun, kod, datum, **nev**           |
+| 2.    | kod → targynev, kredit | …, **targynev, kredit**               |
+| 3.    | kod, datum → terem     | …, **terem** → minden oszlop megvan ✔ |
 
 Tehát `{neptun, kod, datum}` szuperkulcs. Elhagyható-e valamelyik eleme?
 
@@ -132,12 +132,12 @@ Pontosan annyi sor, amennyi az eredeti – a felbontás veszteségmentes.
 
 A normalizálás a **módosításokat** teszi biztonságossá, de a lekérdezések több JOIN-t igényelnek. Néha szándékosan visszalépünk:
 
-| Helyzet                                                    | Denormalizálás                                 | Kockázat és kezelése                             |
-| ---------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ |
-| A termékoldalon mindig kell az értékelések száma és átlaga | `termekek.ertekelesek_szama`, `atlag` oszlop   | elavulhat → triggerrel vagy időzített frissítéssel tartjuk naprakészen |
-| Riport-adatbázis (adattárház), amelyet csak olvasnak        | csillagséma, ismétlődő dimenzióadatok (18. témakör) | nincs módosítás, így nincs anomália          |
-| A rendelés a vásárláskori árat és címet őrzi                | `tetelek.egysegar`, `rendelesek.szallitasi_cim` | ez valójában **nem is** redundancia, hanem történeti tény |
-| Nagyon gyakori, drága JOIN                                  | materializált nézet (16. témakör)              | frissíteni kell                                  |
+| Helyzet                                                    | Denormalizálás                                      | Kockázat és kezelése                                                   |
+| ---------------------------------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------- |
+| A termékoldalon mindig kell az értékelések száma és átlaga | `termekek.ertekelesek_szama`, `atlag` oszlop        | elavulhat → triggerrel vagy időzített frissítéssel tartjuk naprakészen |
+| Riport-adatbázis (adattárház), amelyet csak olvasnak       | csillagséma, ismétlődő dimenzióadatok (18. témakör) | nincs módosítás, így nincs anomália                                    |
+| A rendelés a vásárláskori árat és címet őrzi               | `tetelek.egysegar`, `rendelesek.szallitasi_cim`     | ez valójában **nem is** redundancia, hanem történeti tény              |
+| Nagyon gyakori, drága JOIN                                 | materializált nézet (16. témakör)                   | frissíteni kell                                                        |
 
 **Aranyszabály:** előbb **normalizálj**, és csak akkor denormalizálj, ha **mért** teljesítményproblémád van – és akkor is dokumentáld, ki és mi tartja szinkronban a másolatot.
 

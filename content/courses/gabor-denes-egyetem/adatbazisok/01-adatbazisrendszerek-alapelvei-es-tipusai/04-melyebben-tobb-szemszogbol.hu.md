@@ -18,12 +18,12 @@ Ez a lecke az előző három lecke fogalmait (adat, DBMS, háromszintű architek
 
 Gondolj egy egyetemi tanulmányi rendszerre (mint a Neptun). Egyetlen adatbázis van mögötte, mégis mindenki mást lát és mást akar tőle:
 
-| Ki?                            | Mit lát?                                       | Mit csinál vele?                                | Mi fontos neki?                       |
-| ------------------------------ | ---------------------------------------------- | ----------------------------------------------- | ------------------------------------- |
-| **Hallgató**                   | a saját tárgyait, jegyeit, órarendjét          | tárgyat vesz fel, vizsgára jelentkezik          | gyors legyen, és ne vesszen el semmi  |
-| **Tanulmányi ügyintéző**       | egy szak összes hallgatóját, a jegyeket        | jegyet javít, kimutatást készít                 | pontos, ellentmondásmentes adatok     |
-| **Fejlesztő**                  | a táblákat, oszlopokat, kapcsolatokat          | lekérdezéseket és programokat ír                | érthető szerkezet, stabil felület     |
-| **Adatbázis-adminisztrátor**   | a lemezeket, mentéseket, jogosultságokat       | ment, hangol, jogot oszt, frissít               | biztonság, rendelkezésre állás, sebesség |
+| Ki?                          | Mit lát?                                 | Mit csinál vele?                       | Mi fontos neki?                          |
+| ---------------------------- | ---------------------------------------- | -------------------------------------- | ---------------------------------------- |
+| **Hallgató**                 | a saját tárgyait, jegyeit, órarendjét    | tárgyat vesz fel, vizsgára jelentkezik | gyors legyen, és ne vesszen el semmi     |
+| **Tanulmányi ügyintéző**     | egy szak összes hallgatóját, a jegyeket  | jegyet javít, kimutatást készít        | pontos, ellentmondásmentes adatok        |
+| **Fejlesztő**                | a táblákat, oszlopokat, kapcsolatokat    | lekérdezéseket és programokat ír       | érthető szerkezet, stabil felület        |
+| **Adatbázis-adminisztrátor** | a lemezeket, mentéseket, jogosultságokat | ment, hangol, jogot oszt, frissít      | biztonság, rendelkezésre állás, sebesség |
 
 Ez pontosan a **háromszintű architektúra** a gyakorlatban:
 
@@ -38,20 +38,20 @@ Ez pontosan a **háromszintű architektúra** a gyakorlatban:
 Egy hallgatói önkormányzat eddig egy közös táblázatfájlban tartotta nyilván a rendezvényekre jelentkezőket. Nézzük, mi történik, amikor nő a forgalom!
 
 1. **Egyszerre ketten szerkesztik.** Anna és Béla is megnyitja a fájlt, mindketten beírnak egy-egy új jelentkezőt az 51. sorba, majd mentenek. A később mentő felülírja a másikat: **elveszett egy jelentkezés**. A DBMS ezt **konkurenciakezeléssel** (zárolás, tranzakciók) oldja meg: mindkét beszúrás megmarad.
-2. **Ugyanaz a hallgató háromszor.** Egyszer „Kiss Anna”, egyszer „Kiss  Anna” (két szóközzel), egyszer „kiss anna”. A táblázat nem tiltja; a DBMS-ben **egyedi kulccsal** (pl. Neptun-kód) ez megakadályozható.
+2. **Ugyanaz a hallgató háromszor.** Egyszer „Kiss Anna”, egyszer „Kiss Anna” (két szóközzel), egyszer „kiss anna”. A táblázat nem tiltja; a DBMS-ben **egyedi kulccsal** (pl. Neptun-kód) ez megakadályozható.
 3. **Hibás adat.** Valaki a létszám oszlopba azt írja: „sok”. A táblázat elfogadja; a DBMS **típusellenőrzéssel** (`INT`) visszautasítja.
 4. **Ki mit láthat?** A táblázatot vagy látja valaki, vagy nem. A DBMS-ben megadható, hogy a szervező lássa az e-mail-címeket, a többiek csak a neveket (**jogosultságok, nézetek**).
 5. **Leállt a gép mentés közben.** A félig mentett fájl akár olvashatatlan is lehet. A DBMS a **naplóból** helyreállítja az utolsó ép állapotot (erről a 9. témakörben lesz szó).
 6. **Egymillió sor.** A táblázatkezelő belassul vagy el sem indul; a DBMS **indexekkel** ezredmásodpercek alatt megtalál egy sort.
 
-| Szempont               | Táblázatkezelő            | DBMS                                   |
-| ---------------------- | ------------------------- | -------------------------------------- |
-| Egyidejű szerkesztés   | korlátozott, ütközések    | tranzakciók, zárolás                   |
-| Adattípusok kikényszerítése | nincs vagy gyenge    | szigorú (`INT`, `DATE`, `CHECK`)       |
-| Ismétlődés tiltása     | kézzel                    | elsődleges és egyedi kulcs             |
-| Jogosultság            | fájlszintű                | tábla-, oszlop-, sor-szintű            |
-| Hibatűrés              | utolsó mentés             | napló, helyreállítás, replikáció       |
-| Méret                  | néhány százezer sor       | milliárdnyi sor                        |
+| Szempont                    | Táblázatkezelő         | DBMS                             |
+| --------------------------- | ---------------------- | -------------------------------- |
+| Egyidejű szerkesztés        | korlátozott, ütközések | tranzakciók, zárolás             |
+| Adattípusok kikényszerítése | nincs vagy gyenge      | szigorú (`INT`, `DATE`, `CHECK`) |
+| Ismétlődés tiltása          | kézzel                 | elsődleges és egyedi kulcs       |
+| Jogosultság                 | fájlszintű             | tábla-, oszlop-, sor-szintű      |
+| Hibatűrés                   | utolsó mentés          | napló, helyreállítás, replikáció |
+| Méret                       | néhány százezer sor    | milliárdnyi sor                  |
 
 Ez **nem** azt jelenti, hogy a táblázatkezelő rossz! Egy gyors számításra, egyszemélyes listára tökéletes. A kérdés mindig az, hogy **hányan, mennyi adattal, mennyire kritikusan** dolgoznak vele.
 

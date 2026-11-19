@@ -1,7 +1,7 @@
 ---
 title: Practice – NoSQL
 summary: Review questions about the NoSQL families, the CAP theorem and modelling, a "which database should we choose?" case study, and an extra exercise with embedded JSON documents.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -120,6 +120,116 @@ SELECT o.id,
 FROM orders o, jsonb_array_elements(o.doc -> 'items') AS i
 GROUP BY o.id, o.doc ->> 'customer'
 ORDER BY o.id;
+```
+
+</details>
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+The first four exercises work on the order documents above (`orders` table, `doc` JSONB column), the last one imitates a key-value store.
+
+**1.** **Array length.** Per order, show the customer's name and **how many items** are in the order (`jsonb_array_length`), by ID!
+
+```sql starter
+SELECT id, doc
+FROM orders;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT id,
+       doc ->> 'customer' AS customer,                -- ->> returns text
+       jsonb_array_length(doc -> 'items') AS items    -- -> returns JSON (here an array)
+FROM orders
+ORDER BY id;
+```
+
+</details>
+
+**2.** **Containment (`@>`).** Which order (ID, customer) contains a **webcam**? Use the `@>` operator: "does the document contain this sub-document?"
+
+```sql starter
+SELECT id, doc ->> 'customer' AS customer
+FROM orders;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT id, doc ->> 'customer' AS customer
+FROM orders
+WHERE doc @> '{"items": [{"product": "Webcam"}]}';     -- with a GIN index this is very fast
+```
+
+</details>
+
+**3.** **Expanding an array.** List all items **more expensive than 10,000 HUF** (product, price) from all orders, by price descending!
+
+```sql starter
+SELECT i
+FROM orders o, jsonb_array_elements(o.doc -> 'items') AS i;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT i ->> 'product' AS product, (i ->> 'price')::INT AS price
+FROM orders o, jsonb_array_elements(o.doc -> 'items') AS i
+WHERE (i ->> 'price')::INT > 10000                     -- the text has to be converted to a number
+ORDER BY price DESC;
+```
+
+</details>
+
+**4.** **A new field in the document.** Order 2 is done: extend its document with a `"status": "done"` field (the `||` operator merges two JSON objects)! Then query every order's ID and status.
+
+```sql starter
+SELECT id, doc ->> 'status' AS status
+FROM orders
+ORDER BY id;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+UPDATE orders
+SET doc = doc || '{"status": "done"}'
+WHERE id = 2;
+
+SELECT id, doc ->> 'status' AS status        -- NULL where there is no such field
+FROM orders
+ORDER BY id;
+```
+
+</details>
+
+**5.** **A key-value store in SQL.** We imitate a page-view counter: in the `counters` table (`key` text, primary key; `value` integer) we increase the value of the `home` key by 1 on every page view – if there's no such key yet, it's created with 1. Run the "increment" **three times**, then query the table!
+
+```sql starter
+CREATE TABLE counters (key TEXT PRIMARY KEY, value INT NOT NULL);
+-- INSERT ... ON CONFLICT ... (three times)
+SELECT * FROM counters;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE counters (key TEXT PRIMARY KEY, value INT NOT NULL);
+INSERT INTO counters VALUES ('home', 1)
+  ON CONFLICT (key) DO UPDATE SET value = counters.value + 1;
+INSERT INTO counters VALUES ('home', 1)
+  ON CONFLICT (key) DO UPDATE SET value = counters.value + 1;
+INSERT INTO counters VALUES ('home', 1)
+  ON CONFLICT (key) DO UPDATE SET value = counters.value + 1;   -- in Redis: INCR home
+SELECT * FROM counters;
 ```
 
 </details>

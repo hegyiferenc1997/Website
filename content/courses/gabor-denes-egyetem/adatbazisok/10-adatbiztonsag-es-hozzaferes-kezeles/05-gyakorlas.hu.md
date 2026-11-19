@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adatbiztonság
 summary: Ellenőrző kérdések a hitelesítésről, a jogosultságokról, a nézetekről és a sorszintű biztonságról, majd egy komplett jogosultsági terv megvalósítása SQL-ben: csoport, felhasználó, oszlopszintű jog és egy túl bőkezű jog visszavonása.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -114,3 +114,111 @@ SELECT (SELECT rolcanlogin FROM pg_roles WHERE oid = r.oktato)                AS
          OR has_table_privilege(r.gyakornok, 'hallgatok', 'DELETE')           AS gyakornok_ir
 FROM r;
 ```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+A jogosultságokat a `has_table_privilege` és a `has_column_privilege` függvénnyel lehet ellenőrizni: igaz/hamis választ adnak arra, hogy egy szerepkör megteheti-e az adott műveletet.
+
+**1.** **Csak olvasás.** Hozd létre az `olvaso` szerepkört, és adj neki **csak olvasási** jogot a `hallgatok` táblára! Utána kérdezd le, hogy olvashat-e (`SELECT`) és módosíthat-e (`UPDATE`) a táblában.
+
+```sql starter
+CREATE ROLE olvaso;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE ROLE olvaso;
+GRANT SELECT ON hallgatok TO olvaso;
+
+SELECT has_table_privilege('olvaso', 'hallgatok', 'SELECT') AS olvashat,
+       has_table_privilege('olvaso', 'hallgatok', 'UPDATE') AS modosithat;
+```
+
+</details>
+
+**2.** **Oszlopszintű jog.** Az oktató (`oktato` szerepkör) olvashatja a jelentkezéseket, de **csak a `jegy` oszlopot** módosíthatja. Add meg a jogokat, majd ellenőrizd: módosíthatja-e a `jegy`-et, illetve a `neptun`-t?
+
+```sql starter
+CREATE ROLE oktato;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE ROLE oktato;
+GRANT SELECT ON jelentkezesek TO oktato;
+GRANT UPDATE (jegy) ON jelentkezesek TO oktato;     -- csak ez az egy oszlop
+
+SELECT has_column_privilege('oktato', 'jelentkezesek', 'jegy', 'UPDATE')   AS jegyet_irhat,
+       has_column_privilege('oktato', 'jelentkezesek', 'neptun', 'UPDATE') AS neptunt_irhat;
+```
+
+</details>
+
+**3.** **Jog visszavonása.** A gyakornok túl sok jogot kapott. Vond vissza tőle a **törlés** (`DELETE`) jogát a `targyak` táblán, a többit hagyd meg! Ellenőrizd a `SELECT`, `INSERT` és `DELETE` jogot.
+
+```sql starter
+CREATE ROLE gyakornok;
+GRANT ALL ON targyak TO gyakornok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE ROLE gyakornok;
+GRANT ALL ON targyak TO gyakornok;
+REVOKE DELETE ON targyak FROM gyakornok;
+
+SELECT has_table_privilege('gyakornok', 'targyak', 'SELECT') AS olvashat,
+       has_table_privilege('gyakornok', 'targyak', 'INSERT') AS beszurhat,
+       has_table_privilege('gyakornok', 'targyak', 'DELETE') AS torolhet;
+```
+
+</details>
+
+**4.** **Védelem nézettel.** A portás csak a hallgatók nevét és szakját láthatja, a születési dátumot és a várost nem. Hozd létre a `nevsor` nézetet (`nev`, `szak`), adj rá olvasási jogot a `portas` szerepkörnek – magára a `hallgatok` táblára viszont ne! Ellenőrizd mindkettőt.
+
+```sql starter
+CREATE ROLE portas;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE ROLE portas;
+CREATE VIEW nevsor AS SELECT nev, szak FROM hallgatok;
+GRANT SELECT ON nevsor TO portas;                   -- a nézetre igen, a táblára nem
+
+SELECT has_table_privilege('portas', 'nevsor', 'SELECT')    AS nezetet_lat,
+       has_table_privilege('portas', 'hallgatok', 'SELECT') AS tablat_lat;
+```
+
+</details>
+
+**5.** **Szerepkör-csoport.** Hozz létre egy `tanszek` csoport-szerepkört olvasási joggal a `targyak` táblára, és egy `kovacs` felhasználót, aki **tagja** a csoportnak. Ellenőrizd, hogy `kovacs` a csoporton keresztül olvashatja a tárgyakat!
+
+```sql starter
+CREATE ROLE tanszek;
+CREATE ROLE kovacs;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE ROLE tanszek;
+CREATE ROLE kovacs;
+GRANT SELECT ON targyak TO tanszek;
+GRANT tanszek TO kovacs;                             -- kovacs örökli a csoport jogait
+
+SELECT has_table_privilege('kovacs', 'targyak', 'SELECT') AS olvashat;
+```
+
+</details>

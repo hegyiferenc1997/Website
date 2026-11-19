@@ -26,13 +26,13 @@ minutes: 40
 
 Mielőtt egyetlen `GRANT`-ot leírnál, készíts egy táblázatot: soronként a **szerepkörök**, oszloponként a **táblák**, a cellákban pedig, hogy ki mit tehet: **C**reate (INSERT), **R**ead (SELECT), **U**pdate, **D**elete.
 
-| Szerepkör              | hallgatok | targyak | jelentkezesek        |
-| ---------------------- | --------- | ------- | -------------------- |
-| hallgató (alkalmazás)  | R (saját) | R       | C, R (saját)         |
-| oktató                 | R         | R       | R, U (csak a jegyet) |
-| tanulmányi osztály     | C, R, U   | C, R, U | C, R, U              |
-| statisztikus           | –         | R       | R (név nélkül)       |
-| DBA / migráció         | minden    | minden  | minden               |
+| Szerepkör             | hallgatok | targyak | jelentkezesek        |
+| --------------------- | --------- | ------- | -------------------- |
+| hallgató (alkalmazás) | R (saját) | R       | C, R (saját)         |
+| oktató                | R         | R       | R, U (csak a jegyet) |
+| tanulmányi osztály    | C, R, U   | C, R, U | C, R, U              |
+| statisztikus          | –         | R       | R (név nélkül)       |
+| DBA / migráció        | minden    | minden  | minden               |
 
 Ebből a táblázatból a `GRANT` utasítások szinte gépiesen következnek – és a táblázatot egy nem informatikus vezető is el tudja olvasni és jóvá tudja hagyni. **Ez a legfontosabb lépés:** a jogosultság üzleti döntés, nem technikai részlet.
 
@@ -56,11 +56,11 @@ Egy gyakori, veszélyes minta: a webalkalmazás ugyanazzal a fiókkal csatlakozi
 
 A helyes felállás:
 
-| Fiók               | Mire való                               | Jogai                                    |
-| ------------------ | --------------------------------------- | ---------------------------------------- |
-| `app_owner`        | a séma tulajdonosa, csak migrációkor    | CREATE, ALTER, DROP – a saját objektumain |
-| `app_user`         | a futó alkalmazás ezzel csatlakozik     | csak a CRUD-mátrix szerinti DML          |
-| `readonly`         | riportok, elemzők                       | csak SELECT, esetleg csak nézetekre      |
+| Fiók        | Mire való                            | Jogai                                     |
+| ----------- | ------------------------------------ | ----------------------------------------- |
+| `app_owner` | a séma tulajdonosa, csak migrációkor | CREATE, ALTER, DROP – a saját objektumain |
+| `app_user`  | a futó alkalmazás ezzel csatlakozik  | csak a CRUD-mátrix szerinti DML           |
+| `readonly`  | riportok, elemzők                    | csak SELECT, esetleg csak nézetekre       |
 
 ```sql run
 -- A három fiók (csoport) szétválasztása
@@ -170,14 +170,14 @@ A naplótáblára a hétköznapi szerepkörök csak `INSERT`-et kapjanak (a trig
 
 ## 6. Valódi incidensekhez vezető hibák
 
-| Hiba                                                       | Következmény                                    | Helyesen                                         |
-| ---------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------ |
-| az alkalmazás szuperfelhasználóval csatlakozik            | egy SQL-befecskendezés = teljes átvétel         | külön `app_user` csak DML joggal                 |
-| közös fiók több embernek („admin/admin”)                   | nem derül ki, ki tette; nem vonható vissza egy ember joga | személyes fiókok, csoportszerepkörök    |
-| a kilépett munkatárs fiókja aktív marad                    | volt munkatárs hozzáfér                          | ki- és belépési folyamat, rendszeres jogfelülvizsgálat |
-| `GRANT ALL` „hogy működjön”                                | a legkisebb jogosultság elve sérül              | a CRUD-mátrixból levezetett jogok               |
-| jelszó a forráskódban                                      | a kód kiszivárgásával a jelszó is               | környezeti változó, titokkezelő                  |
-| az adatbázis-port nyitva az internet felé                  | jelszótörő támadások                             | tűzfal, csak az alkalmazásszerverről elérhető   |
+| Hiba                                           | Következmény                                              | Helyesen                                               |
+| ---------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| az alkalmazás szuperfelhasználóval csatlakozik | egy SQL-befecskendezés = teljes átvétel                   | külön `app_user` csak DML joggal                       |
+| közös fiók több embernek („admin/admin”)       | nem derül ki, ki tette; nem vonható vissza egy ember joga | személyes fiókok, csoportszerepkörök                   |
+| a kilépett munkatárs fiókja aktív marad        | volt munkatárs hozzáfér                                   | ki- és belépési folyamat, rendszeres jogfelülvizsgálat |
+| `GRANT ALL` „hogy működjön”                    | a legkisebb jogosultság elve sérül                        | a CRUD-mátrixból levezetett jogok                      |
+| jelszó a forráskódban                          | a kód kiszivárgásával a jelszó is                         | környezeti változó, titokkezelő                        |
+| az adatbázis-port nyitva az internet felé      | jelszótörő támadások                                      | tűzfal, csak az alkalmazásszerverről elérhető          |
 
 ## Összefoglalás
 

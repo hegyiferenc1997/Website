@@ -24,12 +24,12 @@ minutes: 45
 
 A web shop operator complains that "the site is slow". From the log (in PostgreSQL the `pg_stat_statements` extension collects it) we see:
 
-| Query                        | One run   | Runs per day    | Total per day    |
-| ---------------------------- | --------- | --------------- | ---------------- |
-| A) monthly report            | 40 s      | 1               | 40 s             |
-| B) product page              | 30 ms     | 200,000         | **6,000 s**      |
-| C) "My orders" page          | 120 ms    | 20,000          | 2,400 s          |
-| D) search                    | 800 ms    | 2,000           | 1,600 s          |
+| Query               | One run | Runs per day | Total per day |
+| ------------------- | ------- | ------------ | ------------- |
+| A) monthly report   | 40 s    | 1            | 40 s          |
+| B) product page     | 30 ms   | 200,000      | **6,000 s**   |
+| C) "My orders" page | 120 ms  | 20,000       | 2,400 s       |
+| D) search           | 800 ms  | 2,000        | 1,600 s       |
 
 The slowest (A) looks like the main villain, but it takes only 40 seconds a day. Query **B** is fast individually, but because it runs so often it makes up the largest part of the total load: speeding it up from 30 ms to 10 ms saves **4,000 seconds** a day – a hundred times more than bringing A down to zero.
 
@@ -146,7 +146,7 @@ The optimiser executes this as a **semi-join**. **Telltale sign:** if you write 
 
 1. **Measure and rank:** frequency × duration (`pg_stat_statements`, slow query log).
 2. **Look at the plan:** `EXPLAIN (ANALYZE, BUFFERS)`. Look for the most expensive node, a `Seq Scan` on a large table, a `SubPlan`, a large `Sort`, a big gap between estimated and actual row counts.
-3. **One change at a time:** an index *or* a rewrite *or* a statistics refresh (`ANALYZE`) – otherwise you won't know what helped.
+3. **One change at a time:** an index _or_ a rewrite _or_ a statistics refresh (`ANALYZE`) – otherwise you won't know what helped.
 4. **Measure again** with the same data, several times (the first run is slower because of a cold buffer).
 5. **Check the result:** does the rewritten query return **the same** thing? (A fast but wrong query is worse than a slow one.)
 6. **Document it:** why the index is there, what it fixed.

@@ -23,14 +23,14 @@ A DBMS nem sorokat, hanem **lapokat** (PostgreSQL-ben 8 KB-os blokkokat) olvas a
 
 ### Alapadatok, amelyekkel számolunk
 
-| Jelölés | Jelentés                                 | Példa             |
-| ------- | ---------------------------------------- | ----------------- |
-| N       | sorok száma                              | 1 000 000         |
-| R       | sorok egy lapon                          | 50                |
-| P = N/R | lapok száma                              | 20 000            |
-| h       | a B+-fa magassága (szintek)              | 3                 |
-| t_s     | egy lap **soros** olvasása (HDD)         | ≈ 0,1 ms          |
-| t_r     | egy lap **véletlen** olvasása (HDD)      | ≈ 5 ms            |
+| Jelölés | Jelentés                            | Példa     |
+| ------- | ----------------------------------- | --------- |
+| N       | sorok száma                         | 1 000 000 |
+| R       | sorok egy lapon                     | 50        |
+| P = N/R | lapok száma                         | 20 000    |
+| h       | a B+-fa magassága (szintek)         | 3         |
+| t_s     | egy lap **soros** olvasása (HDD)    | ≈ 0,1 ms  |
+| t_r     | egy lap **véletlen** olvasása (HDD) | ≈ 5 ms    |
 
 A soros olvasás azért ennyivel gyorsabb, mert a HDD olvasófejének nem kell ugrálnia, és a DBMS egyszerre sok egymás utáni lapot kérhet. SSD-n a különbség kisebb (kb. 2–4-szeres), de ott is van.
 
@@ -50,12 +50,12 @@ Példa: (3 + 1) × 5 ms = **20 ms**. Százszor gyorsabb a teljes olvasásnál. (
 
 Ha a feltétel **k** sort ad vissza, és ezek **különböző lapokon** vannak (a halomfájlban a sorok nincsenek az indexelt oszlop szerint rendezve), akkor: **költség ≈ h + k véletlen olvasás.**
 
-| k (találat) | Indexes költség     | Teljes olvasás |
-| ----------- | ------------------- | -------------- |
-| 10          | 13 × 5 ms = 65 ms   | 2 s            |
-| 100         | 103 × 5 ms ≈ 0,5 s  | 2 s            |
-| 400         | 403 × 5 ms ≈ 2 s    | 2 s ← **határpont** |
-| 5 000       | ≈ 25 s              | 2 s            |
+| k (találat) | Indexes költség    | Teljes olvasás      |
+| ----------- | ------------------ | ------------------- |
+| 10          | 13 × 5 ms = 65 ms  | 2 s                 |
+| 100         | 103 × 5 ms ≈ 0,5 s | 2 s                 |
+| 400         | 403 × 5 ms ≈ 2 s   | 2 s ← **határpont** |
+| 5 000       | ≈ 25 s             | 2 s                 |
 
 **A határpont:** k · t_r ≈ P · t_s → k ≈ 20 000 × 0,1 / 5 = **400 sor**, ami az 1 000 000 sornak csupán **0,04%-a**! Ennél több találatnál a teljes táblaolvasás gyorsabb HDD-n. (SSD-n a határpont magasabb, néhány százalék – ezért ott az optimalizáló bátrabban választ indexet.)
 
@@ -92,11 +92,11 @@ minden v sorra a vasarlok-ban:
 
 **Költség ≈ V + R + (a rendezések költsége).** Akkor nyer, ha az adatok **már rendezettek**, vagy az eredményt úgyis rendezni kell.
 
-| Algoritmus   | Mikor nyer?                                          |
-| ------------ | ---------------------------------------------------- |
-| Nested loop  | kevés külső sor + index a belső táblán               |
-| Hash join    | nagy táblák, egyenlőséges feltétel, rendezetlen adat |
-| Merge join   | már rendezett bemenet, vagy rendezett kimenet kell   |
+| Algoritmus  | Mikor nyer?                                          |
+| ----------- | ---------------------------------------------------- |
+| Nested loop | kevés külső sor + index a belső táblán               |
+| Hash join   | nagy táblák, egyenlőséges feltétel, rendezetlen adat |
+| Merge join  | már rendezett bemenet, vagy rendezett kimenet kell   |
 
 ## 5. Rendezés, ha nem fér el a memóriában
 

@@ -25,13 +25,13 @@ Az alábbi történet kitalált, de minden lépése valódi incidensekben is el�
 
 ### Hol lehetett volna megállítani?
 
-| Lépés | Védelmi réteg                                   | Témakör |
-| ----- | ----------------------------------------------- | ------- |
-| 1.    | paraméterezett lekérdezések, bemenet-ellenőrzés | 15/1    |
-| 2.    | legkisebb jogosultság, külön alkalmazásfiók     | 10      |
-| 3.    | lassú, sózott jelszó-hash (bcrypt, Argon2)      | 15/2    |
+| Lépés | Védelmi réteg                                   | Témakör          |
+| ----- | ----------------------------------------------- | ---------------- |
+| 1.    | paraméterezett lekérdezések, bemenet-ellenőrzés | 15/1             |
+| 2.    | legkisebb jogosultság, külön alkalmazásfiók     | 10               |
+| 3.    | lassú, sózott jelszó-hash (bcrypt, Argon2)      | 15/2             |
 | 4.    | adattakarékosság, megőrzési idő, álnevesítés    | 15/3, ez a lecke |
-| 5.    | naplózás, riasztás, rendszeres felülvizsgálat   | 10/4    |
+| 5.    | naplózás, riasztás, rendszeres felülvizsgálat   | 10/4             |
 
 Ez a **mélységi védelem** (defense in depth) elve: nem egyetlen tökéletes falra bízzuk magunkat, hanem **több, egymástól független** rétegre. Ha az egyik átszakad, a következő még megállíthatja – vagy legalább csökkenti a kárt.
 
@@ -41,14 +41,14 @@ Ez a **mélységi védelem** (defense in depth) elve: nem egyetlen tökéletes f
 
 A STRIDE egy ellenőrzőlista: hat támadástípus, amelyeket egy rendszer minden részénél végiggondolunk.
 
-| Betű | Fenyegetés                         | Példa az adatbázisnál                               | Védekezés                                  |
-| ---- | ---------------------------------- | --------------------------------------------------- | ------------------------------------------ |
-| S    | **S**poofing – megszemélyesítés    | ellopott jelszóval belépés                          | erős hitelesítés, kétlépcsős azonosítás    |
-| T    | **T**ampering – adatmódosítás      | a jegyek utólagos átírása                           | jogosultságok, napló, ellenőrzőösszeg      |
-| R    | **R**epudiation – letagadás        | „nem én töröltem”                                   | személyes fiókok, módosíthatatlan napló    |
-| I    | **I**nformation disclosure – kiszivárgás | befecskendezés, titkosítatlan mentés          | paraméterezés, titkosítás, maszkolás       |
-| D    | **D**enial of service – szolgáltatásmegtagadás | lassú lekérdezések tömegével túlterhelés | időkorlát, sebességkorlát, indexek       |
-| E    | **E**levation of privilege – jogosultság-emelés | a SECURITY DEFINER függvény eltérítése | `search_path` rögzítése, szűk jogok      |
+| Betű | Fenyegetés                                      | Példa az adatbázisnál                    | Védekezés                               |
+| ---- | ----------------------------------------------- | ---------------------------------------- | --------------------------------------- |
+| S    | **S**poofing – megszemélyesítés                 | ellopott jelszóval belépés               | erős hitelesítés, kétlépcsős azonosítás |
+| T    | **T**ampering – adatmódosítás                   | a jegyek utólagos átírása                | jogosultságok, napló, ellenőrzőösszeg   |
+| R    | **R**epudiation – letagadás                     | „nem én töröltem”                        | személyes fiókok, módosíthatatlan napló |
+| I    | **I**nformation disclosure – kiszivárgás        | befecskendezés, titkosítatlan mentés     | paraméterezés, titkosítás, maszkolás    |
+| D    | **D**enial of service – szolgáltatásmegtagadás  | lassú lekérdezések tömegével túlterhelés | időkorlát, sebességkorlát, indexek      |
+| E    | **E**levation of privilege – jogosultság-emelés | a SECURITY DEFINER függvény eltérítése   | `search_path` rögzítése, szűk jogok     |
 
 ## 3. A befecskendezés kevésbé ismert formái
 

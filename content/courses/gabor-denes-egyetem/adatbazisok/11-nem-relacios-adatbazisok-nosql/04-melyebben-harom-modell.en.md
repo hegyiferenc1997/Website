@@ -68,12 +68,12 @@ In relational design you start from **the data** (what entities and relationship
 
 ## Embedding or referencing – with numbers
 
-| Question                                      | Tips towards embedding                 | Tips towards referencing                    |
-| --------------------------------------------- | -------------------------------------- | ------------------------------------------- |
-| How many "child" elements can there be?       | few, bounded (order items: 1–50)       | many, unbounded (a product's reviews: up to 100,000) |
-| Do you read them together?                    | almost always                          | rarely                                      |
-| Does the child change independently?          | no (the item lives with the order)     | yes (the product's price, description)      |
-| Is it shared with other documents?            | no                                     | yes (the same product in many orders)       |
+| Question                                | Tips towards embedding             | Tips towards referencing                             |
+| --------------------------------------- | ---------------------------------- | ---------------------------------------------------- |
+| How many "child" elements can there be? | few, bounded (order items: 1–50)   | many, unbounded (a product's reviews: up to 100,000) |
+| Do you read them together?              | almost always                      | rarely                                               |
+| Does the child change independently?    | no (the item lives with the order) | yes (the product's price, description)               |
+| Is it shared with other documents?      | no                                 | yes (the same product in many orders)                |
 
 **Numeric example:** in MongoDB a document can be at most **16 MB**. If we embedded a popular product's reviews, and a review averages 500 bytes, then after 16 MB / 500 B ≈ **32,000 reviews** the document can't grow any further. On top of that, every product page view would read all reviews. That's why reviews are a **referenced** separate collection, while order items are **embedded**.
 

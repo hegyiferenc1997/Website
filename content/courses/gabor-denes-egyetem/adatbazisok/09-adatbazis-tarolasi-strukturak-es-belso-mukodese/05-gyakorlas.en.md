@@ -1,7 +1,7 @@
 ---
 title: Practice – Storage and Internals
 summary: Review questions about pages, indexes, the log and MVCC, a small "size estimation" case study on the web shop database, and a calculation worksheet.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -103,3 +103,106 @@ The first is an `Index Scan` (B-tree on the primary key), the second a `Seq Scan
 - the hash index scrambles the order
 ! This is called bloat.
 ```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+In these exercises we "look inside" PostgreSQL's storage: pages, row identifiers, sizes. The exercises run on the webshop database above.
+
+**1.** **How many pages does it take?** The `relpages` column of the `pg_class` catalog table shows how many 8 KB **pages** a table takes. Query the name and page count of the four webshop tables, by name!
+
+```sql starter
+SELECT relname, relpages
+FROM pg_class;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT relname, relpages
+FROM pg_class
+WHERE relname IN ('customers', 'products', 'orders', 'order_items')
+ORDER BY relname;
+```
+
+</details>
+
+**2.** **Rows per page.** Per table, compute **how many rows fit on a page** on average (`reltuples / relpages`, rounded to an integer)! Only look at tables taking at least 2 pages, sorted by name.
+
+```sql starter
+SELECT relname, reltuples, relpages
+FROM pg_class
+WHERE relname IN ('customers', 'products', 'orders', 'order_items');
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT relname, ROUND(reltuples / relpages) AS rows_per_page
+FROM pg_class
+WHERE relname IN ('customers', 'products', 'orders', 'order_items')
+  AND relpages >= 2
+ORDER BY relname;
+```
+
+</details>
+
+**3.** **A row's physical address.** Every row has a hidden `ctid` column: **(page number, row number on the page)**. Query the `ctid` and name of the first 3 products by ID! Do you see that they're all on page 0?
+
+```sql starter
+SELECT name
+FROM products
+ORDER BY product_id
+LIMIT 3;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT ctid, name
+FROM products
+ORDER BY product_id
+LIMIT 3;
+```
+
+</details>
+
+**4.** **How big is a row?** `pg_column_size(t.*)` gives the stored size of a row in bytes. What is the **average** size of a product row (rounded to an integer)?
+
+```sql starter
+SELECT pg_column_size(t.*) FROM products t;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT ROUND(AVG(pg_column_size(t.*))) AS average_bytes
+FROM products t;
+```
+
+</details>
+
+**5.** **Table versus index.** Compare the size in pages of the `orders` table and its primary key index (`orders_pkey`)! Which is smaller, and why? (Columns: name, pages, by name.)
+
+```sql starter
+SELECT relname, relpages
+FROM pg_class
+WHERE relname = 'orders';
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT relname, relpages
+FROM pg_class
+WHERE relname IN ('orders', 'orders_pkey')   -- the index only stores the key and the row's address
+ORDER BY relname;
+```
+
+</details>

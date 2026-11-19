@@ -18,14 +18,14 @@ minutes: 40
 
 ### Entities and attributes
 
-| Entity      | Attributes                                         | Note                                           |
-| ----------- | -------------------------------------------------- | ---------------------------------------------- |
-| Customer    | **customer_id**, name, email                       | "several shipping addresses" is multivalued!   |
-| Address     | **address_id**, zip, city, street                  | the multivalued attribute became an entity     |
-| Category    | **category_id**, name                              | related to itself (subcategory)                |
-| Product     | **product_id**, name, current_price                |                                                |
-| Order       | **order_id**, order_date, status                   | the total is **derived** (from the items)      |
-| Review      | **customer + product**, stars, text                | a relationship with its own attributes         |
+| Entity   | Attributes                          | Note                                         |
+| -------- | ----------------------------------- | -------------------------------------------- |
+| Customer | **customer_id**, name, email        | "several shipping addresses" is multivalued! |
+| Address  | **address_id**, zip, city, street   | the multivalued attribute became an entity   |
+| Category | **category_id**, name               | related to itself (subcategory)              |
+| Product  | **product_id**, name, current_price |                                              |
+| Order    | **order_id**, order_date, status    | the total is **derived** (from the items)    |
+| Review   | **customer + product**, stars, text | a relationship with its own attributes       |
 
 ### Relationships
 
@@ -122,11 +122,11 @@ Two questions must be answered:
 
 ### Three mapping strategies
 
-| Strategy                         | Tables                                          | Pro                                          | Con                                             |
-| -------------------------------- | ----------------------------------------------- | -------------------------------------------- | ----------------------------------------------- |
-| **1. One common table**          | `persons(id, name, email, type, major, semester, department, position)` | simple, no JOIN | many NULLs; hard to enforce that a student has a major |
-| **2. One table per subtype**     | `students(id, name, email, major, semester)`, `lecturers(id, name, email, department, position)` | no NULLs | common columns repeat; "all persons" needs UNION; duplication with overlap |
-| **3. Parent + child tables**     | `persons(id, name, email)`, `students(id → persons, major, semester)`, `lecturers(id → persons, department, position)` | clean, no repetition, overlap works | subtype data needs a JOIN |
+| Strategy                     | Tables                                                                                                                 | Pro                                 | Con                                                                        |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------- |
+| **1. One common table**      | `persons(id, name, email, type, major, semester, department, position)`                                                | simple, no JOIN                     | many NULLs; hard to enforce that a student has a major                     |
+| **2. One table per subtype** | `students(id, name, email, major, semester)`, `lecturers(id, name, email, department, position)`                       | no NULLs                            | common columns repeat; "all persons" needs UNION; duplication with overlap |
+| **3. Parent + child tables** | `persons(id, name, email)`, `students(id → persons, major, semester)`, `lecturers(id → persons, department, position)` | clean, no repetition, overlap works | subtype data needs a JOIN                                                  |
 
 Which is right? **It depends** – and that's not a cop-out:
 

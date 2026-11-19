@@ -1,7 +1,7 @@
 ---
 title: Practice – Integration and Migration
 summary: Review questions about ORMs, the API layer, ETL, schema migrations and data migration, then a migration case study with decision questions.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -79,3 +79,129 @@ A university is replacing its twenty-year-old, in-house student records program 
 - nothing, bugs can't happen
 ! Always have a plan B.
 ```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+We have to load "dirty" product data exported from an old system. The data is in an all-text **staging table**.
+
+<details>
+<summary>Creating the staging table (SQL)</summary>
+
+```sql setup
+-- Staging: every column is text, no constraints – just as it was in the file.
+CREATE TABLE stg_products (code TEXT, name TEXT, price TEXT, added TEXT, sku TEXT);
+INSERT INTO stg_products VALUES
+  ('1', '  wireless MOUSE ',   '4990',     '2024.03.01.', 'ABC-1234'),
+  ('2', 'Keyboard',            '24 990',   '2024-05-12',  'ABC-2345'),
+  ('3', 'monitor   27 inch',   '69990 Ft', '12/06/2024',  'XYZ-99'),
+  ('4', 'Webcam',              'n/a',      '2024-07-30',  'ABC-4567'),
+  ('5', 'headphones',          '15990',    '',            'abc-5678');
+```
+
+</details>
+
+**1.** **Tidying the names.** Clean the product names: trim spaces from the ends, replace repeated inner spaces with a single one, and **capitalise** every word (`initcap`). (Code as an integer, clean name; by code.)
+
+```sql starter
+SELECT code, name
+FROM stg_products;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code::INT AS code,
+       initcap(regexp_replace(TRIM(name), '\s+', ' ', 'g')) AS name
+FROM stg_products
+ORDER BY code;
+```
+
+</details>
+
+**2.** **Converting prices to numbers.** The prices contain spaces, `Ft` and a meaningless value (`n/a`). Remove every **non-digit** character and convert to an integer; where this leaves empty text, it should be `NULL` (`NULLIF` helps). (Code, original price, clean price; by code.)
+
+```sql starter
+SELECT code, price
+FROM stg_products;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code::INT AS code, price,
+       NULLIF(regexp_replace(price, '[^0-9]', '', 'g'), '')::INT AS clean_price   -- '[^0-9]': anything that isn't a digit
+FROM stg_products
+ORDER BY code;
+```
+
+</details>
+
+**3.** **Dates in several formats.** The date added appears in three forms (`YYYY-MM-DD`, `YYYY.MM.DD.`, `DD/MM/YYYY`) or is empty. Convert all of them to `DATE` with `CASE` and regular expressions; anything matching none of the patterns should be `NULL`. (Code, date; by code.)
+
+```sql starter
+SELECT code, added
+FROM stg_products;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code::INT AS code,
+       CASE
+         WHEN added ~ '^\d{4}-\d{2}-\d{2}$'     THEN to_date(added, 'YYYY-MM-DD')
+         WHEN added ~ '^\d{4}\.\d{2}\.\d{2}\.$' THEN to_date(added, 'YYYY.MM.DD.')
+         WHEN added ~ '^\d{2}/\d{2}/\d{4}$'     THEN to_date(added, 'DD/MM/YYYY')
+       END AS added                              -- without ELSE, CASE gives NULL
+FROM stg_products
+ORDER BY code;
+```
+
+</details>
+
+**4.** **A log of rejected rows.** The correct form of the SKU is **3 capital letters, a hyphen, 4 digits** (e.g. `ABC-1234`). Collect the rows with an invalid SKU together with the reason (code, SKU, `'invalid SKU'`), by code!
+
+```sql starter
+SELECT code, sku
+FROM stg_products;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code::INT AS code, sku, 'invalid SKU' AS reason
+FROM stg_products
+WHERE sku !~ '^[A-Z]{3}-\d{4}$'            -- !~ : does NOT match the pattern
+ORDER BY code;
+```
+
+</details>
+
+**5.** **Reconciliation after loading.** The `products_target` table loaded into the target system has to be compared with the source. Give in one row: the **row counts** of source and target, and whether the **sum of prices** matches (true/false)! For the source, only sum the prices that can be converted to numbers.
+
+```sql starter
+CREATE TABLE products_target (code INT PRIMARY KEY, price INT);
+INSERT INTO products_target VALUES (1, 4990), (2, 24990), (3, 69990), (4, NULL), (5, 1599);
+
+SELECT COUNT(*) FROM products_target;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE products_target (code INT PRIMARY KEY, price INT);
+INSERT INTO products_target VALUES (1, 4990), (2, 24990), (3, 69990), (4, NULL), (5, 1599);
+
+SELECT (SELECT COUNT(*) FROM stg_products) AS source_rows,
+       (SELECT COUNT(*) FROM products_target) AS target_rows,
+       (SELECT SUM(NULLIF(regexp_replace(price, '[^0-9]', '', 'g'), '')::INT) FROM stg_products) =
+       (SELECT SUM(price) FROM products_target) AS sum_matches;   -- false: product 5's price lost a digit!
+```
+
+</details>

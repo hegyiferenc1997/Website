@@ -5,9 +5,17 @@ futtatásakor) az oldal innen tölti be az adatbázisba a témaköröket és a l
 
 A szerkezet a tanmenet 19 témakörét követi, ugyanabban a sorrendben:
 `01-adatbazisrendszerek-alapelvei-es-tipusai` … `19-adatbazisok-gyakorlati-alkalmazasa`. Minden
-témakör 3 leckéből és egy `gyakorlas` (kind: practice) leckéből áll (a 8. témakör 4 + 1 leckéből);
-az utolsó témakör utolsó leckéje a tárgy záró gyakorlása. A mappák, a `topic.json` és a lecke fájlok
-felépítése ugyanaz, mint a Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
+témakör 3 alapleckéből (a 8. témakörben 4), egy `melyebben-…` leckéből és egy `gyakorlas` (kind: practice)
+leckéből áll; az utolsó témakör utolsó leckéje a tárgy záró gyakorlása.
+
+- A **Mélyebben** lecke ugyanazt a témát több szemszögből, gyakorlati esettanulmánnyal és sok futtatható
+  példával dolgozza fel (saját kötelező feladattal).
+- A **gyakorlás** lecke az ellenőrző kérdések és a kötelező összefoglaló feladat után a „További gyakorló
+  feladatok (nem kötelezők)” szakaszban 5–6 megoldható SQL feladatot ad (` ```sql starter ` +
+  ` ```sql solution `, szükség esetén ` ```sql test `). Ezek nem zárnak le semmit, csak gyakorlásra valók.
+
+A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a Programozási alapoknál (lásd
+`../programozas-alapjai/README.md`).
 
 **Szabály:** a tárgy követelményei (számonkérés, ZH-k, pontok, jegyek, aláírás, oktató, irodalom) soha
 nem kerülnek a tananyagba (a `tests/quiz.test.ts` egy egyszerű szókereséssel ellenőrzi). A leckék csak

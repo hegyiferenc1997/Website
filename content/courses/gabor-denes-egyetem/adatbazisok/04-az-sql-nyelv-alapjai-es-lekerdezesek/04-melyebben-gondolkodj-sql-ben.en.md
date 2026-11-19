@@ -56,11 +56,11 @@ ORDER BY credits_approx DESC;
 
 If a comparison involves `NULL`, the result is neither true nor false but **unknown** (`UNKNOWN`, in SQL `NULL`). Logical operators behave like this:
 
-| A        | B        | A AND B   | A OR B   | NOT A    |
-| -------- | -------- | --------- | -------- | -------- |
-| true     | unknown  | unknown   | **true** | false    |
-| false    | unknown  | **false** | unknown  | true     |
-| unknown  | unknown  | unknown   | unknown  | unknown  |
+| A       | B       | A AND B   | A OR B   | NOT A   |
+| ------- | ------- | --------- | -------- | ------- |
+| true    | unknown | unknown   | **true** | false   |
+| false   | unknown | **false** | unknown  | true    |
+| unknown | unknown | unknown   | unknown  | unknown |
 
 It makes sense if you think it through: "false AND anything" is always false, so the unknown doesn't matter; "true OR anything" is always true.
 
@@ -138,15 +138,15 @@ SELECT 10 / NULLIF(0, 0) AS safe_division;
 
 ## 5. String functions
 
-| Function                    | What it does                     | Example → result                        |
-| --------------------------- | -------------------------------- | --------------------------------------- |
-| `UPPER(s)`, `LOWER(s)`      | upper / lower case               | `UPPER('anna')` → `ANNA`                |
-| `LENGTH(s)`                 | length in characters             | `LENGTH('Béla')` → 4                    |
-| `TRIM(s)`                   | trims spaces from both ends      | `TRIM('  x ')` → `x`                    |
-| `SUBSTRING(s FROM i FOR n)` | substring                        | `SUBSTRING('ABC123' FROM 4 FOR 3)` → `123` |
-| `s1 \|\| s2`                | concatenation                    | `'Anna' \|\| ' ' \|\| 'Kiss'`            |
-| `SPLIT_PART(s, sep, n)`     | n-th piece by separator          | `SPLIT_PART('Anna Kiss', ' ', 2)` → `Kiss` |
-| `REPLACE(s, what, with)`    | replace                          | `REPLACE('a-b', '-', '/')` → `a/b`      |
+| Function                    | What it does                | Example → result                           |
+| --------------------------- | --------------------------- | ------------------------------------------ |
+| `UPPER(s)`, `LOWER(s)`      | upper / lower case          | `UPPER('anna')` → `ANNA`                   |
+| `LENGTH(s)`                 | length in characters        | `LENGTH('Béla')` → 4                       |
+| `TRIM(s)`                   | trims spaces from both ends | `TRIM('  x ')` → `x`                       |
+| `SUBSTRING(s FROM i FOR n)` | substring                   | `SUBSTRING('ABC123' FROM 4 FOR 3)` → `123` |
+| `s1 \|\| s2`                | concatenation               | `'Anna' \|\| ' ' \|\| 'Kiss'`              |
+| `SPLIT_PART(s, sep, n)`     | n-th piece by separator     | `SPLIT_PART('Anna Kiss', ' ', 2)` → `Kiss` |
+| `REPLACE(s, what, with)`    | replace                     | `REPLACE('a-b', '-', '/')` → `a/b`         |
 
 ```sql run
 SELECT name,

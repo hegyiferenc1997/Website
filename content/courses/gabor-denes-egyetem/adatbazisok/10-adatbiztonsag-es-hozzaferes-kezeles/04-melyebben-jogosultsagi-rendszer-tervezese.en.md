@@ -26,13 +26,13 @@ minutes: 40
 
 Before writing a single `GRANT`, make a table: **roles** as rows, **tables** as columns, and in each cell what that role may do: **C**reate (INSERT), **R**ead (SELECT), **U**pdate, **D**elete.
 
-| Role                   | students   | courses | enrollments            |
-| ---------------------- | ---------- | ------- | ---------------------- |
-| student (application)  | R (own)    | R       | C, R (own)             |
-| lecturer               | R          | R       | R, U (grade only)      |
-| registrar's office     | C, R, U    | C, R, U | C, R, U                |
-| statistician           | –          | R       | R (without names)      |
-| DBA / migration        | all        | all     | all                    |
+| Role                  | students | courses | enrollments       |
+| --------------------- | -------- | ------- | ----------------- |
+| student (application) | R (own)  | R       | C, R (own)        |
+| lecturer              | R        | R       | R, U (grade only) |
+| registrar's office    | C, R, U  | C, R, U | C, R, U           |
+| statistician          | –        | R       | R (without names) |
+| DBA / migration       | all      | all     | all               |
 
 The `GRANT` statements follow almost mechanically from this table – and even a non-technical manager can read and approve it. **This is the most important step:** permissions are a business decision, not a technical detail.
 
@@ -56,11 +56,11 @@ A common, dangerous pattern: the web application connects with the same account 
 
 The correct setup:
 
-| Account            | Purpose                                 | Rights                                   |
-| ------------------ | --------------------------------------- | ---------------------------------------- |
-| `app_owner`        | schema owner, used only for migrations  | CREATE, ALTER, DROP – on its own objects |
-| `app_user`         | the running application connects with it | only DML per the CRUD matrix            |
-| `readonly`         | reports, analysts                       | SELECT only, maybe only on views         |
+| Account     | Purpose                                  | Rights                                   |
+| ----------- | ---------------------------------------- | ---------------------------------------- |
+| `app_owner` | schema owner, used only for migrations   | CREATE, ALTER, DROP – on its own objects |
+| `app_user`  | the running application connects with it | only DML per the CRUD matrix             |
+| `readonly`  | reports, analysts                        | SELECT only, maybe only on views         |
 
 ```sql run
 -- Separating the three accounts (groups)
@@ -170,14 +170,14 @@ Everyday roles should get only `INSERT` on the log table (through the trigger), 
 
 ## 6. Mistakes that lead to real incidents
 
-| Mistake                                                    | Consequence                                     | The right way                                    |
-| ---------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------ |
-| the application connects as a superuser                    | one SQL injection = complete takeover           | a separate `app_user` with DML rights only       |
-| a shared account for several people ("admin/admin")        | can't tell who did it; can't revoke one person's access | personal accounts, group roles           |
-| a departed employee's account stays active                 | a former employee has access                    | on/offboarding process, regular access reviews   |
-| `GRANT ALL` "to make it work"                              | violates least privilege                        | rights derived from the CRUD matrix              |
-| password in the source code                                | leaking the code leaks the password             | environment variable, secret manager             |
-| database port open to the internet                         | password-guessing attacks                       | firewall, reachable only from the app server     |
+| Mistake                                             | Consequence                                             | The right way                                  |
+| --------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------- |
+| the application connects as a superuser             | one SQL injection = complete takeover                   | a separate `app_user` with DML rights only     |
+| a shared account for several people ("admin/admin") | can't tell who did it; can't revoke one person's access | personal accounts, group roles                 |
+| a departed employee's account stays active          | a former employee has access                            | on/offboarding process, regular access reviews |
+| `GRANT ALL` "to make it work"                       | violates least privilege                                | rights derived from the CRUD matrix            |
+| password in the source code                         | leaking the code leaks the password                     | environment variable, secret manager           |
+| database port open to the internet                  | password-guessing attacks                               | firewall, reachable only from the app server   |
 
 ## Summary
 

@@ -23,15 +23,15 @@ Húzzuk alá a főneveket: _könyv, cím, szerző, kiadási év, ISBN, példány
 
 Most válogassunk: melyik **önálló dolog** (egyed), és melyik csak egy dolog **tulajdonsága**?
 
-| Főnév          | Egyed vagy tulajdonság?        | Miért?                                                |
-| -------------- | ------------------------------ | ----------------------------------------------------- |
-| könyv          | **egyed**                      | sok tulajdonsága van, sok más dolog kapcsolódik hozzá |
-| cím, ISBN, év  | a könyv tulajdonságai          | önmagukban nem érdekesek                              |
-| szerző         | **egyed** (!)                  | egy könyvnek több szerzője lehet, egy szerzőnek több könyve |
-| példány        | **egyed**                      | külön kölcsönözhető, saját állapota van               |
-| olvasó         | **egyed**                      | sok tulajdonság, sok kölcsönzés                       |
-| kölcsönzés     | **egyed** (esemény)            | saját adatai vannak: mikor vitte el, mikor hozta vissza |
-| késési díj     | **számolt érték**              | a dátumokból kiszámolható, nem kell tárolni           |
+| Főnév         | Egyed vagy tulajdonság? | Miért?                                                      |
+| ------------- | ----------------------- | ----------------------------------------------------------- |
+| könyv         | **egyed**               | sok tulajdonsága van, sok más dolog kapcsolódik hozzá       |
+| cím, ISBN, év | a könyv tulajdonságai   | önmagukban nem érdekesek                                    |
+| szerző        | **egyed** (!)           | egy könyvnek több szerzője lehet, egy szerzőnek több könyve |
+| példány       | **egyed**               | külön kölcsönözhető, saját állapota van                     |
+| olvasó        | **egyed**               | sok tulajdonság, sok kölcsönzés                             |
+| kölcsönzés    | **egyed** (esemény)     | saját adatai vannak: mikor vitte el, mikor hozta vissza     |
+| késési díj    | **számolt érték**       | a dátumokból kiszámolható, nem kell tárolni                 |
 
 Figyeld meg az utolsó sort: a **kiszámolható** adatot általában nem tároljuk, mert ha a dátum változik, a tárolt díj elavulna (ellentmondás!).
 
@@ -97,12 +97,12 @@ Ha egy kérdésre nem tudsz válaszolni, hiányzik valami a modellből.
 
 Ugyanarra a leírásra több helyes modell is adható. Néhány döntés, amelyben jogos a vita:
 
-| Kérdés                                      | A változat                            | B változat                              | Mikor melyik?                                      |
-| ------------------------------------------- | ------------------------------------- | --------------------------------------- | -------------------------------------------------- |
-| Szerző: külön tábla vagy szöveg?            | `szerzok` tábla + kapcsolótábla       | `szerzo` szöveges mező a könyvben       | ha keresni, szűrni kell szerzőre → A; ha csak kiírni → B elég |
-| Kulcs: természetes vagy mesterséges?        | `isbn` a kulcs                        | `konyv_id SERIAL`, az ISBN csak egyedi  | régi könyveknek nincs ISBN-je → B biztonságosabb   |
-| Lakcím: egy mező vagy több?                 | `lakcim TEXT`                         | `irsz`, `varos`, `utca`, `hazszam`      | ha városra statisztika kell → B                     |
-| Késési díj: tárolt vagy számolt?            | `dij` oszlop                          | lekérdezésben számolva                  | ha a díjszabás változhat, és a régi díj számít → tárolt |
+| Kérdés                               | A változat                      | B változat                             | Mikor melyik?                                                 |
+| ------------------------------------ | ------------------------------- | -------------------------------------- | ------------------------------------------------------------- |
+| Szerző: külön tábla vagy szöveg?     | `szerzok` tábla + kapcsolótábla | `szerzo` szöveges mező a könyvben      | ha keresni, szűrni kell szerzőre → A; ha csak kiírni → B elég |
+| Kulcs: természetes vagy mesterséges? | `isbn` a kulcs                  | `konyv_id SERIAL`, az ISBN csak egyedi | régi könyveknek nincs ISBN-je → B biztonságosabb              |
+| Lakcím: egy mező vagy több?          | `lakcim TEXT`                   | `irsz`, `varos`, `utca`, `hazszam`     | ha városra statisztika kell → B                               |
+| Késési díj: tárolt vagy számolt?     | `dij` oszlop                    | lekérdezésben számolva                 | ha a díjszabás változhat, és a régi díj számít → tárolt       |
 
 Az utolsó sor érdekes: ha a könyvtár holnaptól napi 100 Ft-ot kér, a **múltbeli** késéseknél továbbra is az akkori 50 Ft érvényes. Ilyenkor a kiszámolt díjat a visszahozáskor **elmentjük**, mert az már egy lezárt, történeti tény. A „ne tárolj számolt értéket” szabály tehát nem dogma – a lényeg, hogy **tudatosan** döntsünk.
 
@@ -170,16 +170,16 @@ Kattints a **Szerkesztés** gombra, írd át `'Anna'`-t `'Annamária'`-ra, és f
 
 ## Típusválasztási puska
 
-| Adat                      | Jó típus               | Rossz választás          |
-| ------------------------- | ---------------------- | ------------------------ |
-| ár, egyenleg              | `NUMERIC(12, 2)`       | `REAL`, `FLOAT`          |
-| darabszám, életkor        | `INT` (+ `CHECK >= 0`) | `VARCHAR`                |
-| dátum                     | `DATE`                 | `VARCHAR`                |
-| időpont                   | `TIMESTAMP`            | két külön szöveg         |
-| telefonszám, irányítószám | `VARCHAR`              | `INT`                    |
-| igen/nem                  | `BOOLEAN`              | `CHAR(1)` 'I'/'N'        |
-| ISBN                      | `CHAR(13)`             | `BIGINT`                 |
-| hosszú leírás             | `TEXT`                 | `VARCHAR(50)`            |
+| Adat                      | Jó típus               | Rossz választás   |
+| ------------------------- | ---------------------- | ----------------- |
+| ár, egyenleg              | `NUMERIC(12, 2)`       | `REAL`, `FLOAT`   |
+| darabszám, életkor        | `INT` (+ `CHECK >= 0`) | `VARCHAR`         |
+| dátum                     | `DATE`                 | `VARCHAR`         |
+| időpont                   | `TIMESTAMP`            | két külön szöveg  |
+| telefonszám, irányítószám | `VARCHAR`              | `INT`             |
+| igen/nem                  | `BOOLEAN`              | `CHAR(1)` 'I'/'N' |
+| ISBN                      | `CHAR(13)`             | `BIGINT`          |
+| hosszú leírás             | `TEXT`                 | `VARCHAR(50)`     |
 
 ## Összefoglalás
 

@@ -214,11 +214,11 @@ SELECT * FROM articles;
 
 Ben's save updates **0 rows** – from this the program knows that someone else saved in the meantime and tells Ben: "The article was modified meanwhile, please reload!". This method doesn't lock, so it scales well; it's good when conflicts are **rare**.
 
-| Method                | When is it good?                                  | Drawback                                 |
-| --------------------- | ------------------------------------------------- | ---------------------------------------- |
-| `qty = qty - 1`       | simple arithmetic                                 | not enough for complex business logic    |
-| `FOR UPDATE`          | short transaction, frequent conflicts             | waiting, risk of deadlock                |
-| Version number        | long "thinking time" (form), rare conflicts       | on conflict the user has to start over   |
+| Method          | When is it good?                            | Drawback                               |
+| --------------- | ------------------------------------------- | -------------------------------------- |
+| `qty = qty - 1` | simple arithmetic                           | not enough for complex business logic  |
+| `FOR UPDATE`    | short transaction, frequent conflicts       | waiting, risk of deadlock              |
+| Version number  | long "thinking time" (form), rare conflicts | on conflict the user has to start over |
 
 ## Summary
 

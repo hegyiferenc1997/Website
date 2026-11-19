@@ -1,7 +1,7 @@
 ---
 title: Practice – Graph and Time Series Databases
 summary: Review questions about the graph model, recursive queries and time series data, then writing a friend suggester in SQL, with the number of mutual friends.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -107,6 +107,140 @@ WHERE f1.person = 1
   AND f2.friend NOT IN (SELECT friend FROM friendships WHERE person = 1)   -- not known yet
 GROUP BY p.name
 ORDER BY mutual_friends DESC, p.name;
+```
+
+</details>
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+The first three exercises work on the social network above, the last two on a small sensor time series.
+
+**1.** **Degree.** How many friends does each person have? (Name, number of friends; by number of friends descending, then by name.) In graph terms this is the **degree** of the nodes.
+
+```sql starter
+SELECT person, friend
+FROM friendships;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT p.name, COUNT(*) AS friends
+FROM friendships f
+JOIN people p ON p.id = f.person
+GROUP BY p.name
+ORDER BY friends DESC, p.name;
+```
+
+</details>
+
+**2.** **Mutual friends.** How many **mutual friends** do Anna (1) and Dani (4) have? Who are they? (Names, alphabetically.)
+
+```sql starter
+SELECT friend FROM friendships WHERE person = 1;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT p.name
+FROM friendships a
+JOIN friendships d ON d.friend = a.friend   -- the same friend for both of them
+JOIN people p ON p.id = a.friend
+WHERE a.person = 1 AND d.person = 4
+ORDER BY p.name;
+```
+
+</details>
+
+**3.** **Distance with a recursive query.** How many steps away from Anna (1) is everyone else in the network? (Name, distance; by distance, then by name.) Hint: a recursive CTE that grows step by step, and at the end we take the **smallest** distance per person. Limit the depth (e.g. 6 steps) so cycles don't make it run forever!
+
+```sql starter
+WITH RECURSIVE path (id, dist) AS (
+  SELECT 1, 0                    -- start: Anna, 0 steps
+  -- UNION ALL ...
+)
+SELECT * FROM path;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+WITH RECURSIVE path (id, dist) AS (
+  SELECT 1, 0
+  UNION ALL
+  SELECT f.friend, p.dist + 1
+  FROM path p
+  JOIN friendships f ON f.person = p.id
+  WHERE p.dist < 6               -- depth limit because of cycles
+)
+SELECT pe.name, MIN(p.dist) AS distance
+FROM path p
+JOIN people pe ON pe.id = p.id
+WHERE p.id <> 1
+GROUP BY pe.name
+ORDER BY distance, pe.name;
+```
+
+</details>
+
+**4.** **Time series: hourly average.** A thermometer measures every 20 minutes. Compute the average temperature **per hour** to one decimal (hour, average; in time order)! `date_trunc('hour', ts)` "cuts" the timestamp to the start of the hour.
+
+```sql starter
+CREATE TABLE readings (ts TIMESTAMP, temperature NUMERIC(4, 1));
+INSERT INTO readings
+SELECT TIMESTAMP '2026-01-10 08:00' + n * INTERVAL '20 minutes', 18 + n * 0.5
+FROM generate_series(0, 8) AS n;
+
+SELECT * FROM readings ORDER BY ts;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE readings (ts TIMESTAMP, temperature NUMERIC(4, 1));
+INSERT INTO readings
+SELECT TIMESTAMP '2026-01-10 08:00' + n * INTERVAL '20 minutes', 18 + n * 0.5
+FROM generate_series(0, 8) AS n;
+
+SELECT date_trunc('hour', ts) AS hour, ROUND(AVG(temperature), 1) AS average
+FROM readings
+GROUP BY hour
+ORDER BY hour;
+```
+
+</details>
+
+**5.** **Time series: moving average.** On the same kind of readings, compute for every point in time **the average of the last 3 readings** (including the current one), to two decimals – this smooths out the noise. (Time, temperature, moving average; in time order.)
+
+```sql starter
+CREATE TABLE readings (ts TIMESTAMP, temperature NUMERIC(4, 1));
+INSERT INTO readings VALUES
+  ('2026-01-10 08:00', 18.0), ('2026-01-10 08:20', 21.0), ('2026-01-10 08:40', 18.5),
+  ('2026-01-10 09:00', 19.0), ('2026-01-10 09:20', 25.0), ('2026-01-10 09:40', 19.5);
+
+SELECT ts, temperature FROM readings ORDER BY ts;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE readings (ts TIMESTAMP, temperature NUMERIC(4, 1));
+INSERT INTO readings VALUES
+  ('2026-01-10 08:00', 18.0), ('2026-01-10 08:20', 21.0), ('2026-01-10 08:40', 18.5),
+  ('2026-01-10 09:00', 19.0), ('2026-01-10 09:20', 25.0), ('2026-01-10 09:40', 19.5);
+
+SELECT ts, temperature,
+       ROUND(AVG(temperature) OVER (ORDER BY ts ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS moving_avg
+FROM readings
+ORDER BY ts;
 ```
 
 </details>

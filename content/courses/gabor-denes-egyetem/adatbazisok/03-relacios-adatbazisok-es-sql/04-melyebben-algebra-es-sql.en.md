@@ -63,14 +63,14 @@ JOIN enrollments e ON e.neptun = s.neptun      -- ⋈
 WHERE e.code = 'ADB' AND e.grade >= 4;         -- σ
 ```
 
-| Algebra             | SQL                                       |
-| ------------------- | ----------------------------------------- |
-| σ (selection)       | `WHERE`                                   |
-| π (projection)      | the column list after `SELECT`            |
-| ⋈ (join)            | `JOIN … ON …`                             |
-| × (product)         | `CROSS JOIN` (or a comma in `FROM`)       |
-| ρ (rename)          | `AS`                                      |
-| ∪, ∩, −             | `UNION`, `INTERSECT`, `EXCEPT`            |
+| Algebra        | SQL                                 |
+| -------------- | ----------------------------------- |
+| σ (selection)  | `WHERE`                             |
+| π (projection) | the column list after `SELECT`      |
+| ⋈ (join)       | `JOIN … ON …`                       |
+| × (product)    | `CROSS JOIN` (or a comma in `FROM`) |
+| ρ (rename)     | `AS`                                |
+| ∪, ∩, −        | `UNION`, `INTERSECT`, `EXCEPT`      |
 
 ## Set or multiset?
 

@@ -38,12 +38,12 @@ An exam registration table: `R(neptun, name, code, course_name, credits, exam_da
 
 What is the key? Let's try `{neptun, code, exam_date}`:
 
-| Step | FD used                   | X⁺                                                     |
-| ---- | ------------------------- | ------------------------------------------------------ |
-| 0.   | –                         | neptun, code, exam_date                                |
-| 1.   | neptun → name             | neptun, code, exam_date, **name**                      |
-| 2.   | code → course_name, credits | …, **course_name, credits**                          |
-| 3.   | code, exam_date → room    | …, **room** → every column is there ✔                  |
+| Step | FD used                     | X⁺                                    |
+| ---- | --------------------------- | ------------------------------------- |
+| 0.   | –                           | neptun, code, exam_date               |
+| 1.   | neptun → name               | neptun, code, exam_date, **name**     |
+| 2.   | code → course_name, credits | …, **course_name, credits**           |
+| 3.   | code, exam_date → room      | …, **room** → every column is there ✔ |
 
 So `{neptun, code, exam_date}` is a superkey. Can any element be dropped?
 
@@ -132,12 +132,12 @@ Exactly as many rows as the original – the decomposition is lossless.
 
 Normalisation makes **updates** safe, but queries need more JOINs. Sometimes we step back on purpose:
 
-| Situation                                                    | Denormalisation                                 | Risk and how to handle it                          |
-| ------------------------------------------------------------ | ----------------------------------------------- | -------------------------------------------------- |
-| The product page always needs the review count and average   | `products.review_count`, `avg_rating` columns   | may get stale → kept up to date by a trigger or a scheduled refresh |
-| A reporting database (data warehouse) that is only read      | star schema, repeated dimension data (topic 18) | no updates, so no anomalies                        |
-| The order keeps the price and address at purchase time       | `order_items.unit_price`, `orders.shipping_address` | this isn't really redundancy but a historical fact |
-| A very frequent, expensive JOIN                              | materialised view (topic 16)                    | needs refreshing                                   |
+| Situation                                                  | Denormalisation                                     | Risk and how to handle it                                           |
+| ---------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------- |
+| The product page always needs the review count and average | `products.review_count`, `avg_rating` columns       | may get stale → kept up to date by a trigger or a scheduled refresh |
+| A reporting database (data warehouse) that is only read    | star schema, repeated dimension data (topic 18)     | no updates, so no anomalies                                         |
+| The order keeps the price and address at purchase time     | `order_items.unit_price`, `orders.shipping_address` | this isn't really redundancy but a historical fact                  |
+| A very frequent, expensive JOIN                            | materialised view (topic 16)                        | needs refreshing                                                    |
 
 **Golden rule:** **normalise** first, and only denormalise when you have a **measured** performance problem – and even then document who and what keeps the copy in sync.
 

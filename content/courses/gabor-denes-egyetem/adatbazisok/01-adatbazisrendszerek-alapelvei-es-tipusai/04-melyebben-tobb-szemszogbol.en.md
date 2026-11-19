@@ -18,12 +18,12 @@ This lesson ties together the ideas of the previous three lessons (data, DBMS, t
 
 Think of a university student information system. There is a single database behind it, yet everyone sees something different and wants something different from it:
 
-| Who?                         | What do they see?                          | What do they do with it?                    | What matters to them?                    |
-| ---------------------------- | ------------------------------------------ | ------------------------------------------- | ---------------------------------------- |
-| **Student**                  | their own courses, grades, timetable       | registers for courses and exams             | speed, and nothing gets lost             |
-| **Registrar's office clerk** | all students of a programme, the grades    | corrects grades, creates reports            | accurate, consistent data                |
-| **Developer**                | tables, columns, relationships             | writes queries and programs                 | clear structure, a stable interface      |
-| **Database administrator**   | disks, backups, permissions                | backs up, tunes, grants rights, upgrades    | security, availability, speed            |
+| Who?                         | What do they see?                       | What do they do with it?                 | What matters to them?               |
+| ---------------------------- | --------------------------------------- | ---------------------------------------- | ----------------------------------- |
+| **Student**                  | their own courses, grades, timetable    | registers for courses and exams          | speed, and nothing gets lost        |
+| **Registrar's office clerk** | all students of a programme, the grades | corrects grades, creates reports         | accurate, consistent data           |
+| **Developer**                | tables, columns, relationships          | writes queries and programs              | clear structure, a stable interface |
+| **Database administrator**   | disks, backups, permissions             | backs up, tunes, grants rights, upgrades | security, availability, speed       |
 
 This is exactly the **three-level architecture** in practice:
 
@@ -38,20 +38,20 @@ This is exactly the **three-level architecture** in practice:
 A student union has kept track of event sign-ups in a shared spreadsheet file. Let's see what happens as traffic grows!
 
 1. **Two people edit at once.** Anna and Ben both open the file, both type a new attendee into row 51, then both save. The later save overwrites the other: **a sign-up is lost**. A DBMS solves this with **concurrency control** (locking, transactions): both inserts survive.
-2. **The same student three times.** Once as "Anna Kiss", once as "Anna  Kiss" (two spaces), once as "anna kiss". The spreadsheet doesn't prevent it; in a DBMS a **unique key** (e.g. a student ID) can.
+2. **The same student three times.** Once as "Anna Kiss", once as "Anna Kiss" (two spaces), once as "anna kiss". The spreadsheet doesn't prevent it; in a DBMS a **unique key** (e.g. a student ID) can.
 3. **Invalid data.** Someone types "lots" into the headcount column. The spreadsheet accepts it; the DBMS rejects it through **type checking** (`INT`).
 4. **Who may see what?** Either someone can see the spreadsheet or not. In a DBMS you can let the organiser see e-mail addresses while others see only names (**permissions, views**).
 5. **The machine crashes while saving.** A half-saved file may even be unreadable. The DBMS restores the last consistent state from its **log** (more on this in topic 9).
 6. **A million rows.** The spreadsheet slows down or won't even open; the DBMS finds a row in milliseconds using **indexes**.
 
-| Aspect               | Spreadsheet               | DBMS                                    |
-| -------------------- | ------------------------- | --------------------------------------- |
-| Concurrent editing   | limited, conflicts        | transactions, locking                   |
-| Enforcing data types | none or weak              | strict (`INT`, `DATE`, `CHECK`)         |
-| Preventing duplicates| by hand                   | primary and unique keys                 |
-| Permissions          | file level                | table, column and row level             |
-| Fault tolerance      | last save                 | log, recovery, replication              |
-| Size                 | a few hundred thousand rows | billions of rows                      |
+| Aspect                | Spreadsheet                 | DBMS                            |
+| --------------------- | --------------------------- | ------------------------------- |
+| Concurrent editing    | limited, conflicts          | transactions, locking           |
+| Enforcing data types  | none or weak                | strict (`INT`, `DATE`, `CHECK`) |
+| Preventing duplicates | by hand                     | primary and unique keys         |
+| Permissions           | file level                  | table, column and row level     |
+| Fault tolerance       | last save                   | log, recovery, replication      |
+| Size                  | a few hundred thousand rows | billions of rows                |
 
 This does **not** mean spreadsheets are bad! They are perfect for a quick calculation or a one-person list. The question is always **how many people, how much data and how critical** the work is.
 

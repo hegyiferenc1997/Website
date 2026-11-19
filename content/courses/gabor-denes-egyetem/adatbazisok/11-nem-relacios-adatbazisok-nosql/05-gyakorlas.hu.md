@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – NoSQL
 summary: Ellenőrző kérdések a NoSQL családokról, a CAP-tételről és a modellezésről, egy „melyik adatbázist válasszuk?” esettanulmány, valamint egy szorgalmi feladat beágyazott JSON-dokumentumokkal.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -120,6 +120,116 @@ SELECT r.id,
 FROM rendelesek r, jsonb_array_elements(r.dok -> 'tetelek') AS t
 GROUP BY r.id, r.dok ->> 'vasarlo'
 ORDER BY r.id;
+```
+
+</details>
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+Az első négy feladat a fenti rendelésdokumentumokon (`rendelesek` tábla, `dok` JSONB oszlop) dolgozik, az utolsó egy kulcs-érték tárat utánoz.
+
+**1.** **Tömb hossza.** Rendelésenként írd ki a vásárló nevét és azt, hogy **hány tétel** van a rendelésben (`jsonb_array_length`), azonosító szerint!
+
+```sql starter
+SELECT id, dok
+FROM rendelesek;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT id,
+       dok ->> 'vasarlo' AS vasarlo,                    -- ->> szöveget ad vissza
+       jsonb_array_length(dok -> 'tetelek') AS tetelek  -- -> JSON-t ad vissza (itt egy tömböt)
+FROM rendelesek
+ORDER BY id;
+```
+
+</details>
+
+**2.** **Tartalmazás (`@>`).** Melyik rendelésben (azonosító, vásárló) szerepel **webkamera**? Használd a `@>` operátort: „a dokumentum tartalmazza-e ezt a részdokumentumot?”
+
+```sql starter
+SELECT id, dok ->> 'vasarlo' AS vasarlo
+FROM rendelesek;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT id, dok ->> 'vasarlo' AS vasarlo
+FROM rendelesek
+WHERE dok @> '{"tetelek": [{"termek": "Webkamera"}]}';   -- GIN indexszel ez nagyon gyors
+```
+
+</details>
+
+**3.** **Tömb kibontása.** Listázd ki az összes **10 000 Ft-nál drágább** tételt (termék, ár) az összes rendelésből, ár szerint csökkenően!
+
+```sql starter
+SELECT t
+FROM rendelesek r, jsonb_array_elements(r.dok -> 'tetelek') AS t;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT t ->> 'termek' AS termek, (t ->> 'ar')::INT AS ar
+FROM rendelesek r, jsonb_array_elements(r.dok -> 'tetelek') AS t
+WHERE (t ->> 'ar')::INT > 10000                          -- a szöveget számmá kell alakítani
+ORDER BY ar DESC;
+```
+
+</details>
+
+**4.** **Új mező a dokumentumba.** A 2-es rendelés elkészült: egészítsd ki a dokumentumát egy `"statusz": "kész"` mezővel (a `||` operátor összefésül két JSON-objektumot)! Utána kérdezd le minden rendelés azonosítóját és státuszát.
+
+```sql starter
+SELECT id, dok ->> 'statusz' AS statusz
+FROM rendelesek
+ORDER BY id;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+UPDATE rendelesek
+SET dok = dok || '{"statusz": "kész"}'
+WHERE id = 2;
+
+SELECT id, dok ->> 'statusz' AS statusz      -- ahol nincs ilyen mező, ott NULL
+FROM rendelesek
+ORDER BY id;
+```
+
+</details>
+
+**5.** **Kulcs-érték tár SQL-ben.** Egy oldalletöltés-számlálót utánzunk: a `szamlalok` táblában (`kulcs` szöveg, elsődleges kulcs; `ertek` egész) a `fooldal` kulcs értékét minden letöltéskor 1-gyel növeljük – ha még nincs ilyen kulcs, 1-gyel jön létre. Futtasd a „növelést” **háromszor**, majd kérdezd le a táblát!
+
+```sql starter
+CREATE TABLE szamlalok (kulcs TEXT PRIMARY KEY, ertek INT NOT NULL);
+-- INSERT ... ON CONFLICT ... (háromszor)
+SELECT * FROM szamlalok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE TABLE szamlalok (kulcs TEXT PRIMARY KEY, ertek INT NOT NULL);
+INSERT INTO szamlalok VALUES ('fooldal', 1)
+  ON CONFLICT (kulcs) DO UPDATE SET ertek = szamlalok.ertek + 1;
+INSERT INTO szamlalok VALUES ('fooldal', 1)
+  ON CONFLICT (kulcs) DO UPDATE SET ertek = szamlalok.ertek + 1;
+INSERT INTO szamlalok VALUES ('fooldal', 1)
+  ON CONFLICT (kulcs) DO UPDATE SET ertek = szamlalok.ertek + 1;   -- Redisben: INCR fooldal
+SELECT * FROM szamlalok;
 ```
 
 </details>

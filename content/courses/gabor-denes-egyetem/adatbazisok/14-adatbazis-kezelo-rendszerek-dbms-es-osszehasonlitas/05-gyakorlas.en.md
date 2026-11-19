@@ -1,7 +1,7 @@
 ---
 title: Practice – Comparing DBMSs
 summary: Review questions about relational and NoSQL systems, cloud services and the method of choosing, then five project descriptions for which you have to choose the most suitable database.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -81,3 +81,125 @@ Five teams ask you for advice. Choose the best-fitting solution for each!
 - a big, fixed-size rented server
 ! They pay per use, and scaling is automatic.
 ```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+In every exercise you get a query written in **another DBMS's dialect** as a comment. Rewrite it in **standard SQL / PostgreSQL** so that it gives the same result!
+
+<details>
+<summary>Creating the sample database (SQL)</summary>
+
+<!-- sql-setup: egyetem -->
+
+</details>
+
+**1.** **MySQL → standard paging.** MySQL's `LIMIT 2, 3` means: "skip 2 rows and return 3". Rewrite it in the standard `OFFSET … FETCH` form! (Course code and name, sorted by code.)
+
+```sql starter
+-- MySQL: SELECT code, name FROM courses ORDER BY code LIMIT 2, 3;
+SELECT code, name
+FROM courses
+ORDER BY code;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT code, name
+FROM courses
+ORDER BY code
+OFFSET 2 ROWS FETCH NEXT 3 ROWS ONLY;      -- SQL:2008 standard, Oracle and SQL Server understand it too
+```
+
+</details>
+
+**2.** **Oracle `NVL` → `COALESCE`.** Rewrite it: the students' name and city, with the text `'unknown'` instead of an unknown city, by name.
+
+```sql starter
+-- Oracle: SELECT name, NVL(city, 'unknown') FROM students ORDER BY name;
+SELECT name, city
+FROM students
+ORDER BY name;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name, COALESCE(city, 'unknown') AS city   -- COALESCE: standard, works in every DBMS
+FROM students
+ORDER BY name;
+```
+
+</details>
+
+**3.** **MySQL `GROUP_CONCAT` → `string_agg`.** Per student (Neptun code), the codes of their courses **separated by commas, alphabetically**, sorted by Neptun code.
+
+```sql starter
+-- MySQL: SELECT neptun, GROUP_CONCAT(code ORDER BY code SEPARATOR ', ')
+--        FROM enrollments GROUP BY neptun ORDER BY neptun;
+SELECT neptun, code
+FROM enrollments;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT neptun, string_agg(code, ', ' ORDER BY code) AS courses
+FROM enrollments
+GROUP BY neptun
+ORDER BY neptun;
+```
+
+</details>
+
+**4.** **Oracle `DECODE` → `CASE`.** `DECODE(semester, 1, 'first', 3, 'third', 'other')` is Oracle-specific. Rewrite it with a standard `CASE`! (Name, semester as text, by name.)
+
+```sql starter
+-- Oracle: SELECT name, DECODE(semester, 1, 'first', 3, 'third', 'other') FROM students ORDER BY name;
+SELECT name, semester
+FROM students
+ORDER BY name;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name,
+       CASE semester
+         WHEN 1 THEN 'first'
+         WHEN 3 THEN 'third'
+         ELSE 'other'
+       END AS semester_text
+FROM students
+ORDER BY name;
+```
+
+</details>
+
+**5.** **SQL Server `DATEDIFF` → PostgreSQL.** How old were the students on **1 September 2025**? (Name, age; only with a known birth date, by name.) In PostgreSQL `AGE(date1, date2)` gives the exact difference, and `EXTRACT(YEAR FROM …)` takes the years from it.
+
+```sql starter
+-- SQL Server (inaccurate: it only subtracts the years!):
+-- SELECT name, DATEDIFF(year, born, '2025-09-01') FROM students ...;
+SELECT name, born
+FROM students
+ORDER BY name;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT name, EXTRACT(YEAR FROM AGE(DATE '2025-09-01', born)) AS age
+FROM students
+WHERE born IS NOT NULL
+ORDER BY name;
+```
+
+</details>

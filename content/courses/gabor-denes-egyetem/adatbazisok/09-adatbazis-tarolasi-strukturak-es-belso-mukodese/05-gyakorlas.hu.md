@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – tárolás és belső működés
 summary: Ellenőrző kérdések a lapokról, indexekről, a naplóról és az MVCC-ről, egy kis „méretbecslős” esettanulmány a webshop adatbázisán, és egy számolós feladatlap.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -103,3 +103,106 @@ Az első `Index Scan` (B-fa az elsődleges kulcson), a második `Seq Scan` – a
 - a hash index összekeveri a sorrendet
 ! Ezt hívják felfúvódásnak (bloat).
 ```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+Ezekben a feladatokban „belenézünk” a PostgreSQL tárolójába: lapok, sorazonosítók, méretek. A feladatok a fenti webshop-adatbázison futnak.
+
+**1.** **Hány lapon fér el?** A `pg_class` katalógustábla `relpages` oszlopa megmutatja, hány 8 KB-os **lapot** foglal egy tábla. Kérd le a négy webshop-tábla nevét és lapszámát, név szerint!
+
+```sql starter
+SELECT relname, relpages
+FROM pg_class;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT relname, relpages
+FROM pg_class
+WHERE relname IN ('vasarlok', 'termekek', 'rendelesek', 'tetelek')
+ORDER BY relname;
+```
+
+</details>
+
+**2.** **Sor per lap.** Számold ki táblánként, átlagosan **hány sor fér egy lapra** (`reltuples / relpages`, egészre kerekítve)! Csak azokat a táblákat nézd, amelyek legalább 2 lapot foglalnak, név szerint rendezve.
+
+```sql starter
+SELECT relname, reltuples, relpages
+FROM pg_class
+WHERE relname IN ('vasarlok', 'termekek', 'rendelesek', 'tetelek');
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT relname, ROUND(reltuples / relpages) AS sor_per_lap
+FROM pg_class
+WHERE relname IN ('vasarlok', 'termekek', 'rendelesek', 'tetelek')
+  AND relpages >= 2
+ORDER BY relname;
+```
+
+</details>
+
+**3.** **A sor fizikai címe.** Minden sornak van egy rejtett `ctid` oszlopa: **(lapszám, sorszám a lapon)**. Kérd le az első 3 termék `ctid`-jét és nevét azonosító szerint! Látod, hogy mind a 0. lapon vannak?
+
+```sql starter
+SELECT nev
+FROM termekek
+ORDER BY termek_id
+LIMIT 3;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT ctid, nev
+FROM termekek
+ORDER BY termek_id
+LIMIT 3;
+```
+
+</details>
+
+**4.** **Mekkora egy sor?** A `pg_column_size(t.*)` egy sor tárolt méretét adja bájtban. Mekkora egy termék-sor **átlagos** mérete (egészre kerekítve)?
+
+```sql starter
+SELECT pg_column_size(t.*) FROM termekek t;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT ROUND(AVG(pg_column_size(t.*))) AS atlagos_bajt
+FROM termekek t;
+```
+
+</details>
+
+**5.** **Tábla kontra index.** Hasonlítsd össze a `rendelesek` tábla és az elsődleges kulcs indexének (`rendelesek_pkey`) méretét lapokban! Melyik a kisebb, és miért? (Oszlopok: név, lapok, név szerint.)
+
+```sql starter
+SELECT relname, relpages
+FROM pg_class
+WHERE relname = 'rendelesek';
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT relname, relpages
+FROM pg_class
+WHERE relname IN ('rendelesek', 'rendelesek_pkey')   -- az index csak a kulcsot és a sor címét tárolja
+ORDER BY relname;
+```
+
+</details>

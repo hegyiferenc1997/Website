@@ -1,7 +1,7 @@
 ---
 title: Practice – E-R Modelling
 summary: Review questions and a complete modelling task (cinema ticket booking) from requirements to tables.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -85,4 +85,182 @@ Design the E-R model and the tables in your head (or on paper), then answer!
 ? How many tables do you get in total? (films, halls, screenings, viewers + whatever bookings and seats need)
 = 6
 ! films, halls, screenings, viewers, bookings, booked_seats.
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+**1.** **Querying a 1:N relationship.** We store a library's authors and books. For **every author**, show how many books they have – including those who have **none** (with 0)! Sorted by name.
+
+```sql starter
+CREATE TABLE authors (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+CREATE TABLE books (
+  id        INT PRIMARY KEY,
+  title     VARCHAR(60) NOT NULL,
+  author_id INT REFERENCES authors (id)
+);
+INSERT INTO authors VALUES (1, 'Mor Jokai'), (2, 'Magda Szabo'), (3, 'Istvan Orkeny');
+INSERT INTO books VALUES (1, 'The Man with the Golden Touch', 1), (2, 'The Baron''s Sons', 1), (3, 'The Door', 2);
+
+SELECT a.name, b.title
+FROM authors a JOIN books b ON b.author_id = a.id;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE authors (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+CREATE TABLE books (
+  id        INT PRIMARY KEY,
+  title     VARCHAR(60) NOT NULL,
+  author_id INT REFERENCES authors (id)
+);
+INSERT INTO authors VALUES (1, 'Mor Jokai'), (2, 'Magda Szabo'), (3, 'Istvan Orkeny');
+INSERT INTO books VALUES (1, 'The Man with the Golden Touch', 1), (2, 'The Baron''s Sons', 1), (3, 'The Door', 2);
+
+SELECT a.name, COUNT(b.id) AS book_count      -- COUNT(b.id): a missing (NULL) book counts as 0
+FROM authors a
+LEFT JOIN books b ON b.author_id = a.id       -- LEFT JOIN: authors without books stay too
+GROUP BY a.name
+ORDER BY a.name;
+```
+
+</details>
+
+**2.** **An N:M relationship with a junction table.** Pupils attend clubs; a pupil can attend several clubs, a club has several pupils. Create the `membership` junction table (`pupil_id`, `club_id`) with a **composite primary key** and **two foreign keys**!
+
+```sql starter
+CREATE TABLE pupils (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+CREATE TABLE clubs (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+INSERT INTO pupils VALUES (1, 'Anna'), (2, 'Bela');
+INSERT INTO clubs VALUES (1, 'Robotics'), (2, 'Chess');
+
+CREATE TABLE membership (
+  pupil_id INT
+);
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE pupils (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+CREATE TABLE clubs (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+INSERT INTO pupils VALUES (1, 'Anna'), (2, 'Bela');
+INSERT INTO clubs VALUES (1, 'Robotics'), (2, 'Chess');
+
+CREATE TABLE membership (
+  pupil_id INT REFERENCES pupils (id),
+  club_id  INT REFERENCES clubs (id),
+  PRIMARY KEY (pupil_id, club_id)            -- a pupil is in a club only once
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION try_it(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'succeeded';
+EXCEPTION WHEN others THEN
+  RETURN 'rejected';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE results (seq INT, test TEXT, result TEXT);
+INSERT INTO results VALUES (1, 'Anna in robotics', try_it($q$INSERT INTO membership VALUES (1, 1)$q$));
+INSERT INTO results VALUES (2, 'Anna in chess too', try_it($q$INSERT INTO membership VALUES (1, 2)$q$));
+INSERT INTO results VALUES (3, 'Anna twice in robotics', try_it($q$INSERT INTO membership VALUES (1, 1)$q$));
+INSERT INTO results VALUES (4, 'non-existent club', try_it($q$INSERT INTO membership VALUES (2, 9)$q$));
+SELECT * FROM results ORDER BY seq;
+```
+
+**3.** **A weak entity.** A room can only be identified together with its building: room 101 in building A is different from room 101 in building B. Create the `rooms` table (`building_code`, `room_number`, `capacity`) so that the key is **the building and the room number together**, and the building is a **foreign key**!
+
+```sql starter
+CREATE TABLE buildings (code CHAR(1) PRIMARY KEY, name VARCHAR(40) NOT NULL);
+INSERT INTO buildings VALUES ('A', 'Main building'), ('B', 'Lab');
+
+CREATE TABLE rooms (
+  room_number INT PRIMARY KEY
+);
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE buildings (code CHAR(1) PRIMARY KEY, name VARCHAR(40) NOT NULL);
+INSERT INTO buildings VALUES ('A', 'Main building'), ('B', 'Lab');
+
+CREATE TABLE rooms (
+  building_code CHAR(1) REFERENCES buildings (code),
+  room_number   INT,
+  capacity      INT,
+  PRIMARY KEY (building_code, room_number)   -- the "owner's" key + the partial key
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION try_it(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'succeeded';
+EXCEPTION WHEN others THEN
+  RETURN 'rejected';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE results (seq INT, test TEXT, result TEXT);
+INSERT INTO results VALUES (1, 'A101', try_it($q$INSERT INTO rooms VALUES ('A', 101, 30)$q$));
+INSERT INTO results VALUES (2, 'B101', try_it($q$INSERT INTO rooms VALUES ('B', 101, 20)$q$));
+INSERT INTO results VALUES (3, 'A101 once more', try_it($q$INSERT INTO rooms VALUES ('A', 101, 50)$q$));
+INSERT INTO results VALUES (4, 'non-existent building', try_it($q$INSERT INTO rooms VALUES ('C', 1, 10)$q$));
+SELECT * FROM results ORDER BY seq;
+```
+
+**4.** **A 1:1 relationship.** Every person can have at most one ID card. Create the `id_cards` table (`number` key, `person_id`, `valid_until` date) so that a person **can't have two ID cards**!
+
+```sql starter
+CREATE TABLE persons (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+INSERT INTO persons VALUES (1, 'Anna Kiss'), (2, 'Bela Nagy');
+
+CREATE TABLE id_cards (
+  number VARCHAR(10) PRIMARY KEY
+);
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+CREATE TABLE persons (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);
+INSERT INTO persons VALUES (1, 'Anna Kiss'), (2, 'Bela Nagy');
+
+CREATE TABLE id_cards (
+  number      VARCHAR(10) PRIMARY KEY,
+  person_id   INT NOT NULL UNIQUE REFERENCES persons (id),   -- UNIQUE makes it 1:1
+  valid_until DATE
+);
+```
+
+</details>
+
+```sql test
+CREATE FUNCTION try_it(cmd TEXT) RETURNS TEXT AS $$
+BEGIN
+  EXECUTE cmd;
+  RETURN 'succeeded';
+EXCEPTION WHEN others THEN
+  RETURN 'rejected';
+END $$ LANGUAGE plpgsql;
+
+CREATE TABLE results (seq INT, test TEXT, result TEXT);
+INSERT INTO results VALUES (1, 'Anna''s ID card', try_it($q$INSERT INTO id_cards VALUES ('123456AB', 1, '2030-01-01')$q$));
+INSERT INTO results VALUES (2, 'Anna''s second ID card', try_it($q$INSERT INTO id_cards VALUES ('654321CD', 1, '2031-01-01')$q$));
+INSERT INTO results VALUES (3, 'Bela''s ID card', try_it($q$INSERT INTO id_cards VALUES ('111111EF', 2, '2029-06-30')$q$));
+SELECT * FROM results ORDER BY seq;
 ```

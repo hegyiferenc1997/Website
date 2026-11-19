@@ -20,17 +20,17 @@ Az SQL-nek van nemzetközi szabványa (ISO/IEC 9075, legutóbb 2023-as kiadás),
 
 ## Az eltérések egy táblázatban
 
-| Feladat                       | PostgreSQL                         | MySQL / MariaDB                   | SQL Server (T-SQL)              | Oracle                                 | SQLite                       |
-| ----------------------------- | ---------------------------------- | --------------------------------- | ------------------------------- | -------------------------------------- | ---------------------------- |
-| első 10 sor                   | `LIMIT 10` vagy `FETCH FIRST 10 ROWS ONLY` | `LIMIT 10`                | `TOP 10` vagy `OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY` | `FETCH FIRST 10 ROWS ONLY` (régen: `ROWNUM`) | `LIMIT 10`   |
-| automatikus azonosító         | `GENERATED ALWAYS AS IDENTITY` (régen: `SERIAL`) | `AUTO_INCREMENT`    | `IDENTITY(1,1)`                 | `GENERATED AS IDENTITY` (régen: sequence) | `INTEGER PRIMARY KEY`       |
-| szöveg összefűzése            | `a \|\| b`, `CONCAT(a, b)`          | `CONCAT(a, b)`                    | `a + b`, `CONCAT(a, b)`         | `a \|\| b`, `CONCAT(a, b)`              | `a \|\| b`                    |
-| NULL helyett érték            | `COALESCE(x, 0)`                   | `COALESCE`, `IFNULL(x, 0)`        | `COALESCE`, `ISNULL(x, 0)`      | `COALESCE`, `NVL(x, 0)`                | `COALESCE`, `IFNULL`         |
-| mai dátum                     | `CURRENT_DATE`                     | `CURRENT_DATE`, `CURDATE()`       | `CAST(GETDATE() AS DATE)`       | `TRUNC(SYSDATE)`, `CURRENT_DATE`       | `DATE('now')`                |
-| logikai típus                 | `BOOLEAN`                          | `BOOLEAN` (= `TINYINT(1)`)        | `BIT`                           | `BOOLEAN` (23c-től), régen `NUMBER(1)` | nincs, 0/1 egész             |
-| beszúrás vagy frissítés       | `ON CONFLICT … DO UPDATE`, `MERGE` | `ON DUPLICATE KEY UPDATE`         | `MERGE`                         | `MERGE`                                | `ON CONFLICT … DO UPDATE`    |
-| azonosító idézése             | `"név"`                            | `` `név` ``                       | `[név]` vagy `"név"`            | `"név"`                                | `"név"`                      |
-| szöveg-összehasonlítás alapból | kis/nagybetű-**érzékeny**         | általában **nem érzékeny**        | általában **nem érzékeny**      | **érzékeny**                           | ASCII-n érzékeny (`=`), a `LIKE` nem |
+| Feladat                        | PostgreSQL                                       | MySQL / MariaDB             | SQL Server (T-SQL)                                    | Oracle                                       | SQLite                               |
+| ------------------------------ | ------------------------------------------------ | --------------------------- | ----------------------------------------------------- | -------------------------------------------- | ------------------------------------ |
+| első 10 sor                    | `LIMIT 10` vagy `FETCH FIRST 10 ROWS ONLY`       | `LIMIT 10`                  | `TOP 10` vagy `OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY` | `FETCH FIRST 10 ROWS ONLY` (régen: `ROWNUM`) | `LIMIT 10`                           |
+| automatikus azonosító          | `GENERATED ALWAYS AS IDENTITY` (régen: `SERIAL`) | `AUTO_INCREMENT`            | `IDENTITY(1,1)`                                       | `GENERATED AS IDENTITY` (régen: sequence)    | `INTEGER PRIMARY KEY`                |
+| szöveg összefűzése             | `a \|\| b`, `CONCAT(a, b)`                       | `CONCAT(a, b)`              | `a + b`, `CONCAT(a, b)`                               | `a \|\| b`, `CONCAT(a, b)`                   | `a \|\| b`                           |
+| NULL helyett érték             | `COALESCE(x, 0)`                                 | `COALESCE`, `IFNULL(x, 0)`  | `COALESCE`, `ISNULL(x, 0)`                            | `COALESCE`, `NVL(x, 0)`                      | `COALESCE`, `IFNULL`                 |
+| mai dátum                      | `CURRENT_DATE`                                   | `CURRENT_DATE`, `CURDATE()` | `CAST(GETDATE() AS DATE)`                             | `TRUNC(SYSDATE)`, `CURRENT_DATE`             | `DATE('now')`                        |
+| logikai típus                  | `BOOLEAN`                                        | `BOOLEAN` (= `TINYINT(1)`)  | `BIT`                                                 | `BOOLEAN` (23c-től), régen `NUMBER(1)`       | nincs, 0/1 egész                     |
+| beszúrás vagy frissítés        | `ON CONFLICT … DO UPDATE`, `MERGE`               | `ON DUPLICATE KEY UPDATE`   | `MERGE`                                               | `MERGE`                                      | `ON CONFLICT … DO UPDATE`            |
+| azonosító idézése              | `"név"`                                          | `` `név` ``                 | `[név]` vagy `"név"`                                  | `"név"`                                      | `"név"`                              |
+| szöveg-összehasonlítás alapból | kis/nagybetű-**érzékeny**                        | általában **nem érzékeny**  | általában **nem érzékeny**                            | **érzékeny**                                 | ASCII-n érzékeny (`=`), a `LIKE` nem |
 
 Az „általában” szó azért szerepel, mert a viselkedést a **rendezési szabály** (collation) határozza meg, és ez adatbázisonként beállítható.
 

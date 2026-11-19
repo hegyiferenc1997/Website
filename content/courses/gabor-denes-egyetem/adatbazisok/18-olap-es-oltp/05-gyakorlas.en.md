@@ -1,7 +1,7 @@
 ---
 title: Practice – OLAP and OLTP
 summary: Review questions about the difference between OLTP and OLAP, the star schema and analytical SQL, a design case study, and an extra exercise with a window function: the best product per region.
-minutes: 28
+minutes: 53
 kind: practice
 ---
 
@@ -117,6 +117,138 @@ SELECT region, category, revenue
 FROM ranking
 WHERE position = 1
 ORDER BY region;
+```
+
+</details>
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. Each one has a solution – try it yourself first, and only then look!
+
+The exercises run on the retail chain's star schema above (`fact_sales` + `dim_date`, `dim_product`, `dim_store`).
+
+**1.** **Slicing along two dimensions.** What was the revenue in **2025** **per region and per quarter**? (Region, quarter, revenue; by region, then quarter.)
+
+```sql starter
+SELECT f.revenue
+FROM fact_sales f;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT s.region, d.quarter, SUM(f.revenue) AS revenue
+FROM fact_sales f
+JOIN dim_date d  ON d.date_id = f.date_id
+JOIN dim_store s ON s.store_id = f.store_id
+WHERE d.year = 2025                       -- slicing: we filter one dimension to one value
+GROUP BY s.region, d.quarter
+ORDER BY s.region, d.quarter;
+```
+
+</details>
+
+**2.** **Subtotal and grand total (ROLLUP).** Total revenue per category, **plus a summary row** at the end. `GROUP BY ROLLUP (category)` gives this in one step; in the summary row the category is `NULL` – replace it with `'total'`! (Category, revenue; categories alphabetically, the total at the end.)
+
+```sql starter
+SELECT p.category, SUM(f.revenue) AS revenue
+FROM fact_sales f
+JOIN dim_product p ON p.product_id = f.product_id
+GROUP BY p.category;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT COALESCE(p.category, 'total') AS category, SUM(f.revenue) AS revenue
+FROM fact_sales f
+JOIN dim_product p ON p.product_id = f.product_id
+GROUP BY ROLLUP (p.category)
+ORDER BY p.category NULLS LAST;           -- the summary (NULL) row goes to the end
+```
+
+</details>
+
+**3.** **A report (pivot) with FILTER.** Per city, the **2025 and 2026** revenue **side by side, in two columns**, plus the change in percent (1 decimal). Sorted by city.
+
+```sql starter
+SELECT s.city, d.year, SUM(f.revenue) AS revenue
+FROM fact_sales f
+JOIN dim_date d  ON d.date_id = f.date_id
+JOIN dim_store s ON s.store_id = f.store_id
+GROUP BY s.city, d.year;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT s.city,
+       SUM(f.revenue) FILTER (WHERE d.year = 2025) AS revenue_2025,
+       SUM(f.revenue) FILTER (WHERE d.year = 2026) AS revenue_2026,
+       ROUND(100.0 * (SUM(f.revenue) FILTER (WHERE d.year = 2026) - SUM(f.revenue) FILTER (WHERE d.year = 2025))
+             / SUM(f.revenue) FILTER (WHERE d.year = 2025), 1) AS change_percent
+FROM fact_sales f
+JOIN dim_date d  ON d.date_id = f.date_id
+JOIN dim_store s ON s.store_id = f.store_id
+GROUP BY s.city
+ORDER BY s.city;
+```
+
+</details>
+
+**4.** **Monthly change with LAG.** For every month of **2025**, give the revenue, the **previous month's** revenue and the difference! (Month, revenue, previous month, difference; by month.) January has no previous month: `NULL` is correct there.
+
+```sql starter
+SELECT d.month, SUM(f.revenue) AS revenue
+FROM fact_sales f
+JOIN dim_date d ON d.date_id = f.date_id
+WHERE d.year = 2025
+GROUP BY d.month
+ORDER BY d.month;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+WITH monthly AS (
+  SELECT d.month, SUM(f.revenue) AS revenue
+  FROM fact_sales f
+  JOIN dim_date d ON d.date_id = f.date_id
+  WHERE d.year = 2025
+  GROUP BY d.month
+)
+SELECT month, revenue,
+       LAG(revenue) OVER (ORDER BY month) AS previous_month,
+       revenue - LAG(revenue) OVER (ORDER BY month) AS difference
+FROM monthly
+ORDER BY month;
+```
+
+</details>
+
+**5.** **Share of the whole.** Per store (city), what is the **total** revenue, and what **percentage** of the whole chain's revenue is it (1 decimal)? `SUM(...) OVER ()` puts the grand total on every row. By share descending.
+
+```sql starter
+SELECT s.city, SUM(f.revenue) AS revenue
+FROM fact_sales f
+JOIN dim_store s ON s.store_id = f.store_id
+GROUP BY s.city;
+```
+
+<details>
+<summary>Solution</summary>
+
+```sql solution
+SELECT s.city, SUM(f.revenue) AS revenue,
+       ROUND(100.0 * SUM(f.revenue) / SUM(SUM(f.revenue)) OVER (), 1) AS share
+FROM fact_sales f
+JOIN dim_store s ON s.store_id = f.store_id
+GROUP BY s.city
+ORDER BY share DESC, s.city;
 ```
 
 </details>

@@ -120,12 +120,12 @@ A PostgreSQL az **elsődleges kulcsra** és a **UNIQUE** megszorításra magát�
 
 Az index az **oszlop eredeti értékei** szerint rendezett. Ha a `WHERE`-ben **függvényt** alkalmazol az oszlopra, az index használhatatlanná válik – a DBMS-nek minden sorra ki kell számolnia a függvényt.
 
-| Nem keresőbarát ✘                               | Keresőbarát ✔                                                      |
-| ----------------------------------------------- | ------------------------------------------------------------------ |
-| `WHERE EXTRACT(YEAR FROM datum) = 2024`         | `WHERE datum >= '2024-01-01' AND datum < '2025-01-01'`             |
-| `WHERE ar * 1.27 > 10000`                       | `WHERE ar > 10000 / 1.27`                                          |
-| `WHERE LOWER(email) = 'a@b.hu'`                 | kifejezés alapú index: `CREATE INDEX … ON vasarlok (LOWER(email))` |
-| `WHERE nev LIKE '%anna'` (eleje ismeretlen)     | `WHERE nev LIKE 'Anna%'` (az eleje ismert)                         |
+| Nem keresőbarát ✘                           | Keresőbarát ✔                                                      |
+| ------------------------------------------- | ------------------------------------------------------------------ |
+| `WHERE EXTRACT(YEAR FROM datum) = 2024`     | `WHERE datum >= '2024-01-01' AND datum < '2025-01-01'`             |
+| `WHERE ar * 1.27 > 10000`                   | `WHERE ar > 10000 / 1.27`                                          |
+| `WHERE LOWER(email) = 'a@b.hu'`             | kifejezés alapú index: `CREATE INDEX … ON vasarlok (LOWER(email))` |
+| `WHERE nev LIKE '%anna'` (eleje ismeretlen) | `WHERE nev LIKE 'Anna%'` (az eleje ismert)                         |
 
 ```sql run
 CREATE INDEX idx_rend_datum ON rendelesek (datum);

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – OLAP és OLTP
 summary: Ellenőrző kérdések az OLTP és OLAP különbségéről, a csillagsémáról és az elemző SQL-ről, egy tervezési esettanulmány, valamint egy szorgalmi feladat ablakfüggvénnyel: a legjobb termék régiónként.
-minutes: 28
+minutes: 53
 kind: practice
 ---
 
@@ -117,6 +117,138 @@ SELECT regio, kategoria, bevetel
 FROM rangsor
 WHERE helyezes = 1
 ORDER BY regio;
+```
+
+</details>
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+A feladatok a fenti üzletlánc csillagsémáján futnak (`teny_eladas` + `dim_datum`, `dim_termek`, `dim_bolt`).
+
+**1.** **Szeletelés két dimenzió mentén.** **2025**-ben mennyi volt a bevétel **régiónként és negyedévenként**? (Régió, negyedév, bevétel; régió, majd negyedév szerint.)
+
+```sql starter
+SELECT f.bevetel
+FROM teny_eladas f;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT b.regio, d.negyedev, SUM(f.bevetel) AS bevetel
+FROM teny_eladas f
+JOIN dim_datum d ON d.datum_id = f.datum_id
+JOIN dim_bolt b  ON b.bolt_id = f.bolt_id
+WHERE d.ev = 2025                         -- szeletelés: egy dimenzió egy értékére szűrünk
+GROUP BY b.regio, d.negyedev
+ORDER BY b.regio, d.negyedev;
+```
+
+</details>
+
+**2.** **Részösszeg és végösszeg (ROLLUP).** Kategóriánként a teljes bevétel, **plusz egy összesítő sor** a végén. A `GROUP BY ROLLUP (kategoria)` ezt egy lépésben megadja; az összesítő sorban a kategória `NULL`, ezt cseréld `'összesen'`-re! (Kategória, bevétel; a kategóriák ábécérendben, az összesen a végén.)
+
+```sql starter
+SELECT p.kategoria, SUM(f.bevetel) AS bevetel
+FROM teny_eladas f
+JOIN dim_termek p ON p.termek_id = f.termek_id
+GROUP BY p.kategoria;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT COALESCE(p.kategoria, 'összesen') AS kategoria, SUM(f.bevetel) AS bevetel
+FROM teny_eladas f
+JOIN dim_termek p ON p.termek_id = f.termek_id
+GROUP BY ROLLUP (p.kategoria)
+ORDER BY p.kategoria NULLS LAST;          -- az összesítő (NULL) sor kerüljön a végére
+```
+
+</details>
+
+**3.** **Kimutatás (pivot) FILTER-rel.** Városonként a **2025-ös és a 2026-os** bevétel **egymás mellett, két oszlopban**, plusz a változás százalékban (1 tizedes). Város szerint rendezve.
+
+```sql starter
+SELECT b.varos, d.ev, SUM(f.bevetel) AS bevetel
+FROM teny_eladas f
+JOIN dim_datum d ON d.datum_id = f.datum_id
+JOIN dim_bolt b  ON b.bolt_id = f.bolt_id
+GROUP BY b.varos, d.ev;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT b.varos,
+       SUM(f.bevetel) FILTER (WHERE d.ev = 2025) AS bevetel_2025,
+       SUM(f.bevetel) FILTER (WHERE d.ev = 2026) AS bevetel_2026,
+       ROUND(100.0 * (SUM(f.bevetel) FILTER (WHERE d.ev = 2026) - SUM(f.bevetel) FILTER (WHERE d.ev = 2025))
+             / SUM(f.bevetel) FILTER (WHERE d.ev = 2025), 1) AS valtozas_szazalek
+FROM teny_eladas f
+JOIN dim_datum d ON d.datum_id = f.datum_id
+JOIN dim_bolt b  ON b.bolt_id = f.bolt_id
+GROUP BY b.varos
+ORDER BY b.varos;
+```
+
+</details>
+
+**4.** **Havi változás LAG-gal.** **2025** minden hónapjára add meg a bevételt, az **előző havi** bevételt és a különbséget! (Hónap, bevétel, előző hónap, különbség; hónap szerint.) Januárnál nincs előző hónap: ott `NULL` a helyes.
+
+```sql starter
+SELECT d.honap, SUM(f.bevetel) AS bevetel
+FROM teny_eladas f
+JOIN dim_datum d ON d.datum_id = f.datum_id
+WHERE d.ev = 2025
+GROUP BY d.honap
+ORDER BY d.honap;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+WITH havi AS (
+  SELECT d.honap, SUM(f.bevetel) AS bevetel
+  FROM teny_eladas f
+  JOIN dim_datum d ON d.datum_id = f.datum_id
+  WHERE d.ev = 2025
+  GROUP BY d.honap
+)
+SELECT honap, bevetel,
+       LAG(bevetel) OVER (ORDER BY honap) AS elozo_honap,
+       bevetel - LAG(bevetel) OVER (ORDER BY honap) AS kulonbseg
+FROM havi
+ORDER BY honap;
+```
+
+</details>
+
+**5.** **Részesedés az egészből.** Boltonként (város) mekkora a **teljes** bevétel, és ez hány **százaléka** a lánc összes bevételének (1 tizedes)? A `SUM(...) OVER ()` minden sorba odaadja a végösszeget. Részesedés szerint csökkenően.
+
+```sql starter
+SELECT b.varos, SUM(f.bevetel) AS bevetel
+FROM teny_eladas f
+JOIN dim_bolt b ON b.bolt_id = f.bolt_id
+GROUP BY b.varos;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT b.varos, SUM(f.bevetel) AS bevetel,
+       ROUND(100.0 * SUM(f.bevetel) / SUM(SUM(f.bevetel)) OVER (), 1) AS reszesedes
+FROM teny_eladas f
+JOIN dim_bolt b ON b.bolt_id = f.bolt_id
+GROUP BY b.varos
+ORDER BY reszesedes DESC, b.varos;
 ```
 
 </details>

@@ -214,11 +214,11 @@ SELECT * FROM cikkek;
 
 Béla mentése **0 sort** módosít – a program ebből tudja, hogy közben valaki más mentett, és szól Bélának: „A cikket időközben módosították, töltsd újra!”. Ez a módszer nem zárol, ezért jól skálázódik; akkor jó, ha az ütközés **ritka**.
 
-| Módszer               | Mikor jó?                                         | Hátránya                                 |
-| --------------------- | ------------------------------------------------- | ---------------------------------------- |
-| `db = db - 1`         | egyszerű számolás                                 | összetett üzleti logikára nem elég       |
-| `FOR UPDATE`          | rövid tranzakció, gyakori ütközés                 | várakozás, holtpont veszélye             |
-| Verziószám            | hosszú „gondolkodási idő” (űrlap), ritka ütközés  | ütközéskor a felhasználónak újra kell kezdenie |
+| Módszer       | Mikor jó?                                        | Hátránya                                       |
+| ------------- | ------------------------------------------------ | ---------------------------------------------- |
+| `db = db - 1` | egyszerű számolás                                | összetett üzleti logikára nem elég             |
+| `FOR UPDATE`  | rövid tranzakció, gyakori ütközés                | várakozás, holtpont veszélye                   |
+| Verziószám    | hosszú „gondolkodási idő” (űrlap), ritka ütközés | ütközéskor a felhasználónak újra kell kezdenie |
 
 ## Összefoglalás
 

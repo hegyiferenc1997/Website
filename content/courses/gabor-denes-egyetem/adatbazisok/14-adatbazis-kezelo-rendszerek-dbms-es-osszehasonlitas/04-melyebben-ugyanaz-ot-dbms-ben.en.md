@@ -20,17 +20,17 @@ SQL has an international standard (ISO/IEC 9075, latest edition 2023), but the b
 
 ## The differences in one table
 
-| Task                          | PostgreSQL                         | MySQL / MariaDB                   | SQL Server (T-SQL)              | Oracle                                 | SQLite                       |
-| ----------------------------- | ---------------------------------- | --------------------------------- | ------------------------------- | -------------------------------------- | ---------------------------- |
-| first 10 rows                 | `LIMIT 10` or `FETCH FIRST 10 ROWS ONLY` | `LIMIT 10`                  | `TOP 10` or `OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY` | `FETCH FIRST 10 ROWS ONLY` (formerly `ROWNUM`) | `LIMIT 10` |
-| auto-generated ID             | `GENERATED ALWAYS AS IDENTITY` (formerly `SERIAL`) | `AUTO_INCREMENT`  | `IDENTITY(1,1)`                 | `GENERATED AS IDENTITY` (formerly sequence) | `INTEGER PRIMARY KEY`   |
-| string concatenation          | `a \|\| b`, `CONCAT(a, b)`          | `CONCAT(a, b)`                    | `a + b`, `CONCAT(a, b)`         | `a \|\| b`, `CONCAT(a, b)`              | `a \|\| b`                    |
-| value instead of NULL         | `COALESCE(x, 0)`                   | `COALESCE`, `IFNULL(x, 0)`        | `COALESCE`, `ISNULL(x, 0)`      | `COALESCE`, `NVL(x, 0)`                | `COALESCE`, `IFNULL`         |
-| today's date                  | `CURRENT_DATE`                     | `CURRENT_DATE`, `CURDATE()`       | `CAST(GETDATE() AS DATE)`       | `TRUNC(SYSDATE)`, `CURRENT_DATE`       | `DATE('now')`                |
-| boolean type                  | `BOOLEAN`                          | `BOOLEAN` (= `TINYINT(1)`)        | `BIT`                           | `BOOLEAN` (from 23c), formerly `NUMBER(1)` | none, integer 0/1        |
-| insert or update              | `ON CONFLICT … DO UPDATE`, `MERGE` | `ON DUPLICATE KEY UPDATE`         | `MERGE`                         | `MERGE`                                | `ON CONFLICT … DO UPDATE`    |
-| quoting identifiers           | `"name"`                           | `` `name` ``                      | `[name]` or `"name"`            | `"name"`                               | `"name"`                     |
-| string comparison by default  | **case-sensitive**                 | usually **case-insensitive**      | usually **case-insensitive**    | **case-sensitive**                     | case-sensitive on ASCII (`=`), `LIKE` is not |
+| Task                         | PostgreSQL                                         | MySQL / MariaDB              | SQL Server (T-SQL)                                  | Oracle                                         | SQLite                                       |
+| ---------------------------- | -------------------------------------------------- | ---------------------------- | --------------------------------------------------- | ---------------------------------------------- | -------------------------------------------- |
+| first 10 rows                | `LIMIT 10` or `FETCH FIRST 10 ROWS ONLY`           | `LIMIT 10`                   | `TOP 10` or `OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY` | `FETCH FIRST 10 ROWS ONLY` (formerly `ROWNUM`) | `LIMIT 10`                                   |
+| auto-generated ID            | `GENERATED ALWAYS AS IDENTITY` (formerly `SERIAL`) | `AUTO_INCREMENT`             | `IDENTITY(1,1)`                                     | `GENERATED AS IDENTITY` (formerly sequence)    | `INTEGER PRIMARY KEY`                        |
+| string concatenation         | `a \|\| b`, `CONCAT(a, b)`                         | `CONCAT(a, b)`               | `a + b`, `CONCAT(a, b)`                             | `a \|\| b`, `CONCAT(a, b)`                     | `a \|\| b`                                   |
+| value instead of NULL        | `COALESCE(x, 0)`                                   | `COALESCE`, `IFNULL(x, 0)`   | `COALESCE`, `ISNULL(x, 0)`                          | `COALESCE`, `NVL(x, 0)`                        | `COALESCE`, `IFNULL`                         |
+| today's date                 | `CURRENT_DATE`                                     | `CURRENT_DATE`, `CURDATE()`  | `CAST(GETDATE() AS DATE)`                           | `TRUNC(SYSDATE)`, `CURRENT_DATE`               | `DATE('now')`                                |
+| boolean type                 | `BOOLEAN`                                          | `BOOLEAN` (= `TINYINT(1)`)   | `BIT`                                               | `BOOLEAN` (from 23c), formerly `NUMBER(1)`     | none, integer 0/1                            |
+| insert or update             | `ON CONFLICT … DO UPDATE`, `MERGE`                 | `ON DUPLICATE KEY UPDATE`    | `MERGE`                                             | `MERGE`                                        | `ON CONFLICT … DO UPDATE`                    |
+| quoting identifiers          | `"name"`                                           | `` `name` ``                 | `[name]` or `"name"`                                | `"name"`                                       | `"name"`                                     |
+| string comparison by default | **case-sensitive**                                 | usually **case-insensitive** | usually **case-insensitive**                        | **case-sensitive**                             | case-sensitive on ASCII (`=`), `LIKE` is not |
 
 "Usually" appears because the behaviour is determined by the **collation**, which can be configured per database.
 

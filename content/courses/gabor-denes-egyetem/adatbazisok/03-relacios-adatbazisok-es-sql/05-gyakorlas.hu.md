@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – relációs modell és SQL
 summary: Ellenőrző kérdések, egy relációs algebrai kifejezés SQL-re fordítása és összefoglaló feladatlap a kulcsokról, a relációs algebráról és a DDL-ről.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -106,3 +106,100 @@ WHERE szak = 'gazdaságinformatikus';
 = ALTER TABLE
 ! ALTER TABLE … ADD COLUMN …
 ```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+**1.** **Kiválasztás és vetítés.** Relációs algebrában: π<sub>nev, kredit</sub>(σ<sub>kredit ≥ 5</sub>(targyak)). Írd fel SQL-ben, név szerint rendezve!
+
+```sql starter
+SELECT *
+FROM targyak;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT nev, kredit           -- vetítés (π)
+FROM targyak
+WHERE kredit >= 5            -- kiválasztás (σ)
+ORDER BY nev;
+```
+
+</details>
+
+**2.** **Unió.** Kik azok (Neptun-kód), akik **kaptak már ötöst** valamiből, **vagy** az **5. félévben** járnak? Minden kód egyszer szerepeljen, sorba rendezve.
+
+```sql starter
+SELECT neptun FROM jelentkezesek WHERE jegy = 5;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT neptun FROM jelentkezesek WHERE jegy = 5
+UNION                                   -- a UNION kiszűri az ismétlődéseket
+SELECT neptun FROM hallgatok WHERE felev = 5
+ORDER BY 1;
+```
+
+</details>
+
+**3.** **Metszet.** Kik vették fel az `ADB` **és** a `DIG` tárgyat is? (Neptun-kód, sorba rendezve.)
+
+```sql starter
+SELECT neptun FROM jelentkezesek WHERE kod = 'ADB';
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT neptun FROM jelentkezesek WHERE kod = 'ADB'
+INTERSECT
+SELECT neptun FROM jelentkezesek WHERE kod = 'DIG'
+ORDER BY 1;
+```
+
+</details>
+
+**4.** **Összekapcsolás.** A _Programozási alapok_ tárgyat felvett hallgatók **neve és jegye**, név szerint rendezve. Ehhez a hallgatók, a jelentkezések és a tárgyak tábláját is össze kell kapcsolnod.
+
+```sql starter
+SELECT *
+FROM jelentkezesek;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT h.nev, j.jegy
+FROM jelentkezesek j
+JOIN hallgatok h ON h.neptun = j.neptun
+JOIN targyak t   ON t.kod = j.kod
+WHERE t.nev = 'Programozási alapok'
+ORDER BY h.nev;
+```
+
+</details>
+
+**5.** **Descartes-szorzat.** Hány sora van a `hallgatok × targyak` szorzatnak? Előbb számold ki fejben (6 hallgató, 5 tárgy), aztán ellenőrizd SQL-lel!
+
+```sql starter
+SELECT *
+FROM hallgatok CROSS JOIN targyak;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT COUNT(*) AS sorok
+FROM hallgatok CROSS JOIN targyak;      -- 6 × 5 = 30
+```
+
+</details>

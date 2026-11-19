@@ -62,7 +62,7 @@ FROM stg_customers;
 ```
 
 - `TRIM` – removes spaces from both ends;
-- `regexp_replace(…, '\s+', ' ', 'g')` – replaces repeated inner spaces with one ("Emma  Varga" → "Emma Varga");
+- `regexp_replace(…, '\s+', ' ', 'g')` – replaces repeated inner spaces with one ("Emma Varga" → "Emma Varga");
 - `LOWER` – e-mail addresses aren't case-sensitive, so we make them uniformly lower case (that's how we can spot duplicates).
 
 The square brackets are just there so we can see the invisible spaces.

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – teljesítményoptimalizálás
 summary: Ellenőrző kérdések a lekérdezések átírásáról, a materializált nézetről, a particionálásról, a gyorsítótárról és a skálázásról, majd egy kulcsalapú lapozás megírása két oszlop szerinti rendezéssel.
-minutes: 28
+minutes: 53
 kind: practice
 ---
 
@@ -84,5 +84,124 @@ LIMIT 5;
 ```
 
 Élesben ehhez egy `(datum, rendeles_id)` összetett index is kell, hogy a DBMS egyenesen a megfelelő helyre ugorhasson.
+
+</details>
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+A feladatok a fenti webshop-adatbázison futnak. Mindegyiknél érdemes az `EXPLAIN ANALYZE`-zal is megnézni, mennyi ideig tart és milyen tervet kap.
+
+**1.** **Toplista egy lépésben.** Melyik **5 termék** hozta a legtöbb bevételt (`db * egysegar` összege) a **nem törölt** rendelésekből? (Terméknév, bevétel; bevétel szerint csökkenően.)
+
+```sql starter
+SELECT termek_id, db, egysegar
+FROM tetelek;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT t.nev, SUM(te.db * te.egysegar) AS bevetel
+FROM tetelek te
+JOIN rendelesek r ON r.rendeles_id = te.rendeles_id
+JOIN termekek t   ON t.termek_id = te.termek_id
+WHERE r.statusz <> 'törölt'
+GROUP BY t.termek_id, t.nev
+ORDER BY bevetel DESC
+LIMIT 5;
+```
+
+</details>
+
+**2.** **Kulcsalapú lapozás.** Az `OFFSET 10000` minden alkalommal végigolvas 10 000 sort. Gyorsabb, ha az előző oldal **utolsó kulcsától** folytatjuk. Kérd le a 10 000-es azonosító **utáni** 5 rendelést (azonosító, dátum), azonosító szerint!
+
+```sql starter
+SELECT rendeles_id, datum
+FROM rendelesek
+ORDER BY rendeles_id
+OFFSET 10000 LIMIT 5;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT rendeles_id, datum
+FROM rendelesek
+WHERE rendeles_id > 10000          -- a kulcs indexéből azonnal megtalálja a kezdőpontot
+ORDER BY rendeles_id
+LIMIT 5;
+```
+
+</details>
+
+**3.** **EXISTS a COUNT helyett.** „Van-e olyan pécsi vásárló, aki **törölt** rendelést adott le?” Ehhez nem kell mindet megszámolni: az `EXISTS` az **első találatnál** megáll. Adj igaz/hamis választ!
+
+```sql starter
+SELECT COUNT(*)
+FROM rendelesek r
+JOIN vasarlok v ON v.vasarlo_id = r.vasarlo_id
+WHERE v.varos = 'Pécs' AND r.statusz = 'törölt';
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT EXISTS (
+  SELECT 1
+  FROM rendelesek r
+  JOIN vasarlok v ON v.vasarlo_id = r.vasarlo_id
+  WHERE v.varos = 'Pécs' AND r.statusz = 'törölt'
+) AS van_ilyen;
+```
+
+</details>
+
+**4.** **Előre összesített adat.** A vezetői kimutatás naponta százszor kéri a havi bevételt. Hozz létre egy `havi_bevetel` **materializált nézetet** (hónap, bevétel) a nem törölt rendelésekből, majd kérdezd le belőle a 3 legjobb hónapot (bevétel szerint csökkenően)!
+
+```sql starter
+SELECT date_trunc('month', r.datum) AS honap, SUM(te.db * te.egysegar) AS bevetel
+FROM rendelesek r
+JOIN tetelek te ON te.rendeles_id = r.rendeles_id
+WHERE r.statusz <> 'törölt'
+GROUP BY honap;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE MATERIALIZED VIEW havi_bevetel AS
+SELECT date_trunc('month', r.datum) AS honap, SUM(te.db * te.egysegar) AS bevetel
+FROM rendelesek r
+JOIN tetelek te ON te.rendeles_id = r.rendeles_id
+WHERE r.statusz <> 'törölt'
+GROUP BY honap;                    -- az eredmény eltárolódik; frissítés: REFRESH MATERIALIZED VIEW
+
+SELECT * FROM havi_bevetel ORDER BY bevetel DESC LIMIT 3;
+```
+
+</details>
+
+**5.** **Indexbarát dátumszűrés.** A `WHERE EXTRACT(MONTH FROM datum) = 3 AND EXTRACT(YEAR FROM datum) = 2025` nem tud indexet használni, mert az oszlopon függvény van. Írd át **tartományra** (`datum >= … AND datum < …`), és számold meg a 2025. márciusi rendeléseket!
+
+```sql starter
+SELECT COUNT(*)
+FROM rendelesek
+WHERE EXTRACT(YEAR FROM datum) = 2025 AND EXTRACT(MONTH FROM datum) = 3;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT COUNT(*)
+FROM rendelesek
+WHERE datum >= DATE '2025-03-01' AND datum < DATE '2025-04-01';   -- az oszlop „csupasz” → indexelhető
+```
 
 </details>

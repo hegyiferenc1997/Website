@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adatbázisrendszerek alapjai
 summary: Ellenőrző kérdések és összefoglaló feladatlap az adatbázis, a DBMS, a háromszintű architektúra és az adatbázis-típusok témájában.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -84,4 +84,121 @@ Egy kezdő csapat egy **ételrendelő alkalmazást** épít. Segíts nekik a dö
 - OLTP
 + OLAP
 ! Online Analytical Processing.
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. Mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+<details>
+<summary>A mintaadatbázis létrehozása (SQL)</summary>
+
+<!-- sql-setup: egyetem -->
+
+</details>
+
+**1.** Első lépések a mintaadatbázisban: listázd ki azoknak a hallgatóknak a **nevét és városát**, akiknek **ismert a városa**, név szerint ábécérendben.
+
+```sql starter
+SELECT nev, varos
+FROM hallgatok;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT nev, varos
+FROM hallgatok
+WHERE varos IS NOT NULL      -- az ismeretlen (NULL) város kimarad
+ORDER BY nev;
+```
+
+</details>
+
+**2.** **Külső szint a gyakorlatban.** A kollégium portása csak a budapesti hallgatókat látja. Hozd létre a `budapesti_hallgatok` **nézetet** (`neptun`, `nev` oszlopokkal), majd kérdezd le Neptun-kód szerint rendezve!
+
+```sql starter
+-- 1. CREATE VIEW budapesti_hallgatok AS ...
+-- 2. SELECT ... FROM budapesti_hallgatok ...
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE VIEW budapesti_hallgatok AS
+SELECT neptun, nev
+FROM hallgatok
+WHERE varos = 'Budapest';
+
+SELECT * FROM budapesti_hallgatok ORDER BY neptun;
+```
+
+</details>
+
+**3.** **A DBMS önmagáról is tud adatot adni** (adatszótár). Kérdezd le az `information_schema.columns` nézetből a `hallgatok` tábla **oszlopainak nevét és adattípusát**, a táblabeli sorrendjükben (`ordinal_position`)!
+
+```sql starter
+SELECT column_name, data_type
+FROM information_schema.columns;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'hallgatok'
+ORDER BY ordinal_position;
+```
+
+</details>
+
+**4.** Hány **tábla** van a `public` sémában? (Az `information_schema.tables` nézet segít.)
+
+```sql starter
+SELECT table_name
+FROM information_schema.tables;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+SELECT COUNT(*) AS tablak_szama
+FROM information_schema.tables
+WHERE table_schema = 'public'
+  AND table_type = 'BASE TABLE';    -- csak a valódi táblák, a nézetek nem
+```
+
+</details>
+
+**5.** **Fizikai adatfüggetlenség kipróbálva.** Hozz létre egy indexet a `hallgatok.varos` oszlopra, majd futtasd le _ugyanazt_ a lekérdezést, mint index nélkül: a szegedi és debreceni hallgatók neve, név szerint. Figyeld meg: a lekérdezésen semmit sem kellett változtatni!
+
+```sql starter
+SELECT nev
+FROM hallgatok
+WHERE varos IN ('Szeged', 'Debrecen')
+ORDER BY nev;
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```sql solution
+CREATE INDEX idx_hallgatok_varos ON hallgatok (varos);   -- csak a belső szint változik
+
+SELECT nev
+FROM hallgatok
+WHERE varos IN ('Szeged', 'Debrecen')
+ORDER BY nev;
+```
+
+</details>
+
+```sql test
+SELECT (SELECT COUNT(*) FROM pg_indexes WHERE tablename = 'hallgatok' AND indexdef LIKE '%(varos)%') AS index_van,
+       (SELECT string_agg(nev, ', ' ORDER BY nev) FROM hallgatok WHERE varos IN ('Szeged', 'Debrecen')) AS nevek;
 ```

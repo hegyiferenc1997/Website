@@ -23,14 +23,14 @@ The DBMS reads not rows but **pages** from disk (8 KB blocks in PostgreSQL). Rea
 
 ### Basic figures we calculate with
 
-| Symbol  | Meaning                                  | Example           |
-| ------- | ---------------------------------------- | ----------------- |
-| N       | number of rows                           | 1,000,000         |
-| R       | rows per page                            | 50                |
-| P = N/R | number of pages                          | 20,000            |
-| h       | height of the B+ tree (levels)           | 3                 |
-| t_s     | **sequential** read of one page (HDD)    | ≈ 0.1 ms          |
-| t_r     | **random** read of one page (HDD)        | ≈ 5 ms            |
+| Symbol  | Meaning                               | Example   |
+| ------- | ------------------------------------- | --------- |
+| N       | number of rows                        | 1,000,000 |
+| R       | rows per page                         | 50        |
+| P = N/R | number of pages                       | 20,000    |
+| h       | height of the B+ tree (levels)        | 3         |
+| t_s     | **sequential** read of one page (HDD) | ≈ 0.1 ms  |
+| t_r     | **random** read of one page (HDD)     | ≈ 5 ms    |
 
 Sequential reading is so much faster because the HDD's read head doesn't have to jump around, and the DBMS can request many consecutive pages at once. On an SSD the difference is smaller (about 2–4×), but it's still there.
 
@@ -50,12 +50,12 @@ Example: (3 + 1) × 5 ms = **20 ms**. A hundred times faster than the full scan.
 
 If the condition returns **k** rows and they're on **different pages** (in a heap file the rows aren't sorted by the indexed column), then: **cost ≈ h + k random reads.**
 
-| k (matches) | Index cost          | Full scan      |
-| ----------- | ------------------- | -------------- |
-| 10          | 13 × 5 ms = 65 ms   | 2 s            |
-| 100         | 103 × 5 ms ≈ 0.5 s  | 2 s            |
-| 400         | 403 × 5 ms ≈ 2 s    | 2 s ← **break-even** |
-| 5,000       | ≈ 25 s              | 2 s            |
+| k (matches) | Index cost         | Full scan            |
+| ----------- | ------------------ | -------------------- |
+| 10          | 13 × 5 ms = 65 ms  | 2 s                  |
+| 100         | 103 × 5 ms ≈ 0.5 s | 2 s                  |
+| 400         | 403 × 5 ms ≈ 2 s   | 2 s ← **break-even** |
+| 5,000       | ≈ 25 s             | 2 s                  |
 
 **The break-even point:** k · t_r ≈ P · t_s → k ≈ 20,000 × 0.1 / 5 = **400 rows**, which is just **0.04%** of the 1,000,000 rows! With more matches, the full table scan is faster on an HDD. (On an SSD the break-even is higher, a few percent – that's why the optimiser chooses indexes more boldly there.)
 
@@ -92,11 +92,11 @@ for each row c in customers:
 
 **Cost ≈ C + O + (cost of sorting).** It wins when the data is **already sorted**, or the result must be sorted anyway.
 
-| Algorithm    | When does it win?                                    |
-| ------------ | ---------------------------------------------------- |
-| Nested loop  | few outer rows + an index on the inner table         |
-| Hash join    | large tables, equality condition, unsorted data      |
-| Merge join   | already sorted input, or sorted output needed        |
+| Algorithm   | When does it win?                               |
+| ----------- | ----------------------------------------------- |
+| Nested loop | few outer rows + an index on the inner table    |
+| Hash join   | large tables, equality condition, unsorted data |
+| Merge join  | already sorted input, or sorted output needed   |
 
 ## 5. Sorting when it doesn't fit in memory
 
