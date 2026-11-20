@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – nyelvek összehasonlítása
 summary: Ellenőrző kérdések és kód „fordítása” Javából, C#-ból és Rubyból Pythonra.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -276,4 +276,125 @@ e = szo_statisztika("R2D2 és C-3PO 2024-ben")
 assert e["szavak"] == 6 and e["egyedi"] == 6, "Számjegyek nem részei a szavaknak: r, d, és, c, po, ben."
 assert szo_statisztika("") == {"szavak": 0, "egyedi": 0, "leggyakoribb": [], "atlagos_hossz": 0.0}, "Üres szövegnél 0, 0, [], 0.0."
 assert szo_statisztika("b a b a c")["leggyakoribb"] == [("a", 2), ("b", 2), ("c", 1)], "Egyenlő darabszámnál ábécérend."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **JavaScript-szerű összeadás.** JavaScriptben a `+` szöveggé alakít, ha bármelyik oldal szöveg (`1 + "2"` → `"12"`), egyébként számként ad össze. Írd meg a `js_osszeadas(a, b)` függvényt, amely ezt a viselkedést utánozza Pythonban (számokra és szövegekre)!
+
+```python starter
+def js_osszeadas(a, b):
+    return a + b
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def js_osszeadas(a, b):
+    if isinstance(a, str) or isinstance(b, str):
+        return str(a) + str(b)              # gyenge típusosság: automatikus szöveggé alakítás
+    return a + b
+```
+
+</details>
+
+```python test
+assert js_osszeadas(1, "2") == "12"
+assert js_osszeadas("a", 3) == "a3"
+assert js_osszeadas(1, 2) == 3
+assert js_osszeadas("x", "y") == "xy"
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **32 bites túlcsordulás.** C-ben vagy Javában egy 32 bites előjeles `int` értéke −2 147 483 648 és 2 147 483 647 között van, és túlcsorduláskor „körbefordul”. Írd meg az `int32(x)` függvényt, amely egy tetszőleges Python egészet ilyen 32 bites értékké alakít!
+
+```python starter
+def int32(x):
+    return x
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def int32(x):
+    x = x % 2 ** 32                         # 0 .. 2^32 - 1 tartományba
+    if x >= 2 ** 31:
+        x -= 2 ** 32                        # a felső fél negatív számokat jelent
+    return x
+```
+
+</details>
+
+```python test
+assert int32(5) == 5
+assert int32(2147483647) == 2147483647
+assert int32(2147483647 + 1) == -2147483648
+assert int32(-2147483649) == 2147483647
+assert int32(2 ** 32) == 0
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Kerekítés eltérően.** A Python `round()` „banki” kerekítést használ: `round(2.5)` → `2`, `round(3.5)` → `4`. Sok más nyelv (és az iskolai szabály) a `.5`-öt mindig felfelé (nullától el) kerekíti. Írd meg a `kerekit_felfele_fel(x)` függvényt, amely egészre kerekít így: `2.5` → `3`, `-2.5` → `-3`!
+
+```python starter
+def kerekit_felfele_fel(x):
+    return round(x)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import math
+
+def kerekit_felfele_fel(x):
+    if x >= 0:
+        return math.floor(x + 0.5)          # pozitív: fél felfelé
+    return -math.floor(-x + 0.5)            # negatív: tükrözve, nullától el
+```
+
+</details>
+
+```python test
+assert kerekit_felfele_fel(2.5) == 3
+assert kerekit_felfele_fel(3.5) == 4
+assert kerekit_felfele_fel(2.4) == 2
+assert kerekit_felfele_fel(-2.5) == -3
+assert kerekit_felfele_fel(-2.4) == -2
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mennyi `round(2.5)` értéke Pythonban?
+= 2
+! Banki kerekítés: a `.5`-öt a páros szomszéd felé kerekíti.
+
+? Melyik állítás igaz a Pythonra?
++ dinamikusan és erősen típusos
+- statikusan és gyengén típusos
+- dinamikusan és gyengén típusos
+- statikusan és erősen típusos
+! A változó típusa futás közben dől el, de `1 + "2"` hibát ad, nincs automatikus átalakítás.
+
+? Mi lesz a 32 bites előjeles int legnagyobb értéke plusz egy, körbefordulással?
+- 2147483648
++ -2147483648
+- 0
+- -1
+! A legnagyobb érték után a legkisebb negatív következik.
+
+? Melyik nyelv fordított (compiled) jellemzően, gépi kódra?
+- Python
+- JavaScript
++ C
+- Bash
+! A C-t a fordító közvetlenül gépi kódra fordítja.
 ```

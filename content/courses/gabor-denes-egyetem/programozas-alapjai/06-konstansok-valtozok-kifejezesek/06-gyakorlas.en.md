@@ -1,7 +1,7 @@
 ---
 title: Practice – Variables and Expressions
 summary: Review questions and exercises with variables, constants, operators and output.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -252,4 +252,124 @@ try:
     assert False, "A height of 0 must raise ValueError."
 except ValueError:
     pass
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Rounding to 5 forints.** In Hungary, cash totals are rounded to 5 forints: endings 1–2 go down to 0, 3–4 go up to 5, 6–7 go down to 5, 8–9 go up to 10. Write the `round_to_five(amount)` function for integers!
+
+```python starter
+def round_to_five(amount):
+    return amount
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def round_to_five(amount):
+    remainder = amount % 5
+    if remainder <= 2:
+        return amount - remainder           # down
+    return amount + (5 - remainder)         # up
+```
+
+</details>
+
+```python test
+assert round_to_five(1231) == 1230
+assert round_to_five(1232) == 1230
+assert round_to_five(1233) == 1235
+assert round_to_five(1237) == 1235
+assert round_to_five(1238) == 1240
+assert round_to_five(1240) == 1240
+print("All checks passed!")
+```
+
+**2.** **Which day will it be?** Write the `day_name(index, offset)` function! The list of days is `["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]`, `index` is today (0 = Monday) and `offset` is how many days later (it can be negative). Use the `%` operator!
+
+```python starter
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+def day_name(index, offset):
+    return DAYS[index + offset]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+def day_name(index, offset):
+    return DAYS[(index + offset) % 7]       # in Python % gives 0..6 for negatives too
+```
+
+</details>
+
+```python test
+assert day_name(0, 0) == "Monday"
+assert day_name(4, 3) == "Monday"
+assert day_name(0, -1) == "Sunday"
+assert day_name(2, 100) == "Friday"
+assert day_name(6, -15) == "Saturday"
+print("All checks passed!")
+```
+
+**3.** **Quadratic equation.** Write the `quadratic(a, b, c)` function, which returns the real solutions of $ax^2 + bx + c = 0$ in increasing order, in a list! If there is no real solution, return an empty list; if there is one, a one-element list. (You may assume `a != 0`.)
+
+```python starter
+def quadratic(a, b, c):
+    return []
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def quadratic(a, b, c):
+    d = b * b - 4 * a * c                   # discriminant
+    if d < 0:
+        return []
+    if d == 0:
+        return [-b / (2 * a)]
+    root = d ** 0.5
+    return sorted([(-b - root) / (2 * a), (-b + root) / (2 * a)])
+```
+
+</details>
+
+```python test
+assert quadratic(1, -3, 2) == [1.0, 2.0]
+assert quadratic(1, 2, 1) == [-1.0]
+assert quadratic(1, 0, 1) == []
+assert quadratic(-1, 0, 4) == [-2.0, 2.0]
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is the value of `-7 // 2` in Python?
+= -4
+! Floor division rounds down (towards minus infinity): -3.5 → -4.
+
+? What is the value of `-7 % 3` in Python?
+= 2
+! In Python the remainder takes the sign of the divisor: -7 = 3 · (-3) + 2.
+
+? What is the value of `2 ** 3 ** 2`?
+= 512
+! Exponentiation binds from the right: $2^{(3^2)} = 2^9 = 512$.
+
+? What does the expression `True or 1 / 0` give?
++ True
+- ZeroDivisionError
+- 1
+- False
+! Short-circuit: after `True`, `or` doesn't evaluate the right side.
 ```

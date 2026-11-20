@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – nyelvek és paradigmák
 summary: Ellenőrző kérdések és feladatok: imperatív, deklaratív, objektumorientált és funkcionális megoldások.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -232,4 +232,137 @@ cs = [Hallgato("Béla", [60, 70]), Hallgato("Anna", [90, 80]), Hallgato("Csilla"
 assert legjobbak(cs, 2) == ["Anna", "Csilla"], "A két legjobb: Anna (85), Csilla (85) – egyenlőségnél ábécérend."
 assert legjobbak(cs, 5) == ["Anna", "Csilla", "Béla"], "Ha n nagyobb, mindenki benne van."
 assert legjobbak([], 3) == [], "Üres csoportra üres lista."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Téglalap osztály.** Írd meg a `Teglalap` osztályt, amelynek konstruktora a `szelesseg` és a `magassag` értéket kapja, és van `terulet()` és `kerulet()` metódusa! Negatív vagy nulla méretnél a konstruktor dobjon `ValueError`-t.
+
+```python starter
+class Teglalap:
+    def __init__(self, szelesseg, magassag):
+        self.szelesseg = szelesseg
+        self.magassag = magassag
+
+    def terulet(self):
+        return 0
+
+    def kerulet(self):
+        return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+class Teglalap:
+    def __init__(self, szelesseg, magassag):
+        if szelesseg <= 0 or magassag <= 0:
+            raise ValueError("a méretek legyenek pozitívak")
+        self.szelesseg = szelesseg
+        self.magassag = magassag
+
+    def terulet(self):
+        return self.szelesseg * self.magassag
+
+    def kerulet(self):
+        return 2 * (self.szelesseg + self.magassag)
+```
+
+</details>
+
+```python test
+t = Teglalap(3, 4)
+assert t.terulet() == 12
+assert t.kerulet() == 14
+try:
+    Teglalap(0, 5)
+    assert False, "ValueError kellett volna"
+except ValueError:
+    pass
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Funkcionálisan.** Írd meg a `paratlan_negyzetek(szamok)` függvényt **egyetlen** listaértelmezéssel, amely a páratlan számok négyzetét adja vissza, eredeti sorrendben!
+
+```python starter
+def paratlan_negyzetek(szamok):
+    return [x * x for x in szamok]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def paratlan_negyzetek(szamok):
+    return [x * x for x in szamok if x % 2 == 1]   # szűrés + átalakítás egyben
+```
+
+</details>
+
+```python test
+assert paratlan_negyzetek([1, 2, 3, 4, 5]) == [1, 9, 25]
+assert paratlan_negyzetek([2, 4]) == []
+assert paratlan_negyzetek([-3, 7]) == [9, 49]
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Függvénylánc.** Írd meg a `lanc(ertek, *fuggvenyek)` függvényt, amely az értékre sorban alkalmazza a megadott függvényeket (az elsőt először), és a végeredményt adja vissza! Függvények nélkül az érték változatlan.
+
+```python starter
+def lanc(ertek, *fuggvenyek):
+    return ertek
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def lanc(ertek, *fuggvenyek):
+    for f in fuggvenyek:
+        ertek = f(ertek)                    # az előző eredmény a következő bemenete
+    return ertek
+```
+
+</details>
+
+```python test
+assert lanc(3, lambda x: x + 1, lambda x: x * 10) == 40
+assert lanc(3, lambda x: x * 10, lambda x: x + 1) == 31
+assert lanc("  alma ", str.strip, str.upper) == "ALMA"
+assert lanc(7) == 7
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit jelent az egységbezárás (encapsulation)?
++ az adat és a rajta végzett műveletek egy egységben vannak, és az adat csak szabályosan változhat
+- minden osztályt külön fájlba kell tenni
+- a program egyetlen függvényből áll
+- a változók neve nagybetűs
+! Pl. a számla egyenlege csak befizetéssel és kivétellel változhat.
+
+? Mi a tiszta függvény legfontosabb jellemzője?
+- mindig rövid
++ ugyanarra a bemenetre mindig ugyanazt adja, és nincs mellékhatása
+- nincs paramétere
+- osztályon belül van
+! Ezért könnyű tesztelni.
+
+? Mi a `sum(x * 2 for x in [1, 2, 3] if x > 1)` értéke?
+= 10
+! A szűrés után 2 és 3 marad: $4 + 6 = 10$.
+
+? Melyik az öröklés helyes leírása?
+- egy függvény meghívja önmagát
++ egy osztály átveszi egy másik osztály tulajdonságait és metódusait, és bővítheti őket
+- két változó ugyanarra az objektumra mutat
+- a lista elemei egymás után következnek
+! Pl. `class Megtakaritas(Szamla)`.
 ```

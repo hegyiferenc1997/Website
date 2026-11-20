@@ -1,7 +1,7 @@
 ---
 title: Practice – Testing and Debugging
 summary: Review questions, writing tests and fixing buggy code.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -331,4 +331,141 @@ for mutant, description in [(m_no_subtractive, "4 → IIII (no subtractive forms
         caught = True
     roman = correct
     assert caught, f"Your tests did not notice this bug: {description}."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Temperature category with edge cases.** Write the `temperature_category(degrees)` function: below 0 `"freezing"`, from 0 to below 15 `"cold"`, from 15 to below 25 `"pleasant"`, from 25 `"warm"`! The test also checks the boundary values (0, 15, 25) — this is the essence of boundary value analysis.
+
+```python starter
+def temperature_category(degrees):
+    if degrees < 0:
+        return "freezing"
+    if degrees <= 15:
+        return "cold"
+    if degrees <= 25:
+        return "pleasant"
+    return "warm"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def temperature_category(degrees):
+    if degrees < 0:
+        return "freezing"
+    if degrees < 15:                        # 15 is already pleasant
+        return "cold"
+    if degrees < 25:                        # 25 is already warm
+        return "pleasant"
+    return "warm"
+```
+
+</details>
+
+```python test
+assert temperature_category(-0.1) == "freezing"
+assert temperature_category(0) == "cold"
+assert temperature_category(14.9) == "cold"
+assert temperature_category(15) == "pleasant"
+assert temperature_category(25) == "warm"
+print("All checks passed!")
+```
+
+**2.** **Is it sorted?** Write the `is_sorted(items)` function, which returns `True` if the list is in non-decreasing order! Think about the special cases: empty and one-element lists are sorted, and equal neighbours are allowed.
+
+```python starter
+def is_sorted(items):
+    return items[0] <= items[-1]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def is_sorted(items):
+    for i in range(len(items) - 1):
+        if items[i] > items[i + 1]:         # a single bad pair is enough
+            return False
+    return True
+```
+
+</details>
+
+```python test
+assert is_sorted([1, 2, 2, 5])
+assert is_sorted([])
+assert is_sorted([7])
+assert not is_sorted([1, 3, 2, 4])
+assert not is_sorted([3, 1, 2, 3])
+print("All checks passed!")
+```
+
+**3.** **First bad version.** From a certain point on, all versions of a program numbered 1 to `n` are buggy. Write the `first_bad_version(n, good)` function with **binary search**, where `good(v)` tells whether version `v` is good! Return the number of the first bad version (you may assume there is one). This is the idea behind `git bisect`.
+
+```python starter
+def first_bad_version(n, good):
+    return n
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def first_bad_version(n, good):
+    low, high = 1, n
+    while low < high:
+        mid = (low + high) // 2
+        if good(mid):
+            low = mid + 1                   # the bug came in later
+        else:
+            high = mid                      # this one is bad, but there may be an earlier one
+    return low
+```
+
+</details>
+
+```python test
+assert first_bad_version(10, lambda v: v < 7) == 7
+assert first_bad_version(1, lambda v: False) == 1
+assert first_bad_version(1000, lambda v: v < 2) == 2
+calls = []
+first_bad_version(1000000, lambda v: calls.append(v) or v < 123457)
+assert first_bad_version(1000000, lambda v: v < 123457) == 123457
+assert len(calls) <= 20, "binary search needed"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? A function accepts integers between 1 and 100. Which is the best boundary value test set?
+- 50
+- 1, 50, 100
++ 0, 1, 100, 101
+- 2, 99
+! It's worth testing both sides of the boundaries: bugs typically live there.
+
+? What does the statement `assert 1 + 1 == 3` return?
+- False
+- None
++ raises an `AssertionError` exception
+- nothing, it only warns
+! With a false condition `assert` raises an exception, which signals the failing test.
+
+? At most how many tries does binary search need to find the first bad version among 1024 versions?
+= 10
+! $2^{10} = 1024$, every try halves the possibilities.
+
+? What is the goal of regression testing?
+- designing new features
++ checking that a change hasn't broken a previously working part
+- measuring the program's speed
+- drawing the user interface
+! Re-running the tests after every change.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – kivételkezelés
 summary: Ellenőrző kérdések és feladatok kivételek kezelésére, dobására és saját kivételekre.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -315,4 +315,137 @@ try:
 except SorHiba as h:
     assert str(h) == "hibás pontszám", "Az üzenet: hibás pontszám"
 assert feldolgoz([]) == ({}, []), "Üres listára üres eredmény."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Első szám a szövegben.** Írd meg az `elso_szam(szavak)` függvényt, amely egy szöveglistában az első olyan elemet adja vissza egész számként, amely `int()`-tel átalakítható! A nem számokat `try`–`except ValueError` segítségével ugord át; ha nincs ilyen elem, `None` legyen az eredmény.
+
+```python starter
+def elso_szam(szavak):
+    return int(szavak[0])
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elso_szam(szavak):
+    for szo in szavak:
+        try:
+            return int(szo)
+        except ValueError:
+            continue                        # nem szám, megyünk tovább
+    return None
+```
+
+</details>
+
+```python test
+assert elso_szam(["alma", "12", "7"]) == 12
+assert elso_szam(["x", "-3"]) == -3
+assert elso_szam(["a", "b"]) is None
+assert elso_szam([]) is None
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Biztonságos indexelés.** Írd meg a `biztonsagos_elem(lista, index, alap=None)` függvényt, amely a lista adott indexű elemét adja vissza, `IndexError` esetén pedig az `alap` értéket! (Negatív index is lehet, ahogy a Pythonban szokás.)
+
+```python starter
+def biztonsagos_elem(lista, index, alap=None):
+    return lista[index]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def biztonsagos_elem(lista, index, alap=None):
+    try:
+        return lista[index]
+    except IndexError:                      # túl nagy vagy túl kicsi index
+        return alap
+```
+
+</details>
+
+```python test
+assert biztonsagos_elem([1, 2, 3], 1) == 2
+assert biztonsagos_elem([1, 2, 3], -1) == 3
+assert biztonsagos_elem([1, 2, 3], 5) is None
+assert biztonsagos_elem([], 0, "üres") == "üres"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Osztás listán.** Írd meg az `oszt_lista(szamlalok, nevezo)` függvényt, amely minden számot eloszt a nevezővel! Ha a nevező 0, ne dobjon hibát, hanem minden helyre `None` kerüljön; ha a nevező nem szám (`TypeError`), dobj `ValueError`-t `"a nevező szám legyen"` üzenettel!
+
+```python starter
+def oszt_lista(szamlalok, nevezo):
+    return [x / nevezo for x in szamlalok]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def oszt_lista(szamlalok, nevezo):
+    eredmeny = []
+    for x in szamlalok:
+        try:
+            eredmeny.append(x / nevezo)
+        except ZeroDivisionError:
+            eredmeny.append(None)           # 0-val osztás: nincs értelmes eredmény
+        except TypeError:
+            raise ValueError("a nevező szám legyen")   # érthetőbb hibára cseréljük
+    return eredmeny
+```
+
+</details>
+
+```python test
+assert oszt_lista([2, 4], 2) == [1.0, 2.0]
+assert oszt_lista([1, 2], 0) == [None, None]
+assert oszt_lista([], 0) == []
+try:
+    oszt_lista([1], "x")
+    assert False, "ValueError kellett volna"
+except ValueError as hiba:
+    assert str(hiba) == "a nevező szám legyen"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik kivétel keletkezik az `int("abc")` hívásnál?
+- TypeError
++ ValueError
+- KeyError
+- SyntaxError
+! A típus jó (szöveg), csak az értéke nem alakítható számmá.
+
+? Mikor fut le a `finally` ág?
+- csak ha nem volt kivétel
+- csak ha volt kivétel
++ mindig, kivételtől függetlenül
+- soha, ha volt `return`
+! Ezért ide kerül pl. a fájl lezárása vagy egyéb takarítás.
+
+? Melyik kivétel keletkezik a `{"a": 1}["b"]` kifejezésnél?
+- IndexError
++ KeyError
+- ValueError
+- NameError
+! Szótárban nem létező kulcs → KeyError.
+
+? Hány `except` ág lehet egy `try` blokk után?
+- pontosan egy
++ akárhány
+- legfeljebb kettő
+- egy sem
+! Több `except` ág is írható, az első illeszkedő fut le.
 ```

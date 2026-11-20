@@ -6,6 +6,15 @@ az adatbázisba a témaköröket és a leckéket.
 A szerkezet a GDE hivatalos tantárgyleírásának (B-PROGAL) 19 témakörét követi: `01-alapelvek-es-koncepciok` …
 `19-gyakorlati-alkalmazas`. Minden témakör végén egy `gyakorlas` lecke van ellenőrző kérdésekkel és feladatokkal.
 
+### Mélyítés (2026-11)
+
+- Minden témakör gyakorló leckéje előtt van egy **Mélyebben** lecke (`NN-melyebben-…`): több szemszögből,
+  futtatható példákkal mutatja meg ugyanazt a témát, és saját kötelező feladata van. Az új leckék miatt a
+  gyakorló lecke sorszáma eggyel nőtt; a slug a szám nélküli rész, ezért a „kész” jelölések megmaradtak.
+- Minden gyakorló lecke végén van egy **„További gyakorló feladatok (nem kötelezők)”** szakasz: 3 Python-feladat
+  (kiinduló kód + megoldás + ellenőrzés) és egy 4 kérdéses gyors kvíz (` ```quiz `, nem kötelező).
+- Jelenleg: 19 témakör, 110 lecke, 346 futtatható példa, 251 feladat-kiinduló kód, 8 interaktív grafikon.
+
 ## Szerkezet
 
 ```

@@ -1,7 +1,7 @@
 ---
 title: Final Review – the Whole Semester
 summary: Mixed review questions and exercises from the entire course, to prepare for tests and the project.
-minutes: 45
+minutes: 70
 kind: practice
 ---
 
@@ -423,4 +423,132 @@ bounds = "name;neptun;t1;t2;t3\nA;1;10;20;19\nB;2;10;20;20\nC;3;20;20;21\nD;4;20
 grades = {name: g for name, _, g in evaluate_midterm(bounds)["results"]}
 assert grades == {"A": 1, "B": 2, "C": 2, "D": 3, "E": 3, "F": 4, "G": 4, "H": 5}, "The grade boundaries: 50, 62, 75, 88."
 assert evaluate_midterm("name;neptun;t1;t2;t3\n") == {"results": [], "average": 0.0, "invalid": []}, "Header only: empty result, 0.0 average."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Can the order be fulfilled?** Write the `can_fulfil(stock, order)` function! Both are dictionaries (product → quantity). Return `True` if every item of the order is available in the stock in at least the requested quantity; a product missing from the stock counts as 0 pieces.
+
+```python starter
+def can_fulfil(stock, order):
+    return all(p in stock for p in order)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def can_fulfil(stock, order):
+    for product, qty in order.items():
+        if stock.get(product, 0) < qty:     # missing product = 0 pcs
+            return False
+    return True
+```
+
+</details>
+
+```python test
+stock = {"pen": 10, "notebook": 3}
+assert can_fulfil(stock, {"pen": 2, "notebook": 3})
+assert not can_fulfil(stock, {"notebook": 4})
+assert not can_fulfil(stock, {"eraser": 1})
+assert can_fulfil(stock, {})
+print("All checks passed!")
+```
+
+**2.** **Most frequent words.** Write the `top_words(text, n)` function, which returns the `n` most frequent words of the text as a list of `(word, count)` pairs! Lowercase the words and drop the `.,!?` punctuation; on equal counts alphabetical order decides.
+
+```python starter
+def top_words(text, n):
+    return [(word, 1) for word in text.split()[:n]]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def top_words(text, n):
+    counts = {}
+    for word in text.lower().split():
+        word = word.strip(".,!?")           # punctuation off the edges of the word
+        if word:
+            counts[word] = counts.get(word, 0) + 1
+    ordered = sorted(counts.items(), key=lambda pair: (-pair[1], pair[0]))   # count descending, word ascending
+    return ordered[:n]
+```
+
+</details>
+
+```python test
+text = "The dog barks. The cat meows, the dog runs!"
+assert top_words(text, 2) == [("the", 3), ("dog", 2)]
+assert top_words(text, 3) == [("the", 3), ("dog", 2), ("barks", 1)]
+assert top_words("", 5) == []
+print("All checks passed!")
+```
+
+**3.** **Checking an email address.** Write the `valid_email(address)` function with a simplified rule set: it must contain exactly one `@`, no spaces, the part before `@` is not empty, and the part after `@` contains a dot but neither starts nor ends with a dot!
+
+```python starter
+def valid_email(address):
+    return "@" in address
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def valid_email(address):
+    if address.count("@") != 1 or " " in address:
+        return False
+    name, domain = address.split("@")
+    return (len(name) > 0 and "." in domain
+            and not domain.startswith(".") and not domain.endswith("."))   # e.g. "example.com"
+```
+
+</details>
+
+```python test
+assert valid_email("anna@example.com")
+assert valid_email("a.b@uni.edu.hu")
+assert not valid_email("anna.example.com")
+assert not valid_email("@example.com")
+assert not valid_email("anna@example")
+assert not valid_email("anna@.com")
+assert not valid_email("an na@example.com")
+assert not valid_email("a@b@c.com")
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which is the right order when developing a small project?
+- coding → requirements → testing → design
++ requirements → design → coding → testing
+- testing → coding → design → requirements
+- design → testing → requirements → coding
+! First you need to know what you're building, only then how.
+
+? What does `{"a": 1}.get("b", 0)` give?
+= 0
+! For a missing key `get` returns the second argument instead of raising an error.
+
+? Why is it worth splitting a big task into smaller functions?
+- because Python only runs short functions
++ because small parts can be tested separately, are easier to understand and reusable
+- because the program runs faster that way
+- because then no testing is needed
+! Splitting also makes debugging easier.
+
+? What is the value of `sorted([("b", 2), ("a", 2), ("c", 5)], key=lambda p: (-p[1], p[0]))[0][0]`?
+- a
+- b
++ c
+- raises an error
+! The largest count (5) comes first.
 ```

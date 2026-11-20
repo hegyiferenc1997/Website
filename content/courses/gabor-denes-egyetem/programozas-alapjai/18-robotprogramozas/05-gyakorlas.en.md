@@ -1,7 +1,7 @@
 ---
 title: Practice – Robot Programming
 summary: Review questions, executing a command sequence, obstacle avoidance, a P controller and path finding.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -341,4 +341,139 @@ assert r["floor"] == ["########", "#Roo#..#", "#o#o#..#", "#ooo####", "########"
 assert clean(["###", "#R#", "###"]) == {"cleaned": 0, "unreachable": 0, "floor": ["###", "#R#", "###"]}, "With no free cells there is nothing to clean."
 r = clean(["#####", "#.#R#", "#.#.#", "#####"])
 assert r["cleaned"] == 1 and r["unreachable"] == 2 and r["floor"][2] == "#.#o#", "It can only move to neighbouring (not diagonal) cells."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Robot on a grid.** A robot starts at `(0, 0)` facing north (`"N"`). Its commands: `"F"` = one step forward, `"L"` = turn left 90°, `"R"` = turn right 90°. Write the `position(commands)` function, which returns the triple `(x, y, direction)` at the end! The directions clockwise: `"N"`, `"E"`, `"S"`, `"W"`; going north `y` grows, going east `x` grows.
+
+```python starter
+def position(commands):
+    return (0, commands.count("F"), "N")
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+DIRECTIONS = ["N", "E", "S", "W"]
+STEP = {"N": (0, 1), "E": (1, 0), "S": (0, -1), "W": (-1, 0)}
+
+def position(commands):
+    x, y, i = 0, 0, 0                       # i: index in the DIRECTIONS list
+    for c in commands:
+        if c == "L":
+            i = (i - 1) % 4
+        elif c == "R":
+            i = (i + 1) % 4
+        elif c == "F":
+            dx, dy = STEP[DIRECTIONS[i]]
+            x, y = x + dx, y + dy
+    return (x, y, DIRECTIONS[i])
+```
+
+</details>
+
+```python test
+assert position("") == (0, 0, "N")
+assert position("FF") == (0, 2, "N")
+assert position("RFF") == (2, 0, "E")
+assert position("FRFRFRF") == (0, 0, "W")
+assert position("LLF") == (0, -1, "S")
+print("All checks passed!")
+```
+
+**2.** **Moving average filter.** Sensors are noisy, so we smooth the measurements. Write the `moving_average(readings, window)` function, which returns in a list the average of every consecutive section of length `window`, rounded to 2 decimals! If there are fewer readings than the window, return an empty list.
+
+```python starter
+def moving_average(readings, window):
+    return readings
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def moving_average(readings, window):
+    result = []
+    for i in range(len(readings) - window + 1):
+        section = readings[i:i + window]    # the current window
+        result.append(round(sum(section) / window, 2))
+    return result
+```
+
+</details>
+
+```python test
+assert moving_average([10, 20, 30, 40], 2) == [15.0, 25.0, 35.0]
+assert moving_average([1, 2, 3], 3) == [2.0]
+assert moving_average([1, 2], 3) == []
+assert moving_average([10, 50, 10, 10], 3) == [23.33, 23.33]
+print("All checks passed!")
+```
+
+**3.** **Obstacle avoidance.** A robot has three distance sensors (left, centre, right, in cm). Write the `obstacle_decision(left, centre, right, threshold=30)` function: if the centre distance is greater than the threshold, `"forward"`; otherwise turn towards the side with more space (`"left"` / `"right"`), if that is greater than the threshold (left on ties); if neither side is free, `"back"`.
+
+```python starter
+def obstacle_decision(left, centre, right, threshold=30):
+    return "forward"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def obstacle_decision(left, centre, right, threshold=30):
+    if centre > threshold:
+        return "forward"                    # the way is clear
+    if left >= right and left > threshold:
+        return "left"
+    if right > threshold:
+        return "right"
+    return "back"                           # obstacles everywhere
+```
+
+</details>
+
+```python test
+assert obstacle_decision(10, 100, 10) == "forward"
+assert obstacle_decision(80, 20, 50) == "left"
+assert obstacle_decision(40, 20, 90) == "right"
+assert obstacle_decision(60, 20, 60) == "left"
+assert obstacle_decision(10, 20, 25) == "back"
+assert obstacle_decision(10, 30, 10) == "back"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does the "sense – plan – act" cycle mean in robotics?
++ the robot continuously measures its environment, decides, then carries out the decision
+- the robot plans once, then only executes
+- the robot moves only on the user's commands
+- the robot uses no sensors
+! This cycle can run up to a hundred times per second.
+
+? How many values does a moving average of length 3 give for 10 readings?
+= 8
+! 10 − 3 + 1 = 8 windows fit.
+
+? What is a moving average filter good for?
+- speeding up measurements
++ smoothing noisy measurements
+- increasing the robot's speed
+- saving memory
+! In exchange it delays changes slightly.
+
+? In a PD controller, what does the D (derivative) term watch?
+- the size of the error
++ the rate of change of the error
+- the sum of the errors
+- the motor's temperature
+! The D term brakes when the error decreases quickly, so there is less overshoot.
 ```

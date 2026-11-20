@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – futtatási környezetek
 summary: Ellenőrző kérdések, parancssori számológép, beállítások környezeti változókból és requirements.txt feldolgozása.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -337,4 +337,142 @@ assert kod == 1 and ki.startswith("Hiba:"), "Nem pozitív árfolyamnál 'Hiba: .
 kod, ki = futas(["1000"], {"PENZNEM": "GBP"})
 assert kod == 1 and ki.startswith("Hiba:"), "Ismeretlen PENZNEM-nél 'Hiba: ...' és 1-es kód."
 assert futas(["sok"], {})[0] == 2 and futas([], {})[0] == 2, "Hibás argumentumoknál az argparse kódját (2) add vissza."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Verzió megfelel-e?** Írd meg a `verzio_megfelel(verzio, minimum)` függvényt, amely `"3.10.2"` alakú verziószámokat hasonlít össze **számként** részenként (nem szövegként!), és `True`-t ad, ha `verzio >= minimum`! Figyelj: `"3.10"` újabb, mint `"3.9"`.
+
+```python starter
+def verzio_megfelel(verzio, minimum):
+    return verzio >= minimum
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def verzio_megfelel(verzio, minimum):
+    def reszek(v):
+        return [int(r) for r in v.split(".")]   # "3.10.2" -> [3, 10, 2]
+    a, b = reszek(verzio), reszek(minimum)
+    hossz = max(len(a), len(b))
+    a += [0] * (hossz - len(a))             # "3.10" == "3.10.0"
+    b += [0] * (hossz - len(b))
+    return a >= b                           # a listák elemenként hasonlítódnak
+```
+
+</details>
+
+```python test
+assert verzio_megfelel("3.10", "3.9")
+assert not verzio_megfelel("3.9", "3.10")
+assert verzio_megfelel("3.12.0", "3.12")
+assert not verzio_megfelel("2.7.18", "3")
+assert verzio_megfelel("1.0.0", "1.0.0")
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Környezeti változó logikai értéke.** Írd meg az `env_bool(ertek, alap=False)` függvényt, amely egy környezeti változó szöveges értékét logikai értékké alakítja! Igaz: `"1"`, `"true"`, `"yes"`, `"igen"`, `"on"`; hamis: `"0"`, `"false"`, `"no"`, `"nem"`, `"off"` (kis-/nagybetű és szóközök nem számítanak). `None` vagy ismeretlen érték esetén az `alap` legyen az eredmény.
+
+```python starter
+def env_bool(ertek, alap=False):
+    return bool(ertek)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+IGAZ = {"1", "true", "yes", "igen", "on"}
+HAMIS = {"0", "false", "no", "nem", "off"}
+
+def env_bool(ertek, alap=False):
+    if ertek is None:
+        return alap                         # nincs beállítva
+    tiszta = ertek.strip().lower()
+    if tiszta in IGAZ:
+        return True
+    if tiszta in HAMIS:
+        return False
+    return alap
+```
+
+</details>
+
+```python test
+assert env_bool("true") is True
+assert env_bool(" YES ") is True
+assert env_bool("0") is False
+assert env_bool("false", True) is False
+assert env_bool(None, True) is True
+assert env_bool("talán") is False
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Parancssori kapcsolók.** Írd meg az `args_elemez(argumentumok)` függvényt, amely egy `sys.argv`-szerű listát (a programnév nélkül) szótárrá alakít! A `--nev=ertek` alakból `{"nev": "ertek"}`, a csak `--nev` alakból `{"nev": True}` lesz; a többi (pozicionális) elem a `"_"` kulcs alatti listába kerüljön.
+
+```python starter
+def args_elemez(argumentumok):
+    return {"_": argumentumok}
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def args_elemez(argumentumok):
+    eredmeny = {"_": []}
+    for arg in argumentumok:
+        if arg.startswith("--"):
+            nev, van_ertek, ertek = arg[2:].partition("=")   # szétvágás az első = jelnél
+            eredmeny[nev] = ertek if van_ertek else True
+        else:
+            eredmeny["_"].append(arg)       # pozicionális paraméter
+    return eredmeny
+```
+
+</details>
+
+```python test
+assert args_elemez(["be.txt", "--verbose", "--szint=3"]) == {"_": ["be.txt"], "verbose": True, "szint": "3"}
+assert args_elemez([]) == {"_": []}
+assert args_elemez(["--url=a=b"]) == {"_": [], "url": "a=b"}
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik parancs hoz létre virtuális környezetet `.venv` néven?
+- pip install venv
++ python -m venv .venv
+- python --venv .venv
+- venv create .venv
+! Utána aktiválni kell (Windowson `.venv\Scripts\activate`).
+
+? Mi a `sys.argv[0]` értéke?
++ a futtatott szkript neve
+- az első felhasználói paraméter
+- a paraméterek száma
+- mindig üres szöveg
+! A felhasználói paraméterek `sys.argv[1]`-től kezdődnek.
+
+? Miért nem jó szövegként összehasonlítani a verziószámokat?
+- mert a Python nem tud szövegeket összehasonlítani
++ mert szövegként `"3.10" < "3.9"`, hiszen a „1” karakter kisebb a „9”-nél
+- mert a pontok hibát okoznak
+- mert a verziószám mindig egész
+! Részenként számmá kell alakítani őket.
+
+? Mit tárol jellemzően a `requirements.txt`?
+- a program forráskódját
++ a projekt által használt csomagok listáját (verziókkal)
+- a jelszavakat
+- a tesztek eredményét
+! `pip install -r requirements.txt` telepíti őket.
 ```

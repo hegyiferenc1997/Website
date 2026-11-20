@@ -5,17 +5,12 @@
     {
       "nev": "Matematika",
       "kredit": 6,
-      "napok": [
-        "hétfő",
-        "szerda"
-      ]
+      "napok": ["hétfő", "szerda"]
     },
     {
       "nev": "Programozási alapok",
       "kredit": 8,
-      "napok": [
-        "kedd"
-      ]
+      "napok": ["kedd"]
     }
   ]
 }

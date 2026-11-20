@@ -1,7 +1,7 @@
 ---
 title: Practice – Runtime Environments
 summary: Review questions, a command-line calculator, settings from environment variables and parsing requirements.txt.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -337,4 +337,142 @@ assert code == 1 and out.startswith("Error:"), "A non-positive rate gives 'Error
 code, out = run_cli(["1000"], {"CURRENCY": "GBP"})
 assert code == 1 and out.startswith("Error:"), "An unknown CURRENCY gives 'Error: ...' and code 1."
 assert run_cli(["lots"], {})[0] == 2 and run_cli([], {})[0] == 2, "For bad arguments return argparse's code (2)."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Is the version sufficient?** Write the `version_ok(version, minimum)` function, which compares version numbers of the form `"3.10.2"` part by part **as numbers** (not as text!), and returns `True` if `version >= minimum`! Careful: `"3.10"` is newer than `"3.9"`.
+
+```python starter
+def version_ok(version, minimum):
+    return version >= minimum
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def version_ok(version, minimum):
+    def parts(v):
+        return [int(p) for p in v.split(".")]   # "3.10.2" -> [3, 10, 2]
+    a, b = parts(version), parts(minimum)
+    length = max(len(a), len(b))
+    a += [0] * (length - len(a))            # "3.10" == "3.10.0"
+    b += [0] * (length - len(b))
+    return a >= b                           # lists compare element by element
+```
+
+</details>
+
+```python test
+assert version_ok("3.10", "3.9")
+assert not version_ok("3.9", "3.10")
+assert version_ok("3.12.0", "3.12")
+assert not version_ok("2.7.18", "3")
+assert version_ok("1.0.0", "1.0.0")
+print("All checks passed!")
+```
+
+**2.** **Boolean value of an environment variable.** Write the `env_bool(value, default=False)` function, which converts the text value of an environment variable to a boolean! True: `"1"`, `"true"`, `"yes"`, `"igen"`, `"on"`; false: `"0"`, `"false"`, `"no"`, `"nem"`, `"off"` (case and surrounding spaces don't matter). For `None` or an unknown value the result should be `default`.
+
+```python starter
+def env_bool(value, default=False):
+    return bool(value)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+TRUE = {"1", "true", "yes", "igen", "on"}
+FALSE = {"0", "false", "no", "nem", "off"}
+
+def env_bool(value, default=False):
+    if value is None:
+        return default                      # not set
+    clean = value.strip().lower()
+    if clean in TRUE:
+        return True
+    if clean in FALSE:
+        return False
+    return default
+```
+
+</details>
+
+```python test
+assert env_bool("true") is True
+assert env_bool(" YES ") is True
+assert env_bool("0") is False
+assert env_bool("false", True) is False
+assert env_bool(None, True) is True
+assert env_bool("maybe") is False
+print("All checks passed!")
+```
+
+**3.** **Command-line switches.** Write the `parse_args(arguments)` function, which turns a `sys.argv`-like list (without the program name) into a dictionary! The form `--name=value` becomes `{"name": "value"}`, the bare `--name` form becomes `{"name": True}`; the rest (positional) elements go into a list under the `"_"` key.
+
+```python starter
+def parse_args(arguments):
+    return {"_": arguments}
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def parse_args(arguments):
+    result = {"_": []}
+    for arg in arguments:
+        if arg.startswith("--"):
+            name, has_value, value = arg[2:].partition("=")   # split at the first = sign
+            result[name] = value if has_value else True
+        else:
+            result["_"].append(arg)         # positional argument
+    return result
+```
+
+</details>
+
+```python test
+assert parse_args(["in.txt", "--verbose", "--level=3"]) == {"_": ["in.txt"], "verbose": True, "level": "3"}
+assert parse_args([]) == {"_": []}
+assert parse_args(["--url=a=b"]) == {"_": [], "url": "a=b"}
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which command creates a virtual environment named `.venv`?
+- pip install venv
++ python -m venv .venv
+- python --venv .venv
+- venv create .venv
+! Then it needs to be activated (on Windows `.venv\Scripts\activate`).
+
+? What is the value of `sys.argv[0]`?
++ the name of the script being run
+- the first user argument
+- the number of arguments
+- always an empty string
+! User arguments start at `sys.argv[1]`.
+
+? Why is comparing version numbers as text a bad idea?
+- because Python can't compare strings
++ because as text `"3.10" < "3.9"`, since the character "1" is smaller than "9"
+- because the dots cause errors
+- because a version number is always an integer
+! They have to be converted to numbers part by part.
+
+? What does `requirements.txt` typically store?
+- the program's source code
++ the list of packages used by the project (with versions)
+- the passwords
+- the test results
+! `pip install -r requirements.txt` installs them.
 ```

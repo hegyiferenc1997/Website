@@ -1,7 +1,7 @@
 ---
 title: Practice – Data Types
 summary: Review questions and exercises with numbers, strings and type conversion.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -245,4 +245,129 @@ assert report("20") == "min: 20.0, max: 20.0, avg: 20.0", "With a single value a
 assert report("1, 2, 2") == "min: 1.0, max: 2.0, avg: 1.67", "Round the average to two decimals (1.67)."
 assert report("") == "no data", "An empty line gives: no data"
 assert report(" , ") == "no data", "Only empty items also give: no data"
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Hex colour code.** Write the `hex_color(r, g, b)` function, which builds a web colour code from three integers between 0 and 255 (red, green, blue), with lowercase hexadecimal digits, always padded to 2 digits! For example `(255, 128, 0)` → `"#ff8000"`. For out-of-range values raise `ValueError`!
+
+```python starter
+def hex_color(r, g, b):
+    return "#" + str(r) + str(g) + str(b)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def hex_color(r, g, b):
+    for value in (r, g, b):
+        if not 0 <= value <= 255:
+            raise ValueError("must be between 0 and 255")
+    return f"#{r:02x}{g:02x}{b:02x}"        # 02x: 2-digit hex padded with zeros
+```
+
+</details>
+
+```python test
+assert hex_color(255, 128, 0) == "#ff8000"
+assert hex_color(0, 0, 0) == "#000000"
+assert hex_color(10, 11, 12) == "#0a0b0c"
+try:
+    hex_color(256, 0, 0)
+    assert False, "ValueError expected"
+except ValueError:
+    pass
+print("All checks passed!")
+```
+
+**2.** **Floating-point comparison.** In Python `0.1 + 0.2 == 0.3` is `False`. Write the `nearly_equal(a, b, tolerance=1e-9)` function, which returns `True` if the absolute difference of the two numbers is at most `tolerance`!
+
+```python starter
+def nearly_equal(a, b, tolerance=1e-9):
+    return a == b
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def nearly_equal(a, b, tolerance=1e-9):
+    return abs(a - b) <= tolerance          # a tolerance instead of exact equality
+```
+
+</details>
+
+```python test
+assert nearly_equal(0.1 + 0.2, 0.3)
+assert not nearly_equal(0.1, 0.2)
+assert nearly_equal(1.0, 1.05, tolerance=0.1)
+assert not nearly_equal(1.0, 1.2, tolerance=0.1)
+print("All checks passed!")
+```
+
+**3.** **UTF-8 byte count.** Write the `utf8_bytes(text)` function, which tells how many bytes the text takes in UTF-8 without using `encode()`, based only on `ord()`! Rule: code point < 128 → 1 byte, < 2048 → 2, < 65536 → 3, otherwise 4.
+
+```python starter
+def utf8_bytes(text):
+    return len(text)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def utf8_bytes(text):
+    total = 0
+    for char in text:
+        k = ord(char)
+        if k < 128:
+            total += 1                      # ASCII
+        elif k < 2048:
+            total += 2                      # e.g. á, ő
+        elif k < 65536:
+            total += 3                      # e.g. €
+        else:
+            total += 4                      # e.g. emoji
+    return total
+```
+
+</details>
+
+```python test
+assert utf8_bytes("abc") == 3
+assert utf8_bytes("ő") == 2
+assert utf8_bytes("€") == 3
+assert utf8_bytes("😀") == 4
+assert utf8_bytes("Szép €") == 9
+for s in ["árvíztűrő", "a€😀", ""]:
+    assert utf8_bytes(s) == len(s.encode("utf-8"))
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is the value of the binary number 0b1011 in decimal?
+= 11
+! 8 + 0 + 2 + 1 = 11.
+
+? How many different values can an 8-bit unsigned integer store?
+= 256
+! $2^8 = 256$ (from 0 to 255).
+
+? Why is `0.1 + 0.2 == 0.3` `False`?
+- because Python adds incorrectly
++ because 0.1 cannot be represented exactly in binary
+- because `==` compares as text
+- because 0.3 is an integer
+! Floating-point numbers are binary fractions; 0.1 would be an infinite binary fraction, so it is stored rounded.
+
+? How many bytes does the letter "ő" take in UTF-8?
+= 2
+! Its code point is 337, which falls between 128 and 2047, so 2 bytes.
 ```

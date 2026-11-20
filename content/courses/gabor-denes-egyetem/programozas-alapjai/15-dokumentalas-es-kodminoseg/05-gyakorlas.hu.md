@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – dokumentálás és kódminőség
 summary: Ellenőrző kérdések, docstringek írása és rossz minőségű kód refaktorálása.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -288,4 +288,139 @@ except ValueError:
 assert (Homerseklet.__doc__ or "").strip(), "Az osztálynak legyen docstringje."
 for nev in ("fahrenheit", "kelvin", "fahrenheitbol"):
     assert (getattr(Homerseklet, nev).__doc__ or "").strip(), f"A(z) {nev} metódusnak legyen docstringje."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Hiányzó docstringek.** Írd meg a `docstring_nelkul(kod)` függvényt, amely egy Python forráskódot (szöveget) az `ast` modullal elemez, és ábécérendben visszaadja azoknak a függvényeknek a nevét, amelyeknek nincs docstringje! Segítség: `ast.walk(ast.parse(kod))`, `isinstance(csomopont, ast.FunctionDef)`, `ast.get_docstring(csomopont)`.
+
+```python starter
+import ast
+
+def docstring_nelkul(kod):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import ast
+
+def docstring_nelkul(kod):
+    hianyzik = []
+    for csomopont in ast.walk(ast.parse(kod)):          # a szintaxisfa összes eleme
+        if isinstance(csomopont, ast.FunctionDef) and ast.get_docstring(csomopont) is None:
+            hianyzik.append(csomopont.name)
+    return sorted(hianyzik)
+```
+
+</details>
+
+```python test
+kod = '''
+def osszead(a, b):
+    """Két szám összege."""
+    return a + b
+
+def szoroz(a, b):
+    return a * b
+
+def atlag(l):
+    # ez csak megjegyzés, nem docstring
+    return sum(l) / len(l)
+'''
+assert docstring_nelkul(kod) == ["atlag", "szoroz"]
+assert docstring_nelkul("x = 1") == []
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Beszédes név?** Írd meg a `beszedes_nev_e(nev)` függvényt egy egyszerű névkonvenció-ellenőrzőhöz! Akkor adjon `True`-t, ha a név legalább 3 karakteres, csak kisbetűt, számjegyet és aláhúzást tartalmaz, és nem számjeggyel kezdődik. Kivétel: az `i`, `j`, `k` ciklusváltozók is elfogadottak.
+
+```python starter
+def beszedes_nev_e(nev):
+    return len(nev) >= 3
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def beszedes_nev_e(nev):
+    if nev in ("i", "j", "k"):
+        return True                         # megszokott ciklusváltozók
+    engedett = set("abcdefghijklmnopqrstuvwxyz0123456789_")
+    return len(nev) >= 3 and not nev[0].isdigit() and set(nev) <= engedett
+```
+
+</details>
+
+```python test
+assert beszedes_nev_e("osszeg")
+assert beszedes_nev_e("max_ertek2")
+assert beszedes_nev_e("i")
+assert not beszedes_nev_e("a")
+assert not beszedes_nev_e("Osszeg")
+assert not beszedes_nev_e("2db")
+assert not beszedes_nev_e("max-ertek")
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Túl hosszú sorok.** Írd meg a `sorhossz_hibak(kod, max_hossz=79)` függvényt, amely a forráskód azon sorainak **sorszámát** (1-től számozva) adja vissza listában, amelyek hosszabbak `max_hossz` karakternél!
+
+```python starter
+def sorhossz_hibak(kod, max_hossz=79):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def sorhossz_hibak(kod, max_hossz=79):
+    return [szam for szam, sor in enumerate(kod.splitlines(), start=1)   # 1-től számozunk
+            if len(sor) > max_hossz]
+```
+
+</details>
+
+```python test
+kod = "x = 1\n" + "y = " + "1" * 80 + "\nz = 3\n" + "w" * 79
+assert sorhossz_hibak(kod) == [2]
+assert sorhossz_hibak(kod, 5) == [2, 4]
+assert sorhossz_hibak("") == []
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik név felel meg a PEP 8 ajánlásnak egy Python függvényre?
+- OsszegSzamol
+- osszegSzamol
++ osszeg_szamol
+- OSSZEG_SZAMOL
+! Függvényekre és változókra snake_case, osztályokra PascalCase, konstansokra NAGYBETŰ.
+
+? Mi a DRY elv lényege?
++ ne ismételd önmagad: egy tudásdarab egy helyen legyen a kódban
+- minden függvény legyen rövidebb 5 sornál
+- ne használj megjegyzéseket
+- minden változó legyen globális
+! Don't Repeat Yourself: a duplikált kódot függvénybe érdemes kiemelni.
+
+? Hány karakteres sorhosszt ajánl a PEP 8 alapértelmezésként legfeljebb?
+= 79
+! Sok csapat ennél többet enged (pl. 88 vagy 100), de a PEP 8 eredeti ajánlása 79.
+
+? Mire való a docstring?
+- a kód gyorsítására
++ a függvény céljának és használatának leírására, amit a `help()` is megjelenít
+- a hibák elrejtésére
+- a változók típusának kikényszerítésére
+! A függvény első utasításaként írt szöveg.
 ```

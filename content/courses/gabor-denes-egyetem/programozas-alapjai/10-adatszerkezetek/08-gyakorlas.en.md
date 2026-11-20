@@ -1,7 +1,7 @@
 ---
 title: Practice – Data Structures
 summary: Review questions and exercises on arrays, lists, linked lists, sets, dictionaries and stacks.
-minutes: 40
+minutes: 65
 kind: practice
 ---
 
@@ -346,4 +346,117 @@ assert by_reader == {"Anna": ["Dune", "Hobbit"], "Bob": ["Dune", "Emma"], "Cecil
 assert popular == ["Dune", "Hobbit"], "Popular: borrowed by at least two different readers."
 assert loan_report([("Anna", "X"), ("Anna", "X")]) == ({"Anna": ["X"]}, []), "The same reader twice: not popular."
 assert loan_report([]) == ({}, []), "An empty list gives an empty result."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Common elements.** Write the `common_elements(a, b)` function, which returns the common elements of the two lists in a **sorted** list without repetition! Use a set (`set`)!
+
+```python starter
+def common_elements(a, b):
+    return []
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def common_elements(a, b):
+    return sorted(set(a) & set(b))          # & = intersection of sets
+```
+
+</details>
+
+```python test
+assert common_elements([1, 2, 3, 2], [2, 3, 4]) == [2, 3]
+assert common_elements(["a", "b"], ["c"]) == []
+assert common_elements([5, 5, 1], [1, 5]) == [1, 5]
+print("All checks passed!")
+```
+
+**2.** **Reversing with a stack.** Write the `stack_reverse(text)` function, which reverses the text using a list as a stack (`append` and `pop`), without using `[::-1]` or `reversed`!
+
+```python starter
+def stack_reverse(text):
+    return text
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def stack_reverse(text):
+    stack = []
+    for char in text:
+        stack.append(char)                  # put it on top of the stack
+    result = ""
+    while stack:
+        result += stack.pop()               # always take the topmost one (LIFO)
+    return result
+```
+
+</details>
+
+```python test
+assert stack_reverse("abc") == "cba"
+assert stack_reverse("") == ""
+assert stack_reverse("Görög") == "göröG"
+print("All checks passed!")
+```
+
+**3.** **Grouping by length.** Write the `words_by_length(words)` function, which returns a dictionary: the key is the word length, the value is the list of words of that length in the original order!
+
+```python starter
+def words_by_length(words):
+    return {}
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def words_by_length(words):
+    groups = {}
+    for word in words:
+        groups.setdefault(len(word), []).append(word)   # if the key doesn't exist yet, an empty list
+    return groups
+```
+
+</details>
+
+```python test
+assert words_by_length(["fi", "pear", "ok", "sky"]) == {2: ["fi", "ok"], 4: ["pear"], 3: ["sky"]}
+assert words_by_length([]) == {}
+assert words_by_length(["a", "a"]) == {1: ["a", "a"]}
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which data structure is NOT mutable (immutable)?
+- list
+- dict
++ tuple
+- set
+! A tuple cannot be changed after it is created.
+
+? What is the value of `len({1, 2, 2, 3, 3, 3})`?
+= 3
+! A set stores each element only once.
+
+? On average how fast is lookup by key in a dictionary?
++ nearly constant time, independent of the size
+- proportional to the size
+- proportional to the square of the size
+- fast only in a sorted dictionary
+! A dictionary uses a hash table.
+
+? What is the length of `[1, 2, 3, 4, 5][1:4]`?
+= 3
+! The elements at index 1, 2 and 3: [2, 3, 4].
 ```

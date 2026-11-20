@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – rekurzió és iteráció
 summary: Ellenőrző kérdések és feladatok rekurzív és iteratív megoldásokra.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -255,4 +255,125 @@ assert permutaciok("abc") == ["abc", "acb", "bac", "bca", "cab", "cba"], "Az \"a
 assert permutaciok("aab") == ["aab", "aba", "baa"], "Ismétlődő betűnél a duplikátumokat ki kell szűrni."
 assert permutaciok("") == [""], "Az üres szöveg egyetlen permutációja az üres szöveg."
 assert len(permutaciok("abcde")) == 120, "5 különböző betűnek 5! = 120 permutációja van."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Gyorshatványozás.** Írd meg a rekurzív `hatvany(a, n)` függvényt (nemnegatív egész `n`), amely a `**` operátor nélkül, a „felezés” ötletével számol: páros `n`-nél $a^n = (a^{n/2})^2$, páratlannál $a^n = a \cdot a^{n-1}$. Így 1000-edik hatványhoz is csak kb. 15 hívás kell!
+
+```python starter
+def hatvany(a, n):
+    return a * n
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def hatvany(a, n):
+    if n == 0:
+        return 1                            # alapeset
+    if n % 2 == 0:
+        fel = hatvany(a, n // 2)            # egyszer számoljuk ki, kétszer használjuk
+        return fel * fel
+    return a * hatvany(a, n - 1)
+```
+
+</details>
+
+```python test
+assert hatvany(2, 10) == 1024
+assert hatvany(3, 0) == 1
+assert hatvany(5, 3) == 125
+assert hatvany(2, 1000) == 2 ** 1000
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Beágyazott összeg.** Írd meg az `osszeg_rek(adat)` függvényt, amely egy tetszőleges mélységben egymásba ágyazott lista összes számát összeadja! Például `[1, [2, [3, 4]], 5]` → `15`.
+
+```python starter
+def osszeg_rek(adat):
+    return sum(x for x in adat if isinstance(x, int))
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def osszeg_rek(adat):
+    osszes = 0
+    for elem in adat:
+        if isinstance(elem, list):
+            osszes += osszeg_rek(elem)      # a részlista ugyanolyan feladat, csak kisebb
+        else:
+            osszes += elem
+    return osszes
+```
+
+</details>
+
+```python test
+assert osszeg_rek([1, [2, [3, 4]], 5]) == 15
+assert osszeg_rek([]) == 0
+assert osszeg_rek([[[[]]]]) == 0
+assert osszeg_rek([[1.5], [[2.5]]]) == 4.0
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Összes bináris szám.** Írd meg a rekurzív `binaris_szamok(n)` függvényt, amely az összes `n` hosszú, 0-kból és 1-esekből álló szöveget adja vissza növekvő sorrendben! `n = 0`-ra `[""]` legyen az eredmény.
+
+```python starter
+def binaris_szamok(n):
+    return ["0" * n]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def binaris_szamok(n):
+    if n == 0:
+        return [""]                         # egyetlen üres szöveg
+    rovidebbek = binaris_szamok(n - 1)
+    return ["0" + s for s in rovidebbek] + ["1" + s for s in rovidebbek]
+```
+
+</details>
+
+```python test
+assert binaris_szamok(0) == [""]
+assert binaris_szamok(2) == ["00", "01", "10", "11"]
+assert len(binaris_szamok(5)) == 32
+assert binaris_szamok(3)[5] == "101"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mi történik, ha egy rekurzív függvényből hiányzik az alapeset?
+- a függvény 0-t ad vissza
++ a hívások sosem állnak meg, és `RecursionError` keletkezik
+- a Python automatikusan megállítja az első hívás után
+- semmi különös
+! A Python alapból kb. 1000 hívásmélységnél megállítja a programot.
+
+? Hányszor hívódik meg összesen `fakt(4)` számításakor a `fakt(n) = n * fakt(n - 1)`, `fakt(0) = 1` függvény?
+= 5
+! fakt(4), fakt(3), fakt(2), fakt(1), fakt(0).
+
+? Mennyi a 6. Fibonacci-szám, ha F(1) = F(2) = 1?
+= 8
+! 1, 1, 2, 3, 5, 8.
+
+? Miért lassú a naiv rekurzív Fibonacci nagy n-re?
+- mert a Python nem támogatja a rekurziót
++ mert ugyanazokat a részértékeket újra és újra kiszámolja
+- mert túl kevés memóriát használ
+- mert a számok túl nagyok
+! Memoizálással (pl. `functools.lru_cache`) gyorssá tehető.
 ```

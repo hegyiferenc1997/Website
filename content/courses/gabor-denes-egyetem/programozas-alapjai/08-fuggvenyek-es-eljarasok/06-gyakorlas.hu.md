@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – függvények
 summary: Ellenőrző kérdések és feladatok függvények írására, paraméterekre, hatókörre és egyszerű rekurzióra.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -278,4 +278,129 @@ assert jelszo_hibak("Titok12!", min_hossz=10) == ["túl rövid"], "10-es minimum
 assert jelszo_hibak("TITOKTITOK!") == ["nincs benne szám"], "Csak a szám hiányzik."
 assert jelszo_hibak("Titok 1234") == ["nincs benne speciális karakter"], "A szóköz nem számít speciális karakternek."
 assert van_szam("a1") and not van_szam("ab"), "A van_szam segédfüggvény is működjön."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Számláló lezárással.** Írd meg a `szamlalo_keszito(kezdo=0)` függvényt, amely egy **függvényt** ad vissza! A visszaadott függvény minden hívásakor eggyel nagyobb számot adjon (először `kezdo + 1`-et). Használj belső függvényt és `nonlocal` változót!
+
+```python starter
+def szamlalo_keszito(kezdo=0):
+    def leptet():
+        return kezdo + 1
+    return leptet
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szamlalo_keszito(kezdo=0):
+    ertek = kezdo
+    def leptet():
+        nonlocal ertek                      # a külső függvény változóját módosítjuk
+        ertek += 1
+        return ertek
+    return leptet
+```
+
+</details>
+
+```python test
+sz = szamlalo_keszito()
+assert sz() == 1 and sz() == 2 and sz() == 3
+masik = szamlalo_keszito(10)
+assert masik() == 11
+assert sz() == 4
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Függvény alkalmazása mindenre.** Írd meg az `alkalmaz_mindre(fuggveny, lista)` függvényt, amely egy új listát ad vissza, benne a `fuggveny` eredményével minden elemre (a beépített `map` használata nélkül)!
+
+```python starter
+def alkalmaz_mindre(fuggveny, lista):
+    return lista
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def alkalmaz_mindre(fuggveny, lista):
+    return [fuggveny(elem) for elem in lista]   # a függvény is csak egy érték
+```
+
+</details>
+
+```python test
+assert alkalmaz_mindre(abs, [-1, 2, -3]) == [1, 2, 3]
+assert alkalmaz_mindre(lambda x: x * x, [1, 2, 3]) == [1, 4, 9]
+assert alkalmaz_mindre(str.upper, ["a", "b"]) == ["A", "B"]
+assert alkalmaz_mindre(len, []) == []
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Legkisebb kulcs szerint.** Írd meg a `legkisebb_szerint(lista, kulcs)` függvényt, amely azt az elemet adja vissza, amelyre a `kulcs(elem)` értéke a legkisebb (egyenlőségnél az elsőt), a `min()` használata nélkül! Üres listára `None`-t adjon.
+
+```python starter
+def legkisebb_szerint(lista, kulcs):
+    return lista[0] if lista else None
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def legkisebb_szerint(lista, kulcs):
+    if not lista:
+        return None
+    legjobb = lista[0]
+    for elem in lista[1:]:
+        if kulcs(elem) < kulcs(legjobb):    # a kulcsfüggvény dönt
+            legjobb = elem
+    return legjobb
+```
+
+</details>
+
+```python test
+assert legkisebb_szerint(["alma", "fa", "körte"], len) == "fa"
+assert legkisebb_szerint([3, -1, 2], abs) == -1
+assert legkisebb_szerint([("Anna", 30), ("Béla", 25)], lambda p: p[1]) == ("Béla", 25)
+assert legkisebb_szerint(["ab", "cd"], len) == "ab"
+assert legkisebb_szerint([], len) is None
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit ad vissza egy olyan függvény, amelyben nincs `return`?
+- 0
+- üres szöveget
++ None
+- hibát dob
+! A `return` nélküli függvény automatikusan `None`-nal tér vissza.
+
+? Mennyi `(lambda a, b=2: a * b)(5)` értéke?
+= 10
+! `b` alapértéke 2, így 5 · 2 = 10.
+
+? Mire való a `nonlocal` kulcsszó?
+- globális változó létrehozására
++ a befoglaló függvény változójának módosítására egy belső függvényből
+- egy változó törlésére
+- a függvény exportálására
+! Nélküle az `ertek += 1` új helyi változót próbálna létrehozni.
+
+? Mennyi `sorted(["ccc", "a", "bb"], key=len)[-1]` értéke?
+- a
+- bb
++ ccc
+- hibát dob
+! Hossz szerint rendezve az utolsó a leghosszabb.
 ```

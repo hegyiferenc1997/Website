@@ -1,7 +1,7 @@
 ---
 title: Practice – Type Systems
 summary: Review questions on type systems, and exercises with type hints.
-minutes: 15
+minutes: 40
 kind: practice
 ---
 
@@ -198,4 +198,121 @@ try:
     assert False, "A return value of the wrong type must raise TypeError."
 except TypeError:
     pass
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Type names.** Write the `type_names(items)` function, which returns the name of the type of each element of a list (e.g. `"int"`, `"str"`)! Use the expression `type(x).__name__`.
+
+```python starter
+def type_names(items):
+    return ["int" for _ in items]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def type_names(items):
+    return [type(item).__name__ for item in items]   # the type's name as text
+```
+
+</details>
+
+```python test
+assert type_names([1, "a", 2.5, True, None]) == ["int", "str", "float", "bool", "NoneType"]
+assert type_names([]) == []
+assert type_names([[1], (1,), {1: 2}]) == ["list", "tuple", "dict"]
+print("All checks passed!")
+```
+
+**2.** **Safe conversion.** Write the `safe_int(value, default=0)` function, which tries to convert the value to an integer (`int(value)`), and if that fails (`ValueError` or `TypeError`), returns `default`!
+
+```python starter
+def safe_int(value, default=0):
+    return int(value)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def safe_int(value, default=0):
+    try:
+        return int(value)
+    except (ValueError, TypeError):         # bad text or a non-convertible type
+        return default
+```
+
+</details>
+
+```python test
+assert safe_int("42") == 42
+assert safe_int(" -7 ") == -7
+assert safe_int("six") == 0
+assert safe_int(None, -1) == -1
+assert safe_int("3.5", 99) == 99
+assert safe_int(3.9) == 3
+print("All checks passed!")
+```
+
+**3.** **Schema check.** Write the `check_types(data, schema)` function! `schema` is a dictionary that maps field names to types (e.g. `{"name": str, "age": int}`). Return, in alphabetical order, the names of the fields that are missing from the `data` dictionary or have the wrong type! A `bool` should not count as an `int`.
+
+```python starter
+def check_types(data, schema):
+    return []
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def check_types(data, schema):
+    wrong = []
+    for field, kind in schema.items():
+        value = data.get(field)
+        bad_bool = isinstance(value, bool) and kind is not bool   # bool is a subclass of int
+        if field not in data or not isinstance(value, kind) or bad_bool:
+            wrong.append(field)
+    return sorted(wrong)
+```
+
+</details>
+
+```python test
+schema = {"name": str, "age": int, "active": bool}
+assert check_types({"name": "Anna", "age": 20, "active": True}, schema) == []
+assert check_types({"name": "Anna", "age": "20", "active": True}, schema) == ["age"]
+assert check_types({"age": True, "active": 1}, schema) == ["active", "age", "name"]
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does `type(3 / 1).__name__` return?
+- int
++ float
+- str
+- number
+! `/` is always floating-point division, so the result is 3.0.
+
+? What is the value of `int("101", 2)`?
+= 5
+! The second parameter is the base: 101 in binary is 5.
+
+? What does `isinstance(True, int)` give?
++ True
+- False
+- raises an error
+- None
+! In Python `bool` is a subclass of `int`, so it needs separate handling if we want to tell them apart.
+
+? What is the value of `len(str(12345))`?
+= 5
+! The number converted to text is 5 characters long.
 ```

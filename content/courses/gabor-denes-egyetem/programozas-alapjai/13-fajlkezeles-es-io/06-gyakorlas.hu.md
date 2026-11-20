@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – fájlkezelés
 summary: Ellenőrző kérdések és feladatok szöveges, CSV és JSON fájlokra, valamint a fájlhibák kezelésére.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -309,4 +309,130 @@ try:
 except FileNotFoundError:
     pass
 assert not os.path.exists("nem_kell.json"), "Hiba esetén ne jöjjön létre kimeneti fájl."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Szavak száma fájlban.** Írd meg a `szavak_szama_fajlban(utvonal)` függvényt, amely `with open(..., encoding="utf-8")` segítségével megnyitja a szövegfájlt, és visszaadja a benne lévő szavak számát (szóközzel/sortöréssel elválasztva)!
+
+```python starter
+def szavak_szama_fajlban(utvonal):
+    return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szavak_szama_fajlban(utvonal):
+    with open(utvonal, encoding="utf-8") as f:   # a with automatikusan lezárja a fájlt
+        return len(f.read().split())
+```
+
+</details>
+
+```python test
+with open("szoveg.txt", "w", encoding="utf-8") as f:
+    f.write("Első sor két szóval\nmásodik  sor\n\n")
+assert szavak_szama_fajlban("szoveg.txt") == 6
+with open("ures.txt", "w", encoding="utf-8") as f:
+    pass
+assert szavak_szama_fajlban("ures.txt") == 0
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Mentés és betöltés JSON-nal.** Írd meg a `ment_es_betolt(adat, utvonal)` függvényt, amely az `adat` szótárat JSON formában fájlba írja (`json.dump`, `ensure_ascii=False`), majd visszaolvassa (`json.load`), és a visszaolvasott értéket adja vissza!
+
+```python starter
+import json
+
+def ment_es_betolt(adat, utvonal):
+    return {}
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import json
+
+def ment_es_betolt(adat, utvonal):
+    with open(utvonal, "w", encoding="utf-8") as f:
+        json.dump(adat, f, ensure_ascii=False)   # ékezetek olvashatóan maradnak
+    with open(utvonal, encoding="utf-8") as f:
+        return json.load(f)
+```
+
+</details>
+
+```python test
+adat = {"név": "Ádám", "pontok": [3, 5], "aktív": True}
+assert ment_es_betolt(adat, "adat.json") == adat
+assert "Ádám" in open("adat.json", encoding="utf-8").read()
+assert ment_es_betolt({}, "ures.json") == {}
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **CSV oszlop kiolvasása.** Írd meg a `csv_oszlop(utvonal, oszlopnev)` függvényt, amely a `csv.DictReader` segítségével egy pontosvesszővel elválasztott CSV fájlból a megadott oszlop értékeit adja vissza listában!
+
+```python starter
+import csv
+
+def csv_oszlop(utvonal, oszlopnev):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import csv
+
+def csv_oszlop(utvonal, oszlopnev):
+    with open(utvonal, encoding="utf-8", newline="") as f:
+        olvaso = csv.DictReader(f, delimiter=";")    # az első sor a fejléc
+        return [sor[oszlopnev] for sor in olvaso]
+```
+
+</details>
+
+```python test
+with open("termekek.csv", "w", encoding="utf-8", newline="") as f:
+    f.write("nev;ar\nkenyér;650\ntej;420\n")
+assert csv_oszlop("termekek.csv", "nev") == ["kenyér", "tej"]
+assert csv_oszlop("termekek.csv", "ar") == ["650", "420"]
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit csinál a `"w"` megnyitási mód, ha a fájl már létezik?
+- hozzáfűz a végéhez
++ felülírja (kiüríti) a fájlt
+- hibát dob
+- csak olvasásra nyitja meg
+! Hozzáfűzéshez az `"a"` mód kell.
+
+? Miért ajánlott a `with open(...)` forma?
+- mert gyorsabban olvas
++ mert a fájlt akkor is lezárja, ha közben kivétel történik
+- mert titkosítja a fájlt
+- mert nem kell megadni a fájl nevét
+! A `with` blokk végén a fájl automatikusan lezárul.
+
+? Hány elemű listát ad a `"a;b;;c".split(";")`?
+= 4
+! `["a", "b", "", "c"]`: a két pontosvessző között üres szöveg van.
+
+? Milyen Python típus lesz a JSON `true` értékéből betöltés után?
+- str
+- int
++ bool
+- None
+! A JSON `true`/`false` a Python `True`/`False` értékévé alakul.
 ```

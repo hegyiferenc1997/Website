@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adatszerkezetek
 summary: Ellenőrző kérdések és feladatok tömbökre, listákra, láncolt listákra, halmazokra, szótárakra és veremre.
-minutes: 40
+minutes: 65
 kind: practice
 ---
 
@@ -347,4 +347,117 @@ assert olvasonkent == {"Anna": ["Dűne", "Hobbit"], "Béla": ["Dűne", "Emma"], 
 assert nepszeru == ["Dűne", "Hobbit"], "Népszerű: amit legalább két különböző olvasó vitt el."
 assert kolcsonzes_jelentes([("Anna", "X"), ("Anna", "X")]) == ({"Anna": ["X"]}, []), "Ugyanaz az olvasó kétszer: nem népszerű."
 assert kolcsonzes_jelentes([]) == ({}, []), "Üres listára üres eredmény."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Közös elemek.** Írd meg a `kozos_elemek(a, b)` függvényt, amely a két lista közös elemeit adja vissza **rendezett**, ismétlődés nélküli listában! Használj halmazt (`set`)!
+
+```python starter
+def kozos_elemek(a, b):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kozos_elemek(a, b):
+    return sorted(set(a) & set(b))          # & = halmazok metszete
+```
+
+</details>
+
+```python test
+assert kozos_elemek([1, 2, 3, 2], [2, 3, 4]) == [2, 3]
+assert kozos_elemek(["a", "b"], ["c"]) == []
+assert kozos_elemek([5, 5, 1], [1, 5]) == [1, 5]
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Fordítás veremmel.** Írd meg a `verem_fordit(szoveg)` függvényt, amely egy listát veremként használva (`append` és `pop`) fordítja meg a szöveget, a `[::-1]` és a `reversed` használata nélkül!
+
+```python starter
+def verem_fordit(szoveg):
+    return szoveg
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def verem_fordit(szoveg):
+    verem = []
+    for karakter in szoveg:
+        verem.append(karakter)              # rátesszük a verem tetejére
+    eredmeny = ""
+    while verem:
+        eredmeny += verem.pop()             # mindig a legfelsőt vesszük le (LIFO)
+    return eredmeny
+```
+
+</details>
+
+```python test
+assert verem_fordit("abc") == "cba"
+assert verem_fordit("") == ""
+assert verem_fordit("Görög") == "göröG"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Csoportosítás hossz szerint.** Írd meg a `szavak_hossz_szerint(szavak)` függvényt, amely szótárat ad vissza: kulcs a szóhossz, érték az adott hosszúságú szavak listája az eredeti sorrendben!
+
+```python starter
+def szavak_hossz_szerint(szavak):
+    return {}
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szavak_hossz_szerint(szavak):
+    csoportok = {}
+    for szo in szavak:
+        csoportok.setdefault(len(szo), []).append(szo)   # ha még nincs kulcs, üres lista
+    return csoportok
+```
+
+</details>
+
+```python test
+assert szavak_hossz_szerint(["fa", "alma", "ég", "kör"]) == {2: ["fa", "ég"], 4: ["alma"], 3: ["kör"]}
+assert szavak_hossz_szerint([]) == {}
+assert szavak_hossz_szerint(["a", "a"]) == {1: ["a", "a"]}
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik adatszerkezet NEM módosítható (immutable)?
+- list
+- dict
++ tuple
+- set
+! A tuple létrehozás után nem változtatható.
+
+? Mennyi `len({1, 2, 2, 3, 3, 3})` értéke?
+= 3
+! A halmaz csak egyszer tárolja az elemeket.
+
+? Átlagosan milyen gyors egy szótárban a kulcs szerinti keresés?
++ közel állandó idejű, a mérettől függetlenül
+- a mérettel arányos
+- a méret négyzetével arányos
+- csak rendezett szótárban gyors
+! A szótár hasítótáblát használ.
+
+? Mennyi `[1, 2, 3, 4, 5][1:4]` hossza?
+= 3
+! Az 1., 2. és 3. indexű elem: [2, 3, 4].
 ```

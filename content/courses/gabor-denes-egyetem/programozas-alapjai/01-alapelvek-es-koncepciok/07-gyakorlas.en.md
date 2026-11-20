@@ -1,7 +1,7 @@
 ---
 title: Practice – Principles
 summary: Review questions and first exercises on this topic.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -211,4 +211,129 @@ assert statistics([12, 7, 21, 3]) == [3, 21, 10.75], "statistics([12, 7, 21, 3])
 assert statistics([5]) == [5, 5, 5.0], "With a single measurement all three values are the same."
 assert statistics([-1.5, 2, 0]) == [-1.5, 2, 0.17], "It must work with negative and fractional numbers (average: 0.17)."
 assert statistics([]) is None, "For an empty list the result is None."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Position of the maximum.** Write the `max_position(items)` function, which returns the index of the **first** occurrence of the largest element of the list, without using `max()` or `index()` (the maximum selection pattern)! For an empty list return `-1`.
+
+```python starter
+def max_position(items):
+    return 0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def max_position(items):
+    if not items:
+        return -1
+    pos = 0
+    for i in range(1, len(items)):
+        if items[i] > items[pos]:           # switch only when strictly greater: the first one stays
+            pos = i
+    return pos
+```
+
+</details>
+
+```python test
+assert max_position([3, 8, 2, 8, 1]) == 1
+assert max_position([5]) == 0
+assert max_position([-4, -2, -9]) == 1
+assert max_position([]) == -1
+print("All checks passed!")
+```
+
+**2.** **Reversed number.** Write the `reverse_digits(n)` function, which returns the digits of a non-negative integer in reverse order **as a number**, without converting to text (using division with remainder)! For example `1230` → `321`.
+
+```python starter
+def reverse_digits(n):
+    return n
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def reverse_digits(n):
+    result = 0
+    while n > 0:
+        result = result * 10 + n % 10       # append the last digit
+        n //= 10
+    return result
+```
+
+</details>
+
+```python test
+assert reverse_digits(1230) == 321
+assert reverse_digits(5) == 5
+assert reverse_digits(0) == 0
+assert reverse_digits(907) == 709
+print("All checks passed!")
+```
+
+**3.** **Prime factors.** Write the `prime_factors(n)` function, which returns the prime factors of an integer greater than 1 in increasing order, including repetitions! For example `60` → `[2, 2, 3, 5]`.
+
+```python starter
+def prime_factors(n):
+    return [n]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def prime_factors(n):
+    factors, divisor = [], 2
+    while divisor * divisor <= n:
+        while n % divisor == 0:
+            factors.append(divisor)
+            n //= divisor
+        divisor += 1
+    if n > 1:
+        factors.append(n)                   # the remainder is itself a prime
+    return factors
+```
+
+</details>
+
+```python test
+assert prime_factors(60) == [2, 2, 3, 5]
+assert prime_factors(13) == [13]
+assert prime_factors(1024) == [2] * 10
+assert prime_factors(999) == [3, 3, 3, 37]
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which one is NOT a property of an algorithm?
+- it finishes after a finite number of steps
+- every step is unambiguous
++ it can only be written in Python
+- it has input and output
+! An algorithm is language independent: it can be described in text, with a flowchart or in any language.
+
+? How many steps does the remainder-based Euclidean algorithm take to compute gcd(48, 18)?
+= 3
+! (48, 18) → (18, 12) → (12, 6) → (6, 0): 3 steps.
+
+? At most how many steps does binary search need in a sorted list of 1,000,000 elements?
+= 20
+! $2^{20} = 1\,048\,576 \geq 1\,000\,000$.
+
+? Which paradigm describes the result instead of the steps?
+- imperative
++ declarative
+- procedural
+- machine code
+! E.g. SQL or `sorted(..., key=...)`.
 ```

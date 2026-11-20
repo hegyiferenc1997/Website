@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – paraméterek
 summary: Ellenőrző kérdések és feladatok a paraméterek fajtáiról, az átadás módjáról és a kiértékelésről.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -272,4 +272,117 @@ try:
     assert False, "A kosar csak kulcsszavasan adható meg (TypeError)."
 except TypeError:
     pass
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Mellékhatás nélkül.** Írd meg az `uj_lista_hozzaadva(lista, elem)` függvényt, amely egy **új** listát ad vissza a végére fűzött elemmel, az eredeti listát viszont **nem** módosítja!
+
+```python starter
+def uj_lista_hozzaadva(lista, elem):
+    lista.append(elem)
+    return lista
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def uj_lista_hozzaadva(lista, elem):
+    return lista + [elem]                   # a + új listát hoz létre
+```
+
+</details>
+
+```python test
+eredeti = [1, 2]
+uj = uj_lista_hozzaadva(eredeti, 3)
+assert uj == [1, 2, 3]
+assert eredeti == [1, 2], "az eredeti lista nem változhat"
+assert uj is not eredeti
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Tetszőleges számú paraméter.** Írd meg a `formaz(*szavak, elvalaszto=", ")` függvényt, amely a kapott szavakat az elválasztóval összefűzve adja vissza! Az `elvalaszto` csak kulcsszóval legyen megadható.
+
+```python starter
+def formaz(szavak, elvalaszto=", "):
+    return elvalaszto.join(szavak)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def formaz(*szavak, elvalaszto=", "):       # a *szavak után minden paraméter csak kulcsszavas
+    return elvalaszto.join(szavak)
+```
+
+</details>
+
+```python test
+assert formaz("alma", "körte", "szilva") == "alma, körte, szilva"
+assert formaz("a", "b", elvalaszto="-") == "a-b"
+assert formaz() == ""
+assert formaz("egy") == "egy"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Beállítások frissítése.** Írd meg a `szotar_frissit(alap, **valtozasok)` függvényt, amely egy új szótárat ad vissza: az `alap` másolatát, amelyben a kulcsszavas paraméterek felülírják vagy kiegészítik az értékeket! Az `alap` szótár ne változzon.
+
+```python starter
+def szotar_frissit(alap, **valtozasok):
+    alap.update(valtozasok)
+    return alap
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szotar_frissit(alap, **valtozasok):
+    uj = dict(alap)                         # másolat, hogy az eredeti ne változzon
+    uj.update(valtozasok)
+    return uj
+```
+
+</details>
+
+```python test
+alap = {"tema": "sotet", "nyelv": "hu"}
+uj = szotar_frissit(alap, nyelv="en", meret=14)
+assert uj == {"tema": "sotet", "nyelv": "en", "meret": 14}
+assert alap == {"tema": "sotet", "nyelv": "hu"}
+assert szotar_frissit({}) == {}
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit ír ki a program? `def f(l): l.append(1)`, `a = []`, `f(a)`, `f(a)`, `print(len(a))`
+= 2
+! A lista módosítható objektum, a függvény ugyanazt a listát kapja meg, nem másolatot.
+
+? Mi a gond a `def f(x, lista=[]):` fejléccel?
+- szintaktikai hiba
++ az alapértelmezett lista egyetlen példány, amely a hívások között megmarad
+- a lista mindig üres marad
+- semmi gond nincs vele
+! Helyette `lista=None`, és a függvényben `if lista is None: lista = []`.
+
+? Milyen típusú a `**kw` paraméter a függvényen belül?
+- list
+- tuple
++ dict
+- set
+! A `*args` tuple, a `**kwargs` szótár.
+
+? Mennyi `(lambda *a: len(a))(1, 2, 3, 4)` értéke?
+= 4
+! A `*a` az összes pozicionális paramétert egy tuple-be gyűjti.
 ```

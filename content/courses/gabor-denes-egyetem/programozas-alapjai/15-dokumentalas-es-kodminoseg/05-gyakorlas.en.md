@@ -1,7 +1,7 @@
 ---
 title: Practice – Documentation and Code Quality
 summary: Review questions, writing docstrings and refactoring low-quality code.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -288,4 +288,139 @@ except ValueError:
 assert (Temperature.__doc__ or "").strip(), "The class needs a docstring."
 for name in ("fahrenheit", "kelvin", "from_fahrenheit"):
     assert (getattr(Temperature, name).__doc__ or "").strip(), f"The {name} method needs a docstring."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Missing docstrings.** Write the `without_docstring(code)` function, which parses a Python source code (string) with the `ast` module and returns, in alphabetical order, the names of the functions that have no docstring! Hint: `ast.walk(ast.parse(code))`, `isinstance(node, ast.FunctionDef)`, `ast.get_docstring(node)`.
+
+```python starter
+import ast
+
+def without_docstring(code):
+    return []
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import ast
+
+def without_docstring(code):
+    missing = []
+    for node in ast.walk(ast.parse(code)):          # every element of the syntax tree
+        if isinstance(node, ast.FunctionDef) and ast.get_docstring(node) is None:
+            missing.append(node.name)
+    return sorted(missing)
+```
+
+</details>
+
+```python test
+code = '''
+def add(a, b):
+    """Sum of two numbers."""
+    return a + b
+
+def multiply(a, b):
+    return a * b
+
+def average(l):
+    # this is just a comment, not a docstring
+    return sum(l) / len(l)
+'''
+assert without_docstring(code) == ["average", "multiply"]
+assert without_docstring("x = 1") == []
+print("All checks passed!")
+```
+
+**2.** **A descriptive name?** Write the `is_descriptive_name(name)` function for a simple naming convention checker! It should return `True` if the name is at least 3 characters long, contains only lowercase letters, digits and underscores, and doesn't start with a digit. Exception: the loop variables `i`, `j`, `k` are also accepted.
+
+```python starter
+def is_descriptive_name(name):
+    return len(name) >= 3
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def is_descriptive_name(name):
+    if name in ("i", "j", "k"):
+        return True                         # usual loop variables
+    allowed = set("abcdefghijklmnopqrstuvwxyz0123456789_")
+    return len(name) >= 3 and not name[0].isdigit() and set(name) <= allowed
+```
+
+</details>
+
+```python test
+assert is_descriptive_name("total")
+assert is_descriptive_name("max_value2")
+assert is_descriptive_name("i")
+assert not is_descriptive_name("a")
+assert not is_descriptive_name("Total")
+assert not is_descriptive_name("2pcs")
+assert not is_descriptive_name("max-value")
+print("All checks passed!")
+```
+
+**3.** **Lines too long.** Write the `long_lines(code, max_length=79)` function, which returns in a list the **line numbers** (counting from 1) of the lines of the source code that are longer than `max_length` characters!
+
+```python starter
+def long_lines(code, max_length=79):
+    return []
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def long_lines(code, max_length=79):
+    return [number for number, line in enumerate(code.splitlines(), start=1)   # numbering from 1
+            if len(line) > max_length]
+```
+
+</details>
+
+```python test
+code = "x = 1\n" + "y = " + "1" * 80 + "\nz = 3\n" + "w" * 79
+assert long_lines(code) == [2]
+assert long_lines(code, 5) == [2, 4]
+assert long_lines("") == []
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which name follows the PEP 8 recommendation for a Python function?
+- ComputeTotal
+- computeTotal
++ compute_total
+- COMPUTE_TOTAL
+! snake_case for functions and variables, PascalCase for classes, UPPERCASE for constants.
+
+? What is the essence of the DRY principle?
++ don't repeat yourself: each piece of knowledge should live in one place in the code
+- every function should be shorter than 5 lines
+- don't use comments
+- every variable should be global
+! Don't Repeat Yourself: duplicated code is worth extracting into a function.
+
+? What line length does PEP 8 recommend as the default maximum?
+= 79
+! Many teams allow more (e.g. 88 or 100), but the original PEP 8 recommendation is 79.
+
+? What is a docstring for?
+- speeding up the code
++ describing the function's purpose and usage, which `help()` also displays
+- hiding errors
+- enforcing variable types
+! A string written as the first statement of the function.
 ```

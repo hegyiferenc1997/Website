@@ -1,7 +1,7 @@
 ---
 title: Practice – Recursion and Iteration
 summary: Review questions and exercises on recursive and iterative solutions.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -255,4 +255,125 @@ assert permutations("abc") == ["abc", "acb", "bac", "bca", "cab", "cba"], "The p
 assert permutations("aab") == ["aab", "aba", "baa"], "With a repeated letter the duplicates must be filtered out."
 assert permutations("") == [""], "The only permutation of the empty text is the empty text."
 assert len(permutations("abcde")) == 120, "5 different letters have 5! = 120 permutations."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Fast exponentiation.** Write the recursive `power(a, n)` function (non-negative integer `n`) that computes without the `**` operator, using the "halving" idea: for even `n`, $a^n = (a^{n/2})^2$; for odd `n`, $a^n = a \cdot a^{n-1}$. This way even the 1000th power needs only about 15 calls!
+
+```python starter
+def power(a, n):
+    return a * n
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def power(a, n):
+    if n == 0:
+        return 1                            # base case
+    if n % 2 == 0:
+        half = power(a, n // 2)             # compute once, use twice
+        return half * half
+    return a * power(a, n - 1)
+```
+
+</details>
+
+```python test
+assert power(2, 10) == 1024
+assert power(3, 0) == 1
+assert power(5, 3) == 125
+assert power(2, 1000) == 2 ** 1000
+print("All checks passed!")
+```
+
+**2.** **Nested sum.** Write the `nested_sum(data)` function, which adds up all the numbers of a list nested to any depth! For example `[1, [2, [3, 4]], 5]` → `15`.
+
+```python starter
+def nested_sum(data):
+    return sum(x for x in data if isinstance(x, int))
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def nested_sum(data):
+    total = 0
+    for item in data:
+        if isinstance(item, list):
+            total += nested_sum(item)       # the sublist is the same task, just smaller
+        else:
+            total += item
+    return total
+```
+
+</details>
+
+```python test
+assert nested_sum([1, [2, [3, 4]], 5]) == 15
+assert nested_sum([]) == 0
+assert nested_sum([[[[]]]]) == 0
+assert nested_sum([[1.5], [[2.5]]]) == 4.0
+print("All checks passed!")
+```
+
+**3.** **All binary numbers.** Write the recursive `binary_strings(n)` function, which returns all strings of length `n` made of 0s and 1s in increasing order! For `n = 0` the result should be `[""]`.
+
+```python starter
+def binary_strings(n):
+    return ["0" * n]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def binary_strings(n):
+    if n == 0:
+        return [""]                         # a single empty string
+    shorter = binary_strings(n - 1)
+    return ["0" + s for s in shorter] + ["1" + s for s in shorter]
+```
+
+</details>
+
+```python test
+assert binary_strings(0) == [""]
+assert binary_strings(2) == ["00", "01", "10", "11"]
+assert len(binary_strings(5)) == 32
+assert binary_strings(3)[5] == "101"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What happens if a recursive function lacks a base case?
+- the function returns 0
++ the calls never stop and a `RecursionError` occurs
+- Python stops it automatically after the first call
+- nothing special
+! By default Python stops the program at a call depth of about 1000.
+
+? How many times in total is the function `fact(n) = n * fact(n - 1)`, `fact(0) = 1` called when computing `fact(4)`?
+= 5
+! fact(4), fact(3), fact(2), fact(1), fact(0).
+
+? What is the 6th Fibonacci number if F(1) = F(2) = 1?
+= 8
+! 1, 1, 2, 3, 5, 8.
+
+? Why is the naive recursive Fibonacci slow for large n?
+- because Python doesn't support recursion
++ because it computes the same partial values again and again
+- because it uses too little memory
+- because the numbers are too big
+! It can be made fast with memoization (e.g. `functools.lru_cache`).
 ```

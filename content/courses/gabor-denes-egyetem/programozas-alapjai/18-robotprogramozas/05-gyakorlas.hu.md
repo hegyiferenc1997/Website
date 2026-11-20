@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – robotprogramozás
 summary: Ellenőrző kérdések, parancssorozat végrehajtása, akadályelkerülés, P szabályozó és útkeresés.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -341,4 +341,139 @@ assert e["terkep"] == ["########", "#Roo#..#", "#o#o#..#", "#ooo####", "########
 assert takarit(["###", "#R#", "###"]) == {"tiszta": 0, "elerhetetlen": 0, "terkep": ["###", "#R#", "###"]}, "Szabad mező nélkül nincs mit takarítani."
 e = takarit(["#####", "#.#R#", "#.#.#", "#####"])
 assert e["tiszta"] == 1 and e["elerhetetlen"] == 2 and e["terkep"][2] == "#.#o#", "Csak a szomszédos (nem átlós) mezőkön lehet haladni."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Robot a rácson.** Egy robot a `(0, 0)` pontról indul, északra (`"É"`) néz. Parancsai: `"F"` = egy lépés előre, `"L"` = fordulás balra 90°-ot, `"R"` = fordulás jobbra 90°-ot. Írd meg a `pozicio(parancsok)` függvényt, amely a végén `(x, y, irany)` hármast ad vissza! Az irányok óramutató szerint: `"É"`, `"K"`, `"D"`, `"Ny"`; északra `y` nő, keletre `x` nő.
+
+```python starter
+def pozicio(parancsok):
+    return (0, parancsok.count("F"), "É")
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+IRANYOK = ["É", "K", "D", "Ny"]
+LEPES = {"É": (0, 1), "K": (1, 0), "D": (0, -1), "Ny": (-1, 0)}
+
+def pozicio(parancsok):
+    x, y, i = 0, 0, 0                       # i: index az IRANYOK listában
+    for p in parancsok:
+        if p == "L":
+            i = (i - 1) % 4
+        elif p == "R":
+            i = (i + 1) % 4
+        elif p == "F":
+            dx, dy = LEPES[IRANYOK[i]]
+            x, y = x + dx, y + dy
+    return (x, y, IRANYOK[i])
+```
+
+</details>
+
+```python test
+assert pozicio("") == (0, 0, "É")
+assert pozicio("FF") == (0, 2, "É")
+assert pozicio("RFF") == (2, 0, "K")
+assert pozicio("FRFRFRF") == (0, 0, "Ny")
+assert pozicio("LLF") == (0, -1, "D")
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Mozgóátlag szűrő.** A szenzorok zajosak, ezért a méréseket simítjuk. Írd meg a `szuro_atlag(meresek, ablak)` függvényt, amely minden `ablak` hosszú, egymást követő szakasz átlagát adja vissza listában, 2 tizedesre kerekítve! Ha kevesebb mérés van, mint az ablak, üres listát adjon.
+
+```python starter
+def szuro_atlag(meresek, ablak):
+    return meresek
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szuro_atlag(meresek, ablak):
+    eredmeny = []
+    for i in range(len(meresek) - ablak + 1):
+        szakasz = meresek[i:i + ablak]      # az aktuális ablak
+        eredmeny.append(round(sum(szakasz) / ablak, 2))
+    return eredmeny
+```
+
+</details>
+
+```python test
+assert szuro_atlag([10, 20, 30, 40], 2) == [15.0, 25.0, 35.0]
+assert szuro_atlag([1, 2, 3], 3) == [2.0]
+assert szuro_atlag([1, 2], 3) == []
+assert szuro_atlag([10, 50, 10, 10], 3) == [23.33, 23.33]
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Akadálykerülés.** Egy robotnak három távolságérzékelője van (bal, közép, jobb, cm-ben). Írd meg az `akadaly_dontes(bal, kozep, jobb, kuszob=30)` függvényt: ha a középső távolság nagyobb a küszöbnél, `"előre"`; különben arra forduljon (`"balra"` / `"jobbra"`), amerre több a hely, ha az nagyobb a küszöbnél (egyenlőségnél balra); ha egyik oldal sem szabad, `"hátra"`.
+
+```python starter
+def akadaly_dontes(bal, kozep, jobb, kuszob=30):
+    return "előre"
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def akadaly_dontes(bal, kozep, jobb, kuszob=30):
+    if kozep > kuszob:
+        return "előre"                      # szabad az út
+    if bal >= jobb and bal > kuszob:
+        return "balra"
+    if jobb > kuszob:
+        return "jobbra"
+    return "hátra"                          # mindenhol akadály
+```
+
+</details>
+
+```python test
+assert akadaly_dontes(10, 100, 10) == "előre"
+assert akadaly_dontes(80, 20, 50) == "balra"
+assert akadaly_dontes(40, 20, 90) == "jobbra"
+assert akadaly_dontes(60, 20, 60) == "balra"
+assert akadaly_dontes(10, 20, 25) == "hátra"
+assert akadaly_dontes(10, 30, 10) == "hátra"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit jelent a robotikában az „érzékel – tervez – cselekszik” ciklus?
++ a robot folyamatosan méri a környezetét, dönt, majd végrehajtja a döntést
+- a robot egyszer tervez, utána csak végrehajt
+- a robot csak a felhasználó parancsaira mozog
+- a robot nem használ érzékelőket
+! Ez a ciklus másodpercenként akár százszor is lefut.
+
+? Hány értékből áll a 3 hosszú mozgóátlag eredménye 10 mérésre?
+= 8
+! 10 − 3 + 1 = 8 ablak fér el.
+
+? Mire jó a mozgóátlag szűrő?
+- a mérések felgyorsítására
++ a zajos mérések kisimítására
+- a robot sebességének növelésére
+- a memória megtakarítására
+! Cserébe kissé késlelteti a változásokat.
+
+? Egy PD-szabályozóban mit figyel a D (deriváló) tag?
+- a hiba nagyságát
++ a hiba változásának sebességét
+- a hibák összegét
+- a motor hőmérsékletét
+! A D tag fékez, ha a hiba gyorsan csökken, így kisebb a túllendülés.
 ```

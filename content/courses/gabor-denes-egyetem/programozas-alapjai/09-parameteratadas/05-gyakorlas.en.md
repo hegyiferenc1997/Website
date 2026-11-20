@@ -1,7 +1,7 @@
 ---
 title: Practice – Parameters
 summary: Review questions and exercises on parameter kinds, passing and evaluation.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -272,4 +272,117 @@ try:
     assert False, "basket can only be given as a keyword (TypeError)."
 except TypeError:
     pass
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Without side effects.** Write the `with_appended(items, item)` function, which returns a **new** list with the item appended to the end, but does **not** modify the original list!
+
+```python starter
+def with_appended(items, item):
+    items.append(item)
+    return items
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def with_appended(items, item):
+    return items + [item]                   # + creates a new list
+```
+
+</details>
+
+```python test
+original = [1, 2]
+new = with_appended(original, 3)
+assert new == [1, 2, 3]
+assert original == [1, 2], "the original list must not change"
+assert new is not original
+print("All checks passed!")
+```
+
+**2.** **Any number of parameters.** Write the `join_words(*words, separator=", ")` function, which returns the received words joined with the separator! `separator` should only be passable as a keyword.
+
+```python starter
+def join_words(words, separator=", "):
+    return separator.join(words)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def join_words(*words, separator=", "):     # every parameter after *words is keyword-only
+    return separator.join(words)
+```
+
+</details>
+
+```python test
+assert join_words("apple", "pear", "plum") == "apple, pear, plum"
+assert join_words("a", "b", separator="-") == "a-b"
+assert join_words() == ""
+assert join_words("one") == "one"
+print("All checks passed!")
+```
+
+**3.** **Updating settings.** Write the `updated(base, **changes)` function, which returns a new dictionary: a copy of `base` in which the keyword arguments overwrite or extend the values! The `base` dictionary must not change.
+
+```python starter
+def updated(base, **changes):
+    base.update(changes)
+    return base
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def updated(base, **changes):
+    new = dict(base)                        # a copy, so the original doesn't change
+    new.update(changes)
+    return new
+```
+
+</details>
+
+```python test
+base = {"theme": "dark", "lang": "hu"}
+new = updated(base, lang="en", size=14)
+assert new == {"theme": "dark", "lang": "en", "size": 14}
+assert base == {"theme": "dark", "lang": "hu"}
+assert updated({}) == {}
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does the program print? `def f(l): l.append(1)`, `a = []`, `f(a)`, `f(a)`, `print(len(a))`
+= 2
+! A list is a mutable object; the function receives the same list, not a copy.
+
+? What is the problem with the header `def f(x, items=[]):`?
+- it's a syntax error
++ the default list is a single instance that persists between calls
+- the list always stays empty
+- there is no problem with it
+! Instead use `items=None` and inside the function `if items is None: items = []`.
+
+? What type is the `**kw` parameter inside the function?
+- list
+- tuple
++ dict
+- set
+! `*args` is a tuple, `**kwargs` is a dictionary.
+
+? What is the value of `(lambda *a: len(a))(1, 2, 3, 4)`?
+= 4
+! `*a` collects all positional arguments into a tuple.
 ```

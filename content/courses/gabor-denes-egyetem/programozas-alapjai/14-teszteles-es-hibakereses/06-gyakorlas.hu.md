@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – tesztelés és hibakeresés
 summary: Ellenőrző kérdések, tesztek írása és hibás kódok kijavítása.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -331,4 +331,141 @@ for mutans, leiras in [(m_nincs_kivonas, "4 → IIII (nincs kivonásos alak)"),
         elkapta = True
     romai = helyes
     assert elkapta, f"A tesztjeid nem vették észre ezt a hibát: {leiras}."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Hőmérséklet-kategória határesetekkel.** Írd meg a `homerseklet_kategoria(fok)` függvényt: 0 alatt `"fagy"`, 0-tól 15 alatt `"hideg"`, 15-től 25 alatt `"kellemes"`, 25-től `"meleg"`! A teszt a határértékeket (0, 15, 25) is ellenőrzi — ez a határérték-elemzés lényege.
+
+```python starter
+def homerseklet_kategoria(fok):
+    if fok < 0:
+        return "fagy"
+    if fok <= 15:
+        return "hideg"
+    if fok <= 25:
+        return "kellemes"
+    return "meleg"
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def homerseklet_kategoria(fok):
+    if fok < 0:
+        return "fagy"
+    if fok < 15:                            # a 15 már kellemes
+        return "hideg"
+    if fok < 25:                            # a 25 már meleg
+        return "kellemes"
+    return "meleg"
+```
+
+</details>
+
+```python test
+assert homerseklet_kategoria(-0.1) == "fagy"
+assert homerseklet_kategoria(0) == "hideg"
+assert homerseklet_kategoria(14.9) == "hideg"
+assert homerseklet_kategoria(15) == "kellemes"
+assert homerseklet_kategoria(25) == "meleg"
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Rendezett-e?** Írd meg a `rendezett_e(lista)` függvényt, amely `True`-t ad, ha a lista nem csökkenő sorrendű! Gondolj a speciális esetekre: üres és egyelemű lista is rendezett, egyenlő szomszédok megengedettek.
+
+```python starter
+def rendezett_e(lista):
+    return lista[0] <= lista[-1]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def rendezett_e(lista):
+    for i in range(len(lista) - 1):
+        if lista[i] > lista[i + 1]:         # egyetlen rossz pár elég
+            return False
+    return True
+```
+
+</details>
+
+```python test
+assert rendezett_e([1, 2, 2, 5])
+assert rendezett_e([])
+assert rendezett_e([7])
+assert not rendezett_e([1, 3, 2, 4])
+assert not rendezett_e([3, 1, 2, 3])
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Első rossz verzió.** Egy program 1-től `n`-ig számozott verzióiból egy ponttól kezdve mind hibás. Írd meg az `elso_rossz_verzio(n, jo)` függvényt **bináris kereséssel**, ahol `jo(v)` megmondja, hogy a `v` verzió jó-e! Az első rossz verzió számát add vissza (feltehető, hogy van rossz verzió). Ez a `git bisect` ötlete.
+
+```python starter
+def elso_rossz_verzio(n, jo):
+    return n
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elso_rossz_verzio(n, jo):
+    also, felso = 1, n
+    while also < felso:
+        kozep = (also + felso) // 2
+        if jo(kozep):
+            also = kozep + 1                # a hiba később jött be
+        else:
+            felso = kozep                   # ez rossz, de lehet, hogy van korábbi is
+    return also
+```
+
+</details>
+
+```python test
+assert elso_rossz_verzio(10, lambda v: v < 7) == 7
+assert elso_rossz_verzio(1, lambda v: False) == 1
+assert elso_rossz_verzio(1000, lambda v: v < 2) == 2
+hivasok = []
+elso_rossz_verzio(1000000, lambda v: hivasok.append(v) or v < 123457)
+assert elso_rossz_verzio(1000000, lambda v: v < 123457) == 123457
+assert len(hivasok) <= 20, "bináris keresés kell"
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Egy függvény 1 és 100 közötti egészeket fogad el. Melyik a legjobb határérték-tesztkészlet?
+- 50
+- 1, 50, 100
++ 0, 1, 100, 101
+- 2, 99
+! A határok két oldalán érdemes tesztelni: a hibák jellemzően ott vannak.
+
+? Mit ad vissza az `assert 1 + 1 == 3` utasítás?
+- False
+- None
++ `AssertionError` kivételt dob
+- semmit, csak figyelmeztet
+! Hamis feltételnél az `assert` kivételt dob, ez jelzi a hibás tesztet.
+
+? Legfeljebb hány próbával találja meg a bináris keresés az első rossz verziót 1024 verzió közül?
+= 10
+! $2^{10} = 1024$, minden próba felezi a lehetőségeket.
+
+? Mi a regressziós tesztelés célja?
+- új funkciók tervezése
++ ellenőrizni, hogy egy változtatás nem rontott-e el korábban működő részt
+- a program sebességének mérése
+- a felhasználói felület megrajzolása
+! A tesztek újrafuttatása minden módosítás után.
 ```

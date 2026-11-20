@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – vezérlési szerkezetek
 summary: Ellenőrző kérdések és feladatok elágazásokra, ciklusokra és a programozási tételekre.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -341,4 +341,135 @@ e = zh_statisztika([88, 89, 49, -3])
 assert e["eloszlas"] == [1, 0, 0, 1, 1] and e["atlag"] == 3.33, "88 → 4, 89 → 5, 49 → 1; átlag 3.33."
 e = zh_statisztika([])
 assert e == {"eloszlas": [0, 0, 0, 0, 0], "atlag": 0, "legjobb": None, "bukott": 0, "ervenytelen": 0}, "Üres listára az alapértékek."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Számjegyek száma.** Írd meg a `szamjegyek_szama(n)` függvényt, amely egy egész szám számjegyeinek számát adja vissza `while` ciklussal, szöveggé alakítás nélkül! A negatív előjel nem számít, a `0` egyjegyű.
+
+```python starter
+def szamjegyek_szama(n):
+    return 1
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szamjegyek_szama(n):
+    n = abs(n)
+    db = 1
+    while n >= 10:
+        n //= 10                            # levágjuk az utolsó jegyet
+        db += 1
+    return db
+```
+
+</details>
+
+```python test
+assert szamjegyek_szama(0) == 1
+assert szamjegyek_szama(7) == 1
+assert szamjegyek_szama(12345) == 5
+assert szamjegyek_szama(-900) == 3
+assert szamjegyek_szama(10 ** 20) == 21
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Érdemjegy szövegesen.** Írd meg a `jegy_szovegesen(jegy)` függvényt `match` utasítással: 1 → `"elégtelen"`, 2 → `"elégséges"`, 3 → `"közepes"`, 4 → `"jó"`, 5 → `"jeles"`, bármi más → `"ismeretlen"`!
+
+```python starter
+def jegy_szovegesen(jegy):
+    return "ismeretlen"
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def jegy_szovegesen(jegy):
+    match jegy:
+        case 1:
+            return "elégtelen"
+        case 2:
+            return "elégséges"
+        case 3:
+            return "közepes"
+        case 4:
+            return "jó"
+        case 5:
+            return "jeles"
+        case _:                             # minden egyéb eset
+            return "ismeretlen"
+```
+
+</details>
+
+```python test
+assert jegy_szovegesen(1) == "elégtelen"
+assert jegy_szovegesen(3) == "közepes"
+assert jegy_szovegesen(5) == "jeles"
+assert jegy_szovegesen(0) == "ismeretlen"
+assert jegy_szovegesen("5") == "ismeretlen"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Első negatív elem.** Írd meg az `elso_negativ_index(lista)` függvényt `for`–`else` szerkezettel: a ciklus `break`-kel álljon meg az első negatív elemnél, és adja vissza az indexét; ha nem volt negatív elem, az `else` ág adjon `-1`-et!
+
+```python starter
+def elso_negativ_index(lista):
+    return -1
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def elso_negativ_index(lista):
+    for i, elem in enumerate(lista):
+        if elem < 0:
+            break                           # megvan, kilépünk
+    else:
+        return -1                           # csak akkor fut, ha nem volt break
+    return i
+```
+
+</details>
+
+```python test
+assert elso_negativ_index([3, 1, -2, -5]) == 2
+assert elso_negativ_index([-1]) == 0
+assert elso_negativ_index([1, 2, 3]) == -1
+assert elso_negativ_index([]) == -1
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Hányszor fut le a `for i in range(2, 11, 3):` ciklus magja?
+= 3
+! Az értékek: 2, 5, 8 (a 11 már nem).
+
+? Mikor fut le egy `for` ciklus `else` ága?
+- mindig, a ciklus előtt
++ ha a ciklus `break` nélkül ért véget
+- csak ha a ciklus egyszer sem futott
+- ha kivétel történt
+! Az `else` a „nem találtam” eset kezelésére jó.
+
+? Mit csinál a `continue` utasítás?
+- kilép a ciklusból
++ átugorja a ciklusmag hátralévő részét, és a következő körrel folytatja
+- újraindítja a ciklust az elejéről
+- leállítja a programot
+! A `break` lép ki, a `continue` csak az aktuális kört fejezi be.
+
+? Mennyi lesz `s` értéke? `s = 0` majd `for i in range(1, 5): s += i`
+= 10
+! 1 + 2 + 3 + 4 = 10.
 ```

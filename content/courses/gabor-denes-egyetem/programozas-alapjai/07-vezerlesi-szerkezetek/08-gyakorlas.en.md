@@ -1,7 +1,7 @@
 ---
 title: Practice – Control Structures
 summary: Review questions and exercises on branching, loops and the basic algorithm patterns.
-minutes: 35
+minutes: 60
 kind: practice
 ---
 
@@ -341,4 +341,135 @@ s = exam_statistics([88, 89, 49, -3])
 assert s["distribution"] == [1, 0, 0, 1, 1] and s["average"] == 3.33, "88 → 4, 89 → 5, 49 → 1; average 3.33."
 s = exam_statistics([])
 assert s == {"distribution": [0, 0, 0, 0, 0], "average": 0, "best": None, "failed": 0, "invalid": 0}, "An empty list gives the default values."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Number of digits.** Write the `digit_count(n)` function, which returns the number of digits of an integer with a `while` loop, without converting to text! The minus sign doesn't count, and `0` has one digit.
+
+```python starter
+def digit_count(n):
+    return 1
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def digit_count(n):
+    n = abs(n)
+    count = 1
+    while n >= 10:
+        n //= 10                            # cut off the last digit
+        count += 1
+    return count
+```
+
+</details>
+
+```python test
+assert digit_count(0) == 1
+assert digit_count(7) == 1
+assert digit_count(12345) == 5
+assert digit_count(-900) == 3
+assert digit_count(10 ** 20) == 21
+print("All checks passed!")
+```
+
+**2.** **Grade in words.** Write the `grade_in_words(grade)` function with a `match` statement: 1 → `"fail"`, 2 → `"pass"`, 3 → `"satisfactory"`, 4 → `"good"`, 5 → `"excellent"`, anything else → `"unknown"`!
+
+```python starter
+def grade_in_words(grade):
+    return "unknown"
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def grade_in_words(grade):
+    match grade:
+        case 1:
+            return "fail"
+        case 2:
+            return "pass"
+        case 3:
+            return "satisfactory"
+        case 4:
+            return "good"
+        case 5:
+            return "excellent"
+        case _:                             # every other case
+            return "unknown"
+```
+
+</details>
+
+```python test
+assert grade_in_words(1) == "fail"
+assert grade_in_words(3) == "satisfactory"
+assert grade_in_words(5) == "excellent"
+assert grade_in_words(0) == "unknown"
+assert grade_in_words("5") == "unknown"
+print("All checks passed!")
+```
+
+**3.** **First negative element.** Write the `first_negative_index(items)` function with a `for`–`else` structure: the loop should stop with `break` at the first negative element and return its index; if there was no negative element, the `else` branch should return `-1`!
+
+```python starter
+def first_negative_index(items):
+    return -1
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def first_negative_index(items):
+    for i, item in enumerate(items):
+        if item < 0:
+            break                           # found it, exit
+    else:
+        return -1                           # runs only if there was no break
+    return i
+```
+
+</details>
+
+```python test
+assert first_negative_index([3, 1, -2, -5]) == 2
+assert first_negative_index([-1]) == 0
+assert first_negative_index([1, 2, 3]) == -1
+assert first_negative_index([]) == -1
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? How many times does the body of `for i in range(2, 11, 3):` run?
+= 3
+! The values: 2, 5, 8 (11 is not included).
+
+? When does the `else` branch of a `for` loop run?
+- always, before the loop
++ if the loop ended without `break`
+- only if the loop never ran
+- if an exception occurred
+! `else` is handy for the "not found" case.
+
+? What does the `continue` statement do?
+- exits the loop
++ skips the rest of the loop body and continues with the next round
+- restarts the loop from the beginning
+- stops the program
+! `break` exits; `continue` only ends the current round.
+
+? What is the value of `s`? `s = 0` then `for i in range(1, 5): s += i`
+= 10
+! 1 + 2 + 3 + 4 = 10.
 ```

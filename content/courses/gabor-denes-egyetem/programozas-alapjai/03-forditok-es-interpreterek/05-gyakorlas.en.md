@@ -1,7 +1,7 @@
 ---
 title: Practice – Compilers and Interpreters
 summary: Review questions on the compilation process, and experiments with Python bytecode.
-minutes: 15
+minutes: 40
 kind: practice
 ---
 
@@ -206,4 +206,127 @@ assert calculate("10 - 2*3 - 1") == 3, "10 - 2*3 - 1 = 3"
 assert calculate("7") == 7, "A single number is itself."
 assert calculate("2*3*4 - 4*5 + 1") == 5, "2*3*4 - 4*5 + 1 = 5"
 assert calculate("100-1-1") == 98, "Subtraction goes left to right: 100-1-1 = 98"
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Syntax checker.** Write the `is_valid_syntax(code)` function, which returns `True` if the Python code can be compiled and `False` if it has a syntax error! Use the built-in `compile(code, "<code>", "exec")` function and catch `SyntaxError`. (The code does not need to be run.)
+
+```python starter
+def is_valid_syntax(code):
+    return True
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def is_valid_syntax(code):
+    try:
+        compile(code, "<code>", "exec")      # only compiles, does not run
+        return True
+    except SyntaxError:
+        return False
+```
+
+</details>
+
+```python test
+assert is_valid_syntax("x = 1 + 2") is True
+assert is_valid_syntax("print('missing parenthesis'") is False
+assert is_valid_syntax("if True:\nprint(1)") is False
+assert is_valid_syntax("1 / 0") is True
+print("All checks passed!")
+```
+
+**2.** **Keywords.** Write the `keywords_in(code)` function, which returns the Python keywords appearing in the code, in alphabetical order without repetition! The words come from `re.findall(r"[A-Za-z_]+", code)`, and `keyword.iskeyword` decides whether a word is a keyword.
+
+```python starter
+import re
+
+def keywords_in(code):
+    return re.findall(r"[A-Za-z_]+", code)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import keyword
+import re
+
+def keywords_in(code):
+    return sorted({word for word in re.findall(r"[A-Za-z_]+", code) if keyword.iskeyword(word)})
+```
+
+</details>
+
+```python test
+assert keywords_in("for i in range(3):\n    if i: print(i)") == ["for", "if", "in"]
+assert keywords_in("x = 1") == []
+assert keywords_in("def f(): return None") == ["None", "def", "return"]
+print("All checks passed!")
+```
+
+**3.** **Real code lines.** Write the `code_lines(code)` function, which counts the lines of the code that are not empty and not just comments (lines starting with `#` – after any leading spaces – are ignored by the compiler)!
+
+```python starter
+def code_lines(code):
+    return len(code.splitlines())
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def code_lines(code):
+    count = 0
+    for line in code.splitlines():
+        s = line.strip()
+        if s and not s.startswith("#"):     # empty and comment lines don't count
+            count += 1
+    return count
+```
+
+</details>
+
+```python test
+code = "# addition\nx = 1\n\n    # inner comment\ny = x + 2  # this is code\n"
+assert code_lines(code) == 2
+assert code_lines("") == 0
+assert code_lines("print(1)\nprint(2)") == 2
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which statement is true about a compiler?
++ it turns the whole source code into machine code (or intermediate code) before running
+- it interprets the code line by line and executes it immediately
+- it only exists in Python
+- it catches all runtime errors in advance too
+! An interpreter executes line by line (statement by statement).
+
+? What is the value of `24 * 60`, which Python already computes at compile time (constant folding)?
+= 1440
+! Only the finished 1440 appears in the bytecode.
+
+? Which error is detected in Python before the program even starts?
+- division by zero
+- a missing key in a dictionary
++ a missing colon after `if`
+- a formula giving a wrong result
+! Syntax errors are found during parsing.
+
+? What does an incremental build do?
+- always recompiles the whole project
++ recompiles only the changed files and those depending on them
+- deletes the compiled files
+- runs the program with an interpreter
+! It saves hours on a big project.
 ```

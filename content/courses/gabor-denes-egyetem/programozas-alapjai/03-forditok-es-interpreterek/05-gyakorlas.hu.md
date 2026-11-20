@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – fordítók és interpreterek
 summary: Ellenőrző kérdések a fordítás folyamatáról, és kísérletek a Python bájtkódjával.
-minutes: 15
+minutes: 40
 kind: practice
 ---
 
@@ -206,4 +206,127 @@ assert kiszamol("10 - 2*3 - 1") == 3, "10 - 2*3 - 1 = 3"
 assert kiszamol("7") == 7, "Egyetlen szám önmaga."
 assert kiszamol("2*3*4 - 4*5 + 1") == 5, "2*3*4 - 4*5 + 1 = 5"
 assert kiszamol("100-1-1") == 98, "A kivonás balról jobbra halad: 100-1-1 = 98"
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Szintaxis-ellenőrző.** Írd meg a `szintaktikailag_helyes(kod)` függvényt, amely `True`-t ad, ha a Python-kód lefordítható, és `False`-t, ha szintaktikai hibás! Használd a beépített `compile(kod, "<kod>", "exec")` függvényt, és kapd el a `SyntaxError`-t. (A kódot nem kell futtatni.)
+
+```python starter
+def szintaktikailag_helyes(kod):
+    return True
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szintaktikailag_helyes(kod):
+    try:
+        compile(kod, "<kod>", "exec")        # csak fordít, nem futtat
+        return True
+    except SyntaxError:
+        return False
+```
+
+</details>
+
+```python test
+assert szintaktikailag_helyes("x = 1 + 2") is True
+assert szintaktikailag_helyes("print('hiányzó zárójel'") is False
+assert szintaktikailag_helyes("if True:\nprint(1)") is False
+assert szintaktikailag_helyes("1 / 0") is True
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Kulcsszavak.** Írd meg a `kulcsszavak(kod)` függvényt, amely ábécérendben, ismétlés nélkül visszaadja a kódban szereplő Python-kulcsszavakat! A szavakat a `re.findall(r"[A-Za-z_]+", kod)` adja, a kulcsszó-e kérdést a `keyword.iskeyword` dönti el.
+
+```python starter
+import re
+
+def kulcsszavak(kod):
+    return re.findall(r"[A-Za-z_]+", kod)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+import keyword
+import re
+
+def kulcsszavak(kod):
+    return sorted({szo for szo in re.findall(r"[A-Za-z_]+", kod) if keyword.iskeyword(szo)})
+```
+
+</details>
+
+```python test
+assert kulcsszavak("for i in range(3):\n    if i: print(i)") == ["for", "if", "in"]
+assert kulcsszavak("x = 1") == []
+assert kulcsszavak("def f(): return None") == ["None", "def", "return"]
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Valódi kódsorok.** Írd meg a `kodsorok(kod)` függvényt, amely megszámolja, hány olyan sor van a kódban, amely nem üres, és nem csak megjegyzés (a `#`-tel kezdődő sorokat – az elején lévő szóközök után – a fordító figyelmen kívül hagyja)!
+
+```python starter
+def kodsorok(kod):
+    return len(kod.splitlines())
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kodsorok(kod):
+    db = 0
+    for sor in kod.splitlines():
+        s = sor.strip()
+        if s and not s.startswith("#"):     # üres és megjegyzéssor nem számít
+            db += 1
+    return db
+```
+
+</details>
+
+```python test
+kod = "# összeadás\nx = 1\n\n    # belső megjegyzés\ny = x + 2  # ez kód\n"
+assert kodsorok(kod) == 2
+assert kodsorok("") == 0
+assert kodsorok("print(1)\nprint(2)") == 2
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik állítás igaz a fordítóra (compiler)?
++ a teljes forráskódot futtatás előtt gépi kódra (vagy köztes kódra) alakítja
+- soronként értelmezi és rögtön végrehajtja a kódot
+- csak Pythonban létezik
+- a futás közbeni hibákat is mind előre kiszűri
+! Az interpreter soronként (utasításonként) hajt végre.
+
+? Mi a `24 * 60` kifejezés értéke, amelyet a Python már fordításkor kiszámol (konstans-összevonás)?
+= 1440
+! A bájtkódban csak a kész 1440 szerepel.
+
+? Melyik hiba derül ki már a program indítása előtt Pythonban?
+- nullával osztás
+- nem létező kulcs a szótárban
++ hiányzó kettőspont az `if` után
+- rossz eredményt adó képlet
+! A szintaktikai hibát az elemzés találja meg.
+
+? Mit csinál az inkrementális build?
+- mindig az egész projektet újrafordítja
++ csak a megváltozott fájlokat és a tőlük függőket fordítja újra
+- törli a lefordított fájlokat
+- a programot interpreterrel futtatja
+! Nagy projektnél órákat spórol.
 ```

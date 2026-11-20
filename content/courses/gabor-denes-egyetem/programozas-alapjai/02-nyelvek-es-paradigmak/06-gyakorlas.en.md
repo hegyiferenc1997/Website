@@ -1,7 +1,7 @@
 ---
 title: Practice – Languages and Paradigms
 summary: Review questions and exercises: imperative, declarative, object-oriented and functional solutions.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -232,4 +232,137 @@ g = [Student("Bob", [60, 70]), Student("Anna", [90, 80]), Student("Cecil", [85, 
 assert top_students(g, 2) == ["Anna", "Cecil"], "The best two: Anna (85), Cecil (85) – ties go alphabetically."
 assert top_students(g, 5) == ["Anna", "Cecil", "Bob"], "If n is larger, everyone is included."
 assert top_students([], 3) == [], "An empty group gives an empty list."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Rectangle class.** Write the `Rectangle` class, whose constructor receives `width` and `height`, and which has `area()` and `perimeter()` methods! For a negative or zero size the constructor should raise `ValueError`.
+
+```python starter
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return 0
+
+    def perimeter(self):
+        return 0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+class Rectangle:
+    def __init__(self, width, height):
+        if width <= 0 or height <= 0:
+            raise ValueError("sizes must be positive")
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+```
+
+</details>
+
+```python test
+r = Rectangle(3, 4)
+assert r.area() == 12
+assert r.perimeter() == 14
+try:
+    Rectangle(0, 5)
+    assert False, "ValueError expected"
+except ValueError:
+    pass
+print("All checks passed!")
+```
+
+**2.** **Functionally.** Write the `odd_squares(numbers)` function with a **single** list comprehension that returns the squares of the odd numbers, in the original order!
+
+```python starter
+def odd_squares(numbers):
+    return [x * x for x in numbers]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def odd_squares(numbers):
+    return [x * x for x in numbers if x % 2 == 1]   # filtering + transforming in one
+```
+
+</details>
+
+```python test
+assert odd_squares([1, 2, 3, 4, 5]) == [1, 9, 25]
+assert odd_squares([2, 4]) == []
+assert odd_squares([-3, 7]) == [9, 49]
+print("All checks passed!")
+```
+
+**3.** **Function chain.** Write the `chain(value, *functions)` function, which applies the given functions to the value in order (the first one first) and returns the final result! Without functions the value is unchanged.
+
+```python starter
+def chain(value, *functions):
+    return value
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def chain(value, *functions):
+    for f in functions:
+        value = f(value)                    # the previous result is the next input
+    return value
+```
+
+</details>
+
+```python test
+assert chain(3, lambda x: x + 1, lambda x: x * 10) == 40
+assert chain(3, lambda x: x * 10, lambda x: x + 1) == 31
+assert chain("  apple ", str.strip, str.upper) == "APPLE"
+assert chain(7) == 7
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does encapsulation mean?
++ data and the operations on it form one unit, and the data can only change in a controlled way
+- every class must go into a separate file
+- the program consists of a single function
+- variable names are uppercase
+! E.g. an account balance can only change through deposits and withdrawals.
+
+? What is the most important feature of a pure function?
+- it is always short
++ it always gives the same output for the same input and has no side effects
+- it has no parameters
+- it is inside a class
+! That's why it's easy to test.
+
+? What is the value of `sum(x * 2 for x in [1, 2, 3] if x > 1)`?
+= 10
+! After filtering 2 and 3 remain: $4 + 6 = 10$.
+
+? Which is the correct description of inheritance?
+- a function calls itself
++ a class takes over the attributes and methods of another class and can extend them
+- two variables refer to the same object
+- the elements of a list follow each other
+! E.g. `class Savings(Account)`.
 ```

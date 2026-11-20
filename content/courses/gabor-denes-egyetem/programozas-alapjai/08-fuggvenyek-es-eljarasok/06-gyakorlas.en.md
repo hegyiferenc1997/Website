@@ -1,7 +1,7 @@
 ---
 title: Practice – Functions
 summary: Review questions and exercises on writing functions, parameters, scope and simple recursion.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -278,4 +278,129 @@ assert password_problems("Secr12!x", min_length=10) == ["too short"], "With a mi
 assert password_problems("SECRETSECRET!") == ["no digit"], "Only the digit is missing."
 assert password_problems("Secret 1234") == ["no special character"], "A space does not count as a special character."
 assert has_digit("a1") and not has_digit("ab"), "The has_digit helper must work too."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Counter with a closure.** Write the `make_counter(start=0)` function, which returns a **function**! Each call of the returned function should give a number one larger (first `start + 1`). Use an inner function and a `nonlocal` variable!
+
+```python starter
+def make_counter(start=0):
+    def step():
+        return start + 1
+    return step
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def make_counter(start=0):
+    value = start
+    def step():
+        nonlocal value                      # we modify the outer function's variable
+        value += 1
+        return value
+    return step
+```
+
+</details>
+
+```python test
+c = make_counter()
+assert c() == 1 and c() == 2 and c() == 3
+other = make_counter(10)
+assert other() == 11
+assert c() == 4
+print("All checks passed!")
+```
+
+**2.** **Apply a function to everything.** Write the `apply_to_all(function, items)` function, which returns a new list with the result of `function` for every element (without using the built-in `map`)!
+
+```python starter
+def apply_to_all(function, items):
+    return items
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def apply_to_all(function, items):
+    return [function(item) for item in items]   # a function is just a value too
+```
+
+</details>
+
+```python test
+assert apply_to_all(abs, [-1, 2, -3]) == [1, 2, 3]
+assert apply_to_all(lambda x: x * x, [1, 2, 3]) == [1, 4, 9]
+assert apply_to_all(str.upper, ["a", "b"]) == ["A", "B"]
+assert apply_to_all(len, []) == []
+print("All checks passed!")
+```
+
+**3.** **Smallest by key.** Write the `smallest_by(items, key)` function, which returns the element for which `key(item)` is the smallest (the first one on ties), without using `min()`! For an empty list return `None`.
+
+```python starter
+def smallest_by(items, key):
+    return items[0] if items else None
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def smallest_by(items, key):
+    if not items:
+        return None
+    best = items[0]
+    for item in items[1:]:
+        if key(item) < key(best):           # the key function decides
+            best = item
+    return best
+```
+
+</details>
+
+```python test
+assert smallest_by(["apple", "fig", "pear"], len) == "fig"
+assert smallest_by([3, -1, 2], abs) == -1
+assert smallest_by([("Anna", 30), ("Ben", 25)], lambda p: p[1]) == ("Ben", 25)
+assert smallest_by(["ab", "cd"], len) == "ab"
+assert smallest_by([], len) is None
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does a function without `return` return?
+- 0
+- an empty string
++ None
+- raises an error
+! A function without `return` automatically returns `None`.
+
+? What is the value of `(lambda a, b=2: a * b)(5)`?
+= 10
+! The default of `b` is 2, so 5 · 2 = 10.
+
+? What is the `nonlocal` keyword for?
+- creating a global variable
++ modifying the enclosing function's variable from an inner function
+- deleting a variable
+- exporting the function
+! Without it, `value += 1` would try to create a new local variable.
+
+? What is the value of `sorted(["ccc", "a", "bb"], key=len)[-1]`?
+- a
+- bb
++ ccc
+- raises an error
+! Sorted by length, the last one is the longest.
 ```

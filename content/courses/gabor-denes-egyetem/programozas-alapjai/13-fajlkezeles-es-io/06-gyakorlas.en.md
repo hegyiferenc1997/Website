@@ -1,7 +1,7 @@
 ---
 title: Practice – File Handling
 summary: Review questions and exercises on text, CSV and JSON files, and on handling file errors.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -309,4 +309,130 @@ try:
 except FileNotFoundError:
     pass
 assert not os.path.exists("not_needed.json"), "No output file may be created on error."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **Words in a file.** Write the `count_words_in_file(path)` function, which opens the text file with `with open(..., encoding="utf-8")` and returns the number of words in it (separated by spaces/newlines)!
+
+```python starter
+def count_words_in_file(path):
+    return 0
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def count_words_in_file(path):
+    with open(path, encoding="utf-8") as f:     # with closes the file automatically
+        return len(f.read().split())
+```
+
+</details>
+
+```python test
+with open("text.txt", "w", encoding="utf-8") as f:
+    f.write("First line with four\nsecond  line\n\n")
+assert count_words_in_file("text.txt") == 6
+with open("empty.txt", "w", encoding="utf-8") as f:
+    pass
+assert count_words_in_file("empty.txt") == 0
+print("All checks passed!")
+```
+
+**2.** **Saving and loading with JSON.** Write the `save_and_load(data, path)` function, which writes the `data` dictionary to a file in JSON format (`json.dump`, `ensure_ascii=False`), then reads it back (`json.load`) and returns the value read back!
+
+```python starter
+import json
+
+def save_and_load(data, path):
+    return {}
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import json
+
+def save_and_load(data, path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)   # accented letters stay readable
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+```
+
+</details>
+
+```python test
+data = {"name": "Ádám", "points": [3, 5], "active": True}
+assert save_and_load(data, "data.json") == data
+assert "Ádám" in open("data.json", encoding="utf-8").read()
+assert save_and_load({}, "empty.json") == {}
+print("All checks passed!")
+```
+
+**3.** **Reading a CSV column.** Write the `csv_column(path, column)` function, which uses `csv.DictReader` to return the values of the given column from a semicolon-separated CSV file in a list!
+
+```python starter
+import csv
+
+def csv_column(path, column):
+    return []
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import csv
+
+def csv_column(path, column):
+    with open(path, encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f, delimiter=";")    # the first row is the header
+        return [row[column] for row in reader]
+```
+
+</details>
+
+```python test
+with open("products.csv", "w", encoding="utf-8", newline="") as f:
+    f.write("name;price\nbread;650\nmilk;420\n")
+assert csv_column("products.csv", "name") == ["bread", "milk"]
+assert csv_column("products.csv", "price") == ["650", "420"]
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What does the `"w"` open mode do if the file already exists?
+- appends to its end
++ overwrites (empties) the file
+- raises an error
+- opens it for reading only
+! Appending needs the `"a"` mode.
+
+? Why is the `with open(...)` form recommended?
+- because it reads faster
++ because it closes the file even if an exception happens in the meantime
+- because it encrypts the file
+- because the file name need not be given
+! At the end of the `with` block the file closes automatically.
+
+? How many elements does `"a;b;;c".split(";")` give?
+= 4
+! `["a", "b", "", "c"]`: there is an empty string between the two semicolons.
+
+? What Python type does the JSON value `true` become after loading?
+- str
+- int
++ bool
+- None
+! JSON `true`/`false` become Python `True`/`False`.
 ```

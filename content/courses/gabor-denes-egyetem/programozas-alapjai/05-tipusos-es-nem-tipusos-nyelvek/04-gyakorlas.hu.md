@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – típusrendszerek
 summary: Ellenőrző kérdések a típusrendszerekről, és feladatok típusjelölésekkel.
-minutes: 15
+minutes: 40
 kind: practice
 ---
 
@@ -198,4 +198,121 @@ try:
     assert False, "Rossz típusú visszatérési értéknél TypeError kell."
 except TypeError:
     pass
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Típusnevek.** Írd meg a `tipus_nevek(lista)` függvényt, amely egy lista minden eleméhez a típusa nevét adja vissza (pl. `"int"`, `"str"`)! Használd a `type(x).__name__` kifejezést.
+
+```python starter
+def tipus_nevek(lista):
+    return ["int" for _ in lista]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def tipus_nevek(lista):
+    return [type(elem).__name__ for elem in lista]   # a típus neve szövegként
+```
+
+</details>
+
+```python test
+assert tipus_nevek([1, "a", 2.5, True, None]) == ["int", "str", "float", "bool", "NoneType"]
+assert tipus_nevek([]) == []
+assert tipus_nevek([[1], (1,), {1: 2}]) == ["list", "tuple", "dict"]
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Biztonságos átalakítás.** Írd meg a `biztos_int(ertek, alap=0)` függvényt, amely megpróbálja egész számmá alakítani az értéket (`int(ertek)`), és ha ez nem sikerül (`ValueError` vagy `TypeError`), az `alap` értéket adja vissza!
+
+```python starter
+def biztos_int(ertek, alap=0):
+    return int(ertek)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def biztos_int(ertek, alap=0):
+    try:
+        return int(ertek)
+    except (ValueError, TypeError):         # rossz szöveg vagy nem átalakítható típus
+        return alap
+```
+
+</details>
+
+```python test
+assert biztos_int("42") == 42
+assert biztos_int(" -7 ") == -7
+assert biztos_int("hat") == 0
+assert biztos_int(None, -1) == -1
+assert biztos_int("3.5", 99) == 99
+assert biztos_int(3.9) == 3
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Séma-ellenőrzés.** Írd meg az `ellenoriz_tipusokat(adat, sema)` függvényt! A `sema` egy szótár, amely mezőnévhez típust rendel (pl. `{"nev": str, "kor": int}`). Add vissza azon mezők nevét ábécérendben, amelyek hiányoznak az `adat` szótárból vagy rossz típusúak! A `bool` ne számítson `int`-nek.
+
+```python starter
+def ellenoriz_tipusokat(adat, sema):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ellenoriz_tipusokat(adat, sema):
+    hibas = []
+    for mezo, tipus in sema.items():
+        ertek = adat.get(mezo)
+        rossz_bool = isinstance(ertek, bool) and tipus is not bool   # a bool az int alosztálya
+        if mezo not in adat or not isinstance(ertek, tipus) or rossz_bool:
+            hibas.append(mezo)
+    return sorted(hibas)
+```
+
+</details>
+
+```python test
+sema = {"nev": str, "kor": int, "aktiv": bool}
+assert ellenoriz_tipusokat({"nev": "Anna", "kor": 20, "aktiv": True}, sema) == []
+assert ellenoriz_tipusokat({"nev": "Anna", "kor": "20", "aktiv": True}, sema) == ["kor"]
+assert ellenoriz_tipusokat({"kor": True, "aktiv": 1}, sema) == ["aktiv", "kor", "nev"]
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit ad vissza a `type(3 / 1).__name__` kifejezés?
+- int
++ float
+- str
+- number
+! A `/` mindig lebegőpontos osztás, így 3.0 lesz.
+
+? Mennyi `int("101", 2)` értéke?
+= 5
+! A második paraméter a számrendszer alapja: 101 kettesben 5.
+
+? Mit ad az `isinstance(True, int)`?
++ True
+- False
+- hibát dob
+- None
+! Pythonban a `bool` az `int` alosztálya, ezért külön kell kezelni, ha meg akarjuk különböztetni.
+
+? Mennyi `len(str(12345))` értéke?
+= 5
+! A szám szöveggé alakítva 5 karakter.
 ```

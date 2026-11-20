@@ -1,7 +1,7 @@
 ---
 title: Összefoglaló gyakorlás – a félév anyaga
 summary: Vegyes ellenőrző kérdések és feladatok a teljes tananyagból, zárthelyire és projektre készüléshez.
-minutes: 45
+minutes: 70
 kind: practice
 ---
 
@@ -425,4 +425,132 @@ hatarok = "nev;neptun;f1;f2;f3\nA;1;10;20;19\nB;2;10;20;20\nC;3;20;20;21\nD;4;20
 jegyek = {nev: j for nev, _, j in zh_kiertekeles(hatarok)["eredmenyek"]}
 assert jegyek == {"A": 1, "B": 2, "C": 2, "D": 3, "E": 3, "F": 4, "G": 4, "H": 5}, "A jegyhatárok: 50, 62, 75, 88."
 assert zh_kiertekeles("nev;neptun;f1;f2;f3\n") == {"eredmenyek": [], "atlag": 0.0, "hibas": []}, "Csak fejléc: üres eredmény, 0.0 átlag."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Teljesíthető-e a rendelés?** Írd meg a `raktar_kesz(keszlet, rendeles)` függvényt! Mindkettő szótár (termék → darabszám). Adjon `True`-t, ha a rendelés minden tétele elérhető a készletben legalább a kért mennyiségben; a készletben nem szereplő termék 0 darabnak számít.
+
+```python starter
+def raktar_kesz(keszlet, rendeles):
+    return all(t in keszlet for t in rendeles)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def raktar_kesz(keszlet, rendeles):
+    for termek, db in rendeles.items():
+        if keszlet.get(termek, 0) < db:     # hiányzó termék = 0 db
+            return False
+    return True
+```
+
+</details>
+
+```python test
+keszlet = {"toll": 10, "füzet": 3}
+assert raktar_kesz(keszlet, {"toll": 2, "füzet": 3})
+assert not raktar_kesz(keszlet, {"füzet": 4})
+assert not raktar_kesz(keszlet, {"radír": 1})
+assert raktar_kesz(keszlet, {})
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Leggyakoribb szavak.** Írd meg a `top_szavak(szoveg, n)` függvényt, amely a szöveg `n` leggyakoribb szavát adja vissza `(szo, darab)` párok listájaként! A szavakat kisbetűsítsd, a `.,!?` írásjeleket hagyd el; egyenlő darabszámnál ábécérend döntsön.
+
+```python starter
+def top_szavak(szoveg, n):
+    return [(szo, 1) for szo in szoveg.split()[:n]]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def top_szavak(szoveg, n):
+    db = {}
+    for szo in szoveg.lower().split():
+        szo = szo.strip(".,!?")             # írásjelek le a szó széléről
+        if szo:
+            db[szo] = db.get(szo, 0) + 1
+    rendezett = sorted(db.items(), key=lambda par: (-par[1], par[0]))   # darab csökkenő, szó növekvő
+    return rendezett[:n]
+```
+
+</details>
+
+```python test
+szoveg = "A kutya ugat. A macska nyávog, a kutya fut!"
+assert top_szavak(szoveg, 2) == [("a", 3), ("kutya", 2)]
+assert top_szavak(szoveg, 3) == [("a", 3), ("kutya", 2), ("fut", 1)]
+assert top_szavak("", 5) == []
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **E-mail cím ellenőrzése.** Írd meg az `ervenyes_email(cim)` függvényt egy egyszerűsített szabálykészlettel: pontosan egy `@` legyen benne, nem lehet benne szóköz, a `@` előtti rész nem üres, a `@` utáni rész tartalmaz pontot, de nem ponttal kezdődik és nem ponttal végződik!
+
+```python starter
+def ervenyes_email(cim):
+    return "@" in cim
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def ervenyes_email(cim):
+    if cim.count("@") != 1 or " " in cim:
+        return False
+    nev, domain = cim.split("@")
+    return (len(nev) > 0 and "." in domain
+            and not domain.startswith(".") and not domain.endswith("."))   # pl. "pelda.hu"
+```
+
+</details>
+
+```python test
+assert ervenyes_email("anna@pelda.hu")
+assert ervenyes_email("a.b@egyetem.edu.hu")
+assert not ervenyes_email("anna.pelda.hu")
+assert not ervenyes_email("@pelda.hu")
+assert not ervenyes_email("anna@pelda")
+assert not ervenyes_email("anna@.hu")
+assert not ervenyes_email("an na@pelda.hu")
+assert not ervenyes_email("a@b@c.hu")
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik a helyes sorrend egy kis projekt fejlesztésénél?
+- kódolás → követelmények → tesztelés → tervezés
++ követelmények → tervezés → kódolás → tesztelés
+- tesztelés → kódolás → tervezés → követelmények
+- tervezés → tesztelés → követelmények → kódolás
+! Előbb azt kell tudni, mit építünk, csak utána, hogyan.
+
+? Mit ad `{"a": 1}.get("b", 0)`?
+= 0
+! Hiányzó kulcsnál a `get` a második paramétert adja vissza, nem dob hibát.
+
+? Miért érdemes egy nagy feladatot kisebb függvényekre bontani?
+- mert a Python csak rövid függvényeket futtat
++ mert a kis részek külön tesztelhetők, érthetőbbek és újrahasznosíthatók
+- mert így gyorsabban fut a program
+- mert így nem kell tesztelni
+! A felbontás a hibakeresést is megkönnyíti.
+
+? Mennyi `sorted([("b", 2), ("a", 2), ("c", 5)], key=lambda p: (-p[1], p[0]))[0][0]` értéke?
+- a
+- b
++ c
+- hibát dob
+! A legnagyobb darabszám (5) kerül előre.
 ```

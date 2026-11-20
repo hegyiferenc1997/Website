@@ -1,7 +1,7 @@
 ---
 title: Practice – Comparing Languages
 summary: Review questions and "translating" code from Java, C# and Ruby into Python.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -276,4 +276,125 @@ r = word_stats("R2D2 and C-3PO in 2024")
 assert r["words"] == 6 and r["unique"] == 6, "Digits are not part of words: r, d, and, c, po, in."
 assert word_stats("") == {"words": 0, "unique": 0, "most_common": [], "avg_length": 0.0}, "For empty text: 0, 0, [], 0.0."
 assert word_stats("b a b a c")["most_common"] == [("a", 2), ("b", 2), ("c", 1)], "Alphabetical order on equal counts."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **JavaScript-like addition.** In JavaScript `+` converts to text if either side is a string (`1 + "2"` → `"12"`), otherwise it adds numbers. Write the `js_add(a, b)` function, which imitates this behaviour in Python (for numbers and strings)!
+
+```python starter
+def js_add(a, b):
+    return a + b
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def js_add(a, b):
+    if isinstance(a, str) or isinstance(b, str):
+        return str(a) + str(b)              # weak typing: automatic conversion to text
+    return a + b
+```
+
+</details>
+
+```python test
+assert js_add(1, "2") == "12"
+assert js_add("a", 3) == "a3"
+assert js_add(1, 2) == 3
+assert js_add("x", "y") == "xy"
+print("All checks passed!")
+```
+
+**2.** **32-bit overflow.** In C or Java a 32-bit signed `int` is between −2,147,483,648 and 2,147,483,647, and on overflow it "wraps around". Write the `int32(x)` function, which converts any Python integer into such a 32-bit value!
+
+```python starter
+def int32(x):
+    return x
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def int32(x):
+    x = x % 2 ** 32                         # into the range 0 .. 2^32 - 1
+    if x >= 2 ** 31:
+        x -= 2 ** 32                        # the upper half means negative numbers
+    return x
+```
+
+</details>
+
+```python test
+assert int32(5) == 5
+assert int32(2147483647) == 2147483647
+assert int32(2147483647 + 1) == -2147483648
+assert int32(-2147483649) == 2147483647
+assert int32(2 ** 32) == 0
+print("All checks passed!")
+```
+
+**3.** **Rounding differently.** Python's `round()` uses "banker's" rounding: `round(2.5)` → `2`, `round(3.5)` → `4`. Many other languages (and the school rule) always round `.5` up (away from zero). Write the `round_half_up(x)` function, which rounds to an integer this way: `2.5` → `3`, `-2.5` → `-3`!
+
+```python starter
+def round_half_up(x):
+    return round(x)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+import math
+
+def round_half_up(x):
+    if x >= 0:
+        return math.floor(x + 0.5)          # positive: half up
+    return -math.floor(-x + 0.5)            # negative: mirrored, away from zero
+```
+
+</details>
+
+```python test
+assert round_half_up(2.5) == 3
+assert round_half_up(3.5) == 4
+assert round_half_up(2.4) == 2
+assert round_half_up(-2.5) == -3
+assert round_half_up(-2.4) == -2
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? What is the value of `round(2.5)` in Python?
+= 2
+! Banker's rounding: `.5` is rounded towards the even neighbour.
+
+? Which statement is true about Python?
++ it is dynamically and strongly typed
+- it is statically and weakly typed
+- it is dynamically and weakly typed
+- it is statically and strongly typed
+! A variable's type is decided at runtime, but `1 + "2"` gives an error; there is no automatic conversion.
+
+? What is the largest 32-bit signed int plus one, with wrap-around?
+- 2147483648
++ -2147483648
+- 0
+- -1
+! After the largest value comes the smallest negative one.
+
+? Which language is typically compiled to machine code?
+- Python
+- JavaScript
++ C
+- Bash
+! C is translated directly to machine code by the compiler.
 ```

@@ -1,7 +1,7 @@
 ---
 title: Practice – Exception Handling
 summary: Review questions and exercises on handling, raising and defining exceptions.
-minutes: 30
+minutes: 55
 kind: practice
 ---
 
@@ -315,4 +315,137 @@ try:
 except LineError as e:
     assert str(e) == "invalid score", "The message: invalid score"
 assert process([]) == ({}, []), "An empty list gives an empty result."
+```
+
+## More practice exercises (optional)
+
+These exercises are optional, but the more you solve, the more confident you'll become. For the programming exercises, write the function, then run the check; each one has a solution – try it yourself first, and only then look!
+
+### Programming exercises
+
+**1.** **First number in the text.** Write the `first_number(words)` function, which returns, as an integer, the first element of a list of strings that can be converted with `int()`! Skip non-numbers using `try`–`except ValueError`; if there is no such element, the result should be `None`.
+
+```python starter
+def first_number(words):
+    return int(words[0])
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def first_number(words):
+    for word in words:
+        try:
+            return int(word)
+        except ValueError:
+            continue                        # not a number, move on
+    return None
+```
+
+</details>
+
+```python test
+assert first_number(["apple", "12", "7"]) == 12
+assert first_number(["x", "-3"]) == -3
+assert first_number(["a", "b"]) is None
+assert first_number([]) is None
+print("All checks passed!")
+```
+
+**2.** **Safe indexing.** Write the `safe_item(items, index, default=None)` function, which returns the element of the list at the given index, and in case of `IndexError` returns `default`! (The index can be negative, as usual in Python.)
+
+```python starter
+def safe_item(items, index, default=None):
+    return items[index]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def safe_item(items, index, default=None):
+    try:
+        return items[index]
+    except IndexError:                      # index too large or too small
+        return default
+```
+
+</details>
+
+```python test
+assert safe_item([1, 2, 3], 1) == 2
+assert safe_item([1, 2, 3], -1) == 3
+assert safe_item([1, 2, 3], 5) is None
+assert safe_item([], 0, "empty") == "empty"
+print("All checks passed!")
+```
+
+**3.** **Dividing a list.** Write the `divide_all(numerators, denominator)` function, which divides every number by the denominator! If the denominator is 0, don't raise an error, but put `None` in every place; if the denominator is not a number (`TypeError`), raise `ValueError` with the message `"the denominator must be a number"`!
+
+```python starter
+def divide_all(numerators, denominator):
+    return [x / denominator for x in numerators]
+```
+
+<details>
+<summary>Solution</summary>
+
+```python solution
+def divide_all(numerators, denominator):
+    result = []
+    for x in numerators:
+        try:
+            result.append(x / denominator)
+        except ZeroDivisionError:
+            result.append(None)             # division by zero: no meaningful result
+        except TypeError:
+            raise ValueError("the denominator must be a number")   # replace with a clearer error
+    return result
+```
+
+</details>
+
+```python test
+assert divide_all([2, 4], 2) == [1.0, 2.0]
+assert divide_all([1, 2], 0) == [None, None]
+assert divide_all([], 0) == []
+try:
+    divide_all([1], "x")
+    assert False, "ValueError expected"
+except ValueError as error:
+    assert str(error) == "the denominator must be a number"
+print("All checks passed!")
+```
+
+### Quick check questions
+
+```quiz
+? Which exception occurs on `int("abc")`?
+- TypeError
++ ValueError
+- KeyError
+- SyntaxError
+! The type is right (a string), only its value cannot be converted to a number.
+
+? When does the `finally` branch run?
+- only if there was no exception
+- only if there was an exception
++ always, regardless of exceptions
+- never, if there was a `return`
+! That's why closing a file or other cleanup goes here.
+
+? Which exception occurs on the expression `{"a": 1}["b"]`?
+- IndexError
++ KeyError
+- ValueError
+- NameError
+! A non-existent key in a dictionary → KeyError.
+
+? How many `except` branches can follow a `try` block?
+- exactly one
++ any number
+- at most two
+- none
+! Several `except` branches can be written; the first matching one runs.
 ```

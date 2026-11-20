@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – változók és kifejezések
 summary: Ellenőrző kérdések és feladatok változókkal, konstansokkal, operátorokkal és kiírással.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -252,4 +252,124 @@ try:
     assert False, "0 magasságnál ValueError kell."
 except ValueError:
     pass
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Kerekítés 5 forintra.** Készpénzes fizetésnél a végösszeget 5 forintra kerekítjük: 1–2 lefelé 0-ra, 3–4 felfelé 5-re, 6–7 lefelé 5-re, 8–9 felfelé 10-re. Írd meg a `kerekit_otre(osszeg)` függvényt egész számokra!
+
+```python starter
+def kerekit_otre(osszeg):
+    return osszeg
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kerekit_otre(osszeg):
+    maradek = osszeg % 5
+    if maradek <= 2:
+        return osszeg - maradek             # lefelé
+    return osszeg + (5 - maradek)           # felfelé
+```
+
+</details>
+
+```python test
+assert kerekit_otre(1231) == 1230
+assert kerekit_otre(1232) == 1230
+assert kerekit_otre(1233) == 1235
+assert kerekit_otre(1237) == 1235
+assert kerekit_otre(1238) == 1240
+assert kerekit_otre(1240) == 1240
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Melyik nap lesz?** Írd meg a `nap_neve(index, eltolas)` függvényt! A napok listája `["hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat", "vasárnap"]`, az `index` a mai nap (0 = hétfő), az `eltolas` pedig hány nap múlva (negatív is lehet). Használd a `%` operátort!
+
+```python starter
+NAPOK = ["hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat", "vasárnap"]
+
+def nap_neve(index, eltolas):
+    return NAPOK[index + eltolas]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+NAPOK = ["hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat", "vasárnap"]
+
+def nap_neve(index, eltolas):
+    return NAPOK[(index + eltolas) % 7]     # a % Pythonban negatívra is 0..6-ot ad
+```
+
+</details>
+
+```python test
+assert nap_neve(0, 0) == "hétfő"
+assert nap_neve(4, 3) == "hétfő"
+assert nap_neve(0, -1) == "vasárnap"
+assert nap_neve(2, 100) == "péntek"
+assert nap_neve(6, -15) == "szombat"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Másodfokú egyenlet.** Írd meg a `masodfoku(a, b, c)` függvényt, amely az $ax^2 + bx + c = 0$ valós megoldásait adja vissza növekvő sorrendben, listában! Ha nincs valós megoldás, üres listát, ha egy van, egyelemű listát adjon. (Feltehető, hogy `a != 0`.)
+
+```python starter
+def masodfoku(a, b, c):
+    return []
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def masodfoku(a, b, c):
+    d = b * b - 4 * a * c                   # diszkrimináns
+    if d < 0:
+        return []
+    if d == 0:
+        return [-b / (2 * a)]
+    gyok = d ** 0.5
+    return sorted([(-b - gyok) / (2 * a), (-b + gyok) / (2 * a)])
+```
+
+</details>
+
+```python test
+assert masodfoku(1, -3, 2) == [1.0, 2.0]
+assert masodfoku(1, 2, 1) == [-1.0]
+assert masodfoku(1, 0, 1) == []
+assert masodfoku(-1, 0, 4) == [-2.0, 2.0]
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mennyi `-7 // 2` értéke Pythonban?
+= -4
+! Az egészosztás lefelé (a mínusz végtelen felé) kerekít: -3,5 → -4.
+
+? Mennyi `-7 % 3` értéke Pythonban?
+= 2
+! Pythonban a maradék előjele az osztóé: -7 = 3 · (-3) + 2.
+
+? Mennyi `2 ** 3 ** 2` értéke?
+= 512
+! A hatványozás jobbról köt: $2^{(3^2)} = 2^9 = 512$.
+
+? Mit ad a `True or 1 / 0` kifejezés?
++ True
+- ZeroDivisionError
+- 1
+- False
+! Rövidzár: az `or` a `True` után már nem értékeli ki a jobb oldalt.
 ```

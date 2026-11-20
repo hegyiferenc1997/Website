@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – alapelvek
 summary: Ellenőrző kérdések és első feladatok a témakör anyagából.
-minutes: 20
+minutes: 45
 kind: practice
 ---
 
@@ -211,4 +211,129 @@ assert statisztika([12, 7, 21, 3]) == [3, 21, 10.75], "statisztika([12, 7, 21, 3
 assert statisztika([5]) == [5, 5, 5.0], "Egyetlen mérésnél mindhárom érték ugyanaz."
 assert statisztika([-1.5, 2, 0]) == [-1.5, 2, 0.17], "Negatív és tört számokkal is működjön (átlag: 0.17)."
 assert statisztika([]) is None, "Üres listára None az eredmény."
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Maximum helye.** Írd meg a `max_hely(lista)` függvényt, amely a lista legnagyobb elemének **első** előfordulási indexét adja vissza a `max()` és az `index()` használata nélkül (maximumkiválasztás tétele)! Üres listára adjon `-1`-et.
+
+```python starter
+def max_hely(lista):
+    return 0
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def max_hely(lista):
+    if not lista:
+        return -1
+    hely = 0
+    for i in range(1, len(lista)):
+        if lista[i] > lista[hely]:          # csak szigorúan nagyobbnál váltunk: az első marad
+            hely = i
+    return hely
+```
+
+</details>
+
+```python test
+assert max_hely([3, 8, 2, 8, 1]) == 1
+assert max_hely([5]) == 0
+assert max_hely([-4, -2, -9]) == 1
+assert max_hely([]) == -1
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Tükörszám.** Írd meg a `tukor(n)` függvényt, amely egy nemnegatív egész szám számjegyeit fordított sorrendben adja vissza **számként**, szöveggé alakítás nélkül (maradékos osztással)! Például `1230` → `321`.
+
+```python starter
+def tukor(n):
+    return n
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def tukor(n):
+    eredmeny = 0
+    while n > 0:
+        eredmeny = eredmeny * 10 + n % 10   # az utolsó jegyet hozzáfűzzük
+        n //= 10
+    return eredmeny
+```
+
+</details>
+
+```python test
+assert tukor(1230) == 321
+assert tukor(5) == 5
+assert tukor(0) == 0
+assert tukor(907) == 709
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Prímtényezők.** Írd meg a `primtenyezok(n)` függvényt, amely egy 1-nél nagyobb egész szám prímtényezőit adja vissza növekvő sorrendben, ismétlődéssel együtt! Például `60` → `[2, 2, 3, 5]`.
+
+```python starter
+def primtenyezok(n):
+    return [n]
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def primtenyezok(n):
+    tenyezok, oszto = [], 2
+    while oszto * oszto <= n:
+        while n % oszto == 0:
+            tenyezok.append(oszto)
+            n //= oszto
+        oszto += 1
+    if n > 1:
+        tenyezok.append(n)                  # a maradék maga is prím
+    return tenyezok
+```
+
+</details>
+
+```python test
+assert primtenyezok(60) == [2, 2, 3, 5]
+assert primtenyezok(13) == [13]
+assert primtenyezok(1024) == [2] * 10
+assert primtenyezok(999) == [3, 3, 3, 37]
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Melyik NEM tulajdonsága egy algoritmusnak?
+- véges számú lépés után befejeződik
+- minden lépése egyértelmű
++ csak Pythonban írható le
+- van bemenete és kimenete
+! Az algoritmus nyelvfüggetlen: leírható szövegesen, folyamatábrával vagy bármely nyelven.
+
+? Hány lépésben fut le a maradékos Euklidész-algoritmus az lnko(48, 18) kiszámításánál?
+= 3
+! (48, 18) → (18, 12) → (12, 6) → (6, 0): 3 lépés.
+
+? Legfeljebb hány lépés kell a bináris kereséshez egy 1 000 000 elemű rendezett listában?
+= 20
+! $2^{20} = 1\,048\,576 \geq 1\,000\,000$.
+
+? Melyik paradigma írja le az eredményt a lépések helyett?
+- imperatív
++ deklaratív
+- procedurális
+- gépi kódú
+! Pl. az SQL vagy a `sorted(..., key=...)`.
 ```

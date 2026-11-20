@@ -1,7 +1,7 @@
 ---
 title: Gyakorlás – adattípusok
 summary: Ellenőrző kérdések és feladatok számokkal, szövegekkel és típuskonverzióval.
-minutes: 25
+minutes: 50
 kind: practice
 ---
 
@@ -245,4 +245,129 @@ assert jelentes("20") == "min: 20.0, max: 20.0, átlag: 20.0", "Egyetlen érték
 assert jelentes("1, 2, 2") == "min: 1.0, max: 2.0, átlag: 1.67", "Az átlagot két tizedesre kell kerekíteni (1.67)."
 assert jelentes("") == "nincs adat", "Üres sorra: nincs adat"
 assert jelentes(" , ") == "nincs adat", "Csak üres elemekre is: nincs adat"
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Hexa színkód.** Írd meg a `hexa_szin(r, g, b)` függvényt, amely három 0–255 közötti egész számból (piros, zöld, kék) webes színkódot készít, kisbetűs hexadecimális jegyekkel, mindig 2 jegyre kiegészítve! Például `(255, 128, 0)` → `"#ff8000"`. Tartományon kívüli értékre dobj `ValueError`-t!
+
+```python starter
+def hexa_szin(r, g, b):
+    return "#" + str(r) + str(g) + str(b)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def hexa_szin(r, g, b):
+    for ertek in (r, g, b):
+        if not 0 <= ertek <= 255:
+            raise ValueError("0 és 255 között kell lennie")
+    return f"#{r:02x}{g:02x}{b:02x}"        # 02x: 2 jegyű, nullával kiegészített hexa
+```
+
+</details>
+
+```python test
+assert hexa_szin(255, 128, 0) == "#ff8000"
+assert hexa_szin(0, 0, 0) == "#000000"
+assert hexa_szin(10, 11, 12) == "#0a0b0c"
+try:
+    hexa_szin(256, 0, 0)
+    assert False, "ValueError kellett volna"
+except ValueError:
+    pass
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Lebegőpontos összehasonlítás.** A `0.1 + 0.2 == 0.3` Pythonban `False`. Írd meg a `kozel_egyenlo(a, b, tures=1e-9)` függvényt, amely akkor ad `True`-t, ha a két szám eltérésének abszolút értéke legfeljebb `tures`!
+
+```python starter
+def kozel_egyenlo(a, b, tures=1e-9):
+    return a == b
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kozel_egyenlo(a, b, tures=1e-9):
+    return abs(a - b) <= tures              # pontos egyezés helyett tűréshatár
+```
+
+</details>
+
+```python test
+assert kozel_egyenlo(0.1 + 0.2, 0.3)
+assert not kozel_egyenlo(0.1, 0.2)
+assert kozel_egyenlo(1.0, 1.05, tures=0.1)
+assert not kozel_egyenlo(1.0, 1.2, tures=0.1)
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **UTF-8 bájtszám.** Írd meg az `utf8_bajtok(szoveg)` függvényt, amely az `encode()` használata nélkül, csak az `ord()` alapján megmondja, hány bájtot foglal a szöveg UTF-8-ban! Szabály: kódpont < 128 → 1 bájt, < 2048 → 2, < 65536 → 3, egyébként 4.
+
+```python starter
+def utf8_bajtok(szoveg):
+    return len(szoveg)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def utf8_bajtok(szoveg):
+    osszes = 0
+    for karakter in szoveg:
+        k = ord(karakter)
+        if k < 128:
+            osszes += 1                     # ASCII
+        elif k < 2048:
+            osszes += 2                     # pl. á, ő
+        elif k < 65536:
+            osszes += 3                     # pl. €
+        else:
+            osszes += 4                     # pl. emoji
+    return osszes
+```
+
+</details>
+
+```python test
+assert utf8_bajtok("abc") == 3
+assert utf8_bajtok("ő") == 2
+assert utf8_bajtok("€") == 3
+assert utf8_bajtok("😀") == 4
+assert utf8_bajtok("Szép €") == 9
+for s in ["árvíztűrő", "a€😀", ""]:
+    assert utf8_bajtok(s) == len(s.encode("utf-8"))
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mennyi a 0b1011 bináris szám értéke tízes számrendszerben?
+= 11
+! 8 + 0 + 2 + 1 = 11.
+
+? Hány különböző értéket tud tárolni egy 8 bites előjel nélküli egész?
+= 256
+! $2^8 = 256$ (0-tól 255-ig).
+
+? Miért ad `False`-t a `0.1 + 0.2 == 0.3`?
+- mert a Python hibásan összead
++ mert a 0,1 kettes számrendszerben nem ábrázolható pontosan
+- mert az `==` szövegként hasonlít
+- mert a 0,3 egész szám
+! A lebegőpontos számok kettedes törtek, a 0,1 végtelen kettedes tört lenne, ezért kerekítve tárolódik.
+
+? Hány bájtot foglal az „ő” betű UTF-8-ban?
+= 2
+! Kódpontja 337, ami 128 és 2047 közé esik, ezért 2 bájt.
 ```
