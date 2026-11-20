@@ -4,8 +4,16 @@ Ebben a mappában van a 3. féléves Digitális technika tárgy tananyaga. Indí
 futtatásakor) az oldal innen tölti be az adatbázisba a témaköröket és a leckéket.
 
 A szerkezet a tantárgyleírás 13 témakörét követi: `01-digitalis-rendszerek-alapjai` …
-`13-alkalmazasok-az-informatikaban`. Minden témakör végén egy `gyakorlas` lecke van ellenőrző kérdésekkel
-és összefoglaló feladatlappal. A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a
+`13-alkalmazasok-az-informatikaban`. Minden témakör az alapleckék után egy `melyebben-…` leckével és egy
+`gyakorlas` leckével zárul.
+
+- A **Mélyebben** lecke ugyanazt a témát számokkal és szimulátorokkal (` ```python run `) mutatja be
+  (pl. zajtartalék, Hamming-kód, hazárd időben, CPU-szimulátor, aliasing, UART-keret), saját kötelező kvízzel.
+- A **gyakorlás** lecke ellenőrző kérdésekkel és összefoglaló feladatlappal (kötelező kvíz) indul, a végén
+  pedig „További gyakorló feladatok (nem kötelezők)” szakasz van: 3 számolós Python-feladat
+  (` ```python starter ` + rejtett megoldás + ` ```python test `) és egy nem kötelező gyors kvíz.
+
+A mappák, a `topic.json` és a lecke fájlok felépítése ugyanaz, mint a
 Programozási alapoknál (lásd `../programozas-alapjai/README.md`).
 
 ## Kötelező feladat: kvíz
