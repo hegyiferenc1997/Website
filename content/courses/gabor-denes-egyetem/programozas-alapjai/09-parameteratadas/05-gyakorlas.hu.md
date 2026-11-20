@@ -1,0 +1,388 @@
+---
+title: Gyakorlás – paraméterek
+summary: Ellenőrző kérdések és feladatok a paraméterek fajtáiról, az átadás módjáról és a kiértékelésről.
+minutes: 50
+kind: practice
+---
+
+## Ellenőrző kérdések
+
+**1. Mit ír ki?**
+
+```python
+def f(lista):
+    lista.append(4)
+    lista = [9]
+    lista.append(5)
+
+a = [1, 2, 3]
+f(a)
+print(a)
+```
+
+<details>
+<summary>Válasz</summary>
+
+`[1, 2, 3, 4]`. Az `append(4)` a közös listát módosítja; a `lista = [9]` után a lokális név már egy új listára mutat, így az `append(5)` az eredetit nem érinti.
+
+</details>
+
+**2. Miért nem változik meg az `x` értéke? `def f(n): n += 1` → `x = 5; f(x)`**
+
+<details>
+<summary>Válasz</summary>
+
+Az `int` megváltoztathatatlan: az `n += 1` egy új objektumot hoz létre, és csak a lokális `n` mutat rá. Az `x` továbbra is az eredeti 5-re mutat.
+
+</details>
+
+**3. Mi a hiba ebben: `def naplo(uzenet, lista=[]):`?**
+
+<details>
+<summary>Válasz</summary>
+
+Az alapértelmezett lista egyszer, a definíciókor jön létre, és minden hívás ugyanazt használja, így az üzenetek felhalmozódnak. Helyesen: `lista=None`, majd a függvényben `if lista is None: lista = []`.
+
+</details>
+
+**4. Milyen típusú a `*args` és a `**kwargs` a függvényen belül?**
+
+<details>
+<summary>Válasz</summary>
+
+Az `args` egy tuple, a `kwargs` egy szótár.
+
+</details>
+
+**5. Mi a különbség a mohó és a lusta kiértékelés között?**
+
+<details>
+<summary>Válasz</summary>
+
+Mohó kiértékelésnél az argumentumok a hívás előtt kiértékelődnek; lustánál csak akkor, ha az értékükre ténylegesen szükség van.
+
+</details>
+
+## Feladatok
+
+### 1. feladat: Átlag tetszőleges számú értékből
+
+Írj `atlag(*szamok)` függvényt, amely tetszőleges számú argumentum átlagát adja vissza; argumentum nélkül `None`-t.
+
+```python starter
+def atlag(*szamok):
+    pass
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def atlag(*szamok):
+    if not szamok:
+        return None
+    return sum(szamok) / len(szamok)
+```
+
+</details>
+
+```python test
+assert atlag(2, 4, 6) == 4
+assert atlag(5) == 5
+assert atlag() is None
+print("Minden ellenőrzés sikeres!")
+```
+
+### 2. feladat: HTML címke
+
+Írj `cimke(nev, tartalom, **attributumok)` függvényt, amely HTML címkét készít: `cimke("a", "Link", href="/x")` → `'<a href="/x">Link</a>'`. Több attribútum a megadás sorrendjében, szóközzel elválasztva kövesse egymást.
+
+```python starter
+def cimke(nev, tartalom, **attributumok):
+    pass
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def cimke(nev, tartalom, **attributumok):
+    attr = "".join(f' {k}="{v}"' for k, v in attributumok.items())
+    return f"<{nev}{attr}>{tartalom}</{nev}>"
+```
+
+</details>
+
+```python test
+assert cimke("a", "Link", href="/x") == '<a href="/x">Link</a>'
+assert cimke("p", "Szia") == "<p>Szia</p>"
+assert cimke("img", "", src="k.png", alt="kép") == '<img src="k.png" alt="kép"></img>'
+print("Minden ellenőrzés sikeres!")
+```
+
+### 3. feladat: Mellékhatás nélkül
+
+Az alábbi függvény módosítja a kapott listát. Írd át úgy, hogy az eredeti lista **változatlan maradjon**, és egy új listát adjon vissza!
+
+```python starter
+def duplaz(lista):
+    for i in range(len(lista)):
+        lista[i] *= 2
+    return lista
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def duplaz(lista):
+    return [x * 2 for x in lista]
+```
+
+</details>
+
+```python test
+eredeti = [1, 2, 3]
+uj = duplaz(eredeti)
+assert uj == [2, 4, 6]
+assert eredeti == [1, 2, 3], "Az eredeti lista nem változhat!"
+print("Minden ellenőrzés sikeres!")
+```
+
+### 4. feladat: Javítsd ki a hibát
+
+A `kosarba` függvény a második hívásnál már az előző termékeket is tartalmazza. Javítsd ki!
+
+```python starter
+def kosarba(termek, kosar=[]):
+    kosar.append(termek)
+    return kosar
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kosarba(termek, kosar=None):
+    if kosar is None:
+        kosar = []
+    kosar.append(termek)
+    return kosar
+```
+
+</details>
+
+```python test
+assert kosarba("tej") == ["tej"]
+assert kosarba("kenyér") == ["kenyér"]
+k = ["alma"]
+assert kosarba("körte", k) == ["alma", "körte"]
+print("Minden ellenőrzés sikeres!")
+```
+
+### 5. feladat: Páros számok generátora
+
+Írj `parosak(n)` generátorfüggvényt (`yield`), amely sorban előállítja a 0 és n közötti páros számokat (n-et is, ha páros).
+
+```python starter
+def parosak(n):
+    pass
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def parosak(n):
+    for i in range(0, n + 1, 2):
+        yield i
+```
+
+</details>
+
+```python test
+assert list(parosak(7)) == [0, 2, 4, 6]
+assert list(parosak(8)) == [0, 2, 4, 6, 8]
+import types
+assert isinstance(parosak(3), types.GeneratorType), "Generátorfüggvény kell (yield)!"
+print("Minden ellenőrzés sikeres!")
+```
+
+## Összefoglaló feladat: Webshop-kosár
+
+A témakör összefoglaló feladata: pozicionális, alapértelmezett, csak kulcsszavas és tetszőleges kulcsszavas paraméterek, megosztás szerinti átadás és az alapérték-csapda – egy függvényben.
+
+Írj `kosarba(termek, mennyiseg=1, *, kosar=None, **opciok)` függvényt, amely egy tételt tesz a kosárba, és visszaadja a kosarat (egy listát):
+
+- a tétel egy szótár: `{"termek": ..., "mennyiseg": ..., "opciok": {...}}` – az `opciok` a kapott kulcsszavas paraméterek szótára (pl. `szin="kék"`);
+- ha nem kapott `kosar`-at, **új** listát kezd (és nem egy közös, megmaradó listát!);
+- ha a kosárban már van ugyanilyen termék **ugyanazokkal az opciókkal**, ne új tételt vegyen fel, hanem növelje a mennyiségét;
+- nem pozitív mennyiségnél `ValueError`.
+
+```python starter required
+def kosarba(termek, mennyiseg=1, *, kosar=None, **opciok):
+    pass
+
+
+k = kosarba("póló", szin="kék", meret="M")
+k = kosarba("póló", 2, kosar=k, szin="kék", meret="M")
+print(k)   # egy tétel, 3 darab
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def kosarba(termek, mennyiseg=1, *, kosar=None, **opciok):
+    if mennyiseg <= 0:
+        raise ValueError("A mennyiség legyen pozitív.")
+    if kosar is None:
+        kosar = []
+    for tetel in kosar:
+        if tetel["termek"] == termek and tetel["opciok"] == opciok:
+            tetel["mennyiseg"] += mennyiseg
+            return kosar
+    kosar.append({"termek": termek, "mennyiseg": mennyiseg, "opciok": opciok})
+    return kosar
+
+
+k = kosarba("póló", szin="kék", meret="M")
+k = kosarba("póló", 2, kosar=k, szin="kék", meret="M")
+print(k)   # egy tétel, 3 darab
+```
+
+</details>
+
+```python test
+k = kosarba("póló", szin="kék", meret="M")
+assert k == [{"termek": "póló", "mennyiseg": 1, "opciok": {"szin": "kék", "meret": "M"}}], "Az első tétel szerkezete nem stimmel."
+k = kosarba("póló", 2, kosar=k, szin="kék", meret="M")
+assert len(k) == 1 and k[0]["mennyiseg"] == 3, "Ugyanaz a termék ugyanazzal az opcióval: a mennyiség nő (3)."
+k = kosarba("póló", kosar=k, szin="piros", meret="M")
+assert len(k) == 2, "Más opcióval új tétel kell."
+assert kosarba("bögre") == [{"termek": "bögre", "mennyiseg": 1, "opciok": {}}], "Kosár nélkül mindig új, üres kosár indul."
+assert kosarba("toll") == [{"termek": "toll", "mennyiseg": 1, "opciok": {}}], "Az előző hívás tétele nem maradhat meg."
+try:
+    kosarba("toll", 0)
+    assert False, "0 mennyiségnél ValueError kell."
+except ValueError:
+    pass
+try:
+    kosarba("toll", 1, [])
+    assert False, "A kosar csak kulcsszavasan adható meg (TypeError)."
+except TypeError:
+    pass
+```
+
+## További gyakorló feladatok (nem kötelezők)
+
+Ezek a feladatok nem kötelezők, de minél többet megoldasz, annál magabiztosabb leszel. A programozós feladatoknál írd meg a függvényt, majd futtasd az ellenőrzést; mindegyikhez ott a megoldás – előbb próbáld meg magad, és csak utána nézd meg!
+
+### Programozási feladatok
+
+**1.** **Mellékhatás nélkül.** Írd meg az `uj_lista_hozzaadva(lista, elem)` függvényt, amely egy **új** listát ad vissza a végére fűzött elemmel, az eredeti listát viszont **nem** módosítja!
+
+```python starter
+def uj_lista_hozzaadva(lista, elem):
+    lista.append(elem)
+    return lista
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def uj_lista_hozzaadva(lista, elem):
+    return lista + [elem]                   # a + új listát hoz létre
+```
+
+</details>
+
+```python test
+eredeti = [1, 2]
+uj = uj_lista_hozzaadva(eredeti, 3)
+assert uj == [1, 2, 3]
+assert eredeti == [1, 2], "az eredeti lista nem változhat"
+assert uj is not eredeti
+print("Minden ellenőrzés sikeres!")
+```
+
+**2.** **Tetszőleges számú paraméter.** Írd meg a `formaz(*szavak, elvalaszto=", ")` függvényt, amely a kapott szavakat az elválasztóval összefűzve adja vissza! Az `elvalaszto` csak kulcsszóval legyen megadható.
+
+```python starter
+def formaz(szavak, elvalaszto=", "):
+    return elvalaszto.join(szavak)
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def formaz(*szavak, elvalaszto=", "):       # a *szavak után minden paraméter csak kulcsszavas
+    return elvalaszto.join(szavak)
+```
+
+</details>
+
+```python test
+assert formaz("alma", "körte", "szilva") == "alma, körte, szilva"
+assert formaz("a", "b", elvalaszto="-") == "a-b"
+assert formaz() == ""
+assert formaz("egy") == "egy"
+print("Minden ellenőrzés sikeres!")
+```
+
+**3.** **Beállítások frissítése.** Írd meg a `szotar_frissit(alap, **valtozasok)` függvényt, amely egy új szótárat ad vissza: az `alap` másolatát, amelyben a kulcsszavas paraméterek felülírják vagy kiegészítik az értékeket! Az `alap` szótár ne változzon.
+
+```python starter
+def szotar_frissit(alap, **valtozasok):
+    alap.update(valtozasok)
+    return alap
+```
+
+<details>
+<summary>Megoldás</summary>
+
+```python solution
+def szotar_frissit(alap, **valtozasok):
+    uj = dict(alap)                         # másolat, hogy az eredeti ne változzon
+    uj.update(valtozasok)
+    return uj
+```
+
+</details>
+
+```python test
+alap = {"tema": "sotet", "nyelv": "hu"}
+uj = szotar_frissit(alap, nyelv="en", meret=14)
+assert uj == {"tema": "sotet", "nyelv": "en", "meret": 14}
+assert alap == {"tema": "sotet", "nyelv": "hu"}
+assert szotar_frissit({}) == {}
+print("Minden ellenőrzés sikeres!")
+```
+
+### Gyors ellenőrző kérdések
+
+```quiz
+? Mit ír ki a program? `def f(l): l.append(1)`, `a = []`, `f(a)`, `f(a)`, `print(len(a))`
+= 2
+! A lista módosítható objektum, a függvény ugyanazt a listát kapja meg, nem másolatot.
+
+? Mi a gond a `def f(x, lista=[]):` fejléccel?
+- szintaktikai hiba
++ az alapértelmezett lista egyetlen példány, amely a hívások között megmarad
+- a lista mindig üres marad
+- semmi gond nincs vele
+! Helyette `lista=None`, és a függvényben `if lista is None: lista = []`.
+
+? Milyen típusú a `**kw` paraméter a függvényen belül?
+- list
+- tuple
++ dict
+- set
+! A `*args` tuple, a `**kwargs` szótár.
+
+? Mennyi `(lambda *a: len(a))(1, 2, 3, 4)` értéke?
+= 4
+! A `*a` az összes pozicionális paramétert egy tuple-be gyűjti.
+```

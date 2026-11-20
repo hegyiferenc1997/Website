@@ -1,0 +1,14 @@
+[
+  {
+    "book_id": "K1",
+    "student": "anna",
+    "issued": "2026-09-01",
+    "returned": "2026-09-10"
+  },
+  {
+    "book_id": "K3",
+    "student": "ben",
+    "issued": "2026-09-03",
+    "returned": null
+  }
+]
