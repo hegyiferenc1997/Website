@@ -350,13 +350,13 @@ describe("Személyes kompetencia és kommunikáció fejlesztése", () => {
   );
 
   it("van tananyaga, és minden leckének van kötelező feladata", () => {
-    // A tanmenet 18 témaköre, témakörönként 3 lecke + 1 gyakorló lecke.
+    // A tanmenet 18 témaköre, témakörönként 3 lecke + 1 Mélyebben lecke + 1 gyakorló lecke.
     expect(course?.topics.length).toBe(18);
     const missing = course!.topics.flatMap((t) =>
       t.lessons.filter((l) => !l.hasExercise).map((l) => `${t.slug}/${l.slug}`),
     );
     expect(missing).toEqual([]);
-    expect(course!.topics.every((t) => t.lessons.length === 4)).toBe(true);
+    expect(course!.topics.every((t) => t.lessons.length === 5)).toBe(true);
   });
 
   it("minden lecke két nyelven elérhető", () => {
