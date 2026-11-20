@@ -1,0 +1,14 @@
+[
+  {
+    "konyv_id": "K1",
+    "hallgato": "anna",
+    "kiadva": "2026-09-01",
+    "visszahozva": "2026-09-10"
+  },
+  {
+    "konyv_id": "K3",
+    "hallgato": "béla",
+    "kiadva": "2026-09-03",
+    "visszahozva": null
+  }
+]
